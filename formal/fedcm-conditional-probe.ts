@@ -66,6 +66,14 @@ const sw = `
   const log = [];
   self.addEventListener('message', event => {
     if (event.data === 'events') event.ports[0].postMessage(log);
+    if (event.data?.type === 'privacy-installed-resource') {
+      event.ports[0].postMessage({ok:false,error:'SW blocked'});
+      event.ports[0].close();
+    }
+    if (event.data?.type === 'privacy-publisher-rpc' && event.data.operation === 'status') {
+      event.ports[0].postMessage({ok:true,value:null});
+      event.ports[0].close();
+    }
   });
   self.addEventListener('fetch', event => {
     log.push(event.request.url);
@@ -276,6 +284,19 @@ try {
       });
       await page.goto(origin + '/app/');
       await page.waitForFunction(() => globalThis.prepared);
+      // Drain observed setup/update activity before the identity API action.
+      // This is a measured interval, not proof that browser jobs have ended.
+      let setupCount = traffic.length,
+        unchangedSince = Date.now();
+      const quietDeadline = Date.now() + 15000;
+      while (Date.now() - unchangedSince < 3000) {
+        assert(Date.now() < quietDeadline, 'FedCM setup did not become quiet');
+        await page.waitForTimeout(100);
+        if (traffic.length !== setupCount) {
+          setupCount = traffic.length;
+          unchangedSince = Date.now();
+        }
+      }
       const start = traffic.length;
       const outcome = await page.evaluate(async (origin) => {
         const data = { mode: privacyHost.mode, getDenied: false, ordinaryFetch: '' };
@@ -331,7 +352,10 @@ try {
               : /^NetworkError:/,
         );
       }
-      assert.equal(outcome.ordinaryFetch, kind === 'none' ? 'TypeError' : 'SW blocked');
+      assert.equal(
+        outcome.ordinaryFetch,
+        kind === 'none' || kind === 'fixed' ? 'TypeError' : 'SW blocked',
+      );
       receipt.rows.push({
         kind,
         phase: 'prepared-seeded-disconnect',

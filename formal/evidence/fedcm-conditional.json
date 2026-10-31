@@ -1,18 +1,18 @@
 {
-  "origin": "http://127.0.0.1:41645",
+  "origin": "http://127.0.0.1:42699",
   "version": "153.0.8010.12",
   "historicalRevision": "2449929b26adc7dad41b54c9d4de2c4b3bdb0a69",
-  "fixedHEAD": "5f3811dce632dd481657459fb18ed1b38689e0a7",
-  "runnerSHA256": "e6faed001c49067e3cdc919cb772c6952b7cb5427e30eb5f7dac3de8eb83d548",
+  "fixedHEAD": "649db677dc513b3467c5a619e049c19c4ebfbd3c",
+  "runnerSHA256": "8be366059173368e411d0f1b29334ed20e8e43da00035448df7b4a2391380176",
   "fixtureHashes": {
-    "historical": "c4c6cfcfa01bc0e0dee2e2ea8b071a8487935cc2ed7a493a2c2bdc1800bafeae",
-    "fixed": "95a53245ebe75d652924bf965b1a48d62edc141c778f9089ab3499cc87c1c0bb"
+    "historical": "fa0ec535d2fada1bc4c2ca380e37f3dd44279277b3dfaba1de4750c782fecb44",
+    "fixed": "e02c3003b6ead0ceff6bffe26a723a0f2445a07ff71d44fdbb74e547c5eef920"
   },
-  "testedAt": "2026-10-30T14:55:14.411Z",
+  "testedAt": "2026-10-31T15:52:24.889Z",
   "sourceHashes": {
     "src/runtime/response-policy.ts": "f21946f76dd37233ea7e48dd969a59e09343315f3a044e4be66ae4324fb9efb2",
     "src/runtime/enforcement/effects.ts": "466c165e4ef9d82e2011c85cd2639e3f7e7152309c49fbb5c8962ed0fd1bb691",
-    "src/runtime/contexts/window-realm.ts": "06cae24e208c2471a511ef718037bbb82ae8000a18069d7b50ecd1a956da649d",
+    "src/runtime/contexts/window-realm.ts": "7b329b2d6570547fc615c86bfbb384604e6703f44e42002d5c5be6b5f2be360e",
     "scripts/trusted-policy.ts": "93cc9dffdee1683b74faa06251b4f8ab16eaf5294047b5783f156cb6417a5e36"
   },
   "installedLockSHA256": "4e8c7b0964047f1c9fd3f82956b08d381817fa86fb2f7d47d4a10458dc5e62ed",
@@ -48,7 +48,7 @@
         {
           "url": "/disconnect",
           "method": "POST",
-          "body": "client_id=private-marker-41645&account_hint=account"
+          "body": "client_id=private-marker-42699&account_hint=account"
         }
       ]
     },
@@ -67,7 +67,7 @@
         "mode": "network-isolated",
         "getDenied": true,
         "ordinaryFetch": "TypeError",
-        "disconnect": "NetworkError:Refused to connect to 'http://127.0.0.1:41645/config.json' because it violates the document's Content Security Policy."
+        "disconnect": "NetworkError:Refused to connect to 'http://127.0.0.1:42699/config.json' because it violates the document's Content Security Policy."
       },
       "observed": []
     },
@@ -104,7 +104,7 @@
       "outcome": {
         "mode": "network-isolated",
         "getDenied": true,
-        "ordinaryFetch": "SW blocked",
+        "ordinaryFetch": "TypeError",
         "disconnect": "SecurityError:Operation disconnect prohibited by application host"
       },
       "observed": []
@@ -152,6 +152,11 @@
       "body": ""
     },
     {
+      "url": "/sw.js",
+      "method": "GET",
+      "body": ""
+    },
+    {
       "url": "/.well-known/web-identity",
       "method": "GET",
       "body": ""
@@ -164,7 +169,7 @@
     {
       "url": "/disconnect",
       "method": "POST",
-      "body": "client_id=private-marker-41645&account_hint=account"
+      "body": "client_id=private-marker-42699&account_hint=account"
     },
     {
       "url": "/",
@@ -207,6 +212,11 @@
       "body": ""
     },
     {
+      "url": "/sw.js",
+      "method": "GET",
+      "body": ""
+    },
+    {
       "url": "/",
       "method": "GET",
       "body": ""
@@ -247,6 +257,11 @@
       "body": ""
     },
     {
+      "url": "/sw.js",
+      "method": "GET",
+      "body": ""
+    },
+    {
       "url": "/",
       "method": "GET",
       "body": ""
@@ -283,6 +298,11 @@
     },
     {
       "url": "/fixture.js",
+      "method": "GET",
+      "body": ""
+    },
+    {
+      "url": "/sw.js",
       "method": "GET",
       "body": ""
     }

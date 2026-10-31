@@ -27,7 +27,7 @@
     "formal/evidence/contexts-prototype-confinement.json": "b76ddfd0f71ff886720faa3304cf86020e1b4a485c9fb624e2e11afdacc22819",
     "formal/evidence/document-consumption-fault.json": "ac89b66f67e8b5fc2114f0b0c2ca17108cb69e194b3ad4e4d905f7cb5d6982ac",
     "formal/evidence/eventsource-beacon.json": "74fd54e3323a3e81b511ad8cd78931c0514147a34def38c65b0a8fd07d7325fa",
-    "formal/evidence/fedcm-conditional.json": "67a51d93242a3e007dd08f723931e01504f6c21426dd3e21a3f87de6c36d9b4b",
+    "formal/evidence/fedcm-conditional.json": "78a4ebe1c9b4d4bfc1f3d7f7e61e9dd908a496a6c719664dc128025f850fb573",
     "formal/evidence/fetch-later.json": "e0dd9907ac7c33b5f9aac19a06fe0cdb50f5643c56ddc1c90adad24597a52364",
     "formal/evidence/generation-overlaps.json": "4aa7a3b7632cf06fa1e2b4f8424d2f791e14aa652a741322f3a6226ee99524bb",
     "formal/evidence/hyperlink-auditing.json": "4deb55ac64e514eb55b7b00233c4281db617a2b0802ff48f0a2317761111b766",
@@ -146,7 +146,7 @@
     "src/runtime/response-policy.ts": "f21946f76dd37233ea7e48dd969a59e09343315f3a044e4be66ae4324fb9efb2",
     "src/runtime/root-guard.ts": "70db83fd30629386ae04af44e78969ebdbc8f03e42a7aee6e63082db83e8e2d0",
     "src/runtime/storage.ts": "3f25382228184cf46609e26562fd815c1701f88d8fc4af19d9a61ff79e949c5d",
-    "src/runtime/worker.ts": "98296f823c16070bb766ea4cff77295bc414f6adaf697a05c17b6ce9027913ba",
+    "src/runtime/worker.ts": "840822ea59854a5106911d4d8aadb839a1ce36339b7df26116d1d23a70dc3859",
     "src/shared/application-navigation.ts": "ff1aa86011a7aa5af0ccf8626f77d0b8a86883d4cc4e21cf92f7f1382d9cbdb4",
     "src/shared/primordials.ts": "422a992a7e863c1b3b09f7d1484f10fa66a0300cdea007dfe485c9bf0c1e980c",
     "src/shared/runtime-url.ts": "26503f8994b0307030dddb9f843f6bd438573869b7ab01226565c865c9e3c24f",
@@ -199,7 +199,7 @@
     "formal/runtime-verification/registration-overlap.json": "7069acdfc3df48645721c881e9d3457e02fb92f8f1aa8757776437f4682e5b09",
     "formal/runtime-verification/registration-overlap.md": "e37aa165dc339f2764d7e81efe7490205411bb32e329ffb154604039b8e8e033",
     "formal/runtime-verification/boundaries.ts": "9a2e528ce527b38c7fbea83857b531796c75f15e715494f0bba1ac879a64eac2",
-    "formal/runtime-verification/implementation-inventory.json": "c71e1e7e401ae59244258e2cf009afadc4a46946128ef4fe42c5a78b5d483c2f",
+    "formal/runtime-verification/implementation-inventory.json": "4617cf57e47ed5c91296900d049893cf857a64e795008d059e1de75480edd525",
     "formal/runtime-verification/inventory.ts": "30a433edc9bc21d25c4790a9540e6eeb271f382c12f4fefeccd1dba1b75a47c2",
     "formal/runtime-verification/RegistrationLifetime.lean": "908a92fe1b89c616425ad6f6525ad966e66b723b8cb2d5e944d750112667c153",
     "formal/runtime-verification/registration-lifetime-check.ts": "4a9ff9841f2b1e27c50c4fefab3adfde32742d808c32cdea287e0fbbaf934d7f",
@@ -221,7 +221,10 @@
     "src/runtime/resource-broker.ts": "807ddb9de3364a3836935323d0f89b121b86e6a30dc503e3b4c1577dc1b8ed26",
     "test/resource-fetch.test.ts": "703ad5f9e418ebfc1600e8519ebc0a968f6f9c3f4ad1f87843c5467fa487d544",
     "src/runtime/contexts/popup-factory.ts": "0e35f493f9854d95a77c72e7434ccacbd63e01c49c37675131876256350ff858",
-    "formal/runtime-verification/resource-fetch.md": "3993d8d95a601662e83dd690f273867f8764e90836d21e5aedce7179e21eb904"
+    "formal/runtime-verification/resource-fetch.md": "44b4e278147a04cfef91f36012beffc904018b6af462cf2db97d39c84bfecf46",
+    "results/browser.json": "46665f63b9a9a32b45e6e76e962c5c109f4dc12934ab8dc1558f8ec1e8f4a8e5",
+    "test/run.ts": "c251a148802bcb633f9de6167f798f892ad7b38e8dda576b2356b641cb581642",
+    "formal/fedcm-conditional-probe.ts": "8be366059173368e411d0f1b29334ed20e8e43da00035448df7b4a2391380176"
   },
   "claims": [
     {
@@ -469,17 +472,26 @@
         {
           "kind": "native_control",
           "description": "A user-selected synthetic FedCM connection was seeded before preparation.",
-          "paths": ["formal/evidence/fedcm-conditional.json"]
+          "paths": [
+            "formal/evidence/fedcm-conditional.json",
+            "formal/fedcm-conditional-probe.ts"
+          ]
         },
         {
           "kind": "historical_control",
           "description": "The historical test build permitted a marker-bearing disconnect POST after a synthetic connection was seeded; this does not establish reachability against the deployed runtime. Configured CSP and permission controls independently refused it.",
-          "paths": ["formal/evidence/fedcm-conditional.json"]
+          "paths": [
+            "formal/evidence/fedcm-conditional.json",
+            "formal/fedcm-conditional-probe.ts"
+          ]
         },
         {
           "kind": "confined_test",
           "description": "Fixed test build denied the call and the independent local receiver observed no request.",
-          "paths": ["formal/evidence/fedcm-conditional.json"]
+          "paths": [
+            "formal/evidence/fedcm-conditional.json",
+            "formal/fedcm-conditional-probe.ts"
+          ]
         }
       ],
       "open_obligations": [
@@ -1918,6 +1930,11 @@
             "results/contexts/shared-workers.json",
             "test/shared-worker-contexts.ts"
           ]
+        },
+        {
+          "kind": "discovery",
+          "description": "The ordinary host integration test exercises 16 groups in both browsers, including local display of a refused message resource read. Its receipt pins the later diagnostic-logging candidate; the corpus and transport experiments retain their own saved inputs.",
+          "paths": ["test/run.ts", "results/browser.json"]
         }
       ],
       "open_obligations": [

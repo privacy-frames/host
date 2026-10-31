@@ -7,6 +7,8 @@ from its installation, and checks its authority and installation generation afte
 asynchronous resource and publisher work. A failed read never tries the network.
 Generated manifests and captured manifest icons use one public-resource reader
 for native browser loads and authenticated message reads.
+Both transports record successful and refused reads in the local observations
+log. The end-to-end host test checks that refused message reads appear there.
 
 The change removes the second copy of resource selection, publisher interception
 and CSS relocation from the HTTP handler. Application code and resource lists

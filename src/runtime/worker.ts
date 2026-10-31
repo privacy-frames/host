@@ -222,8 +222,17 @@ worker.addEventListener('message', (event) => {
             headers: Array.from(result.headers),
             body,
           };
+          record('installed', request.url, request.method);
           port.postMessage({ ok: true, value }, [body]);
         } catch (error) {
+          if (packet.type === INSTALLED_RESOURCE_REQUEST)
+            record(
+              'blocked',
+              'url' in packet && typeof packet.url === 'string'
+                ? packet.url
+                : 'invalid-resource-message',
+              'GET',
+            );
           port.postMessage({
             ok: false,
             error: error instanceof Error ? error.message : String(error),

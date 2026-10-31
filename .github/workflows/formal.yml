@@ -16,8 +16,8 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
-      - name: Install Chromium for the admission contract fixture
-        run: npx playwright install --with-deps chromium
+      - name: Install browsers for the admission contract fixture
+        run: npx playwright install --with-deps chromium firefox
         timeout-minutes: 10
       - name: Check runtime types and unit contracts
         run: |
