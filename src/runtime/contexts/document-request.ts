@@ -129,6 +129,17 @@ export async function documentRequestInput(
   throw new Error('Unsupported document source');
 }
 
+/** Message and HTTP readers enforce the same complete JSON text bound. */
+export function parseDocumentRequest(value: unknown): unknown {
+  if (
+    typeof value !== 'string' ||
+    !value ||
+    new TextEncoder().encode(value).byteLength > LIMITS.bytes
+  )
+    throw new Error('Document request exceeds size limit or is missing');
+  return internalData(JSON.parse(value));
+}
+
 /** Bound the complete request before JSON parsing, including escaped source text. */
 export async function readDocumentRequest(request: Request): Promise<unknown> {
   // Firefox exposes a null stream for some service-worker POST requests while

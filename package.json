@@ -25,7 +25,7 @@
     "test:lifecycle": "node test/lifecycle.ts",
     "test:dynamic-scripts": "node test/dynamic-scripts.ts",
     "test:contexts": "node test/realm-enforcement.ts && node test/context-csp.ts && node test/context-generation.ts && node test/context-navigation.ts && node test/worker-destinations.ts && node test/dynamic-scripts.ts && node test/worker-contexts.ts && npm run test:documents && node test/shared-connections.ts && node test/shared-worker-contexts.ts && npm run test:worklets && node test/inert-documents.ts && node test/intrinsics.ts && node test/global-bindings.ts && node test/storage-proxy-receiver.ts && node test/popup-receivers.ts && npm run test:publisher && npm run test:prototypes && node test/resource-elements.ts && node test/custom-elements.ts && npm run test:history && npm run test:worker-root-aliases && node test/native-markup.ts",
-    "test:documents": "node test/document-intents.ts && node test/document-renderer.ts && node test/document-factory.ts && node test/document-contexts.ts",
+    "test:documents": "node test/document-intents.ts && node test/document-renderer.ts && node test/document-factory.ts && node test/document-contexts.ts && node test/document-control.ts",
     "test:worklets": "node test/worklet-platform.ts && node test/worklet-guard.ts && node test/worklet-contexts.ts",
     "test:publisher": "node test/publisher-store.ts && node test/cache-aliases.ts && node test/publisher-contexts.ts",
     "test:prototypes": "node test/prototype-confinement.ts",

@@ -222,6 +222,7 @@ jobs:
           npx tsc --ignoreConfig --noEmit --strict --types node --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --lib ES2023,DOM,DOM.Iterable,WebWorker formal/implementation-navigation/initialization-run.ts
           node formal/implementation-navigation/initialization-run.ts
       - run: node test/document-consumption-race.ts
+      - run: node test/document-control.ts
       - run: node formal/document-consumption-fault.ts
       - run: node test/context-generation.ts
       - run: cp results/contexts/generation.json formal/evidence/generation-overlaps.json
@@ -249,6 +250,7 @@ jobs:
             formal/evidence/generation-overlaps.json
             formal/confinement/generation-implementation-traces.json
             results/contexts/document-consumption-race.json
+            results/contexts/document-control.json
             formal/evidence/document-consumption-fault.json
             formal/evidence/cache-publisher.json
             formal/evidence/publisher-routes.json

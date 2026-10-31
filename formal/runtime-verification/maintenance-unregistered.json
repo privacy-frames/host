@@ -1,6 +1,6 @@
 {
-  "scope": "Native browser comparison of local context bootstraps, service-worker-mediated resources and message-only operations. The Firefox forced-stale profile uses an explicit testing preference, not natural 24-hour aging. The unregistered variant checks retained delivery and loss of interception. No production runtime repair is claimed.",
-  "runnerSHA256": "1814fb79794b1c7b06becb2ddd4362ddbbdf2eec0e05cb5ae19b3ba8bb3dbd3e",
+  "scope": "Native browser comparison of local context bootstraps, service-worker-mediated resources and message-only operations. The Firefox forced-stale profile uses an explicit testing preference, not natural 24-hour aging. The unregistered variant checks retained delivery and loss of interception. Known positive triggers use up to three fresh samples; omissions are recorded and a group without a positive observation fails. No production runtime repair is claimed.",
+  "runnerSHA256": "b98ad20d3ad51ae4d943423298205d4b731a4777ee235b11857d7ec37c43d286",
   "observationMilliseconds": 3000,
   "rows": [
     {
@@ -9,9 +9,11 @@
       "forcedStaleCheck": false,
       "unregistered": true,
       "operation": "fetch",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "cached",
-      "actionStarted": 1793448670894,
-      "observationEnded": 1793448673898,
+      "actionStarted": 1793463782483,
+      "observationEnded": 1793463785486,
       "requests": []
     },
     {
@@ -20,9 +22,11 @@
       "forcedStaleCheck": false,
       "unregistered": true,
       "operation": "message",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793448676949,
-      "observationEnded": 1793448679951,
+      "actionStarted": 1793463788529,
+      "observationEnded": 1793463791531,
       "requests": []
     },
     {
@@ -31,9 +35,11 @@
       "forcedStaleCheck": false,
       "unregistered": true,
       "operation": "blob-worker",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793448682995,
-      "observationEnded": 1793448686000,
+      "actionStarted": 1793463794571,
+      "observationEnded": 1793463797578,
       "requests": []
     },
     {
@@ -42,9 +48,11 @@
       "forcedStaleCheck": false,
       "unregistered": true,
       "operation": "blob-worker-fetch",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "cached",
-      "actionStarted": 1793448689050,
-      "observationEnded": 1793448692059,
+      "actionStarted": 1793463800616,
+      "observationEnded": 1793463803623,
       "requests": []
     },
     {
@@ -53,9 +61,11 @@
       "forcedStaleCheck": false,
       "unregistered": true,
       "operation": "srcdoc",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "Local frame",
-      "actionStarted": 1793448695106,
-      "observationEnded": 1793448698113,
+      "actionStarted": 1793463806666,
+      "observationEnded": 1793463809672,
       "requests": []
     },
     {
@@ -64,9 +74,11 @@
       "forcedStaleCheck": false,
       "unregistered": true,
       "operation": "blob-frame",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "Local frame",
-      "actionStarted": 1793448701157,
-      "observationEnded": 1793448704164,
+      "actionStarted": 1793463812714,
+      "observationEnded": 1793463815721,
       "requests": []
     },
     {
@@ -75,9 +87,11 @@
       "forcedStaleCheck": false,
       "unregistered": true,
       "operation": "fetch",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "cached",
-      "actionStarted": 1793448708154,
-      "observationEnded": 1793448711159,
+      "actionStarted": 1793463819621,
+      "observationEnded": 1793463822625,
       "requests": []
     },
     {
@@ -86,9 +100,11 @@
       "forcedStaleCheck": false,
       "unregistered": true,
       "operation": "message",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793448714326,
-      "observationEnded": 1793448717329,
+      "actionStarted": 1793463825800,
+      "observationEnded": 1793463828802,
       "requests": []
     },
     {
@@ -97,9 +113,11 @@
       "forcedStaleCheck": false,
       "unregistered": true,
       "operation": "blob-worker",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793448720553,
-      "observationEnded": 1793448723561,
+      "actionStarted": 1793463831994,
+      "observationEnded": 1793463835002,
       "requests": []
     },
     {
@@ -108,13 +126,15 @@
       "forcedStaleCheck": false,
       "unregistered": true,
       "operation": "blob-worker-fetch",
+      "attempt": 1,
+      "expectedRequest": true,
       "result": "network-cached",
-      "actionStarted": 1793448726744,
-      "observationEnded": 1793448729755,
+      "actionStarted": 1793463838191,
+      "observationEnded": 1793463841202,
       "requests": [
         {
           "path": "/cached",
-          "time": 1793448726753
+          "time": 1793463838200
         }
       ]
     },
@@ -124,9 +144,11 @@
       "forcedStaleCheck": false,
       "unregistered": true,
       "operation": "srcdoc",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "Local frame",
-      "actionStarted": 1793448732919,
-      "observationEnded": 1793448735927,
+      "actionStarted": 1793463844406,
+      "observationEnded": 1793463847416,
       "requests": []
     },
     {
@@ -135,9 +157,11 @@
       "forcedStaleCheck": false,
       "unregistered": true,
       "operation": "blob-frame",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "Local frame",
-      "actionStarted": 1793448739085,
-      "observationEnded": 1793448742095,
+      "actionStarted": 1793463850586,
+      "observationEnded": 1793463853595,
       "requests": []
     },
     {
@@ -146,9 +170,11 @@
       "forcedStaleCheck": true,
       "unregistered": true,
       "operation": "fetch",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "cached",
-      "actionStarted": 1793448746275,
-      "observationEnded": 1793448749279,
+      "actionStarted": 1793463857676,
+      "observationEnded": 1793463860680,
       "requests": []
     },
     {
@@ -157,9 +183,11 @@
       "forcedStaleCheck": true,
       "unregistered": true,
       "operation": "message",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793448752441,
-      "observationEnded": 1793448755445,
+      "actionStarted": 1793463863844,
+      "observationEnded": 1793463866846,
       "requests": []
     },
     {
@@ -168,9 +196,11 @@
       "forcedStaleCheck": true,
       "unregistered": true,
       "operation": "blob-worker",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793448758609,
-      "observationEnded": 1793448761617,
+      "actionStarted": 1793463870022,
+      "observationEnded": 1793463873029,
       "requests": []
     },
     {
@@ -179,13 +209,15 @@
       "forcedStaleCheck": true,
       "unregistered": true,
       "operation": "blob-worker-fetch",
+      "attempt": 1,
+      "expectedRequest": true,
       "result": "network-cached",
-      "actionStarted": 1793448764776,
-      "observationEnded": 1793448767787,
+      "actionStarted": 1793463876209,
+      "observationEnded": 1793463879220,
       "requests": [
         {
           "path": "/cached",
-          "time": 1793448764785
+          "time": 1793463876218
         }
       ]
     },
@@ -195,9 +227,11 @@
       "forcedStaleCheck": true,
       "unregistered": true,
       "operation": "srcdoc",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "Local frame",
-      "actionStarted": 1793448770969,
-      "observationEnded": 1793448773979,
+      "actionStarted": 1793463882384,
+      "observationEnded": 1793463885392,
       "requests": []
     },
     {
@@ -206,11 +240,13 @@
       "forcedStaleCheck": true,
       "unregistered": true,
       "operation": "blob-frame",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "Local frame",
-      "actionStarted": 1793448777144,
-      "observationEnded": 1793448780155,
+      "actionStarted": 1793463888562,
+      "observationEnded": 1793463891571,
       "requests": []
     }
   ],
-  "completedAt": "2026-10-31T12:13:00.367Z"
+  "completedAt": "2026-10-31T16:24:51.775Z"
 }

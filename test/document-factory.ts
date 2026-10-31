@@ -23,13 +23,23 @@ const config = globalThis.fixtureRegistration;
 const rawGet = Element.prototype.getAttribute;
 globalThis.readPhysicalSandbox = frame => Reflect.apply(rawGet, frame, ['sandbox']);
 const add = EventTarget.prototype.addEventListener;
+// Explicit fixture transport; production uses the private controller channel.
+const fixtureFetch = fetch;
+const documentControl = async (operation, payload) => {
+  const response = await fixtureFetch('/fixture/' + operation, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  if (!response.ok) throw new Error('Fixture command refused');
+  return response.json();
+};
 const nativePost = window.postMessage;
 const nativeParent = parent;
 const policy = createTrustedPolicy(location.origin + '/app/');
 const tools = createPolicyTools();
 const resources = { mapURL: value => String(value), isInstalledURL: () => false };
 const scripts = installScriptPolicy(tools, { nonce: 'fixture_nonce', ...resources });
-const documents = createDocumentFactory(tools, { applicationURL: location.origin + '/app/', baseURL: () => location.href, policy });
+const documents = createDocumentFactory(tools, { applicationURL: location.origin + '/app/', baseURL: () => location.href, policy, documentControl });
 installDOMPolicy(tools, rawGet, policy, scripts, documents);
 installResourceAttributePolicy(tools, resources.mapURL, scripts, documents);
 globalThis.waitForOwnedDocuments = () => documents.whenLoaded();
@@ -79,7 +89,19 @@ const server = http.createServer(async (request, target) => {
     target.end(script);
     return;
   }
-  if (url.pathname === '/app/__document-intents') {
+  if (url.pathname === '/fixture/close') {
+    const chunks: Buffer[] = [];
+    for await (const chunk of request) chunks.push(Buffer.from(chunk));
+    const body = JSON.parse(Buffer.concat(chunks).toString());
+    const registration = registrations.get(body.id);
+    assert(registration);
+    assert.equal(body.parentToken, registration.parentToken);
+    registration.closed = true;
+    target.writeHead(200, { 'Content-Type': 'application/json' });
+    target.end(JSON.stringify({ closed: true }));
+    return;
+  }
+  if (url.pathname === '/fixture/create') {
     const chunks: Buffer[] = [];
     for await (const chunk of request) chunks.push(Buffer.from(chunk));
     const input = JSON.parse(Buffer.concat(chunks).toString());
@@ -108,22 +130,12 @@ const server = http.createServer(async (request, target) => {
     return;
   }
   const context = url.pathname.match(
-    /^\/app\/__contexts\/([^/]+)\/(document\.(html|svg)|close)$/,
+    /^\/app\/__contexts\/([^/]+)\/(document\.(html|svg))$/,
   );
   if (context) {
     const registration = registrations.get(context[1]);
     if (!registration) {
       target.writeHead(404);
-      target.end();
-      return;
-    }
-    if (context[2] === 'close') {
-      const chunks: Buffer[] = [];
-      for await (const chunk of request) chunks.push(Buffer.from(chunk));
-      const body = JSON.parse(Buffer.concat(chunks).toString());
-      assert.equal(body.parentToken, registration.parentToken);
-      registration.closed = true;
-      target.writeHead(200);
       target.end();
       return;
     }

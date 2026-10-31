@@ -1,3 +1,4 @@
+import type { DocumentControl } from './document-client.ts';
 import {
   strings,
   internalArray,
@@ -12,10 +13,11 @@ import {
   parseDocumentRegistration,
   type DocumentRegistration,
 } from './document-protocol.ts';
-// Control-plane requests retain the pre-adapter native operation.
+// Native fetch is retained only for local Blob source reads.
 const nativeFetch = fetch;
 
 interface PopupFactoryOptions {
+  documentControl: DocumentControl;
   applicationURL: string;
   baseURL(): string;
   resources: Pick<ResourceAliases, 'mapURL' | 'isInstalledURL' | 'sourceURL'>;
@@ -92,11 +94,9 @@ export function createPopupFactory(tools: PolicyTools, options: PopupFactoryOpti
     set = Reflect.set;
   const getPrototype = Object.getPrototypeOf;
   const fetchOK = descriptor(Response.prototype, 'ok')!.get!;
-  const json = Response.prototype.json,
-    text = Response.prototype.text;
+  const text = Response.prototype.text;
   const headers = descriptor(Response.prototype, 'headers')!.get!;
   const headerGet = Headers.prototype.get;
-  const stringify = JSON.stringify;
   const setTimer = owner.setTimeout,
     clearTimer = owner.clearTimeout;
   const records = new NativeWeakMap<object, PopupRecord>();
@@ -105,15 +105,15 @@ export function createPopupFactory(tools: PolicyTools, options: PopupFactoryOpti
   const field = (value: unknown, key: string): unknown =>
     value && typeof value === 'object' ? descriptor(value, key)?.value : undefined;
   function closeRegistration(registration: DocumentRegistration) {
-    void nativeFetch(
-      apply(href, new NativeURL('close', registration.url), []),
-      internalRecord<RequestInit>({
-        method: 'POST',
-        credentials: 'omit',
-        headers: internalRecord({ 'Content-Type': 'application/json' }),
-        body: stringify(internalRecord({ parentToken: registration.parentToken })),
-      }),
-    ).catch(() => {});
+    void options
+      .documentControl(
+        'close',
+        internalRecord({
+          id: registration.id,
+          parentToken: registration.parentToken,
+        }),
+      )
+      .catch(() => {});
   }
   function retire(record: PopupRecord, error = false) {
     if (record.canceled) return;
@@ -376,28 +376,17 @@ export function createPopupFactory(tools: PolicyTools, options: PopupFactoryOpti
             'text/html',
         });
       }
-      const response = await nativeFetch(
-        apply(href, new NativeURL('__document-intents', options.applicationURL), []),
-        internalRecord<RequestInit>({
-          method: 'POST',
-          credentials: 'omit',
-          headers: internalRecord({ 'Content-Type': 'application/json' }),
-          body: stringify(
-            internalRecord({
-              carrier: 'popup',
-              popup,
-              source,
-              baseURL: options.baseURL(),
-              ...(blobContent ? internalRecord({ blobContent }) : internalRecord({})),
-            }),
-          ),
+      const reply = await options.documentControl(
+        'create',
+        internalRecord({
+          carrier: 'popup',
+          popup,
+          source,
+          baseURL: options.baseURL(),
+          ...(blobContent ? internalRecord({ blobContent }) : internalRecord({})),
         }),
       );
-      if (!apply(fetchOK, response, [])) fail('Popup registration was refused');
-      const registration = parseDocumentRegistration(
-        await apply(json, response, []),
-        options.applicationURL,
-      );
+      const registration = parseDocumentRegistration(reply, options.applicationURL);
       if (registration.carrier !== 'popup') fail('Invalid popup registration');
       record.registration = registration;
       if (record.canceled) {

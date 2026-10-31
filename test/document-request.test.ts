@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   documentRequestInput,
+  parseDocumentRequest,
   readDocumentRequest,
 } from '../src/runtime/contexts/document-request.ts';
 import { applicationURL, resourceURL } from '../src/shared/runtime-url.ts';
@@ -228,4 +229,15 @@ test('installed secondary documents retain their captured base URL', async () =>
   );
   assert.equal(input.sourceURL, child.url);
   assert.equal(input.baseURL, child.documentBase);
+});
+
+test('controller document payloads require JSON text and detach prototype-sensitive records', () => {
+  const value = parseDocumentRequest(
+    '{"source":{"kind":"empty"},"__proto__":{"application":"other"}}',
+  );
+  assert(value && typeof value === 'object');
+  assert.equal(Object.getPrototypeOf(Object.getPrototypeOf(value)), null);
+  assert.equal('application' in value, false);
+  for (const invalid of [undefined, null, {}, '', '{'])
+    assert.throws(() => parseDocumentRequest(invalid));
 });

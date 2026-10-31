@@ -8,7 +8,7 @@ import { CONTEXT_POLICY_VERSION, ContextRegistry } from './model.ts';
 import { DocumentIntentStore } from './document-intents.ts';
 import type { DocumentIntentMetadata } from './document-intents.ts';
 import type { DocumentBootstrapConfiguration } from './document-protocol.ts';
-import { documentRequestInput, readDocumentRequest } from './document-request.ts';
+import { documentRequestInput, parseDocumentRequest } from './document-request.ts';
 interface DocumentControllerOptions {
   base: URL;
   contexts: ContextRegistry;
@@ -18,9 +18,7 @@ interface DocumentControllerOptions {
   bootstrap(): Promise<Response | undefined>;
 }
 const UUID = '[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}';
-const routePattern = new RegExp(
-  `/__contexts/(${UUID})/(document\\.(?:html|svg)|configuration|content|close)$`,
-);
+const routePattern = new RegExp(`/__contexts/(${UUID})/(document\\.(?:html|svg))$`);
 function bootstrapURL(
   app: StoredInstallation,
   intent: DocumentIntentMetadata,
@@ -30,9 +28,6 @@ function bootstrapURL(
     `__contexts/${intent.id}/document.${intent.kind}`,
     applicationURL(app, base),
   );
-}
-function json(value: unknown, status = 200): Response {
-  return response(JSON.stringify(value), 'application/json', status);
 }
 /** Only native browser identities select the owner of registration and payloads. */
 export function createDocumentController(options: DocumentControllerOptions) {
@@ -58,7 +53,7 @@ export function createDocumentController(options: DocumentControllerOptions) {
       parent.app.generation === intent.installationGeneration
     );
   }
-  return async function documentContextResponse(
+  async function documentContextResponse(
     event: FetchEvent,
   ): Promise<Response | undefined> {
     const request = event.request;
@@ -94,64 +89,10 @@ export function createDocumentController(options: DocumentControllerOptions) {
         return Response.error();
       return (await options.bootstrap()) || Response.error();
     }
-    if (strings.endsWith(url.pathname, '/__document-intents')) {
-      if (
-        request.method !== 'POST' ||
-        request.destination !== '' ||
-        request.mode === 'navigate' ||
-        url.search
-      )
-        return Response.error();
-      const parent = await owner(event.clientId);
-      if (
-        !parent ||
-        url.href !== new URL('__document-intents', applicationURL(parent.app, base)).href
-      )
-        return Response.error();
-      try {
-        const body = await readDocumentRequest(request);
-        const surface = parseDocumentSurface(body, true);
-        const input = await documentRequestInput(
-          body,
-          parent.app,
-          base,
-          internalRecord({ getResource }),
-        );
-        const intent = await intents.issue(
-          internalRecord({
-            application: parent.app.id,
-            installationGeneration: parent.app.generation,
-            parentClient: parent.client.id,
-          }),
-          input,
-          surface,
-        );
-        return json(
-          internalRecord({
-            id: intent.id,
-            nonce: intent.nonce,
-            parentToken: intent.parentToken,
-            kind: intent.kind,
-            carrier: intent.carrier,
-            ...(intent.popup
-              ? internalRecord({ popup: intent.popup })
-              : internalRecord({})),
-            url: bootstrapURL(parent.app, intent, base).href,
-          }),
-        );
-      } catch (error) {
-        return json(
-          internalRecord({
-            error: error instanceof Error ? error.message : 'Document source refused',
-          }),
-          400,
-        );
-      }
-    }
     const match = strings.match(url.pathname, routePattern);
     if (!match) return;
     const intent = await intents.inspect(match[1]);
-    if (!intent) return match[2] === 'close' ? undefined : Response.error();
+    if (!intent) return Response.error();
     const app = await getApp(intent.application);
     if (!app || app.generation !== intent.installationGeneration) return Response.error();
     const target = bootstrapURL(app, intent, base);
@@ -213,56 +154,102 @@ export function createDocumentController(options: DocumentControllerOptions) {
         }),
       );
     }
-    if (match[2] === 'close') {
+    return Response.error();
+  }
+  async function request(
+    clientId: string,
+    operation: unknown,
+    payload: unknown,
+  ): Promise<unknown> {
+    const actual = await owner(clientId);
+    const identity = actual && (await contexts.resolve(actual.client));
+    if (
+      !actual ||
+      identity?.kind !== 'window' ||
+      identity.application !== actual.app.id ||
+      identity.installationGeneration !== actual.app.generation
+    )
+      throw new Error('Document client not authorized');
+    const current = async () => {
       if (
-        request.method !== 'POST' ||
-        request.destination !== '' ||
-        request.mode === 'navigate'
+        !(await contexts.isCurrent(actual.client, identity)) ||
+        (await getApp(actual.app.id))?.generation !== actual.app.generation
       )
-        return Response.error();
-      const parent = await owner(event.clientId);
-      if (!parent || parent.app.id !== app.id) return Response.error();
-      const body = await readDocumentRequest(request);
-      if (
-        !body ||
-        typeof body !== 'object' ||
-        !('parentToken' in body) ||
-        typeof body.parentToken !== 'string'
-      )
-        return Response.error();
+        throw new Error('Document authority changed');
+    };
+    const body = parseDocumentRequest(payload);
+    if (operation === 'create') {
+      const surface = parseDocumentSurface(body, true);
+      const input = await documentRequestInput(
+        body,
+        actual.app,
+        base,
+        internalRecord({ getResource }),
+      );
+      await current();
+      const intent = await intents.issue(
+        internalRecord({
+          application: actual.app.id,
+          installationGeneration: actual.app.generation,
+          parentClient: actual.client.id,
+        }),
+        input,
+        surface,
+      );
+      try {
+        await current();
+      } catch (error) {
+        await intents.close(intent.id, intent, intent.parentToken);
+        throw error;
+      }
+      return internalRecord({
+        id: intent.id,
+        nonce: intent.nonce,
+        parentToken: intent.parentToken,
+        kind: intent.kind,
+        carrier: intent.carrier,
+        ...(intent.popup ? internalRecord({ popup: intent.popup }) : internalRecord({})),
+        url: bootstrapURL(actual.app, intent, base).href,
+      });
+    }
+    if (
+      !body ||
+      typeof body !== 'object' ||
+      !('id' in body) ||
+      typeof body.id !== 'string' ||
+      !new RegExp('^' + UUID + '$').test(body.id)
+    )
+      throw new Error('Invalid document identifier');
+    const intent = await intents.inspect(body.id);
+    const app = actual.app;
+    if (
+      !intent ||
+      intent.application !== app.id ||
+      intent.installationGeneration !== app.generation
+    )
+      throw new Error('Document unavailable');
+    if (operation === 'close') {
+      if (!('parentToken' in body) || typeof body.parentToken !== 'string')
+        throw new Error('Document parent token required');
       const closed = await intents.close(
         intent.id,
         internalRecord({
           application: app.id,
           installationGeneration: app.generation,
-          parentClient: parent.client.id,
+          parentClient: actual.client.id,
         }),
         body.parentToken,
       );
-      if (closed) await contexts.closeChild(parent.client.id, app.id, intent.id);
-      return json(internalRecord({ closed }), closed ? 200 : 403);
+      if (closed) await contexts.closeChild(actual.client.id, app.id, intent.id);
+      return internalRecord({ closed });
     }
-    if (
-      request.method !== 'GET' ||
-      request.destination !== '' ||
-      request.mode === 'navigate' ||
-      event.resultingClientId
-    )
-      return Response.error();
-    const actual = await owner(event.clientId);
-    const identity = actual && (await contexts.resolve(actual.client));
-    if (
-      !actual ||
-      actual.app.id !== app.id ||
-      identity?.id !== intent.id ||
-      identity.kind !== 'window' ||
-      intent.childClient !== actual.client.id
-    )
-      return Response.error();
+    if (identity.id !== intent.id || intent.childClient !== actual.client.id)
+      throw new Error('Document child not authorized');
     const key = internalRecord({ id: intent.id, nonce: intent.nonce });
-    if (match[2] === 'configuration') {
+    if (operation === 'configuration') {
       const content = await intents.read(key, actual.client.id, app.generation);
-      if (!content) return Response.error();
+      if (!content) throw new Error('Document configuration unavailable');
+      await current();
       const configuration: DocumentBootstrapConfiguration = internalRecord({
         id: intent.id,
         nonce: intent.nonce,
@@ -271,7 +258,7 @@ export function createDocumentController(options: DocumentControllerOptions) {
         kind: intent.kind,
         carrier: intent.carrier,
         ...(intent.popup ? internalRecord({ popup: intent.popup }) : internalRecord({})),
-        url: target.href,
+        url: bootstrapURL(app, intent, base).href,
         application: app.id,
         installationGeneration: app.generation,
         applicationURL: applicationURL(app, base).href,
@@ -283,11 +270,13 @@ export function createDocumentController(options: DocumentControllerOptions) {
           documentBase: content.input.baseURL || content.input.sourceURL,
         }),
       });
-      return json(configuration);
+      return configuration;
     }
+    if (operation !== 'content') throw new Error('Unknown document operation');
     const content = await intents.consume(key, actual.client.id, app.generation);
-    if (!content) return Response.error();
-    if (!(await contexts.isCurrent(actual.client, identity))) return Response.error();
-    return json(content.input);
-  };
+    if (!content) throw new Error('Document content unavailable');
+    await current();
+    return content.input;
+  }
+  return internalRecord({ respond: documentContextResponse, request });
 }

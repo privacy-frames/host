@@ -14,6 +14,16 @@ const bundle = await build({
     contents: `
 import { createPolicyTools } from './src/runtime/enforcement/native.ts';
 import { createPopupFactory } from './src/runtime/contexts/popup-factory.ts';
+// Explicit fixture transport; production uses the private controller channel.
+const fixtureFetch = fetch;
+const documentControl = async (operation, payload) => {
+  const response = await fixtureFetch('/fixture/' + operation, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+  if (!response.ok) throw new Error('Fixture command refused');
+  return response.json();
+};
 const nativeOpen = window.open;
 const apply = Reflect.apply;
 let privateWindow;
@@ -30,6 +40,7 @@ window.open = function(...args) {
   return privateWindow;
 };
 const open = createPopupFactory(createPolicyTools(), {
+  documentControl,
   applicationURL: location.origin + '/app/',
   baseURL: () => location.href,
   resources: { mapURL: String, isInstalledURL: () => false, sourceURL: () => undefined },
@@ -102,7 +113,19 @@ const server = http.createServer(async (request, response) => {
     response.end(script);
     return;
   }
-  if (url.pathname === '/app/__document-intents') {
+  if (url.pathname === '/fixture/close') {
+    const chunks: Buffer[] = [];
+    for await (const chunk of request) chunks.push(Buffer.from(chunk));
+    const body = JSON.parse(Buffer.concat(chunks).toString());
+    const registration = registrations.get(body.id);
+    assert(registration);
+    assert.equal(body.parentToken, registration.parentToken);
+    registration.closed = true;
+    response.writeHead(200, { 'Content-Type': 'application/json' });
+    response.end(JSON.stringify({ closed: true }));
+    return;
+  }
+  if (url.pathname === '/fixture/create') {
     const chunks: Buffer[] = [];
     for await (const chunk of request) chunks.push(Buffer.from(chunk));
     const input = JSON.parse(Buffer.concat(chunks).toString());

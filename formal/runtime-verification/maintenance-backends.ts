@@ -91,178 +91,190 @@ try {
     );
     try {
       for (const operation of selectedOperations) {
-        const context = await browser.newContext();
-        try {
-          const page = await context.newPage();
-          page.setDefaultTimeout(15_000);
-          await page.goto(origin);
-          await page.evaluate(async () => {
-            await navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' });
-            await navigator.serviceWorker.ready;
-            if (!navigator.serviceWorker.controller)
-              await new Promise<void>((resolve) =>
-                navigator.serviceWorker.addEventListener(
-                  'controllerchange',
-                  () => resolve(),
-                  { once: true },
-                ),
-              );
-          });
-          if (unregistered)
+        for (let attempt = 1; attempt <= 3; attempt++) {
+          const context = await browser.newContext();
+          try {
+            const page = await context.newPage();
+            page.setDefaultTimeout(15_000);
+            await page.goto(origin);
             await page.evaluate(async () => {
-              const registration = await navigator.serviceWorker.getRegistration();
-              if (!registration || !(await registration.unregister()))
-                throw new Error('Unregister failed');
+              await navigator.serviceWorker.register('/sw.js', {
+                updateViaCache: 'none',
+              });
+              await navigator.serviceWorker.ready;
               if (!navigator.serviceWorker.controller)
-                throw new Error('Existing page lost its controller');
-            });
-          let count = requests.length;
-          let changed = Date.now();
-          const deadline = Date.now() + 20_000;
-          while (Date.now() - changed < 3000) {
-            assert(Date.now() < deadline, 'Setup did not become quiet');
-            await page.waitForTimeout(250);
-            if (count !== requests.length) {
-              count = requests.length;
-              changed = Date.now();
-            }
-          }
-          const start = requests.length;
-          const actionStarted = Date.now();
-          const result = await page.evaluate(async (operation: Operation) => {
-            if (operation === 'idle') return 'idle';
-            if (operation === 'fetch') return (await fetch('/cached')).text();
-            if (operation === 'message') {
-              return await new Promise<string>((resolve, reject) => {
-                const channel = new MessageChannel();
-                const timer = setTimeout(
-                  () => reject(new Error('Message timed out')),
-                  10_000,
-                );
-                channel.port1.onmessage = (event) => {
-                  clearTimeout(timer);
-                  channel.port1.close();
-                  resolve(event.data);
-                };
-                navigator.serviceWorker.controller!.postMessage('probe', [channel.port2]);
-              });
-            }
-            if (
-              operation === 'srcdoc' ||
-              operation === 'blob-frame' ||
-              operation === 'frame'
-            ) {
-              return await new Promise<string>((resolve, reject) => {
-                const frame = document.createElement('iframe');
-                const blob =
-                  operation === 'blob-frame'
-                    ? URL.createObjectURL(
-                        new Blob(['<!doctype html>Local frame'], { type: 'text/html' }),
-                      )
-                    : undefined;
-                const timer = setTimeout(
-                  () => reject(new Error('Frame timed out')),
-                  10_000,
-                );
-                frame.onload = () => {
-                  clearTimeout(timer);
-                  const text = frame.contentDocument?.body.textContent;
-                  frame.remove();
-                  if (blob) URL.revokeObjectURL(blob);
-                  resolve(text || '');
-                };
-                if (operation === 'srcdoc') frame.srcdoc = '<!doctype html>Local frame';
-                else frame.src = blob || '/frame';
-                document.body.append(frame);
-              });
-            }
-            const blob = operation.startsWith('blob-')
-              ? URL.createObjectURL(
-                  new Blob(
-                    [
-                      operation === 'blob-worker-fetch'
-                        ? `fetch(${JSON.stringify(location.origin + '/cached')}).then(r=>r.text()).then(postMessage)`
-                        : 'postMessage("ready")',
-                    ],
-                    { type: 'text/javascript' },
+                await new Promise<void>((resolve) =>
+                  navigator.serviceWorker.addEventListener(
+                    'controllerchange',
+                    () => resolve(),
+                    { once: true },
                   ),
-                )
-              : undefined;
-            try {
-              return await new Promise<string>((resolve, reject) => {
-                const worker = new Worker(blob || '/worker.js', {
-                  type: operation.includes('module') ? 'module' : 'classic',
-                });
-                const timer = setTimeout(() => {
-                  worker.terminate();
-                  reject(new Error('Worker timed out'));
-                }, 10_000);
-                worker.onmessage = (event) => {
-                  clearTimeout(timer);
-                  worker.terminate();
-                  resolve(event.data);
-                };
-                worker.onerror = (event) => {
-                  clearTimeout(timer);
-                  worker.terminate();
-                  reject(new Error(event.message));
-                };
+                );
+            });
+            if (unregistered)
+              await page.evaluate(async () => {
+                const registration = await navigator.serviceWorker.getRegistration();
+                if (!registration || !(await registration.unregister()))
+                  throw new Error('Unregister failed');
+                if (!navigator.serviceWorker.controller)
+                  throw new Error('Existing page lost its controller');
               });
-            } finally {
-              if (blob) URL.revokeObjectURL(blob);
+            let count = requests.length;
+            let changed = Date.now();
+            const deadline = Date.now() + 20_000;
+            while (Date.now() - changed < 3000) {
+              assert(Date.now() < deadline, 'Setup did not become quiet');
+              await page.waitForTimeout(250);
+              if (count !== requests.length) {
+                count = requests.length;
+                changed = Date.now();
+              }
             }
-          }, operation);
-          await page.waitForTimeout(3000);
-          const observed = requests.slice(start);
-          const lostInterception =
-            unregistered &&
-            profile.engine === firefox &&
-            operation === 'blob-worker-fetch';
-          assert(
-            observed.every(
-              (request) => request.path === (lostInterception ? '/cached' : '/sw.js'),
-            ),
-          );
-          const expectedRequest = unregistered
-            ? lostInterception
-            : ['worker', 'module-worker', 'frame'].includes(operation) ||
-              (profile.engine === firefox &&
-                (operation === 'srcdoc' ||
-                  operation === 'blob-frame' ||
-                  (profile.stale &&
-                    (operation === 'fetch' || operation === 'blob-worker-fetch'))));
-          assert.equal(
-            observed.length > 0,
-            expectedRequest,
-            'Known platform behavior changed; review the browser contract',
-          );
-          assert.equal(
-            result,
-            lostInterception
-              ? 'network-cached'
-              : operation === 'idle'
-                ? 'idle'
-                : operation === 'fetch' || operation === 'blob-worker-fetch'
-                  ? 'cached'
-                  : operation.endsWith('frame') || operation === 'srcdoc'
-                    ? 'Local frame'
-                    : 'ready',
-          );
-          const row = {
-            browser: profile.engine.name(),
-            version: browser.version(),
-            forcedStaleCheck: profile.stale,
-            unregistered,
-            operation,
-            result,
-            actionStarted,
-            observationEnded: Date.now(),
-            requests: observed,
-          };
-          rows.push(row);
-          console.log(JSON.stringify(row));
-        } finally {
-          await context.close();
+            const start = requests.length;
+            const actionStarted = Date.now();
+            const result = await page.evaluate(async (operation: Operation) => {
+              if (operation === 'idle') return 'idle';
+              if (operation === 'fetch') return (await fetch('/cached')).text();
+              if (operation === 'message') {
+                return await new Promise<string>((resolve, reject) => {
+                  const channel = new MessageChannel();
+                  const timer = setTimeout(
+                    () => reject(new Error('Message timed out')),
+                    10_000,
+                  );
+                  channel.port1.onmessage = (event) => {
+                    clearTimeout(timer);
+                    channel.port1.close();
+                    resolve(event.data);
+                  };
+                  navigator.serviceWorker.controller!.postMessage('probe', [
+                    channel.port2,
+                  ]);
+                });
+              }
+              if (
+                operation === 'srcdoc' ||
+                operation === 'blob-frame' ||
+                operation === 'frame'
+              ) {
+                return await new Promise<string>((resolve, reject) => {
+                  const frame = document.createElement('iframe');
+                  const blob =
+                    operation === 'blob-frame'
+                      ? URL.createObjectURL(
+                          new Blob(['<!doctype html>Local frame'], { type: 'text/html' }),
+                        )
+                      : undefined;
+                  const timer = setTimeout(
+                    () => reject(new Error('Frame timed out')),
+                    10_000,
+                  );
+                  frame.onload = () => {
+                    clearTimeout(timer);
+                    const text = frame.contentDocument?.body.textContent;
+                    frame.remove();
+                    if (blob) URL.revokeObjectURL(blob);
+                    resolve(text || '');
+                  };
+                  if (operation === 'srcdoc') frame.srcdoc = '<!doctype html>Local frame';
+                  else frame.src = blob || '/frame';
+                  document.body.append(frame);
+                });
+              }
+              const blob = operation.startsWith('blob-')
+                ? URL.createObjectURL(
+                    new Blob(
+                      [
+                        operation === 'blob-worker-fetch'
+                          ? `fetch(${JSON.stringify(location.origin + '/cached')}).then(r=>r.text()).then(postMessage)`
+                          : 'postMessage("ready")',
+                      ],
+                      { type: 'text/javascript' },
+                    ),
+                  )
+                : undefined;
+              try {
+                return await new Promise<string>((resolve, reject) => {
+                  const worker = new Worker(blob || '/worker.js', {
+                    type: operation.includes('module') ? 'module' : 'classic',
+                  });
+                  const timer = setTimeout(() => {
+                    worker.terminate();
+                    reject(new Error('Worker timed out'));
+                  }, 10_000);
+                  worker.onmessage = (event) => {
+                    clearTimeout(timer);
+                    worker.terminate();
+                    resolve(event.data);
+                  };
+                  worker.onerror = (event) => {
+                    clearTimeout(timer);
+                    worker.terminate();
+                    reject(new Error(event.message));
+                  };
+                });
+              } finally {
+                if (blob) URL.revokeObjectURL(blob);
+              }
+            }, operation);
+            await page.waitForTimeout(3000);
+            const observed = requests.slice(start);
+            const lostInterception =
+              unregistered &&
+              profile.engine === firefox &&
+              operation === 'blob-worker-fetch';
+            assert(
+              observed.every(
+                (request) => request.path === (lostInterception ? '/cached' : '/sw.js'),
+              ),
+            );
+            const expectedRequest = unregistered
+              ? lostInterception
+              : ['worker', 'module-worker', 'frame'].includes(operation) ||
+                (profile.engine === firefox &&
+                  (operation === 'srcdoc' ||
+                    operation === 'blob-frame' ||
+                    (profile.stale &&
+                      (operation === 'fetch' || operation === 'blob-worker-fetch'))));
+            assert.equal(
+              result,
+              lostInterception
+                ? 'network-cached'
+                : operation === 'idle'
+                  ? 'idle'
+                  : operation === 'fetch' || operation === 'blob-worker-fetch'
+                    ? 'cached'
+                    : operation.endsWith('frame') || operation === 'srcdoc'
+                      ? 'Local frame'
+                      : 'ready',
+            );
+            const row = {
+              browser: profile.engine.name(),
+              version: browser.version(),
+              forcedStaleCheck: profile.stale,
+              unregistered,
+              operation,
+              attempt,
+              expectedRequest,
+              result,
+              actionStarted,
+              observationEnded: Date.now(),
+              requests: observed,
+            };
+            rows.push(row);
+            console.log(JSON.stringify(row));
+            if (!expectedRequest) {
+              assert.equal(observed.length, 0, 'Unexpected native network effect');
+              break;
+            }
+            if (observed.length > 0) break;
+            assert(
+              attempt < 3,
+              'Known trigger had no positive observation in three fresh samples',
+            );
+          } finally {
+            await context.close();
+          }
         }
       }
     } finally {
@@ -274,7 +286,7 @@ try {
     JSON.stringify(
       {
         scope:
-          'Native browser comparison of local context bootstraps, service-worker-mediated resources and message-only operations. The Firefox forced-stale profile uses an explicit testing preference, not natural 24-hour aging. The unregistered variant checks retained delivery and loss of interception. No production runtime repair is claimed.',
+          'Native browser comparison of local context bootstraps, service-worker-mediated resources and message-only operations. The Firefox forced-stale profile uses an explicit testing preference, not natural 24-hour aging. The unregistered variant checks retained delivery and loss of interception. Known positive triggers use up to three fresh samples; omissions are recorded and a group without a positive observation fails. No production runtime repair is claimed.',
         runnerSHA256: createHash('sha256')
           .update(await readFile(import.meta.filename))
           .digest('hex'),

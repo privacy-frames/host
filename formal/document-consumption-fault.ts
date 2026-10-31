@@ -13,8 +13,7 @@ interface Result {
   scenario: string;
   consumedBeforeMutation: boolean;
   validations: number;
-  type: string;
-  status: number;
+  accepted: boolean;
   body: string;
 }
 declare global {
@@ -41,15 +40,17 @@ async function compile(fault: boolean) {
         { filter: /[/\\]contexts[/\\]document-controller\.ts$/ },
         async ({ path }) => {
           const original = await readFile(path, 'utf8');
-          const check =
-            '    if (!(await contexts.isCurrent(actual.client, identity))) return Response.error();\n';
+          const check = '    await current();\n    return content.input;';
           assert.equal(
             original.split(check).length,
             2,
             'Authority mutation anchor changed',
           );
           transformed++;
-          return { contents: original.replace(check, ''), loader: 'ts' };
+          return {
+            contents: original.replace(check, '    return content.input;'),
+            loader: 'ts',
+          };
         },
       );
     },
@@ -133,11 +134,10 @@ try {
             assert.equal(item.consumedBeforeMutation, true);
             assert.equal(item.validations, profile === 'normal' ? 1 : 0);
             if (profile === 'normal' && item.scenario !== 'unchanged') {
-              assert.equal(item.type, 'error');
-              assert.equal(item.status, 0);
+              assert.equal(item.accepted, false);
               assert.equal(item.body, '');
             } else {
-              assert.equal(item.status, 200);
+              assert.equal(item.accepted, true);
               assert.equal(
                 JSON.parse(item.body).text,
                 '<p>Admitted private document</p>',

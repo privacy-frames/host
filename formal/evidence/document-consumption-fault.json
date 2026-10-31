@@ -1,17 +1,17 @@
 {
   "scope": "Actual document controller and real IndexedDB with simulated browser clients and in-memory context storage. Test-only in-memory mutation deletes exactly the post-consumption isCurrent guard. This is authority/content delivery, not a network-leak demonstration.",
-  "revision": "49898b6d992e969d789db639dd6914ff1ced4a78",
-  "runnerSHA256": "33f222968437c3646eba8e4267b5bca67d65fabcc253bf0be788665793b67ec1",
+  "revision": "1d46fad8bdca15c3f8c7ee3fc2fb6fb1d1868de6",
+  "runnerSHA256": "50d39c00e3c926fb331f09053abfe1192af0a4baa9521ba27739be1a4a27e1ae",
   "sourceHashes": {
-    "src/runtime/contexts/document-controller.ts": "ca269260ec3cb34cd963bf59d3ba6596554ddecb646013aea8ecd73e35e03812",
+    "src/runtime/contexts/document-controller.ts": "2f662fe1fcc5220dcaeb8944d79ef0f87213814f601ea453051aaac11bf538e4",
     "src/runtime/contexts/document-intents.ts": "4373aae1b9abe5d957b89b4acc511718905e8222c0a441da82d4306cbf751770",
     "src/runtime/contexts/model.ts": "6b5905338c313754d25fa392deb5b604771794c55a6d72f9dfbae6a7bb8c48b4",
     "src/runtime/storage.ts": "3f25382228184cf46609e26562fd815c1701f88d8fc4af19d9a61ff79e949c5d",
-    "test/document-consumption-race.ts": "16d3c13a51144f99bfb2ed4ebd1e81b6afef59c00d835eaa3818c9e165011b23",
+    "test/document-consumption-race.ts": "127bf11bd08401feb81fa54e74e81f4d5e1756fb03674ed555657006ac2bc4a0",
     "package-lock.json": "4e8c7b0964047f1c9fd3f82956b08d381817fa86fb2f7d47d4a10458dc5e62ed"
   },
-  "normalBundleSHA256": "d59cf2f2b0a7bb0cde9388a4bceb0f2b62291003f7fa98a05a466f6bb03963bf",
-  "faultBundleSHA256": "860155d150ec1152ebfcba58147a8b95f295900f0fc819363a8dd9b08fefd025",
+  "normalBundleSHA256": "4b4d38a4b2fe1092a64fae7040c369113ccc5390f7203b34b7cb02f76f0cf557",
+  "faultBundleSHA256": "359f526748eeddb2834f4e8308ad144101138f2d9f8035ecd336e4a90f7ccb24",
   "completed": true,
   "browsers": [
     {
@@ -25,32 +25,28 @@
               "scenario": "unchanged",
               "consumedBeforeMutation": true,
               "validations": 1,
-              "type": "default",
-              "status": 200,
+              "accepted": true,
               "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
             },
             {
               "scenario": "closed",
               "consumedBeforeMutation": true,
               "validations": 1,
-              "type": "error",
-              "status": 0,
+              "accepted": false,
               "body": ""
             },
             {
               "scenario": "owner-changed",
               "consumedBeforeMutation": true,
               "validations": 1,
-              "type": "error",
-              "status": 0,
+              "accepted": false,
               "body": ""
             },
             {
               "scenario": "generation-changed",
               "consumedBeforeMutation": true,
               "validations": 1,
-              "type": "error",
-              "status": 0,
+              "accepted": false,
               "body": ""
             }
           ]
@@ -62,32 +58,28 @@
               "scenario": "unchanged",
               "consumedBeforeMutation": true,
               "validations": 0,
-              "type": "default",
-              "status": 200,
+              "accepted": true,
               "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
             },
             {
               "scenario": "closed",
               "consumedBeforeMutation": true,
               "validations": 0,
-              "type": "default",
-              "status": 200,
+              "accepted": true,
               "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
             },
             {
               "scenario": "owner-changed",
               "consumedBeforeMutation": true,
               "validations": 0,
-              "type": "default",
-              "status": 200,
+              "accepted": true,
               "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
             },
             {
               "scenario": "generation-changed",
               "consumedBeforeMutation": true,
               "validations": 0,
-              "type": "default",
-              "status": 200,
+              "accepted": true,
               "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
             }
           ]
@@ -105,32 +97,28 @@
               "scenario": "unchanged",
               "consumedBeforeMutation": true,
               "validations": 1,
-              "type": "default",
-              "status": 200,
+              "accepted": true,
               "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
             },
             {
               "scenario": "closed",
               "consumedBeforeMutation": true,
               "validations": 1,
-              "type": "error",
-              "status": 0,
+              "accepted": false,
               "body": ""
             },
             {
               "scenario": "owner-changed",
               "consumedBeforeMutation": true,
               "validations": 1,
-              "type": "error",
-              "status": 0,
+              "accepted": false,
               "body": ""
             },
             {
               "scenario": "generation-changed",
               "consumedBeforeMutation": true,
               "validations": 1,
-              "type": "error",
-              "status": 0,
+              "accepted": false,
               "body": ""
             }
           ]
@@ -142,32 +130,28 @@
               "scenario": "unchanged",
               "consumedBeforeMutation": true,
               "validations": 0,
-              "type": "default",
-              "status": 200,
+              "accepted": true,
               "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
             },
             {
               "scenario": "closed",
               "consumedBeforeMutation": true,
               "validations": 0,
-              "type": "default",
-              "status": 200,
+              "accepted": true,
               "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
             },
             {
               "scenario": "owner-changed",
               "consumedBeforeMutation": true,
               "validations": 0,
-              "type": "default",
-              "status": 200,
+              "accepted": true,
               "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
             },
             {
               "scenario": "generation-changed",
               "consumedBeforeMutation": true,
               "validations": 0,
-              "type": "default",
-              "status": 200,
+              "accepted": true,
               "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
             }
           ]

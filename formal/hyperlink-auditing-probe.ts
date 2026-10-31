@@ -43,6 +43,25 @@ const sw = `
   self.addEventListener('install', () => self.skipWaiting());
   self.addEventListener('activate', event => event.waitUntil(self.clients.claim()));
   const log = [];
+  // The prepared realm uses message-based resource reads. This fixture admits
+  // only its diagnostic log and supplies no publisher worker.
+  self.addEventListener('message', event => {
+    const packet = event.data;
+    const port = event.ports[0];
+    if (!port) return;
+    if (packet?.type === 'privacy-installed-resource') {
+      if (new URL(packet.url).pathname === '/events') {
+        const body = new TextEncoder().encode(JSON.stringify(log)).buffer;
+        port.postMessage({ok:true,value:{url:packet.url,status:200,statusText:'OK',
+          headers:[['content-type','application/json']],body}}, [body]);
+      } else port.postMessage({ok:false,error:'SW blocked'});
+      port.close();
+    }
+    if (packet?.type === 'privacy-publisher-rpc' && packet.operation === 'status') {
+      port.postMessage({ok:true,value:null});
+      port.close();
+    }
+  });
   self.addEventListener('fetch', event => {
     const path = new URL(event.request.url).pathname;
     log.push({

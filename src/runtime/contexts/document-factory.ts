@@ -1,3 +1,4 @@
+import type { DocumentControl } from './document-client.ts';
 import {
   strings,
   internalArray,
@@ -18,7 +19,7 @@ import {
   type DocumentGeneration,
   type DocumentPublicationState,
 } from './document-publication.ts';
-// Control-plane requests retain the pre-adapter native operation.
+// Native fetch is retained only for local Blob source reads.
 const nativeFetch = fetch;
 
 export interface DocumentContextPolicy {
@@ -50,6 +51,7 @@ export interface DocumentContextPolicy {
   prepareContext(placeholder: HTMLTemplateElement, descriptor: ContentContext): Element;
 }
 interface DocumentFactoryOptions {
+  documentControl: DocumentControl;
   applicationURL: string;
   baseURL(): string;
   policy: TrustedPolicy;
@@ -99,12 +101,10 @@ export function createDocumentFactory(
   const runtimeOrigin: string = apply(origin, new NativeURL(options.applicationURL), []);
   const setTimer = window.setTimeout,
     clearTimer = window.clearTimeout;
-  const responseJSON = Response.prototype.json,
-    responseText = Response.prototype.text;
+  const responseText = Response.prototype.text;
   const responseOK = descriptor(Response.prototype, 'ok')!.get!;
   const responseHeaders = descriptor(Response.prototype, 'headers')!.get!;
   const headerGet = Headers.prototype.get;
-  const stringify = JSON.stringify;
   const mint = crypto.randomUUID.bind(crypto);
   const NativeEvent = Event;
   const NativePromise = Promise,
@@ -251,15 +251,15 @@ export function createDocumentFactory(
       ]);
   }
   function closeRegistration(registration: DocumentRegistration) {
-    void nativeFetch(
-      apply(href, new NativeURL('close', registration.url), []),
-      internalRecord<RequestInit>({
-        method: 'POST',
-        credentials: 'omit',
-        headers: internalRecord({ 'Content-Type': 'application/json' }),
-        body: stringify(internalRecord({ parentToken: registration.parentToken })),
-      }),
-    ).catch(() => {});
+    void options
+      .documentControl(
+        'close',
+        internalRecord({
+          id: registration.id,
+          parentToken: registration.parentToken,
+        }),
+      )
+      .catch(() => {});
   }
   function cancel(record: ManagedDocument) {
     cancelDocumentPublication(record);
@@ -399,26 +399,15 @@ export function createDocumentFactory(
             'text/html',
         });
       }
-      const reply = await nativeFetch(
-        apply(href, new NativeURL('__document-intents', options.applicationURL), []),
-        internalRecord<RequestInit>({
-          method: 'POST',
-          credentials: 'omit',
-          headers: internalRecord({ 'Content-Type': 'application/json' }),
-          body: stringify(
-            internalRecord({
-              source,
-              baseURL: record.baseURL || options.baseURL(),
-              ...(blobContent ? internalRecord({ blobContent }) : internalRecord({})),
-            }),
-          ),
+      const reply = await options.documentControl(
+        'create',
+        internalRecord({
+          source,
+          baseURL: record.baseURL || options.baseURL(),
+          ...(blobContent ? internalRecord({ blobContent }) : internalRecord({})),
         }),
       );
-      if (!apply(responseOK, reply, [])) fail('Document registration was refused');
-      registration = parseDocumentRegistration(
-        await apply(responseJSON, reply, []),
-        options.applicationURL,
-      );
+      registration = parseDocumentRegistration(reply, options.applicationURL);
       if (generation !== record.generation || !apply(connected, record.placeholder, [])) {
         closeRegistration(registration);
         return;

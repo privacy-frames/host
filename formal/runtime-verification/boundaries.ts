@@ -33,6 +33,8 @@ export const boundaries: readonly Boundary[] = [
       'src/runtime/contexts/document-guard.ts',
       'src/runtime/contexts/document-main.ts',
       'src/runtime/contexts/document-controller.ts',
+      'src/runtime/contexts/document-client.ts',
+      'src/runtime/contexts/document-request.ts',
       'src/runtime/contexts/document-intents.ts',
       'src/runtime/contexts/document-protocol.ts',
     ],

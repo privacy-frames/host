@@ -4,7 +4,7 @@
   "selectionReason": "Both candidates satisfy the same JavaScript heap contracts. Generation retains the JavaScript verifier and adds a model, instruction semantics, emitter and rendering obligations; it removes no trusted boundary for this component. Keep the hand-written TypeScript component and its deductive verification.",
   "productionSourceSHA256": "bbcd7e92f84434270b5a6b6b6ba6ea67dd48f1f530848f9d4a3a811d8595079b",
   "productionFixtureSHA256": "9ac2e9566cc54b8c2393385c48eb81221d6403b72b5c325bfc690668711322a3",
-  "directReceiptSHA256": "116c8206b98778beab783cf9fa10c3fa969fc5ea6d5c9a7ba67bcfd33bb4c77b",
+  "directReceiptSHA256": "ed58abc8f8b3688dee6ca888717b4f7b7997763828b32bf5aa9e85c9bbdb552a",
   "modelSHA256": "73e252a862122b493d8a0e45a1834a0ead1ecdaebf44ceee41cb542b19ac544b",
   "generatedJavaScriptSHA256": "4b1cedf71c4942117357929e5793956e7569114d0f09c6098dc91bdf6c881be7",
   "runnerSHA256": "61bc8ca641e2e603b55ce3956e66c4b60e621fd455b09afd54cabf377f566a7a",
@@ -20,8 +20,8 @@
     "exitCode": 0,
     "inputSHA256": "5d1f2e6106d2276ec1ee9a1d8a8014d975208b3abbcb6ffd7a8bafadd1452e00",
     "driverSHA256": "063007959d3583ef19e0c8365d0f65c6e753517c21769ee776e6c050a39d4c7d",
-    "outputSHA256": "b7c06820c38664b6a65460960eb9cd74a055b0dba04fc11a62f6b1f065f8184a",
-    "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 2 symbolic tests in total\nRunning symbolic tests: 0.076684\nVerifying one spec of procedure beginDocumentPublication... s Success\nVerifying one spec of procedure cancelDocumentPublication... s Success\nAll specs succeeded: 0.466766"
+    "outputSHA256": "52aaa6ec9c59f9f42dd1d774a9c7746bec12d7f770480308c3ebf648e1ed726c",
+    "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 2 symbolic tests in total\nRunning symbolic tests: 0.048931\nVerifying one spec of procedure beginDocumentPublication... s Success\nVerifying one spec of procedure cancelDocumentPublication... s Success\nAll specs succeeded: 0.352229"
   },
   "wrongModelControl": {
     "disposition": "proof-rejected",
@@ -34,8 +34,8 @@
     "exitCode": 1,
     "inputSHA256": "5a1684c951e8241053f164804b53ab167c1bb9a43cf723776902b37db134eccf",
     "driverSHA256": "063007959d3583ef19e0c8365d0f65c6e753517c21769ee776e6c050a39d4c7d",
-    "outputSHA256": "eed15af625b666bbe1a9ac4c8826cecd2b5bacdf0f61e12ac158a1c6a47fc539",
-    "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 2 symbolic tests in total\nRunning symbolic tests: 0.057720\nVerifying one spec of procedure beginDocumentPublication... s Success\nVerifying one spec of procedure cancelDocumentPublication... f Failure\nThere were failures: 0.415595\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+    "outputSHA256": "3bcd14f14e6a7459465c01dfb84ab02bf59ef29b26bb0237eb737badb51db50a",
+    "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 2 symbolic tests in total\nRunning symbolic tests: 0.049491\nVerifying one spec of procedure beginDocumentPublication... s Success\nVerifying one spec of procedure cancelDocumentPublication... f Failure\nThere were failures: 0.347750\nAnalysis failures!\n1. Couldn't satisfy postcondition"
   },
   "measuredInputs": {
     "productionSourceBytes": 720,
@@ -45,5 +45,5 @@
     "additionalGenerationRunnerBytes": 9342,
     "generatedJavaScriptBytes": 371
   },
-  "completedAt": "2026-10-31T14:49:43.419Z"
+  "completedAt": "2026-10-31T16:18:34.086Z"
 }

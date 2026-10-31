@@ -11,8 +11,7 @@ interface ConsumptionResult {
   scenario: string;
   consumedBeforeMutation: boolean;
   validations: number;
-  type: string;
-  status: number;
+  accepted: boolean;
   body: string;
 }
 declare global {
@@ -24,7 +23,7 @@ declare global {
 // Run independently: node test/document-consumption-race.ts
 // Receipt: results/contexts/document-consumption-race.json
 // This trusted fixture calls the actual controller and real IndexedDB stores.
-// Client/FetchEvent identities and ContextStorage are stand-ins: this does not
+// Client identities and ContextStorage are stand-ins: this does not
 // test browser authentication, CacheStorage concurrency or physical publication.
 const compiled = await build({
   stdin: {
@@ -109,9 +108,9 @@ window.runConsumptionRace = async () => {
       await paused.blocked;
       return content;
     };
-    const pending = controller({
-      request: new Request(new URL('content', target)), clientId: 'child', resultingClientId: '',
-    });
+    const pending = controller.request('child', 'content', JSON.stringify({ id: intent.id }))
+      .then(value => ({ accepted: true, body: JSON.stringify(value) }),
+        () => ({ accepted: false, body: '' }));
     try {
       await bounded(paused.waiting);
       const consumedBeforeMutation = (await intents.inspect(intent.id)).state === 'consumed';
@@ -127,7 +126,7 @@ window.runConsumptionRace = async () => {
       const response = await bounded(pending);
       check(response, 'Controller did not handle content request');
       results.push({ scenario, consumedBeforeMutation, validations,
-        type: response.type, status: response.status, body: await response.text() });
+        accepted: response.accepted, body: response.body });
     } finally {
       paused.release();
       await bounded(Promise.allSettled([pending]));
@@ -176,11 +175,10 @@ try {
         assert.equal(result.consumedBeforeMutation, true);
         assert.equal(result.validations, 1);
         if (result.scenario === 'unchanged') {
-          assert.equal(result.status, 200);
+          assert.equal(result.accepted, true);
           assert.equal(JSON.parse(result.body).text, '<p>Admitted private document</p>');
         } else {
-          assert.equal(result.type, 'error');
-          assert.equal(result.status, 0);
+          assert.equal(result.accepted, false);
           assert.equal(result.body, '');
         }
       }

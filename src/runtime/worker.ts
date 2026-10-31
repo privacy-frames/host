@@ -13,6 +13,7 @@ import { readInstalledContent } from './content-broker.ts';
 import {
   INSTALLED_CONTENT_REQUEST,
   INSTALLED_RESOURCE_REQUEST,
+  DOCUMENT_CONTROL_REQUEST,
 } from '../shared/types.ts';
 import {
   parseResourceRequest,
@@ -183,7 +184,8 @@ worker.addEventListener('message', (event) => {
     typeof packet === 'object' &&
     'type' in packet &&
     (packet.type === INSTALLED_CONTENT_REQUEST ||
-      packet.type === INSTALLED_RESOURCE_REQUEST)
+      packet.type === INSTALLED_RESOURCE_REQUEST ||
+      packet.type === DOCUMENT_CONTROL_REQUEST)
   ) {
     const port = event.ports[0];
     if (!port) return;
@@ -194,6 +196,15 @@ worker.addEventListener('message', (event) => {
             event.source && 'id' in event.source
               ? await worker.clients.get(event.source.id)
               : undefined;
+          if (packet.type === DOCUMENT_CONTROL_REQUEST) {
+            const value = await documents.request(
+              client?.id || '',
+              'operation' in packet ? packet.operation : undefined,
+              'payload' in packet ? packet.payload : undefined,
+            );
+            port.postMessage({ ok: true, value });
+            return;
+          }
           if (packet.type === INSTALLED_CONTENT_REQUEST) {
             const value = await readInstalledContent(client, contexts, BASE);
             port.postMessage({ ok: true, value });
@@ -302,7 +313,7 @@ worker.addEventListener('fetch', (event) => {
     (async () => {
       const req = event.request;
       const url = new URL(req.url);
-      const documentResponse = await documents(event);
+      const documentResponse = await documents.respond(event);
       if (documentResponse) return documentResponse;
       const sharedResponse = await sharedWorkers(event);
       if (sharedResponse) return sharedResponse;

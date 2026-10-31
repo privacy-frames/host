@@ -10,12 +10,15 @@ unregistration before the operation. Each sample uses a fresh browser context,
 an owned HTTP server, and a measured three-second quiet interval after setup.
 Operations must complete successfully. The server records every HTTP request
 for three seconds after completion, including requests for fixed trusted URLs.
-The runners check the observed behavior; a changed result calls for review of
-the browser contract.
+Known positive triggers use up to three fresh samples. Every omission is
+recorded; a group without a positive observation fails. Unexpected traffic in
+a quiet case also fails. This accounts for observed update-check omissions
+without assuming deterministic delivery.
 
 ## Registered workers
 
-The [registered receipt](maintenance-backends.json) records 33 samples:
+The [registered receipt](maintenance-backends.json) records the eleven operation
+groups for each browser profile, including any repeated positive-control samples:
 
 | Operation                                  | Chromium      | Firefox       | Firefox forced stale |
 | ------------------------------------------ | ------------- | ------------- | -------------------- |

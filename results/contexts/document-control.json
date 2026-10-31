@@ -1,0 +1,85 @@
+{
+  "provenance": {
+    "capturedAt": "2026-10-31T16:29:08.227Z",
+    "revision": "1d46fad8bdca15c3f8c7ee3fc2fb6fb1d1868de6",
+    "dirty": true,
+    "sourceSHA256": "f46d4f2ffb2298da8b4ba5bc34ba6c2654c37207d058345d6c4ca769ad5919dd",
+    "runner": "test/document-control.ts",
+    "runnerSHA256": "52ee56fe22084022e5475e1aba55e54f8883f8354e10e2711bd2f45e5ed98eaf",
+    "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
+    "artifacts": {
+      "dist-manager/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-manager/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-manager/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-manager/index.html": "0ea2b29b0ef6946140c54c2dc2147bffe4de82b9ed13eb4fdcae97a81cfd56f7",
+      "dist-manager/manager.js": "e361950a8774ca901a2b669e55041e15931e079bcdf5cd66e2b95d3986ce0730",
+      "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-manager/sw.js": "0db0964099863d7982a9655741e8165bc4e6e08e3e3028f892a68456b0f7b4f7",
+      "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
+      "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
+      "dist-runtime/document-guard.js": "5a91a4de0e40dd27641e64663a36c98795cfbff31106875bbd719c416d5e48fb",
+      "dist-runtime/guard.js": "a421b358416f7b61f82b2500642ee85f1769bd98ff113402fc4b5fbf327cc3b3",
+      "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
+      "dist-runtime/publisher-worker-guard.js": "b1ac13860c6732e441d63d58e090baea04b18288ab3f890ade0f55d22c22ebc0",
+      "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-runtime/shared-worker-guard.js": "96a3c1086f9de09a02a7ea335d1898513563bf7f09b078de23cc1402f1704e2a",
+      "dist-runtime/sw.js": "763aa46ec51461bf8662e25823226003447dbcabfdd76f39f5e7627c2b31c2c8",
+      "dist-runtime/worker-guard.js": "ccd59c5ea899bf225c37c7cfaf4677d1c648d83e132ec62e98ec91877ad2d89f",
+      "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
+      "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-installation/index.html": "3ca67c9966dd6eaaddb08a331c4c422a70d79bed1acecddada56764ba4ac8e5f",
+      "dist-installation/installation.js": "6cd0a3f3f4494dee2db059f3b1a5feb62017a39399a22e2d3774d0319fa1e3f3"
+    }
+  },
+  "scope": "Actual built controller, native browser clients and real storage; inert child guard and test-only native handles; no preparation or complete confinement proof",
+  "rows": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "checks": [
+        "unbound",
+        "missing-resource",
+        "surface",
+        "parent-read",
+        "wrong-parent",
+        "wrong-token",
+        "bound-child-configuration",
+        "consume-once",
+        "consumed-configuration",
+        "live-child-create-control",
+        "closed-child-valid-create",
+        "message-only-no-http"
+      ],
+      "concurrentConsumeAccepted": 1,
+      "requests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "checks": [
+        "unbound",
+        "missing-resource",
+        "surface",
+        "parent-read",
+        "wrong-parent",
+        "wrong-token",
+        "bound-child-configuration",
+        "consume-once",
+        "consumed-configuration",
+        "live-child-create-control",
+        "closed-child-valid-create",
+        "message-only-no-http"
+      ],
+      "concurrentConsumeAccepted": 1,
+      "requests": []
+    }
+  ]
+}

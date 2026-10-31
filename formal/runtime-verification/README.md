@@ -106,7 +106,9 @@ arguments even where the abstract publication contract is shared.
   publisher client shares its captured transport. See the
   [root content integration](root-content-broker.md). Window fetch/cache downloads
   now use the [shared local resource reader](resource-fetch.md), with actual
-  adapter-bypass and forced-stale browser controls. Resource and adapter proofs
+  adapter-bypass and forced-stale browser controls. Document and popup
+  [control operations](document-control.md) now use authenticated messages, with
+  actual-browser client and concurrent-consumption checks. Resource and adapter proofs
   and the remaining context delivery paths are open.
 - Stage 7: browser validation is in progress for the root content integration;
   broader coverage and lifecycle obligations remain open.

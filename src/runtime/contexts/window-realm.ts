@@ -1,3 +1,4 @@
+import { createDocumentControl } from './document-client.ts';
 import { createControllerClient } from '../controller-client.ts';
 import { createResourceFetch } from '../resource-fetch.ts';
 import { INSTALLED_RESOURCE_REQUEST } from '../../shared/types.ts';
@@ -63,6 +64,7 @@ export function prepareWindowRealm({
   let sharedIdentity: SharedWorkerIdentity | undefined;
   const policy = createTrustedPolicy(applicationURL);
   const controller = createControllerClient();
+  const documentControl = createDocumentControl(controller.request);
   const fetchResource = createResourceFetch(
     (url, headers) =>
       controller.request(
@@ -124,7 +126,12 @@ export function prepareWindowRealm({
   const documents = enableDocumentContexts
     ? createDocumentFactory(
         tools,
-        internalRecord({ applicationURL, baseURL: () => resourceBase, policy }),
+        internalRecord({
+          applicationURL,
+          baseURL: () => resourceBase,
+          policy,
+          documentControl,
+        }),
       )
     : undefined;
   const openPopup = enableDocumentContexts
@@ -134,6 +141,7 @@ export function prepareWindowRealm({
           applicationURL,
           baseURL: () => resourceBase,
           resources,
+          documentControl,
         }),
       )
     : undefined;

@@ -1,6 +1,6 @@
 {
-  "scope": "Native browser comparison of local context bootstraps, service-worker-mediated resources and message-only operations. The Firefox forced-stale profile uses an explicit testing preference, not natural 24-hour aging. The unregistered variant checks retained delivery and loss of interception. No production runtime repair is claimed.",
-  "runnerSHA256": "1814fb79794b1c7b06becb2ddd4362ddbbdf2eec0e05cb5ae19b3ba8bb3dbd3e",
+  "scope": "Native browser comparison of local context bootstraps, service-worker-mediated resources and message-only operations. The Firefox forced-stale profile uses an explicit testing preference, not natural 24-hour aging. The unregistered variant checks retained delivery and loss of interception. Known positive triggers use up to three fresh samples; omissions are recorded and a group without a positive observation fails. No production runtime repair is claimed.",
+  "runnerSHA256": "b98ad20d3ad51ae4d943423298205d4b731a4777ee235b11857d7ec37c43d286",
   "observationMilliseconds": 3000,
   "rows": [
     {
@@ -9,9 +9,11 @@
       "forcedStaleCheck": false,
       "unregistered": false,
       "operation": "idle",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "idle",
-      "actionStarted": 1793448670889,
-      "observationEnded": 1793448673891,
+      "actionStarted": 1793463537515,
+      "observationEnded": 1793463540517,
       "requests": []
     },
     {
@@ -20,9 +22,11 @@
       "forcedStaleCheck": false,
       "unregistered": false,
       "operation": "fetch",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "cached",
-      "actionStarted": 1793448676940,
-      "observationEnded": 1793448679943,
+      "actionStarted": 1793463543559,
+      "observationEnded": 1793463546562,
       "requests": []
     },
     {
@@ -31,9 +35,11 @@
       "forcedStaleCheck": false,
       "unregistered": false,
       "operation": "message",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793448682987,
-      "observationEnded": 1793448685990,
+      "actionStarted": 1793463549603,
+      "observationEnded": 1793463552606,
       "requests": []
     },
     {
@@ -42,13 +48,15 @@
       "forcedStaleCheck": false,
       "unregistered": false,
       "operation": "worker",
+      "attempt": 1,
+      "expectedRequest": true,
       "result": "ready",
-      "actionStarted": 1793448689044,
-      "observationEnded": 1793448692049,
+      "actionStarted": 1793463555646,
+      "observationEnded": 1793463558652,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793448690051
+          "time": 1793463556652
         }
       ]
     },
@@ -58,13 +66,15 @@
       "forcedStaleCheck": false,
       "unregistered": false,
       "operation": "module-worker",
+      "attempt": 1,
+      "expectedRequest": true,
       "result": "ready",
-      "actionStarted": 1793448695093,
-      "observationEnded": 1793448698100,
+      "actionStarted": 1793463561706,
+      "observationEnded": 1793463564713,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793448696100
+          "time": 1793463562713
         }
       ]
     },
@@ -74,9 +84,11 @@
       "forcedStaleCheck": false,
       "unregistered": false,
       "operation": "blob-worker",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793448701147,
-      "observationEnded": 1793448704153,
+      "actionStarted": 1793463567756,
+      "observationEnded": 1793463570763,
       "requests": []
     },
     {
@@ -85,9 +97,11 @@
       "forcedStaleCheck": false,
       "unregistered": false,
       "operation": "blob-module-worker",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793448707198,
-      "observationEnded": 1793448710203,
+      "actionStarted": 1793463573803,
+      "observationEnded": 1793463576809,
       "requests": []
     },
     {
@@ -96,9 +110,11 @@
       "forcedStaleCheck": false,
       "unregistered": false,
       "operation": "blob-worker-fetch",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "cached",
-      "actionStarted": 1793448713247,
-      "observationEnded": 1793448716254,
+      "actionStarted": 1793463579855,
+      "observationEnded": 1793463582863,
       "requests": []
     },
     {
@@ -107,9 +123,11 @@
       "forcedStaleCheck": false,
       "unregistered": false,
       "operation": "srcdoc",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "Local frame",
-      "actionStarted": 1793448719296,
-      "observationEnded": 1793448722302,
+      "actionStarted": 1793463585902,
+      "observationEnded": 1793463588910,
       "requests": []
     },
     {
@@ -118,9 +136,11 @@
       "forcedStaleCheck": false,
       "unregistered": false,
       "operation": "blob-frame",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "Local frame",
-      "actionStarted": 1793448725339,
-      "observationEnded": 1793448728347,
+      "actionStarted": 1793463591957,
+      "observationEnded": 1793463594965,
       "requests": []
     },
     {
@@ -129,13 +149,15 @@
       "forcedStaleCheck": false,
       "unregistered": false,
       "operation": "frame",
+      "attempt": 1,
+      "expectedRequest": true,
       "result": "Local frame",
-      "actionStarted": 1793448731388,
-      "observationEnded": 1793448734396,
+      "actionStarted": 1793463598007,
+      "observationEnded": 1793463601016,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793448732396
+          "time": 1793463599016
         }
       ]
     },
@@ -145,9 +167,11 @@
       "forcedStaleCheck": false,
       "unregistered": false,
       "operation": "idle",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "idle",
-      "actionStarted": 1793448738389,
-      "observationEnded": 1793448741391,
+      "actionStarted": 1793463604944,
+      "observationEnded": 1793463607947,
       "requests": []
     },
     {
@@ -156,9 +180,11 @@
       "forcedStaleCheck": false,
       "unregistered": false,
       "operation": "fetch",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "cached",
-      "actionStarted": 1793448744558,
-      "observationEnded": 1793448747563,
+      "actionStarted": 1793463611121,
+      "observationEnded": 1793463614125,
       "requests": []
     },
     {
@@ -167,9 +193,11 @@
       "forcedStaleCheck": false,
       "unregistered": false,
       "operation": "message",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793448750761,
-      "observationEnded": 1793448753764,
+      "actionStarted": 1793463617295,
+      "observationEnded": 1793463620297,
       "requests": []
     },
     {
@@ -178,13 +206,15 @@
       "forcedStaleCheck": false,
       "unregistered": false,
       "operation": "worker",
+      "attempt": 1,
+      "expectedRequest": true,
       "result": "ready",
-      "actionStarted": 1793448756925,
-      "observationEnded": 1793448759936,
+      "actionStarted": 1793463623458,
+      "observationEnded": 1793463626467,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793448757940
+          "time": 1793463624550
         }
       ]
     },
@@ -194,13 +224,15 @@
       "forcedStaleCheck": false,
       "unregistered": false,
       "operation": "module-worker",
+      "attempt": 1,
+      "expectedRequest": true,
       "result": "ready",
-      "actionStarted": 1793448763115,
-      "observationEnded": 1793448766126,
+      "actionStarted": 1793463629647,
+      "observationEnded": 1793463632657,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793448764193
+          "time": 1793463630661
         }
       ]
     },
@@ -210,9 +242,11 @@
       "forcedStaleCheck": false,
       "unregistered": false,
       "operation": "blob-worker",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793448769305,
-      "observationEnded": 1793448772312,
+      "actionStarted": 1793463635857,
+      "observationEnded": 1793463638865,
       "requests": []
     },
     {
@@ -221,9 +255,11 @@
       "forcedStaleCheck": false,
       "unregistered": false,
       "operation": "blob-module-worker",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793448775496,
-      "observationEnded": 1793448778503,
+      "actionStarted": 1793463642048,
+      "observationEnded": 1793463645056,
       "requests": []
     },
     {
@@ -232,9 +268,11 @@
       "forcedStaleCheck": false,
       "unregistered": false,
       "operation": "blob-worker-fetch",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "cached",
-      "actionStarted": 1793448781665,
-      "observationEnded": 1793448784682,
+      "actionStarted": 1793463648238,
+      "observationEnded": 1793463651248,
       "requests": []
     },
     {
@@ -243,13 +281,15 @@
       "forcedStaleCheck": false,
       "unregistered": false,
       "operation": "srcdoc",
+      "attempt": 1,
+      "expectedRequest": true,
       "result": "Local frame",
-      "actionStarted": 1793448787848,
-      "observationEnded": 1793448790858,
+      "actionStarted": 1793463654416,
+      "observationEnded": 1793463657425,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793448788947
+          "time": 1793463655455
         }
       ]
     },
@@ -259,13 +299,15 @@
       "forcedStaleCheck": false,
       "unregistered": false,
       "operation": "blob-frame",
+      "attempt": 1,
+      "expectedRequest": true,
       "result": "Local frame",
-      "actionStarted": 1793448794042,
-      "observationEnded": 1793448797052,
+      "actionStarted": 1793463660594,
+      "observationEnded": 1793463663602,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793448795171
+          "time": 1793463661670
         }
       ]
     },
@@ -275,13 +317,15 @@
       "forcedStaleCheck": false,
       "unregistered": false,
       "operation": "frame",
+      "attempt": 1,
+      "expectedRequest": true,
       "result": "Local frame",
-      "actionStarted": 1793448800492,
-      "observationEnded": 1793448803502,
+      "actionStarted": 1793463667047,
+      "observationEnded": 1793463670057,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793448801504
+          "time": 1793463668058
         }
       ]
     },
@@ -291,9 +335,11 @@
       "forcedStaleCheck": true,
       "unregistered": false,
       "operation": "idle",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "idle",
-      "actionStarted": 1793448807679,
-      "observationEnded": 1793448810681,
+      "actionStarted": 1793463674187,
+      "observationEnded": 1793463677189,
       "requests": []
     },
     {
@@ -302,13 +348,15 @@
       "forcedStaleCheck": true,
       "unregistered": false,
       "operation": "fetch",
+      "attempt": 1,
+      "expectedRequest": true,
       "result": "cached",
-      "actionStarted": 1793448813857,
-      "observationEnded": 1793448816862,
+      "actionStarted": 1793463680357,
+      "observationEnded": 1793463683361,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793448814862
+          "time": 1793463681426
         }
       ]
     },
@@ -318,9 +366,11 @@
       "forcedStaleCheck": true,
       "unregistered": false,
       "operation": "message",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793448820061,
-      "observationEnded": 1793448823063,
+      "actionStarted": 1793463686524,
+      "observationEnded": 1793463689527,
       "requests": []
     },
     {
@@ -329,13 +379,15 @@
       "forcedStaleCheck": true,
       "unregistered": false,
       "operation": "worker",
+      "attempt": 1,
+      "expectedRequest": true,
       "result": "ready",
-      "actionStarted": 1793448826233,
-      "observationEnded": 1793448829243,
+      "actionStarted": 1793463692710,
+      "observationEnded": 1793463695722,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793448827247
+          "time": 1793463693786
         }
       ]
     },
@@ -345,13 +397,15 @@
       "forcedStaleCheck": true,
       "unregistered": false,
       "operation": "module-worker",
+      "attempt": 1,
+      "expectedRequest": true,
       "result": "ready",
-      "actionStarted": 1793448832484,
-      "observationEnded": 1793448835495,
+      "actionStarted": 1793463698903,
+      "observationEnded": 1793463701913,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793448833584
+          "time": 1793463699917
         }
       ]
     },
@@ -361,9 +415,11 @@
       "forcedStaleCheck": true,
       "unregistered": false,
       "operation": "blob-worker",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793448838674,
-      "observationEnded": 1793448841682,
+      "actionStarted": 1793463705088,
+      "observationEnded": 1793463708095,
       "requests": []
     },
     {
@@ -372,9 +428,11 @@
       "forcedStaleCheck": true,
       "unregistered": false,
       "operation": "blob-module-worker",
+      "attempt": 1,
+      "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793448844864,
-      "observationEnded": 1793448847872,
+      "actionStarted": 1793463711276,
+      "observationEnded": 1793463714284,
       "requests": []
     },
     {
@@ -383,13 +441,15 @@
       "forcedStaleCheck": true,
       "unregistered": false,
       "operation": "blob-worker-fetch",
+      "attempt": 1,
+      "expectedRequest": true,
       "result": "cached",
-      "actionStarted": 1793448851056,
-      "observationEnded": 1793448854067,
+      "actionStarted": 1793463717459,
+      "observationEnded": 1793463720472,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793448852070
+          "time": 1793463718539
         }
       ]
     },
@@ -399,13 +459,15 @@
       "forcedStaleCheck": true,
       "unregistered": false,
       "operation": "srcdoc",
+      "attempt": 1,
+      "expectedRequest": true,
       "result": "Local frame",
-      "actionStarted": 1793448857251,
-      "observationEnded": 1793448860260,
+      "actionStarted": 1793463723681,
+      "observationEnded": 1793463726693,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793448858326
+          "time": 1793463724778
         }
       ]
     },
@@ -415,13 +477,15 @@
       "forcedStaleCheck": true,
       "unregistered": false,
       "operation": "blob-frame",
+      "attempt": 1,
+      "expectedRequest": true,
       "result": "Local frame",
-      "actionStarted": 1793448863438,
-      "observationEnded": 1793448866447,
+      "actionStarted": 1793463729874,
+      "observationEnded": 1793463732884,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793448864539
+          "time": 1793463730919
         }
       ]
     },
@@ -431,16 +495,18 @@
       "forcedStaleCheck": true,
       "unregistered": false,
       "operation": "frame",
+      "attempt": 1,
+      "expectedRequest": true,
       "result": "Local frame",
-      "actionStarted": 1793448869920,
-      "observationEnded": 1793448872929,
+      "actionStarted": 1793463736300,
+      "observationEnded": 1793463739311,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793448870931
+          "time": 1793463737311
         }
       ]
     }
   ],
-  "completedAt": "2026-10-31T12:14:33.126Z"
+  "completedAt": "2026-10-31T16:22:19.500Z"
 }

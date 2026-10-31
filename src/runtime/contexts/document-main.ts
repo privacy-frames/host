@@ -1,3 +1,5 @@
+import { createControllerClient } from '../controller-client.ts';
+import { createDocumentControl } from './document-client.ts';
 import {
   internalArray,
   ownDescriptor,
@@ -23,7 +25,6 @@ const nativeOpener = window.opener;
 const setOpener = descriptor(window, 'opener')?.set;
 const setName = descriptor(window, 'name')?.set;
 let nativeParent = frameParent;
-const nativeFetch = fetch;
 const nativePost = window.postMessage;
 const nativeStop = window.stop;
 const add = EventTarget.prototype.addEventListener;
@@ -36,8 +37,6 @@ const eventTrusted = descriptor(new Event('message'), 'isTrusted')!.get!;
 const stopEvent = Event.prototype.stopImmediatePropagation;
 const portPost = MessagePort.prototype.postMessage;
 const portStart = MessagePort.prototype.start;
-const responseOK = descriptor(Response.prototype, 'ok')!.get!;
-const responseJSON = Response.prototype.json;
 const readyState = descriptor(Document.prototype, 'readyState')!.get!;
 const nativeTimer = window.setTimeout;
 const getAttribute = Element.prototype.getAttribute;
@@ -61,16 +60,6 @@ async function waitForShell(): Promise<void> {
 let configuration: DocumentBootstrapConfiguration | undefined;
 let control: MessagePort | undefined;
 let parentOrigin: string | undefined;
-
-async function json(url: string): Promise<unknown> {
-  const result = await apply(nativeFetch, nativeWindow, [
-    url,
-    internalRecord({ credentials: 'omit' }),
-  ]);
-  if (!apply(responseOK, result, []))
-    throw new Error('Document bootstrap request refused');
-  return apply(responseJSON, result, []);
-}
 
 async function start(script: Element | null) {
   if (!script) throw new Error('Trusted document bootstrap is missing');
@@ -101,9 +90,11 @@ async function start(script: Element | null) {
   )
     throw new Error('Application document is not controlled by the host');
 
-  const configurationURL = new nativeURL('configuration', expectedURL).href;
-  const contentURL = new nativeURL('content', expectedURL).href;
-  configuration = parseDocumentBootstrap(await json(configurationURL), expectedURL);
+  const documentControl = createDocumentControl(createControllerClient().request);
+  configuration = parseDocumentBootstrap(
+    await documentControl('configuration', internalRecord({ id })),
+    expectedURL,
+  );
   const config = configuration;
   if (config.carrier === 'popup') {
     if (frameParent !== nativeWindow || !nativeOpener || !config.popup)
@@ -141,7 +132,7 @@ async function start(script: Element | null) {
   // Compile while the parent still cannot access this Window's mutable DOM
   // prototypes. Publication happens before executing app code or measuring layout.
 
-  const received = await json(contentURL);
+  const received = await documentControl('content', internalRecord({ id }));
 
   const input = parseDocumentContentInput(received, config);
 
