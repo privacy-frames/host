@@ -1,0 +1,20 @@
+{
+  "scope": "Unbounded abstract scope/queue lemma, not implementation correspondence or a complete browser model. Old-client jobs retain one scope and consult its registration map entry at delivery. Trusted setup traffic is excluded only under a separate independence obligation.",
+  "preconditions": [
+    "The protected scope remains absent throughout old-client and queued-job lifetimes.",
+    "Old-client-caused jobs use that scope; they cannot select another registration.",
+    "Scope names are abstract natural numbers, not emitted URL slugs or a verified allocator.",
+    "Browser inheritance, registration semantics and the production launch protocol require separate correspondence."
+  ],
+  "modelSHA256": "908a92fe1b89c616425ad6f6525ad966e66b723b8cb2d5e944d750112667c153",
+  "runnerSHA256": "4a9ff9841f2b1e27c50c4fefab3adfde32742d808c32cdea287e0fbbaf934d7f",
+  "leanVersion": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+  "leanExecutableSHA256": "bf8d54e4714cc4b03d3f6bb34c83b7202b87e49c8bfcbff6895c085bb90ceb38",
+  "proofOutput": "'RegistrationLifetime.initial_safe' does not depend on any axioms\n'RegistrationLifetime.step_safe' depends on axioms: [propext]\n'RegistrationLifetime.arbitrary_trace_safe' depends on axioms: [propext]\n'RegistrationLifetime.fresh_scopes_no_old_network' depends on axioms: [propext]\n'RegistrationLifetime.scope_reuse_counterexample' does not depend on any axioms\n'RegistrationLifetime.unregistered_delivery_no_network' does not depend on any axioms",
+  "faultyDeliveryControl": {
+    "disposition": "proof-rejected",
+    "sourceSHA256": "e848677b8faa5599ad47b211205238e8b1a0071c9545aaab27a40a58c5e19c1d",
+    "outputSHA256": "9ee28c19916b179501017712b39392433a217535a0999268f03c93f74703c816"
+  },
+  "completedAt": "2026-10-31T13:22:57.407Z"
+}

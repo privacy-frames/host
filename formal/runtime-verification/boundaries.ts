@@ -138,6 +138,20 @@ export const boundaries: readonly Boundary[] = [
     ],
   },
   {
+    id: 'browser-owned-maintenance',
+    obligation:
+      'Account for update-script requests caused by local context/resource operations, including registration overlap; cache-only fetch responses do not establish maintenance independence.',
+    invariants: ['C4'],
+    sources: [
+      'src/bridge/connect.ts',
+      'src/manager/services/bootstrap.ts',
+      'src/runtime/worker.ts',
+      'src/runtime/contexts/worker-factory.ts',
+      'src/runtime/contexts/document-factory.ts',
+      'src/runtime/contexts/resources.ts',
+    ],
+  },
+  {
     id: 'trusted-runtime-state',
     obligation:
       'Protect enforcement state and native captures while application prototypes remain mutable.',

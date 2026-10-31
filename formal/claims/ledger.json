@@ -88,7 +88,7 @@
     "formal/publisher-routes.md": "54b1b7cedf2260ff34e264c8827753b1caea113b533c7473926f428111ef6022",
     "formal/route-review/README.md": "def9f578cf05dbd6ded8f518833ba924d81acfce8a9d43fbd003679987cf77bd",
     "formal/route-review/triage.json": "3e5ab07e2747d1d329f13be013bc5268671c054ee8c5470e9e952b8a72a7e855",
-    "formal/runtime-verification/README.md": "42ffccb02fc1021b7fa7d4165d89b13c38f3797a79c4a5747a9d7fd380d6b439",
+    "formal/runtime-verification/README.md": "809dd91fc9bc8e3dec61e97de3c9e85277f5baf35e76f7ea935cf6cbac74ebdd",
     "formal/runtime-verification/document-publication-check.ts": "53860e7c9687d3c59499d9effbd30afc9b569144c174a786600af2935e65ef7f",
     "formal/runtime-verification/document-publication-compatibility.json": "1088389b2b01cb451f58858438a5b06127813c31733b91a93b35450fb67fe90c",
     "formal/runtime-verification/document-publication-result.json": "afaa391664ee5d718f562750736f45995ba6f4dde68fa392d114208d3d493d72",
@@ -194,7 +194,16 @@
     "formal/runtime-verification/message-resource-broker.ts": "82150dd2908fde943aa2502b26bcfb5e73499212f6927f85fb227bf0a016331a",
     "formal/runtime-verification/message-resource-broker.json": "28c95a5b215b56c352cde22e2bd7b4b93acd3a014a563c480f99d4de5583bece",
     "formal/runtime-verification/message-resource-broker-relaxed.json": "c8a0c5abc93d1e7169c9d9dc315bffbf75c4966e552ac9030c9e433112116a8b",
-    "formal/runtime-verification/message-resource-broker.md": "345bae8945881bf052e83f23cd209f7da19660a7286e450877f27112a63aae85"
+    "formal/runtime-verification/message-resource-broker.md": "345bae8945881bf052e83f23cd209f7da19660a7286e450877f27112a63aae85",
+    "formal/runtime-verification/registration-overlap.ts": "ea1edfc91c81eb1443f0fce8cc93a5bf72080287fad33ae813cd19bf4c068da3",
+    "formal/runtime-verification/registration-overlap.json": "e8cd2a45f801ec01b58e6a32eba8cc06a81f4ba1469c918589c8c10ac7373dc1",
+    "formal/runtime-verification/registration-overlap.md": "48c77f5920d3e9bb159618ba2208881d26add0cf31aa0025e4c4d78ed0c034c2",
+    "formal/runtime-verification/boundaries.ts": "e6260374db4a9b9414207fe549c7d5a6410c636ffac8440a5334962aba8fd2bb",
+    "formal/runtime-verification/implementation-inventory.json": "77687adc2603a6d48b82f7a7f7005be1996eef13b6a09ca3c47fedf135d5d0c7",
+    "formal/runtime-verification/inventory.ts": "30a433edc9bc21d25c4790a9540e6eeb271f382c12f4fefeccd1dba1b75a47c2",
+    "formal/runtime-verification/RegistrationLifetime.lean": "908a92fe1b89c616425ad6f6525ad966e66b723b8cb2d5e944d750112667c153",
+    "formal/runtime-verification/registration-lifetime-check.ts": "4a9ff9841f2b1e27c50c4fefab3adfde32742d808c32cdea287e0fbbaf934d7f",
+    "formal/runtime-verification/registration-lifetime.json": "3f944fb52b9c88675f78ef3cb1a817a57da1edb92f7183d3916ec65cd7a857eb"
   },
   "claims": [
     {
@@ -1308,6 +1317,27 @@
             "formal/runtime-verification/message-resource-broker-relaxed.json",
             "formal/runtime-verification/message-resource-broker.md"
           ]
+        },
+        {
+          "kind": "discovery",
+          "description": "Twenty-seven native overlap samples compare absent, reused and distinct sibling registration scopes. Firefox local-document creation emits update requests after scope reuse despite the original controller reference remaining unchanged; the distinct-scope cases emit none in their observed windows. This is a launch-lifecycle obligation, not a verified allocator or production repair. The implementation map now names browser-owned maintenance separately from resource delivery.",
+          "paths": [
+            "formal/runtime-verification/registration-overlap.ts",
+            "formal/runtime-verification/registration-overlap.json",
+            "formal/runtime-verification/registration-overlap.md",
+            "formal/runtime-verification/boundaries.ts",
+            "formal/runtime-verification/implementation-inventory.json",
+            "formal/runtime-verification/inventory.ts"
+          ]
+        },
+        {
+          "kind": "formal_theorem",
+          "description": "Lean kernel checks six abstract scope/queue results with recorded standard logical axiom dependencies. Arbitrary finite traces preserve no old-client-job network effect if the protected scope remains absent and jobs retain it. The model includes a queued-job scope-reuse counterexample and rejects unconditional delivery. Native lookup semantics, allocation, controller ownership and trusted-setup independence remain correspondence obligations.",
+          "paths": [
+            "formal/runtime-verification/RegistrationLifetime.lean",
+            "formal/runtime-verification/registration-lifetime-check.ts",
+            "formal/runtime-verification/registration-lifetime.json"
+          ]
         }
       ],
       "open_obligations": [
@@ -1315,7 +1345,8 @@
         "Cover shared workers, document creation, later resource fetches, stale registrations and browser update scheduling in the full confinement argument.",
         "Preserve the independently tested navigation-preload defense; it does not mitigate the demonstrated update request.",
         "Repeat on deployed HTTPS and establish the scope of any repair; the current counterexample is local HTTP with exact build provenance.",
-        "Integrate and verify private broker grants, actual admission/generation checks and preparation across every supported context before relying on the message transport; the prototype uses a trusted harness and selected classic-worker operations."
+        "Integrate and verify private broker grants, actual admission/generation checks and preparation across every supported context before relying on the message transport; the prototype uses a trusted harness and selected classic-worker operations.",
+        "Prevent later launch/registration activity from reviving a private execution scope while its clients or queued work remain; distinct-scope observations and the abstract lemma do not implement or verify this allocation/lifetime condition."
       ],
       "disposition": "unverified",
       "control_status": {

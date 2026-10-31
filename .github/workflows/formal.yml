@@ -95,6 +95,26 @@ jobs:
             formal/runtime-verification/maintenance-unregistered.json
             formal/runtime-verification/message-resource-broker.json
             formal/runtime-verification/message-resource-broker-relaxed.json
+  registration-overlap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium firefox
+        timeout-minutes: 5
+      - name: Type-check registration overlap experiment
+        run: npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --types node --target ES2022 --module NodeNext --moduleResolution NodeNext --allowImportingTsExtensions --lib ES2022,DOM --skipLibCheck formal/runtime-verification/registration-overlap.ts
+      - run: node formal/runtime-verification/registration-overlap.ts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: registration-overlap-evidence
+          path: formal/runtime-verification/registration-overlap.json
   fedcm:
     runs-on: ubuntu-latest
     steps:

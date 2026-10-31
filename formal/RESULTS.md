@@ -25,6 +25,14 @@ Firefox profile updates after a cached resource fetch. Unregistration preserves
 the existing page's local delivery but loses interception for a new Blob worker
 in Firefox. These results rule out either change as a complete repair on its own.
 
+The [registration overlap experiment](runtime-verification/registration-overlap.md)
+finds that reusing an unregistered scope reopens Firefox's local-document update
+path while the original page retains its controller reference. Distinct sibling
+scopes avoid that trigger in the 27 observed cases. An unbounded scope/queue model
+checks the corresponding lifetime condition and records its implementation and
+browser assumptions. A per-launch allocation and preparation protocol remains
+to be implemented.
+
 A synthetic test with a seeded FedCM connection exposed a conditional escape in
 the earlier runtime: `IdentityCredential.disconnect` sent an application-selected
 marker to the runtime-origin server outside the service worker. The test did not

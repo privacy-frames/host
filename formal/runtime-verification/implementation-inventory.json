@@ -4,7 +4,7 @@
   "typescriptVersion": "6.0.3",
   "contractSHA256": "57c378112e1d53c1223955a6e0a28b546e0a6ec3e90895f0deec46908ca9017f",
   "generatorSHA256": "30a433edc9bc21d25c4790a9540e6eeb271f382c12f4fefeccd1dba1b75a47c2",
-  "boundaryDefinitionsSHA256": "3c9ef24d9abf44dce857181661b1795df0143d2b600545b9950acb8dd4251f26",
+  "boundaryDefinitionsSHA256": "e6260374db4a9b9414207fe549c7d5a6410c636ffac8440a5334962aba8fd2bb",
   "boundaries": [
     {
       "id": "root-publication",
@@ -192,6 +192,21 @@
       ]
     },
     {
+      "id": "browser-owned-maintenance",
+      "obligation": "Account for update-script requests caused by local context/resource operations, including registration overlap; cache-only fetch responses do not establish maintenance independence.",
+      "invariants": [
+        "C4"
+      ],
+      "sources": [
+        "src/bridge/connect.ts",
+        "src/manager/services/bootstrap.ts",
+        "src/runtime/worker.ts",
+        "src/runtime/contexts/worker-factory.ts",
+        "src/runtime/contexts/document-factory.ts",
+        "src/runtime/contexts/resources.ts"
+      ]
+    },
+    {
       "id": "trusted-runtime-state",
       "obligation": "Protect enforcement state and native captures while application prototypes remain mutable.",
       "invariants": [
@@ -231,6 +246,7 @@
       "path": "src/bridge/connect.ts",
       "sourceSHA256": "bd35b868143935b8cfa4f7ce3227644c516b01f5ef82eea2b196e3183f17833b",
       "boundaries": [
+        "browser-owned-maintenance",
         "installation-and-management"
       ],
       "siteCount": 101,
@@ -249,6 +265,7 @@
       "path": "src/manager/services/bootstrap.ts",
       "sourceSHA256": "17176349ebf2d4f1f2fe9662e0e737b5da3f50a52eef7f84b21102158ab16427",
       "boundaries": [
+        "browser-owned-maintenance",
         "installation-and-management"
       ],
       "siteCount": 42,
@@ -285,7 +302,8 @@
       "path": "src/runtime/contexts/document-factory.ts",
       "sourceSHA256": "df2a8f020cfa3e82827516ca2a0925eeeda6c2865b9a5e2ab153fdf9ce47985e",
       "boundaries": [
-        "document-publication"
+        "document-publication",
+        "browser-owned-maintenance"
       ],
       "siteCount": 536,
       "sitesSHA256": "552b6f7d7b379b0ba45be8dd3d37e62b3805da54468666fead99c2812bf828e4"
@@ -357,7 +375,8 @@
       "path": "src/runtime/contexts/resources.ts",
       "sourceSHA256": "4dc6b1028c8b0683dccd72591f29115dae342e66658f70c8d635e61aeea6cd01",
       "boundaries": [
-        "resource-delivery"
+        "resource-delivery",
+        "browser-owned-maintenance"
       ],
       "siteCount": 54,
       "sitesSHA256": "1627b6b359b035b9d64f5ef709e17e071322a13d94c3f05b4c73a5e39a43e329"
@@ -411,7 +430,8 @@
       "path": "src/runtime/contexts/worker-factory.ts",
       "sourceSHA256": "a91ac1819cea5a4611f8f0c63fbd4232f3764aa95dac6188b39909ad9045f4f2",
       "boundaries": [
-        "dedicated-worker-publication"
+        "dedicated-worker-publication",
+        "browser-owned-maintenance"
       ],
       "siteCount": 152,
       "sitesSHA256": "63391f128c4c0e1eb775805cf3873922a63991c1bf481ad33d033d4d268ac96f"
@@ -654,7 +674,8 @@
       "path": "src/runtime/worker.ts",
       "sourceSHA256": "7fba94edacc170650ff8445a0220eb9e365df7590b5d8625d632315251811046",
       "boundaries": [
-        "resource-delivery"
+        "resource-delivery",
+        "browser-owned-maintenance"
       ],
       "siteCount": 377,
       "sitesSHA256": "811e2c57ebadacc557c21ece39a6047cddda79b328c9457449eae4b2dfdc99bc"

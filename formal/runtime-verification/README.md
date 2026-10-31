@@ -99,6 +99,8 @@ arguments even where the abstract publication contract is shared.
   A [message resource prototype](message-resource-broker.md) passes selected worker
   reads and confirmed Chromium restarts without HTTP, with working receiver
   controls. Production integration and document behavior remain open.
+  The [registration overlap experiment and model](registration-overlap.md)
+  identify scope reuse during private execution as a separate launch obligation.
 - Stages 5, 7 and 8: pending. Earlier component evidence remains available, with
   its original assumptions and source hashes.
 
