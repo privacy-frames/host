@@ -1,20 +1,37 @@
 {
-  "scope": "Unbounded abstract scope/queue lemma, not implementation correspondence or a complete browser model. Old-client jobs retain one scope and consult its registration map entry at delivery. Trusted setup traffic is excluded only under a separate independence obligation.",
+  "scope": "Unbounded prefix/queue model for one origin and storage key, not a browser or implementation proof. Current covering registrations can authorize queued old-client effects, which may transmit after unregistration. Prefix-separated registrations preserve safety for all client association addresses within the protected scope.",
   "preconditions": [
-    "The protected scope remains absent throughout old-client and queued-job lifetimes.",
-    "Old-client-caused jobs use that scope; they cannot select another registration.",
-    "Scope names are abstract natural numbers, not emitted URL slugs or a verified allocator.",
-    "Browser inheritance, registration semantics and the production launch protocol require separate correspondence."
+    "All active registrations are prefix-incomparable with the protected scope at entry to private execution and throughout the relevant lifetimes.",
+    "Every modeled job uses a client association address under the protected scope, not the remote script destination; native inheritance and selection must establish this correspondence.",
+    "No old-client-caused request is already authorized at the private boundary. Authorization and transmission are separate steps; unregistering does not cancel an authorized effect.",
+    "Addresses are lists of natural-number URL symbols, not a checked URL parser, serialized browser URL binding or production allocator.",
+    "Trusted setup traffic requires a separate independence argument; actual launch ordering, retained browser state and offline reload remain implementation/browser obligations."
   ],
-  "modelSHA256": "908a92fe1b89c616425ad6f6525ad966e66b723b8cb2d5e944d750112667c153",
-  "runnerSHA256": "4a9ff9841f2b1e27c50c4fefab3adfde32742d808c32cdea287e0fbbaf934d7f",
+  "modelSHA256": "331eb33dd0d4dc0abd3e2b6b29818b2abee9d97f2267f8ec9d921c449781a2b3",
+  "checkedSourceSHA256": "99f074f1da97a21b5e7d865cb39e6675d12616f28a61583a12b1cdaec422e00d",
+  "runnerSHA256": "d3b5b7453badf4efbd66be71c0d2cbd91702a4dba5c28181e92690f9063a435e",
   "leanVersion": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
   "leanExecutableSHA256": "bf8d54e4714cc4b03d3f6bb34c83b7202b87e49c8bfcbff6895c085bb90ceb38",
-  "proofOutput": "'RegistrationLifetime.initial_safe' does not depend on any axioms\n'RegistrationLifetime.step_safe' depends on axioms: [propext]\n'RegistrationLifetime.arbitrary_trace_safe' depends on axioms: [propext]\n'RegistrationLifetime.fresh_scopes_no_old_network' depends on axioms: [propext]\n'RegistrationLifetime.scope_reuse_counterexample' does not depend on any axioms\n'RegistrationLifetime.unregistered_delivery_no_network' does not depend on any axioms",
-  "faultyDeliveryControl": {
-    "disposition": "proof-rejected",
-    "sourceSHA256": "e848677b8faa5599ad47b211205238e8b1a0071c9545aaab27a40a58c5e19c1d",
-    "outputSHA256": "9ee28c19916b179501017712b39392433a217535a0999268f03c93f74703c816"
-  },
-  "completedAt": "2026-10-31T13:22:57.407Z"
+  "proofOutput": "'RegistrationLifetime.separated_no_covering_registration' does not depend on any axioms\n'RegistrationLifetime.equal_length_distinct_scopes_separated' does not depend on any axioms\n'RegistrationLifetime.initial_safe' depends on axioms: [propext, Quot.sound]\n'RegistrationLifetime.no_covering_match' depends on axioms: [propext, Quot.sound]\n'RegistrationLifetime.step_safe' depends on axioms: [propext, Quot.sound]\n'RegistrationLifetime.arbitrary_trace_safe' depends on axioms: [propext, Quot.sound]\n'RegistrationLifetime.separated_scopes_no_old_network' depends on axioms: [propext, Quot.sound]\n'RegistrationLifetime.ancestor_counterexample' depends on axioms: [propext, Quot.sound]\n'RegistrationLifetime.descendant_counterexample' depends on axioms: [propext, Quot.sound]\n'RegistrationLifetime.scope_reuse_counterexample' depends on axioms: [propext, Quot.sound]\n'RegistrationLifetime.sibling_delivery_no_network' depends on axioms: [propext, Quot.sound]\n'RegistrationLifetime.unregistered_delivery_no_network' depends on axioms: [propext, Quot.sound]\n'RegistrationLifetime.distinct_ancestor_is_forbidden' depends on axioms: [propext, Quot.sound]\n'RegistrationLifetime.unregister_after_authorization_counterexample' depends on axioms: [propext, Quot.sound]",
+  "controls": [
+    {
+      "name": "unconditional-delivery",
+      "disposition": "proof-rejected",
+      "sourceSHA256": "6140855878fa53c3149b23ccba273ffa479648088653fe00a8f5fbf386d266c1",
+      "outputSHA256": "7675ac2b8eaf6303dfed352159ed8cb708e196f53d1fa9b6341ca7515dbd4610"
+    },
+    {
+      "name": "exact-scope-only",
+      "disposition": "proof-rejected",
+      "sourceSHA256": "7951bf37c371217dbd9231bc839d16285a4f260f490081e9252d6174a9014a7c",
+      "outputSHA256": "35fcc5c3b4354174a10674174209900d2110dc392199407c72e937db8d411ccd"
+    },
+    {
+      "name": "unchecked-proof",
+      "disposition": "axiom-report-rejected",
+      "sourceSHA256": "50f851e8d62dc780d97a1d0dbae06399ae50aa8d8fe5b1b7c10678390728ffe6",
+      "outputSHA256": "172e3663b218292a9fc9d8223377349ad066d3c046331900981c850f9a08aa38"
+    }
+  ],
+  "completedAt": "2026-10-31T18:55:55.488Z"
 }

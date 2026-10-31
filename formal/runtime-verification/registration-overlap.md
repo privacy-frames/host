@@ -63,32 +63,57 @@ resource delivery to new contexts. These bounded observations do not establish
 those lifecycle properties. The [message broker](message-resource-broker.md)
 supplies a transport candidate for contexts that cannot rely on interception.
 
-## Unbounded scope/queue model
+## Prefix coverage and queued updates
 
 Run `node formal/runtime-verification/registration-lifetime-check.ts` with the
-pinned Lean release. `RegistrationLifetime.lean` models registration-map changes
-and a queue of update jobs attributed to one old client. Six checked theorems
-cover initial safety, single-step preservation, arbitrary finite traces, the
-no-network consequence, and two concrete delivery cases. The checker records
-the standard logical axiom dependencies and rejects unexpected reports. A
-delivery rule that transmits unconditionally fails proof checking.
+pinned Lean release. `RegistrationLifetime.lean` represents scopes and client
+association addresses as symbol lists. A scope matches an address when it is a
+prefix. The association address selects a registration; it is not the remote
+service-worker script destination.
 
-The model requires the protected scope to remain absent and every old-client job
-to retain that scope. It permits arbitrary queue lengths and interleavings of
-other-scope registration, unregistration and delivery. Its scope-reuse
-counterexample includes a job queued before reuse. That schedule is a model
-result rather than an observed browser trace.
+The state records registrations, pending association lookups, authorized requests
+and whether an old-client-caused request has transmitted. Authorization and
+transmission are separate events. Unregistering removes a registration but
+leaves authorized requests intact. A checked counterexample authorizes a request,
+unregisters its scope, then transmits it. This is a model result, not a newly
+observed browser schedule.
 
-The ancestor experiment shows why the job-scope premise matters. Keeping only
-the old scope absent does not prevent the observed request when a covering
-registration exists. The model has no path-prefix relation and does not derive
-which registration a new local document can select. Its theorem therefore
-cannot justify a launch protocol that checks scope inequality alone. A candidate
-must account for covering scopes, child controller inheritance and pending jobs.
+Fourteen checked propositions cover prefix separation, initial safety,
+single-step preservation, arbitrary finite traces, the no-network consequence
+and concrete counterexamples. Safety requires every registration to be
+prefix-incomparable with the protected scope, queued association addresses to
+remain within that scope, and no already-authorized old-client request at the
+private boundary. Subject to those conditions, registration, unregistration,
+queuing, authorization and transmission preserve safety for arbitrary finite
+traces and queue lengths.
 
-Scope names are abstract natural numbers. The model does not implement a URL
-allocator, reproduce browser registration code, establish private controller
-ownership or prove independence of trusted launch traffic. Those are
-implementation and browser correspondence obligations. The
-[model receipt](registration-lifetime.json) records their separation from the
-checked propositions.
+The model rejects same-scope reuse and covering ancestors. It also rejects a
+registration below the protected scope, because that registration could cover a
+reachable descendant address. Sibling registration is safe in the concrete
+example. A separate theorem proves that distinct equal-length scope strings
+cannot be prefixes of one another; it does not implement freshness, allocation
+or browser URL serialization.
+
+The checker requires the exact fourteen theorem names and their reported logical
+axioms. The two prefix lemmas are axiom-free; the remaining proofs report
+`propext` and `Quot.sound`. An unconditional-transmission fault and an
+exact-scope-only registration rule fail proof checking. Replacing the actual
+preservation proof with an unchecked proof body returns compiler success, but
+adds `sorryAx`; the checker rejects those axiom reports even after removing the
+compiler warning from its input.
+
+## Correspondence still required
+
+The production launch protocol must establish the model's premises. This needs
+an argument for actual serialized scope URLs, native controller inheritance,
+which registration an update selects, and the point where a pending request can
+no longer be prevented. Unregistration alone cannot establish the initial
+absence of authorized private effects. Trusted setup requests also need an
+independence argument.
+
+The model considers registration coverage in one origin and storage key. It does
+not execute browser selection algorithms, bind native clients, implement a URL
+allocator or preserve offline reload by itself. The existing thirty-six native
+samples remain evidence about selected browser schedules. The
+[model receipt](registration-lifetime.json) records the checked statements,
+preconditions, toolchain and fault-control digests separately.

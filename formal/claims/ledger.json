@@ -88,7 +88,7 @@
     "formal/publisher-routes.md": "54b1b7cedf2260ff34e264c8827753b1caea113b533c7473926f428111ef6022",
     "formal/route-review/README.md": "def9f578cf05dbd6ded8f518833ba924d81acfce8a9d43fbd003679987cf77bd",
     "formal/route-review/triage.json": "3e5ab07e2747d1d329f13be013bc5268671c054ee8c5470e9e952b8a72a7e855",
-    "formal/runtime-verification/README.md": "c6e6c7c0e8573cd507d98794c56a0dc232738ae19f40803a054caf19c347c788",
+    "formal/runtime-verification/README.md": "53b1841cebf3a1e246db6b18a896d19909e39bd32bb600846dfa717b6aaa37ee",
     "formal/runtime-verification/document-publication-check.ts": "53860e7c9687d3c59499d9effbd30afc9b569144c174a786600af2935e65ef7f",
     "formal/runtime-verification/document-publication-compatibility.json": "1088389b2b01cb451f58858438a5b06127813c31733b91a93b35450fb67fe90c",
     "formal/runtime-verification/document-publication-result.json": "24d6cc5c031dcc70c82830cd89c703bb6d50a2328f8615dc164724c77a2a2aef",
@@ -197,13 +197,13 @@
     "formal/runtime-verification/message-resource-broker.md": "345bae8945881bf052e83f23cd209f7da19660a7286e450877f27112a63aae85",
     "formal/runtime-verification/registration-overlap.ts": "d05906f8b74054d9b35b7e4867590282eb0b66fe424b37a49a79e54619e43861",
     "formal/runtime-verification/registration-overlap.json": "7069acdfc3df48645721c881e9d3457e02fb92f8f1aa8757776437f4682e5b09",
-    "formal/runtime-verification/registration-overlap.md": "e37aa165dc339f2764d7e81efe7490205411bb32e329ffb154604039b8e8e033",
+    "formal/runtime-verification/registration-overlap.md": "3277a6cef765881ac87e9a0b2f1c35314c6d8bfe32450a53304d9b35d9787dad",
     "formal/runtime-verification/boundaries.ts": "80151393d0bc34c4af708d88395d93321e424c9b534760b1caacf0cbc3989326",
     "formal/runtime-verification/implementation-inventory.json": "8a934f3449b945e5221a1c0e860939567c5bff495e8433ea03223ea50235a8ea",
     "formal/runtime-verification/inventory.ts": "30a433edc9bc21d25c4790a9540e6eeb271f382c12f4fefeccd1dba1b75a47c2",
-    "formal/runtime-verification/RegistrationLifetime.lean": "908a92fe1b89c616425ad6f6525ad966e66b723b8cb2d5e944d750112667c153",
-    "formal/runtime-verification/registration-lifetime-check.ts": "4a9ff9841f2b1e27c50c4fefab3adfde32742d808c32cdea287e0fbbaf934d7f",
-    "formal/runtime-verification/registration-lifetime.json": "3f944fb52b9c88675f78ef3cb1a817a57da1edb92f7183d3916ec65cd7a857eb",
+    "formal/runtime-verification/RegistrationLifetime.lean": "331eb33dd0d4dc0abd3e2b6b29818b2abee9d97f2267f8ec9d921c449781a2b3",
+    "formal/runtime-verification/registration-lifetime-check.ts": "d3b5b7453badf4efbd66be71c0d2cbd91702a4dba5c28181e92690f9063a435e",
+    "formal/runtime-verification/registration-lifetime.json": "611782fadf9f94fa1423fe051694013b0adab34ffe7d93f6fe16f8ea4becb3c6",
     "formal/runtime-verification/root-content-compatibility.json": "3d132bf67e97e4ca98f3239dc04413c50dffc7fc8b82dc12a17977f49959750d",
     "test/content-broker.test.ts": "f7aed1a1855e5c0e8f82185a80eaf308b365e412c2103cf25d78eb107907095a",
     "src/runtime/controller-client.ts": "a420699a6ebeaf45c0bdc4a87b9a6f1f0d8e102fae165864f601846c6df9ce33",
@@ -1389,7 +1389,7 @@
         },
         {
           "kind": "discovery",
-          "description": "Twenty-seven native overlap samples compare absent, reused and distinct sibling registration scopes. Firefox local-document creation emits update requests after scope reuse despite the original controller reference remaining unchanged; the distinct-scope cases emit none in their observed windows. This is a launch-lifecycle obligation, not a verified allocator or production repair. The implementation map now names browser-owned maintenance separately from resource delivery.",
+          "description": "Thirty-six native samples compare absent, reused, sibling and covering ancestor scopes. Firefox local-document creation emits update requests after reuse or a covering ancestor registration; sibling cases emit none in their observed windows. This is a launch-lifecycle obligation, not a verified allocator or production repair.",
           "paths": [
             "formal/runtime-verification/registration-overlap.ts",
             "formal/runtime-verification/registration-overlap.json",
@@ -1401,7 +1401,7 @@
         },
         {
           "kind": "formal_theorem",
-          "description": "Lean kernel checks six abstract scope/queue results with recorded standard logical axiom dependencies. Arbitrary finite traces preserve no old-client-job network effect if the protected scope remains absent and jobs retain it. The model includes a queued-job scope-reuse counterexample and rejects unconditional delivery. Native lookup semantics, allocation, controller ownership and trusted-setup independence remain correspondence obligations.",
+          "description": "Lean checks fourteen prefix/queue propositions with exact named axiom reports. Prefix-incomparable registrations, queued association URLs within the protected scope and no initially authorized private request preserve no old-client network effect over arbitrary finite traces. Counterexamples cover ancestors, descendants, reuse and transmission after unregistration following authorization. Unconditional transmission, equality-only scope checks and an unchecked preservation proof are rejected. Browser selection, URL serialization, allocation and launch correspondence remain open.",
           "paths": [
             "formal/runtime-verification/RegistrationLifetime.lean",
             "formal/runtime-verification/registration-lifetime-check.ts",
@@ -1416,9 +1416,9 @@
         "Repeat on deployed HTTPS and establish the scope of any repair; the current counterexample is local HTTP with exact build provenance.",
         "Integrate and verify private broker grants, actual admission/generation checks and preparation across every supported context before relying on the message transport; the prototype uses a trusted harness and selected classic-worker operations.",
         "Prevent later launch/registration activity from reviving a private execution scope while its clients or queued work remain; distinct-scope observations and the abstract lemma do not implement or verify this allocation/lifetime condition.",
-        "The expanded registration experiment observes Firefox updates after a covering ancestor scope is registered. Different scope IDs and absence of the old exact scope do not establish namespace separation; the abstract old-job scope premise is not browser correspondence.",
+        "The prefix/queue model now accounts for ancestor and descendant coverage and distinguishes authorization from transmission. Establish its initial no-authorized-private-request condition, actual URL/registration lookup semantics, controller inheritance and native pending-operation correspondence; none follows from absence of the old exact registration.",
         "The eighteen-case local-document experiment finds no uniform child controller transport after unregistration: Chromium Blob documents have no controller, and Firefox local-child requests time out while parent controls succeed. Integrate an authenticated parent transport rather than assuming inherited controller delivery.",
-        "The parent-mediated local-document fixture now completes all eighteen reads, with an actual Window/origin handshake and a late-receiver integrity fault control. Production context admission, private-channel ownership through callers, local resource delivery and registration lifetime still need integration and proof."
+        "Production document and popup configuration/content now use an owning-parent channel with native client and generation admission. Prove private-channel/factory ownership through all callers and complete local bootstrap/resource delivery and registration lifetime; fixed-resource relay success does not establish C4."
       ],
       "disposition": "unverified",
       "control_status": {
