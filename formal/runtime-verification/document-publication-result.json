@@ -18,63 +18,135 @@
     {
       "name": "production",
       "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "beginDocumentPublication",
+          "paths": 1,
+          "failedPaths": 0
+        },
+        {
+          "procedure": "cancelDocumentPublication",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
       "exitCode": 0,
       "inputSHA256": "9ac2e9566cc54b8c2393385c48eb81221d6403b72b5c325bfc690668711322a3",
-      "driverSHA256": "063007959d3583ef19e0c8365d0f65c6e753517c21769ee776e6c050a39d4c7d",
-      "outputSHA256": "c6cfcb828fd71a2d005a28f420f5b5218f6d482ec784b0880264df267d24f194",
-      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 2 symbolic tests in total\nRunning symbolic tests: 0.096884\nVerifying one spec of procedure beginDocumentPublication... s Success\nVerifying one spec of procedure cancelDocumentPublication... s Success\nAll specs succeeded: 0.584691"
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "8772a83b48663171bf2c6cde965783ea32be72f4bc22191d6564dbdde853ec42",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 2 symbolic tests in total\nRunning symbolic tests: 0.053803\nVerifying one spec of procedure beginDocumentPublication... s Success\nVerifying one spec of procedure cancelDocumentPublication... s Success\nAll specs succeeded: 0.371689"
     },
     {
       "name": "cancel-keeps-generation",
       "expectedSuccess": false,
+      "checkedProcedures": [
+        {
+          "procedure": "beginDocumentPublication",
+          "paths": 1,
+          "failedPaths": 0
+        },
+        {
+          "procedure": "cancelDocumentPublication",
+          "paths": 1,
+          "failedPaths": 1
+        }
+      ],
       "exitCode": 1,
       "inputSHA256": "128c5ee37216a3aa3b2f29977f6712384c9e2b14dfaa3fecaf5db22f2e05e053",
-      "driverSHA256": "063007959d3583ef19e0c8365d0f65c6e753517c21769ee776e6c050a39d4c7d",
-      "outputSHA256": "5693bfe4692be784aa45a503c3e1616ccaad24511130d15cb3adf7c20a1679be",
-      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 2 symbolic tests in total\nRunning symbolic tests: 0.080942\nVerifying one spec of procedure beginDocumentPublication... s Success\nVerifying one spec of procedure cancelDocumentPublication... f Failure\nThere were failures: 0.504770\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "7069d481a71f29fba324013c96f5d0c9b72480238a1e000391fed28c3fa3b48b",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 2 symbolic tests in total\nRunning symbolic tests: 0.055991\nVerifying one spec of procedure beginDocumentPublication... s Success\nVerifying one spec of procedure cancelDocumentPublication... f Failure\nThere were failures: 0.378823\nAnalysis failures!\n1. Couldn't satisfy postcondition"
     },
     {
       "name": "cancel-keeps-ready",
       "expectedSuccess": false,
+      "checkedProcedures": [
+        {
+          "procedure": "beginDocumentPublication",
+          "paths": 1,
+          "failedPaths": 0
+        },
+        {
+          "procedure": "cancelDocumentPublication",
+          "paths": 1,
+          "failedPaths": 1
+        }
+      ],
       "exitCode": 1,
       "inputSHA256": "b14de6b94ca087da376a5c337efbf5a91403b08012d9e69f11c44f44a8146c87",
-      "driverSHA256": "063007959d3583ef19e0c8365d0f65c6e753517c21769ee776e6c050a39d4c7d",
-      "outputSHA256": "519622c3faab5a67edc4f4e63bc20ea790fbe0d63707459849cef1026509557a",
-      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 2 symbolic tests in total\nRunning symbolic tests: 0.070344\nVerifying one spec of procedure beginDocumentPublication... s Success\nVerifying one spec of procedure cancelDocumentPublication... f Failure\nThere were failures: 0.430166\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "0ba85ae4a0c9f82d383c227a7075e65b0106f546ac0e5d3b6b6183644abe601f",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 2 symbolic tests in total\nRunning symbolic tests: 0.052495\nVerifying one spec of procedure beginDocumentPublication... s Success\nVerifying one spec of procedure cancelDocumentPublication... f Failure\nThere were failures: 0.372620\nAnalysis failures!\n1. Couldn't satisfy postcondition"
     },
     {
       "name": "begin-reuses-generation",
       "expectedSuccess": false,
+      "checkedProcedures": [
+        {
+          "procedure": "beginDocumentPublication",
+          "paths": 1,
+          "failedPaths": 1
+        },
+        {
+          "procedure": "cancelDocumentPublication",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
       "exitCode": 1,
       "inputSHA256": "b47bc480374cd64d3a9f560280f5d37cc154647e00c0747a4706b6899d53f6ab",
-      "driverSHA256": "063007959d3583ef19e0c8365d0f65c6e753517c21769ee776e6c050a39d4c7d",
-      "outputSHA256": "c1a020478ee8fc4c3adec8da078bb0052e13b5d1459bd10810091a27471f7273",
-      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 2 symbolic tests in total\nRunning symbolic tests: 0.054649\nVerifying one spec of procedure beginDocumentPublication... f Failure\nVerifying one spec of procedure cancelDocumentPublication... s Success\nThere were failures: 0.405420\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "6d0d98d7216da2daa321a8e33c02102dfd8f24d50ded05d74ca7939fbc60a282",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 2 symbolic tests in total\nRunning symbolic tests: 0.053724\nVerifying one spec of procedure beginDocumentPublication... f Failure\nVerifying one spec of procedure cancelDocumentPublication... s Success\nThere were failures: 0.382330\nAnalysis failures!\n1. Couldn't satisfy postcondition"
     },
     {
       "name": "begin-keeps-loaded",
       "expectedSuccess": false,
+      "checkedProcedures": [
+        {
+          "procedure": "beginDocumentPublication",
+          "paths": 1,
+          "failedPaths": 1
+        },
+        {
+          "procedure": "cancelDocumentPublication",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
       "exitCode": 1,
       "inputSHA256": "9950a569ed17e43f87aa8e132fb00c8aa7fe79a2a8b0efc0b953b3ef6229dd8e",
-      "driverSHA256": "063007959d3583ef19e0c8365d0f65c6e753517c21769ee776e6c050a39d4c7d",
-      "outputSHA256": "ba1bca22002175a9cd391ce289953f18dae11b0b9a4112567201de00fc9db70c",
-      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 2 symbolic tests in total\nRunning symbolic tests: 0.060141\nVerifying one spec of procedure beginDocumentPublication... f Failure\nVerifying one spec of procedure cancelDocumentPublication... s Success\nThere were failures: 0.393281\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "407618ee5b9a9ac5ef987c5108593380aff40f9f7402112338f9e2251fb56ac3",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 2 symbolic tests in total\nRunning symbolic tests: 0.054414\nVerifying one spec of procedure beginDocumentPublication... f Failure\nVerifying one spec of procedure cancelDocumentPublication... s Success\nThere were failures: 0.346867\nAnalysis failures!\n1. Couldn't satisfy postcondition"
     },
     {
       "name": "begin-corrupts-ready",
       "expectedSuccess": false,
+      "checkedProcedures": [
+        {
+          "procedure": "beginDocumentPublication",
+          "paths": 1,
+          "failedPaths": 1
+        },
+        {
+          "procedure": "cancelDocumentPublication",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
       "exitCode": 1,
       "inputSHA256": "0a328d20923b50f67a3140e1ad143048b3c20898de238f5880ea4ed036fe4b33",
-      "driverSHA256": "063007959d3583ef19e0c8365d0f65c6e753517c21769ee776e6c050a39d4c7d",
-      "outputSHA256": "777333bfbd8485b77e03f06cc81bed26a2a596472f9a4e664e5eef7842a2151c",
-      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 2 symbolic tests in total\nRunning symbolic tests: 0.058349\nVerifying one spec of procedure beginDocumentPublication... f Failure\nVerifying one spec of procedure cancelDocumentPublication... s Success\nThere were failures: 0.451340\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "d9a85481198da5e525f77250cf7369559c9cba2d5c30389a714ece723c0e04e3",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 2 symbolic tests in total\nRunning symbolic tests: 0.054104\nVerifying one spec of procedure beginDocumentPublication... f Failure\nVerifying one spec of procedure cancelDocumentPublication... s Success\nThere were failures: 0.407453\nAnalysis failures!\n1. Couldn't satisfy postcondition"
     }
   ],
   "vacuousAnnotationControl": {
     "disposition": "rejected-by-runner",
     "inputSHA256": "4c40bcd589f5f70eeac3479eac414c8468b25cd8539a7b2cca601053b132ba85",
-    "outputSHA256": "fa7802cd1a2fa0b1fa460efbc54be73fdd430ef4171501c82f9c4f7d232fbc1e",
+    "outputSHA256": "1b75c8cec954b84bf9a4a61a6a462b897158e9b984285d0971cf6fd9d61a90dd",
     "observedProcedureCount": 0
   },
-  "completedAt": "2026-10-31T18:33:07.345Z"
+  "completedAt": "2026-10-31T20:06:07.995Z"
 }

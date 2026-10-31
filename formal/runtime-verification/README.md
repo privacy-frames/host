@@ -92,7 +92,11 @@ arguments even where the abstract publication contract is shared.
 - Stage 4: deductive-mode calibration and verification of the production document
   begin/cancel state functions pass. The generated-specification comparison also
   passes; direct JavaScript verification is selected for this component. Applying
-  the method to complete protocols and their callers remains open.
+  the method to complete protocols and their callers remains open. The
+  [production authority predicate](authority-predicate.md) now has twenty-seven
+  checked heap contracts, eight actual comparison-removal controls and a
+  zero-contract rejection. Caller filtering and asynchronous freshness are still
+  separate obligations.
 - Stage 6: a worker-creation experiment reproduces application-dependent update
   requests in both browsers. See the [maintenance finding](service-worker-maintenance.md).
   The [backend comparison](maintenance-backends.md) also finds limitations of

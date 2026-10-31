@@ -12,21 +12,55 @@
     {
       "name": "stateful-closure",
       "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "getId",
+          "paths": 1,
+          "failedPaths": 0
+        },
+        {
+          "procedure": "reset",
+          "paths": 1,
+          "failedPaths": 0
+        },
+        {
+          "procedure": "makeIdGen",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
       "exitCode": 0,
       "inputSHA256": "32b1829ee190fbf535ab2d4748f1567e039e796fa18e9effeafc2c17651cf308",
-      "driverSHA256": "063007959d3583ef19e0c8365d0f65c6e753517c21769ee776e6c050a39d4c7d",
-      "outputSHA256": "9b561eb50ab5d3b2db379bb0471d21a961deab85f2f08a718366315f823932c3",
-      "outputSummary": "Parsing and compiling...\nSorting:\n\tmakeIdGen : 2\n\tgetId : 3\n\treset : 3Adjusted:\n\tmakeIdGen : 2\n\tgetId : 2\n\treset : 2Preprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 3 symbolic tests in total\nRunning symbolic tests: 0.072947\nVerifying one spec of procedure getId... s Success\nVerifying one spec of procedure reset... s Success\nVerifying one spec of procedure makeIdGen... s Success\nAll specs succeeded: 0.255186"
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "a139b2f7917b341a490f2a6eddfcedca5d56368e36333c39e51d3c5457afc5c9",
+      "outputSummary": "Parsing and compiling...\nSorting:\n\tmakeIdGen : 2\n\tgetId : 3\n\treset : 3Adjusted:\n\tmakeIdGen : 2\n\tgetId : 2\n\treset : 2Preprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 3 symbolic tests in total\nRunning symbolic tests: 0.077969\nVerifying one spec of procedure getId... s Success\nVerifying one spec of procedure reset... s Success\nVerifying one spec of procedure makeIdGen... s Success\nAll specs succeeded: 0.265361"
     },
     {
       "name": "missing-state-update",
       "expectedSuccess": false,
+      "checkedProcedures": [
+        {
+          "procedure": "getId",
+          "paths": 1,
+          "failedPaths": 1
+        },
+        {
+          "procedure": "reset",
+          "paths": 1,
+          "failedPaths": 0
+        },
+        {
+          "procedure": "makeIdGen",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
       "exitCode": 1,
       "inputSHA256": "d2b825e94997099c291c5bdcf9291ff4d124ad1833e9574af3742d3f82ed11cd",
-      "driverSHA256": "063007959d3583ef19e0c8365d0f65c6e753517c21769ee776e6c050a39d4c7d",
-      "outputSHA256": "3663669675f5371579e940bb1d2c6be507cd8e08c20e9836fe69f6e0d9e5a9fd",
-      "outputSummary": "Parsing and compiling...\nSorting:\n\tmakeIdGen : 2\n\tgetId : 3\n\treset : 3Adjusted:\n\tmakeIdGen : 2\n\tgetId : 2\n\treset : 2Preprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 3 symbolic tests in total\nRunning symbolic tests: 0.074309\nVerifying one spec of procedure getId... f Failure\nVerifying one spec of procedure reset... s Success\nVerifying one spec of procedure makeIdGen... s Success\nThere were failures: 0.257093\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "d7f2a874189d7ab1d89b3a3bb28a1bf87bdd32d0234bff538330ef5e399ab558",
+      "outputSummary": "Parsing and compiling...\nSorting:\n\tmakeIdGen : 2\n\tgetId : 3\n\treset : 3Adjusted:\n\tmakeIdGen : 2\n\tgetId : 2\n\treset : 2Preprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 3 symbolic tests in total\nRunning symbolic tests: 0.074906\nVerifying one spec of procedure getId... f Failure\nVerifying one spec of procedure reset... s Success\nVerifying one spec of procedure makeIdGen... s Success\nThere were failures: 0.252192\nAnalysis failures!\n1. Couldn't satisfy postcondition"
     }
   ],
-  "completedAt": "2026-10-31T11:08:40.557Z"
+  "completedAt": "2026-10-31T20:06:04.378Z"
 }

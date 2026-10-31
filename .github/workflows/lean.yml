@@ -104,6 +104,22 @@ jobs:
             .tools/registration-lifetime/*.lean
             .tools/registration-lifetime/*.log
           include-hidden-files: true
+      - name: Verify the production authority predicate and actual omission controls
+        id: authority_predicate
+        run: |
+          rm -f formal/runtime-verification/authority-predicate.json
+          node --test formal/runtime-verification/gillian-report.test.ts
+          npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --types node --target ES2022 --module NodeNext --moduleResolution NodeNext --allowImportingTsExtensions --skipLibCheck formal/runtime-verification/authority-predicate-check.ts
+          node formal/runtime-verification/authority-predicate-check.ts
+      - uses: actions/upload-artifact@v4
+        if: always() && (steps.authority_predicate.outcome == 'success' || steps.authority_predicate.outcome == 'failure')
+        with:
+          name: authority-predicate-contracts
+          path: |
+            formal/runtime-verification/authority-predicate.json
+            .tools/authority-predicate/*.js
+            .tools/authority-predicate/*.log
+          include-hidden-files: true
       - name: Type-check publication generation comparison
         run: npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --types node --target ES2022 --module NodeNext --moduleResolution NodeNext --allowImportingTsExtensions --skipLibCheck formal/runtime-verification/generation-comparison.ts
       - name: Produce verified publication contracts for the backend comparison

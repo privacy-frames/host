@@ -88,11 +88,11 @@
     "formal/publisher-routes.md": "54b1b7cedf2260ff34e264c8827753b1caea113b533c7473926f428111ef6022",
     "formal/route-review/README.md": "def9f578cf05dbd6ded8f518833ba924d81acfce8a9d43fbd003679987cf77bd",
     "formal/route-review/triage.json": "3e5ab07e2747d1d329f13be013bc5268671c054ee8c5470e9e952b8a72a7e855",
-    "formal/runtime-verification/README.md": "bf8c5bfe0b9583bd7d2118a642e8d8605d9004bb35257b67ec7f1eddd00bd00a",
+    "formal/runtime-verification/README.md": "baf6eed1a7474d1cfe1c3cddb67143637fe5697ad48422d861d26adfedeed4d2",
     "formal/runtime-verification/document-publication-check.ts": "53860e7c9687d3c59499d9effbd30afc9b569144c174a786600af2935e65ef7f",
     "formal/runtime-verification/document-publication-compatibility.json": "1088389b2b01cb451f58858438a5b06127813c31733b91a93b35450fb67fe90c",
-    "formal/runtime-verification/document-publication-result.json": "24d6cc5c031dcc70c82830cd89c703bb6d50a2328f8615dc164724c77a2a2aef",
-    "formal/runtime-verification/gillian.ts": "063007959d3583ef19e0c8365d0f65c6e753517c21769ee776e6c050a39d4c7d",
+    "formal/runtime-verification/document-publication-result.json": "53d60db8b0fd747e4c76aa43b4ac05b7ebca11ba3aaf1d17a6df71ad812dce41",
+    "formal/runtime-verification/gillian.ts": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
     "formal/startup/lifecycle-comparison.json": "5c3b7dbfa4335e0132699a0f6d9e9d0c1dce6c2382dab98315b0ed43859c6ac5",
     "formal/web-install-sandbox-fault.md": "dc874f193288fa6f0cbc393d607a49c55e416b1c203267051c0484a3e5a4e3bc",
     "formal/web-install-sandbox-fault.ts": "a806a240ed04d67a74e1bebdc00ff1bbd36f306f62ebd2e00843cf365170aca3",
@@ -179,7 +179,7 @@
     "test/worklet-platform.ts": "1872fe7f40011ec8ce0ef26ef7de59f27720a175de4983755205d608d6c8b7da",
     "formal/runtime-verification/PublicationModel.lean": "73e252a862122b493d8a0e45a1834a0ead1ecdaebf44ceee41cb542b19ac544b",
     "formal/runtime-verification/generation-comparison.ts": "61bc8ca641e2e603b55ce3956e66c4b60e621fd455b09afd54cabf377f566a7a",
-    "formal/runtime-verification/generation-comparison.json": "84cecad33675cc5e9fd8c7dfe5318a5778c69bb1af280e42b7789b7312e647ac",
+    "formal/runtime-verification/generation-comparison.json": "bb66bb1bbcbaa88d97f37af309b081eb11d490df5c18330da804513d1508721a",
     "formal/runtime-verification/service-worker-maintenance.ts": "ebefda0405a24606196232f0435d34f9e501ef1c2f361b3321274389717ef552",
     "formal/runtime-verification/service-worker-maintenance.json": "127491d2af2ccc94efe80f777f99e1b5b3fb035b28161cfb763001189a639d7b",
     "formal/runtime-verification/service-worker-maintenance.md": "380b79595d2c18b52fca86878610f679e1c0d576f49fc8115fca3a8370d0e50c",
@@ -271,7 +271,12 @@
     "formal/runtime-verification/atomic-context-compatibility.json": "731658cca4896ee5c13d5c6ce85cea7924f3af53e8ce2c62fccc0d1186069402",
     "test/context-storage.ts": "f53360d27f088e232c355a59a734e1d0870342edab93d2bccbc54f51759a6563",
     "formal/implementation-mapping.md": "9308c7a49e5e6e05d7aa4109859750f3cb0b226405fc05a041d3d7f6b5d0f13a",
-    "formal/confinement/registry-implementation-traces.json": "3975f9306cd1bf449a7fce9d4f3734b990f07f36c24517d1252625f56bfaf653"
+    "formal/confinement/registry-implementation-traces.json": "3975f9306cd1bf449a7fce9d4f3734b990f07f36c24517d1252625f56bfaf653",
+    "formal/runtime-verification/method-calibration.json": "be6583d59236632d50bdbd113a20d4ab7b987ab8bfa8949cddce2ad42416f943",
+    "formal/runtime-verification/authority-predicate.md": "be5b7c553fc9f0e515a923800e30b7b5855e621e3881ee4f4f90158e76f2e902",
+    "formal/runtime-verification/authority-predicate.json": "bbe289c18c770c0564ca5d02cc6f9ba2eea5170fd1c452bcaa65046657b8c1c4",
+    "formal/runtime-verification/gillian-report.test.ts": "a4d5550e24ac238acb9ab35c3bf4e2aa3833979bd42195d9439a9613230c7fd6",
+    "formal/runtime-verification/authority-predicate-check.ts": "245819db13befe006f57ce873babb7a56c7cf9912d66eae2fa79ec98461af25a"
   },
   "claims": [
     {
@@ -2342,6 +2347,55 @@
       "control_status": {
         "native_control": "recorded",
         "confined_test": "recorded",
+        "fault_control": "recorded"
+      }
+    },
+    {
+      "id": "authority_predicate_contracts",
+      "title": "Owned-record contracts for the actual authority comparator",
+      "disposition": "reviewed-scoped",
+      "preconditions": "Current is absent or an owned ordinary record with current policy version 3; expected is an owned ordinary record. Identity fields are strings, parents are null or strings and policy versions are numeric. Separate and aliased records use distinct contracts. Native actor authentication and current-record filtering remain caller obligations.",
+      "enforcement": "The actual sameAuthority expression compares context ID, application, installation generation, parent, kind, policy version and URL, and rejects a closed expectation. It preserves the owned record properties and prototypes. The checker extracts the production function, erases types and renames function copies for independently reported contracts; it does not substitute an abstract implementation.",
+      "source_paths": ["src/runtime/contexts/model.ts"],
+      "evidence": [
+        {
+          "kind": "deductive_verification",
+          "description": "Twenty-seven production-body heap contracts pass for root/child records, matches, mismatches with other arbitrary fields, cross-parent types, absent current values, aliasing and closed expectations. Arbitrary prototypes and preserved owned data fields are part of the contracts. This does not establish callers, async reads or browser identity.",
+          "paths": [
+            "formal/runtime-verification/authority-predicate-check.ts",
+            "formal/runtime-verification/authority-predicate.json",
+            "formal/runtime-verification/authority-predicate.md",
+            "formal/runtime-verification/gillian.ts"
+          ]
+        },
+        {
+          "kind": "fault_control",
+          "description": "Removing each of the seven actual field comparisons or the closed-expectation check causes its selected postcondition to fail. Two additional controls reject matching root/child records and fail the positive postconditions. Displacing annotations produces zero checked contracts and is rejected. Mutations affect generated verifier inputs only.",
+          "paths": [
+            "formal/runtime-verification/authority-predicate-check.ts",
+            "formal/runtime-verification/authority-predicate.json"
+          ]
+        },
+        {
+          "kind": "discovery",
+          "description": "Five report-parser unit cases check positive multi-outcome reports and reject missing/duplicate/extra procedure reports, malformed/contradictory markers, zero-contract results and inconsistent summaries. Existing calibration, publication and generated-state checks pass with the revised shared driver.",
+          "paths": [
+            "formal/runtime-verification/gillian-report.test.ts",
+            "formal/runtime-verification/method-calibration.json",
+            "formal/runtime-verification/document-publication-result.json",
+            "formal/runtime-verification/generation-comparison.json"
+          ]
+        }
+      ],
+      "open_obligations": [
+        "Prove callers establish normalized owned data records and preserve ownership through all aliases, callbacks and prototype mutation. The heap preconditions are not a proof of their own establishment.",
+        "The comparator alone can accept a closed current snapshot against an open expectation. Verify resolve/resolveWorker filtering, native actor/URL checks and read freshness before composing this result with C6/C7.",
+        "Extraction, function renaming, TypeScript erasure, JavaScript semantics, verifier and solver remain trusted. The pinned image source revision is not identified, and no whole-runtime or browser theorem follows.",
+        "The known C4 maintenance channel and remaining context bootstraps are unaffected. Contract counts and output markers do not establish browser coverage."
+      ],
+      "control_status": {
+        "native_control": "not-recorded",
+        "confined_test": "not-recorded",
         "fault_control": "recorded"
       }
     }

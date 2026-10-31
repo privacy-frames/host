@@ -16,6 +16,58 @@ interface Fixture {
   failedProcedure?: string;
 }
 
+/** Validate named contracts and every path marker, rather than a summary alone. */
+export function checkVerificationReport(
+  output: string,
+  procedures: readonly string[],
+  failedProcedure?: string,
+) {
+  assert(procedures.length > 0, 'A successful zero-contract run is not verification');
+  assert.equal(
+    new Set(procedures).size,
+    procedures.length,
+    'Duplicate expected procedure',
+  );
+  assert(!failedProcedure || procedures.includes(failedProcedure));
+  const lines = output.split(/\r?\n/);
+  const totals = lines.filter((line) =>
+    /^Obtained \d+ symbolic tests in total$/.test(line),
+  );
+  assert.deepEqual(
+    totals,
+    [`Obtained ${procedures.length} symbolic tests in total`],
+    'Wrong number of procedure contracts checked',
+  );
+  const prefix = 'Verifying one spec of procedure ';
+  const reports = lines.filter((line) => line.startsWith(prefix));
+  assert.equal(reports.length, procedures.length, 'Missing or extra procedure reports');
+  const checked = procedures.map((procedure) => {
+    const beginning = prefix + procedure + '... ';
+    const matching = reports.filter((line) => line.startsWith(beginning));
+    assert.equal(matching.length, 1, 'Missing or duplicate outcome for ' + procedure);
+    const parsed = /^((?:[sf] )+)(Success|Failure)$/.exec(
+      matching[0].slice(beginning.length),
+    );
+    assert(parsed, 'Malformed path outcome for ' + procedure);
+    const paths = parsed[1].trim().split(' ');
+    const failedPaths = paths.filter((path) => path === 'f').length;
+    if (procedure === failedProcedure) {
+      assert.equal(parsed[2], 'Failure', 'Expected failed contract: ' + procedure);
+      assert(failedPaths > 0, 'Failed contract has no failing path: ' + procedure);
+    } else {
+      assert.equal(parsed[2], 'Success', 'Unexpected failed contract: ' + procedure);
+      assert.equal(failedPaths, 0, 'Success report contains a failed path: ' + procedure);
+    }
+    return { procedure, paths: paths.length, failedPaths };
+  });
+  const summaries = lines.filter((line) => line.startsWith('All specs succeeded:'));
+  if (failedProcedure) {
+    assert.match(output, /Couldn't satisfy postcondition/);
+    assert.equal(summaries.length, 0, 'Failed report has a successful summary');
+  } else assert.equal(summaries.length, 1, 'Missing or duplicate successful summary');
+  return checked;
+}
+
 export async function verifyFixture(fixture: Fixture) {
   const { directory, name, code, procedures, failedProcedure } = fixture;
   assert(/^[a-z0-9-]+$/.test(name));
@@ -61,22 +113,11 @@ export async function verifyFixture(fixture: Fixture) {
   const output = run.stdout + run.stderr;
   await writeFile(resolve(directory, name + '.log'), output);
   assert.equal(run.status, failedProcedure ? 1 : 0, output);
-  assert(
-    output.includes(`Obtained ${procedures.length} symbolic tests in total`),
-    'Wrong number of procedure contracts checked',
-  );
-  for (const procedure of procedures) {
-    const outcome = procedure === failedProcedure ? 'f Failure' : 's Success';
-    assert(
-      output.includes(`Verifying one spec of procedure ${procedure}... ${outcome}`),
-      `Missing expected verification outcome for ${procedure}: ${output}`,
-    );
-  }
-  if (failedProcedure) assert.match(output, /Couldn't satisfy postcondition/);
-  else assert.match(output, /All specs succeeded:/);
+  const checkedProcedures = checkVerificationReport(output, procedures, failedProcedure);
   return {
     name,
     expectedSuccess: !failedProcedure,
+    checkedProcedures,
     exitCode: run.status,
     inputSHA256: hash(code),
     driverSHA256: hash(await readFile(import.meta.filename, 'utf8')),
