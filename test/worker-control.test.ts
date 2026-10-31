@@ -1,3 +1,4 @@
+import { parseWorkerResource } from '../src/runtime/contexts/worker-resource-protocol.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
@@ -5,7 +6,10 @@ import {
   CONTEXT_POLICY_VERSION,
   type ContextIdentity,
 } from '../src/runtime/contexts/model.ts';
-import { requestWorkerControl } from '../src/runtime/contexts/worker-control.ts';
+import {
+  requestWorkerControl,
+  withWorkerAuthority,
+} from '../src/runtime/contexts/worker-control.ts';
 import { parseWorkerControl } from '../src/runtime/contexts/worker-protocol.ts';
 import type { StoredInstallation } from '../src/runtime/storage.ts';
 import { memoryContextStorage } from './context-storage.ts';
@@ -66,6 +70,7 @@ async function fixture() {
   };
   return {
     contexts,
+    store,
     records,
     root,
     other,
@@ -165,4 +170,101 @@ test('worker control parses own data fields without executing accessors', () => 
     { ...parseWorkerControl({ operation: 'verify', path: [child] }), path: [child] },
     { operation: 'verify', path: [child] },
   );
+});
+
+test('delegated reads revalidate ancestry and installation after the complete asynchronous action', async () => {
+  for (const change of ['close', 'replace'] as const) {
+    const f = await fixture();
+    let entered!: () => void;
+    let release!: () => void;
+    const waiting = new Promise<void>((resolve) => {
+      entered = resolve;
+    });
+    const barrier = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    const result = withWorkerAuthority(
+      f.root,
+      [child, grandchild],
+      f.contexts,
+      async (selected) => {
+        assert.equal(selected.id, 'native-grandchild');
+        entered();
+        await barrier;
+        return new Uint8Array([1, 2, 3]).buffer;
+      },
+      f.store,
+    );
+    await waiting;
+    if (change === 'close') await f.contexts.closeChild(f.root.id, 'app', child);
+    else f.replace();
+    release();
+    await assert.rejects(result, /delegation changed|installation changed/);
+  }
+});
+
+test('delegated actions reject unrelated workers before invoking their resource reader', async () => {
+  const f = await fixture();
+  let calls = 0;
+  await assert.rejects(
+    withWorkerAuthority(
+      f.other,
+      [child],
+      f.contexts,
+      async () => {
+        calls++;
+        return 'forbidden';
+      },
+      f.store,
+    ),
+    /delegation not authorized/,
+  );
+  assert.equal(calls, 0);
+  await assert.rejects(
+    withWorkerAuthority(
+      f.root,
+      [child],
+      f.contexts,
+      async () => {
+        calls++;
+        throw new Error('Missing immutable resource');
+      },
+      f.store,
+    ),
+    /Missing immutable resource/,
+  );
+  assert.equal(calls, 1);
+});
+
+test('worker resource packets copy own header data and reject malformed paths without getters', () => {
+  let accessed = false;
+  const headers = [['accept', 'application/json']];
+  const input = { path: [child], url: 'https://publisher.test/resource', headers };
+  const parsed = parseWorkerResource(input);
+  headers[0][1] = 'changed';
+  assert.equal(parsed.headers[0][1], 'application/json');
+  assert.deepEqual(structuredClone(parsed.path), [child]);
+  for (const path of [null, [absent, 'bad-id'], new Array(1)])
+    assert.throws(() => parseWorkerResource({ ...input, path }), /worker control/);
+  const malicious = {
+    path: [child],
+    url: input.url,
+    get headers() {
+      accessed = true;
+      return [];
+    },
+  };
+  assert.throws(() => parseWorkerResource(malicious), /worker resource/);
+  assert.equal(accessed, false);
+  const pair = Object.defineProperty(['accept', ''], '1', {
+    get() {
+      accessed = true;
+      return '';
+    },
+  });
+  assert.throws(
+    () => parseWorkerResource({ ...input, headers: [pair] }),
+    /worker resource/,
+  );
+  assert.equal(accessed, false);
 });

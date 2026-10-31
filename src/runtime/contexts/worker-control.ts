@@ -26,13 +26,14 @@ export async function closeWorkerChild(
 }
 
 /** Every delegated hop must match an actual native parent/client binding. */
-export async function requestWorkerControl(
+export async function withWorkerAuthority<T>(
   client: Pick<Client, 'id' | 'url' | 'type'> | undefined,
-  packet: unknown,
+  path: unknown,
   contexts: ContextRegistry,
+  action: (client: Pick<Client, 'id' | 'url' | 'type'>) => Promise<T>,
   store = internalRecord({ getApp }),
-): Promise<unknown> {
-  const input = parseWorkerControl(packet);
+): Promise<T> {
+  const input = parseWorkerControl(internalRecord({ operation: 'verify', path }));
   if (!client) throw new Error('Worker control client missing');
   const root = await contexts.resolve(client);
   if (!root || root.kind === 'worklet')
@@ -40,6 +41,8 @@ export async function requestWorkerControl(
   const app = await store.getApp(root.application);
   if (!app || app.generation !== root.installationGeneration)
     throw new Error('Worker installation unavailable');
+  const application = app.id;
+  const generation = app.generation;
   type Actor = { client: Pick<Client, 'id' | 'url' | 'type'>; identity: ContextIdentity };
   const actors: Actor[] = [{ client, identity: root }];
   let selected = actors[0];
@@ -62,13 +65,38 @@ export async function requestWorkerControl(
     };
     actors.push(selected);
   }
-  for (const actor of actors)
-    if (!(await contexts.isCurrent(actor.client, actor.identity)))
-      throw new Error('Worker delegation changed');
-  if ((await store.getApp(app.id))?.generation !== app.generation)
-    throw new Error('Worker installation changed');
-  if (input.operation === 'verify') return internalRecord({ verified: true });
-  return internalRecord({
-    closed: await closeWorkerChild(selected.client, input.id, contexts, store),
-  });
+  async function current() {
+    for (const actor of actors)
+      if (!(await contexts.isCurrent(actor.client, actor.identity)))
+        throw new Error('Worker delegation changed');
+    if ((await store.getApp(application))?.generation !== generation)
+      throw new Error('Worker installation changed');
+  }
+  await current();
+  const result = await action(selected.client);
+  await current();
+  return result;
+}
+
+export async function requestWorkerControl(
+  client: Pick<Client, 'id' | 'url' | 'type'> | undefined,
+  packet: unknown,
+  contexts: ContextRegistry,
+  store = internalRecord({ getApp }),
+): Promise<unknown> {
+  const input = parseWorkerControl(packet);
+  // Closing an actor's child intentionally changes that child's state, not the
+  // selected ancestor chain that must remain valid through this operation.
+  return withWorkerAuthority(
+    client,
+    input.path,
+    contexts,
+    async (selected) => {
+      if (input.operation === 'verify') return internalRecord({ verified: true });
+      return internalRecord({
+        closed: await closeWorkerChild(selected, input.id, contexts, store),
+      });
+    },
+    store,
+  );
 }

@@ -4,6 +4,7 @@ import {
   internalRecord,
 } from '../../shared/primordials.ts';
 import { serveWorkerParent } from './worker-client.ts';
+import type { WorkerResourceRead } from './worker-resource-protocol.ts';
 import type { WorkerControl } from './worker-protocol.ts';
 import type { PolicyTools } from '../enforcement/native.ts';
 import type { ResourceAliases } from '../resource-aliases.ts';
@@ -16,6 +17,7 @@ export interface WorkerFactoryContext {
   baseURL: () => string;
   resources: ResourceAliases;
   control: WorkerControl;
+  read: WorkerResourceRead;
 }
 
 interface QueuedMessage {
@@ -228,6 +230,7 @@ export function createWorkerFactory(
           id,
           context.control,
           () => !lifecycle.closed,
+          context.read,
         );
         // This first native message precedes every message from the returned handle.
         apply(nativePost, worker, [

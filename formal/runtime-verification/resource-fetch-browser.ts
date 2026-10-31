@@ -1,3 +1,4 @@
+import { checkResourceRestart } from './resource-restart.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import http from 'node:http';
@@ -10,7 +11,11 @@ import { provideResourceList } from '../../test/resource-list-input.ts';
 import { servers } from '../../test/server.ts';
 import { testProvenance } from '../../test/provenance.ts';
 
-const sourcePath = 'src/runtime/contexts/window-realm.ts';
+const workerContext = process.env.PF_RESOURCE_CONTEXT === 'worker';
+const sourcePath = workerContext
+  ? 'src/runtime/contexts/worker-realm.ts'
+  : 'src/runtime/contexts/window-realm.ts';
+const guardFile = workerContext ? 'worker-guard.js' : 'guard.js';
 const source = await readFile(sourcePath, 'utf8');
 const needle = '\n      fetchResource,\n';
 assert.equal(source.split(needle).length, 2);
@@ -19,7 +24,9 @@ const hash = (value: Uint8Array | string) =>
 async function guard(altered: boolean) {
   let changes = 0;
   const result = await build({
-    entryPoints: ['src/runtime/guard.ts'],
+    entryPoints: [
+      workerContext ? 'src/runtime/contexts/worker-guard.ts' : 'src/runtime/guard.ts',
+    ],
     bundle: true,
     write: false,
     format: 'iife',
@@ -33,7 +40,7 @@ async function guard(altered: boolean) {
               name: 'test-only-native-fetch-instead-of-resource-message',
               setup(builder: PluginBuild) {
                 builder.onLoad(
-                  { filter: /[/\\]contexts[/\\]window-realm\.ts$/ },
+                  { filter: /[/\\]contexts[/\\](window|worker)-realm\.ts$/ },
                   async ({ path }) => {
                     assert.equal(await readFile(path, 'utf8'), source);
                     changes++;
@@ -51,36 +58,61 @@ async function guard(altered: boolean) {
 }
 const normal = await guard(false),
   altered = await guard(true);
-assert(Buffer.from(normal).equals(await readFile('dist-runtime/guard.js')));
+assert(Buffer.from(normal).equals(await readFile('dist-runtime/' + guardFile)));
 assert.notEqual(hash(normal), hash(altered));
 const integrity =
   'sha256-' + createHash('sha256').update('{"value":21}').digest('base64');
-const script = `
+const task = `
+async function readResources(base) {
+  const request = new Request(new URL('./data.json', base), {
+    headers: {'x-fixture': 'local-header'}, integrity: ${JSON.stringify(integrity)}
+  });
+  const responses = await Promise.all([fetch(request), fetch('./data.json')]);
+  const clone = responses[0].clone();
+  const json = await Promise.all(responses.map(value => value.json()));
+  const binary = Array.from(new Uint8Array(await (await fetch('./bytes.bin')).arrayBuffer()));
+  const wasm = await WebAssembly.instantiateStreaming(fetch('./empty.wasm'), {});
+  let aborted = false;
+  const abort = new AbortController(); abort.abort();
+  try { await fetch('./data.json', {signal: abort.signal}); } catch { aborted = true; }
+  let integrityRefused = false;
+  try { await fetch('./data.json', {integrity:'sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='}); }
+  catch { integrityRefused = true; }
+  return {
+    sum: json[0].value + json[1].value, binary, clone: (await clone.json()).value,
+    url: clone.url, type: clone.type, wasm: wasm.module instanceof WebAssembly.Module,
+    aborted, integrityRefused
+  };
+}`;
+const applicationWorker =
+  task +
+  `
+self.onmessage = async event => {
+  try {
+    postMessage(event.data === '0' ? 'skipped' : JSON.stringify(await readResources(location.href)));
+  } catch (error) { postMessage('failed:' + String(error)); }
+};
+postMessage('ready');`;
+const script = workerContext
+  ? `
+let worker;
+globalThis.resourceFixtureWarm = () => new Promise((resolve, reject) => {
+  worker = new Worker('./resource-worker.js');
+  worker.onerror = event => reject(new Error(event.message));
+  worker.onmessage = event => { if(event.data === 'ready') resolve(); };
+});
+document.querySelector('#run').onclick = () => {
+  worker.onmessage = event => { document.querySelector('#result').textContent = event.data; };
+  worker.postMessage(document.querySelector('#private').value);
+};`
+  : task +
+    `
+globalThis.resourceFixtureWarm = async () => {};
 document.querySelector('#run').onclick = async () => {
   try {
-    if (document.querySelector('#private').value === '0') {
-      document.querySelector('#result').textContent = 'skipped'; return;
-    }
-    const request = new Request(new URL('./data.json', document.baseURI), {
-      headers: {'x-fixture': 'local-header'}, integrity: ${JSON.stringify(integrity)}
-    });
-    const responses = await Promise.all([fetch(request), fetch('./data.json')]);
-    const clone = responses[0].clone();
-    const json = await Promise.all(responses.map(value => value.json()));
-    const binary = Array.from(new Uint8Array(await (await fetch('./bytes.bin')).arrayBuffer()));
-    const wasm = await WebAssembly.instantiateStreaming(fetch('./empty.wasm'), {});
-    let aborted = false;
-    const abort = new AbortController(); abort.abort();
-    try { await fetch('./data.json', {signal: abort.signal}); } catch { aborted = true; }
-    let integrityRefused = false;
-    try { await fetch('./data.json', {integrity:'sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA='}); }
-    catch { integrityRefused = true; }
-    document.querySelector('#result').textContent = JSON.stringify({
-      sum: json[0].value + json[1].value, binary,
-      clone: (await clone.json()).value,
-      url: clone.url, type: clone.type, wasm: wasm.module instanceof WebAssembly.Module, aborted, integrityRefused
-    });
-  } catch (error) { document.querySelector('#result').textContent = 'failed:' + String(error); }
+    document.querySelector('#result').textContent = document.querySelector('#private').value === '0'
+      ? 'skipped' : JSON.stringify(await readResources(document.baseURI));
+  } catch(error) { document.querySelector('#result').textContent = 'failed:' + String(error); }
 };`;
 const assets = {
   '/data.json': {
@@ -108,9 +140,15 @@ const publisher = http.createServer((request, response) => {
   if (asset) {
     response.setHeader('Content-Type', asset.type);
     response.end(Buffer.from(asset.body));
-  } else if (path === '/main.js' || path === '/sw.js') {
+  } else if (path === '/main.js' || path === '/sw.js' || path === '/resource-worker.js') {
     response.setHeader('Content-Type', 'text/javascript');
-    response.end(path === '/main.js' ? script : nativeWorker);
+    response.end(
+      path === '/main.js'
+        ? script
+        : path === '/resource-worker.js'
+          ? applicationWorker
+          : nativeWorker,
+    );
   } else if (path === '/') {
     response.setHeader('Content-Type', 'text/html');
     response.end(
@@ -126,9 +164,16 @@ const origin = `http://127.0.0.1:${address.port}`;
 const runtimeFiles = new Map<string, Uint8Array>();
 const host = await servers({ receiver: false, runtimeFiles });
 const provenance = await testProvenance(import.meta.url);
-const receipt = new URL('./resource-fetch-browser.json', import.meta.url);
+const receipt = new URL(
+  workerContext
+    ? './worker-resource-fetch-browser.json'
+    : './resource-fetch-browser.json',
+  import.meta.url,
+);
 await rm(receipt, { force: true });
 const rows: object[] = [];
+let completed = false;
+let failure: string | undefined;
 async function quiet(page: Page) {
   let count = host.traffic.length + received.length,
     changed = Date.now();
@@ -162,18 +207,35 @@ try {
         ? ['native', 'normal', 'altered']
         : ['native', 'normal']) {
         runtimeFiles.clear();
-        if (mode === 'altered') runtimeFiles.set('/guard.js', altered);
+        if (mode === 'altered') runtimeFiles.set('/' + guardFile, altered);
         for (const bit of ['0', '1']) {
           const context = await browser.newContext();
           try {
             let page: Page;
+            let manager: Page | undefined;
+            const guardErrors: string[] = [];
             const guardHashes: string[] = [];
             context.on('response', (response) => {
-              if (
-                response.url() === 'http://127.0.0.1:4211/runtime/guard.js' &&
-                response.fromServiceWorker()
-              )
-                void response.body().then((body) => guardHashes.push(hash(body)));
+              const selected = workerContext
+                ? /\/__contexts\/[a-f0-9-]{36}\/classic\.js$/.test(response.url())
+                : response.url() === 'http://127.0.0.1:4211/runtime/guard.js';
+              if (selected && response.fromServiceWorker()) {
+                void response
+                  .body()
+                  .then((body) => {
+                    if (workerContext) {
+                      const expected = mode === 'altered' ? altered : normal;
+                      assert(
+                        Buffer.from(body).includes(Buffer.from(expected)),
+                        'Bootstrap guard differs',
+                      );
+                      guardHashes.push(hash(expected));
+                    } else guardHashes.push(hash(body));
+                  })
+                  .catch((error: unknown) => {
+                    guardErrors.push(String(error));
+                  });
+              }
             });
             if (mode === 'native') {
               page = await context.newPage();
@@ -193,13 +255,16 @@ try {
                   );
               });
             } else {
-              const manager = await context.newPage();
+              manager = await context.newPage();
               await manager.goto('http://127.0.0.1:4210/privacy-frames/');
               await manager.getByText('Ready to install.', { exact: true }).waitFor();
               await manager.locator('#app-url').fill(origin + '/');
               await provideResourceList(
                 manager,
-                Object.keys(assets).map((path) => origin + path),
+                [
+                  ...Object.keys(assets),
+                  ...(workerContext ? ['/resource-worker.js'] : []),
+                ].map((path) => origin + path),
               );
               await manager.locator('#install button').click();
               const installed = manager.locator('[data-app]').first();
@@ -209,7 +274,9 @@ try {
               page = await opened;
             }
             await page.locator('#run').waitFor();
+            await page.evaluate(() => Reflect.get(window, 'resourceFixtureWarm')());
             await quiet(page);
+            assert.deepEqual(guardErrors, []);
             if (mode !== 'native')
               assert.deepEqual(guardHashes, [
                 hash(mode === 'altered' ? altered : normal),
@@ -251,7 +318,28 @@ try {
                   ),
                 );
             }
+            let restart: object = {
+              disposition: 'not-run',
+              reason:
+                'No equivalent Firefox termination control established, or not the selected worker case',
+            };
+            if (
+              workerContext &&
+              profile.engine === chromium &&
+              mode === 'normal' &&
+              bit === '1'
+            ) {
+              assert(manager);
+              restart = await checkResourceRestart(
+                manager,
+                page,
+                origin,
+                host.traffic,
+                received,
+              );
+            }
             rows.push({
+              restart,
               browser: profile.engine.name(),
               version: browser.version(),
               forcedStale: profile.stale,
@@ -278,29 +366,51 @@ try {
       await browser.close();
     }
   }
-  const final = await testProvenance(import.meta.url);
-  assert.equal(final.sourceSHA256, provenance.sourceSHA256);
-  assert.deepEqual(final.artifacts, provenance.artifacts);
-  await writeFile(
-    receipt,
-    JSON.stringify(
-      {
-        scope:
-          'Actual installed window fetch and native local-response controls, with selected GET Request/header, clone, binary, Wasm and abort behavior. The forced-stale Firefox control bypasses only the window fetch message adapter. Receiver observations are bounded; other native HTTP paths remain outside this result.',
-        provenance,
-        sourcePath,
-        sourceSHA256: hash(source),
-        normalGuardSHA256: hash(normal),
-        alteredGuardSHA256: hash(altered),
-        observationMilliseconds: 3000,
-        rows,
-        completedAt: new Date().toISOString(),
-      },
-      null,
-      2,
-    ) + '\n',
-  );
+  completed = true;
+} catch (error) {
+  failure = error instanceof Error ? error.stack : String(error);
+  throw error;
 } finally {
-  await host.close();
-  await new Promise<void>((resolve) => publisher.close(() => resolve()));
+  try {
+    const final = await testProvenance(import.meta.url);
+    const stable =
+      final.sourceSHA256 === provenance.sourceSHA256 &&
+      JSON.stringify(final.artifacts) === JSON.stringify(provenance.artifacts);
+    if (!stable) {
+      completed = false;
+      failure = 'Source or artifacts changed during observation';
+    }
+    await writeFile(
+      receipt,
+      JSON.stringify(
+        {
+          context: workerContext ? 'dedicated-worker' : 'window',
+          scope:
+            'Actual installed context fetch and native local-response controls, with selected GET Request/header, clone, binary, Wasm and abort behavior. The forced-stale Firefox control bypasses only the selected context fetch message adapter. Receiver observations are bounded; other native HTTP paths remain outside this result.',
+          completed,
+          failure,
+          provenance,
+          finalProvenance: final,
+          sourceAndArtifactsStable: stable,
+          runnerSHA256: hash(await readFile(import.meta.filename)),
+          restartHelperSHA256: hash(
+            await readFile('formal/runtime-verification/resource-restart.ts'),
+          ),
+          sourcePath,
+          sourceSHA256: hash(source),
+          normalGuardSHA256: hash(normal),
+          alteredGuardSHA256: hash(altered),
+          observationMilliseconds: 3000,
+          rows,
+          completedAt: new Date().toISOString(),
+        },
+        null,
+        2,
+      ) + '\n',
+    );
+    assert(stable, failure || 'Source or artifacts changed');
+  } finally {
+    await host.close();
+    await new Promise<void>((resolve) => publisher.close(() => resolve()));
+  }
 }

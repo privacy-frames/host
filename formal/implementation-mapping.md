@@ -315,3 +315,27 @@ browser-client role. Complete correspondence must connect transaction commit,
 reply delivery, preparation, publication, cancellation and controller replacement
 to the lifecycle model. Closure of a record does not prove native termination or
 cancel an already-admitted effect.
+
+## Worker resource operations
+
+[Worker parent relays](../src/runtime/contexts/worker-client.ts) now carry reads as
+well as control operations. Each relay adds the child ID owned by its factory.
+[withWorkerAuthority](../src/runtime/contexts/worker-control.ts) derives the
+selected actor from the native root sender and stored ancestry, validates the
+chain, runs the asynchronous action, and validates again before returning.
+The [worker resource account](runtime-verification/worker-resource-broker.md)
+records native transport and revocation tests.
+
+| Concrete operation                                       | Required correspondence argument                                                                                                                                                                         |
+| -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Parse the resource request and resolve its ancestor path | Own data fields and stored bindings must establish the selected actor; packet identity claims grant nothing.                                                                                             |
+| Read an immutable context resource                       | The existing resolver checks the selected worker client and admitted generation. A local byte read is a candidate stuttering step for lifecycle state, subject to ownership and browser-effect premises. |
+| Handle an ordinary installation resource                 | Publisher interception can execute application code or start/rebind a publisher executor. Those effects need their own lifecycle transitions; this branch cannot simply be declared silent.              |
+| Buffer and revalidate                                    | Every ancestor and installation generation is checked after the complete body read. Sequential observations still need a grant-point argument.                                                           |
+| Return the reply through each parent                     | Local closure must suppress pending replies. Returned byte buffers and metadata must expose no host authority; the resource adapter constructs native Responses in the receiving realm.                  |
+
+The current Lifecycle model does not represent resource bytes, body streams,
+private reply ports or these pending reader actions. Existing Registry trace
+comparisons therefore do not establish correspondence for this protocol. Its
+proof must account for the two resource branches, delivery and cancellation,
+including effects already queued in a publisher executor.

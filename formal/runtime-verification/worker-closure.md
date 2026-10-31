@@ -4,6 +4,9 @@ Dedicated workers now use a private parent broker for execution-authority checks
 and child closure. Each bootstrap receives two separate ports: the startup port
 closes after script loading, while the broker remains available for later nested
 worker operations. The broker does not require a worker service-worker container.
+It now also relays [resource reads](worker-resource-broker.md) with the same fixed
+child-hop ownership. The controller revalidates authority before and after the
+complete asynchronous operation, including body buffering.
 
 A window sends control requests through its captured native controller client.
 Each parent relay prepends its own host-generated child identifier. The controller
@@ -82,7 +85,7 @@ tasks in both browsers, including offline reloads. Its source and artifact hashe
 match the policy-4 native control and upgrade checks. This historical receipt
 does not validate the policy-5 candidate.
 
-The [policy-5 validation record](worker-policy-validation.json) records a clean
+The historical [policy-5 namespace validation record](worker-policy-validation.json) records a clean
 context-suite invocation, nine worker-control samples, four startup schedules,
 and the [sixteen application comparisons](worker-policy-compatibility.json).
 All eight unchanged applications pass their tasks in both browsers and reload

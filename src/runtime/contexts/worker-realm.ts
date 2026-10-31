@@ -1,3 +1,5 @@
+import { createResourceFetch } from '../resource-fetch.ts';
+import type { WorkerResourceRead } from './worker-resource-protocol.ts';
 import {
   strings,
   internalArray,
@@ -137,11 +139,16 @@ export function prepareWorkerRealm(
   context: WorkerBootstrapMetadata,
   listenerType: 'message' | 'connect',
   control: WorkerControl,
+  read: WorkerResourceRead,
 ) {
   prepareRuntimeIntrinsics();
   const tools = createPolicyTools();
   const { apply, method, accessor, descriptor, propertyOwner, fail } = tools;
   let scriptBase = context.applicationURL;
+  const fetchResource = createResourceFetch(
+    (url, headers) => read([], url, headers),
+    tools,
+  );
   const resources = resourceAliases(
     internalRecord({
       method,
@@ -149,6 +156,7 @@ export function prepareWorkerRealm(
       descriptor,
       apply,
       target: worker,
+      fetchResource,
       baseURL: () => scriptBase,
     }),
   );
@@ -160,6 +168,7 @@ export function prepareWorkerRealm(
       baseURL: () => scriptBase,
       resources,
       control,
+      read,
     }),
   );
   const sharedFactory = createSharedWorkerFactory(

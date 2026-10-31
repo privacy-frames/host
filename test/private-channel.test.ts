@@ -153,3 +153,63 @@ test('a private peer that never replies times out', async () => {
     channel.port2.close();
   }
 });
+
+test('worker parent resource relays fix ancestry and suppress replies after local closure', async () => {
+  const { createWorkerResourceRead, serveWorkerParent } =
+    await import('../src/runtime/contexts/worker-client.ts');
+  const channel = new MessageChannel();
+  const child = '65f0558d-d4dc-47c7-bc3b-946e028f740a';
+  const descendant = '58f0558d-d4dc-47c7-bc3b-946e028f740a';
+  const entered = deferred<void>();
+  const release = deferred<void>();
+  let current = true;
+  let reads = 0;
+  const server = serveWorkerParent(
+    channel.port2,
+    child,
+    async () => {
+      throw new Error('Resource read must not become a control operation');
+    },
+    () => current,
+    async (path, url, headers) => {
+      assert.deepEqual(structuredClone(path), [child, descendant]);
+      assert.equal(url, 'https://publisher.test/data.json');
+      assert.deepEqual(structuredClone(headers), [['accept', 'application/json']]);
+      reads++;
+      if (reads === 2) {
+        entered.resolve();
+        await release.promise;
+      }
+      return { body: new Uint8Array([0, 128, 255]).buffer };
+    },
+  );
+  const client = createPortClient(channel.port1, 1000);
+  const read = createWorkerResourceRead(client.request);
+  try {
+    const value = await read([descendant], 'https://publisher.test/data.json', [
+      ['accept', 'application/json'],
+    ]);
+    assert(
+      value &&
+        typeof value === 'object' &&
+        'body' in value &&
+        value.body instanceof ArrayBuffer,
+    );
+    assert.deepEqual(Array.from(new Uint8Array(value.body)), [0, 128, 255]);
+    const pending = read([descendant], 'https://publisher.test/data.json', [
+      ['accept', 'application/json'],
+    ]);
+    await entered.promise;
+    current = false;
+    release.resolve();
+    await assert.rejects(pending, /Worker parent channel closed/);
+    await assert.rejects(
+      read([], 'https://publisher.test/data.json', []),
+      /Worker parent request refused/,
+    );
+    assert.equal(reads, 2);
+  } finally {
+    client.close();
+    server.close();
+  }
+});

@@ -23,7 +23,7 @@ self.onmessage=async e=>{
   postMessage({bytes:Array.from(new Uint8Array(e.data.buffer||new ArrayBuffer(0))),location:location.href,host:typeof privacyHost==='object'?privacyHost:null,imported:globalThis.importedValue||0});
  }catch(error){postMessage({failure:error.name,message:error.message})}
 };`;
-const nestedCode = `self.onmessage=async e=>{if(e.data.depth){const next=new Worker('nested.js');next.onerror=event=>{event.preventDefault();postMessage({nestedError:event.message})};next.onmessage=event=>{postMessage(event.data);next.terminate()};next.postMessage({...e.data,depth:e.data.depth-1});return}let fetchRefused=false,importsRefused=false;try{await fetch(e.data.target+'/nested-private-marker')}catch{fetchRefused=true}try{importScripts(e.data.target+'/nested-import-private-marker')}catch{importsRefused=true}const alias=Worker.prototype.constructor;let recoveryRefused=false;try{new alias(e.data.target+'/nested-constructor-marker')}catch{recoveryRefused=true}postMessage({value:e.data.value,host:typeof privacyHost==='object'?privacyHost:null,location:location.href,fetchRefused,importsRefused,recoveryRefused,sameConstructor:alias===Worker})};`;
+const nestedCode = `self.onmessage=async e=>{if(e.data.depth){const next=new Worker('nested.js');next.onerror=event=>{event.preventDefault();postMessage({nestedError:event.message})};next.onmessage=event=>{postMessage(event.data);next.terminate()};next.postMessage({...e.data,depth:e.data.depth-1});return}let fetchRefused=false,importsRefused=false;try{await fetch(e.data.target+'/nested-private-marker')}catch{fetchRefused=true}try{importScripts(e.data.target+'/nested-import-private-marker')}catch{importsRefused=true}const alias=Worker.prototype.constructor;let recoveryRefused=false;try{new alias(e.data.target+'/nested-constructor-marker')}catch{recoveryRefused=true}const resource=await(await fetch(new URL('./data.json',location.href))).json();postMessage({value:e.data.value,resource:resource.value,host:typeof privacyHost==='object'?privacyHost:null,location:location.href,fetchRefused,importsRefused,recoveryRefused,sameConstructor:alias===Worker})};`;
 const tlaCode = `const value=await new Promise(resolve=>self.onmessage=e=>resolve(e.data));postMessage({value,host:typeof privacyHost==='object'?privacyHost:null});`;
 const tlaListenerCode = `const value=await new Promise(resolve=>self.addEventListener('message',e=>resolve(e.data),{once:true}));postMessage({value,host:typeof privacyHost==='object'?privacyHost:null});`;
 const files: Record<string, [string, string]> = {
@@ -58,6 +58,8 @@ globalThis.workerFixtureReady = true;
     'text/javascript',
     `import {value} from './helper-module.js';globalThis.importedValue=value;${workerCode}`,
   ],
+  '/workers/data.json': ['application/json', '{"value":42}'],
+  '/workers/directory/data.json': ['application/json', '{"value":42}'],
   '/workers/helper.js': ['text/javascript', 'globalThis.importedValue=13;'],
   '/workers/helper-module.js': ['text/javascript', 'export const value=13;'],
   '/workers/nested.js': ['text/javascript', nestedCode],
@@ -209,7 +211,7 @@ try {
         await provideResourceList(
           manager,
           Object.keys(files)
-            .filter((file) => file.endsWith('.js') && !file.endsWith('/uninstalled.js'))
+            .filter((file) => !file.endsWith('/') && !file.endsWith('/uninstalled.js'))
             .map((file) => publisherURL + file.replace('/workers/', path)),
         );
         await manager.locator('#install button').click();
@@ -432,6 +434,7 @@ try {
       }
       if (nested) {
         assert.equal(nested.nested.value, 71);
+        assert.equal(nested.nested.resource, 42);
         assert.equal(nested.nested.host.application, nested.host.application);
         assert.equal(nested.nested.host.context, 'dedicated-worker');
         assert.equal(nested.nested.fetchRefused, true);

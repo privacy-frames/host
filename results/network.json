@@ -1,9 +1,9 @@
 {
   "provenance": {
-    "capturedAt": "2026-10-31T22:20:52.430Z",
-    "revision": "9a6878f3d53cdcdcb7a826204af5e455e4094ab6",
+    "capturedAt": "2026-10-31T23:07:44.141Z",
+    "revision": "17e4589f3b75baea17fbd6bddf49bea55746ade8",
     "dirty": true,
-    "sourceSHA256": "ea7b9ad070ee89858bda19835961ece7b3067b487bbd1fa008becab95e1a6904",
+    "sourceSHA256": "5d37f3c7765c33924801c8a111c279561df79277ccc7e97463c125c32e735fcb",
     "runner": "test/network.ts",
     "runnerSHA256": "8f0ecb32acf35593c17be437c84929041d2588af47ead6af8305cc53b77c8344",
     "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
@@ -16,22 +16,22 @@
       "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-manager/sw.js": "b56505dfcb35410621414c0b80258146ba8fc5c527275b7145e2a81d621fcf0c",
+      "dist-manager/sw.js": "6bdacf5a88e7e58df4547ded1437d8907831941d3f16820080937346fb8fb8d5",
       "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
       "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
       "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
-      "dist-runtime/document-guard.js": "c83cd58707b96b57ea4c78e7ea3915eea9a1a128f05f6bfd96f24fa424bb3b4b",
-      "dist-runtime/guard.js": "e4a780bec97aab3b5a1124e23d9d141f0d751f6b58631e3dc35697f2a4dc94a6",
+      "dist-runtime/document-guard.js": "00759a1fc93d9b7e856bb5e7591d93f38f04f7c8d2e9884cf50829e0b5ce3e00",
+      "dist-runtime/guard.js": "f4ad98f224fcdf9577da6a7e68c70706e280f00d46fb2c3b878673e87c0839df",
       "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
       "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
-      "dist-runtime/publisher-worker-guard.js": "64d95806d394c610e3bfa84502a5ebada1b4e4c9ea2724e5133fff7045d211fb",
+      "dist-runtime/publisher-worker-guard.js": "9966ebc2590a74ccc6d73b0fbfb047c899e708190491fb8a26e6764cb18379b7",
       "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-runtime/shared-worker-guard.js": "58cb6576594a2fb131687b674c3c9329638691b11dff123c81bbb7679bd40132",
-      "dist-runtime/sw.js": "a529732d682c87972ce9df714344027272a0dcb9457fecebbca6292a686f487e",
-      "dist-runtime/worker-guard.js": "bf0b5667842d5b1f7e4293698465fcebad35b64c9c39afcbe585ac46cfb87dae",
+      "dist-runtime/shared-worker-guard.js": "1611f1dd6303093c0cb9576a50f66574f4f201d9ba56979fe045975585d83f8c",
+      "dist-runtime/sw.js": "9511822df7ad9f0ed29e7c8f3c49afea0a436f24159df389d616d444cbdb3f66",
+      "dist-runtime/worker-guard.js": "f780e48f210325c060dcb297b4de71ff325c53d99ccf9fc1051ee0e823dd3110",
       "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
       "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
@@ -39,7 +39,7 @@
       "dist-installation/installation.js": "6cd0a3f3f4494dee2db059f3b1a5feb62017a39399a22e2d3774d0319fa1e3f3"
     }
   },
-  "date": "2026-10-31T22:20:52.439Z",
+  "date": "2026-10-31T23:07:44.150Z",
   "checks": [
     "Runtime network, cache fetch, speculative links/rules, sockets and RTC refused with zero receiver TCP or STUN UDP traffic",
     "Independent syscall tracing observes real DNS-query sends for the unrestricted control and none for the private marker",
@@ -186,121 +186,121 @@
     "queryRecords": [
       {
         "phase": "control",
-        "label": "pfrt-control-mvwyt9hz",
+        "label": "pfrt-control-mvx0hj12",
         "syscall": "sendmmsg",
         "sent": 2
       },
       {
         "phase": "control",
-        "label": "pfrt-control-mvwyt9hz",
+        "label": "pfrt-control-mvx0hj12",
         "syscall": "sendmmsg",
         "sent": 2
       },
       {
         "phase": "control",
-        "label": "pfrt-control-mvwyt9hz",
+        "label": "pfrt-control-mvx0hj12",
         "syscall": "sendmmsg",
         "sent": 2
       },
       {
         "phase": "control",
-        "label": "pfrt-control-mvwyt9hz",
+        "label": "pfrt-control-mvx0hj12",
         "syscall": "sendmmsg",
         "sent": 2
       },
       {
         "phase": "control",
-        "label": "pfrt-control-mvwyt9hz",
+        "label": "pfrt-control-mvx0hj12",
         "syscall": "sendmmsg",
         "sent": 2
       },
       {
         "phase": "control",
-        "label": "pfrt-control-mvwyt9hz",
+        "label": "pfrt-control-mvx0hj12",
         "syscall": "sendmmsg",
         "sent": 2
       },
       {
         "phase": "control",
-        "label": "pfrt-control-worker-mvwyt9hz",
+        "label": "pfrt-control-worker-mvx0hj12",
         "syscall": "sendmmsg",
         "sent": 2
       },
       {
         "phase": "control",
-        "label": "pfrt-control-worker-mvwyt9hz",
+        "label": "pfrt-control-worker-mvx0hj12",
         "syscall": "sendmmsg",
         "sent": 2
       },
       {
         "phase": "control",
-        "label": "pfrt-control-worker-mvwyt9hz",
+        "label": "pfrt-control-worker-mvx0hj12",
         "syscall": "sendmmsg",
         "sent": 2
       },
       {
         "phase": "control",
-        "label": "pfrt-control-worker-mvwyt9hz",
+        "label": "pfrt-control-worker-mvx0hj12",
         "syscall": "sendmmsg",
         "sent": 2
       },
       {
         "phase": "control",
-        "label": "pfrt-control-mvwyt9hz",
+        "label": "pfrt-control-mvx0hj12",
         "syscall": "sendmmsg",
         "sent": 2
       },
       {
         "phase": "control",
-        "label": "pfrt-control-mvwyt9hz",
+        "label": "pfrt-control-mvx0hj12",
         "syscall": "sendmmsg",
         "sent": 2
       },
       {
         "phase": "control",
-        "label": "pfrt-control-mvwyt9hz",
+        "label": "pfrt-control-mvx0hj12",
         "syscall": "sendmmsg",
         "sent": 2
       },
       {
         "phase": "control",
-        "label": "pfrt-control-mvwyt9hz",
+        "label": "pfrt-control-mvx0hj12",
         "syscall": "sendmmsg",
         "sent": 2
       },
       {
         "phase": "control",
-        "label": "pfrt-control-mvwyt9hz",
+        "label": "pfrt-control-mvx0hj12",
         "syscall": "sendmmsg",
         "sent": 2
       },
       {
         "phase": "control",
-        "label": "pfrt-control-mvwyt9hz",
+        "label": "pfrt-control-mvx0hj12",
         "syscall": "sendmmsg",
         "sent": 2
       },
       {
         "phase": "control",
-        "label": "pfrt-control-module-mvwyt9hz",
+        "label": "pfrt-control-module-mvx0hj12",
         "syscall": "sendmmsg",
         "sent": 2
       },
       {
         "phase": "control",
-        "label": "pfrt-control-module-mvwyt9hz",
+        "label": "pfrt-control-module-mvx0hj12",
         "syscall": "sendmmsg",
         "sent": 2
       },
       {
         "phase": "control",
-        "label": "pfrt-control-module-mvwyt9hz",
+        "label": "pfrt-control-module-mvx0hj12",
         "syscall": "sendmmsg",
         "sent": 2
       },
       {
         "phase": "control",
-        "label": "pfrt-control-module-mvwyt9hz",
+        "label": "pfrt-control-module-mvx0hj12",
         "syscall": "sendmmsg",
         "sent": 2
       }

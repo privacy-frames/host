@@ -18,13 +18,15 @@ import {
 } from '../shared/types.ts';
 import {
   parseResourceRequest,
+  resourceMessage,
   readInstalledResource,
   readPublicInstallationResource,
 } from './resource-broker.ts';
 import { admitInstallation } from './admission.ts';
 import { CONTEXT_POLICY_VERSION, ContextRegistry } from './contexts/model.ts';
 import type { WorkerBootstrapMetadata } from './contexts/model.ts';
-import { requestWorkerControl } from './contexts/worker-control.ts';
+import { parseWorkerResource } from './contexts/worker-resource-protocol.ts';
+import { requestWorkerControl, withWorkerAuthority } from './contexts/worker-control.ts';
 import { readDocumentRequest } from './contexts/document-request.ts';
 import { workerResourceAliases } from './contexts/worker-aliases.ts';
 import { controllerContextStorage } from './contexts/controller-store.ts';
@@ -179,6 +181,35 @@ async function runtimeIdentity(
   }
   return null;
 }
+async function readWorkerResource(
+  client: Pick<Client, 'id' | 'url' | 'type'> | undefined,
+  packet: unknown,
+) {
+  const input = parseWorkerResource(packet);
+  const request = parseResourceRequest(input);
+  return withWorkerAuthority(client, input.path, contexts, async (actor) => {
+    const result =
+      (await contextResourceResponse(
+        { request, clientId: actor.id, resultingClientId: '' },
+        contexts,
+        BASE,
+      )) ??
+      (await readInstalledResource(
+        actor,
+        request,
+        contexts,
+        BASE,
+        (app, resource, value) =>
+          publishers.intercept(
+            { request, clientId: actor.id, resultingClientId: '' },
+            app,
+            resource,
+            value,
+          ),
+      ));
+    return resourceMessage(request, result);
+  });
+}
 let managementQueue = Promise.resolve();
 worker.addEventListener('message', (event) => {
   const packet: unknown = event.data;
@@ -219,30 +250,9 @@ worker.addEventListener('message', (event) => {
             port.postMessage({ ok: true, value });
             return;
           }
-          const request = parseResourceRequest(packet);
-          const result = await readInstalledResource(
-            client,
-            request,
-            contexts,
-            BASE,
-            (app, resource, value) =>
-              publishers.intercept(
-                { request, clientId: client?.id || '', resultingClientId: '' },
-                app,
-                resource,
-                value,
-              ),
-          );
-          if (result.type === 'error') throw new Error('Resource response refused');
-          const body = await result.arrayBuffer();
-          const value = {
-            url: request.url,
-            status: result.status,
-            statusText: result.statusText,
-            headers: Array.from(result.headers),
-            body,
-          };
-          record('installed', request.url, request.method);
+          const value = await readWorkerResource(client, packet);
+          const { body } = value;
+          record('installed', value.url, 'GET');
           port.postMessage({ ok: true, value }, [body]);
         } catch (error) {
           if (packet.type === INSTALLED_RESOURCE_REQUEST)
@@ -377,11 +387,25 @@ worker.addEventListener('fetch', (event) => {
             url.href !== new URL('__contexts/control', applicationURL(app, BASE)).href
           )
             return Response.error();
-          const value = await requestWorkerControl(
-            client,
-            await readDocumentRequest(req),
-            contexts,
-          );
+          const packet = await readDocumentRequest(req);
+          if (
+            packet &&
+            typeof packet === 'object' &&
+            'type' in packet &&
+            packet.type === INSTALLED_RESOURCE_REQUEST
+          ) {
+            const value = await readWorkerResource(client, packet);
+            record('installed', value.url, 'GET');
+            return new Response(
+              [204, 205, 304].includes(value.status) ? null : value.body,
+              {
+                status: value.status,
+                statusText: value.statusText,
+                headers: value.headers,
+              },
+            );
+          }
+          const value = await requestWorkerControl(client, packet, contexts);
           return response(JSON.stringify(value), 'application/json');
         } catch {
           return Response.error();

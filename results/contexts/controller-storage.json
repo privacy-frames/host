@@ -1,9 +1,9 @@
 {
   "provenance": {
-    "capturedAt": "2026-10-31T22:10:48.898Z",
-    "revision": "9a6878f3d53cdcdcb7a826204af5e455e4094ab6",
+    "capturedAt": "2026-10-31T22:54:00.692Z",
+    "revision": "17e4589f3b75baea17fbd6bddf49bea55746ade8",
     "dirty": true,
-    "sourceSHA256": "ea7b9ad070ee89858bda19835961ece7b3067b487bbd1fa008becab95e1a6904",
+    "sourceSHA256": "5d37f3c7765c33924801c8a111c279561df79277ccc7e97463c125c32e735fcb",
     "runner": "test/controller-context-storage.ts",
     "runnerSHA256": "3dd61db73a414d9ce8ac6e723d7f89242a4fc3231cea4426f3c72d2e444880c6",
     "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
@@ -16,22 +16,22 @@
       "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-manager/sw.js": "b56505dfcb35410621414c0b80258146ba8fc5c527275b7145e2a81d621fcf0c",
+      "dist-manager/sw.js": "6bdacf5a88e7e58df4547ded1437d8907831941d3f16820080937346fb8fb8d5",
       "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
       "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
       "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
-      "dist-runtime/document-guard.js": "c83cd58707b96b57ea4c78e7ea3915eea9a1a128f05f6bfd96f24fa424bb3b4b",
-      "dist-runtime/guard.js": "e4a780bec97aab3b5a1124e23d9d141f0d751f6b58631e3dc35697f2a4dc94a6",
+      "dist-runtime/document-guard.js": "00759a1fc93d9b7e856bb5e7591d93f38f04f7c8d2e9884cf50829e0b5ce3e00",
+      "dist-runtime/guard.js": "f4ad98f224fcdf9577da6a7e68c70706e280f00d46fb2c3b878673e87c0839df",
       "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
       "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
-      "dist-runtime/publisher-worker-guard.js": "64d95806d394c610e3bfa84502a5ebada1b4e4c9ea2724e5133fff7045d211fb",
+      "dist-runtime/publisher-worker-guard.js": "9966ebc2590a74ccc6d73b0fbfb047c899e708190491fb8a26e6764cb18379b7",
       "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-runtime/shared-worker-guard.js": "58cb6576594a2fb131687b674c3c9329638691b11dff123c81bbb7679bd40132",
-      "dist-runtime/sw.js": "a529732d682c87972ce9df714344027272a0dcb9457fecebbca6292a686f487e",
-      "dist-runtime/worker-guard.js": "bf0b5667842d5b1f7e4293698465fcebad35b64c9c39afcbe585ac46cfb87dae",
+      "dist-runtime/shared-worker-guard.js": "1611f1dd6303093c0cb9576a50f66574f4f201d9ba56979fe045975585d83f8c",
+      "dist-runtime/sw.js": "9511822df7ad9f0ed29e7c8f3c49afea0a436f24159df389d616d444cbdb3f66",
+      "dist-runtime/worker-guard.js": "f780e48f210325c060dcb297b4de71ff325c53d99ccf9fc1051ee0e823dd3110",
       "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
       "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
@@ -60,12 +60,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "770bdb81-4166-4c3b-bd16-e83ae84590a2"
+          "instance": "6441ed06-7b99-4748-b60b-b96de2973bd9"
         }
       ],
       "identities": [
@@ -79,13 +79,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/normal-false-client/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-false-client/worker"
           },
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         }
       ]
     },
@@ -98,12 +98,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "770bdb81-4166-4c3b-bd16-e83ae84590a2"
+          "instance": "6441ed06-7b99-4748-b60b-b96de2973bd9"
         }
       ],
       "identities": [
@@ -117,13 +117,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/normal-false-context/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-false-context/worker"
           },
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         }
       ]
     },
@@ -136,12 +136,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "770bdb81-4166-4c3b-bd16-e83ae84590a2"
+          "instance": "6441ed06-7b99-4748-b60b-b96de2973bd9"
         }
       ],
       "identities": [
@@ -155,13 +155,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/normal-false-same/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-false-same/worker"
           },
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         }
       ]
     },
@@ -174,11 +174,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": true,
-          "instance": "770bdb81-4166-4c3b-bd16-e83ae84590a2"
+          "instance": "6441ed06-7b99-4748-b60b-b96de2973bd9"
         }
       ],
       "identities": [
@@ -192,9 +192,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/normal-false-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-false-independent/worker"
           },
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": true,
@@ -206,9 +206,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/normal-false-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-false-independent/worker"
           },
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         }
       ]
     },
@@ -221,12 +221,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "3baad3dc-1d43-4399-9c7e-8b8f87055244"
+          "instance": "9607eeee-a8c1-4fa8-a58f-e5b25e31cfac"
         }
       ],
       "identities": [
@@ -240,13 +240,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/normal-true-client/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-true-client/worker"
           },
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         }
       ]
     },
@@ -259,12 +259,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "3baad3dc-1d43-4399-9c7e-8b8f87055244"
+          "instance": "9607eeee-a8c1-4fa8-a58f-e5b25e31cfac"
         }
       ],
       "identities": [
@@ -278,13 +278,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/normal-true-context/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-true-context/worker"
           },
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         }
       ]
     },
@@ -296,13 +296,13 @@
       "collision": "same",
       "replies": [
         {
-          "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
-        },
-        {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "3baad3dc-1d43-4399-9c7e-8b8f87055244"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
+        },
+        {
+          "ok": true,
+          "instance": "9607eeee-a8c1-4fa8-a58f-e5b25e31cfac"
         }
       ],
       "identities": [
@@ -316,13 +316,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/normal-true-same/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-true-same/worker"
           },
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         }
       ]
     },
@@ -335,11 +335,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": true,
-          "instance": "3baad3dc-1d43-4399-9c7e-8b8f87055244"
+          "instance": "9607eeee-a8c1-4fa8-a58f-e5b25e31cfac"
         }
       ],
       "identities": [
@@ -353,9 +353,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/normal-true-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-true-independent/worker"
           },
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": true,
@@ -367,9 +367,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/normal-true-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-true-independent/worker"
           },
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         }
       ]
     },
@@ -381,12 +381,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "7a6469bb-83c6-4048-b2bc-1c7b4862e611"
+          "instance": "63ffcf92-a8c9-4e75-afcd-3f4aa1abfcab"
         }
       ],
       "result": {
@@ -399,9 +399,9 @@
           "parent": "parent",
           "kind": "dedicated-worker",
           "state": "closed",
-          "url": "http://127.0.0.1:40161/context-store/close-bind-0/worker"
+          "url": "http://127.0.0.1:45831/context-store/close-bind-0/worker"
         },
-        "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+        "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
       }
     },
     {
@@ -412,12 +412,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "7a6469bb-83c6-4048-b2bc-1c7b4862e611"
+          "instance": "63ffcf92-a8c9-4e75-afcd-3f4aa1abfcab"
         }
       ],
       "result": {
@@ -430,9 +430,9 @@
           "parent": "parent",
           "kind": "dedicated-worker",
           "state": "closed",
-          "url": "http://127.0.0.1:40161/context-store/close-bind-1/worker"
+          "url": "http://127.0.0.1:45831/context-store/close-bind-1/worker"
         },
-        "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+        "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
       }
     },
     {
@@ -443,12 +443,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "7a6469bb-83c6-4048-b2bc-1c7b4862e611"
+          "instance": "63ffcf92-a8c9-4e75-afcd-3f4aa1abfcab"
         }
       ],
       "result": {
@@ -461,9 +461,9 @@
           "parent": "parent",
           "kind": "dedicated-worker",
           "state": "closed",
-          "url": "http://127.0.0.1:40161/context-store/close-bind-2/worker"
+          "url": "http://127.0.0.1:45831/context-store/close-bind-2/worker"
         },
-        "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+        "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
       }
     },
     {
@@ -474,12 +474,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "7a6469bb-83c6-4048-b2bc-1c7b4862e611"
+          "instance": "63ffcf92-a8c9-4e75-afcd-3f4aa1abfcab"
         }
       ],
       "result": {
@@ -492,9 +492,9 @@
           "parent": "parent",
           "kind": "dedicated-worker",
           "state": "closed",
-          "url": "http://127.0.0.1:40161/context-store/close-bind-3/worker"
+          "url": "http://127.0.0.1:45831/context-store/close-bind-3/worker"
         },
-        "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+        "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
       }
     },
     {
@@ -505,12 +505,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "7a6469bb-83c6-4048-b2bc-1c7b4862e611"
+          "instance": "63ffcf92-a8c9-4e75-afcd-3f4aa1abfcab"
         }
       ],
       "result": {
@@ -523,9 +523,9 @@
           "parent": "parent",
           "kind": "dedicated-worker",
           "state": "closed",
-          "url": "http://127.0.0.1:40161/context-store/close-bind-4/worker"
+          "url": "http://127.0.0.1:45831/context-store/close-bind-4/worker"
         },
-        "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+        "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
       }
     },
     {
@@ -536,12 +536,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "7a6469bb-83c6-4048-b2bc-1c7b4862e611"
+          "instance": "63ffcf92-a8c9-4e75-afcd-3f4aa1abfcab"
         }
       ],
       "result": {
@@ -554,9 +554,9 @@
           "parent": "parent",
           "kind": "dedicated-worker",
           "state": "closed",
-          "url": "http://127.0.0.1:40161/context-store/close-bind-5/worker"
+          "url": "http://127.0.0.1:45831/context-store/close-bind-5/worker"
         },
-        "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+        "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
       }
     },
     {
@@ -567,12 +567,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "7a6469bb-83c6-4048-b2bc-1c7b4862e611"
+          "instance": "63ffcf92-a8c9-4e75-afcd-3f4aa1abfcab"
         }
       ],
       "result": {
@@ -585,9 +585,9 @@
           "parent": "parent",
           "kind": "dedicated-worker",
           "state": "closed",
-          "url": "http://127.0.0.1:40161/context-store/close-bind-6/worker"
+          "url": "http://127.0.0.1:45831/context-store/close-bind-6/worker"
         },
-        "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+        "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
       }
     },
     {
@@ -598,12 +598,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "7a6469bb-83c6-4048-b2bc-1c7b4862e611"
+          "instance": "63ffcf92-a8c9-4e75-afcd-3f4aa1abfcab"
         }
       ],
       "result": {
@@ -616,9 +616,9 @@
           "parent": "parent",
           "kind": "dedicated-worker",
           "state": "closed",
-          "url": "http://127.0.0.1:40161/context-store/close-bind-7/worker"
+          "url": "http://127.0.0.1:45831/context-store/close-bind-7/worker"
         },
-        "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+        "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
       }
     },
     {
@@ -629,12 +629,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "7a6469bb-83c6-4048-b2bc-1c7b4862e611"
+          "instance": "63ffcf92-a8c9-4e75-afcd-3f4aa1abfcab"
         }
       ],
       "result": {
@@ -647,9 +647,9 @@
           "parent": "parent",
           "kind": "dedicated-worker",
           "state": "closed",
-          "url": "http://127.0.0.1:40161/context-store/close-bind-8/worker"
+          "url": "http://127.0.0.1:45831/context-store/close-bind-8/worker"
         },
-        "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+        "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
       }
     },
     {
@@ -660,12 +660,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "7a6469bb-83c6-4048-b2bc-1c7b4862e611"
+          "instance": "63ffcf92-a8c9-4e75-afcd-3f4aa1abfcab"
         }
       ],
       "result": {
@@ -678,9 +678,9 @@
           "parent": "parent",
           "kind": "dedicated-worker",
           "state": "closed",
-          "url": "http://127.0.0.1:40161/context-store/close-bind-9/worker"
+          "url": "http://127.0.0.1:45831/context-store/close-bind-9/worker"
         },
-        "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+        "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
       }
     },
     {
@@ -691,12 +691,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "7a6469bb-83c6-4048-b2bc-1c7b4862e611"
+          "instance": "63ffcf92-a8c9-4e75-afcd-3f4aa1abfcab"
         }
       ],
       "result": {
@@ -709,9 +709,9 @@
           "parent": "parent",
           "kind": "dedicated-worker",
           "state": "closed",
-          "url": "http://127.0.0.1:40161/context-store/close-bind-10/worker"
+          "url": "http://127.0.0.1:45831/context-store/close-bind-10/worker"
         },
-        "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+        "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
       }
     },
     {
@@ -722,12 +722,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "7a6469bb-83c6-4048-b2bc-1c7b4862e611"
+          "instance": "63ffcf92-a8c9-4e75-afcd-3f4aa1abfcab"
         }
       ],
       "result": {
@@ -740,9 +740,9 @@
           "parent": "parent",
           "kind": "dedicated-worker",
           "state": "closed",
-          "url": "http://127.0.0.1:40161/context-store/close-bind-11/worker"
+          "url": "http://127.0.0.1:45831/context-store/close-bind-11/worker"
         },
-        "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+        "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
       }
     },
     {
@@ -760,9 +760,9 @@
             "parent": "other-parent",
             "kind": "dedicated-worker",
             "state": "closed",
-            "url": "http://127.0.0.1:40161/context-store/normal-lifecycle/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-lifecycle/worker"
           },
-          "instance": "3baad3dc-1d43-4399-9c7e-8b8f87055244"
+          "instance": "9607eeee-a8c1-4fa8-a58f-e5b25e31cfac"
         },
         "after": {
           "ok": true,
@@ -774,14 +774,14 @@
             "parent": "other-parent",
             "kind": "dedicated-worker",
             "state": "closed",
-            "url": "http://127.0.0.1:40161/context-store/normal-lifecycle/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-lifecycle/worker"
           },
-          "instance": "7a6469bb-83c6-4048-b2bc-1c7b4862e611"
+          "instance": "63ffcf92-a8c9-4e75-afcd-3f4aa1abfcab"
         },
         "aborted": {
           "ok": false,
           "error": "Error: Context transaction aborted",
-          "instance": "b8c4a1a6-6a21-410c-80b7-c858ba406901"
+          "instance": "56cd0773-2d9a-4a62-97d1-c91ee67b8c70"
         }
       }
     },
@@ -794,11 +794,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         },
         {
           "ok": true,
-          "instance": "09eb4a7b-1980-4183-91fb-d14411064fbc"
+          "instance": "c6568c11-ff2e-4815-bd64-55407ceceb4b"
         }
       ],
       "identities": [
@@ -807,18 +807,18 @@
           "value": {
             "policyVersion": 5,
             "installationGeneration": "generation",
-            "id": "right-context",
+            "id": "left-context",
             "application": "application",
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/client-fault-false-client/worker"
+            "url": "http://127.0.0.1:45831/context-store/client-fault-false-client/worker"
           },
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         },
         {
           "ok": true,
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         }
       ]
     },
@@ -831,12 +831,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         },
         {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "09eb4a7b-1980-4183-91fb-d14411064fbc"
+          "instance": "c6568c11-ff2e-4815-bd64-55407ceceb4b"
         }
       ],
       "identities": [
@@ -850,13 +850,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/client-fault-false-context/worker"
+            "url": "http://127.0.0.1:45831/context-store/client-fault-false-context/worker"
           },
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         },
         {
           "ok": true,
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         }
       ]
     },
@@ -869,11 +869,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         },
         {
           "ok": true,
-          "instance": "09eb4a7b-1980-4183-91fb-d14411064fbc"
+          "instance": "c6568c11-ff2e-4815-bd64-55407ceceb4b"
         }
       ],
       "identities": [
@@ -887,13 +887,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/client-fault-false-same/worker"
+            "url": "http://127.0.0.1:45831/context-store/client-fault-false-same/worker"
           },
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         },
         {
           "ok": true,
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         }
       ]
     },
@@ -906,11 +906,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         },
         {
           "ok": true,
-          "instance": "09eb4a7b-1980-4183-91fb-d14411064fbc"
+          "instance": "c6568c11-ff2e-4815-bd64-55407ceceb4b"
         }
       ],
       "identities": [
@@ -924,9 +924,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/client-fault-false-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/client-fault-false-independent/worker"
           },
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         },
         {
           "ok": true,
@@ -938,9 +938,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/client-fault-false-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/client-fault-false-independent/worker"
           },
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         }
       ]
     },
@@ -953,11 +953,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         },
         {
           "ok": true,
-          "instance": "b8f6f4c6-b313-4873-a02b-28654bad0712"
+          "instance": "9cad85d9-507a-4ec3-9c2d-b2861f7a5f16"
         }
       ],
       "identities": [
@@ -971,13 +971,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/client-fault-true-client/worker"
+            "url": "http://127.0.0.1:45831/context-store/client-fault-true-client/worker"
           },
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         },
         {
           "ok": true,
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         }
       ]
     },
@@ -990,12 +990,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         },
         {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "b8f6f4c6-b313-4873-a02b-28654bad0712"
+          "instance": "9cad85d9-507a-4ec3-9c2d-b2861f7a5f16"
         }
       ],
       "identities": [
@@ -1009,13 +1009,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/client-fault-true-context/worker"
+            "url": "http://127.0.0.1:45831/context-store/client-fault-true-context/worker"
           },
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         },
         {
           "ok": true,
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         }
       ]
     },
@@ -1028,11 +1028,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         },
         {
           "ok": true,
-          "instance": "b8f6f4c6-b313-4873-a02b-28654bad0712"
+          "instance": "9cad85d9-507a-4ec3-9c2d-b2861f7a5f16"
         }
       ],
       "identities": [
@@ -1046,13 +1046,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/client-fault-true-same/worker"
+            "url": "http://127.0.0.1:45831/context-store/client-fault-true-same/worker"
           },
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         },
         {
           "ok": true,
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         }
       ]
     },
@@ -1065,11 +1065,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         },
         {
           "ok": true,
-          "instance": "b8f6f4c6-b313-4873-a02b-28654bad0712"
+          "instance": "9cad85d9-507a-4ec3-9c2d-b2861f7a5f16"
         }
       ],
       "identities": [
@@ -1083,9 +1083,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/client-fault-true-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/client-fault-true-independent/worker"
           },
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         },
         {
           "ok": true,
@@ -1097,9 +1097,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/client-fault-true-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/client-fault-true-independent/worker"
           },
-          "instance": "ad38d3ba-b058-4840-9a77-5d01c746edad"
+          "instance": "289599ce-3171-4931-a131-75db17df07e7"
         }
       ]
     },
@@ -1112,12 +1112,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         },
         {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "0beeb238-30b8-4a06-b4f1-f333fb44bf5e"
+          "instance": "d99c2707-4086-4181-a330-4646bae7ed5c"
         }
       ],
       "identities": [
@@ -1131,13 +1131,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-false-client/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-false-client/worker"
           },
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         },
         {
           "ok": true,
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         }
       ]
     },
@@ -1150,11 +1150,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         },
         {
           "ok": true,
-          "instance": "0beeb238-30b8-4a06-b4f1-f333fb44bf5e"
+          "instance": "d99c2707-4086-4181-a330-4646bae7ed5c"
         }
       ],
       "identities": [
@@ -1168,9 +1168,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-false-context/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-false-context/worker"
           },
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         },
         {
           "ok": true,
@@ -1182,9 +1182,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-false-context/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-false-context/worker"
           },
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         }
       ]
     },
@@ -1197,12 +1197,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         },
         {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "0beeb238-30b8-4a06-b4f1-f333fb44bf5e"
+          "instance": "d99c2707-4086-4181-a330-4646bae7ed5c"
         }
       ],
       "identities": [
@@ -1216,13 +1216,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-false-same/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-false-same/worker"
           },
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         },
         {
           "ok": true,
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         }
       ]
     },
@@ -1235,11 +1235,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         },
         {
           "ok": true,
-          "instance": "0beeb238-30b8-4a06-b4f1-f333fb44bf5e"
+          "instance": "d99c2707-4086-4181-a330-4646bae7ed5c"
         }
       ],
       "identities": [
@@ -1253,9 +1253,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-false-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-false-independent/worker"
           },
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         },
         {
           "ok": true,
@@ -1267,9 +1267,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-false-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-false-independent/worker"
           },
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         }
       ]
     },
@@ -1282,12 +1282,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         },
         {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "0bb76e0f-ea79-441d-a0d8-4af674d5628f"
+          "instance": "870bd3f7-8ff8-46bb-8d35-985c03f51c7f"
         }
       ],
       "identities": [
@@ -1301,13 +1301,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-true-client/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-true-client/worker"
           },
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         },
         {
           "ok": true,
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         }
       ]
     },
@@ -1320,11 +1320,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         },
         {
           "ok": true,
-          "instance": "0bb76e0f-ea79-441d-a0d8-4af674d5628f"
+          "instance": "870bd3f7-8ff8-46bb-8d35-985c03f51c7f"
         }
       ],
       "identities": [
@@ -1338,9 +1338,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-true-context/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-true-context/worker"
           },
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         },
         {
           "ok": true,
@@ -1352,9 +1352,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-true-context/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-true-context/worker"
           },
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         }
       ]
     },
@@ -1367,12 +1367,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         },
         {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "0bb76e0f-ea79-441d-a0d8-4af674d5628f"
+          "instance": "870bd3f7-8ff8-46bb-8d35-985c03f51c7f"
         }
       ],
       "identities": [
@@ -1386,13 +1386,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-true-same/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-true-same/worker"
           },
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         },
         {
           "ok": true,
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         }
       ]
     },
@@ -1405,11 +1405,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         },
         {
           "ok": true,
-          "instance": "0bb76e0f-ea79-441d-a0d8-4af674d5628f"
+          "instance": "870bd3f7-8ff8-46bb-8d35-985c03f51c7f"
         }
       ],
       "identities": [
@@ -1423,9 +1423,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-true-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-true-independent/worker"
           },
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         },
         {
           "ok": true,
@@ -1437,9 +1437,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-true-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-true-independent/worker"
           },
-          "instance": "c4e0d51d-2051-4e4b-9ad3-dd43cb6680ca"
+          "instance": "7043d91a-d67b-4648-bed8-2e89ed37f6ab"
         }
       ]
     },
@@ -1452,12 +1452,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "4a93bbe6-7e30-4ab1-bf24-0b80d108b4dc"
+          "instance": "8ca8d14e-e5b5-4086-a87c-0a31666f577b"
         }
       ],
       "identities": [
@@ -1471,13 +1471,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/normal-false-client/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-false-client/worker"
           },
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         }
       ]
     },
@@ -1490,12 +1490,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "4a93bbe6-7e30-4ab1-bf24-0b80d108b4dc"
+          "instance": "8ca8d14e-e5b5-4086-a87c-0a31666f577b"
         }
       ],
       "identities": [
@@ -1509,13 +1509,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/normal-false-context/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-false-context/worker"
           },
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         }
       ]
     },
@@ -1528,12 +1528,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "4a93bbe6-7e30-4ab1-bf24-0b80d108b4dc"
+          "instance": "8ca8d14e-e5b5-4086-a87c-0a31666f577b"
         }
       ],
       "identities": [
@@ -1547,13 +1547,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/normal-false-same/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-false-same/worker"
           },
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         }
       ]
     },
@@ -1566,11 +1566,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": true,
-          "instance": "4a93bbe6-7e30-4ab1-bf24-0b80d108b4dc"
+          "instance": "8ca8d14e-e5b5-4086-a87c-0a31666f577b"
         }
       ],
       "identities": [
@@ -1584,9 +1584,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/normal-false-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-false-independent/worker"
           },
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": true,
@@ -1598,9 +1598,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/normal-false-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-false-independent/worker"
           },
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         }
       ]
     },
@@ -1613,12 +1613,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "6f1c3495-109c-4930-bbf8-f0c7312dc0ba"
+          "instance": "bf111a74-d33b-467f-9636-0578acac2cd0"
         }
       ],
       "identities": [
@@ -1632,13 +1632,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/normal-true-client/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-true-client/worker"
           },
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         }
       ]
     },
@@ -1651,12 +1651,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "6f1c3495-109c-4930-bbf8-f0c7312dc0ba"
+          "instance": "bf111a74-d33b-467f-9636-0578acac2cd0"
         }
       ],
       "identities": [
@@ -1670,13 +1670,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/normal-true-context/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-true-context/worker"
           },
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         }
       ]
     },
@@ -1689,12 +1689,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "6f1c3495-109c-4930-bbf8-f0c7312dc0ba"
+          "instance": "bf111a74-d33b-467f-9636-0578acac2cd0"
         }
       ],
       "identities": [
@@ -1708,13 +1708,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/normal-true-same/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-true-same/worker"
           },
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         }
       ]
     },
@@ -1727,11 +1727,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": true,
-          "instance": "6f1c3495-109c-4930-bbf8-f0c7312dc0ba"
+          "instance": "bf111a74-d33b-467f-9636-0578acac2cd0"
         }
       ],
       "identities": [
@@ -1745,9 +1745,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/normal-true-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-true-independent/worker"
           },
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": true,
@@ -1759,9 +1759,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/normal-true-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-true-independent/worker"
           },
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         }
       ]
     },
@@ -1772,19 +1772,28 @@
       "closeBindRound": 0,
       "replies": [
         {
-          "ok": false,
-          "error": "Error: Browser context closed before startup",
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "ok": true,
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "cb35aa77-6212-4be9-abfc-e36b642c09e9"
+          "instance": "d4522e88-3d1f-4e93-8eae-da7d03249e60"
         }
       ],
       "result": {
         "ok": true,
-        "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+        "value": {
+          "policyVersion": 5,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:45831/context-store/close-bind-0/worker"
+        },
+        "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
       }
     },
     {
@@ -1795,12 +1804,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "cb35aa77-6212-4be9-abfc-e36b642c09e9"
+          "instance": "d4522e88-3d1f-4e93-8eae-da7d03249e60"
         }
       ],
       "result": {
@@ -1813,9 +1822,9 @@
           "parent": "parent",
           "kind": "dedicated-worker",
           "state": "closed",
-          "url": "http://127.0.0.1:40161/context-store/close-bind-1/worker"
+          "url": "http://127.0.0.1:45831/context-store/close-bind-1/worker"
         },
-        "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+        "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
       }
     },
     {
@@ -1826,12 +1835,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "cb35aa77-6212-4be9-abfc-e36b642c09e9"
+          "instance": "d4522e88-3d1f-4e93-8eae-da7d03249e60"
         }
       ],
       "result": {
@@ -1844,9 +1853,9 @@
           "parent": "parent",
           "kind": "dedicated-worker",
           "state": "closed",
-          "url": "http://127.0.0.1:40161/context-store/close-bind-2/worker"
+          "url": "http://127.0.0.1:45831/context-store/close-bind-2/worker"
         },
-        "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+        "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
       }
     },
     {
@@ -1857,12 +1866,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "cb35aa77-6212-4be9-abfc-e36b642c09e9"
+          "instance": "d4522e88-3d1f-4e93-8eae-da7d03249e60"
         }
       ],
       "result": {
@@ -1875,9 +1884,9 @@
           "parent": "parent",
           "kind": "dedicated-worker",
           "state": "closed",
-          "url": "http://127.0.0.1:40161/context-store/close-bind-3/worker"
+          "url": "http://127.0.0.1:45831/context-store/close-bind-3/worker"
         },
-        "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+        "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
       }
     },
     {
@@ -1888,12 +1897,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "cb35aa77-6212-4be9-abfc-e36b642c09e9"
+          "instance": "d4522e88-3d1f-4e93-8eae-da7d03249e60"
         }
       ],
       "result": {
@@ -1906,9 +1915,9 @@
           "parent": "parent",
           "kind": "dedicated-worker",
           "state": "closed",
-          "url": "http://127.0.0.1:40161/context-store/close-bind-4/worker"
+          "url": "http://127.0.0.1:45831/context-store/close-bind-4/worker"
         },
-        "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+        "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
       }
     },
     {
@@ -1919,12 +1928,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "cb35aa77-6212-4be9-abfc-e36b642c09e9"
+          "instance": "d4522e88-3d1f-4e93-8eae-da7d03249e60"
         }
       ],
       "result": {
@@ -1937,9 +1946,9 @@
           "parent": "parent",
           "kind": "dedicated-worker",
           "state": "closed",
-          "url": "http://127.0.0.1:40161/context-store/close-bind-5/worker"
+          "url": "http://127.0.0.1:45831/context-store/close-bind-5/worker"
         },
-        "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+        "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
       }
     },
     {
@@ -1950,12 +1959,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "cb35aa77-6212-4be9-abfc-e36b642c09e9"
+          "instance": "d4522e88-3d1f-4e93-8eae-da7d03249e60"
         }
       ],
       "result": {
@@ -1968,9 +1977,9 @@
           "parent": "parent",
           "kind": "dedicated-worker",
           "state": "closed",
-          "url": "http://127.0.0.1:40161/context-store/close-bind-6/worker"
+          "url": "http://127.0.0.1:45831/context-store/close-bind-6/worker"
         },
-        "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+        "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
       }
     },
     {
@@ -1981,12 +1990,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "cb35aa77-6212-4be9-abfc-e36b642c09e9"
+          "instance": "d4522e88-3d1f-4e93-8eae-da7d03249e60"
         }
       ],
       "result": {
@@ -1999,9 +2008,9 @@
           "parent": "parent",
           "kind": "dedicated-worker",
           "state": "closed",
-          "url": "http://127.0.0.1:40161/context-store/close-bind-7/worker"
+          "url": "http://127.0.0.1:45831/context-store/close-bind-7/worker"
         },
-        "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+        "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
       }
     },
     {
@@ -2012,12 +2021,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "cb35aa77-6212-4be9-abfc-e36b642c09e9"
+          "instance": "d4522e88-3d1f-4e93-8eae-da7d03249e60"
         }
       ],
       "result": {
@@ -2030,9 +2039,9 @@
           "parent": "parent",
           "kind": "dedicated-worker",
           "state": "closed",
-          "url": "http://127.0.0.1:40161/context-store/close-bind-8/worker"
+          "url": "http://127.0.0.1:45831/context-store/close-bind-8/worker"
         },
-        "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+        "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
       }
     },
     {
@@ -2042,19 +2051,28 @@
       "closeBindRound": 9,
       "replies": [
         {
-          "ok": false,
-          "error": "Error: Browser context closed before startup",
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "ok": true,
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "cb35aa77-6212-4be9-abfc-e36b642c09e9"
+          "instance": "d4522e88-3d1f-4e93-8eae-da7d03249e60"
         }
       ],
       "result": {
         "ok": true,
-        "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+        "value": {
+          "policyVersion": 5,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:45831/context-store/close-bind-9/worker"
+        },
+        "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
       }
     },
     {
@@ -2065,12 +2083,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "cb35aa77-6212-4be9-abfc-e36b642c09e9"
+          "instance": "d4522e88-3d1f-4e93-8eae-da7d03249e60"
         }
       ],
       "result": {
@@ -2083,9 +2101,9 @@
           "parent": "parent",
           "kind": "dedicated-worker",
           "state": "closed",
-          "url": "http://127.0.0.1:40161/context-store/close-bind-10/worker"
+          "url": "http://127.0.0.1:45831/context-store/close-bind-10/worker"
         },
-        "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+        "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
       }
     },
     {
@@ -2096,12 +2114,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         },
         {
           "ok": true,
           "value": true,
-          "instance": "cb35aa77-6212-4be9-abfc-e36b642c09e9"
+          "instance": "d4522e88-3d1f-4e93-8eae-da7d03249e60"
         }
       ],
       "result": {
@@ -2114,9 +2132,9 @@
           "parent": "parent",
           "kind": "dedicated-worker",
           "state": "closed",
-          "url": "http://127.0.0.1:40161/context-store/close-bind-11/worker"
+          "url": "http://127.0.0.1:45831/context-store/close-bind-11/worker"
         },
-        "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+        "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
       }
     },
     {
@@ -2134,9 +2152,9 @@
             "parent": "other-parent",
             "kind": "dedicated-worker",
             "state": "closed",
-            "url": "http://127.0.0.1:40161/context-store/normal-lifecycle/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-lifecycle/worker"
           },
-          "instance": "6f1c3495-109c-4930-bbf8-f0c7312dc0ba"
+          "instance": "bf111a74-d33b-467f-9636-0578acac2cd0"
         },
         "after": {
           "ok": true,
@@ -2148,14 +2166,14 @@
             "parent": "other-parent",
             "kind": "dedicated-worker",
             "state": "closed",
-            "url": "http://127.0.0.1:40161/context-store/normal-lifecycle/worker"
+            "url": "http://127.0.0.1:45831/context-store/normal-lifecycle/worker"
           },
-          "instance": "cb35aa77-6212-4be9-abfc-e36b642c09e9"
+          "instance": "d4522e88-3d1f-4e93-8eae-da7d03249e60"
         },
         "aborted": {
           "ok": false,
           "error": "Error: Context transaction aborted",
-          "instance": "95f073bf-1b39-42c2-97e9-a22da06e990a"
+          "instance": "34303755-00ab-4573-a57d-c46a7d6298ef"
         }
       }
     },
@@ -2168,11 +2186,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         },
         {
           "ok": true,
-          "instance": "77bc1e5e-628b-4d87-82d4-d3a3b9582ad1"
+          "instance": "02f165de-0bb0-41af-a33c-727b484ff561"
         }
       ],
       "identities": [
@@ -2181,18 +2199,18 @@
           "value": {
             "policyVersion": 5,
             "installationGeneration": "generation",
-            "id": "left-context",
+            "id": "right-context",
             "application": "application",
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/client-fault-false-client/worker"
+            "url": "http://127.0.0.1:45831/context-store/client-fault-false-client/worker"
           },
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         },
         {
           "ok": true,
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         }
       ]
     },
@@ -2205,12 +2223,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         },
         {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "77bc1e5e-628b-4d87-82d4-d3a3b9582ad1"
+          "instance": "02f165de-0bb0-41af-a33c-727b484ff561"
         }
       ],
       "identities": [
@@ -2224,13 +2242,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/client-fault-false-context/worker"
+            "url": "http://127.0.0.1:45831/context-store/client-fault-false-context/worker"
           },
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         },
         {
           "ok": true,
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         }
       ]
     },
@@ -2243,11 +2261,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         },
         {
           "ok": true,
-          "instance": "77bc1e5e-628b-4d87-82d4-d3a3b9582ad1"
+          "instance": "02f165de-0bb0-41af-a33c-727b484ff561"
         }
       ],
       "identities": [
@@ -2261,13 +2279,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/client-fault-false-same/worker"
+            "url": "http://127.0.0.1:45831/context-store/client-fault-false-same/worker"
           },
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         },
         {
           "ok": true,
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         }
       ]
     },
@@ -2280,11 +2298,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         },
         {
           "ok": true,
-          "instance": "77bc1e5e-628b-4d87-82d4-d3a3b9582ad1"
+          "instance": "02f165de-0bb0-41af-a33c-727b484ff561"
         }
       ],
       "identities": [
@@ -2298,9 +2316,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/client-fault-false-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/client-fault-false-independent/worker"
           },
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         },
         {
           "ok": true,
@@ -2312,9 +2330,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/client-fault-false-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/client-fault-false-independent/worker"
           },
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         }
       ]
     },
@@ -2327,11 +2345,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         },
         {
           "ok": true,
-          "instance": "42bbf138-ec19-404a-8ed2-ae370f49214b"
+          "instance": "706f278b-d9a4-4b99-ad4b-c806c1a7e4ef"
         }
       ],
       "identities": [
@@ -2345,13 +2363,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/client-fault-true-client/worker"
+            "url": "http://127.0.0.1:45831/context-store/client-fault-true-client/worker"
           },
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         },
         {
           "ok": true,
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         }
       ]
     },
@@ -2364,12 +2382,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         },
         {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "42bbf138-ec19-404a-8ed2-ae370f49214b"
+          "instance": "706f278b-d9a4-4b99-ad4b-c806c1a7e4ef"
         }
       ],
       "identities": [
@@ -2383,13 +2401,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/client-fault-true-context/worker"
+            "url": "http://127.0.0.1:45831/context-store/client-fault-true-context/worker"
           },
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         },
         {
           "ok": true,
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         }
       ]
     },
@@ -2402,11 +2420,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         },
         {
           "ok": true,
-          "instance": "42bbf138-ec19-404a-8ed2-ae370f49214b"
+          "instance": "706f278b-d9a4-4b99-ad4b-c806c1a7e4ef"
         }
       ],
       "identities": [
@@ -2420,13 +2438,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/client-fault-true-same/worker"
+            "url": "http://127.0.0.1:45831/context-store/client-fault-true-same/worker"
           },
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         },
         {
           "ok": true,
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         }
       ]
     },
@@ -2439,11 +2457,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         },
         {
           "ok": true,
-          "instance": "42bbf138-ec19-404a-8ed2-ae370f49214b"
+          "instance": "706f278b-d9a4-4b99-ad4b-c806c1a7e4ef"
         }
       ],
       "identities": [
@@ -2457,9 +2475,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/client-fault-true-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/client-fault-true-independent/worker"
           },
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         },
         {
           "ok": true,
@@ -2471,9 +2489,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/client-fault-true-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/client-fault-true-independent/worker"
           },
-          "instance": "6504d228-ba1d-4dd4-8e15-d13bb34d7b2c"
+          "instance": "0e2ff74c-4b11-4e52-b781-a802e6ecf6e3"
         }
       ]
     },
@@ -2485,13 +2503,13 @@
       "collision": "client",
       "replies": [
         {
-          "ok": false,
-          "error": "Error: Browser client or context identifier already bound",
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "ok": true,
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         },
         {
-          "ok": true,
-          "instance": "544b8509-fb52-414e-8c8d-821e5697c66f"
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "32b3a5b0-db62-4157-8dc4-1712bc097531"
         }
       ],
       "identities": [
@@ -2500,18 +2518,18 @@
           "value": {
             "policyVersion": 5,
             "installationGeneration": "generation",
-            "id": "right-context",
+            "id": "left-context",
             "application": "application",
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-false-client/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-false-client/worker"
           },
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         },
         {
           "ok": true,
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         }
       ]
     },
@@ -2524,11 +2542,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         },
         {
           "ok": true,
-          "instance": "544b8509-fb52-414e-8c8d-821e5697c66f"
+          "instance": "32b3a5b0-db62-4157-8dc4-1712bc097531"
         }
       ],
       "identities": [
@@ -2542,9 +2560,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-false-context/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-false-context/worker"
           },
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         },
         {
           "ok": true,
@@ -2556,9 +2574,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-false-context/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-false-context/worker"
           },
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         }
       ]
     },
@@ -2571,12 +2589,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         },
         {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "544b8509-fb52-414e-8c8d-821e5697c66f"
+          "instance": "32b3a5b0-db62-4157-8dc4-1712bc097531"
         }
       ],
       "identities": [
@@ -2590,13 +2608,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-false-same/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-false-same/worker"
           },
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         },
         {
           "ok": true,
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         }
       ]
     },
@@ -2609,11 +2627,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         },
         {
           "ok": true,
-          "instance": "544b8509-fb52-414e-8c8d-821e5697c66f"
+          "instance": "32b3a5b0-db62-4157-8dc4-1712bc097531"
         }
       ],
       "identities": [
@@ -2627,9 +2645,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-false-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-false-independent/worker"
           },
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         },
         {
           "ok": true,
@@ -2641,9 +2659,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-false-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-false-independent/worker"
           },
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         }
       ]
     },
@@ -2656,12 +2674,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         },
         {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "1d2ccc7a-7a9d-45e7-88b2-e54d10a96285"
+          "instance": "b1c41972-97ed-486c-84bd-5221623ca5d2"
         }
       ],
       "identities": [
@@ -2675,13 +2693,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-true-client/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-true-client/worker"
           },
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         },
         {
           "ok": true,
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         }
       ]
     },
@@ -2694,11 +2712,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         },
         {
           "ok": true,
-          "instance": "1d2ccc7a-7a9d-45e7-88b2-e54d10a96285"
+          "instance": "b1c41972-97ed-486c-84bd-5221623ca5d2"
         }
       ],
       "identities": [
@@ -2712,9 +2730,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-true-context/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-true-context/worker"
           },
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         },
         {
           "ok": true,
@@ -2726,9 +2744,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-true-context/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-true-context/worker"
           },
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         }
       ]
     },
@@ -2741,12 +2759,12 @@
       "replies": [
         {
           "ok": true,
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         },
         {
           "ok": false,
           "error": "Error: Browser client or context identifier already bound",
-          "instance": "1d2ccc7a-7a9d-45e7-88b2-e54d10a96285"
+          "instance": "b1c41972-97ed-486c-84bd-5221623ca5d2"
         }
       ],
       "identities": [
@@ -2760,13 +2778,13 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-true-same/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-true-same/worker"
           },
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         },
         {
           "ok": true,
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         }
       ]
     },
@@ -2779,11 +2797,11 @@
       "replies": [
         {
           "ok": true,
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         },
         {
           "ok": true,
-          "instance": "1d2ccc7a-7a9d-45e7-88b2-e54d10a96285"
+          "instance": "b1c41972-97ed-486c-84bd-5221623ca5d2"
         }
       ],
       "identities": [
@@ -2797,9 +2815,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-true-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-true-independent/worker"
           },
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         },
         {
           "ok": true,
@@ -2811,9 +2829,9 @@
             "parent": "parent",
             "kind": "dedicated-worker",
             "state": "preparing",
-            "url": "http://127.0.0.1:40161/context-store/context-fault-true-independent/worker"
+            "url": "http://127.0.0.1:45831/context-store/context-fault-true-independent/worker"
           },
-          "instance": "abd1de41-adc1-4e68-aba1-acab9ffe69eb"
+          "instance": "b6d53cb2-50b2-4d4e-a961-b6e1101dbce2"
         }
       ]
     }

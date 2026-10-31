@@ -143,6 +143,11 @@ arguments even where the abstract publication contract is shared.
   [namespace experiment](worker-policy-overlap.md) checks fresh globals across
   policy constants, same-policy sharing and eight policy-omission faults. Retained
   old globals and complete mixed-policy lifetimes remain open.
+  [Dedicated-worker resource reads](worker-resource-broker.md) now relay over the
+  private parent channel. Reads reuse context-scoped resource admission, buffer
+  before final revalidation, and deny replies after local closure. Native warm-read
+  and Chromium restart checks pass; shared/publisher roots and native bootstrap
+  paths retain HTTP obligations.
 - Stage 7: browser validation is in progress for the root content integration;
   broader coverage and lifecycle obligations remain open.
 - Stage 8: pending. Earlier component evidence remains available, with

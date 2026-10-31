@@ -145,3 +145,15 @@ export function parseResourceRequest(packet: unknown): Request {
   }
   return new Request(url.href, { headers, credentials: 'omit' });
 }
+
+/** Buffer before the final authority check; no browser-owned body read follows it. */
+export async function resourceMessage(request: Request, result: Response) {
+  if (result.type === 'error') throw new Error('Resource response refused');
+  return {
+    url: request.url,
+    status: result.status,
+    statusText: result.statusText,
+    headers: Array.from(result.headers),
+    body: await result.arrayBuffer(),
+  };
+}

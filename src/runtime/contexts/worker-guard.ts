@@ -4,7 +4,7 @@ import {
   internalRecord,
 } from '../../shared/primordials.ts';
 import { createPortClient, type PrivateClient } from '../private-channel.ts';
-import { createWorkerControl } from './worker-client.ts';
+import { createWorkerControl, createWorkerResourceRead } from './worker-client.ts';
 import { readWorkerMetadata, prepareWorkerRealm } from './worker-realm.ts';
 const worker = self as unknown as DedicatedWorkerGlobalScope;
 const rawAdd = EventTarget.prototype.addEventListener;
@@ -20,6 +20,10 @@ const realm = prepareWorkerRealm(
   context,
   'message',
   createWorkerControl((packet) => {
+    if (!broker) throw new Error('Worker parent broker unavailable');
+    return broker.request(packet);
+  }),
+  createWorkerResourceRead((packet) => {
     if (!broker) throw new Error('Worker parent broker unavailable');
     return broker.request(packet);
   }),

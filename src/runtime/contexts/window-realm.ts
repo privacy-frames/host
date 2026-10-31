@@ -1,4 +1,4 @@
-import { createWorkerControl } from './worker-client.ts';
+import { createWorkerControl, createWorkerResourceRead } from './worker-client.ts';
 import { createDocumentControl } from './document-client.ts';
 import { createControllerClient } from '../controller-client.ts';
 import { createResourceFetch } from '../resource-fetch.ts';
@@ -100,6 +100,7 @@ export function prepareWindowRealm({
       baseURL: () => resourceBase,
       resources,
       control: createWorkerControl(controller.request),
+      read: createWorkerResourceRead(controller.request),
     }),
   );
   const createSharedWorker = createSharedWorkerFactory(

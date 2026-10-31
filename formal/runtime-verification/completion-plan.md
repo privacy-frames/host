@@ -74,8 +74,9 @@ Unregistration must not be treated as cancellation of an already
 transmitted request.
 
 Dedicated-worker verification and nested closure now use a private parent broker
-with native ancestry checks. Shared and publisher roots retain an authenticated
-HTTP adapter. The former per-context readiness and closure routes are removed.
+with native ancestry checks. Dedicated-worker GET/cache reads also relay through that broker and reuse the
+existing context-resource resolver. Shared and publisher roots retain an
+authenticated HTTP adapter. The former per-context readiness and closure routes are removed.
 
 Then evaluate production bootstrap and delivery. Private root-content and selected
 parent-channel reads already exist. HTTP shells, workers, modules, worklets,

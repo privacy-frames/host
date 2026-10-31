@@ -4,7 +4,7 @@ Window `fetch()` and window cache downloads now read installed resources through
 the private controller transport. Native resource loads use the same controller
 reader. That reader authenticates the browser client, selects an exact resource
 from its installation, and checks its authority and installation generation after
-asynchronous resource and publisher work. A failed read never tries the network.
+asynchronous resource, publisher and body-reading work. A failed read never tries the network.
 Generated manifests and captured manifest icons use one public-resource reader
 for native browser loads and authenticated message reads.
 Both transports record successful and refused reads in the local observations
@@ -12,15 +12,13 @@ log. The end-to-end host test checks that refused message reads appear there.
 
 The change removes the second copy of resource selection, publisher interception
 and CSS relocation from the HTTP handler. Application code and resource lists
-remain unchanged. Worker fetches, scripts, styles, images, document bootstraps and
-other native loads still use HTTP routes; their maintenance behavior remains
-part of the unfinished repair.
+remain unchanged. [Dedicated-worker reads](worker-resource-broker.md) now use
+private parent channels. Script, style, image and document bootstraps, along with
+shared/publisher root transports, still have HTTP maintenance obligations.
 
-Trusted document, popup, worker and worklet factories capture their control
-operation before application-facing adapters are installed. Their registration
-and closure requests still use their existing HTTP protocols. Routing those
-operations through the resource adapter would reject them as unadmitted GETs;
-the document integration test caught that dependency during this change.
+Trusted factories capture their control operations before application-facing
+adapters are installed. Those operations use dedicated control protocols;
+passing them through the GET-only resource adapter would reject them.
 
 ## Implementation contracts
 
@@ -28,6 +26,8 @@ the document integration test caught that dependency during this change.
 transports. The message parser validates the URL and header pairs before making
 a native Request object. Packet fields cannot select an installation or client.
 The controller looks up the actual message source in the browser client table.
+Delegated worker reads additionally validate their complete stored ancestor path;
+worker-scoped URLs retain the context-resource resolver’s client checks.
 
 The publisher controller receives the same admitted resource and request headers
 through either transport. Its existing restrictions on executable responses,
@@ -76,18 +76,19 @@ In forced-stale Firefox, the native local-response control and the installed
 adapter-bypass control both produce a service-worker script request when reads
 occur. Neither produces one in its no-read case. The normal installed adapter
 produces no HTTP request in any recorded case. This repairs the selected window
-fetch trigger under those conditions. It does not close the separate worker or
-document triggers.
+fetch trigger under those conditions. Worker and document startup triggers
+remain separate obligations.
 
 Unit tests challenge malformed requests and replies, foreign and missing
 resources, generation changes, closure during publisher handling, cancellation,
 CSS relocation and native body operations. The browser experiment checks actual
 transport behavior; the unit fixtures supply finer scheduling and input control.
 
-The [compatibility receipt](resource-fetch-compatibility.json) records all eight
+The historical [window-reader compatibility receipt](resource-fetch-compatibility.json)
+records all eight
 applications completing their selected native and confined tasks and reloading
 offline in Chromium and Firefox. Source and artifact hashes match the tested
-candidate. The complete context suite, independent network receiver groups in
-both browsers and all 167 unit tests passed locally. The shared-worker fixture
+window-reader candidate. Its context suite, independent network receiver groups
+in both browsers and 167 unit tests passed locally. The shared-worker fixture
 now records both old and new installation identities before comparing them;
 the former comparison read absent fields from the old result and was vacuous.

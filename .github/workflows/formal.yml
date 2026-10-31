@@ -176,7 +176,7 @@ jobs:
           path: formal/runtime-verification/worker-closure-browser.json
   resource-fetch:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 18
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -191,11 +191,15 @@ jobs:
         run: |
           npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/runtime-verification/resource-fetch-browser.ts
           node formal/runtime-verification/resource-fetch-browser.ts
+      - name: Check dedicated worker reads, restart and transport bypass
+        run: PF_RESOURCE_CONTEXT=worker node formal/runtime-verification/resource-fetch-browser.ts
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: installed-resource-fetch-evidence
-          path: formal/runtime-verification/resource-fetch-browser.json
+          path: |
+            formal/runtime-verification/resource-fetch-browser.json
+            formal/runtime-verification/worker-resource-fetch-browser.json
   local-documents:
     runs-on: ubuntu-latest
     timeout-minutes: 12
