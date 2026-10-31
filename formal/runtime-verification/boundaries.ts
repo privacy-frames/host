@@ -59,6 +59,7 @@ export const boundaries: readonly Boundary[] = [
     invariants: ['C1', 'C2', 'C3', 'C5', 'C7'],
     sources: [
       'src/runtime/contexts/worker-factory.ts',
+      'src/runtime/contexts/worker-control.ts',
       'src/runtime/contexts/worker-guard.ts',
       'src/runtime/contexts/worker-realm.ts',
     ],

@@ -4,7 +4,7 @@
   "typescriptVersion": "6.0.3",
   "contractSHA256": "57c378112e1d53c1223955a6e0a28b546e0a6ec3e90895f0deec46908ca9017f",
   "generatorSHA256": "30a433edc9bc21d25c4790a9540e6eeb271f382c12f4fefeccd1dba1b75a47c2",
-  "boundaryDefinitionsSHA256": "80151393d0bc34c4af708d88395d93321e424c9b534760b1caacf0cbc3989326",
+  "boundaryDefinitionsSHA256": "497351365c917eae59d1b779c99a62ef08b8d1f92979afb9e1a7e243c1acc41a",
   "boundaries": [
     {
       "id": "root-publication",
@@ -76,6 +76,7 @@
       ],
       "sources": [
         "src/runtime/contexts/worker-factory.ts",
+        "src/runtime/contexts/worker-control.ts",
         "src/runtime/contexts/worker-guard.ts",
         "src/runtime/contexts/worker-realm.ts"
       ]
@@ -479,22 +480,31 @@
     },
     {
       "path": "src/runtime/contexts/window-realm.ts",
-      "sourceSHA256": "27d051dcc9015b683c6f6d304fe31e8bd7dabcd05a5ee0ad93e9fa4f0bfe37a6",
+      "sourceSHA256": "48c6c1c0fadf99c657c0a41769e3868eccd8a1e87160bb2f333c8ebd3c3c4269",
       "boundaries": [
         "root-publication"
       ],
-      "siteCount": 55,
-      "sitesSHA256": "ec8876f5f3e397f6a110b6a8a088d293cba629959885899238a921376e817e5a"
+      "siteCount": 57,
+      "sitesSHA256": "ac37ccb9a8a057189783af62290a1f5b2cb209b603736f2c8e3ee04d31505783"
+    },
+    {
+      "path": "src/runtime/contexts/worker-control.ts",
+      "sourceSHA256": "b182a7500ce200bf5cb3b78fe33f80ee749fd3c50653198dadf6e280cacda613",
+      "boundaries": [
+        "dedicated-worker-publication"
+      ],
+      "siteCount": 13,
+      "sitesSHA256": "630455d3a75f9a0cbf5ca361600d88fd2dc9f0ca479c51a20116a4788f0307b7"
     },
     {
       "path": "src/runtime/contexts/worker-factory.ts",
-      "sourceSHA256": "98bc984c6f67804e97a30795140d18bb58af563f30bd3c794c965730840c2233",
+      "sourceSHA256": "8206a4375ccaa504ed0bf66c86622e8dfd13de6692ae2e6d194fa27755dd1c86",
       "boundaries": [
         "dedicated-worker-publication",
         "browser-owned-maintenance"
       ],
-      "siteCount": 152,
-      "sitesSHA256": "bcf91846e4742e9e348287c0dc77a02ec8ec433fc3f34fb6b600cbcbe40f3223"
+      "siteCount": 149,
+      "sitesSHA256": "0905a0f8488ab1361ba2a09137e9d6d0ff0beba17a349c26f64cb3b57fcbd50f"
     },
     {
       "path": "src/runtime/contexts/worker-guard.ts",
@@ -507,12 +517,12 @@
     },
     {
       "path": "src/runtime/contexts/worker-realm.ts",
-      "sourceSHA256": "edce33feb3f62d3d6295da029d71993526541ea71d34a5fdd7e196024bdcb2e2",
+      "sourceSHA256": "b6b0452e86e493288e7bcbd016aa596cefd1c86823796727a988d53b40ab9666",
       "boundaries": [
         "dedicated-worker-publication"
       ],
-      "siteCount": 139,
-      "sitesSHA256": "9ed67684d8975fa6a0fbfa636107b46c900d70dab50ffa73507b8d0efa0cbdac"
+      "siteCount": 143,
+      "sitesSHA256": "7ecc06ba23b91654f5a399dc7ec87a9cd4ecfd49ec0cf8dd3c1266aa1c03d819"
     },
     {
       "path": "src/runtime/contexts/worklet-controller.ts",
@@ -779,13 +789,13 @@
     },
     {
       "path": "src/runtime/worker.ts",
-      "sourceSHA256": "861326ec3f2d58dece58d43383e6e171851b5585ce981d9b7b936a8867b6cb6b",
+      "sourceSHA256": "303af9f0a734bab5b85ad87f80af706f0447030e9985a2a9402e79eed466a9d5",
       "boundaries": [
         "resource-delivery",
         "browser-owned-maintenance"
       ],
-      "siteCount": 364,
-      "sitesSHA256": "82d5a3a7ec44c5c20b4599cc4514e22e2b76e22ae78de155c52e0eef353ce5de"
+      "siteCount": 368,
+      "sitesSHA256": "5b9f20d2df51d486ec5642811476e051de84f9e54b59165cd716d665f8d9cdf2"
     },
     {
       "path": "src/shared/policy.ts",

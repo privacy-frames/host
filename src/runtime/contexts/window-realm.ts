@@ -1,7 +1,7 @@
 import { createDocumentControl } from './document-client.ts';
 import { createControllerClient } from '../controller-client.ts';
 import { createResourceFetch } from '../resource-fetch.ts';
-import { INSTALLED_RESOURCE_REQUEST } from '../../shared/types.ts';
+import { INSTALLED_RESOURCE_REQUEST, WORKER_CLOSE_REQUEST } from '../../shared/types.ts';
 import { internalRecord } from '../../shared/primordials.ts';
 import { sealRuntimeBindings } from '../bindings.ts';
 import { createPopupFactory } from './popup-factory.ts';
@@ -98,6 +98,8 @@ export function prepareWindowRealm({
       applicationURL,
       baseURL: () => resourceBase,
       resources,
+      closeChild: (id: string) =>
+        controller.request(internalRecord({ type: WORKER_CLOSE_REQUEST, id })),
     }),
   );
   const createSharedWorker = createSharedWorkerFactory(

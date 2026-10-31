@@ -206,6 +206,16 @@ checks a source fix; it does not show that all other browser effects are modeled
 
 ## Atomic context bindings across controllers
 
+Window-owned dedicated-worker termination now requests closure over the captured
+controller message transport. The controller derives the parent from the actual
+message source and revalidates its installation before delegating to the same
+atomic storage operation. Packet-supplied parent and application fields grant no
+authority. Worker parents retain their HTTP adapter; that route now rejects
+window parents. See the [native closure checks](runtime-verification/worker-closure.md)
+for the durable-state observation and test-only parent-selection fault. This
+transport change does not establish native termination, full protocol refinement
+or the remaining maintenance-channel repair.
+
 `ContextRegistry` now delegates insertion and closure to dedicated storage
 operations. The former CacheStorage implementation checked absence, wrote a
 client record, and wrote its reverse index in separate operations. Two controller

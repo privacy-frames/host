@@ -6,13 +6,14 @@ import {
 import type { PolicyTools } from '../enforcement/native.ts';
 import type { ResourceAliases } from '../resource-aliases.ts';
 
-// Control-plane requests retain the pre-adapter native operation.
+// Blob source reads retain the pre-adapter native operation.
 const nativeFetch = fetch;
 
 export interface WorkerFactoryContext {
   applicationURL: string;
   baseURL: () => string;
   resources: ResourceAliases;
+  closeChild(id: string): Promise<unknown>;
 }
 
 interface QueuedMessage {
@@ -25,7 +26,7 @@ interface WorkerLifecycle {
   closed: boolean;
   queue: QueuedMessage[];
   port: MessagePort | null;
-  closeURL: string;
+  id: string;
   closeRequested: boolean;
 }
 
@@ -125,11 +126,7 @@ export function createWorkerFactory(
   function revoke(lifecycle: WorkerLifecycle) {
     if (lifecycle.closeRequested) return;
     lifecycle.closeRequested = true;
-    const closing: Promise<Response> = apply(nativeFetch, nativeGlobal, [
-      lifecycle.closeURL,
-      internalRecord({ method: 'POST', credentials: 'omit' }),
-    ]);
-    closing.catch(() => {});
+    context.closeChild(lifecycle.id).catch(() => {});
   }
 
   function failed(worker: Worker, lifecycle: WorkerLifecycle, message: string) {
@@ -179,8 +176,9 @@ export function createWorkerFactory(
         if (type !== 'classic' && type !== 'module')
           throw new TypeError('Unsupported worker type');
         const name = options ? str(get(options, 'name') ?? '') : '';
+        const id: string = apply(randomUUID, nativeCrypto, []);
         const bootstrap = new NativeURL(
-          `__contexts/${apply(randomUUID, nativeCrypto, [])}/${type}.js`,
+          `__contexts/${id}/${type}.js`,
           context.applicationURL,
         );
         const worker: Worker = construct(
@@ -197,7 +195,7 @@ export function createWorkerFactory(
           closed: false,
           queue: internalArray(),
           port: null,
-          closeURL: apply(href, new NativeURL('close', bootstrap), []),
+          id,
           closeRequested: false,
         });
         workers.set(worker, lifecycle);

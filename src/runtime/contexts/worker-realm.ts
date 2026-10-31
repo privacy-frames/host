@@ -160,6 +160,15 @@ export function prepareWorkerRealm(
       applicationURL: context.applicationURL,
       baseURL: () => scriptBase,
       resources,
+      closeChild: (id: string) =>
+        apply(rawFetch, worker, [
+          apply(
+            readHref,
+            new NativeURL(`__contexts/${id}/close`, context.applicationURL),
+            [],
+          ),
+          internalRecord({ method: 'POST', credentials: 'omit' }),
+        ]),
     }),
   );
   const sharedFactory = createSharedWorkerFactory(

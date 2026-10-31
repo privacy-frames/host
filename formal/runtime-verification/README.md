@@ -133,6 +133,10 @@ arguments even where the abstract publication contract is shared.
   [control operations](document-control.md) now use authenticated messages, with
   actual-browser client and concurrent-consumption checks. Resource and adapter proofs
   and the remaining context delivery paths are open.
+  [Window-owned worker closure](worker-closure.md) now uses the captured controller
+  message transport and actual-parent authorization. Native durable-state checks
+  and a parent-selection fault control cover this operation; readiness and
+  nested-worker transport still require the private parent broker.
 - Stage 7: browser validation is in progress for the root content integration;
   broader coverage and lifecycle obligations remain open.
 - Stage 8: pending. Earlier component evidence remains available, with

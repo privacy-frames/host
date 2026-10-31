@@ -1,0 +1,151 @@
+{
+  "scope": "Built controller, actual browser clients and native IndexedDB. Window-owned worker closure uses messages and emits no HTTP in the one-second post-commit observation. A test-only parent-selection fault must be detected by the same native wrong-owner assertion. This does not verify readiness, nested-worker transport or complete confinement.",
+  "completed": true,
+  "provenance": {
+    "capturedAt": "2026-10-31T21:09:53.706Z",
+    "revision": "e83000919c2a5a20ef4904f89154c450c0d75e29",
+    "dirty": true,
+    "sourceSHA256": "33206ebc41a4ea8498f977d13b4886eb603cde657da75e800a26d94d7e3e2c32",
+    "runner": "formal/runtime-verification/worker-closure-browser.ts",
+    "runnerSHA256": "45f273ac40aa6244b2367c44453c84cc1f9b8d45ea1e4b82a5ab1263853e1aea",
+    "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
+    "artifacts": {
+      "dist-manager/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-manager/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-manager/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-manager/index.html": "0ea2b29b0ef6946140c54c2dc2147bffe4de82b9ed13eb4fdcae97a81cfd56f7",
+      "dist-manager/manager.js": "e361950a8774ca901a2b669e55041e15931e079bcdf5cd66e2b95d3986ce0730",
+      "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-manager/sw.js": "2cce9b535c267131b7eddeeb349ead8559d4055cf11a3402ecbaa2758e9e0727",
+      "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
+      "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
+      "dist-runtime/document-guard.js": "9f4f50c5792f4595dea5dad69a809179e671ef45e4a72338399e3a2a5ea754dd",
+      "dist-runtime/guard.js": "cca3c57ad7f189f467ea80cb9302e3faaf7cd5e3aaa36a99c5f2fae923d654ff",
+      "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
+      "dist-runtime/publisher-worker-guard.js": "65a990bf9c5229ba8055d1be9a9ccb90f71db80a8114956d35817091dbe4f25e",
+      "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-runtime/shared-worker-guard.js": "23793ec7b449e56e46dc00ba47d4959b932cb45bf7d52d15275ae8c3776ecddb",
+      "dist-runtime/sw.js": "50760c034a934e2224ea63d5434ad683abe2f2f7cb0033143fd5c4202711d050",
+      "dist-runtime/worker-guard.js": "197ff5b38760e4b5fb019698bd95b266c583cded28ad34c430c8461800b2e140",
+      "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
+      "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-installation/index.html": "3ca67c9966dd6eaaddb08a331c4c422a70d79bed1acecddada56764ba4ac8e5f",
+      "dist-installation/installation.js": "6cd0a3f3f4494dee2db059f3b1a5feb62017a39399a22e2d3774d0319fa1e3f3"
+    }
+  },
+  "runnerSHA256": "45f273ac40aa6244b2367c44453c84cc1f9b8d45ea1e4b82a5ab1263853e1aea",
+  "helperSHA256": "186e4717083868c47fbd1aaba75a658fa63ce67f8fe1babecc2627a87f84dbd2",
+  "controllerSourceSHA256": "b182a7500ce200bf5cb3b78fe33f80ee749fd3c50653198dadf6e280cacda613",
+  "faultySourceSHA256": "d31744a45b664b4dcf65ba39bd09cabc8b85e66af0f169a70fe3d0ca22a40f32",
+  "faultyWorkerSHA256": "4509011e6f0db8083a806c8481bee59a2a94b24671df44d163c9bc3d2ba0d9af",
+  "rows": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStaleCheck": false,
+      "mutant": false,
+      "outcome": {
+        "id": "65a933ab-c4f0-469a-a6bd-115cadaf7609",
+        "wrongOwner": {
+          "ok": true,
+          "value": {
+            "closed": false
+          }
+        },
+        "state": "closed",
+        "observationMilliseconds": 1000,
+        "requests": []
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": false,
+      "mutant": false,
+      "outcome": {
+        "id": "ed601c74-2191-411a-8baa-f5d2895c71e6",
+        "wrongOwner": {
+          "ok": true,
+          "value": {
+            "closed": false
+          }
+        },
+        "state": "closed",
+        "observationMilliseconds": 1000,
+        "requests": []
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": true,
+      "mutant": false,
+      "outcome": {
+        "id": "b4f3af35-5bf8-461d-8c67-5f255306b47b",
+        "wrongOwner": {
+          "ok": true,
+          "value": {
+            "closed": false
+          }
+        },
+        "state": "closed",
+        "observationMilliseconds": 1000,
+        "requests": []
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStaleCheck": false,
+      "mutant": true,
+      "outcome": {
+        "detectedWrongOwnerClosure": true,
+        "reply": {
+          "ok": true,
+          "value": {
+            "closed": true
+          }
+        }
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": false,
+      "mutant": true,
+      "outcome": {
+        "detectedWrongOwnerClosure": true,
+        "reply": {
+          "ok": true,
+          "value": {
+            "closed": true
+          }
+        }
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": true,
+      "mutant": true,
+      "outcome": {
+        "detectedWrongOwnerClosure": true,
+        "reply": {
+          "ok": true,
+          "value": {
+            "closed": true
+          }
+        }
+      }
+    }
+  ],
+  "completedAt": "2026-10-31T21:10:31.827Z"
+}

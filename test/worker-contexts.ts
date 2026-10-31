@@ -6,6 +6,7 @@ import { launch } from './browser-profile.ts';
 import { servers } from './server.ts';
 import { testProvenance } from './provenance.ts';
 import { provideResourceList } from './resource-list-input.ts';
+import { installWorkerClosureProbe, checkWorkerClosure } from './worker-closure.ts';
 
 const publisherURL = 'http://127.0.0.1:4344';
 const provenance = await testProvenance(import.meta.url);
@@ -186,6 +187,7 @@ try {
     try {
       const context = await browser.newContext();
       context.setDefaultTimeout(15000);
+      await installWorkerClosureProbe(context);
       await context.addInitScript(() => {
         const NativeWorker = Worker;
         const nativePost = Worker.prototype.postMessage;
@@ -308,6 +310,7 @@ try {
             event.url === rawWorkers[2].source,
         ),
       );
+      const closure = await checkWorkerClosure(app, context, server.traffic);
       const checks = [];
       for (const kind of [
         'classic',
@@ -697,6 +700,7 @@ try {
       assert(requests.length > before);
       assert(connections.length > connectionsBefore);
       results.push({
+        closure,
         provenance,
         name,
         version: browser.version(),

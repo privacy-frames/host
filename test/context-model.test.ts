@@ -1,3 +1,5 @@
+import { closeWorkerChild } from '../src/runtime/contexts/worker-control.ts';
+import type { StoredInstallation } from '../src/runtime/storage.ts';
 import { memoryContextStorage } from './context-storage.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -226,4 +228,69 @@ test('revalidation queued after closure cannot read before its pending tombstone
   }
   assert(checks);
   assert.deepEqual(await checks, [false, false]);
+});
+
+test('worker closure derives owner and application from the actual parent binding', async () => {
+  const registry = new ContextRegistry(memoryContextStorage());
+  const parent = {
+    id: 'actual-parent',
+    url: 'https://runtime.test/app/',
+    type: 'window' as const,
+  };
+  const other = { ...parent, id: 'other-parent' };
+  const parentIdentity = {
+    ...identity(),
+    id: 'parent-context',
+    parent: null,
+    kind: 'window' as const,
+    url: parent.url,
+  };
+  await registry.bind(parent.id, parentIdentity);
+  await registry.bind(other.id, { ...parentIdentity, id: 'other-context' });
+  const child = '65f0558d-d4dc-47c7-bc3b-946e028f740a';
+  await registry.bind('actual-child', { ...identity(), id: child, parent: parent.id });
+  const app: StoredInstallation = {
+    generation: identity().installationGeneration,
+    id: identity().application,
+    manifest: { id: 'fixture', name: 'Fixture', entry: 'index.html' },
+    source: 'https://publisher.test/',
+    resources: [],
+    size: 0,
+    installedAt: 'fixture',
+    format: 'offline-resources-v1',
+    capture: { additionalResources: [], unavailableResources: [] },
+  };
+  let currentApp = app;
+  const store = {
+    async getApp() {
+      return currentApp;
+    },
+  };
+  assert.equal(await closeWorkerChild(other, child, registry, store), false);
+  assert(await registry.resolveWorker('actual-child'));
+  for (const invalid of [undefined, null, 42, {}, '', 'not-a-context'])
+    await assert.rejects(closeWorkerChild(parent, invalid, registry, store));
+  await assert.rejects(closeWorkerChild(undefined, child, registry, store));
+  await assert.rejects(
+    closeWorkerChild({ ...parent, id: 'forged' }, child, registry, store),
+  );
+  await assert.rejects(
+    closeWorkerChild(
+      { ...parent, url: 'https://runtime.test/elsewhere/' },
+      child,
+      registry,
+      store,
+    ),
+  );
+  currentApp = { ...app, generation: 'replacement-generation' };
+  await assert.rejects(closeWorkerChild(parent, child, registry, store));
+  assert(await registry.resolveWorker('actual-child'));
+  currentApp = app;
+  assert.equal(await closeWorkerChild(parent, child, registry, store), true);
+  assert.equal(await registry.resolveWorker('actual-child'), undefined);
+  const absent = '58f0558d-d4dc-47c7-bc3b-946e028f740a';
+  assert.equal(await closeWorkerChild(parent, absent, registry, store), true);
+  await assert.rejects(
+    registry.bind('late-child', { ...identity(), id: absent, parent: parent.id }),
+  );
 });
