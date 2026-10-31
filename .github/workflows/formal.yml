@@ -60,6 +60,13 @@ jobs:
           npx tsc --ignoreConfig --noEmit --strict --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/confinement/registry-trace-test.ts
           node formal/confinement/registry-trace-test.ts
           node --test formal/confinement/registry-concurrency-test.ts
+      - name: Check native context storage and missing-constraint controls
+        id: context_storage
+        run: |
+          rm -f results/contexts/controller-storage.json
+          npm run build
+          npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker test/controller-context-storage.ts
+          node test/controller-context-storage.ts
       - name: Check that a wrong-owner mutation is detected
         run: |
           if REGISTRY_FAULT=wrong-owner node formal/confinement/registry-trace-test.ts > /tmp/registry-fault.log 2>&1; then
@@ -67,6 +74,11 @@ jobs:
             exit 1
           fi
           grep -q 'registry model mismatch' /tmp/registry-fault.log
+      - uses: actions/upload-artifact@v4
+        if: always() && (steps.context_storage.outcome == 'success' || steps.context_storage.outcome == 'failure')
+        with:
+          name: context-storage-contract
+          path: results/contexts/controller-storage.json
   maintenance:
     runs-on: ubuntu-latest
     timeout-minutes: 15
@@ -248,9 +260,16 @@ jobs:
       - run: node formal/navigation-preload-probe.ts
       - run: node formal/navigation-preload-fault.ts
       - name: Reproduce the known worker-maintenance confinement counterexample
+        id: worker_maintenance
         run: |
+          rm -f formal/runtime-verification/service-worker-maintenance.json
           npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --types node --target ES2022 --module NodeNext --moduleResolution NodeNext --allowImportingTsExtensions --lib ES2022,DOM --skipLibCheck formal/runtime-verification/service-worker-maintenance.ts
           node formal/runtime-verification/service-worker-maintenance.ts
+      - uses: actions/upload-artifact@v4
+        if: always() && (steps.worker_maintenance.outcome == 'success' || steps.worker_maintenance.outcome == 'failure')
+        with:
+          name: worker-maintenance-observation
+          path: formal/runtime-verification/service-worker-maintenance.json
       - name: Check installed-app navigation and actual guarded bundle
         run: |
           npx tsc --ignoreConfig --noEmit --strict --types node --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --lib ES2023,DOM,DOM.Iterable,WebWorker formal/implementation-navigation/installed-run.ts

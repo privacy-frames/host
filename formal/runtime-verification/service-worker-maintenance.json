@@ -1,12 +1,12 @@
 {
   "scope": "Native and actual confined worker creation, chosen by a private input bit, compared with no-worker and idle controls. Fixed-URL service-worker maintenance is observed at independent HTTP servers. Bounded observations do not establish exhaustive browser behavior or channel capacity.",
   "provenance": {
-    "capturedAt": "2026-10-31T15:21:34.641Z",
-    "revision": "c5e710648bd326b96576fdc2a8b5336d8911fd65",
+    "capturedAt": "2026-10-31T19:41:10.816Z",
+    "revision": "7821014d93f660144173d6614f2c116c85a7b65e",
     "dirty": true,
-    "sourceSHA256": "749a8188aeb5b2d7a57862090dc2092eeca20cda3aa418f5fd7c3b3e3f2a4320",
+    "sourceSHA256": "ae056c540bf90a77259224a0ded6eae3955716e83f351da9ec26f7869fa640ab",
     "runner": "formal/runtime-verification/service-worker-maintenance.ts",
-    "runnerSHA256": "0b1e859bbe976ae204a3085bdba8ab613dfb90b58069525e7078aea352df7d0a",
+    "runnerSHA256": "ebefda0405a24606196232f0435d34f9e501ef1c2f361b3321274389717ef552",
     "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
     "artifacts": {
       "dist-manager/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -17,13 +17,13 @@
       "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-manager/sw.js": "d3107827d22262ac7f64b9f31b935163ced4bd227c1489db609d039bdac8a033",
+      "dist-manager/sw.js": "e65e7d53e145ed04a3dcbdf0ca71e3b18998a2b3ce10af217081b606c8b15b32",
       "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
       "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
       "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
-      "dist-runtime/document-guard.js": "ff09ae7169148dc07814e40b35be23e3370479c4001e9265bfdf2a36cc746ba9",
-      "dist-runtime/guard.js": "2be2080675a870d7c2adfcb5fff9b05c1e4fb6562ba00eacd16c2eeffa3bad85",
+      "dist-runtime/document-guard.js": "c50deddbbc7b5f24aeefe69b566642d86eabb9b0542cfc7b8625ff07f069e856",
+      "dist-runtime/guard.js": "443b4f119a47f667c89b57fd8043920bc6434e752a6b086f6f6a0ecb63d5ef10",
       "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
       "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
       "dist-runtime/publisher-worker-guard.js": "b1ac13860c6732e441d63d58e090baea04b18288ab3f890ade0f55d22c22ebc0",
@@ -31,7 +31,7 @@
       "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
       "dist-runtime/shared-worker-guard.js": "96a3c1086f9de09a02a7ea335d1898513563bf7f09b078de23cc1402f1704e2a",
-      "dist-runtime/sw.js": "4781761ae3b1c44ead0121b9ef2a02eed984b21f530dcd9cd542aafadef82107",
+      "dist-runtime/sw.js": "896b282e51b9f995e8d3dfe57d58506f4c1277b94ea1dfbcd767b2f4235b4b84",
       "dist-runtime/worker-guard.js": "ccd59c5ea899bf225c37c7cfaf4677d1c648d83e132ec62e98ec91877ad2d89f",
       "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
       "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -45,8 +45,8 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 0,
-      "actionStarted": 1793460099381,
-      "observationEnded": 1793460102420,
+      "actionStarted": 1793475675566,
+      "observationEnded": 1793475678595,
       "confined": false,
       "bit": "0",
       "idleRuntime": [],
@@ -59,8 +59,8 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 1,
-      "actionStarted": 1793460106983,
-      "observationEnded": 1793460110038,
+      "actionStarted": 1793475683157,
+      "observationEnded": 1793475686217,
       "confined": false,
       "bit": "1",
       "idleRuntime": [],
@@ -69,13 +69,13 @@
       "publisherTraffic": [
         {
           "path": "/sw.js",
-          "time": 1793460108027
+          "time": 1793475684204
         }
       ],
       "updateRequests": [
         {
           "path": "/sw.js",
-          "time": 1793460108027
+          "time": 1793475684204
         }
       ]
     },
@@ -83,8 +83,8 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 2,
-      "actionStarted": 1793460114600,
-      "observationEnded": 1793460117656,
+      "actionStarted": 1793475690778,
+      "observationEnded": 1793475693831,
       "confined": false,
       "bit": "1",
       "idleRuntime": [],
@@ -93,13 +93,13 @@
       "publisherTraffic": [
         {
           "path": "/sw.js",
-          "time": 1793460115644
+          "time": 1793475691821
         }
       ],
       "updateRequests": [
         {
           "path": "/sw.js",
-          "time": 1793460115644
+          "time": 1793475691821
         }
       ]
     },
@@ -107,8 +107,8 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 3,
-      "actionStarted": 1793460122216,
-      "observationEnded": 1793460125250,
+      "actionStarted": 1793475698393,
+      "observationEnded": 1793475701425,
       "confined": false,
       "bit": "0",
       "idleRuntime": [],
@@ -121,8 +121,8 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 0,
-      "actionStarted": 1793460134198,
-      "observationEnded": 1793460137232,
+      "actionStarted": 1793475710357,
+      "observationEnded": 1793475713393,
       "confined": true,
       "bit": "0",
       "idleRuntime": [],
@@ -135,8 +135,8 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 1,
-      "actionStarted": 1793460146180,
-      "observationEnded": 1793460149488,
+      "actionStarted": 1793475722307,
+      "observationEnded": 1793475725615,
       "confined": true,
       "bit": "1",
       "idleRuntime": [],
@@ -161,8 +161,8 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 2,
-      "actionStarted": 1793460158400,
-      "observationEnded": 1793460161707,
+      "actionStarted": 1793475734524,
+      "observationEnded": 1793475737833,
       "confined": true,
       "bit": "1",
       "idleRuntime": [],
@@ -187,8 +187,8 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 3,
-      "actionStarted": 1793460170638,
-      "observationEnded": 1793460173680,
+      "actionStarted": 1793475746736,
+      "observationEnded": 1793475749773,
       "confined": true,
       "bit": "0",
       "idleRuntime": [],
@@ -201,8 +201,8 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 0,
-      "actionStarted": 1793460179202,
-      "observationEnded": 1793460182259,
+      "actionStarted": 1793475755223,
+      "observationEnded": 1793475758280,
       "confined": false,
       "bit": "0",
       "idleRuntime": [],
@@ -215,8 +215,8 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 1,
-      "actionStarted": 1793460186967,
-      "observationEnded": 1793460190047,
+      "actionStarted": 1793475762979,
+      "observationEnded": 1793475766058,
       "confined": false,
       "bit": "1",
       "idleRuntime": [],
@@ -225,13 +225,13 @@
       "publisherTraffic": [
         {
           "path": "/sw.js",
-          "time": 1793460188029
+          "time": 1793475764040
         }
       ],
       "updateRequests": [
         {
           "path": "/sw.js",
-          "time": 1793460188029
+          "time": 1793475764040
         }
       ]
     },
@@ -239,8 +239,8 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 2,
-      "actionStarted": 1793460194765,
-      "observationEnded": 1793460197844,
+      "actionStarted": 1793475770760,
+      "observationEnded": 1793475773839,
       "confined": false,
       "bit": "1",
       "idleRuntime": [],
@@ -249,13 +249,13 @@
       "publisherTraffic": [
         {
           "path": "/sw.js",
-          "time": 1793460195827
+          "time": 1793475771822
         }
       ],
       "updateRequests": [
         {
           "path": "/sw.js",
-          "time": 1793460195827
+          "time": 1793475771822
         }
       ]
     },
@@ -263,8 +263,8 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 3,
-      "actionStarted": 1793460202548,
-      "observationEnded": 1793460205606,
+      "actionStarted": 1793475778533,
+      "observationEnded": 1793475781574,
       "confined": false,
       "bit": "0",
       "idleRuntime": [],
@@ -277,8 +277,8 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 0,
-      "actionStarted": 1793460212786,
-      "observationEnded": 1793460215842,
+      "actionStarted": 1793475788740,
+      "observationEnded": 1793475791803,
       "confined": true,
       "bit": "0",
       "idleRuntime": [],
@@ -291,8 +291,8 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 1,
-      "actionStarted": 1793460222829,
-      "observationEnded": 1793460226064,
+      "actionStarted": 1793475798775,
+      "observationEnded": 1793475802007,
       "confined": true,
       "bit": "1",
       "idleRuntime": [],
@@ -317,8 +317,8 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 2,
-      "actionStarted": 1793460233068,
-      "observationEnded": 1793460236305,
+      "actionStarted": 1793475808984,
+      "observationEnded": 1793475812221,
       "confined": true,
       "bit": "1",
       "idleRuntime": [],
@@ -343,8 +343,8 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 3,
-      "actionStarted": 1793460243321,
-      "observationEnded": 1793460246380,
+      "actionStarted": 1793475819189,
+      "observationEnded": 1793475822250,
       "confined": true,
       "bit": "0",
       "idleRuntime": [],
@@ -385,5 +385,6 @@
     }
   ],
   "observationMilliseconds": 3000,
-  "completedAt": "2026-10-31T15:24:06.628Z"
+  "completed": true,
+  "completedAt": "2026-10-31T19:43:42.484Z"
 }

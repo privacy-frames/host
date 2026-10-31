@@ -1,9 +1,9 @@
 {
   "provenance": {
-    "capturedAt": "2026-10-31T18:35:28.021Z",
-    "revision": "f680d8efa24b2f483d738067534a522fc816fe54",
+    "capturedAt": "2026-10-31T19:34:05.767Z",
+    "revision": "7821014d93f660144173d6614f2c116c85a7b65e",
     "dirty": true,
-    "sourceSHA256": "7c2c01b313e3da427127d1c1a8fab0d239ec05e1b73c03573df76216c9c385b8",
+    "sourceSHA256": "ae056c540bf90a77259224a0ded6eae3955716e83f351da9ec26f7869fa640ab",
     "runner": "test/prototype-confinement.ts",
     "runnerSHA256": "c67de905336cad05930150533413114d087ae5669119c5d532fbeeff5cb62af0",
     "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
@@ -16,7 +16,7 @@
       "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-manager/sw.js": "656b59751ccda47162e24e696556e3a8d94d6f078a88e0dc100f9eca53c475ce",
+      "dist-manager/sw.js": "e65e7d53e145ed04a3dcbdf0ca71e3b18998a2b3ce10af217081b606c8b15b32",
       "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
       "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
@@ -30,7 +30,7 @@
       "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
       "dist-runtime/shared-worker-guard.js": "96a3c1086f9de09a02a7ea335d1898513563bf7f09b078de23cc1402f1704e2a",
-      "dist-runtime/sw.js": "e10c1ffc02c6ae7e021e99b1efbcbd02b1d6bf34d67eca3c1e047063357e9bf4",
+      "dist-runtime/sw.js": "896b282e51b9f995e8d3dfe57d58506f4c1277b94ea1dfbcd767b2f4235b4b84",
       "dist-runtime/worker-guard.js": "ccd59c5ea899bf225c37c7cfaf4677d1c648d83e132ec62e98ec91877ad2d89f",
       "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
       "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -48,9 +48,9 @@
       "upgrades": [
         {
           "port": 4211,
-          "path": "/runtime/__prototype-upgrade?marker=cafdcf66-ca46-4bf6-a41c-cef6986b35fb",
+          "path": "/runtime/__prototype-upgrade?marker=04886d40-7dc8-44c3-a743-6ed85e460f1a",
           "origin": "http://127.0.0.1:4211",
-          "time": 1793471728235
+          "time": 1793475245986
         }
       ]
     },
@@ -62,9 +62,9 @@
       "upgrades": [
         {
           "port": 4211,
-          "path": "/runtime/__prototype-upgrade?marker=32c2e496-0f11-42ba-a4e2-149c1160916a",
+          "path": "/runtime/__prototype-upgrade?marker=14f73164-d44e-4855-b5b9-2b0ff652685c",
           "origin": "http://127.0.0.1:4211",
-          "time": 1793471733199
+          "time": 1793475250793
         }
       ]
     }
@@ -90,7 +90,7 @@
         "websocket": "constructed",
         "childFetch": "resolved",
         "cacheNames": [],
-        "socketMarker": "475f8bcf-adb1-4c2c-b259-75ded1631ddc",
+        "socketMarker": "aa67612f-210e-4338-8d23-92eb10f5926a",
         "sameOriginSockets": {
           "main": "constructed",
           "preparedChild": "constructed",
@@ -104,54 +104,54 @@
       },
       "attempts": [
         {
-          "path": "/collect/fetch?attempt=7edc6a53-92b8-4fef-a279-5df3ea0c7728",
+          "path": "/collect/fetch?attempt=f421b0a0-3e79-44f2-8825-ac56b66b4c3e",
           "upgrade": false
         },
         {
-          "path": "/collect/websocket?attempt=089c907f-e2ec-4204-914b-50d8b4a9ab80",
+          "path": "/collect/websocket?attempt=8bb8a044-b1ce-4e74-9adf-0907ccef9ad4",
           "upgrade": true
         },
         {
-          "path": "/collect/child-fetch?attempt=011cceb8-afe8-4cef-ad87-0ec6ac9a102f",
+          "path": "/collect/child-fetch?attempt=44ab0957-af73-49a0-b910-f9b8fdd4850a",
           "upgrade": false
         }
       ],
       "runtimeUpgrades": [
         {
           "port": 4211,
-          "path": "/runtime/__prototype-upgrade?marker=475f8bcf-adb1-4c2c-b259-75ded1631ddc&context=pending",
-          "origin": "http://127.0.0.1:38279",
-          "time": 1793471728271
+          "path": "/runtime/__prototype-upgrade?marker=aa67612f-210e-4338-8d23-92eb10f5926a&context=pending",
+          "origin": "http://127.0.0.1:41511",
+          "time": 1793475246018
         },
         {
           "port": 4211,
-          "path": "/runtime/__prototype-upgrade?marker=475f8bcf-adb1-4c2c-b259-75ded1631ddc&context=main",
-          "origin": "http://127.0.0.1:38279",
-          "time": 1793471728282
+          "path": "/runtime/__prototype-upgrade?marker=aa67612f-210e-4338-8d23-92eb10f5926a&context=indexed",
+          "origin": "http://127.0.0.1:41511",
+          "time": 1793475246029
         },
         {
           "port": 4211,
-          "path": "/runtime/__prototype-upgrade?marker=475f8bcf-adb1-4c2c-b259-75ded1631ddc&context=indexed",
-          "origin": "http://127.0.0.1:38279",
-          "time": 1793471728293
+          "path": "/runtime/__prototype-upgrade?marker=aa67612f-210e-4338-8d23-92eb10f5926a&context=main",
+          "origin": "http://127.0.0.1:41511",
+          "time": 1793475246040
         },
         {
           "port": 4211,
-          "path": "/runtime/__prototype-upgrade?marker=475f8bcf-adb1-4c2c-b259-75ded1631ddc&context=record-immediate",
-          "origin": "http://127.0.0.1:38279",
-          "time": 1793471728304
+          "path": "/runtime/__prototype-upgrade?marker=aa67612f-210e-4338-8d23-92eb10f5926a&context=record-immediate",
+          "origin": "http://127.0.0.1:41511",
+          "time": 1793475246051
         },
         {
           "port": 4211,
-          "path": "/runtime/__prototype-upgrade?marker=475f8bcf-adb1-4c2c-b259-75ded1631ddc&context=record-microtask",
-          "origin": "http://127.0.0.1:38279",
-          "time": 1793471728315
+          "path": "/runtime/__prototype-upgrade?marker=aa67612f-210e-4338-8d23-92eb10f5926a&context=record-microtask",
+          "origin": "http://127.0.0.1:41511",
+          "time": 1793475246062
         },
         {
           "port": 4211,
-          "path": "/runtime/__prototype-upgrade?marker=475f8bcf-adb1-4c2c-b259-75ded1631ddc&context=prepared-child",
-          "origin": "http://127.0.0.1:38279",
-          "time": 1793471729471
+          "path": "/runtime/__prototype-upgrade?marker=aa67612f-210e-4338-8d23-92eb10f5926a&context=prepared-child",
+          "origin": "http://127.0.0.1:41511",
+          "time": 1793475247219
         }
       ],
       "errors": []
@@ -177,7 +177,7 @@
         "websocket": "rejected",
         "childFetch": "rejected",
         "cacheNames": [],
-        "socketMarker": "4ac37375-a5c6-473e-9eef-e5f025b10dce",
+        "socketMarker": "b598d08a-9a3c-43ca-a788-0c6389319e5c",
         "sameOriginSockets": {
           "main": "rejected",
           "preparedChild": "rejected",
@@ -213,7 +213,7 @@
         "websocket": "constructed",
         "childFetch": "resolved",
         "cacheNames": [],
-        "socketMarker": "7a168a62-f7af-4ab8-93d3-5310c9f91beb",
+        "socketMarker": "04aec42a-d76b-4b3d-b0ce-08e1fe85ab99",
         "sameOriginSockets": {
           "main": "constructed",
           "preparedChild": "constructed",
@@ -227,54 +227,54 @@
       },
       "attempts": [
         {
-          "path": "/collect/fetch?attempt=916a7e2e-7fb6-4f65-992d-b12a967edd08",
+          "path": "/collect/fetch?attempt=30168927-ae8f-4c11-991b-5bc493012f9b",
           "upgrade": false
         },
         {
-          "path": "/collect/websocket?attempt=7510669b-9604-424e-bc3f-eacfd63790cb",
+          "path": "/collect/websocket?attempt=331d0a38-5f3b-4a27-9ab2-5433fd4c1175",
           "upgrade": true
         },
         {
-          "path": "/collect/child-fetch?attempt=2b42b5cd-9d78-4166-8030-d9a58b06a7be",
+          "path": "/collect/child-fetch?attempt=fb856ac7-b8a6-4700-ba4e-d3b99273a7d0",
           "upgrade": false
         }
       ],
       "runtimeUpgrades": [
         {
           "port": 4211,
-          "path": "/runtime/__prototype-upgrade?marker=7a168a62-f7af-4ab8-93d3-5310c9f91beb&context=pending",
-          "origin": "http://127.0.0.1:38279",
-          "time": 1793471733445
+          "path": "/runtime/__prototype-upgrade?marker=04aec42a-d76b-4b3d-b0ce-08e1fe85ab99&context=pending",
+          "origin": "http://127.0.0.1:41511",
+          "time": 1793475251019
         },
         {
           "port": 4211,
-          "path": "/runtime/__prototype-upgrade?marker=7a168a62-f7af-4ab8-93d3-5310c9f91beb&context=indexed",
-          "origin": "http://127.0.0.1:38279",
-          "time": 1793471733453
+          "path": "/runtime/__prototype-upgrade?marker=04aec42a-d76b-4b3d-b0ce-08e1fe85ab99&context=indexed",
+          "origin": "http://127.0.0.1:41511",
+          "time": 1793475251021
         },
         {
           "port": 4211,
-          "path": "/runtime/__prototype-upgrade?marker=7a168a62-f7af-4ab8-93d3-5310c9f91beb&context=main",
-          "origin": "http://127.0.0.1:38279",
-          "time": 1793471733463
+          "path": "/runtime/__prototype-upgrade?marker=04aec42a-d76b-4b3d-b0ce-08e1fe85ab99&context=main",
+          "origin": "http://127.0.0.1:41511",
+          "time": 1793475251025
         },
         {
           "port": 4211,
-          "path": "/runtime/__prototype-upgrade?marker=7a168a62-f7af-4ab8-93d3-5310c9f91beb&context=record-immediate",
-          "origin": "http://127.0.0.1:38279",
-          "time": 1793471733465
+          "path": "/runtime/__prototype-upgrade?marker=04aec42a-d76b-4b3d-b0ce-08e1fe85ab99&context=record-immediate",
+          "origin": "http://127.0.0.1:41511",
+          "time": 1793475251029
         },
         {
           "port": 4211,
-          "path": "/runtime/__prototype-upgrade?marker=7a168a62-f7af-4ab8-93d3-5310c9f91beb&context=record-microtask",
-          "origin": "http://127.0.0.1:38279",
-          "time": 1793471733468
+          "path": "/runtime/__prototype-upgrade?marker=04aec42a-d76b-4b3d-b0ce-08e1fe85ab99&context=record-microtask",
+          "origin": "http://127.0.0.1:41511",
+          "time": 1793475251030
         },
         {
           "port": 4211,
-          "path": "/runtime/__prototype-upgrade?marker=7a168a62-f7af-4ab8-93d3-5310c9f91beb&context=prepared-child",
-          "origin": "http://127.0.0.1:38279",
-          "time": 1793471734646
+          "path": "/runtime/__prototype-upgrade?marker=04aec42a-d76b-4b3d-b0ce-08e1fe85ab99&context=prepared-child",
+          "origin": "http://127.0.0.1:41511",
+          "time": 1793475252212
         }
       ],
       "errors": []
@@ -300,7 +300,7 @@
         "websocket": "rejected",
         "childFetch": "rejected",
         "cacheNames": [],
-        "socketMarker": "b7b1c9a2-8f95-4372-8937-ef64fba85ea2",
+        "socketMarker": "5b65e88e-1b39-4528-ac25-ca3564d070d9",
         "sameOriginSockets": {
           "main": "rejected",
           "preparedChild": "rejected",

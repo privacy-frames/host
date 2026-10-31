@@ -414,17 +414,6 @@ try {
           .frames()
           .find((frame) => frame.url().endsWith('/connect.html'))!;
         console.log(
-          'private bindings',
-          await bridge.evaluate(async () => {
-            const cache = await caches.open('pf-browser-contexts-v1');
-            const out = [];
-            for (const key of await cache.keys()) {
-              out.push({ key: key.url, value: await (await cache.match(key))!.json() });
-            }
-            return out;
-          }),
-        );
-        console.log(
           'private events',
           await bridge.evaluate(
             () =>

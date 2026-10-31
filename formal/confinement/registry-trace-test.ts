@@ -1,3 +1,4 @@
+import { memoryContextStorage } from '../../test/context-storage.ts';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -6,7 +7,6 @@ import {
   CONTEXT_POLICY_VERSION,
   ContextRegistry,
   type ContextIdentity,
-  type ContextStorage,
 } from '../../src/runtime/contexts/model.ts';
 
 execFileSync('python3', ['formal/confinement/generate-registry.py'], {
@@ -79,27 +79,9 @@ async function exercise(sequence: readonly Action[]) {
   const key = (parent: string, app: string, context: string) =>
     JSON.stringify([parent, app, context]);
   let writes = 0;
-  const storage: ContextStorage = {
-    async get(client) {
-      const entry = records.get(client);
-      return entry?.parent && closures.has(key(entry.parent, entry.application, entry.id))
-        ? { ...entry, state: 'closed' }
-        : entry;
-    },
-    async put(client, value) {
-      writes++;
-      records.set(client, value);
-    },
-    async lookupByContext(context) {
-      return [...records].find(([, value]) => value.id === context)?.[0];
-    },
-    async isClosureRequested(parent, app, context) {
-      return closures.has(key(parent, app, context));
-    },
-    async requestClosure(parent, app, context) {
-      closures.add(key(parent, app, context));
-    },
-  };
+  const storage = memoryContextStorage(records, closures, () => {
+    writes++;
+  });
   let registry = new ContextRegistry(storage);
   const snapshot = () => ({
     state: records.get('client')
@@ -305,6 +287,9 @@ await writeFile(
         .digest('hex'),
       sourceSHA256: createHash('sha256')
         .update(await readFile('src/runtime/contexts/model.ts'))
+        .digest('hex'),
+      storageFixtureSHA256: createHash('sha256')
+        .update(await readFile('test/context-storage.ts'))
         .digest('hex'),
       boundAbstraction:
         'Persisted preparing/ready/running all project to bound; no guard readiness is inferred',

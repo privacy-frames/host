@@ -31,7 +31,16 @@ one update request across the two worker samples for each browser/profile pair.
 It records individual omissions rather than requiring deterministic delivery.
 CI run `41206920356` observed an update in one native Chromium worker sample and
 none in the other; the former per-sample assertion rejected that run. The test
-still fails when a group supplies no positive observation.
+still fails when a group supplies no positive observation. CI run
+[41232154107](https://github.com/privacy-frames/host/actions/runs/41232154107)
+observed no update in either native Chromium worker sample and stopped at that
+assertion. This is missing positive evidence, not a confinement result.
+
+The runner now saves partial samples, completed groups and the failure reason
+before cleanup when an observation check fails. Such a receipt has
+`completed: false` and no completion timestamp. CI uploads this observation when
+the probe actually ran, including on failure. A saved partial receipt does not
+satisfy the missing control.
 
 The [receipt](service-worker-maintenance.json) records Chromium and Firefox
 versions, source and build provenance, idle controls and server observations.

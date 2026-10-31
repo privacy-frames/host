@@ -21,10 +21,13 @@ A passing safe check cannot prove that the actual implementation satisfies them.
   The three live persisted phase labels project to one bound state; revalidation
   checks authority without writing those labels. It does not verify bearer secrecy,
   browser guards, persistence, actual client identity or concurrency. A wrong-owner mutation must be rejected by the comparison.
-- `RegistryRace.tla` models two independent registry instances checking the same
-  empty client before either writes. TLC finds a counterexample to unique
-  successful binding. Browser reachability and the security consequences require
-  separate analysis; this model deliberately abstracts cache writes and callers.
+- `RegistryRace.tla` retains the former non-atomic CacheStorage schedule as a
+  countermodel: two independent registries check an empty client before either
+  writes, and both bindings succeed. The current IndexedDB store enforces client
+  and context uniqueness inside a transaction. Its native tests and remaining
+  proof obligations are described in the
+  [implementation mapping](../implementation-mapping.md#atomic-context-bindings-across-controllers).
+  This countermodel does not describe the new store's transaction semantics.
 - `GenerationRead.tla` separates the transaction snapshot, generation check and
   later delivery across an installation replacement. See
   [generation-reads.md](generation-reads.md) for the bounds, fault controls and
@@ -51,6 +54,7 @@ python3 formal/confinement/check-generation-reads.py
 python3 formal/confinement/capture.py
 node formal/confinement/registry-trace-test.ts
 node --test formal/confinement/registry-concurrency-test.ts
+node test/controller-context-storage.ts
 ```
 
 The scripts check the jar hash and use a pinned Java image without network access.

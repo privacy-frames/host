@@ -1,10 +1,10 @@
+import { memoryContextStorage } from './context-storage.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   ContextRegistry,
   CONTEXT_POLICY_VERSION,
   type ContextIdentity,
-  type ContextStorage,
 } from '../src/runtime/contexts/model.ts';
 import { contextResourceResponse } from '../src/runtime/contexts/resources.ts';
 import { applicationURL } from '../src/shared/runtime-url.ts';
@@ -36,24 +36,7 @@ const readyURL = new URL('ready', directory).href;
 
 async function fixture() {
   const records = new Map<string, ContextIdentity>();
-  const closed = new Set<string>();
-  const storage: ContextStorage = {
-    async get(client) {
-      return records.get(client);
-    },
-    async put(client, identity) {
-      records.set(client, identity);
-    },
-    async lookupByContext(id) {
-      return [...records].find(([, identity]) => identity.id === id)?.[0];
-    },
-    async isClosureRequested(parent, application, id) {
-      return closed.has(JSON.stringify([parent, application, id]));
-    },
-    async requestClosure(parent, application, id) {
-      closed.add(JSON.stringify([parent, application, id]));
-    },
-  };
+  const storage = memoryContextStorage(records);
   const registry = new ContextRegistry(storage);
   await registry.bind('actual-worker', {
     policyVersion: CONTEXT_POLICY_VERSION,

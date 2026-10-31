@@ -32,6 +32,7 @@ const compiled = await build({
     sourcefile: 'document-consumption-race-fixture.js',
     contents: `
 import { createDocumentController } from './src/runtime/contexts/document-controller.ts';
+import { memoryContextStorage } from './test/context-storage.ts';
 import { DocumentIntentStore } from './src/runtime/contexts/document-intents.ts';
 import { ContextRegistry, CONTEXT_POLICY_VERSION } from './src/runtime/contexts/model.ts';
 import { getApp, putApp } from './src/runtime/storage.ts';
@@ -69,18 +70,7 @@ async function runRace(parentMode) {
   for (const scenario of scenarios) {
     const records = new Map();
     const closures = new Set();
-    const key = (parent, application, context) => JSON.stringify([parent, application, context]);
-    const storage = {
-      async get(client) {
-        const value = records.get(client);
-        return value && closures.has(key(value.parent, value.application, value.id))
-          ? { ...value, state: 'closed' } : value;
-      },
-      async put(client, value) { records.set(client, value); },
-      async lookupByContext(context) { return [...records].find(([, value]) => value.id === context)?.[0]; },
-      async isClosureRequested(parent, application, context) { return closures.has(key(parent, application, context)); },
-      async requestClosure(parent, application, context) { closures.add(key(parent, application, context)); },
-    };
+    const storage = memoryContextStorage(records, closures);
     const contexts = new ContextRegistry(storage);
     const otherController = new ContextRegistry(storage);
     const intents = new DocumentIntentStore({ databaseName: 'consumption-race-' + parentMode + '-' + scenario });

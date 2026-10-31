@@ -65,13 +65,14 @@ contract to close the item.
 
 ## Initial findings
 
-The existing `ContextRegistry` serializes mutations within one instance.
-`formal/confinement/registry-concurrency-test.ts` includes a schedule in which two
-instances accept bindings for the same browser client. The controller store uses
-separate CacheStorage writes for the record and index. The lifecycle proof must
-either establish that the conflicting browser requests are unreachable, repair
-the synchronization, or establish why the permitted outcome preserves the actual
-confinement invariant. An atomic binding operation cannot simply be assumed.
+The former CacheStorage context store admitted duplicate bindings across
+independent controller queues. The current store uses a single IndexedDB
+transaction, a browser-client primary key and a unique context index. Binding
+and owner-scoped closure commit atomically; the generic identity writer is gone.
+Native Window/worker fixtures exercise conflicting inserts, rollback, closure
+and missing-constraint controls in both browsers. The
+[implementation mapping](../implementation-mapping.md#atomic-context-bindings-across-controllers)
+records the storage contract and its remaining correspondence obligations.
 
 Persistent `preparing`, `ready` and `running` labels do not establish local guard
 readiness. Dedicated-worker message delivery opens after the prepared worker has
@@ -85,7 +86,9 @@ arguments even where the abstract publication contract is shared.
 - Stage 2: entry-point review started; complete authority mapping remains open.
 - Stage 3: document generation invalidation now uses private object identities;
   factory and installed-document integration tests pass in both browsers. The
-  complete publication and lifecycle argument remains open.
+  context store now enforces binding uniqueness and owner-scoped cancellation
+  across native database connections. Complete publication, transaction-callback
+  verification and lifecycle correspondence remain open.
 - Stage 4: deductive-mode calibration and verification of the production document
   begin/cancel state functions pass. The generated-specification comparison also
   passes; direct JavaScript verification is selected for this component. Applying
@@ -184,8 +187,9 @@ generation changes, authenticated grants and resource failure.
 
 Use the unbounded lifecycle models for queues, replacement, concurrent registry
 access and registration lifetime. For each modeled transition, identify the
-executable operation and establish its correspondence. Resolve the known
-multi-instance registry race rather than assuming atomic storage updates.
+executable operation and establish its correspondence. Connect the native transactional binding and closure contract to these
+transitions; its browser constraints and callback implementation require explicit
+premises rather than assumed atomic CacheStorage updates.
 
 Gate: each component has checked preconditions and postconditions, callers
 establish those preconditions, and executable transitions preserve the shared

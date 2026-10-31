@@ -1,0 +1,2821 @@
+{
+  "provenance": {
+    "capturedAt": "2026-10-31T19:31:56.563Z",
+    "revision": "7821014d93f660144173d6614f2c116c85a7b65e",
+    "dirty": true,
+    "sourceSHA256": "ae056c540bf90a77259224a0ded6eae3955716e83f351da9ec26f7869fa640ab",
+    "runner": "test/controller-context-storage.ts",
+    "runnerSHA256": "3dd61db73a414d9ce8ac6e723d7f89242a4fc3231cea4426f3c72d2e444880c6",
+    "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
+    "artifacts": {
+      "dist-manager/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-manager/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-manager/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-manager/index.html": "0ea2b29b0ef6946140c54c2dc2147bffe4de82b9ed13eb4fdcae97a81cfd56f7",
+      "dist-manager/manager.js": "e361950a8774ca901a2b669e55041e15931e079bcdf5cd66e2b95d3986ce0730",
+      "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-manager/sw.js": "e65e7d53e145ed04a3dcbdf0ca71e3b18998a2b3ce10af217081b606c8b15b32",
+      "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
+      "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
+      "dist-runtime/document-guard.js": "c50deddbbc7b5f24aeefe69b566642d86eabb9b0542cfc7b8625ff07f069e856",
+      "dist-runtime/guard.js": "443b4f119a47f667c89b57fd8043920bc6434e752a6b086f6f6a0ecb63d5ef10",
+      "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
+      "dist-runtime/publisher-worker-guard.js": "b1ac13860c6732e441d63d58e090baea04b18288ab3f890ade0f55d22c22ebc0",
+      "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-runtime/shared-worker-guard.js": "96a3c1086f9de09a02a7ea335d1898513563bf7f09b078de23cc1402f1704e2a",
+      "dist-runtime/sw.js": "896b282e51b9f995e8d3dfe57d58506f4c1277b94ea1dfbcd767b2f4235b4b84",
+      "dist-runtime/worker-guard.js": "ccd59c5ea899bf225c37c7cfaf4677d1c648d83e132ec62e98ec91877ad2d89f",
+      "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
+      "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-installation/index.html": "3ca67c9966dd6eaaddb08a331c4c422a70d79bed1acecddada56764ba4ac8e5f",
+      "dist-installation/installation.js": "6cd0a3f3f4494dee2db059f3b1a5feb62017a39399a22e2d3774d0319fa1e3f3"
+    }
+  },
+  "scope": "Actual registry and IndexedDB store in independent native Windows/workers; simulated actor identifiers, not browser identity authentication or full confinement",
+  "sourceHashes": {
+    "normal": "b1d4f8856badf811bc223e0aafb1e5d5a8f33357a5342029342f6d8d2f15d628",
+    "client-fault": "2a17fb222db2e2e2d6d1e579017f0c1a94f39584f9c978c137c1eed2f09f46fe",
+    "context-fault": "d36a95066d487ab362b4ec0910de62d240e522605d7ee6af4cf5c49a7ccea0af"
+  },
+  "bundleHashes": {
+    "/normal/fixture.js": "9c9ca0695f9f07315233a480bc439cf978e7abc3492cca83c39adfbfd56a7259",
+    "/client-fault/fixture.js": "660f35da1c89b159b74689704e3a81e0786f49ff3b296b593c1ca46ceddc9495",
+    "/context-fault/fixture.js": "2602deb64fa68ebbe482fc6a6c6ff7eb58968f59d5e5fcaf61e24846ce5677a7"
+  },
+  "rows": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "normal",
+      "worker": false,
+      "collision": "client",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "206f9df7-01ac-4b4e-9dfc-a5cc3937b7e2"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/normal-false-client/worker"
+          },
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "normal",
+      "worker": false,
+      "collision": "context",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "206f9df7-01ac-4b4e-9dfc-a5cc3937b7e2"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/normal-false-context/worker"
+          },
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "normal",
+      "worker": false,
+      "collision": "same",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "206f9df7-01ac-4b4e-9dfc-a5cc3937b7e2"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/normal-false-same/worker"
+          },
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "normal",
+      "worker": false,
+      "collision": "independent",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": true,
+          "instance": "206f9df7-01ac-4b4e-9dfc-a5cc3937b7e2"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/normal-false-independent/worker"
+          },
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "right-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/normal-false-independent/worker"
+          },
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "normal",
+      "worker": true,
+      "collision": "client",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "e9e38231-5c38-4982-8f42-ec4ed6fca5db"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/normal-true-client/worker"
+          },
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "normal",
+      "worker": true,
+      "collision": "context",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "e9e38231-5c38-4982-8f42-ec4ed6fca5db"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/normal-true-context/worker"
+          },
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "normal",
+      "worker": true,
+      "collision": "same",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "e9e38231-5c38-4982-8f42-ec4ed6fca5db"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/normal-true-same/worker"
+          },
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "normal",
+      "worker": true,
+      "collision": "independent",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": true,
+          "instance": "e9e38231-5c38-4982-8f42-ec4ed6fca5db"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/normal-true-independent/worker"
+          },
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "right-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/normal-true-independent/worker"
+          },
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "normal",
+      "closeBindRound": 0,
+      "replies": [
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "a132e207-0a87-43b8-98ae-dbecd1768e53"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "value": {
+          "policyVersion": 3,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:38501/context-store/close-bind-0/worker"
+        },
+        "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "normal",
+      "closeBindRound": 1,
+      "replies": [
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "a132e207-0a87-43b8-98ae-dbecd1768e53"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "value": {
+          "policyVersion": 3,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:38501/context-store/close-bind-1/worker"
+        },
+        "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "normal",
+      "closeBindRound": 2,
+      "replies": [
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "a132e207-0a87-43b8-98ae-dbecd1768e53"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "value": {
+          "policyVersion": 3,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:38501/context-store/close-bind-2/worker"
+        },
+        "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "normal",
+      "closeBindRound": 3,
+      "replies": [
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "a132e207-0a87-43b8-98ae-dbecd1768e53"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "value": {
+          "policyVersion": 3,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:38501/context-store/close-bind-3/worker"
+        },
+        "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "normal",
+      "closeBindRound": 4,
+      "replies": [
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "a132e207-0a87-43b8-98ae-dbecd1768e53"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "value": {
+          "policyVersion": 3,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:38501/context-store/close-bind-4/worker"
+        },
+        "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "normal",
+      "closeBindRound": 5,
+      "replies": [
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "a132e207-0a87-43b8-98ae-dbecd1768e53"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "value": {
+          "policyVersion": 3,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:38501/context-store/close-bind-5/worker"
+        },
+        "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "normal",
+      "closeBindRound": 6,
+      "replies": [
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "a132e207-0a87-43b8-98ae-dbecd1768e53"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "value": {
+          "policyVersion": 3,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:38501/context-store/close-bind-6/worker"
+        },
+        "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "normal",
+      "closeBindRound": 7,
+      "replies": [
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "a132e207-0a87-43b8-98ae-dbecd1768e53"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "value": {
+          "policyVersion": 3,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:38501/context-store/close-bind-7/worker"
+        },
+        "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "normal",
+      "closeBindRound": 8,
+      "replies": [
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "a132e207-0a87-43b8-98ae-dbecd1768e53"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "value": {
+          "policyVersion": 3,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:38501/context-store/close-bind-8/worker"
+        },
+        "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "normal",
+      "closeBindRound": 9,
+      "replies": [
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "a132e207-0a87-43b8-98ae-dbecd1768e53"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "value": {
+          "policyVersion": 3,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:38501/context-store/close-bind-9/worker"
+        },
+        "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "normal",
+      "closeBindRound": 10,
+      "replies": [
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "a132e207-0a87-43b8-98ae-dbecd1768e53"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "value": {
+          "policyVersion": 3,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:38501/context-store/close-bind-10/worker"
+        },
+        "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "normal",
+      "closeBindRound": 11,
+      "replies": [
+        {
+          "ok": true,
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "a132e207-0a87-43b8-98ae-dbecd1768e53"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "value": {
+          "policyVersion": 3,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:38501/context-store/close-bind-11/worker"
+        },
+        "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "normal",
+      "lifecycle": {
+        "before": {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "context",
+            "application": "application",
+            "parent": "other-parent",
+            "kind": "dedicated-worker",
+            "state": "closed",
+            "url": "http://127.0.0.1:38501/context-store/normal-lifecycle/worker"
+          },
+          "instance": "e9e38231-5c38-4982-8f42-ec4ed6fca5db"
+        },
+        "after": {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "context",
+            "application": "application",
+            "parent": "other-parent",
+            "kind": "dedicated-worker",
+            "state": "closed",
+            "url": "http://127.0.0.1:38501/context-store/normal-lifecycle/worker"
+          },
+          "instance": "a132e207-0a87-43b8-98ae-dbecd1768e53"
+        },
+        "aborted": {
+          "ok": false,
+          "error": "Error: Context transaction aborted",
+          "instance": "a8f34929-3bed-48d0-a66e-d714794ab84a"
+        }
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "client-fault",
+      "worker": false,
+      "collision": "client",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        },
+        {
+          "ok": true,
+          "instance": "7340f779-6d6b-4704-bd4c-da6ea494fadd"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "right-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/client-fault-false-client/worker"
+          },
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        },
+        {
+          "ok": true,
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "client-fault",
+      "worker": false,
+      "collision": "context",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "7340f779-6d6b-4704-bd4c-da6ea494fadd"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/client-fault-false-context/worker"
+          },
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        },
+        {
+          "ok": true,
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "client-fault",
+      "worker": false,
+      "collision": "same",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        },
+        {
+          "ok": true,
+          "instance": "7340f779-6d6b-4704-bd4c-da6ea494fadd"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/client-fault-false-same/worker"
+          },
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        },
+        {
+          "ok": true,
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "client-fault",
+      "worker": false,
+      "collision": "independent",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        },
+        {
+          "ok": true,
+          "instance": "7340f779-6d6b-4704-bd4c-da6ea494fadd"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/client-fault-false-independent/worker"
+          },
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        },
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "right-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/client-fault-false-independent/worker"
+          },
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "client-fault",
+      "worker": true,
+      "collision": "client",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        },
+        {
+          "ok": true,
+          "instance": "ee94ac42-55d6-469c-92f3-0965a688eabf"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "right-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/client-fault-true-client/worker"
+          },
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        },
+        {
+          "ok": true,
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "client-fault",
+      "worker": true,
+      "collision": "context",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "ee94ac42-55d6-469c-92f3-0965a688eabf"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/client-fault-true-context/worker"
+          },
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        },
+        {
+          "ok": true,
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "client-fault",
+      "worker": true,
+      "collision": "same",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        },
+        {
+          "ok": true,
+          "instance": "ee94ac42-55d6-469c-92f3-0965a688eabf"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/client-fault-true-same/worker"
+          },
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        },
+        {
+          "ok": true,
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "client-fault",
+      "worker": true,
+      "collision": "independent",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        },
+        {
+          "ok": true,
+          "instance": "ee94ac42-55d6-469c-92f3-0965a688eabf"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/client-fault-true-independent/worker"
+          },
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        },
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "right-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/client-fault-true-independent/worker"
+          },
+          "instance": "6fe001b1-cbbe-4f43-ac1e-efd87da56286"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "context-fault",
+      "worker": false,
+      "collision": "client",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "32506d45-eb7b-43cf-8de1-0acb4a97b50f"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-false-client/worker"
+          },
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        },
+        {
+          "ok": true,
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "context-fault",
+      "worker": false,
+      "collision": "context",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        },
+        {
+          "ok": true,
+          "instance": "32506d45-eb7b-43cf-8de1-0acb4a97b50f"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-false-context/worker"
+          },
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        },
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-false-context/worker"
+          },
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "context-fault",
+      "worker": false,
+      "collision": "same",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "32506d45-eb7b-43cf-8de1-0acb4a97b50f"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-false-same/worker"
+          },
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        },
+        {
+          "ok": true,
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "context-fault",
+      "worker": false,
+      "collision": "independent",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        },
+        {
+          "ok": true,
+          "instance": "32506d45-eb7b-43cf-8de1-0acb4a97b50f"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-false-independent/worker"
+          },
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        },
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "right-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-false-independent/worker"
+          },
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "context-fault",
+      "worker": true,
+      "collision": "client",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "4287c46b-956e-4c23-a855-2ea034a2cdf4"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-true-client/worker"
+          },
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        },
+        {
+          "ok": true,
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "context-fault",
+      "worker": true,
+      "collision": "context",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        },
+        {
+          "ok": true,
+          "instance": "4287c46b-956e-4c23-a855-2ea034a2cdf4"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-true-context/worker"
+          },
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        },
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-true-context/worker"
+          },
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "context-fault",
+      "worker": true,
+      "collision": "same",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "4287c46b-956e-4c23-a855-2ea034a2cdf4"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-true-same/worker"
+          },
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        },
+        {
+          "ok": true,
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "context-fault",
+      "worker": true,
+      "collision": "independent",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        },
+        {
+          "ok": true,
+          "instance": "4287c46b-956e-4c23-a855-2ea034a2cdf4"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-true-independent/worker"
+          },
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        },
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "right-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-true-independent/worker"
+          },
+          "instance": "cf696439-fc37-42b9-a377-310d468efb90"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "normal",
+      "worker": false,
+      "collision": "client",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "ac29803b-65e7-42a8-b45a-c20cc3328052"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/normal-false-client/worker"
+          },
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "normal",
+      "worker": false,
+      "collision": "context",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "ac29803b-65e7-42a8-b45a-c20cc3328052"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/normal-false-context/worker"
+          },
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "normal",
+      "worker": false,
+      "collision": "same",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "ac29803b-65e7-42a8-b45a-c20cc3328052"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/normal-false-same/worker"
+          },
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "normal",
+      "worker": false,
+      "collision": "independent",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": true,
+          "instance": "ac29803b-65e7-42a8-b45a-c20cc3328052"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/normal-false-independent/worker"
+          },
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "right-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/normal-false-independent/worker"
+          },
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "normal",
+      "worker": true,
+      "collision": "client",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "f77b98eb-41e0-4163-b0be-aaa0bcd04021"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/normal-true-client/worker"
+          },
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "normal",
+      "worker": true,
+      "collision": "context",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "f77b98eb-41e0-4163-b0be-aaa0bcd04021"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/normal-true-context/worker"
+          },
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "normal",
+      "worker": true,
+      "collision": "same",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "f77b98eb-41e0-4163-b0be-aaa0bcd04021"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/normal-true-same/worker"
+          },
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "normal",
+      "worker": true,
+      "collision": "independent",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": true,
+          "instance": "f77b98eb-41e0-4163-b0be-aaa0bcd04021"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/normal-true-independent/worker"
+          },
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "right-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/normal-true-independent/worker"
+          },
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "normal",
+      "closeBindRound": 0,
+      "replies": [
+        {
+          "ok": false,
+          "error": "Error: Browser context closed before startup",
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "4bb75ae9-e623-4efa-936a-162e55fae5bb"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "instance": "f1791f62-814e-418a-ae31-860062fec081"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "normal",
+      "closeBindRound": 1,
+      "replies": [
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "4bb75ae9-e623-4efa-936a-162e55fae5bb"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "value": {
+          "policyVersion": 3,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:38501/context-store/close-bind-1/worker"
+        },
+        "instance": "f1791f62-814e-418a-ae31-860062fec081"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "normal",
+      "closeBindRound": 2,
+      "replies": [
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "4bb75ae9-e623-4efa-936a-162e55fae5bb"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "value": {
+          "policyVersion": 3,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:38501/context-store/close-bind-2/worker"
+        },
+        "instance": "f1791f62-814e-418a-ae31-860062fec081"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "normal",
+      "closeBindRound": 3,
+      "replies": [
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "4bb75ae9-e623-4efa-936a-162e55fae5bb"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "value": {
+          "policyVersion": 3,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:38501/context-store/close-bind-3/worker"
+        },
+        "instance": "f1791f62-814e-418a-ae31-860062fec081"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "normal",
+      "closeBindRound": 4,
+      "replies": [
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "4bb75ae9-e623-4efa-936a-162e55fae5bb"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "value": {
+          "policyVersion": 3,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:38501/context-store/close-bind-4/worker"
+        },
+        "instance": "f1791f62-814e-418a-ae31-860062fec081"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "normal",
+      "closeBindRound": 5,
+      "replies": [
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "4bb75ae9-e623-4efa-936a-162e55fae5bb"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "value": {
+          "policyVersion": 3,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:38501/context-store/close-bind-5/worker"
+        },
+        "instance": "f1791f62-814e-418a-ae31-860062fec081"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "normal",
+      "closeBindRound": 6,
+      "replies": [
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "4bb75ae9-e623-4efa-936a-162e55fae5bb"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "value": {
+          "policyVersion": 3,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:38501/context-store/close-bind-6/worker"
+        },
+        "instance": "f1791f62-814e-418a-ae31-860062fec081"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "normal",
+      "closeBindRound": 7,
+      "replies": [
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "4bb75ae9-e623-4efa-936a-162e55fae5bb"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "value": {
+          "policyVersion": 3,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:38501/context-store/close-bind-7/worker"
+        },
+        "instance": "f1791f62-814e-418a-ae31-860062fec081"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "normal",
+      "closeBindRound": 8,
+      "replies": [
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "4bb75ae9-e623-4efa-936a-162e55fae5bb"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "value": {
+          "policyVersion": 3,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:38501/context-store/close-bind-8/worker"
+        },
+        "instance": "f1791f62-814e-418a-ae31-860062fec081"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "normal",
+      "closeBindRound": 9,
+      "replies": [
+        {
+          "ok": false,
+          "error": "Error: Browser context closed before startup",
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "4bb75ae9-e623-4efa-936a-162e55fae5bb"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "instance": "f1791f62-814e-418a-ae31-860062fec081"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "normal",
+      "closeBindRound": 10,
+      "replies": [
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "4bb75ae9-e623-4efa-936a-162e55fae5bb"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "value": {
+          "policyVersion": 3,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:38501/context-store/close-bind-10/worker"
+        },
+        "instance": "f1791f62-814e-418a-ae31-860062fec081"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "normal",
+      "closeBindRound": 11,
+      "replies": [
+        {
+          "ok": true,
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        },
+        {
+          "ok": true,
+          "value": true,
+          "instance": "4bb75ae9-e623-4efa-936a-162e55fae5bb"
+        }
+      ],
+      "result": {
+        "ok": true,
+        "value": {
+          "policyVersion": 3,
+          "installationGeneration": "generation",
+          "id": "context",
+          "application": "application",
+          "parent": "parent",
+          "kind": "dedicated-worker",
+          "state": "closed",
+          "url": "http://127.0.0.1:38501/context-store/close-bind-11/worker"
+        },
+        "instance": "f1791f62-814e-418a-ae31-860062fec081"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "normal",
+      "lifecycle": {
+        "before": {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "context",
+            "application": "application",
+            "parent": "other-parent",
+            "kind": "dedicated-worker",
+            "state": "closed",
+            "url": "http://127.0.0.1:38501/context-store/normal-lifecycle/worker"
+          },
+          "instance": "f77b98eb-41e0-4163-b0be-aaa0bcd04021"
+        },
+        "after": {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "context",
+            "application": "application",
+            "parent": "other-parent",
+            "kind": "dedicated-worker",
+            "state": "closed",
+            "url": "http://127.0.0.1:38501/context-store/normal-lifecycle/worker"
+          },
+          "instance": "4bb75ae9-e623-4efa-936a-162e55fae5bb"
+        },
+        "aborted": {
+          "ok": false,
+          "error": "Error: Context transaction aborted",
+          "instance": "f1791f62-814e-418a-ae31-860062fec081"
+        }
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "client-fault",
+      "worker": false,
+      "collision": "client",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        },
+        {
+          "ok": true,
+          "instance": "1d919084-4111-4deb-85a2-7abf02caaf0c"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/client-fault-false-client/worker"
+          },
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        },
+        {
+          "ok": true,
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "client-fault",
+      "worker": false,
+      "collision": "context",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "1d919084-4111-4deb-85a2-7abf02caaf0c"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/client-fault-false-context/worker"
+          },
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        },
+        {
+          "ok": true,
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "client-fault",
+      "worker": false,
+      "collision": "same",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        },
+        {
+          "ok": true,
+          "instance": "1d919084-4111-4deb-85a2-7abf02caaf0c"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/client-fault-false-same/worker"
+          },
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        },
+        {
+          "ok": true,
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "client-fault",
+      "worker": false,
+      "collision": "independent",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        },
+        {
+          "ok": true,
+          "instance": "1d919084-4111-4deb-85a2-7abf02caaf0c"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/client-fault-false-independent/worker"
+          },
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        },
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "right-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/client-fault-false-independent/worker"
+          },
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "client-fault",
+      "worker": true,
+      "collision": "client",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        },
+        {
+          "ok": true,
+          "instance": "8f10a837-d18c-442a-9bc5-a03bf883dcb3"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "right-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/client-fault-true-client/worker"
+          },
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        },
+        {
+          "ok": true,
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "client-fault",
+      "worker": true,
+      "collision": "context",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "8f10a837-d18c-442a-9bc5-a03bf883dcb3"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/client-fault-true-context/worker"
+          },
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        },
+        {
+          "ok": true,
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "client-fault",
+      "worker": true,
+      "collision": "same",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        },
+        {
+          "ok": true,
+          "instance": "8f10a837-d18c-442a-9bc5-a03bf883dcb3"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/client-fault-true-same/worker"
+          },
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        },
+        {
+          "ok": true,
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "client-fault",
+      "worker": true,
+      "collision": "independent",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        },
+        {
+          "ok": true,
+          "instance": "8f10a837-d18c-442a-9bc5-a03bf883dcb3"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/client-fault-true-independent/worker"
+          },
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        },
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "right-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/client-fault-true-independent/worker"
+          },
+          "instance": "6539baa5-cc3e-4bce-89eb-fc69d517350f"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "context-fault",
+      "worker": false,
+      "collision": "client",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "119f9b96-58f9-49fc-9ef3-67ac86f5b5c9"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-false-client/worker"
+          },
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        },
+        {
+          "ok": true,
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "context-fault",
+      "worker": false,
+      "collision": "context",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        },
+        {
+          "ok": true,
+          "instance": "119f9b96-58f9-49fc-9ef3-67ac86f5b5c9"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-false-context/worker"
+          },
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        },
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-false-context/worker"
+          },
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "context-fault",
+      "worker": false,
+      "collision": "same",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "119f9b96-58f9-49fc-9ef3-67ac86f5b5c9"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-false-same/worker"
+          },
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        },
+        {
+          "ok": true,
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "context-fault",
+      "worker": false,
+      "collision": "independent",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        },
+        {
+          "ok": true,
+          "instance": "119f9b96-58f9-49fc-9ef3-67ac86f5b5c9"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-false-independent/worker"
+          },
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        },
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "right-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-false-independent/worker"
+          },
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "context-fault",
+      "worker": true,
+      "collision": "client",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "eb87de97-b804-4fe5-bd0e-2aa76b2d894b"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-true-client/worker"
+          },
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        },
+        {
+          "ok": true,
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "context-fault",
+      "worker": true,
+      "collision": "context",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        },
+        {
+          "ok": true,
+          "instance": "eb87de97-b804-4fe5-bd0e-2aa76b2d894b"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-true-context/worker"
+          },
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        },
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-true-context/worker"
+          },
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "context-fault",
+      "worker": true,
+      "collision": "same",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        },
+        {
+          "ok": false,
+          "error": "Error: Browser client or context identifier already bound",
+          "instance": "eb87de97-b804-4fe5-bd0e-2aa76b2d894b"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-true-same/worker"
+          },
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        },
+        {
+          "ok": true,
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "context-fault",
+      "worker": true,
+      "collision": "independent",
+      "replies": [
+        {
+          "ok": true,
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        },
+        {
+          "ok": true,
+          "instance": "eb87de97-b804-4fe5-bd0e-2aa76b2d894b"
+        }
+      ],
+      "identities": [
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "left-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-true-independent/worker"
+          },
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        },
+        {
+          "ok": true,
+          "value": {
+            "policyVersion": 3,
+            "installationGeneration": "generation",
+            "id": "right-context",
+            "application": "application",
+            "parent": "parent",
+            "kind": "dedicated-worker",
+            "state": "preparing",
+            "url": "http://127.0.0.1:38501/context-store/context-fault-true-independent/worker"
+          },
+          "instance": "cd79a2c4-0f95-49e9-8184-d91b2446ba16"
+        }
+      ]
+    }
+  ]
+}

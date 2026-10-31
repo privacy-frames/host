@@ -21,26 +21,26 @@ realm before application execution and publication.
 `Publish` concerns access to execution authority, not every returned JavaScript
 handle. The worker factory returns a native Worker handle before its ready
 message, but intercepts message delivery and supports termination
-([worker-factory.ts:145](../src/runtime/contexts/worker-factory.ts#L145),
-[worker-factory.ts:225](../src/runtime/contexts/worker-factory.ts#L225)). Popups
+([worker-factory.ts](../src/runtime/contexts/worker-factory.ts),
+[worker-factory.ts](../src/runtime/contexts/worker-factory.ts)). Popups
 initially return a facade
-([popup-factory.ts:148](../src/runtime/contexts/popup-factory.ts#L148)). Neither
+([popup-factory.ts](../src/runtime/contexts/popup-factory.ts)). Neither
 case is equivalent to exposing an unrestricted Window or WorkerGlobalScope.
 
 ## Lifecycle correspondence
 
-| Model action or invariant      | Concrete mechanism                                                                                                                                                                                                                                                                                                                                                                     | Correspondence limit                                                                                                                                                                                                                     |
-| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `CreateRoot`                   | A document navigation binds `event.resultingClientId` to a new root identity and serves a trusted shell, [worker.ts:480](../src/runtime/worker.ts#L480).                                                                                                                                                                                                                               | URL parsing identifies an installation, while the browser client binding supplies authority. These are separate steps.                                                                                                                   |
-| `CreateChild(c,p)`             | Child document intents derive their owner from `event.clientId`, [document-controller.ts:40](../src/runtime/contexts/document-controller.ts#L40), and bind the reserved navigation client, [document-controller.ts:177](../src/runtime/contexts/document-controller.ts#L177). Dedicated workers bind the browser's resulting client at [worker.ts:419](../src/runtime/worker.ts#L419). | The model has one generic child action. Documents, dedicated workers, shared workers and worklets have different startup protocols.                                                                                                      |
-| `Prepare(c)` for windows       | `prepareWindowRealm` installs intrinsic, resource, script, context, navigation, DOM, effect and storage policies before sealing bindings, [window-realm.ts:38](../src/runtime/contexts/window-realm.ts#L38). Root rendering follows preparation, [guard.ts:56](../src/runtime/guard.ts#L56).                                                                                           | A single action abstracts many calls that can fail and native effects that must remain unavailable during setup.                                                                                                                         |
-| `Prepare(c)` for workers       | `prepareWorkerRealm` runs before the first bootstrap message can request publisher loading, [worker-guard.ts:15](../src/runtime/contexts/worker-guard.ts#L15). It installs effects and storage restrictions, [worker-realm.ts:138](../src/runtime/contexts/worker-realm.ts#L138).                                                                                                      | The real worker exists before publisher code runs. Native bootstrap execution is distinct from application execution.                                                                                                                    |
-| `PublishedIsPrepared`          | Child guard reports completion only after local preparation and private compilation, [document-guard.ts:125](../src/runtime/contexts/document-guard.ts#L125). Parent checks source Window, origin, context ID and parent token, [document-factory.ts:517](../src/runtime/contexts/document-factory.ts#L517).                                                                           | The model assumes those checks establish the intended child. It does not model WindowProxy identity, event dispatch or token transport.                                                                                                  |
-| Child publication              | `publish` uses state-preserving movement and checks that Window and Document identities survive, [document-factory.ts:468](../src/runtime/contexts/document-factory.ts#L468). `reference` returns null until the prepared, connected identities match, [document-factory.ts:696](../src/runtime/contexts/document-factory.ts#L696).                                                    | Closed shadow roots and getter interception are concrete mechanisms, not consequences of a TLA+ phase label. Indexed/named access and alternate reference paths need browser tests.                                                      |
-| `Run(c)` / `NoUnsafeExecution` | Child rendering waits for the parent publication acknowledgement, [document-guard.ts:157](../src/runtime/contexts/document-guard.ts#L157), then runs at [document-guard.ts:212](../src/runtime/contexts/document-guard.ts#L212). Worker loading validates source/base and only then imports or executes it, [worker-realm.ts:290](../src/runtime/contexts/worker-realm.ts#L290).       | Worker `ready`, application listener installation and complete module evaluation are different events. Top-level await can separate them.                                                                                                |
-| Parent/child startup ordering  | Child startup acknowledgements and load events pass through generation-checked deferred actions, [document-factory.ts:157](../src/runtime/contexts/document-factory.ts#L157). Parent classics run before release, [document-renderer.ts:549](../src/runtime/contexts/document-renderer.ts#L549).                                                                                       | Lifecycle now permits child creation while its parent is published but has not run. The `NoChildBeforeParentRun` reachability control exercises that interleaving; actual parent-classic ordering remains a separate browser obligation. |
-| `Replace` / `CurrentOwners`    | Installations get fresh generations, [storage.ts:88](../src/runtime/storage.ts#L88). Resource reads check the expected generation, [storage.ts:48](../src/runtime/storage.ts#L48), and controller identity resolution compares it with the installed generation, [worker.ts:159](../src/runtime/worker.ts#L159).                                                                       | Atomic model replacement is an abstraction. Real storage writes, pending requests and browser-context termination are not one atomic operation. `CurrentOwners` checks epoch freshness, not every parent-ownership decision.             |
-| `NoStaleAcceptance`            | Document intents and content consumption compare installation generation, [document-controller.ts:166](../src/runtime/contexts/document-controller.ts#L166); publisher executor lookup does the same, [publisher/controller.ts:103](../src/runtime/publisher/controller.ts#L103).                                                                                                      | There is no universal generation field on every real message. Management commands and context RPC have different validation. Model `Accept` must not be read as their shared implementation.                                             |
+| Model action or invariant      | Concrete mechanism                                                                                                                                                                                                                                                                                                                                                                    | Correspondence limit                                                                                                                                                                                                                     |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CreateRoot`                   | A document navigation binds `event.resultingClientId` to a new root identity and serves a trusted shell, [worker.ts](../src/runtime/worker.ts).                                                                                                                                                                                                                                       | URL parsing identifies an installation, while the browser client binding supplies authority. These are separate steps.                                                                                                                   |
+| `CreateChild(c,p)`             | Child document intents derive their owner from the authenticated browser message source, [document-controller.ts](../src/runtime/contexts/document-controller.ts), and bind the reserved navigation client, [document-controller.ts](../src/runtime/contexts/document-controller.ts). Dedicated workers bind the browser's resulting client at [worker.ts](../src/runtime/worker.ts). | The model has one generic child action. Documents, dedicated workers, shared workers and worklets have different startup protocols.                                                                                                      |
+| `Prepare(c)` for windows       | `prepareWindowRealm` installs intrinsic, resource, script, context, navigation, DOM, effect and storage policies before sealing bindings, [window-realm.ts](../src/runtime/contexts/window-realm.ts). Root rendering follows preparation, [guard.ts](../src/runtime/guard.ts).                                                                                                        | A single action abstracts many calls that can fail and native effects that must remain unavailable during setup.                                                                                                                         |
+| `Prepare(c)` for workers       | `prepareWorkerRealm` runs before the first bootstrap message can request publisher loading, [worker-guard.ts](../src/runtime/contexts/worker-guard.ts). It installs effects and storage restrictions, [worker-realm.ts](../src/runtime/contexts/worker-realm.ts).                                                                                                                     | The real worker exists before publisher code runs. Native bootstrap execution is distinct from application execution.                                                                                                                    |
+| `PublishedIsPrepared`          | Child guard reports completion only after local preparation and private compilation, [document-main.ts](../src/runtime/contexts/document-main.ts). Parent checks source Window, origin, context ID and parent token, [document-factory.ts](../src/runtime/contexts/document-factory.ts).                                                                                              | The model assumes those checks establish the intended child. It does not model WindowProxy identity, event dispatch or token transport.                                                                                                  |
+| Child publication              | `publish` uses state-preserving movement and checks that Window and Document identities survive, [document-factory.ts](../src/runtime/contexts/document-factory.ts). `reference` returns null until the prepared, connected identities match, [document-factory.ts](../src/runtime/contexts/document-factory.ts).                                                                     | Closed shadow roots and getter interception are concrete mechanisms, not consequences of a TLA+ phase label. Indexed/named access and alternate reference paths need browser tests.                                                      |
+| `Run(c)` / `NoUnsafeExecution` | Child rendering waits for the parent publication acknowledgement, [document-guard.ts](../src/runtime/contexts/document-guard.ts), then runs at [document-guard.ts](../src/runtime/contexts/document-guard.ts). Worker loading validates source/base and only then imports or executes it, [worker-realm.ts](../src/runtime/contexts/worker-realm.ts).                                 | Worker `ready`, application listener installation and complete module evaluation are different events. Top-level await can separate them.                                                                                                |
+| Parent/child startup ordering  | Child startup acknowledgements and load events pass through generation-checked deferred actions, [document-factory.ts](../src/runtime/contexts/document-factory.ts). Parent classics run before release, [document-renderer.ts](../src/runtime/contexts/document-renderer.ts).                                                                                                        | Lifecycle now permits child creation while its parent is published but has not run. The `NoChildBeforeParentRun` reachability control exercises that interleaving; actual parent-classic ordering remains a separate browser obligation. |
+| `Replace` / `CurrentOwners`    | Installations get fresh generations, [storage.ts](../src/runtime/storage.ts). Resource reads check the expected generation, [storage.ts](../src/runtime/storage.ts), and controller identity resolution compares it with the installed generation, [worker.ts](../src/runtime/worker.ts).                                                                                             | Atomic model replacement is an abstraction. Real storage writes, pending requests and browser-context termination are not one atomic operation. `CurrentOwners` checks epoch freshness, not every parent-ownership decision.             |
+| `NoStaleAcceptance`            | Document intents and content consumption compare installation generation, [document-controller.ts](../src/runtime/contexts/document-controller.ts); publisher executor lookup does the same, [publisher/controller.ts](../src/runtime/publisher/controller.ts).                                                                                                                       | There is no universal generation field on every real message. Management commands and context RPC have different validation. Model `Accept` must not be read as their shared implementation.                                             |
 
 The original `Confinement` sketch also names `PreparedBeforeRun` and
 `PreparedBeforePublication`. Its historical `ran` set and current phase coincide
@@ -50,15 +50,15 @@ published forever. The newer Lifecycle model records unsafe execution separately
 
 ## Admission and resource delivery
 
-| Model action or invariant         | Concrete mechanism                                                                                                                                                                                                                                                                                     | Correspondence limit                                                                                                                                                                                                         |
-| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `Begin`, `Verify(r)`              | Installation downloads declared resources and parses source data through [import-website.ts:37](../src/installation/import-website.ts#L37). Runtime admission independently validates format, identity, paths, bytes, hashes and capture metadata, [admission.ts:82](../src/runtime/admission.ts#L82). | A model resource is an atom. Actual URLs, MIME types, fragments, canonical paths, rewritten bytes and hash computations are not modeled.                                                                                     |
-| `Commit`, `NoUnverifiedAdmission` | The authorized management handler calls `admitInstallation` before `putApp`, [worker.ts:193](../src/runtime/worker.ts#L193). Metadata and resource bodies are written in the storage transaction, [storage.ts:77](../src/runtime/storage.ts#L77).                                                      | Model Commit accepts any nonempty verified subset. It does not express completion of every required explicit-list URL or failure of a required download.                                                                     |
-| `NoUnauthorizedCommit`            | A management message must resolve its actual source client, match the management URL and have a controller-issued management role, [worker.ts:178](../src/runtime/worker.ts#L178). Roles are granted on trusted management navigation, [worker.ts:348](../src/runtime/worker.ts#L348).                 | `ForgedInstall = FALSE` assumes these mechanisms hold. A caller-supplied role or URL is not the implementation's authentication mechanism.                                                                                   |
-| `NoApplicationDuringInstall`      | The installer collects source and validates prepared documents; publisher worker lifecycle execution is deferred to runtime registration.                                                                                                                                                              | Trusted installer and host bootstrap downloads are permitted setup traffic. The model's remote flag must concern forbidden application traffic, not all network activity in every phase.                                     |
-| `Request(r)`, `NoRemoteTraffic`   | The fetch handler resolves the owning installation, matches an admitted resource, and reads its stored bytes, [worker.ts:537](../src/runtime/worker.ts#L537). Unmatched requests and handler failures return `Response.error()`, [worker.ts:580](../src/runtime/worker.ts#L580).                       | This maps controlled fetch delivery. It does not enumerate WebSocket, WebRTC, navigation, browser services or every native default action.                                                                                   |
-| Worker resource reads             | `contextResourceResponse` checks request shape, context capability, generation, destination and exact resource path, [resources.ts:65](../src/runtime/contexts/resources.ts#L65).                                                                                                                      | An empty browser caller ID may use the context bearer for immutable graph reads, [model.ts:117](../src/runtime/contexts/model.ts#L117). That limited capability does not establish browser identity or management authority. |
-| `WritePrivate`                    | Application storage wrappers namespace data. Installation replacement writes the new metadata database without deleting app-private storage.                                                                                                                                                           | `stored` is a reachability flag, not an information-flow label or a proof of storage isolation. The prototype does not promise separate browser permissions or origins per installation.                                     |
+| Model action or invariant         | Concrete mechanism                                                                                                                                                                                                                                                                       | Correspondence limit                                                                                                                                                                                                |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `Begin`, `Verify(r)`              | Installation downloads declared resources and parses source data through [import-website.ts](../src/installation/import-website.ts). Runtime admission independently validates format, identity, paths, bytes, hashes and capture metadata, [admission.ts](../src/runtime/admission.ts). | A model resource is an atom. Actual URLs, MIME types, fragments, canonical paths, rewritten bytes and hash computations are not modeled.                                                                            |
+| `Commit`, `NoUnverifiedAdmission` | The authorized management handler calls `admitInstallation` before `putApp`, [worker.ts](../src/runtime/worker.ts). Metadata and resource bodies are written in the storage transaction, [storage.ts](../src/runtime/storage.ts).                                                        | Model Commit accepts any nonempty verified subset. It does not express completion of every required explicit-list URL or failure of a required download.                                                            |
+| `NoUnauthorizedCommit`            | A management message must resolve its actual source client, match the management URL and have a controller-issued management role, [worker.ts](../src/runtime/worker.ts). Roles are granted on trusted management navigation, [worker.ts](../src/runtime/worker.ts).                     | `ForgedInstall = FALSE` assumes these mechanisms hold. A caller-supplied role or URL is not the implementation's authentication mechanism.                                                                          |
+| `NoApplicationDuringInstall`      | The installer collects source and validates prepared documents; publisher worker lifecycle execution is deferred to runtime registration.                                                                                                                                                | Trusted installer and host bootstrap downloads are permitted setup traffic. The model's remote flag must concern forbidden application traffic, not all network activity in every phase.                            |
+| `Request(r)`, `NoRemoteTraffic`   | The fetch handler resolves the owning installation, matches an admitted resource, and reads its stored bytes, [worker.ts](../src/runtime/worker.ts). Unmatched requests and handler failures return `Response.error()`, [worker.ts](../src/runtime/worker.ts).                           | This maps controlled fetch delivery. It does not enumerate WebSocket, WebRTC, navigation, browser services or every native default action.                                                                          |
+| Worker resource reads             | `contextResourceResponse` checks request shape, context capability, generation, destination and exact resource path, [resources.ts](../src/runtime/contexts/resources.ts).                                                                                                               | An empty browser caller ID may use the context bearer for immutable graph reads, [model.ts](../src/runtime/contexts/model.ts). That limited capability does not establish browser identity or management authority. |
+| `WritePrivate`                    | Application storage wrappers namespace data. Installation replacement writes the new metadata database without deleting app-private storage.                                                                                                                                             | `stored` is a reachability flag, not an information-flow label or a proof of storage isolation. The prototype does not promise separate browser permissions or origins per installation.                            |
 
 `NoStoredPrivate`, `NoRunningChild`, `NoReplacement` and `NoChildBeforeParentRun` are deliberately violated
 reachability checks in their corresponding configurations. They demonstrate that
@@ -68,35 +68,35 @@ useful actions can occur; they are not security requirements of the host.
 
 Raw worker, shared-worker, worklet and service-worker startup destinations are
 rejected unless their dedicated controller route handles them
-([worker.ts:269](../src/runtime/worker.ts#L269)). Dedicated-worker bootstrap requires
+([worker.ts](../src/runtime/worker.ts)). Dedicated-worker bootstrap requires
 an authenticated parent and a reserved resulting client. Shared-worker bootstrap
 has its own owner and browser-binding checks
-([shared-controller.ts:69](../src/runtime/contexts/shared-controller.ts#L69));
+([shared-controller.ts](../src/runtime/contexts/shared-controller.ts));
 connection tickets are consumed against the actual application actor
-([shared-connections.ts:200](../src/runtime/contexts/shared-connections.ts#L200)).
+([shared-connections.ts](../src/runtime/contexts/shared-connections.ts)).
 Worklet requests retain the owning Window client and reject a newly resulting
-client ([worklet-controller.ts:70](../src/runtime/contexts/worklet-controller.ts#L70)).
+client ([worklet-controller.ts](../src/runtime/contexts/worklet-controller.ts)).
 These are different authorities, despite sharing an abstract context label.
 
 The trusted host service worker is distinct from publisher service-worker
 behavior. Publisher registration accepts only captured executable resources and
 validated scope/type metadata
-([publisher/controller.ts:346](../src/runtime/publisher/controller.ts#L346)). Its
+([publisher/controller.ts](../src/runtime/publisher/controller.ts)). Its
 executor is a prepared shared worker, not a native service worker with controller
 authority. Registration, executor bindings and expiring grants live in
 transactional storage; ticket consumption checks the current binding
-([publisher/store.ts:239](../src/runtime/publisher/store.ts#L239)). Install/activate
+([publisher/store.ts](../src/runtime/publisher/store.ts)). Install/activate
 completion is recorded only after executor startup
-([publisher/guard.ts:202](../src/runtime/publisher/guard.ts#L202),
-[publisher/store.ts:156](../src/runtime/publisher/store.ts#L156)).
+([publisher/guard.ts](../src/runtime/publisher/guard.ts),
+[publisher/store.ts](../src/runtime/publisher/store.ts)).
 
 Publisher interception can change an already-admitted non-executable response;
 it does not expand the resource graph. Invalid, redirected or executable
 representations are refused
-([publisher/controller.ts:639](../src/runtime/publisher/controller.ts#L639)). A
+([publisher/controller.ts](../src/runtime/publisher/controller.ts)). A
 typed executor-lifecycle failure may return the original admitted response after
 rechecking generation and ownership
-([publisher/controller.ts:688](../src/runtime/publisher/controller.ts#L688)). That
+([publisher/controller.ts](../src/runtime/publisher/controller.ts)). That
 local fallback is not the modeled `NetworkFallback` fault.
 
 `NoForgedAuthority` therefore covers several concrete boundaries: management
@@ -106,21 +106,19 @@ reference or control callable can cross application callbacks, errors or proxies
 
 ## Revocation and durable-state gaps
 
-The real registry serializes its own mutations
-([model.ts:49](../src/runtime/contexts/model.ts#L49)). `closeChild` checks parent,
-application and context, records cancellation before a possible delayed bind, and
-rechecks a racing binding
-([model.ts:170](../src/runtime/contexts/model.ts#L170)). The controller store keeps
-closure markers separately so a later record write cannot resurrect that client
-([controller-store.ts:88](../src/runtime/contexts/controller-store.ts#L88)).
-Document cancellation also increments a local generation and closes its protocol
-state ([document-factory.ts:261](../src/runtime/contexts/document-factory.ts#L261)).
+Each registry retains its local mutation queue, while native IndexedDB
+transactions enforce binding and closure across independent controllers.
+`closeChild` delegates the parent/application/context check and durable update
+to one storage transaction. There is no later general phase writer that can
+replace the closed identity. Document cancellation also installs a fresh private
+generation object and closes its protocol state
+([document-factory.ts](../src/runtime/contexts/document-factory.ts)).
 
-Lifecycle currently models installation replacement as atomic revocation. It does
-not model these separate durable writes, controller restart, child cancellation,
-queued callbacks or native termination. `closeChild` itself does not recursively
-traverse descendants. Worker descendant termination and orphan Window behavior
-must be stated per browser/context profile rather than inferred from that method.
+Lifecycle models installation replacement as atomic revocation. It does not
+establish the transaction-callback implementation, controller restart, queued
+callbacks or native termination. `closeChild` does not recursively traverse
+descendants. Worker descendant termination and orphan Window behavior require
+separate browser/context arguments.
 
 The separate [generation read model](confinement/generation-reads.md) models an
 IndexedDB snapshot and delivery after replacement, and links it to observed
@@ -133,20 +131,19 @@ resulting-client IDs; origin/source information on messages; service-worker
 control of the relevant fetches; CSP and response sandbox enforcement; native
 DOM identity; and state-preserving context movement. Child bootstrap checks its
 actual controlling script
-([document-guard.ts:92](../src/runtime/contexts/document-guard.ts#L92)). Response
+([document-main.ts](../src/runtime/contexts/document-main.ts)). Response
 policy adds CSP restrictions
-([response-policy.ts:47](../src/runtime/response-policy.ts#L47)); its optional
+([response-policy.ts](../src/runtime/response-policy.ts)); its optional
 Connection-Allowlist header is supplemental and cannot supply the same assurance
 in browsers that do not implement it. Other browser transports need the local
 effect policy and independent behavioral evidence.
 
 Relevant existing fixtures include the registry race and restart cases in
-[context-model.test.ts:51](../test/context-model.test.ts#L51), admission checks in
-[runtime-admission.test.ts:8](../test/runtime-admission.test.ts#L8), publisher
+[context-model.test.ts](../test/context-model.test.ts), admission checks in
+[runtime-admission.test.ts](../test/runtime-admission.test.ts), publisher
 response cases in
-[publisher-events.test.ts:71](../test/publisher-events.test.ts#L71), and the actual
-browser document/worker/publisher suites. This mapping task did not run those
-tests. The Registry comparison below concerns a separate, narrowly defined trace
+[publisher-events.test.ts](../test/publisher-events.test.ts), and the actual
+browser document/worker/publisher suites. Their receipts retain the source and browser scope of each run. The Registry comparison below concerns a separate, narrowly defined trace
 projection.
 
 ## Narrow Registry implementation conformance
@@ -190,7 +187,7 @@ exercise selected such schedules separately.
 The test's `Replace` constructs another ContextRegistry over the same in-memory
 store. It represents loss of the registry object's mutation queue, not the
 installation-generation replacement modeled by Lifecycle. The test does not
-execute CacheStorage persistence, concurrent requests, actual browser client
+execute native IndexedDB persistence, concurrent requests, actual browser client
 authentication, guard preparation, publication or worker termination. Those
 mechanisms remain outside its correspondence claim.
 
@@ -207,124 +204,99 @@ The [browser receiver test](fedcm-conditional-probe.ts) found a concrete
 service-worker-bypassing request in the earlier implementation. The test then
 checks a source fix; it does not show that all other browser effects are modeled.
 
-## Deterministic operations across two registries
+## Atomic context bindings across controllers
 
-Run the separate implementation characterization tests with:
+`ContextRegistry` now delegates insertion and closure to dedicated storage
+operations. The former CacheStorage implementation checked absence, wrote a
+client record, and wrote its reverse index in separate operations. Two controller
+instances could pass the checks and both report a successful bind. The new
+IndexedDB store inserts one record keyed by browser client, with a unique native
+index on context identity. There is no generic identity-write operation.
+
+Binding checks pending owner-scoped cancellation and inserts the record in one
+read/write transaction. Closure checks the indexed identity and its parent and
+application, then writes cancellation and the closed identity in one transaction.
+A cancellation before binding is retained for that parent/application/context;
+it does not cancel a different parent's later binding. Closed records retain
+their identifiers, so the API cannot rebind or reopen them.
+
+The operation acknowledges success from the transaction's completion event,
+not an individual request's success event. An aborted insert must leave neither
+a client record nor a reverse index. The argument relies on IndexedDB's
+[transaction scheduling](https://w3c.github.io/IndexedDB/#transaction-scheduling)
+and [unique-index contract](https://w3c.github.io/IndexedDB/#index-unique-flag).
+Those are browser premises; this implementation has not received a deductive
+proof of all transaction callbacks. Successful binding and closure
+linearize at their transaction commits. Native actor authentication and the
+later publication or reply-delivery point remain separate obligations.
+
+All reads and writes use transactions covering both context and cancellation
+stores. Independent controllers open separate connections to the same
+base-specific database. Controller replacement can retain compatible records;
+installation replacement still changes the installation generation and requires
+separate revocation checks. The former cache format is not imported. Existing
+application data is outside this context database.
+
+### Evidence
+
+Run the native storage fixture with:
 
 ```sh
-node --test formal/confinement/registry-concurrency-test.ts
+npm run build
+node test/controller-context-storage.ts
 ```
 
-The tests use actual ContextRegistry and controller-store code with shared
-in-memory CacheStorage responses. Promise gates select reads and writes;
-bounded waits distinguish a missing checkpoint from a failed assertion. Each
-schedule releases and settles pending operations and restores CacheStorage on
-failure.
+It exercises the actual store and registry through independent native Windows
+and workers in Chromium and Firefox. Browser-client identifiers are simulated;
+this fixture does not authenticate native FetchEvent actors. Conflicting client
+keys, context identifiers and exact duplicates admit one insertion; independent
+bindings admit both. A terminated and recreated worker reads the same closed
+record. Competing bind and close operations leave no live binding, and an abort
+after insert-request success rolls back the record and index before a later
+valid insertion succeeds.
 
-The queued-close test in
-[context-model.test.ts](../test/context-model.test.ts) holds closure before its
-tombstone is committed, then queues both revalidation forms. Neither can pass
-the earlier close; both reject after the gate releases. Across independent
-registries, other schedules pause an already-read live snapshot, commit closure
-through another registry, then release the old read. A second effective read
-rejects the identity/capability without writing any record. Separate schedules
-change application, parent, context ID or generation between those reads and
-require rejection.
+Two test-only builds remove actual constraints independently. Replacing `add`
+with `put` permits duplicate-client successes. Disabling the unique context index
+permits duplicate-context successes. The unchanged fixture detects both faults.
+The [receipt](../results/contexts/controller-storage.json) records normal and
+mutated source/bundle hashes, browser versions and per-case outcomes.
 
-A previous-release controller is modeled by pausing its raw ready-phase storage
-write. A newer registry closes the context before that write finishes. The old
-write can leave the raw record ready; effective reads remain closed through the
-unchanged tombstones. The new implementation itself no longer performs that
-phase write. This checks existing controller overlap without adding a migration
-branch or deleting stored application data.
+The [registry concurrency tests](confinement/registry-concurrency-test.ts) cover
+selected asynchronous suspensions around actual registry operations using an
+atomic in-memory storage fixture. The
+[trace comparison](confinement/registry-implementation-traces.json) checks 10,000
+length-four operation sequences against the TLC graph or stuttering steps. Its
+record includes the storage fixture hash. Neither fixture proves native storage
+semantics or arbitrary browser interleavings.
 
-The independently runnable handler test uses real browser IndexedDB for
-installations and document intents:
+The [document-consumption race](../test/document-consumption-race.ts) uses real
+IndexedDB intents and simulated actors/context storage. It pauses after content
+consumption and changes child or parent authority. Final checks refuse the
+changed cases; separate source-removal controls show why those checks matter.
+The native storage fixture and consumption fixture cover different boundaries.
 
-```sh
-node test/document-consumption-race.ts
-```
+### Native binding entry points
 
-It invokes the actual document controller with simulated trusted Client/FetchEvent
-and context-store inputs. A bounded gate pauses after persistent intent
-consumption. The unchanged control returns its exact text; closure, changed
-parent or changed context generation before final validation produces an error
-response without a body. Chromium and Firefox pass. This tests the
-consume-to-revalidation ordering, not native browser client authentication.
+There are five production calls to `contexts.bind`:
 
-Another schedule makes both registries validate the same absent browser client
-with different context identifiers before either writes. Both binds fulfill; the
-later context wins the client record and both context indexes point to that
-client. The superseded context's capability is refused because the indexed
-identity no longer matches. Per-instance queues still do not provide
-cross-instance binding uniqueness. The test does not establish that the browser
-or trusted dispatcher produces those two bindings.
+- Root navigation and dedicated-worker bootstrap in
+  [worker.ts](../src/runtime/worker.ts).
+- Child documents and popups in
+  [document-controller.ts](../src/runtime/contexts/document-controller.ts).
+- Shared-worker bootstrap in
+  [shared-controller.ts](../src/runtime/contexts/shared-controller.ts).
+- Publisher executor bootstrap in
+  [publisher/controller.ts](../src/runtime/publisher/controller.ts).
 
-A concurrency model needs two operation program counters, their read snapshots,
-raw records/indexes and monotonic closure markers. Its authorization projection
-should use effective storage reads. Treating every late raw write as revival
-would reject the first schedule even though the tombstone prevents authority
-from returning. A binding-uniqueness invariant additionally needs either an
-atomic reservation mechanism or an explicit, separately justified browser
-reservation assumption.
+Each uses the browser-supplied `FetchEvent.resultingClientId` and awaits binding
+before returning its trusted shell or script. Storage now rejects a conflicting
+binding even if two dispatches supply the same identifier; uniqueness no longer
+requires a proof that such dispatches are unreachable.
 
-Normal service-worker replacement is also distinct from installation replacement.
-The host activates with `skipWaiting` and `clients.claim`
-([worker.ts:136](../src/runtime/worker.ts#L136)); its context store remains in the
-same cache, and compatible policy-version bindings survive
-([controller-store.ts:77](../src/runtime/contexts/controller-store.ts#L77),
-[model.ts:85](../src/runtime/contexts/model.ts#L85)). It resets a controller's
-in-memory queues rather than atomically changing every installation generation.
-Lifecycle's atomic `Replace` should describe effective revocation of old-epoch
-resource authority, not physical termination of all old JavaScript. Pending
-requests that validated before replacement need an explicit linearization rule;
-the current model does not establish one for every browser callback.
-
-## Duplicate binding: dispatcher reachability and consequences
-
-There are four production calls to `contexts.bind`. All take the client key from
-`FetchEvent.resultingClientId`, not an application payload:
-
-- Root navigation: [worker.ts:480](../src/runtime/worker.ts#L480).
-- Dedicated-worker bootstrap: [worker.ts:419](../src/runtime/worker.ts#L419).
-- Child document or popup:
-  [document-controller.ts:177](../src/runtime/contexts/document-controller.ts#L177).
-- Shared-worker bootstrap:
-  [shared-controller.ts:92](../src/runtime/contexts/shared-controller.ts#L92).
-
-Each awaits binding before returning a trusted shell or bootstrap. Child
-documents additionally consume an issued intent through an IndexedDB
-transaction before binding
-([document-intents.ts:329](../src/runtime/contexts/document-intents.ts#L329)). The
-dedicated-worker factory creates a fresh bootstrap UUID per constructor call
-([worker-factory.ts:180](../src/runtime/contexts/worker-factory.ts#L180)). Ordinary
-resource, readiness and content requests do not create bindings.
-
-The [Service Worker Handle Fetch algorithm](https://w3c.github.io/ServiceWorker/#handle-fetch)
-selects an active worker for dispatch and derives the resulting client ID from
-the request's reserved client. These are browser-supplied values. This supports
-the intended dispatcher design, but the source audit has not established that
-two bind-capable events can never share a resulting client across controller
-replacement, retries or browser-specific behavior. The two-registry test
-therefore demonstrates a storage-level race, not a demonstrated application
-path to it.
-
-Binding success does not itself deliver publisher code or grant management.
-Subsequent root content validates its current application/generation binding
-([worker.ts:512](../src/runtime/worker.ts#L512)); child content also checks the
-intent's child client and context ID
-([document-controller.ts:252](../src/runtime/contexts/document-controller.ts#L252)).
-Worker capability lookup compares the indexed context with the current identity
-([model.ts:117](../src/runtime/contexts/model.ts#L117)), so the superseded index
-in the deterministic race cannot grant its old capability. Management separately
-requires its issued browser-client role
-([worker.ts:184](../src/runtime/worker.ts#L184)). A reachable overwrite could still
-misattribute or disrupt a client; these checks are not a general proof that all
-consequences are harmless. No network disclosure was demonstrated by that test.
-
-The remaining browser correspondence test should record bootstrap destination,
-resulting client ID, context ID, controller build and bind outcome while an
-actual controller upgrade overlaps root, document and worker startup. Grouping
-successful bindings by resulting client would test the assumed uniqueness under
-those observed schedules. Instrumentation must use real FetchEvents rather than
-supply client IDs through a test RPC.
+Binding success still does not establish prepared application execution or
+management authority. Root content, child content and resource requests retain
+their context and installation checks. Management requires its separately issued
+browser-client role. Complete correspondence must connect transaction commit,
+reply delivery, preparation, publication, cancellation and controller replacement
+to the lifecycle model. Closure of a record does not prove native termination or
+cancel an already-admitted effect.

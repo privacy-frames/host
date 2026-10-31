@@ -1,40 +1,12 @@
+import { memoryContextStorage } from './context-storage.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   CONTEXT_POLICY_VERSION,
   ContextRegistry,
   type ContextIdentity,
-  type ContextStorage,
 } from '../src/runtime/contexts/model.ts';
-import { controllerContextStorage } from '../src/runtime/contexts/controller-store.ts';
 
-function memoryStorage(records = new Map<string, ContextIdentity>()): ContextStorage {
-  const requests = new Set<string>();
-  const closure = (parent: string, application: string, context: string) =>
-    JSON.stringify([parent, application, context]);
-  return {
-    async get(client) {
-      const identity = records.get(client);
-      if (!identity) return undefined;
-      return identity.parent &&
-        requests.has(closure(identity.parent, identity.application, identity.id))
-        ? { ...identity, state: 'closed' }
-        : identity;
-    },
-    async put(client, identity) {
-      records.set(client, identity);
-    },
-    async lookupByContext(context) {
-      return [...records].find(([, identity]) => identity.id === context)?.[0];
-    },
-    async isClosureRequested(parent, application, context) {
-      return requests.has(closure(parent, application, context));
-    },
-    async requestClosure(parent, application, context) {
-      requests.add(closure(parent, application, context));
-    },
-  };
-}
 function identity(): ContextIdentity {
   return {
     policyVersion: CONTEXT_POLICY_VERSION,
@@ -49,7 +21,7 @@ function identity(): ContextIdentity {
 }
 
 test('browser context bindings survive controller replacement but reject claimed IDs and changed URLs', async () => {
-  const storage = memoryStorage();
+  const storage = memoryContextStorage();
   const first = new ContextRegistry(storage);
   const value = identity();
   await first.bind('real-browser-client', value);
@@ -71,7 +43,7 @@ test('browser context bindings survive controller replacement but reject claimed
 });
 
 test('closed contexts cannot regain authority through readiness checks', async () => {
-  const registry = new ContextRegistry(memoryStorage());
+  const registry = new ContextRegistry(memoryContextStorage());
   const client = { id: 'browser-client', url: identity().url };
   await registry.bind(client.id, identity());
   const expected = await registry.resolve(client);
@@ -92,7 +64,7 @@ test('closed contexts cannot regain authority through readiness checks', async (
 });
 
 test('window fragments retain their browser binding while document/query changes and closure revoke it', async () => {
-  const registry = new ContextRegistry(memoryStorage());
+  const registry = new ContextRegistry(memoryContextStorage());
   const value = {
     ...identity(),
     kind: 'window' as const,
@@ -115,7 +87,7 @@ test('window fragments retain their browser binding while document/query changes
 
 test('root window identity survives only routes inside its installed application namespace', async () => {
   const records = new Map<string, ContextIdentity>();
-  const registry = new ContextRegistry(memoryStorage(records));
+  const registry = new ContextRegistry(memoryContextStorage(records));
   const value = {
     ...identity(),
     parent: null,
@@ -145,7 +117,7 @@ test('root window identity survives only routes inside its installed application
 
 test('an incompatible context policy cannot bind or regain authority from persisted state', async () => {
   const records = new Map<string, ContextIdentity>();
-  const registry = new ContextRegistry(memoryStorage(records));
+  const registry = new ContextRegistry(memoryContextStorage(records));
   const value = { ...identity(), policyVersion: CONTEXT_POLICY_VERSION + 1 };
   await assert.rejects(registry.bind('browser-client', value), /Incomplete/);
   records.set('browser-client', value);
@@ -157,7 +129,7 @@ test('an incompatible context policy cannot bind or regain authority from persis
 });
 
 test('only the actual owning parent and application can close a bound context', async () => {
-  const registry = new ContextRegistry(memoryStorage());
+  const registry = new ContextRegistry(memoryContextStorage());
   await registry.bind('browser-client', identity());
   assert.equal(
     await registry.closeChild('unrelated-parent', 'application', 'context'),
@@ -180,7 +152,7 @@ test('only the actual owning parent and application can close a bound context', 
 });
 
 test('parent cancellation before binding survives a registry restart without closing another parent', async () => {
-  const storage = memoryStorage();
+  const storage = memoryContextStorage();
   const first = new ContextRegistry(storage);
   assert.equal(
     await first.closeChild('real-parent-client', 'application', 'context'),
@@ -204,14 +176,14 @@ test('parent cancellation before binding survives a registry restart without clo
 });
 
 test('revalidation queued after closure cannot read before its pending tombstone', async () => {
-  const storage = memoryStorage();
+  const storage = memoryContextStorage();
   const registry = new ContextRegistry(storage);
   const client = { id: 'browser-client', url: identity().url };
   await registry.bind(client.id, identity());
   const expected = await registry.resolve(client);
   const capability = await registry.resourceCapability('context', client.id);
   assert(expected && capability);
-  const request = storage.requestClosure;
+  const request = storage.close;
   let started!: () => void, release!: () => void;
   const waiting = new Promise<void>((resolve) => {
     started = resolve;
@@ -219,10 +191,10 @@ test('revalidation queued after closure cannot read before its pending tombstone
   const blocked = new Promise<void>((resolve) => {
     release = resolve;
   });
-  storage.requestClosure = async (...args) => {
+  storage.close = async (...args) => {
     started();
     await blocked;
-    await request(...args);
+    return request(...args);
   };
   const closed = registry.closeChild('real-parent-client', 'application', 'context');
   let checks: Promise<boolean[]> | undefined;
@@ -254,45 +226,4 @@ test('revalidation queued after closure cannot read before its pending tombstone
   }
   assert(checks);
   assert.deepEqual(await checks, [false, false]);
-});
-
-test('controller storage closure markers survive late writes from a replaced controller', async () => {
-  const entries = new Map<string, Response>();
-  const cache = {
-    async match(key: string) {
-      return entries.get(key)?.clone();
-    },
-    async put(key: string, value: Response) {
-      entries.set(key, value.clone());
-    },
-  };
-  const previous = Object.getOwnPropertyDescriptor(globalThis, 'caches');
-  Object.defineProperty(globalThis, 'caches', {
-    configurable: true,
-    value: {
-      async open() {
-        return cache;
-      },
-    },
-  });
-  try {
-    const first = controllerContextStorage(new URL('https://runtime.test/'));
-    const replacement = controllerContextStorage(new URL('https://runtime.test/'));
-    const value = identity();
-    await first.put('browser-client', value);
-    assert.equal(await replacement.lookupByContext(value.id), 'browser-client');
-    await replacement.requestClosure(value.parent!, value.application, value.id);
-    await first.put('browser-client', { ...value, state: 'ready' });
-    assert.equal((await replacement.get('browser-client'))?.state, 'closed');
-    await first.put('closed-client', { ...value, id: 'other-context', state: 'closed' });
-    await replacement.put('closed-client', {
-      ...value,
-      id: 'other-context',
-      state: 'running',
-    });
-    assert.equal((await first.get('closed-client'))?.state, 'closed');
-  } finally {
-    if (previous) Object.defineProperty(globalThis, 'caches', previous);
-    else Reflect.deleteProperty(globalThis, 'caches');
-  }
 });

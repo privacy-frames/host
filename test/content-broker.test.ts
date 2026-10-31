@@ -1,3 +1,4 @@
+import { memoryContextStorage } from './context-storage.ts';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readInstalledContent } from '../src/runtime/content-broker.ts';
@@ -5,7 +6,6 @@ import {
   ContextRegistry,
   CONTEXT_POLICY_VERSION,
   type ContextIdentity,
-  type ContextStorage,
 } from '../src/runtime/contexts/model.ts';
 import { applicationURL } from '../src/shared/runtime-url.ts';
 import type { StoredInstallation } from '../src/runtime/storage.ts';
@@ -33,21 +33,7 @@ const entry = applicationURL(app, base).href;
 
 async function fixture(parent: string | null = null) {
   const records = new Map<string, ContextIdentity>();
-  const storage: ContextStorage = {
-    async get(client) {
-      return records.get(client);
-    },
-    async put(client, identity) {
-      records.set(client, identity);
-    },
-    async lookupByContext(id) {
-      return [...records].find(([, identity]) => identity.id === id)?.[0];
-    },
-    async isClosureRequested() {
-      return false;
-    },
-    async requestClosure() {},
-  };
+  const storage = memoryContextStorage(records);
   const registry = new ContextRegistry(storage);
   const identity: ContextIdentity = {
     policyVersion: CONTEXT_POLICY_VERSION,

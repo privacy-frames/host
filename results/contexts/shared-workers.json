@@ -1,9 +1,9 @@
 {
   "provenance": {
-    "capturedAt": "2026-10-31T18:34:34.894Z",
-    "revision": "f680d8efa24b2f483d738067534a522fc816fe54",
+    "capturedAt": "2026-10-31T19:33:14.803Z",
+    "revision": "7821014d93f660144173d6614f2c116c85a7b65e",
     "dirty": true,
-    "sourceSHA256": "7c2c01b313e3da427127d1c1a8fab0d239ec05e1b73c03573df76216c9c385b8",
+    "sourceSHA256": "ae056c540bf90a77259224a0ded6eae3955716e83f351da9ec26f7869fa640ab",
     "runner": "test/shared-worker-contexts.ts",
     "runnerSHA256": "b05ef43ac94d26492b7c473e1117c1a0a7b88abb64a2c46ad583dfa6a4ab883f",
     "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
@@ -16,7 +16,7 @@
       "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-manager/sw.js": "656b59751ccda47162e24e696556e3a8d94d6f078a88e0dc100f9eca53c475ce",
+      "dist-manager/sw.js": "e65e7d53e145ed04a3dcbdf0ca71e3b18998a2b3ce10af217081b606c8b15b32",
       "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
       "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
@@ -30,7 +30,7 @@
       "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
       "dist-runtime/shared-worker-guard.js": "96a3c1086f9de09a02a7ea335d1898513563bf7f09b078de23cc1402f1704e2a",
-      "dist-runtime/sw.js": "e10c1ffc02c6ae7e021e99b1efbcbd02b1d6bf34d67eca3c1e047063357e9bf4",
+      "dist-runtime/sw.js": "896b282e51b9f995e8d3dfe57d58506f4c1277b94ea1dfbcd767b2f4235b4b84",
       "dist-runtime/worker-guard.js": "ccd59c5ea899bf225c37c7cfaf4677d1c648d83e132ec62e98ec91877ad2d89f",
       "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
       "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -129,8 +129,8 @@
           "type": "privacy-shared-failed"
         },
         "appMessages": 0,
-        "key": "privacy-shared-v1:[\"first-1337f91e7ba8a7a25304d6450540f0f9d4404889323debe51e2f90e2062d0959\",\"e7ddc461-cd4d-4b8b-96e8-0807fcbd5ef2\",\"http://127.0.0.1:4352/shared.js\",\"classic\",\"state\"]",
-        "generation": "e7ddc461-cd4d-4b8b-96e8-0807fcbd5ef2"
+        "key": "privacy-shared-v1:[\"first-1337f91e7ba8a7a25304d6450540f0f9d4404889323debe51e2f90e2062d0959\",\"388b645e-6d33-4227-ae20-fab0488167b5\",\"http://127.0.0.1:4352/shared.js\",\"classic\",\"state\"]",
+        "generation": "388b645e-6d33-4227-ae20-fab0488167b5"
       },
       "afterMalformed": {
         "count": 3,
@@ -331,8 +331,8 @@
         }
       },
       "newIdentity": {
-        "key": "privacy-shared-v1:[\"first-1337f91e7ba8a7a25304d6450540f0f9d4404889323debe51e2f90e2062d0959\",\"be8063c4-b835-424e-8983-8af8909e5600\",\"http://127.0.0.1:4352/shared.js\",\"classic\",\"state\"]",
-        "generation": "be8063c4-b835-424e-8983-8af8909e5600"
+        "key": "privacy-shared-v1:[\"first-1337f91e7ba8a7a25304d6450540f0f9d4404889323debe51e2f90e2062d0959\",\"26303b73-6740-4196-b1fd-c6ee4befeef1\",\"http://127.0.0.1:4352/shared.js\",\"classic\",\"state\"]",
+        "generation": "26303b73-6740-4196-b1fd-c6ee4befeef1"
       },
       "unaffectedOther": {
         "count": 2,
@@ -441,8 +441,8 @@
           "type": "privacy-shared-failed"
         },
         "appMessages": 0,
-        "key": "privacy-shared-v1:[\"first-1337f91e7ba8a7a25304d6450540f0f9d4404889323debe51e2f90e2062d0959\",\"ee99c281-6805-43b6-948b-7a3c0ff7ae51\",\"http://127.0.0.1:4352/shared.js\",\"classic\",\"state\"]",
-        "generation": "ee99c281-6805-43b6-948b-7a3c0ff7ae51"
+        "key": "privacy-shared-v1:[\"first-1337f91e7ba8a7a25304d6450540f0f9d4404889323debe51e2f90e2062d0959\",\"c93f9cb0-fc79-4d3e-9317-c1de3439219e\",\"http://127.0.0.1:4352/shared.js\",\"classic\",\"state\"]",
+        "generation": "c93f9cb0-fc79-4d3e-9317-c1de3439219e"
       },
       "afterMalformed": {
         "count": 3,
@@ -652,8 +652,8 @@
         }
       },
       "newIdentity": {
-        "key": "privacy-shared-v1:[\"first-1337f91e7ba8a7a25304d6450540f0f9d4404889323debe51e2f90e2062d0959\",\"dbbea94b-cc9a-4baf-88fe-6b2f09f79cde\",\"http://127.0.0.1:4352/shared.js\",\"classic\",\"state\"]",
-        "generation": "dbbea94b-cc9a-4baf-88fe-6b2f09f79cde"
+        "key": "privacy-shared-v1:[\"first-1337f91e7ba8a7a25304d6450540f0f9d4404889323debe51e2f90e2062d0959\",\"4e3d37ad-9496-4311-9ae1-a5cdcd6202a1\",\"http://127.0.0.1:4352/shared.js\",\"classic\",\"state\"]",
+        "generation": "4e3d37ad-9496-4311-9ae1-a5cdcd6202a1"
       },
       "unaffectedOther": {
         "count": 2,

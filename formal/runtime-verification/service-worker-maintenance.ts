@@ -63,6 +63,8 @@ const groups: object[] = [];
 const provenance = await testProvenance(import.meta.url);
 const receipt = new URL('./service-worker-maintenance.json', import.meta.url);
 await rm(receipt, { force: true });
+let completedAt: string | null = null;
+let failure: string | undefined;
 
 async function quiet(page: Page) {
   // Require a measured quiet interval after delayed startup checks. This remains
@@ -180,7 +182,6 @@ try {
         }
         // Scheduling/coalescing can suppress an individual update check. A
         // counterexample requires an observed effect, not delivery on every run.
-        assert(positiveSamples > 0, 'No worker-triggered update observed in this group');
         groups.push({
           browser: engine.name(),
           confined,
@@ -188,6 +189,7 @@ try {
           workerSamples: 2,
           noWorkerSamples: 2,
         });
+        assert(positiveSamples > 0, 'No worker-triggered update observed in this group');
       }
     } finally {
       await browser.close();
@@ -197,23 +199,32 @@ try {
     (await testProvenance(import.meta.url)).artifacts,
     provenance.artifacts,
   );
-  await writeFile(
-    receipt,
-    JSON.stringify(
-      {
-        scope:
-          'Native and actual confined worker creation, chosen by a private input bit, compared with no-worker and idle controls. Fixed-URL service-worker maintenance is observed at independent HTTP servers. Bounded observations do not establish exhaustive browser behavior or channel capacity.',
-        provenance,
-        samples,
-        groups,
-        observationMilliseconds: 3000,
-        completedAt: new Date().toISOString(),
-      },
-      null,
-      2,
-    ) + '\n',
-  );
+  completedAt = new Date().toISOString();
+} catch (error) {
+  failure = String(error);
+  throw error;
 } finally {
-  await host.close();
-  await new Promise<void>((resolve) => publisher.close(() => resolve()));
+  try {
+    await writeFile(
+      receipt,
+      JSON.stringify(
+        {
+          scope:
+            'Native and actual confined worker creation, chosen by a private input bit, compared with no-worker and idle controls. Fixed-URL service-worker maintenance is observed at independent HTTP servers. Bounded observations do not establish exhaustive browser behavior or channel capacity.',
+          provenance,
+          samples,
+          groups,
+          observationMilliseconds: 3000,
+          completed: completedAt !== null,
+          completedAt,
+          ...(failure ? { failure } : {}),
+        },
+        null,
+        2,
+      ) + '\n',
+    );
+  } finally {
+    await host.close();
+    await new Promise<void>((resolve) => publisher.close(() => resolve()));
+  }
 }

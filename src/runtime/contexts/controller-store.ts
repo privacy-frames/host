@@ -34,16 +34,22 @@ function parse(value: unknown): ContextIdentity {
     !value.installationGeneration ||
     !('id' in value) ||
     typeof value.id !== 'string' ||
+    !value.id ||
     !('application' in value) ||
     typeof value.application !== 'string' ||
+    !value.application ||
     !('parent' in value) ||
-    !(value.parent === null || typeof value.parent === 'string') ||
+    !(
+      value.parent === null ||
+      (typeof value.parent === 'string' && value.parent !== '')
+    ) ||
     !('kind' in value) ||
     !kind(value.kind) ||
     !('state' in value) ||
     !state(value.state) ||
     !('url' in value) ||
-    typeof value.url !== 'string'
+    typeof value.url !== 'string' ||
+    !value.url
   )
     throw new Error('Invalid stored context identity');
   return internalRecord({
@@ -58,66 +64,187 @@ function parse(value: unknown): ContextIdentity {
   });
 }
 
-/** This store exists only in the trusted controller, outside app cache namespaces. */
+interface Binding {
+  client: string;
+  identity: ContextIdentity;
+}
+
+function binding(value: unknown): Binding {
+  if (
+    !value ||
+    typeof value !== 'object' ||
+    !('client' in value) ||
+    typeof value.client !== 'string' ||
+    !value.client ||
+    !('identity' in value)
+  )
+    throw new Error('Invalid context binding');
+  return internalRecord({ client: value.client, identity: parse(value.identity) });
+}
+
+/** Native transactions enforce uniqueness and closure across controller instances. */
 export function controllerContextStorage(base: URL): ContextStorage {
-  const key = (client: string) =>
-    new URL('__host-context/' + encodeURIComponent(client), base).href;
-  const contextKey = (context: string) =>
-    new URL('__host-context-index/' + encodeURIComponent(context), base).href;
-  const closedKey = (client: string) =>
-    new URL('__host-context-closed/' + encodeURIComponent(client), base).href;
-  const closureKey = (parent: string, application: string, context: string) =>
-    new URL(
-      '__host-context-close/' +
-        [parent, application, context].map(encodeURIComponent).join('/'),
-      base,
-    ).href;
-  const open = () => caches.open('pf-browser-contexts-v1');
+  const databaseName = 'privacy-frames-browser-contexts-v1:' + new URL('./', base).href;
+  const factory = indexedDB;
+  let connection: Promise<IDBDatabase> | undefined;
+  function open(): Promise<IDBDatabase> {
+    if (!connection) {
+      connection = new Promise((resolve, reject) => {
+        const request = factory.open(databaseName, 1);
+        request.onupgradeneeded = () => {
+          const database = request.result;
+          const contexts = database.createObjectStore(
+            'contexts',
+            internalRecord({ keyPath: 'client' }),
+          );
+          contexts.createIndex(
+            'context',
+            'identity.id',
+            internalRecord({ unique: true }),
+          );
+          database.createObjectStore('closures');
+        };
+        request.onerror = () =>
+          reject(request.error || new Error('Context database failed'));
+        request.onsuccess = () => {
+          const database = request.result;
+          database.onversionchange = () => {
+            database.close();
+            connection = undefined;
+          };
+          resolve(database);
+        };
+      });
+      connection.catch(() => {
+        connection = undefined;
+      });
+    }
+    return connection;
+  }
+  async function transaction<T>(
+    mode: IDBTransactionMode,
+    operation: (
+      contexts: IDBObjectStore,
+      closures: IDBObjectStore,
+      read: <R>(request: IDBRequest<R>, accept: (value: unknown) => void) => void,
+      finish: (value: T) => void,
+      fail: (error: unknown) => void,
+    ) => void,
+  ): Promise<T> {
+    const database = await open();
+    return new Promise((resolve, reject) => {
+      const tx = database.transaction(['contexts', 'closures'], mode);
+      let result: T;
+      let finished = false;
+      let failure: unknown;
+      tx.oncomplete = () =>
+        finished
+          ? resolve(result)
+          : reject(new Error('Context transaction produced no result'));
+      tx.onabort = () =>
+        reject(failure || tx.error || new Error('Context transaction aborted'));
+      const fail = (error: unknown) => {
+        failure = error;
+        tx.abort();
+      };
+      const read = <R>(request: IDBRequest<R>, accept: (value: unknown) => void) => {
+        request.onsuccess = () => {
+          try {
+            accept(request.result);
+          } catch (error) {
+            fail(error);
+          }
+        };
+      };
+      try {
+        operation(
+          tx.objectStore('contexts'),
+          tx.objectStore('closures'),
+          read,
+          (value) => {
+            result = value;
+            finished = true;
+          },
+          fail,
+        );
+      } catch (error) {
+        fail(error);
+      }
+    });
+  }
   return internalRecord({
-    async get(client) {
-      const cache = await open();
-      const response = await cache.match(key(client));
-      if (!response) return undefined;
-      const identity = parse(await response.json());
-      const closed = await cache.match(closedKey(client));
-      const requested = identity.parent
-        ? await cache.match(
-            closureKey(identity.parent, identity.application, identity.id),
-          )
-        : undefined;
-      return closed || requested
-        ? internalRecord<ContextIdentity>({ ...identity, state: 'closed' })
-        : identity;
-    },
-    async put(client, identity) {
-      const cache = await open();
-      if (identity.state === 'closed')
-        await cache.put(closedKey(client), new Response('closed'));
-      await cache.put(
-        key(client),
-        new Response(
-          JSON.stringify(identity),
-          internalRecord({
-            headers: internalRecord({ 'Content-Type': 'application/json' }),
-          }),
-        ),
+    get(client: string) {
+      return transaction<ContextIdentity | undefined>(
+        'readonly',
+        (contexts, _closures, read, finish) => {
+          read(contexts.get(client), (value) => {
+            if (value === undefined) return finish(undefined);
+            const stored = binding(value);
+            if (stored.client !== client) throw new Error('Context client key mismatch');
+            finish(stored.identity);
+          });
+        },
       );
-      await cache.put(contextKey(identity.id), new Response(client));
     },
-    async lookupByContext(context) {
-      const result = await (await open()).match(contextKey(context));
-      if (!result) return undefined;
-      const client = await result.text();
-      if (!client) throw new Error('Invalid context client index');
-      return client;
+    bind(client: string, identity: ContextIdentity) {
+      const checked = parse(identity);
+      if (!client || checked.state !== 'preparing')
+        return Promise.reject(new Error('Invalid initial context binding'));
+      return transaction<void>('readwrite', (contexts, closures, read, finish, fail) => {
+        const insert = () => {
+          const request = contexts.add(internalRecord({ client, identity: checked }));
+          request.onerror = () => {
+            if (request.error?.name === 'ConstraintError')
+              fail(new Error('Browser client or context identifier already bound'));
+          };
+          read(request, () => finish(undefined));
+        };
+        if (!checked.parent) return insert();
+        read(closures.get([checked.parent, checked.application, checked.id]), (value) => {
+          if (value !== undefined)
+            return fail(new Error('Browser context closed before startup'));
+          insert();
+        });
+      });
     },
-    async isClosureRequested(parent, application, context) {
-      return !!(await (await open()).match(closureKey(parent, application, context)));
+    lookupByContext(context: string) {
+      return transaction<string | undefined>(
+        'readonly',
+        (contexts, _closures, read, finish) => {
+          read(contexts.index('context').getKey(context), (value) => {
+            if (value !== undefined && (typeof value !== 'string' || !value))
+              throw new Error('Invalid context client index');
+            finish(value);
+          });
+        },
+      );
     },
-    async requestClosure(parent, application, context) {
-      await (
-        await open()
-      ).put(closureKey(parent, application, context), new Response('closed'));
+    close(parent: string, application: string, context: string) {
+      return transaction<boolean>('readwrite', (contexts, closures, read, finish) => {
+        read(contexts.index('context').get(context), (value) => {
+          if (value === undefined) {
+            read(closures.put(true, [parent, application, context]), () => finish(true));
+            return;
+          }
+          const stored = binding(value);
+          if (
+            stored.identity.id !== context ||
+            stored.identity.parent !== parent ||
+            stored.identity.application !== application
+          )
+            return finish(false);
+          closures.put(true, [parent, application, context]);
+          read(
+            contexts.put(
+              internalRecord({
+                client: stored.client,
+                identity: internalRecord({ ...stored.identity, state: 'closed' }),
+              }),
+            ),
+            () => finish(true),
+          );
+        });
+      });
     },
   });
 }

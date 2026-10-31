@@ -27,14 +27,9 @@ export interface WorkerBootstrapMetadata {
 
 export interface ContextStorage {
   get(client: string): Promise<ContextIdentity | undefined>;
-  put(client: string, identity: ContextIdentity): Promise<void>;
+  bind(client: string, identity: ContextIdentity): Promise<void>;
   lookupByContext(context: string): Promise<string | undefined>;
-  isClosureRequested(
-    parent: string,
-    application: string,
-    context: string,
-  ): Promise<boolean>;
-  requestClosure(parent: string, application: string, context: string): Promise<void>;
+  close(parent: string, application: string, context: string): Promise<boolean>;
 }
 
 // Live phase labels remain valid in the persistent protocol. They do not grant
@@ -82,19 +77,10 @@ export class ContextRegistry {
         identity.policyVersion !== CONTEXT_POLICY_VERSION
       )
         throw new Error('Incomplete browser context identity');
-      if (await this.storage.get(client)) throw new Error('Browser client already bound');
-      if (await this.storage.lookupByContext(identity.id))
-        throw new Error('Context identifier already bound');
-      if (
-        identity.parent &&
-        (await this.storage.isClosureRequested(
-          identity.parent,
-          identity.application,
-          identity.id,
-        ))
-      )
-        throw new Error('Browser context closed before startup');
-      await this.storage.put(client, internalRecord({ ...identity, state: 'preparing' }));
+      await this.storage.bind(
+        client,
+        internalRecord({ ...identity, state: 'preparing' }),
+      );
     });
   }
 
@@ -172,41 +158,7 @@ export class ContextRegistry {
   closeChild(parent: string, application: string, context: string): Promise<boolean> {
     return this.mutate(async () => {
       if (!parent || !application || !context) return false;
-      const client = await this.storage.lookupByContext(context);
-      if (client) {
-        const identity = await this.storage.get(client);
-        if (
-          !identity ||
-          identity.policyVersion !== CONTEXT_POLICY_VERSION ||
-          identity.id !== context ||
-          identity.application !== application ||
-          identity.parent !== parent
-        )
-          return false;
-        await this.storage.requestClosure(parent, application, context);
-        await this.storage.put(client, internalRecord({ ...identity, state: 'closed' }));
-        return true;
-      }
-      // A constructor can be terminated before its reserved client is bound.
-      // This owner-scoped request also rejects a later bind after controller restart.
-      await this.storage.requestClosure(parent, application, context);
-      const racedClient = await this.storage.lookupByContext(context);
-      if (racedClient) {
-        const identity = await this.storage.get(racedClient);
-        if (
-          !identity ||
-          identity.policyVersion !== CONTEXT_POLICY_VERSION ||
-          identity.id !== context ||
-          identity.application !== application ||
-          identity.parent !== parent
-        )
-          return false;
-        await this.storage.put(
-          racedClient,
-          internalRecord({ ...identity, state: 'closed' }),
-        );
-      }
-      return true;
+      return this.storage.close(parent, application, context);
     });
   }
 }
