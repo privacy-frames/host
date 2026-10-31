@@ -294,7 +294,10 @@
     "test/worker-control.test.ts": "7f064b40f47574103e29952caafc202d8fd37a2b1578a7a97c1307d737554d42",
     "formal/runtime-verification/worker-broker-compatibility.json": "818af29bc66837c77d9a24fa1717924b1b3f6a7273a608cf715996a0e6c11489",
     "formal/runtime-verification/worker-broker-validation.json": "a0850f7f1fa2d7a0ff5fe9a77c3557ad47f693ff60687a5bf76bd84d814f0bea",
-    "src/runtime/contexts/shared-worker-guard.ts": "3505fb57e523571bcc8191d7d4d7da5394fbfdaa10a14c1e80d71ca228c1d5aa"
+    "src/runtime/contexts/shared-worker-guard.ts": "3505fb57e523571bcc8191d7d4d7da5394fbfdaa10a14c1e80d71ca228c1d5aa",
+    "formal/runtime-verification/worker-policy-overlap.ts": "794dc0fafbae6bd880492a3fcc9e56e8ae80795612a23e844c6e9c6bb29f6f45",
+    "formal/runtime-verification/worker-policy-overlap.json": "7006fe1206e09692bc2ea957033da2e5a2d583dc2aa6b1e8f5ff145d19674c77",
+    "formal/runtime-verification/worker-policy-overlap.md": "24f73215a19489c3981bb57c3f517907c3e6a2ebe8d6d4193ecaedad6ec8de99"
   },
   "claims": [
     {
@@ -2493,6 +2496,15 @@
             "formal/startup/local-results.json",
             "formal/startup/lifecycle-comparison.json"
           ]
+        },
+        {
+          "kind": "native_control",
+          "description": "Eight native SharedWorker observations in Chromium and Firefox use production shared/publisher namespace helpers for classic and module scripts. With an old connection retained, a later document reuses the old global despite changed script bytes at the same URL, without a second script request. An experimental policy suffix creates a fresh global with a new request. This isolates native reuse; production admission and remote leakage are not exercised.",
+          "paths": [
+            "formal/runtime-verification/worker-policy-overlap.ts",
+            "formal/runtime-verification/worker-policy-overlap.json",
+            "formal/runtime-verification/worker-policy-overlap.md"
+          ]
         }
       ],
       "open_obligations": [
@@ -2500,11 +2512,11 @@
         "Replace shared/publisher root HTTP adapters and remaining native bootstrap, module and resource transports; establish registration lifetime and browser-effect coverage. The parent broker alone does not establish C4.",
         "Explain the initial SVG-publication geometry failure retained in the validation record. Passing repeat observations do not establish absence of that timing behavior.",
         "The native faults detect authorization failures. Establish pending-effect behavior and complete browser contracts beyond the bounded receiver observations.",
-        "Review surviving shared/publisher native globals across a host-policy change. Current name formats include application generation but not context policy version; the existing upgrade cases do not establish fresh native instances across that overlap."
+        "Native namespace-helper observations now establish old-global reuse across changed bootstrap script bytes for shared/publisher classic/module workers in both browsers. Implement policy-version partitioning and test production admission across upgrades; the experimental suffix is not a production repair. Retained old globals, tickets and pending work still need lifecycle correspondence."
       ],
       "disposition": "reviewed-scoped",
       "control_status": {
-        "native_control": "not-recorded",
+        "native_control": "recorded",
         "confined_test": "recorded",
         "fault_control": "recorded"
       }

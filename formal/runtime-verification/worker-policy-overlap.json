@@ -1,0 +1,198 @@
+{
+  "scope": "Native SharedWorker reuse using production namespace helpers. Changed server script represents a later bootstrap deployment. Does not exercise production admission, prove an escape, or establish a production repair.",
+  "completed": true,
+  "sourceSHA256": {
+    "formal/runtime-verification/worker-policy-overlap.ts": "794dc0fafbae6bd880492a3fcc9e56e8ae80795612a23e844c6e9c6bb29f6f45",
+    "src/shared/shared-worker.ts": "628cd871c0853c1ecf8a750eccdffd8b1573f00559079ec7b313a756fb5ab672",
+    "src/shared/primordials.ts": "422a992a7e863c1b3b09f7d1484f10fa66a0300cdea007dfe485c9bf0c1e980c",
+    "src/runtime/publisher/protocol.ts": "2facf0d152606b30661d75fe68a7b86f6c3e73fb2125d61039889bb771ff9de4",
+    "test/browser-profile.ts": "c161489dfce9c3124474d1416440c9876b0a8fce329d2f09fa16f99af744e3a0",
+    "package-lock.json": "4e8c7b0964047f1c9fd3f82956b08d381817fa86fb2f7d47d4a10458dc5e62ed"
+  },
+  "rows": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "shared",
+      "type": "classic",
+      "original": {
+        "revision": 1,
+        "instance": "d47e013b-a407-48be-b242-b85464321687"
+      },
+      "reused": {
+        "revision": 1,
+        "instance": "d47e013b-a407-48be-b242-b85464321687"
+      },
+      "partitioned": {
+        "revision": 2,
+        "instance": "20f7eb6a-793d-4028-868b-3aa8cb47446a"
+      },
+      "fetches": {
+        "initial": 1,
+        "reused": 0,
+        "partitioned": 1
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "shared",
+      "type": "module",
+      "original": {
+        "revision": 1,
+        "instance": "9f5dd407-c2ae-40ca-a71b-f645b1f7fe87"
+      },
+      "reused": {
+        "revision": 1,
+        "instance": "9f5dd407-c2ae-40ca-a71b-f645b1f7fe87"
+      },
+      "partitioned": {
+        "revision": 2,
+        "instance": "77b89951-b7cf-4d38-8462-4571d87ae495"
+      },
+      "fetches": {
+        "initial": 1,
+        "reused": 0,
+        "partitioned": 1
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "publisher",
+      "type": "classic",
+      "original": {
+        "revision": 1,
+        "instance": "6ce4df4d-a7b6-479d-b5a9-29520a0a9f7b"
+      },
+      "reused": {
+        "revision": 1,
+        "instance": "6ce4df4d-a7b6-479d-b5a9-29520a0a9f7b"
+      },
+      "partitioned": {
+        "revision": 2,
+        "instance": "48a9dd2e-2449-4f42-abeb-eff86978d27c"
+      },
+      "fetches": {
+        "initial": 1,
+        "reused": 0,
+        "partitioned": 1
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "publisher",
+      "type": "module",
+      "original": {
+        "revision": 1,
+        "instance": "4ed52931-c06c-41da-95b4-161767cb9bb0"
+      },
+      "reused": {
+        "revision": 1,
+        "instance": "4ed52931-c06c-41da-95b4-161767cb9bb0"
+      },
+      "partitioned": {
+        "revision": 2,
+        "instance": "4ad83122-e874-4ec6-a638-8b24dcd04ecc"
+      },
+      "fetches": {
+        "initial": 1,
+        "reused": 0,
+        "partitioned": 1
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "kind": "shared",
+      "type": "classic",
+      "original": {
+        "revision": 1,
+        "instance": "5048a931-2279-4d28-a6eb-e6947321afb2"
+      },
+      "reused": {
+        "revision": 1,
+        "instance": "5048a931-2279-4d28-a6eb-e6947321afb2"
+      },
+      "partitioned": {
+        "revision": 2,
+        "instance": "b9e7ca86-a666-4ca5-a8dc-bd39b6b8851e"
+      },
+      "fetches": {
+        "initial": 1,
+        "reused": 0,
+        "partitioned": 1
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "kind": "shared",
+      "type": "module",
+      "original": {
+        "revision": 1,
+        "instance": "b8e89ceb-05ec-4609-b9be-f9e2e7bb93b4"
+      },
+      "reused": {
+        "revision": 1,
+        "instance": "b8e89ceb-05ec-4609-b9be-f9e2e7bb93b4"
+      },
+      "partitioned": {
+        "revision": 2,
+        "instance": "320c5be6-1dbb-414d-b821-348b4381ca08"
+      },
+      "fetches": {
+        "initial": 1,
+        "reused": 0,
+        "partitioned": 1
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "kind": "publisher",
+      "type": "classic",
+      "original": {
+        "revision": 1,
+        "instance": "e88d1d2d-14b5-4026-9a21-437039ea2a03"
+      },
+      "reused": {
+        "revision": 1,
+        "instance": "e88d1d2d-14b5-4026-9a21-437039ea2a03"
+      },
+      "partitioned": {
+        "revision": 2,
+        "instance": "c400bc25-aefa-4180-bbb9-91cf6ce2e770"
+      },
+      "fetches": {
+        "initial": 1,
+        "reused": 0,
+        "partitioned": 1
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "kind": "publisher",
+      "type": "module",
+      "original": {
+        "revision": 1,
+        "instance": "6449e067-3b18-4b15-a117-efd1cf3b8fff"
+      },
+      "reused": {
+        "revision": 1,
+        "instance": "6449e067-3b18-4b15-a117-efd1cf3b8fff"
+      },
+      "partitioned": {
+        "revision": 2,
+        "instance": "ccc10b84-7305-4b6f-95c4-8ddc2dc81737"
+      },
+      "fetches": {
+        "initial": 1,
+        "reused": 0,
+        "partitioned": 1
+      }
+    }
+  ]
+}

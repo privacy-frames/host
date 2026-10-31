@@ -68,7 +68,9 @@ in CI. Establish their correspondence to the
 Review changed scripts, install/activate work, overlapping registrations,
 controller retention, restart and work already queued at launch. Review surviving
 shared/publisher globals across policy-version changes: their current native names
-contain application generation, not host policy version. Establish fresh execution
+contain application generation, not host policy version. The
+[native namespace experiment](worker-policy-overlap.md) now observes old-global
+reuse in both browsers even after bootstrap script bytes change. Establish fresh execution
 or an explicit refusal before treating the existing upgrade cases as coverage of
 that overlap. Unregistration must not be treated as cancellation of an already
 transmitted request.
