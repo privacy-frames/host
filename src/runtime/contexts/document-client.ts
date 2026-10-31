@@ -1,7 +1,13 @@
 import { internalRecord } from '../../shared/primordials.ts';
 import { DOCUMENT_CONTROL_REQUEST } from '../../shared/types.ts';
 
-export type DocumentControlOperation = 'create' | 'configuration' | 'content' | 'close';
+export type DocumentControlOperation =
+  | 'create'
+  | 'configuration'
+  | 'content'
+  | 'child-configuration'
+  | 'child-content'
+  | 'close';
 export type DocumentControl = (
   operation: DocumentControlOperation,
   payload: object,

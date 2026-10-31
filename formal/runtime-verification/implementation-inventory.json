@@ -4,7 +4,7 @@
   "typescriptVersion": "6.0.3",
   "contractSHA256": "57c378112e1d53c1223955a6e0a28b546e0a6ec3e90895f0deec46908ca9017f",
   "generatorSHA256": "30a433edc9bc21d25c4790a9540e6eeb271f382c12f4fefeccd1dba1b75a47c2",
-  "boundaryDefinitionsSHA256": "7c5fda784f77dc3ed489fc31034618c4d8626db7c31e0e56dabc1c721e19f210",
+  "boundaryDefinitionsSHA256": "80151393d0bc34c4af708d88395d93321e424c9b534760b1caacf0cbc3989326",
   "boundaries": [
     {
       "id": "root-publication",
@@ -42,6 +42,7 @@
         "src/runtime/contexts/document-main.ts",
         "src/runtime/contexts/document-controller.ts",
         "src/runtime/contexts/document-client.ts",
+        "src/runtime/contexts/document-parent.ts",
         "src/runtime/contexts/parent-channel.ts",
         "src/runtime/contexts/document-request.ts",
         "src/runtime/contexts/document-intents.ts",
@@ -59,7 +60,8 @@
         "C7"
       ],
       "sources": [
-        "src/runtime/contexts/popup-factory.ts"
+        "src/runtime/contexts/popup-factory.ts",
+        "src/runtime/contexts/document-parent.ts"
       ]
     },
     {
@@ -312,31 +314,31 @@
     },
     {
       "path": "src/runtime/contexts/document-client.ts",
-      "sourceSHA256": "aafd2a4a3b728667376fd25515d8562b2ba6e32ca3be76a81c434fe68ef93725",
+      "sourceSHA256": "8388dd26efd1e7de23cb659859cdf5455e635236d3b75e0b2c522ce5165133da",
       "boundaries": [
         "document-publication"
       ],
       "siteCount": 5,
-      "sitesSHA256": "90562005216446d24b52abbb44a78e2ff5f5fab94f0957135937b8c9c12ac5fc"
+      "sitesSHA256": "ec09b7a486c9feffc88f8db9182a1052b96212aa4ab70c9afe8419c4664b225b"
     },
     {
       "path": "src/runtime/contexts/document-controller.ts",
-      "sourceSHA256": "2f662fe1fcc5220dcaeb8944d79ef0f87213814f601ea453051aaac11bf538e4",
+      "sourceSHA256": "cf94ba5b87bfbd4c0d8eb6d3f179d2c97335825ac5f16bb0f88631d3c418d9fa",
       "boundaries": [
         "document-publication"
       ],
-      "siteCount": 150,
-      "sitesSHA256": "25311905dbbbd6e73701ad6052926c5376338e277e0b2a679c6f4ba1014e0663"
+      "siteCount": 170,
+      "sitesSHA256": "7e0bd1e640ea07bc231855cd305020ed1e561b8dddfc80e05872098bfa993ae5"
     },
     {
       "path": "src/runtime/contexts/document-factory.ts",
-      "sourceSHA256": "1059c31c8a69da0af5a8cb2aa973af612d6df9519309a2b4276a60ee9c156025",
+      "sourceSHA256": "3753102ae25d272ffbb08aae092b04358d1087f05591a0b730283d1020ffe64f",
       "boundaries": [
         "document-publication",
         "browser-owned-maintenance"
       ],
-      "siteCount": 520,
-      "sitesSHA256": "11714ea81adb20d7af8a2e109746e26ffc25ea423e5aef9effd51b2eba4995fe"
+      "siteCount": 525,
+      "sitesSHA256": "51ac1da3e38de52b0b52925e6b05d9f0592157420d2f914891830fb6e86e1c91"
     },
     {
       "path": "src/runtime/contexts/document-guard.ts",
@@ -358,12 +360,22 @@
     },
     {
       "path": "src/runtime/contexts/document-main.ts",
-      "sourceSHA256": "771876e09694d7c63c46547bd2ae6e3f4c4aae7372bca7d57ece4b79515d381c",
+      "sourceSHA256": "a0917f95b0608979131077d7c12138f9132ee10b1be212779406383375e761a5",
       "boundaries": [
         "document-publication"
       ],
-      "siteCount": 134,
-      "sitesSHA256": "6091ac88dcc279949d1d0553a7fbde39e576e034cf04e49d9334b32476faca1b"
+      "siteCount": 138,
+      "sitesSHA256": "852b2f3b2e4c3045559cdd2515133c88317381344ecd6288a2976cb067c43a9f"
+    },
+    {
+      "path": "src/runtime/contexts/document-parent.ts",
+      "sourceSHA256": "989319b3ce3b2391dfab85e0afc2f3290613ac9afe3760cdcd6146ba0f8ec7d5",
+      "boundaries": [
+        "document-publication",
+        "popup-publication"
+      ],
+      "siteCount": 15,
+      "sitesSHA256": "373c13d4f5bac54186c239216cf721a3273faa917057508e8ee7db128c4d125a"
     },
     {
       "path": "src/runtime/contexts/document-protocol.ts",
@@ -412,12 +424,12 @@
     },
     {
       "path": "src/runtime/contexts/popup-factory.ts",
-      "sourceSHA256": "82787698039e092a25b6f5afd479f29c7db1ebc995e06be41fa54440c5d72c7c",
+      "sourceSHA256": "b256c8af6095be8b981bd86b3235fdfbd5117abf719edbbd72091bb42498eaf1",
       "boundaries": [
         "popup-publication"
       ],
-      "siteCount": 276,
-      "sitesSHA256": "91bfe94defc7162569a20467f223bae57148f4ab063b7dced30d31109e9dc81b"
+      "siteCount": 279,
+      "sitesSHA256": "4b8d07f217ce76240dffd6a29a535fdd15b867e8e2cdf2b2893f5afe055f1981"
     },
     {
       "path": "src/runtime/contexts/resources.ts",

@@ -139,6 +139,7 @@ try {
       const created = await call(parent, 'create', source);
       assert.equal(created.ok, true);
       const grant = registration(created.value);
+      assert.equal((await call(parent, 'child-configuration', grant)).ok, false);
       assert.equal((await call(parent, 'configuration', { id: grant.id })).ok, false);
       assert.equal((await call(parent, 'content', { id: grant.id })).ok, false);
       assert.equal((await call(sibling, 'close', grant)).ok, true);
@@ -164,13 +165,28 @@ try {
           ({ operation, payload }) => window.documentControlFixture(operation, payload),
           { operation, payload },
         );
+      assert.equal((await call(sibling, 'child-configuration', grant)).ok, false);
+      assert.equal(
+        (
+          await call(parent, 'child-configuration', {
+            ...grant,
+            parentToken: '11111111-1111-4111-8111-111111111111',
+          })
+        ).ok,
+        false,
+      );
+      assert.equal((await call(parent, 'child-configuration', grant)).ok, true);
       assert.equal((await childCall('configuration')).ok, true);
-      const replies = await Promise.all([childCall('content'), childCall('content')]);
+      const replies = await Promise.all([
+        childCall('content'),
+        call(parent, 'child-content', grant),
+      ]);
       assert.equal(replies.filter((reply) => reply.ok).length, 1);
       const delivered = replies.find((reply) => reply.ok)!.value;
       assert(delivered && typeof delivered === 'object' && 'text' in delivered);
       assert.equal(delivered.text, '<p>Private fixture</p>');
       assert.equal((await childCall('configuration')).ok, false);
+      assert.equal((await call(parent, 'child-configuration', grant)).ok, false);
       const nestedReply = await childCall('create', source);
       assert.equal(
         nestedReply.ok,
@@ -184,6 +200,7 @@ try {
       const start = host.traffic.length;
       assert.deepEqual((await call(parent, 'close', grant)).value, { closed: true });
       assert.equal((await childCall('content')).ok, false);
+      assert.equal((await call(parent, 'child-content', grant)).ok, false);
       assert.equal((await childCall('create', source)).ok, false);
       const second = registration((await call(parent, 'create', source)).value);
       assert.deepEqual((await call(parent, 'close', second)).value, { closed: true });
@@ -201,7 +218,12 @@ try {
           'wrong-parent',
           'wrong-token',
           'bound-child-configuration',
+          'parent-relay-before-binding',
+          'parent-relay-wrong-parent',
+          'parent-relay-wrong-token',
+          'owning-parent-configuration',
           'consume-once',
+          'parent-and-child-consume-race',
           'consumed-configuration',
           'live-child-create-control',
           'closed-child-valid-create',

@@ -1,4 +1,5 @@
 import type { DocumentControl } from './document-client.ts';
+import { serveDocumentParent } from './document-parent.ts';
 import {
   strings,
   internalArray,
@@ -65,6 +66,7 @@ interface ManagedDocument extends DocumentPublicationState {
   baseURL?: string;
   privateRoot?: ShadowRoot;
   registration?: DocumentRegistration;
+  parentChannel?: { close(): void };
   window?: Window;
   document?: Document;
   port?: MessagePort;
@@ -263,6 +265,8 @@ export function createDocumentFactory(
   }
   function cancel(record: ManagedDocument) {
     cancelDocumentPublication(record);
+    record.parentChannel?.close();
+    record.parentChannel = undefined;
     record.prepared?.();
     record.prepared = undefined;
     const complete = record.complete;
@@ -413,6 +417,17 @@ export function createDocumentFactory(
         return;
       }
       record.registration = registration;
+      const grant = registration;
+      record.parentChannel = serveDocumentParent(
+        internalRecord({
+          child: () => apply(frameWindow, record.frame, []),
+          origin: runtimeOrigin,
+          registration: grant,
+          isCurrent: () =>
+            generation === record.generation && record.registration === grant,
+          documentControl: options.documentControl,
+        }),
+      );
       const host: HTMLElement = apply(create, document, ['div']);
       apply(setAttr, host, ['style', 'display:none!important']);
       const privateRoot: ShadowRoot = apply(attachShadow, host, [

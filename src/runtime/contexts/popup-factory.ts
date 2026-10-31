@@ -1,4 +1,5 @@
 import type { DocumentControl } from './document-client.ts';
+import { serveDocumentParent } from './document-parent.ts';
 import {
   strings,
   internalArray,
@@ -38,6 +39,7 @@ interface PopupRecord {
   canceled: boolean;
   timer?: number;
   registration?: DocumentRegistration;
+  parentChannel?: { close(): void };
   port?: MessagePort;
   queue: PendingMessage[];
   onload?: unknown;
@@ -118,6 +120,8 @@ export function createPopupFactory(tools: PolicyTools, options: PopupFactoryOpti
   function retire(record: PopupRecord, error = false) {
     if (record.canceled) return;
     record.canceled = true;
+    record.parentChannel?.close();
+    record.parentChannel = undefined;
     if (record.timer !== undefined) apply(clearTimer, owner, [record.timer]);
     record.timer = undefined;
     if (record.port) apply(closePort, record.port, []);
@@ -393,6 +397,15 @@ export function createPopupFactory(tools: PolicyTools, options: PopupFactoryOpti
         closeRegistration(registration);
         return;
       }
+      record.parentChannel = serveDocumentParent(
+        internalRecord({
+          child: () => record.window,
+          origin: runtimeOrigin,
+          registration,
+          isCurrent: () => !record.canceled && record.registration === registration,
+          documentControl: options.documentControl,
+        }),
+      );
       if (popup.noreferrer) {
         const privateDocument: Document = apply(documentGet, record.window, []);
         const meta: Element = apply(createElement, privateDocument, ['meta']);

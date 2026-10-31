@@ -1,17 +1,18 @@
 {
-  "scope": "Actual document controller and real IndexedDB with simulated browser clients and in-memory context storage. Test-only in-memory mutation deletes exactly the post-consumption isCurrent guard. This is authority/content delivery, not a network-leak demonstration.",
-  "revision": "1d46fad8bdca15c3f8c7ee3fc2fb6fb1d1868de6",
-  "runnerSHA256": "50d39c00e3c926fb331f09053abfe1192af0a4baa9521ba27739be1a4a27e1ae",
+  "scope": "Actual document controller and real IndexedDB with simulated browser clients and in-memory context storage. Separate test-only in-memory mutations delete the child post-consumption guard or parent post-relay guard. This is authority/content delivery, not a network-leak demonstration.",
+  "revision": "f680d8efa24b2f483d738067534a522fc816fe54",
+  "runnerSHA256": "435a2d09ce3e639287d51a4ab067a42d6e306999aec49323e69f231536cb6a3b",
   "sourceHashes": {
-    "src/runtime/contexts/document-controller.ts": "2f662fe1fcc5220dcaeb8944d79ef0f87213814f601ea453051aaac11bf538e4",
+    "src/runtime/contexts/document-controller.ts": "cf94ba5b87bfbd4c0d8eb6d3f179d2c97335825ac5f16bb0f88631d3c418d9fa",
     "src/runtime/contexts/document-intents.ts": "4373aae1b9abe5d957b89b4acc511718905e8222c0a441da82d4306cbf751770",
     "src/runtime/contexts/model.ts": "6b5905338c313754d25fa392deb5b604771794c55a6d72f9dfbae6a7bb8c48b4",
     "src/runtime/storage.ts": "3f25382228184cf46609e26562fd815c1701f88d8fc4af19d9a61ff79e949c5d",
-    "test/document-consumption-race.ts": "127bf11bd08401feb81fa54e74e81f4d5e1756fb03674ed555657006ac2bc4a0",
+    "test/document-consumption-race.ts": "55b63ad48cf3221a6676764e541ecd68d25b2956f3134c0af1a2624241603b6d",
     "package-lock.json": "4e8c7b0964047f1c9fd3f82956b08d381817fa86fb2f7d47d4a10458dc5e62ed"
   },
-  "normalBundleSHA256": "4b4d38a4b2fe1092a64fae7040c369113ccc5390f7203b34b7cb02f76f0cf557",
-  "faultBundleSHA256": "359f526748eeddb2834f4e8308ad144101138f2d9f8035ecd336e4a90f7ccb24",
+  "normalBundleSHA256": "e006d02ddf14fc5f99716387cd60d00d54a470d040ca22143b50ad292db01d31",
+  "faultBundleSHA256": "ae510b6f50d8216103e544334106cbdf3811257349cc7a8c749101b467fcde8e",
+  "parentFaultBundleSHA256": "7e273f3eb010f6684027b7945aa3466f3377f63c1beea90c3299b06250266e02",
   "completed": true,
   "browsers": [
     {
@@ -49,6 +50,64 @@
               "accepted": false,
               "body": ""
             }
+          ],
+          "parentResults": [
+            {
+              "scenario": "unchanged",
+              "consumedBeforeMutation": true,
+              "validations": 4,
+              "accepted": true,
+              "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
+            },
+            {
+              "scenario": "closed",
+              "consumedBeforeMutation": true,
+              "validations": 2,
+              "accepted": false,
+              "body": ""
+            },
+            {
+              "scenario": "owner-changed",
+              "consumedBeforeMutation": true,
+              "validations": 2,
+              "accepted": false,
+              "body": ""
+            },
+            {
+              "scenario": "generation-changed",
+              "consumedBeforeMutation": true,
+              "validations": 2,
+              "accepted": false,
+              "body": ""
+            },
+            {
+              "scenario": "parent-closed",
+              "consumedBeforeMutation": true,
+              "validations": 4,
+              "accepted": false,
+              "body": ""
+            },
+            {
+              "scenario": "parent-owner-changed",
+              "consumedBeforeMutation": true,
+              "validations": 4,
+              "accepted": false,
+              "body": ""
+            },
+            {
+              "scenario": "parent-generation-changed",
+              "consumedBeforeMutation": true,
+              "validations": 4,
+              "accepted": false,
+              "body": ""
+            },
+            {
+              "scenario": "intent-closed",
+              "consumedBeforeMutation": true,
+              "validations": 2,
+              "accepted": false,
+              "body": ""
+            }
           ]
         },
         {
@@ -81,6 +140,98 @@
               "validations": 0,
               "accepted": true,
               "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
+            }
+          ],
+          "parentResults": []
+        },
+        {
+          "profile": "parent-fault",
+          "results": [
+            {
+              "scenario": "unchanged",
+              "consumedBeforeMutation": true,
+              "validations": 1,
+              "accepted": true,
+              "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
+            },
+            {
+              "scenario": "closed",
+              "consumedBeforeMutation": true,
+              "validations": 1,
+              "accepted": false,
+              "body": ""
+            },
+            {
+              "scenario": "owner-changed",
+              "consumedBeforeMutation": true,
+              "validations": 1,
+              "accepted": false,
+              "body": ""
+            },
+            {
+              "scenario": "generation-changed",
+              "consumedBeforeMutation": true,
+              "validations": 1,
+              "accepted": false,
+              "body": ""
+            }
+          ],
+          "parentResults": [
+            {
+              "scenario": "unchanged",
+              "consumedBeforeMutation": true,
+              "validations": 3,
+              "accepted": true,
+              "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
+            },
+            {
+              "scenario": "closed",
+              "consumedBeforeMutation": true,
+              "validations": 2,
+              "accepted": false,
+              "body": ""
+            },
+            {
+              "scenario": "owner-changed",
+              "consumedBeforeMutation": true,
+              "validations": 2,
+              "accepted": false,
+              "body": ""
+            },
+            {
+              "scenario": "generation-changed",
+              "consumedBeforeMutation": true,
+              "validations": 2,
+              "accepted": false,
+              "body": ""
+            },
+            {
+              "scenario": "parent-closed",
+              "consumedBeforeMutation": true,
+              "validations": 3,
+              "accepted": true,
+              "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
+            },
+            {
+              "scenario": "parent-owner-changed",
+              "consumedBeforeMutation": true,
+              "validations": 3,
+              "accepted": true,
+              "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
+            },
+            {
+              "scenario": "parent-generation-changed",
+              "consumedBeforeMutation": true,
+              "validations": 3,
+              "accepted": true,
+              "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
+            },
+            {
+              "scenario": "intent-closed",
+              "consumedBeforeMutation": true,
+              "validations": 2,
+              "accepted": false,
+              "body": ""
             }
           ]
         }
@@ -121,6 +272,64 @@
               "accepted": false,
               "body": ""
             }
+          ],
+          "parentResults": [
+            {
+              "scenario": "unchanged",
+              "consumedBeforeMutation": true,
+              "validations": 4,
+              "accepted": true,
+              "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
+            },
+            {
+              "scenario": "closed",
+              "consumedBeforeMutation": true,
+              "validations": 2,
+              "accepted": false,
+              "body": ""
+            },
+            {
+              "scenario": "owner-changed",
+              "consumedBeforeMutation": true,
+              "validations": 2,
+              "accepted": false,
+              "body": ""
+            },
+            {
+              "scenario": "generation-changed",
+              "consumedBeforeMutation": true,
+              "validations": 2,
+              "accepted": false,
+              "body": ""
+            },
+            {
+              "scenario": "parent-closed",
+              "consumedBeforeMutation": true,
+              "validations": 4,
+              "accepted": false,
+              "body": ""
+            },
+            {
+              "scenario": "parent-owner-changed",
+              "consumedBeforeMutation": true,
+              "validations": 4,
+              "accepted": false,
+              "body": ""
+            },
+            {
+              "scenario": "parent-generation-changed",
+              "consumedBeforeMutation": true,
+              "validations": 4,
+              "accepted": false,
+              "body": ""
+            },
+            {
+              "scenario": "intent-closed",
+              "consumedBeforeMutation": true,
+              "validations": 2,
+              "accepted": false,
+              "body": ""
+            }
           ]
         },
         {
@@ -153,6 +362,98 @@
               "validations": 0,
               "accepted": true,
               "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
+            }
+          ],
+          "parentResults": []
+        },
+        {
+          "profile": "parent-fault",
+          "results": [
+            {
+              "scenario": "unchanged",
+              "consumedBeforeMutation": true,
+              "validations": 1,
+              "accepted": true,
+              "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
+            },
+            {
+              "scenario": "closed",
+              "consumedBeforeMutation": true,
+              "validations": 1,
+              "accepted": false,
+              "body": ""
+            },
+            {
+              "scenario": "owner-changed",
+              "consumedBeforeMutation": true,
+              "validations": 1,
+              "accepted": false,
+              "body": ""
+            },
+            {
+              "scenario": "generation-changed",
+              "consumedBeforeMutation": true,
+              "validations": 1,
+              "accepted": false,
+              "body": ""
+            }
+          ],
+          "parentResults": [
+            {
+              "scenario": "unchanged",
+              "consumedBeforeMutation": true,
+              "validations": 3,
+              "accepted": true,
+              "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
+            },
+            {
+              "scenario": "closed",
+              "consumedBeforeMutation": true,
+              "validations": 2,
+              "accepted": false,
+              "body": ""
+            },
+            {
+              "scenario": "owner-changed",
+              "consumedBeforeMutation": true,
+              "validations": 2,
+              "accepted": false,
+              "body": ""
+            },
+            {
+              "scenario": "generation-changed",
+              "consumedBeforeMutation": true,
+              "validations": 2,
+              "accepted": false,
+              "body": ""
+            },
+            {
+              "scenario": "parent-closed",
+              "consumedBeforeMutation": true,
+              "validations": 3,
+              "accepted": true,
+              "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
+            },
+            {
+              "scenario": "parent-owner-changed",
+              "consumedBeforeMutation": true,
+              "validations": 3,
+              "accepted": true,
+              "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
+            },
+            {
+              "scenario": "parent-generation-changed",
+              "consumedBeforeMutation": true,
+              "validations": 3,
+              "accepted": true,
+              "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
+            },
+            {
+              "scenario": "intent-closed",
+              "consumedBeforeMutation": true,
+              "validations": 2,
+              "accepted": false,
+              "body": ""
             }
           ]
         }

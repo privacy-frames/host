@@ -1,5 +1,6 @@
-import { createControllerClient } from '../controller-client.ts';
 import { createDocumentControl } from './document-client.ts';
+import { connectParentChannel } from './parent-channel.ts';
+import type { PrivateClient } from '../private-channel.ts';
 import {
   internalArray,
   ownDescriptor,
@@ -60,6 +61,7 @@ async function waitForShell(): Promise<void> {
 let configuration: DocumentBootstrapConfiguration | undefined;
 let control: MessagePort | undefined;
 let parentOrigin: string | undefined;
+let bootstrapClient: PrivateClient | undefined;
 
 async function start(script: Element | null) {
   if (!script) throw new Error('Trusted document bootstrap is missing');
@@ -90,7 +92,12 @@ async function start(script: Element | null) {
   )
     throw new Error('Application document is not controlled by the host');
 
-  const documentControl = createDocumentControl(createControllerClient().request);
+  nativeParent = frameParent === nativeWindow ? nativeOpener : frameParent;
+  if (!nativeParent || nativeParent === nativeWindow)
+    throw new Error('Application document requires its owning parent');
+  const parentClient = await connectParentChannel(nativeParent, runtime.origin, id);
+  bootstrapClient = parentClient;
+  const documentControl = createDocumentControl(parentClient.request);
   configuration = parseDocumentBootstrap(
     await documentControl('configuration', internalRecord({ id })),
     expectedURL,
@@ -133,6 +140,8 @@ async function start(script: Element | null) {
   // prototypes. Publication happens before executing app code or measuring layout.
 
   const received = await documentControl('content', internalRecord({ id }));
+  parentClient.close();
+  bootstrapClient = undefined;
 
   const input = parseDocumentContentInput(received, config);
 
@@ -204,6 +213,8 @@ async function start(script: Element | null) {
 export function startDocumentGuard(script: Element | null) {
   void start(script).catch((error: unknown) => {
     try {
+      bootstrapClient?.close();
+      bootstrapClient = undefined;
       apply(nativeStop, nativeWindow, []);
       if (control) apply(portPost, control, [internalRecord({ type: 'failed' })]);
       else if (configuration && parentOrigin)

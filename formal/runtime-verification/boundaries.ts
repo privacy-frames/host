@@ -35,6 +35,7 @@ export const boundaries: readonly Boundary[] = [
       'src/runtime/contexts/document-main.ts',
       'src/runtime/contexts/document-controller.ts',
       'src/runtime/contexts/document-client.ts',
+      'src/runtime/contexts/document-parent.ts',
       'src/runtime/contexts/parent-channel.ts',
       'src/runtime/contexts/document-request.ts',
       'src/runtime/contexts/document-intents.ts',
@@ -46,7 +47,10 @@ export const boundaries: readonly Boundary[] = [
     obligation:
       'Prepare each popup before exposing native authority, including retained opener and Window references.',
     invariants: ['C1', 'C2', 'C3', 'C6', 'C7'],
-    sources: ['src/runtime/contexts/popup-factory.ts'],
+    sources: [
+      'src/runtime/contexts/popup-factory.ts',
+      'src/runtime/contexts/document-parent.ts',
+    ],
   },
   {
     id: 'dedicated-worker-publication',

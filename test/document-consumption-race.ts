@@ -17,6 +17,7 @@ interface ConsumptionResult {
 declare global {
   interface Window {
     runConsumptionRace(): Promise<ConsumptionResult[]>;
+    runParentConsumptionRace(): Promise<ConsumptionResult[]>;
   }
 }
 
@@ -51,7 +52,7 @@ async function bounded(promise) {
     ]);
   } finally { clearTimeout(timer); }
 }
-window.runConsumptionRace = async () => {
+async function runRace(parentMode) {
   const id = 'consumption-' + '1'.repeat(64);
   await putApp({
     id, manifest: { id: 'consumption', name: 'Consumption', entry: 'index.html' },
@@ -63,7 +64,9 @@ window.runConsumptionRace = async () => {
   check(app, 'Stored installation missing');
   const base = new URL('/runtime/', location.origin);
   const results = [];
-  for (const scenario of ['unchanged', 'closed', 'owner-changed', 'generation-changed']) {
+  const scenarios = ['unchanged', 'closed', 'owner-changed', 'generation-changed'];
+  if (parentMode) scenarios.push('parent-closed', 'parent-owner-changed', 'parent-generation-changed', 'intent-closed');
+  for (const scenario of scenarios) {
     const records = new Map();
     const closures = new Set();
     const key = (parent, application, context) => JSON.stringify([parent, application, context]);
@@ -80,7 +83,7 @@ window.runConsumptionRace = async () => {
     };
     const contexts = new ContextRegistry(storage);
     const otherController = new ContextRegistry(storage);
-    const intents = new DocumentIntentStore({ databaseName: 'consumption-race-' + scenario });
+    const intents = new DocumentIntentStore({ databaseName: 'consumption-race-' + parentMode + '-' + scenario });
     const input = { kind: 'html', text: '<p>Admitted private document</p>', sourceURL: app.source, aliases: [] };
     const intent = await intents.issue({ application: id, installationGeneration: app.generation, parentClient: 'parent' }, input);
     const target = new URL('__contexts/' + intent.id + '/document.html', applicationURL(app, base));
@@ -90,13 +93,19 @@ window.runConsumptionRace = async () => {
       installationGeneration: app.generation, parent: 'parent', kind: 'window',
       state: 'preparing', url: target.href,
     });
+    const parent = { id: 'parent', url: applicationURL(app, base).href, type: 'window' };
+    if (parentMode) await contexts.bind('parent', {
+      policyVersion: CONTEXT_POLICY_VERSION, id: 'parent-context', application: id,
+      installationGeneration: app.generation, parent: null, kind: 'window',
+      state: 'running', url: parent.url,
+    });
     let validations = 0;
     const validate = contexts.isCurrent.bind(contexts);
     contexts.isCurrent = (...args) => { validations++; return validate(...args); };
     const child = { id: 'child', url: target.href, type: 'window' };
     const controller = createDocumentController({
       base, contexts, intents,
-      async client(clientId) { return clientId === 'child' ? child : undefined; },
+      async client(clientId) { return clientId === 'child' ? child : parentMode && clientId === 'parent' ? parent : undefined; },
       async application() { return id; }, async bootstrap() { return undefined; },
     });
     const paused = gate();
@@ -108,7 +117,7 @@ window.runConsumptionRace = async () => {
       await paused.blocked;
       return content;
     };
-    const pending = controller.request('child', 'content', JSON.stringify({ id: intent.id }))
+    const pending = controller.request(parentMode ? 'parent' : 'child', parentMode ? 'child-content' : 'content', JSON.stringify({ id: intent.id, parentToken: intent.parentToken }))
       .then(value => ({ accepted: true, body: JSON.stringify(value) }),
         () => ({ accepted: false, body: '' }));
     try {
@@ -122,6 +131,14 @@ window.runConsumptionRace = async () => {
         records.set('child', { ...current, ...(scenario === 'owner-changed'
           ? { parent: 'different-parent' } : { installationGeneration: 'different-generation' }) });
       }
+      if (scenario.startsWith('parent-')) {
+        const current = records.get('parent');
+        records.set('parent', { ...current, ...(scenario === 'parent-closed'
+          ? { state: 'closed' } : scenario === 'parent-owner-changed'
+          ? { parent: 'different-parent' } : { installationGeneration: 'different-generation' }) });
+      }
+      if (scenario === 'intent-closed')
+        check(await intents.close(intent.id, intent, intent.parentToken), 'Concurrent intent closure failed');
       paused.release();
       const response = await bounded(pending);
       check(response, 'Controller did not handle content request');
@@ -134,6 +151,10 @@ window.runConsumptionRace = async () => {
     }
   }
   return results;
+}
+window.runParentConsumptionRace = () => runRace(true);
+window.runConsumptionRace = async () => {
+  return runRace(false);
 };`,
   },
   bundle: true,
@@ -161,7 +182,12 @@ const evidence = {
   fixtureSHA256: createHash('sha256').update(script).digest('hex'),
   scope:
     'Actual document controller post-consumption revalidation with real IndexedDB; simulated client identities and in-memory context storage',
-  browsers: [] as { name: string; version: string; results: ConsumptionResult[] }[],
+  browsers: [] as {
+    name: string;
+    version: string;
+    results: ConsumptionResult[];
+    parentResults: ConsumptionResult[];
+  }[],
 };
 try {
   for (const [name, engine] of Object.entries({ chromium, firefox })) {
@@ -182,7 +208,22 @@ try {
           assert.equal(result.body, '');
         }
       }
-      evidence.browsers.push({ name, version: browser.version(), results });
+      const parentResults = await page.evaluate(() => window.runParentConsumptionRace());
+      assert.equal(parentResults.length, 8);
+      for (const result of parentResults) {
+        assert.equal(result.consumedBeforeMutation, true);
+        assert(result.validations >= 2);
+        assert.equal(result.accepted, result.scenario === 'unchanged');
+        if (result.accepted)
+          assert.equal(JSON.parse(result.body).text, '<p>Admitted private document</p>');
+        else assert.equal(result.body, '');
+      }
+      evidence.browsers.push({
+        name,
+        version: browser.version(),
+        results,
+        parentResults,
+      });
       console.log(
         `${name}: unchanged content succeeds; post-consume close/owner/generation changes refused`,
       );

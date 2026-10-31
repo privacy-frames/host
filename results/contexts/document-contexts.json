@@ -1,9 +1,9 @@
 {
   "provenance": {
-    "capturedAt": "2026-10-31T17:46:29.247Z",
-    "revision": "67cb4bce0cb8def781e3d1f565f46183d8dea3c4",
+    "capturedAt": "2026-10-31T18:34:06.167Z",
+    "revision": "f680d8efa24b2f483d738067534a522fc816fe54",
     "dirty": true,
-    "sourceSHA256": "d733fdf63a19f80177d1875f89ee7374cb0f7833a36a44f7fb45cd1e961f708c",
+    "sourceSHA256": "7c2c01b313e3da427127d1c1a8fab0d239ec05e1b73c03573df76216c9c385b8",
     "runner": "test/document-contexts.ts",
     "runnerSHA256": "45b6c97c15df415b4500966a11a26becc2d2b120d8b53fa94f41b8a519c6405d",
     "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
@@ -16,13 +16,13 @@
       "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-manager/sw.js": "01ff219780a71e1448e9c60542aa2fa54cf574d713b53c4cef3ba3c078f06c89",
+      "dist-manager/sw.js": "656b59751ccda47162e24e696556e3a8d94d6f078a88e0dc100f9eca53c475ce",
       "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
       "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
       "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
-      "dist-runtime/document-guard.js": "3f789788bedc0069fc153ccbcf37f4557e9a0a13650067b86efc8e1cdcbd7fa9",
-      "dist-runtime/guard.js": "707fc3c42ad36cc2be9a9ad498c9eb1f05f3d97a84b36cacbeee77e3fca6034a",
+      "dist-runtime/document-guard.js": "c50deddbbc7b5f24aeefe69b566642d86eabb9b0542cfc7b8625ff07f069e856",
+      "dist-runtime/guard.js": "443b4f119a47f667c89b57fd8043920bc6434e752a6b086f6f6a0ecb63d5ef10",
       "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
       "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
       "dist-runtime/publisher-worker-guard.js": "b1ac13860c6732e441d63d58e090baea04b18288ab3f890ade0f55d22c22ebc0",
@@ -30,7 +30,7 @@
       "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
       "dist-runtime/shared-worker-guard.js": "96a3c1086f9de09a02a7ea335d1898513563bf7f09b078de23cc1402f1704e2a",
-      "dist-runtime/sw.js": "ae630f77741bd6ca742d467f4cafc819db577cddff87ebd09affe830a9ccf50e",
+      "dist-runtime/sw.js": "e10c1ffc02c6ae7e021e99b1efbcbd02b1d6bf34d67eca3c1e047063357e9bf4",
       "dist-runtime/worker-guard.js": "ccd59c5ea899bf225c37c7cfaf4677d1c648d83e132ec62e98ec91877ad2d89f",
       "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
       "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -114,6 +114,27 @@
               },
               {
                 "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
                 "documentNull": true,
                 "windowNull": true,
                 "svgDocumentNull": true,
@@ -298,6 +319,20 @@
                 "windowNull": true,
                 "svgDocumentNull": true,
                 "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
               }
             ],
             "result": {
@@ -392,6 +427,27 @@
               },
               {
                 "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
                 "documentNull": true,
                 "windowNull": true,
                 "svgDocumentNull": true,
@@ -592,6 +648,27 @@
                 "windowNull": true,
                 "svgDocumentNull": true,
                 "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
               }
             ],
             "result": {
@@ -640,6 +717,13 @@
               "rootWindowHidden": true
             },
             "pendingStates": [
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
               {
                 "privateRoot": false,
                 "documentNull": true,
@@ -845,6 +929,20 @@
               },
               {
                 "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
                 "documentNull": true,
                 "windowNull": true,
                 "svgDocumentNull": true,
@@ -1109,7 +1207,28 @@
                 "rootWindowHidden": true
               },
               {
-                "privateRoot": false,
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
                 "documentNull": true,
                 "windowNull": true,
                 "svgDocumentNull": true,
@@ -1296,6 +1415,20 @@
                 "windowNull": true,
                 "svgDocumentNull": true,
                 "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
               }
             ],
             "result": {
@@ -1404,102 +1537,101 @@
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/b5b3641a-6106-4112-9be7-51cb1b6de211/document.html",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/b5b3641a-6106-4112-9be7-51cb1b6de211/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/e8324253-c657-4457-822c-5d78f9ee8398/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/e8324253-c657-4457-822c-5d78f9ee8398/document.html",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=b5b3641a-6106-4112-9be7-51cb1b6de211",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=b5b3641a-6106-4112-9be7-51cb1b6de211",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/a15b5e29-a7c9-4e19-9373-3ad288b81008/document.html",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/a15b5e29-a7c9-4e19-9373-3ad288b81008/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=e8324253-c657-4457-822c-5d78f9ee8398",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=e8324253-c657-4457-822c-5d78f9ee8398",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/95fdc1dc-37da-4fd4-8ed7-3c55d5f586a8/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/95fdc1dc-37da-4fd4-8ed7-3c55d5f586a8/document.html",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=a15b5e29-a7c9-4e19-9373-3ad288b81008",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=a15b5e29-a7c9-4e19-9373-3ad288b81008",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/fd9c0e14-6fc5-4ee5-a5f6-3aa159a2ccac/document.svg",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/fd9c0e14-6fc5-4ee5-a5f6-3aa159a2ccac/document.svg",
+        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=95fdc1dc-37da-4fd4-8ed7-3c55d5f586a8",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=95fdc1dc-37da-4fd4-8ed7-3c55d5f586a8",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/43e5f8bd-e944-4ff0-a728-5bd26da43a2f/document.svg",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/43e5f8bd-e944-4ff0-a728-5bd26da43a2f/document.svg",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=fd9c0e14-6fc5-4ee5-a5f6-3aa159a2ccac",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=fd9c0e14-6fc5-4ee5-a5f6-3aa159a2ccac",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/5ab2de9d-efa1-450d-9146-f2712e9f3867/document.html",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/5ab2de9d-efa1-450d-9146-f2712e9f3867/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=43e5f8bd-e944-4ff0-a728-5bd26da43a2f",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=43e5f8bd-e944-4ff0-a728-5bd26da43a2f",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/4d836b18-784b-4ba2-9824-6a08b9082673/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/4d836b18-784b-4ba2-9824-6a08b9082673/document.html",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=5ab2de9d-efa1-450d-9146-f2712e9f3867",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=5ab2de9d-efa1-450d-9146-f2712e9f3867",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/54635e8a-7159-4c0a-a644-ed74fea81104/document.svg",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/54635e8a-7159-4c0a-a644-ed74fea81104/document.svg",
+        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=4d836b18-784b-4ba2-9824-6a08b9082673",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=4d836b18-784b-4ba2-9824-6a08b9082673",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/989f29fc-0989-4ada-b8a8-538088dff670/document.svg",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/989f29fc-0989-4ada-b8a8-538088dff670/document.svg",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=54635e8a-7159-4c0a-a644-ed74fea81104",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=54635e8a-7159-4c0a-a644-ed74fea81104",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/0793e41d-2a5d-40bc-b6d0-a448e2c9f54d/document.html",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/0793e41d-2a5d-40bc-b6d0-a448e2c9f54d/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=989f29fc-0989-4ada-b8a8-538088dff670",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=989f29fc-0989-4ada-b8a8-538088dff670",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/6768e022-f940-43fc-a3dc-1f3554c74a15/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/6768e022-f940-43fc-a3dc-1f3554c74a15/document.html",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=0793e41d-2a5d-40bc-b6d0-a448e2c9f54d",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=0793e41d-2a5d-40bc-b6d0-a448e2c9f54d",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/91830938-9785-4364-969d-739a7a1e46c9/document.html",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/91830938-9785-4364-969d-739a7a1e46c9/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=6768e022-f940-43fc-a3dc-1f3554c74a15",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=6768e022-f940-43fc-a3dc-1f3554c74a15",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/4627eab4-4016-4808-bb1f-cb76e1b34637/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/4627eab4-4016-4808-bb1f-cb76e1b34637/document.html",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=91830938-9785-4364-969d-739a7a1e46c9",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=91830938-9785-4364-969d-739a7a1e46c9",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/bc1fba10-fbd6-4995-8f35-4cbe2b885ab8/document.html",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/bc1fba10-fbd6-4995-8f35-4cbe2b885ab8/document.html",
-        "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
-        "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
-        "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=bc1fba10-fbd6-4995-8f35-4cbe2b885ab8",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=bc1fba10-fbd6-4995-8f35-4cbe2b885ab8",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/146a0a31-ce8c-439a-bcee-bfbec0aa1319/document.html",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/146a0a31-ce8c-439a-bcee-bfbec0aa1319/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=4627eab4-4016-4808-bb1f-cb76e1b34637",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=4627eab4-4016-4808-bb1f-cb76e1b34637",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/6c75a31a-0783-4fb3-a020-74c8562bd577/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/6c75a31a-0783-4fb3-a020-74c8562bd577/document.html",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=146a0a31-ce8c-439a-bcee-bfbec0aa1319",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=146a0a31-ce8c-439a-bcee-bfbec0aa1319",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/45ec5110-3e02-44fd-a9a3-89af959f23b3/document.html",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/45ec5110-3e02-44fd-a9a3-89af959f23b3/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=6c75a31a-0783-4fb3-a020-74c8562bd577",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=6c75a31a-0783-4fb3-a020-74c8562bd577",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/fdb71f46-40b1-43fe-ac83-72661f8e71a1/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/fdb71f46-40b1-43fe-ac83-72661f8e71a1/document.html",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=45ec5110-3e02-44fd-a9a3-89af959f23b3",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=45ec5110-3e02-44fd-a9a3-89af959f23b3",
-        "requestfailed http://127.0.0.1:4350/static-documents/child.html net::ERR_ABORTED",
+        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=fdb71f46-40b1-43fe-ac83-72661f8e71a1",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=fdb71f46-40b1-43fe-ac83-72661f8e71a1",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/b7375feb-0814-4c17-aa95-6b46c47261bd/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/b7375feb-0814-4c17-aa95-6b46c47261bd/document.html",
+        "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
+        "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
+        "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
+        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=b7375feb-0814-4c17-aa95-6b46c47261bd",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=b7375feb-0814-4c17-aa95-6b46c47261bd",
         "requestfailed http://127.0.0.1:4350/static-documents/child.js net::ERR_ABORTED",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/07355dc8-3a92-4ded-af2c-c5859a9ca7b2/document.html",
-        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/f804cadd-6057-4b4d-ae0b-4f11549fc3ee/document.svg",
-        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/3ad8285d-62b3-46fb-81ad-32d071f46c73/document.html",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/07355dc8-3a92-4ded-af2c-c5859a9ca7b2/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/00104e52-f7e5-4ad0-8d0c-25afbde0794b/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/4c149e38-da42-4fab-83c6-3cbb0337e298/document.svg",
+        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/08048e9b-7899-4488-a871-5d2283811745/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/00104e52-f7e5-4ad0-8d0c-25afbde0794b/document.html",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/f804cadd-6057-4b4d-ae0b-4f11549fc3ee/document.svg",
-        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=07355dc8-3a92-4ded-af2c-c5859a9ca7b2",
+        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=00104e52-f7e5-4ad0-8d0c-25afbde0794b",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/4c149e38-da42-4fab-83c6-3cbb0337e298/document.svg",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/08048e9b-7899-4488-a871-5d2283811745/document.html",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=f804cadd-6057-4b4d-ae0b-4f11549fc3ee",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/3ad8285d-62b3-46fb-81ad-32d071f46c73/document.html",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=07355dc8-3a92-4ded-af2c-c5859a9ca7b2",
+        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=4c149e38-da42-4fab-83c6-3cbb0337e298",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=00104e52-f7e5-4ad0-8d0c-25afbde0794b",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=3ad8285d-62b3-46fb-81ad-32d071f46c73",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=f804cadd-6057-4b4d-ae0b-4f11549fc3ee",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=3ad8285d-62b3-46fb-81ad-32d071f46c73"
+        "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js?context=08048e9b-7899-4488-a871-5d2283811745",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=4c149e38-da42-4fab-83c6-3cbb0337e298",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js?context=08048e9b-7899-4488-a871-5d2283811745"
       ],
       "requests": [],
       "connections": [],
@@ -1685,6 +1817,55 @@
                 "windowNull": true,
                 "svgDocumentNull": true,
                 "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
               }
             ],
             "result": {
@@ -1769,7 +1950,28 @@
                 "rootWindowHidden": true
               },
               {
-                "privateRoot": false,
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
                 "documentNull": true,
                 "windowNull": true,
                 "svgDocumentNull": true,
@@ -1966,6 +2168,34 @@
               },
               {
                 "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
                 "documentNull": true,
                 "windowNull": true,
                 "svgDocumentNull": true,
@@ -2285,6 +2515,34 @@
                 "windowNull": true,
                 "svgDocumentNull": true,
                 "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
               }
             ],
             "result": {
@@ -2333,6 +2591,13 @@
               "rootWindowHidden": true
             },
             "pendingStates": [
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
               {
                 "privateRoot": false,
                 "documentNull": true,
@@ -2689,6 +2954,41 @@
                 "windowNull": true,
                 "svgDocumentNull": true,
                 "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
               }
             ],
             "result": {
@@ -2893,7 +3193,28 @@
                 "rootWindowHidden": true
               },
               {
-                "privateRoot": false,
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
                 "documentNull": true,
                 "windowNull": true,
                 "svgDocumentNull": true,
@@ -3185,6 +3506,41 @@
                 "windowNull": true,
                 "svgDocumentNull": true,
                 "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
               }
             ],
             "result": {
@@ -3248,19 +3604,6 @@
                 "svg": true
               },
               {
-                "id": "static-inline",
-                "host": {
-                  "version": 1,
-                  "application": "static-documents-c0c802e3746c807150ff74a949d6cf00ccdb7520ba1433ad97548088e12cb4df",
-                  "publisher": "http://127.0.0.1:4350",
-                  "mode": "network-isolated"
-                },
-                "shared": "same-app-value",
-                "contentType": "text/html",
-                "svg": null,
-                "kind": "static-srcdoc"
-              },
-              {
                 "id": "static-installed",
                 "host": {
                   "version": 1,
@@ -3272,6 +3615,19 @@
                 "contentType": "text/html",
                 "svg": null,
                 "kind": "installed"
+              },
+              {
+                "id": "static-inline",
+                "host": {
+                  "version": 1,
+                  "application": "static-documents-c0c802e3746c807150ff74a949d6cf00ccdb7520ba1433ad97548088e12cb4df",
+                  "publisher": "http://127.0.0.1:4350",
+                  "mode": "network-isolated"
+                },
+                "shared": "same-app-value",
+                "contentType": "text/html",
+                "svg": null,
+                "kind": "static-srcdoc"
               }
             ],
             "windowLoadCount": 3,
@@ -3284,80 +3640,80 @@
         }
       ],
       "logs": [
-        "CONSOLE error [JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 18078}]",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/e384107b-39f8-4297-88d9-9ee85a8a42bd/document.html",
+        "CONSOLE error [JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 18097}]",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/0ee01a07-6e6c-4f1e-a3e6-1bf7d2af5d91/document.html",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/e384107b-39f8-4297-88d9-9ee85a8a42bd/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/0ee01a07-6e6c-4f1e-a3e6-1bf7d2af5d91/document.html",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/\" line: 0}]",
         "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js",
         "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/71c75952-4d86-4f8a-938d-9b6f3a4aa3b8/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/4acd3580-aeb8-456e-9be3-4029d76ff09b/document.html",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/71c75952-4d86-4f8a-938d-9b6f3a4aa3b8/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/4acd3580-aeb8-456e-9be3-4029d76ff09b/document.html",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/\" line: 0}]",
         "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js",
         "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/e61327e7-4765-4c2c-a1b3-a9e3932dae05/document.svg",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/5fdb60b0-9aff-4e9e-81a7-80fb90efe35b/document.svg",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/e61327e7-4765-4c2c-a1b3-a9e3932dae05/document.svg",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/5fdb60b0-9aff-4e9e-81a7-80fb90efe35b/document.svg",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/\" line: 0}]",
         "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js",
         "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/9cf24a15-874c-4d92-a1fd-23caab0bb165/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/b1235975-2dc2-44c3-a4c3-ade774a397c3/document.html",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/9cf24a15-874c-4d92-a1fd-23caab0bb165/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/b1235975-2dc2-44c3-a4c3-ade774a397c3/document.html",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/\" line: 0}]",
         "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js",
         "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/01e9518f-6415-4bed-ae9e-9f15cee49c9f/document.svg",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/ba75dfc3-ae0d-479a-aa49-7924d70f7b2d/document.svg",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/01e9518f-6415-4bed-ae9e-9f15cee49c9f/document.svg",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/ba75dfc3-ae0d-479a-aa49-7924d70f7b2d/document.svg",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/\" line: 0}]",
         "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js",
         "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/c40b7be6-04a6-464f-8937-a5163d2891a1/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/e1c17ac0-ffcd-4b8a-b0aa-b16c1bed52d4/document.html",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/c40b7be6-04a6-464f-8937-a5163d2891a1/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/e1c17ac0-ffcd-4b8a-b0aa-b16c1bed52d4/document.html",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/\" line: 0}]",
         "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js",
         "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/4a54d870-e558-4f24-a662-e57fda802e90/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/34b5b2b7-3dbb-4f24-9b1a-cc1339bff774/document.html",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/4a54d870-e558-4f24-a662-e57fda802e90/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/34b5b2b7-3dbb-4f24-9b1a-cc1339bff774/document.html",
         "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js",
         "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/4a199f75-142d-4c08-9772-20fb0355e315/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/fb2604ae-2be4-4483-beec-9917fcdae4fc/document.html",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/4a199f75-142d-4c08-9772-20fb0355e315/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/fb2604ae-2be4-4483-beec-9917fcdae4fc/document.html",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/\" line: 0}]",
         "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js",
         "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/4407ecb8-9228-44ad-ba13-501b1e973a32/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/837ed744-dbd4-42ce-becb-cc2265effbd5/document.html",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/4407ecb8-9228-44ad-ba13-501b1e973a32/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/837ed744-dbd4-42ce-becb-cc2265effbd5/document.html",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/\" line: 0}]",
         "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js",
         "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/b29eb48e-dd2e-4d0d-b590-aeb200a4018a/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/5e25ec82-220d-4874-9a9b-8fd92392c031/document.html",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/b29eb48e-dd2e-4d0d-b590-aeb200a4018a/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/5e25ec82-220d-4874-9a9b-8fd92392c031/document.html",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/\" line: 0}]",
         "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js",
         "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js",
-        "CONSOLE error [JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 18078}]",
-        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/36e1ccc0-98f5-4cc3-87ff-ddf0436b9017/document.html",
+        "CONSOLE error [JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 18097}]",
+        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/6d6033af-48ef-4ec5-8f7c-35af92746067/document.html",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/36e1ccc0-98f5-4cc3-87ff-ddf0436b9017/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/6d6033af-48ef-4ec5-8f7c-35af92746067/document.html",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/\" line: 0}]",
-        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/651813f5-3652-4309-bb70-5a846df0069e/document.svg",
+        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/2e715353-5cbc-4ffc-ad35-2b6f8465422b/document.svg",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/651813f5-3652-4309-bb70-5a846df0069e/document.svg",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/2e715353-5cbc-4ffc-ad35-2b6f8465422b/document.svg",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/\" line: 0}]",
-        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/433af9bd-9a64-4a07-8f80-63a30704ad1d/document.html",
-        "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
         "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js",
         "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/433af9bd-9a64-4a07-8f80-63a30704ad1d/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/6a9381df-f03b-4136-a9af-2ff3c1d94ca4/document.html",
+        "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/6a9381df-f03b-4136-a9af-2ff3c1d94ca4/document.html",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/\" line: 0}]",
         "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js",
         "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js",

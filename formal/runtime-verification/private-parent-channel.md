@@ -2,9 +2,10 @@
 
 Host code in an owning parent can hold the native controller handle while a child
 uses a private message port. The shared RPC client now serves production
-controller requests and the new parent-channel primitive. Production document
-and worker startup still use their existing bootstraps; the parent primitive is
-currently exercised by native protocol tests and the local-document experiment.
+controller requests and the parent-channel primitive. Production document and
+popup guards now obtain configuration and content through their owning parent.
+Native HTTP shells and guard scripts remain in use; the local-document experiment
+is a separate transport comparison rather than the production bootstrap.
 
 ## Endpoint ownership
 
@@ -80,16 +81,42 @@ and fresh/forced-stale Firefox. Successful local reads do not suppress the
 Firefox covering-scope update. Registration lifetime remains a separate C4
 obligation.
 
-## Integration obligations
+## Production document integration
+
+`document-parent.ts` installs a handler shared by the document and popup
+factories. It permits only configuration and content, closes unexpected
+transferred ports, and supplies the factory's stored child identifier and parent
+token. Packet-supplied identities and payloads cannot select another grant.
+
+Each factory registers the expected native Window before starting its trusted
+document bootstrap. The document factory ties the registration to its private
+generation identity and closes it on cancellation. The popup factory ties it to
+its uncanceled record and closes it on retirement. Static imports install the
+global receiver before publisher listeners, including when the first child is
+requested after application startup.
+
+The controller requires the actual owning parent, matching installation and
+generation, parent token and a bound native child. The child read/consume path
+remains shared. After it returns, the controller rechecks the intent, child and
+parent authority. The child closes its bootstrap client after content delivery
+or a startup failure. Factory cancellation closes the parent's server; client
+closure itself does not cancel remote computation.
+
+Actual installed HTML/SVG and nested-document tests exercise this path. The
+separate built-controller fixture challenges native client authorization and
+single consumption; the bounded real-IndexedDB race fixture challenges authority
+changes during consumption. Neither establishes the full factory ownership proof.
+
+## Remaining obligations
 
 The context factory must establish the expected Window, install the receiver
 before application execution, assign a fresh key for each lifetime and close or
 invalidate the registration on cancellation. The native protocol fixture does
 not prove those caller obligations or complete private-state ownership.
 
-A production handler must constrain operations to the child's installation and
-generation, validate data at admission, and revalidate authority around pending
-reads. The fixed-resource relay does not implement that admission protocol.
+Verify the production handler's admission and revalidation contracts through
+its callers. The separate fixed-resource relay experiment does not implement
+that admission protocol.
 DOM/CSS resources, module graphs, context bootstraps and later registrations
 still need delivery mechanisms that preserve the no-request policy. The complete
 runtime confinement claim remains open.

@@ -1,11 +1,11 @@
 {
   "provenance": {
-    "capturedAt": "2026-10-31T16:21:53.666Z",
-    "revision": "1d46fad8bdca15c3f8c7ee3fc2fb6fb1d1868de6",
+    "capturedAt": "2026-10-31T18:32:52.192Z",
+    "revision": "f680d8efa24b2f483d738067534a522fc816fe54",
     "dirty": true,
-    "sourceSHA256": "e1fb6c49e53b22348d18df55524dcbf082c0b36ef34bf53d3981a92d55f8c3ee",
+    "sourceSHA256": "7c2c01b313e3da427127d1c1a8fab0d239ec05e1b73c03573df76216c9c385b8",
     "runner": "test/document-consumption-race.ts",
-    "runnerSHA256": "127bf11bd08401feb81fa54e74e81f4d5e1756fb03674ed555657006ac2bc4a0",
+    "runnerSHA256": "55b63ad48cf3221a6676764e541ecd68d25b2956f3134c0af1a2624241603b6d",
     "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
     "artifacts": {
       "dist-manager/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -16,13 +16,13 @@
       "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-manager/sw.js": "0db0964099863d7982a9655741e8165bc4e6e08e3e3028f892a68456b0f7b4f7",
+      "dist-manager/sw.js": "656b59751ccda47162e24e696556e3a8d94d6f078a88e0dc100f9eca53c475ce",
       "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
       "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
       "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
-      "dist-runtime/document-guard.js": "5a91a4de0e40dd27641e64663a36c98795cfbff31106875bbd719c416d5e48fb",
-      "dist-runtime/guard.js": "a421b358416f7b61f82b2500642ee85f1769bd98ff113402fc4b5fbf327cc3b3",
+      "dist-runtime/document-guard.js": "c50deddbbc7b5f24aeefe69b566642d86eabb9b0542cfc7b8625ff07f069e856",
+      "dist-runtime/guard.js": "443b4f119a47f667c89b57fd8043920bc6434e752a6b086f6f6a0ecb63d5ef10",
       "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
       "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
       "dist-runtime/publisher-worker-guard.js": "b1ac13860c6732e441d63d58e090baea04b18288ab3f890ade0f55d22c22ebc0",
@@ -30,7 +30,7 @@
       "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
       "dist-runtime/shared-worker-guard.js": "96a3c1086f9de09a02a7ea335d1898513563bf7f09b078de23cc1402f1704e2a",
-      "dist-runtime/sw.js": "763aa46ec51461bf8662e25823226003447dbcabfdd76f39f5e7627c2b31c2c8",
+      "dist-runtime/sw.js": "e10c1ffc02c6ae7e021e99b1efbcbd02b1d6bf34d67eca3c1e047063357e9bf4",
       "dist-runtime/worker-guard.js": "ccd59c5ea899bf225c37c7cfaf4677d1c648d83e132ec62e98ec91877ad2d89f",
       "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
       "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -39,7 +39,7 @@
       "dist-installation/installation.js": "6cd0a3f3f4494dee2db059f3b1a5feb62017a39399a22e2d3774d0319fa1e3f3"
     }
   },
-  "fixtureSHA256": "5ed87e49603d5286a5a3dcbdf7ce8a12f976074458c6d8653e53fd4bf598e902",
+  "fixtureSHA256": "aabd29378e1fe53214bf4bb55a72329fefd92f9b93232ebceb3be08d79385a51",
   "scope": "Actual document controller post-consumption revalidation with real IndexedDB; simulated client identities and in-memory context storage",
   "browsers": [
     {
@@ -74,6 +74,64 @@
           "accepted": false,
           "body": ""
         }
+      ],
+      "parentResults": [
+        {
+          "scenario": "unchanged",
+          "consumedBeforeMutation": true,
+          "validations": 4,
+          "accepted": true,
+          "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
+        },
+        {
+          "scenario": "closed",
+          "consumedBeforeMutation": true,
+          "validations": 2,
+          "accepted": false,
+          "body": ""
+        },
+        {
+          "scenario": "owner-changed",
+          "consumedBeforeMutation": true,
+          "validations": 2,
+          "accepted": false,
+          "body": ""
+        },
+        {
+          "scenario": "generation-changed",
+          "consumedBeforeMutation": true,
+          "validations": 2,
+          "accepted": false,
+          "body": ""
+        },
+        {
+          "scenario": "parent-closed",
+          "consumedBeforeMutation": true,
+          "validations": 4,
+          "accepted": false,
+          "body": ""
+        },
+        {
+          "scenario": "parent-owner-changed",
+          "consumedBeforeMutation": true,
+          "validations": 4,
+          "accepted": false,
+          "body": ""
+        },
+        {
+          "scenario": "parent-generation-changed",
+          "consumedBeforeMutation": true,
+          "validations": 4,
+          "accepted": false,
+          "body": ""
+        },
+        {
+          "scenario": "intent-closed",
+          "consumedBeforeMutation": true,
+          "validations": 2,
+          "accepted": false,
+          "body": ""
+        }
       ]
     },
     {
@@ -105,6 +163,64 @@
           "scenario": "generation-changed",
           "consumedBeforeMutation": true,
           "validations": 1,
+          "accepted": false,
+          "body": ""
+        }
+      ],
+      "parentResults": [
+        {
+          "scenario": "unchanged",
+          "consumedBeforeMutation": true,
+          "validations": 4,
+          "accepted": true,
+          "body": "{\"kind\":\"html\",\"text\":\"<p>Admitted private document</p>\",\"sourceURL\":\"https://publisher.invalid/\",\"aliases\":[]}"
+        },
+        {
+          "scenario": "closed",
+          "consumedBeforeMutation": true,
+          "validations": 2,
+          "accepted": false,
+          "body": ""
+        },
+        {
+          "scenario": "owner-changed",
+          "consumedBeforeMutation": true,
+          "validations": 2,
+          "accepted": false,
+          "body": ""
+        },
+        {
+          "scenario": "generation-changed",
+          "consumedBeforeMutation": true,
+          "validations": 2,
+          "accepted": false,
+          "body": ""
+        },
+        {
+          "scenario": "parent-closed",
+          "consumedBeforeMutation": true,
+          "validations": 4,
+          "accepted": false,
+          "body": ""
+        },
+        {
+          "scenario": "parent-owner-changed",
+          "consumedBeforeMutation": true,
+          "validations": 4,
+          "accepted": false,
+          "body": ""
+        },
+        {
+          "scenario": "parent-generation-changed",
+          "consumedBeforeMutation": true,
+          "validations": 4,
+          "accepted": false,
+          "body": ""
+        },
+        {
+          "scenario": "intent-closed",
+          "consumedBeforeMutation": true,
+          "validations": 2,
           "accepted": false,
           "body": ""
         }

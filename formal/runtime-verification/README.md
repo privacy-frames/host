@@ -106,8 +106,9 @@ arguments even where the abstract publication contract is shared.
   that the existing controller client does not work uniformly in unregistered
   local children. The [private parent-channel primitive](private-parent-channel.md)
   now has native sender, closure, prototype-mutation and actual late-receiver
-  fault controls. Production context admission and bootstrap integration remain
-  open.
+  fault controls. Document and popup configuration/content now use the owning
+  parent channel with native-client and generation admission checks. Local
+  context bootstraps and the complete ownership/lifecycle proof remain open.
 - Stage 5: root content now uses an authenticated private controller request; the
   publisher client shares its captured transport. See the
   [root content integration](root-content-broker.md). Window fetch/cache downloads
@@ -124,6 +125,9 @@ arguments even where the abstract publication contract is shared.
 The complete runtime claim remains unestablished.
 
 ## Execution order for the remaining work
+
+The [completion plan](completion-plan.md) expands this sequence into reviewable
+implementation, proof, browser-coverage and release gates from revision `f680d8e`.
 
 The eight stages above describe the argument we need. The sequence below orders
 the remaining implementation and verification work. Passing one gate does not

@@ -243,6 +243,48 @@ export function createDocumentController(options: DocumentControllerOptions) {
       if (closed) await contexts.closeChild(actual.client.id, app.id, intent.id);
       return internalRecord({ closed });
     }
+    if (operation === 'child-configuration' || operation === 'child-content') {
+      if (
+        intent.parentClient !== actual.client.id ||
+        !('parentToken' in body) ||
+        body.parentToken !== intent.parentToken ||
+        !intent.childClient ||
+        intent.state !== 'bound'
+      )
+        throw new Error('Document parent not authorized');
+      const child = await options.client(intent.childClient);
+      const childIdentity = child && (await contexts.resolve(child));
+      if (
+        !child ||
+        child.type !== 'window' ||
+        childIdentity?.id !== intent.id ||
+        childIdentity.kind !== 'window' ||
+        childIdentity.parent !== actual.client.id ||
+        childIdentity.application !== app.id ||
+        childIdentity.installationGeneration !== app.generation
+      )
+        throw new Error('Document child binding unavailable');
+      await current();
+      const result = await request(
+        child.id,
+        operation === 'child-configuration' ? 'configuration' : 'content',
+        JSON.stringify(internalRecord({ id: intent.id })),
+      );
+      const latest = await intents.inspect(intent.id);
+      if (
+        !latest ||
+        latest.state === 'closed' ||
+        latest.childClient !== child.id ||
+        latest.parentClient !== actual.client.id ||
+        latest.parentToken !== intent.parentToken ||
+        latest.application !== app.id ||
+        latest.installationGeneration !== app.generation ||
+        !(await contexts.isCurrent(child, childIdentity))
+      )
+        throw new Error('Document child authority changed');
+      await current();
+      return result;
+    }
     if (identity.id !== intent.id || intent.childClient !== actual.client.id)
       throw new Error('Document child not authorized');
     const key = internalRecord({ id: intent.id, nonce: intent.nonce });

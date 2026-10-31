@@ -15,6 +15,7 @@ interface Outcome {
 declare global {
   interface Window {
     configureChannel(frame: string, key: string): void;
+    configureDocumentChannel(): void;
     channelAttempt(key: string, parentOrigin: string): Promise<Outcome>;
     channelRead(message: object): Promise<Outcome>;
     captureProbe(): Promise<unknown>;
@@ -44,6 +45,7 @@ const bundle = await build({
     loader: 'ts',
     contents: `
       import { acceptChildChannel, connectParentChannel } from './src/runtime/contexts/parent-channel.ts';
+      import { serveDocumentParent } from './src/runtime/contexts/document-parent.ts';
       import { internalRecord,ownDescriptor } from './src/shared/primordials.ts';
       const apply=Reflect.apply,define=Object.defineProperty;
       const frameWindow=ownDescriptor(HTMLIFrameElement.prototype,'contentWindow').get;
@@ -92,6 +94,20 @@ const bundle = await build({
               await new Promise(resolve=>{state.release=resolve;});
             }
             return internalRecord({value:42});
+          }});
+        connection=state;
+      };
+      window.configureDocumentChannel=()=>{
+        if(connection){connection.current=false;connection.server.close();}
+        const frame=document.getElementById('victim');
+        const state=internalRecord({current:true,handled:0,held:false});
+        state.child=()=>apply(frameWindow,frame,[]);
+        state.server=serveDocumentParent({child:state.child,origin:location.origin,
+          registration:{id:'document-grant',parentToken:'fixed-parent-token'},
+          isCurrent:()=>state.current,
+          documentControl:async(operation,payload)=>{
+            state.handled++;
+            return {operation,payload};
           }});
         connection=state;
       };
@@ -372,6 +388,49 @@ try {
         );
         assert.deepEqual(traffic.slice(start), []);
       }
+      await page.evaluate(() => window.configureDocumentChannel());
+      assert.equal(
+        (
+          await victim.evaluate(
+            (origin) => window.channelAttempt('document-grant', origin),
+            origin,
+          )
+        ).ok,
+        true,
+      );
+      for (const packet of [
+        { type: 'other', operation: 'content' },
+        { type: 'privacy-document-control', operation: 'create' },
+        { type: 'privacy-document-control', operation: 'child-content' },
+      ])
+        assert.equal(
+          (await victim.evaluate((packet) => window.channelRead(packet), packet)).ok,
+          false,
+        );
+      for (const operation of ['configuration', 'content']) {
+        assert.deepEqual(
+          await victim.evaluate(
+            (operation) =>
+              window.channelRead({
+                type: 'privacy-document-control',
+                operation,
+                payload: JSON.stringify({ id: 'different-child', parentToken: 'forged' }),
+                clientId: 'different-client',
+                application: 'different-installation',
+              }),
+            operation,
+          ),
+          {
+            ok: true,
+            value: {
+              operation: 'child-' + operation,
+              payload: { id: 'document-grant', parentToken: 'fixed-parent-token' },
+            },
+          },
+        );
+      }
+      assert.equal((await page.evaluate(() => window.connectionState())).handled, 2);
+      await page.evaluate(() => window.closeConnection());
       rows.push({
         browser: engine.name(),
         version: browser.version(),
@@ -391,6 +450,8 @@ try {
           'pending-generation-change',
           'closed-read',
           'message-only-no-http',
+          'document-parent-operation-restriction',
+          'document-parent-fixed-grant',
         ],
       });
       console.log(

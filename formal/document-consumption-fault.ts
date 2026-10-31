@@ -19,6 +19,7 @@ interface Result {
 declare global {
   interface Window {
     runConsumptionRace(): Promise<Result[]>;
+    runParentConsumptionRace(): Promise<Result[]>;
   }
 }
 
@@ -31,7 +32,7 @@ const afterStart = existing.split(start)[1];
 assert.equal(afterStart.split(end).length, 2, 'Fixture end anchor changed');
 const fixtureSource = afterStart.split(end)[0] + '\n};';
 
-async function compile(fault: boolean) {
+async function compile(fault: false | 'child' | 'parent') {
   let transformed = 0;
   const plugin: Plugin = {
     name: 'test-only-remove-post-consumption-check',
@@ -40,7 +41,10 @@ async function compile(fault: boolean) {
         { filter: /[/\\]contexts[/\\]document-controller\.ts$/ },
         async ({ path }) => {
           const original = await readFile(path, 'utf8');
-          const check = '    await current();\n    return content.input;';
+          const check =
+            fault === 'parent'
+              ? '      await current();\n      return result;'
+              : '    await current();\n    return content.input;';
           assert.equal(
             original.split(check).length,
             2,
@@ -48,7 +52,10 @@ async function compile(fault: boolean) {
           );
           transformed++;
           return {
-            contents: original.replace(check, '    return content.input;'),
+            contents: original.replace(
+              check,
+              fault === 'parent' ? '      return result;' : '    return content.input;',
+            ),
             loader: 'ts',
           };
         },
@@ -71,17 +78,33 @@ async function compile(fault: boolean) {
   return result.outputFiles[0].contents;
 }
 const normal = await compile(false);
-const fault = await compile(true);
+const fault = await compile('child');
+const parentFault = await compile('parent');
 assert.notDeepEqual(normal, fault, 'Mutation did not change the bundle');
 const hash = (data: Uint8Array) => createHash('sha256').update(data).digest('hex');
 const server = http.createServer((request, reply) => {
   reply.setHeader('Cache-Control', 'no-store');
-  if (request.url === '/normal.js' || request.url === '/fault.js') {
+  if (
+    request.url === '/normal.js' ||
+    request.url === '/fault.js' ||
+    request.url === '/parent-fault.js'
+  ) {
     reply.setHeader('Content-Type', 'text/javascript');
-    reply.end(request.url === '/fault.js' ? fault : normal);
+    reply.end(
+      request.url === '/fault.js'
+        ? fault
+        : request.url === '/parent-fault.js'
+          ? parentFault
+          : normal,
+    );
   } else {
     reply.setHeader('Content-Type', 'text/html');
-    const script = request.url === '/fault' ? 'fault.js' : 'normal.js';
+    const script =
+      request.url === '/fault'
+        ? 'fault.js'
+        : request.url === '/parent-fault'
+          ? 'parent-fault.js'
+          : 'normal.js';
     reply.end(
       `<!doctype html><title>Consumption fault</title><script src="/${script}"></script>`,
     );
@@ -95,7 +118,7 @@ const address = server.address();
 assert(address && typeof address !== 'string');
 const receipt = {
   scope:
-    'Actual document controller and real IndexedDB with simulated browser clients and in-memory context storage. Test-only in-memory mutation deletes exactly the post-consumption isCurrent guard. This is authority/content delivery, not a network-leak demonstration.',
+    'Actual document controller and real IndexedDB with simulated browser clients and in-memory context storage. Separate test-only in-memory mutations delete the child post-consumption guard or parent post-relay guard. This is authority/content delivery, not a network-leak demonstration.',
   revision: execFileSync('git', ['rev-parse', 'HEAD'], {
     cwd: root,
     encoding: 'utf8',
@@ -115,6 +138,7 @@ const receipt = {
   ),
   normalBundleSHA256: hash(normal),
   faultBundleSHA256: hash(fault),
+  parentFaultBundleSHA256: hash(parentFault),
   completed: false,
   browsers: [] as object[],
 };
@@ -123,7 +147,7 @@ try {
     const browser = await engine.launch();
     try {
       const profiles: object[] = [];
-      for (const profile of ['normal', 'fault']) {
+      for (const profile of ['normal', 'fault', 'parent-fault']) {
         const context = await browser.newContext();
         try {
           const page = await context.newPage();
@@ -132,8 +156,8 @@ try {
           assert.equal(results.length, 4);
           for (const item of results) {
             assert.equal(item.consumedBeforeMutation, true);
-            assert.equal(item.validations, profile === 'normal' ? 1 : 0);
-            if (profile === 'normal' && item.scenario !== 'unchanged') {
+            assert.equal(item.validations, profile === 'fault' ? 0 : 1);
+            if (profile !== 'fault' && item.scenario !== 'unchanged') {
               assert.equal(item.accepted, false);
               assert.equal(item.body, '');
             } else {
@@ -144,7 +168,27 @@ try {
               );
             }
           }
-          profiles.push({ profile, results });
+          const parentResults =
+            profile === 'fault'
+              ? []
+              : await page.evaluate(() => window.runParentConsumptionRace());
+          if (profile !== 'fault') {
+            assert.equal(parentResults.length, 8);
+            for (const item of parentResults) {
+              assert.equal(item.consumedBeforeMutation, true);
+              const accepted =
+                item.scenario === 'unchanged' ||
+                (profile === 'parent-fault' && item.scenario.startsWith('parent-'));
+              assert.equal(item.accepted, accepted, `${profile}: ${item.scenario}`);
+              if (accepted)
+                assert.equal(
+                  JSON.parse(item.body).text,
+                  '<p>Admitted private document</p>',
+                );
+              else assert.equal(item.body, '');
+            }
+          }
+          profiles.push({ profile, results, parentResults });
         } finally {
           await context.close();
         }
