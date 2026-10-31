@@ -88,7 +88,7 @@
     "formal/publisher-routes.md": "54b1b7cedf2260ff34e264c8827753b1caea113b533c7473926f428111ef6022",
     "formal/route-review/README.md": "def9f578cf05dbd6ded8f518833ba924d81acfce8a9d43fbd003679987cf77bd",
     "formal/route-review/triage.json": "3e5ab07e2747d1d329f13be013bc5268671c054ee8c5470e9e952b8a72a7e855",
-    "formal/runtime-verification/README.md": "757b7cf64951a3a21bae50ed7fa01f70f7cdd48d19b410cd3f45578c93bf7e73",
+    "formal/runtime-verification/README.md": "e50b02fc4ecfe799c3321bc2150a1ae46cdb44ac50ae14c8d633518407450484",
     "formal/runtime-verification/document-publication-check.ts": "53860e7c9687d3c59499d9effbd30afc9b569144c174a786600af2935e65ef7f",
     "formal/runtime-verification/document-publication-compatibility.json": "1088389b2b01cb451f58858438a5b06127813c31733b91a93b35450fb67fe90c",
     "formal/runtime-verification/document-publication-result.json": "53d60db8b0fd747e4c76aa43b4ac05b7ebca11ba3aaf1d17a6df71ad812dce41",
@@ -183,10 +183,10 @@
     "formal/runtime-verification/service-worker-maintenance.ts": "ebefda0405a24606196232f0435d34f9e501ef1c2f361b3321274389717ef552",
     "formal/runtime-verification/service-worker-maintenance.json": "127491d2af2ccc94efe80f777f99e1b5b3fb035b28161cfb763001189a639d7b",
     "formal/runtime-verification/service-worker-maintenance.md": "380b79595d2c18b52fca86878610f679e1c0d576f49fc8115fca3a8370d0e50c",
-    "formal/runtime-verification/maintenance-backends.ts": "b98ad20d3ad51ae4d943423298205d4b731a4777ee235b11857d7ec37c43d286",
-    "formal/runtime-verification/maintenance-backends.json": "1aa7da28a734f27a427d26787612f0ffacb174d4df8dae1ae0bb85574ba5d845",
-    "formal/runtime-verification/maintenance-unregistered.json": "b9fdc810246b8754155ce81367d726dfc4968768120482f32ed9e811cca0d29b",
-    "formal/runtime-verification/maintenance-backends.md": "8b0d91b5c685cad5e5076f9c3c8d3fcdc878b0b475667a99938cd8d3934f3b85",
+    "formal/runtime-verification/maintenance-backends.ts": "d5ef74168c84fe44ac7fed7f7a27af8ae7f84fd11a26b1becba26eab11100c96",
+    "formal/runtime-verification/maintenance-backends.json": "9dacd2dc53b294581f48f397660fd1fe6b55ae9018065a733c6605fede6d6936",
+    "formal/runtime-verification/maintenance-unregistered.json": "539faf41c6b65ade1e1f13985d8d597169980c9c177767050066a4499a5f374d",
+    "formal/runtime-verification/maintenance-backends.md": "e5731612cea9ab1548cd7ccace71af268b3bb5d735b234e64401af92f289c055",
     "package-lock.json": "4e8c7b0964047f1c9fd3f82956b08d381817fa86fb2f7d47d4a10458dc5e62ed",
     "formal/runtime-verification/webspec-assessment.ts": "a1b1730235d0a1730e8eb6ca646dd4573f6550c3fec6cf92c375e29bcd9a509d",
     "formal/runtime-verification/webspec-assessment.json": "2afb6343fc9523bfcaaf2ce409ee16401dfc65ab9172e0d83549212491fd3ed8",
@@ -1388,7 +1388,7 @@
         },
         {
           "kind": "discovery",
-          "description": "Fifty-one native backend comparisons distinguish HTTP/Blob bootstraps, local documents, cached fetches and message-only operations in Chromium and Firefox, including an explicitly forced stale check in Firefox. Blob workers avoid the initial update but not every later trigger. Unregistration loses new Blob-worker resource interception in Firefox. These fixtures reject both simple repair candidates; they do not verify a production broker or naturally aged registration. The launcher and dependency lock are included as reviewed inputs.",
+          "description": "Sixty native backend comparisons distinguish HTTP/Blob bootstraps, local documents, cached fetches and message-only operations in Chromium and Firefox, including an explicitly forced stale check in Firefox. All nine unregistered native HTTP classic-worker, module-worker and frame bootstrap cases reach the independent server and receive distinctive network responses. Firefox also loses new Blob-worker resource interception after unregistration. Registered HTTP bootstraps provoke update requests; Blob workers avoid that initial trigger but not every later trigger. The fixture retains partial failed receipts and pins launcher and lock inputs. These are native mechanism comparisons, not a production repair or naturally aged registration evidence.",
           "paths": [
             "formal/runtime-verification/maintenance-backends.ts",
             "formal/runtime-verification/maintenance-backends.json",
@@ -1468,7 +1468,8 @@
         "The prefix/queue model now accounts for ancestor and descendant coverage and distinguishes authorization from transmission. Establish its initial no-authorized-private-request condition, actual URL/registration lookup semantics, controller inheritance and native pending-operation correspondence; none follows from absence of the old exact registration.",
         "The eighteen-case local-document experiment finds no uniform child controller transport after unregistration: Chromium Blob documents have no controller, and Firefox local-child requests time out while parent controls succeed. Integrate an authenticated parent transport rather than assuming inherited controller delivery.",
         "Production document and popup configuration/content now use an owning-parent channel with native client and generation admission. Prove private-channel/factory ownership through all callers and complete local bootstrap/resource delivery and registration lifetime; fixed-resource relay success does not establish C4.",
-        "Connect the same-scope queue fence to actual soft-update scheduling and production launch; account for changed-script installation/activation, extended events, other queues and later covering registrations. The prefix model counterexample permits schedules not established for native same-scope API jobs; neither model proves cancellation of prior transmitted requests."
+        "Connect the same-scope queue fence to actual soft-update scheduling and production launch; account for changed-script installation/activation, extended events, other queues and later covering registrations. The prefix model counterexample permits schedules not established for native same-scope API jobs; neither model proves cancellation of prior transmitted requests.",
+        "Native HTTP worker and frame bootstraps reach the server after unregistration in both browsers, in addition to the earlier Firefox Blob-worker resource loss. A retained parent controller cannot justify new-context bootstrap interception; production local bootstrap and resource delivery still require implementation and proof."
       ],
       "disposition": "unverified",
       "control_status": {

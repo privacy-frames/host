@@ -100,7 +100,9 @@ arguments even where the abstract publication contract is shared.
 - Stage 6: a worker-creation experiment reproduces application-dependent update
   requests in both browsers. See the [maintenance finding](service-worker-maintenance.md).
   The [backend comparison](maintenance-backends.md) also finds limitations of
-  Blob bootstraps and unregistration. Browser coverage and a repair remain open.
+  Blob bootstraps and unregistration. After unregistration, native HTTP worker
+  and frame bootstraps also reach the server in both browsers. Browser coverage
+  and a repair remain open.
   A [pinned WebSpec source assessment](webspec-assessment.md) identifies the
   missing registration/update lifecycle for this obligation.
   A [message resource prototype](message-resource-broker.md) passes selected worker

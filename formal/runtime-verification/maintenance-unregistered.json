@@ -1,6 +1,9 @@
 {
   "scope": "Native browser comparison of local context bootstraps, service-worker-mediated resources and message-only operations. The Firefox forced-stale profile uses an explicit testing preference, not natural 24-hour aging. The unregistered variant checks retained delivery and loss of interception. Known positive triggers use up to three fresh samples; omissions are recorded and a group without a positive observation fails. No production runtime repair is claimed.",
-  "runnerSHA256": "b98ad20d3ad51ae4d943423298205d4b731a4777ee235b11857d7ec37c43d286",
+  "completed": true,
+  "browserProfileSHA256": "c161489dfce9c3124474d1416440c9876b0a8fce329d2f09fa16f99af744e3a0",
+  "packageLockSHA256": "4e8c7b0964047f1c9fd3f82956b08d381817fa86fb2f7d47d4a10458dc5e62ed",
+  "runnerSHA256": "d5ef74168c84fe44ac7fed7f7a27af8ae7f84fd11a26b1becba26eab11100c96",
   "observationMilliseconds": 3000,
   "rows": [
     {
@@ -12,8 +15,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "cached",
-      "actionStarted": 1793463782483,
-      "observationEnded": 1793463785486,
+      "actionStarted": 1793479274099,
+      "observationEnded": 1793479277105,
       "requests": []
     },
     {
@@ -25,9 +28,45 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793463788529,
-      "observationEnded": 1793463791531,
+      "actionStarted": 1793479280181,
+      "observationEnded": 1793479283189,
       "requests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStaleCheck": false,
+      "unregistered": true,
+      "operation": "worker",
+      "attempt": 1,
+      "expectedRequest": true,
+      "result": "network-ready",
+      "actionStarted": 1793479286267,
+      "observationEnded": 1793479289279,
+      "requests": [
+        {
+          "path": "/worker.js",
+          "time": 1793479286270
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStaleCheck": false,
+      "unregistered": true,
+      "operation": "module-worker",
+      "attempt": 1,
+      "expectedRequest": true,
+      "result": "network-ready",
+      "actionStarted": 1793479292358,
+      "observationEnded": 1793479295367,
+      "requests": [
+        {
+          "path": "/worker.js",
+          "time": 1793479292361
+        }
+      ]
     },
     {
       "browser": "chromium",
@@ -38,8 +77,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793463794571,
-      "observationEnded": 1793463797578,
+      "actionStarted": 1793479298446,
+      "observationEnded": 1793479301459,
       "requests": []
     },
     {
@@ -51,8 +90,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "cached",
-      "actionStarted": 1793463800616,
-      "observationEnded": 1793463803623,
+      "actionStarted": 1793479304532,
+      "observationEnded": 1793479307546,
       "requests": []
     },
     {
@@ -64,8 +103,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "Local frame",
-      "actionStarted": 1793463806666,
-      "observationEnded": 1793463809672,
+      "actionStarted": 1793479310614,
+      "observationEnded": 1793479313628,
       "requests": []
     },
     {
@@ -77,9 +116,27 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "Local frame",
-      "actionStarted": 1793463812714,
-      "observationEnded": 1793463815721,
+      "actionStarted": 1793479316707,
+      "observationEnded": 1793479319721,
       "requests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStaleCheck": false,
+      "unregistered": true,
+      "operation": "frame",
+      "attempt": 1,
+      "expectedRequest": true,
+      "result": "Network frame",
+      "actionStarted": 1793479322793,
+      "observationEnded": 1793479325807,
+      "requests": [
+        {
+          "path": "/frame",
+          "time": 1793479322798
+        }
+      ]
     },
     {
       "browser": "firefox",
@@ -90,8 +147,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "cached",
-      "actionStarted": 1793463819621,
-      "observationEnded": 1793463822625,
+      "actionStarted": 1793479330374,
+      "observationEnded": 1793479333381,
       "requests": []
     },
     {
@@ -103,9 +160,45 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793463825800,
-      "observationEnded": 1793463828802,
+      "actionStarted": 1793479336682,
+      "observationEnded": 1793479339687,
       "requests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": false,
+      "unregistered": true,
+      "operation": "worker",
+      "attempt": 1,
+      "expectedRequest": true,
+      "result": "network-ready",
+      "actionStarted": 1793479343013,
+      "observationEnded": 1793479346029,
+      "requests": [
+        {
+          "path": "/worker.js",
+          "time": 1793479343025
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": false,
+      "unregistered": true,
+      "operation": "module-worker",
+      "attempt": 1,
+      "expectedRequest": true,
+      "result": "network-ready",
+      "actionStarted": 1793479349337,
+      "observationEnded": 1793479352354,
+      "requests": [
+        {
+          "path": "/worker.js",
+          "time": 1793479349352
+        }
+      ]
     },
     {
       "browser": "firefox",
@@ -116,8 +209,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793463831994,
-      "observationEnded": 1793463835002,
+      "actionStarted": 1793479355702,
+      "observationEnded": 1793479358717,
       "requests": []
     },
     {
@@ -129,12 +222,12 @@
       "attempt": 1,
       "expectedRequest": true,
       "result": "network-cached",
-      "actionStarted": 1793463838191,
-      "observationEnded": 1793463841202,
+      "actionStarted": 1793479362045,
+      "observationEnded": 1793479365062,
       "requests": [
         {
           "path": "/cached",
-          "time": 1793463838200
+          "time": 1793479362059
         }
       ]
     },
@@ -147,8 +240,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "Local frame",
-      "actionStarted": 1793463844406,
-      "observationEnded": 1793463847416,
+      "actionStarted": 1793479368384,
+      "observationEnded": 1793479371402,
       "requests": []
     },
     {
@@ -160,9 +253,27 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "Local frame",
-      "actionStarted": 1793463850586,
-      "observationEnded": 1793463853595,
+      "actionStarted": 1793479374724,
+      "observationEnded": 1793479377744,
       "requests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": false,
+      "unregistered": true,
+      "operation": "frame",
+      "attempt": 1,
+      "expectedRequest": true,
+      "result": "Network frame",
+      "actionStarted": 1793479381068,
+      "observationEnded": 1793479384088,
+      "requests": [
+        {
+          "path": "/frame",
+          "time": 1793479381078
+        }
+      ]
     },
     {
       "browser": "firefox",
@@ -173,8 +284,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "cached",
-      "actionStarted": 1793463857676,
-      "observationEnded": 1793463860680,
+      "actionStarted": 1793479389042,
+      "observationEnded": 1793479392049,
       "requests": []
     },
     {
@@ -186,9 +297,45 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793463863844,
-      "observationEnded": 1793463866846,
+      "actionStarted": 1793479395409,
+      "observationEnded": 1793479398414,
       "requests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": true,
+      "unregistered": true,
+      "operation": "worker",
+      "attempt": 1,
+      "expectedRequest": true,
+      "result": "network-ready",
+      "actionStarted": 1793479401763,
+      "observationEnded": 1793479404779,
+      "requests": [
+        {
+          "path": "/worker.js",
+          "time": 1793479401774
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": true,
+      "unregistered": true,
+      "operation": "module-worker",
+      "attempt": 1,
+      "expectedRequest": true,
+      "result": "network-ready",
+      "actionStarted": 1793479408079,
+      "observationEnded": 1793479411097,
+      "requests": [
+        {
+          "path": "/worker.js",
+          "time": 1793479408093
+        }
+      ]
     },
     {
       "browser": "firefox",
@@ -199,8 +346,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793463870022,
-      "observationEnded": 1793463873029,
+      "actionStarted": 1793479414403,
+      "observationEnded": 1793479417415,
       "requests": []
     },
     {
@@ -212,12 +359,12 @@
       "attempt": 1,
       "expectedRequest": true,
       "result": "network-cached",
-      "actionStarted": 1793463876209,
-      "observationEnded": 1793463879220,
+      "actionStarted": 1793479420729,
+      "observationEnded": 1793479423750,
       "requests": [
         {
           "path": "/cached",
-          "time": 1793463876218
+          "time": 1793479420745
         }
       ]
     },
@@ -230,8 +377,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "Local frame",
-      "actionStarted": 1793463882384,
-      "observationEnded": 1793463885392,
+      "actionStarted": 1793479427100,
+      "observationEnded": 1793479430116,
       "requests": []
     },
     {
@@ -243,10 +390,28 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "Local frame",
-      "actionStarted": 1793463888562,
-      "observationEnded": 1793463891571,
+      "actionStarted": 1793479433436,
+      "observationEnded": 1793479436455,
       "requests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": true,
+      "unregistered": true,
+      "operation": "frame",
+      "attempt": 1,
+      "expectedRequest": true,
+      "result": "Network frame",
+      "actionStarted": 1793479439777,
+      "observationEnded": 1793479442795,
+      "requests": [
+        {
+          "path": "/frame",
+          "time": 1793479439784
+        }
+      ]
     }
   ],
-  "completedAt": "2026-10-31T16:24:51.775Z"
+  "completedAt": "2026-10-31T20:44:03.098Z"
 }

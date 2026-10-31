@@ -1,6 +1,9 @@
 {
   "scope": "Native browser comparison of local context bootstraps, service-worker-mediated resources and message-only operations. The Firefox forced-stale profile uses an explicit testing preference, not natural 24-hour aging. The unregistered variant checks retained delivery and loss of interception. Known positive triggers use up to three fresh samples; omissions are recorded and a group without a positive observation fails. No production runtime repair is claimed.",
-  "runnerSHA256": "b98ad20d3ad51ae4d943423298205d4b731a4777ee235b11857d7ec37c43d286",
+  "completed": true,
+  "browserProfileSHA256": "c161489dfce9c3124474d1416440c9876b0a8fce329d2f09fa16f99af744e3a0",
+  "packageLockSHA256": "4e8c7b0964047f1c9fd3f82956b08d381817fa86fb2f7d47d4a10458dc5e62ed",
+  "runnerSHA256": "d5ef74168c84fe44ac7fed7f7a27af8ae7f84fd11a26b1becba26eab11100c96",
   "observationMilliseconds": 3000,
   "rows": [
     {
@@ -12,8 +15,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "idle",
-      "actionStarted": 1793463537515,
-      "observationEnded": 1793463540517,
+      "actionStarted": 1793479269943,
+      "observationEnded": 1793479272947,
       "requests": []
     },
     {
@@ -25,8 +28,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "cached",
-      "actionStarted": 1793463543559,
-      "observationEnded": 1793463546562,
+      "actionStarted": 1793479276025,
+      "observationEnded": 1793479279030,
       "requests": []
     },
     {
@@ -38,8 +41,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793463549603,
-      "observationEnded": 1793463552606,
+      "actionStarted": 1793479282108,
+      "observationEnded": 1793479285112,
       "requests": []
     },
     {
@@ -51,12 +54,12 @@
       "attempt": 1,
       "expectedRequest": true,
       "result": "ready",
-      "actionStarted": 1793463555646,
-      "observationEnded": 1793463558652,
+      "actionStarted": 1793479288184,
+      "observationEnded": 1793479291194,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793463556652
+          "time": 1793479289194
         }
       ]
     },
@@ -69,12 +72,12 @@
       "attempt": 1,
       "expectedRequest": true,
       "result": "ready",
-      "actionStarted": 1793463561706,
-      "observationEnded": 1793463564713,
+      "actionStarted": 1793479294270,
+      "observationEnded": 1793479297280,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793463562713
+          "time": 1793479295280
         }
       ]
     },
@@ -87,8 +90,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793463567756,
-      "observationEnded": 1793463570763,
+      "actionStarted": 1793479300340,
+      "observationEnded": 1793479303349,
       "requests": []
     },
     {
@@ -100,8 +103,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793463573803,
-      "observationEnded": 1793463576809,
+      "actionStarted": 1793479306417,
+      "observationEnded": 1793479309428,
       "requests": []
     },
     {
@@ -113,8 +116,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "cached",
-      "actionStarted": 1793463579855,
-      "observationEnded": 1793463582863,
+      "actionStarted": 1793479312498,
+      "observationEnded": 1793479315514,
       "requests": []
     },
     {
@@ -126,8 +129,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "Local frame",
-      "actionStarted": 1793463585902,
-      "observationEnded": 1793463588910,
+      "actionStarted": 1793479318585,
+      "observationEnded": 1793479321597,
       "requests": []
     },
     {
@@ -139,8 +142,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "Local frame",
-      "actionStarted": 1793463591957,
-      "observationEnded": 1793463594965,
+      "actionStarted": 1793479324669,
+      "observationEnded": 1793479327682,
       "requests": []
     },
     {
@@ -152,12 +155,12 @@
       "attempt": 1,
       "expectedRequest": true,
       "result": "Local frame",
-      "actionStarted": 1793463598007,
-      "observationEnded": 1793463601016,
+      "actionStarted": 1793479330745,
+      "observationEnded": 1793479333759,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793463599016
+          "time": 1793479331758
         }
       ]
     },
@@ -170,8 +173,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "idle",
-      "actionStarted": 1793463604944,
-      "observationEnded": 1793463607947,
+      "actionStarted": 1793479338364,
+      "observationEnded": 1793479341367,
       "requests": []
     },
     {
@@ -183,8 +186,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "cached",
-      "actionStarted": 1793463611121,
-      "observationEnded": 1793463614125,
+      "actionStarted": 1793479344655,
+      "observationEnded": 1793479347663,
       "requests": []
     },
     {
@@ -196,8 +199,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793463617295,
-      "observationEnded": 1793463620297,
+      "actionStarted": 1793479350964,
+      "observationEnded": 1793479353968,
       "requests": []
     },
     {
@@ -209,12 +212,12 @@
       "attempt": 1,
       "expectedRequest": true,
       "result": "ready",
-      "actionStarted": 1793463623458,
-      "observationEnded": 1793463626467,
+      "actionStarted": 1793479357264,
+      "observationEnded": 1793479360280,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793463624550
+          "time": 1793479358281
         }
       ]
     },
@@ -227,12 +230,12 @@
       "attempt": 1,
       "expectedRequest": true,
       "result": "ready",
-      "actionStarted": 1793463629647,
-      "observationEnded": 1793463632657,
+      "actionStarted": 1793479363600,
+      "observationEnded": 1793479366618,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793463630661
+          "time": 1793479364626
         }
       ]
     },
@@ -245,8 +248,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793463635857,
-      "observationEnded": 1793463638865,
+      "actionStarted": 1793479369911,
+      "observationEnded": 1793479372924,
       "requests": []
     },
     {
@@ -258,8 +261,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793463642048,
-      "observationEnded": 1793463645056,
+      "actionStarted": 1793479376258,
+      "observationEnded": 1793479379272,
       "requests": []
     },
     {
@@ -271,8 +274,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "cached",
-      "actionStarted": 1793463648238,
-      "observationEnded": 1793463651248,
+      "actionStarted": 1793479382578,
+      "observationEnded": 1793479385595,
       "requests": []
     },
     {
@@ -284,12 +287,12 @@
       "attempt": 1,
       "expectedRequest": true,
       "result": "Local frame",
-      "actionStarted": 1793463654416,
-      "observationEnded": 1793463657425,
+      "actionStarted": 1793479388951,
+      "observationEnded": 1793479391967,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793463655455
+          "time": 1793479389971
         }
       ]
     },
@@ -302,12 +305,12 @@
       "attempt": 1,
       "expectedRequest": true,
       "result": "Local frame",
-      "actionStarted": 1793463660594,
-      "observationEnded": 1793463663602,
+      "actionStarted": 1793479395305,
+      "observationEnded": 1793479398323,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793463661670
+          "time": 1793479396325
         }
       ]
     },
@@ -320,12 +323,12 @@
       "attempt": 1,
       "expectedRequest": true,
       "result": "Local frame",
-      "actionStarted": 1793463667047,
-      "observationEnded": 1793463670057,
+      "actionStarted": 1793479402117,
+      "observationEnded": 1793479405137,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793463668058
+          "time": 1793479403140
         }
       ]
     },
@@ -338,8 +341,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "idle",
-      "actionStarted": 1793463674187,
-      "observationEnded": 1793463677189,
+      "actionStarted": 1793479409930,
+      "observationEnded": 1793479412933,
       "requests": []
     },
     {
@@ -351,12 +354,12 @@
       "attempt": 1,
       "expectedRequest": true,
       "result": "cached",
-      "actionStarted": 1793463680357,
-      "observationEnded": 1793463683361,
+      "actionStarted": 1793479416255,
+      "observationEnded": 1793479419264,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793463681426
+          "time": 1793479417263
         }
       ]
     },
@@ -369,8 +372,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793463686524,
-      "observationEnded": 1793463689527,
+      "actionStarted": 1793479422587,
+      "observationEnded": 1793479425591,
       "requests": []
     },
     {
@@ -382,12 +385,12 @@
       "attempt": 1,
       "expectedRequest": true,
       "result": "ready",
-      "actionStarted": 1793463692710,
-      "observationEnded": 1793463695722,
+      "actionStarted": 1793479428900,
+      "observationEnded": 1793479431919,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793463693786
+          "time": 1793479429969
         }
       ]
     },
@@ -400,12 +403,12 @@
       "attempt": 1,
       "expectedRequest": true,
       "result": "ready",
-      "actionStarted": 1793463698903,
-      "observationEnded": 1793463701913,
+      "actionStarted": 1793479435236,
+      "observationEnded": 1793479438254,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793463699917
+          "time": 1793479436261
         }
       ]
     },
@@ -418,8 +421,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793463705088,
-      "observationEnded": 1793463708095,
+      "actionStarted": 1793479441584,
+      "observationEnded": 1793479444595,
       "requests": []
     },
     {
@@ -431,8 +434,8 @@
       "attempt": 1,
       "expectedRequest": false,
       "result": "ready",
-      "actionStarted": 1793463711276,
-      "observationEnded": 1793463714284,
+      "actionStarted": 1793479447899,
+      "observationEnded": 1793479450912,
       "requests": []
     },
     {
@@ -444,12 +447,12 @@
       "attempt": 1,
       "expectedRequest": true,
       "result": "cached",
-      "actionStarted": 1793463717459,
-      "observationEnded": 1793463720472,
+      "actionStarted": 1793479454233,
+      "observationEnded": 1793479457246,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793463718539
+          "time": 1793479455248
         }
       ]
     },
@@ -462,12 +465,12 @@
       "attempt": 1,
       "expectedRequest": true,
       "result": "Local frame",
-      "actionStarted": 1793463723681,
-      "observationEnded": 1793463726693,
+      "actionStarted": 1793479460561,
+      "observationEnded": 1793479463582,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793463724778
+          "time": 1793479461605
         }
       ]
     },
@@ -480,12 +483,12 @@
       "attempt": 1,
       "expectedRequest": true,
       "result": "Local frame",
-      "actionStarted": 1793463729874,
-      "observationEnded": 1793463732884,
+      "actionStarted": 1793479466930,
+      "observationEnded": 1793479469944,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793463730919
+          "time": 1793479467947
         }
       ]
     },
@@ -498,15 +501,15 @@
       "attempt": 1,
       "expectedRequest": true,
       "result": "Local frame",
-      "actionStarted": 1793463736300,
-      "observationEnded": 1793463739311,
+      "actionStarted": 1793479473985,
+      "observationEnded": 1793479477006,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793463737311
+          "time": 1793479475009
         }
       ]
     }
   ],
-  "completedAt": "2026-10-31T16:22:19.500Z"
+  "completedAt": "2026-10-31T20:44:37.283Z"
 }

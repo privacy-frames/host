@@ -115,7 +115,9 @@ jobs:
       - run: npx playwright install --with-deps chromium firefox
         timeout-minutes: 10
       - name: Type-check native maintenance comparisons
-        run: npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --types node --target ES2022 --module NodeNext --moduleResolution NodeNext --allowImportingTsExtensions --lib ES2022,DOM,WebWorker --skipLibCheck formal/runtime-verification/maintenance-backends.ts formal/runtime-verification/message-resource-broker.ts
+        run: |
+          rm -f formal/runtime-verification/maintenance-backends.json formal/runtime-verification/maintenance-unregistered.json formal/runtime-verification/message-resource-broker.json formal/runtime-verification/message-resource-broker-relaxed.json
+          npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --types node --target ES2022 --module NodeNext --moduleResolution NodeNext --allowImportingTsExtensions --lib ES2022,DOM,WebWorker --skipLibCheck formal/runtime-verification/maintenance-backends.ts formal/runtime-verification/message-resource-broker.ts
       - name: Compare local bootstraps, cached resources and messages
         run: node formal/runtime-verification/maintenance-backends.ts
       - name: Check retained delivery and new contexts after unregistration

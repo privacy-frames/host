@@ -25,9 +25,9 @@ same-scope unregistration waited for a held update, and a later update failed
 without a second request. It covers an unchanged script and selected schedules;
 it establishes neither a production launch barrier nor a whole-browser drain.
 
-The latest model workflow also lacks a Chromium maintenance positive control:
-neither sample produced the expected update. Diagnose that missing observation
-before using the workflow as evidence for a repair.
+Model workflow `41238247367` lacks a Chromium maintenance positive control:
+neither sample produced the expected update. Diagnose the intermittent missing
+observation before using this fixture as evidence for a repair.
 
 ## 1. State the theorem and its premises
 
@@ -62,8 +62,8 @@ identified authority-producing path. Unresolved references remain obligations.
 
 ## 3. Resolve context and registration lifetimes
 
-Finish the registration-fence experiment, preserve its controls and add it to CI.
-Model the scope-specific update/unregister queue and relate it to the
+The registration-fence fixture, controls and scope-specific queue model now run
+in CI. Establish their correspondence to the
 [Service Workers job algorithms](https://w3c.github.io/ServiceWorker/#schedule-job).
 Review changed scripts, install/activate work, overlapping registrations,
 controller retention, restart and work already queued at launch. Unregistration

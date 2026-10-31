@@ -27,6 +27,9 @@ const selectedOperations = unregistered
         'message',
         'blob-worker',
         'blob-worker-fetch',
+        'worker',
+        'module-worker',
+        'frame',
         'srcdoc',
         'blob-frame',
       ].includes(operation),
@@ -57,6 +60,12 @@ const receiver = http.createServer((request, response) => {
     // A distinctive unrestricted receiver response detects loss of interception.
     response.setHeader('Content-Type', 'text/plain');
     response.end('network-cached');
+  } else if (request.url === '/worker.js') {
+    response.setHeader('Content-Type', 'text/javascript');
+    response.end('postMessage("network-ready")');
+  } else if (request.url === '/frame') {
+    response.setHeader('Content-Type', 'text/html');
+    response.end('<!doctype html>Network frame');
   } else if (request.url === '/') {
     response.setHeader('Content-Type', 'text/html');
     response.end('<!doctype html><link rel="icon" href="data:,">Backend probe');
@@ -74,6 +83,8 @@ const address = receiver.address();
 assert(address && typeof address !== 'string');
 const origin = `http://127.0.0.1:${address.port}`;
 const rows: object[] = [];
+let completed = false;
+let failure: string | undefined;
 
 try {
   for (const profile of [
@@ -219,15 +230,21 @@ try {
             }, operation);
             await page.waitForTimeout(3000);
             const observed = requests.slice(start);
-            const lostInterception =
+            const lostWorkerOrFrame =
+              unregistered && ['worker', 'module-worker', 'frame'].includes(operation);
+            const lostBlobFetch =
               unregistered &&
               profile.engine === firefox &&
               operation === 'blob-worker-fetch';
-            assert(
-              observed.every(
-                (request) => request.path === (lostInterception ? '/cached' : '/sw.js'),
-              ),
-            );
+            const lostInterception = lostWorkerOrFrame || lostBlobFetch;
+            const expectedPath = lostWorkerOrFrame
+              ? operation === 'frame'
+                ? '/frame'
+                : '/worker.js'
+              : lostBlobFetch
+                ? '/cached'
+                : '/sw.js';
+            assert(observed.every((request) => request.path === expectedPath));
             const expectedRequest = unregistered
               ? lostInterception
               : ['worker', 'module-worker', 'frame'].includes(operation) ||
@@ -238,15 +255,19 @@ try {
                       (operation === 'fetch' || operation === 'blob-worker-fetch'))));
             assert.equal(
               result,
-              lostInterception
-                ? 'network-cached'
-                : operation === 'idle'
-                  ? 'idle'
-                  : operation === 'fetch' || operation === 'blob-worker-fetch'
-                    ? 'cached'
-                    : operation.endsWith('frame') || operation === 'srcdoc'
-                      ? 'Local frame'
-                      : 'ready',
+              lostWorkerOrFrame
+                ? operation === 'frame'
+                  ? 'Network frame'
+                  : 'network-ready'
+                : lostBlobFetch
+                  ? 'network-cached'
+                  : operation === 'idle'
+                    ? 'idle'
+                    : operation === 'fetch' || operation === 'blob-worker-fetch'
+                      ? 'cached'
+                      : operation.endsWith('frame') || operation === 'srcdoc'
+                        ? 'Local frame'
+                        : 'ready',
             );
             const row = {
               browser: profile.engine.name(),
@@ -281,23 +302,41 @@ try {
       await browser.close();
     }
   }
-  await writeFile(
-    receipt,
-    JSON.stringify(
-      {
-        scope:
-          'Native browser comparison of local context bootstraps, service-worker-mediated resources and message-only operations. The Firefox forced-stale profile uses an explicit testing preference, not natural 24-hour aging. The unregistered variant checks retained delivery and loss of interception. Known positive triggers use up to three fresh samples; omissions are recorded and a group without a positive observation fails. No production runtime repair is claimed.',
-        runnerSHA256: createHash('sha256')
-          .update(await readFile(import.meta.filename))
-          .digest('hex'),
-        observationMilliseconds: 3000,
-        rows,
-        completedAt: new Date().toISOString(),
-      },
-      null,
-      2,
-    ) + '\n',
-  );
+  completed = true;
+} catch (error) {
+  failure = String(error);
+  throw error;
 } finally {
-  await new Promise<void>((resolve) => receiver.close(() => resolve()));
+  try {
+    await writeFile(
+      receipt,
+      JSON.stringify(
+        {
+          scope:
+            'Native browser comparison of local context bootstraps, service-worker-mediated resources and message-only operations. The Firefox forced-stale profile uses an explicit testing preference, not natural 24-hour aging. The unregistered variant checks retained delivery and loss of interception. Known positive triggers use up to three fresh samples; omissions are recorded and a group without a positive observation fails. No production runtime repair is claimed.',
+          completed,
+          failure,
+          browserProfileSHA256: createHash('sha256')
+            .update(
+              await readFile(new URL('../../test/browser-profile.ts', import.meta.url)),
+            )
+            .digest('hex'),
+          packageLockSHA256: createHash('sha256')
+            .update(await readFile(new URL('../../package-lock.json', import.meta.url)))
+            .digest('hex'),
+          runnerSHA256: createHash('sha256')
+            .update(await readFile(import.meta.filename))
+            .digest('hex'),
+          observationMilliseconds: 3000,
+          rows,
+          completedAt: completed ? new Date().toISOString() : null,
+        },
+        null,
+        2,
+      ) + '\n',
+    );
+  } finally {
+    receiver.closeAllConnections();
+    await new Promise<void>((resolve) => receiver.close(() => resolve()));
+  }
 }

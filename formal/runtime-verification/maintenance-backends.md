@@ -15,6 +15,10 @@ recorded; a group without a positive observation fails. Unexpected traffic in
 a quiet case also fails. This accounts for observed update-check omissions
 without assuming deterministic delivery.
 
+The runner removes the old receipt before starting and retains partial rows,
+failure and `completed: false` if the comparison fails. Receipts pin the runner,
+browser launcher and package lock as well as the browser version.
+
 ## Registered workers
 
 The [registered receipt](maintenance-backends.json) records the eleven operation
@@ -49,17 +53,25 @@ That suggests suppressing updates while retaining local delivery. The
 [unregistered receipt](maintenance-unregistered.json) tests this candidate.
 
 The existing page retains its controller and local fetch/message delivery.
-However, a newly created Blob worker in Firefox sends its resource request to
-the HTTP server after unregistration. The receiver returns the distinctive
-`network-cached` body, whereas an intercepted request returns `cached`. Chromium
-retains interception for this case. Unregistration alone cannot preserve the
-cross-browser confinement boundary.
+New native HTTP classic workers, module workers and frames reach the server in
+both browsers after unregistration. The receiver returns `network-ready` or
+`Network frame`, whereas intercepted responses return `ready` or `Local frame`.
+Retaining the parent's controller does not establish interception of the new
+context's bootstrap request.
+
+A newly created Blob worker in Firefox also sends its later resource request to
+the server. The distinctive `network-cached` response differs from the locally
+intercepted `cached` response. Chromium retains interception for this Blob-worker
+case.
 
 ## Implications for the implementation
 
 Keep both candidates out of production until their remaining obligations are
 resolved. A worker-only Blob change leaves document and stale-resource triggers.
 Unregistration can remove the interception on which a new context relies.
+The [queue-fence experiment](registration-fence.md) addresses ordering of selected
+same-scope jobs. Even if that boundary is established, these delivery failures
+must be resolved before unregistration can form part of the launch protocol.
 
 A message-based local resource broker is a candidate for further investigation:
 the tested message-only operations produce no update request, including with the
