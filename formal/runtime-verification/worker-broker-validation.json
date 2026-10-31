@@ -1,0 +1,116 @@
+{
+  "scope": "Validation of the version-4 worker parent broker candidate, not complete runtime confinement. All named checks have successful current-source observations. The first context-suite run also exposed an unresolved SVG layout observation; it is retained below rather than counted as a clean first pass.",
+  "contextPolicyVersion": 4,
+  "provenance": {
+    "capturedAt": "2026-10-31T21:54:00.858Z",
+    "revision": "902bc4a021c0aa97759f506f09522e0e6be591f9",
+    "dirty": true,
+    "sourceSHA256": "751ff3255ce4151aa0b2b3368d709bddd2957030defbcd08d7b29f7e00a75df5",
+    "runner": "test/worker-contexts.ts",
+    "runnerSHA256": "c1cdd03bc7c52598193727f7ed8f3bac0f577cf229917915e0771957fcea7602",
+    "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
+    "artifacts": {
+      "dist-manager/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-manager/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-manager/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-manager/index.html": "0ea2b29b0ef6946140c54c2dc2147bffe4de82b9ed13eb4fdcae97a81cfd56f7",
+      "dist-manager/manager.js": "e361950a8774ca901a2b669e55041e15931e079bcdf5cd66e2b95d3986ce0730",
+      "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-manager/sw.js": "c768cc846bd6127b805af8abbcbc774256a248d5591e3f902a4a4e432be9d5fd",
+      "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
+      "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
+      "dist-runtime/document-guard.js": "7b9a77849e288e0b3aa351fb1f6335be29248db9058f39f65847ce886cf51ccc",
+      "dist-runtime/guard.js": "3cf6a191e29aabc7b98588e6fc75561543548e18a0d9b30ee0c8d917d7caf5d6",
+      "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
+      "dist-runtime/publisher-worker-guard.js": "67b65c54f9731e83d4a4fd1880ac32378cf14e72da63b852ff2f6f826a802d69",
+      "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-runtime/shared-worker-guard.js": "8f0c6868b4e3eb18d20e0c415ad05ee19603fea009af6c1f9a71af0653f0fa3d",
+      "dist-runtime/sw.js": "6784136d8fcbb15e191abdb116bea244ed2657a6af080cdca540617a939ad115",
+      "dist-runtime/worker-guard.js": "36b3b1027504d62209b46ef229a5adffb60d596fb36f199858a3949edd685c7a",
+      "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
+      "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-installation/index.html": "3ca67c9966dd6eaaddb08a331c4c422a70d79bed1acecddada56764ba4ac8e5f",
+      "dist-installation/installation.js": "6cd0a3f3f4494dee2db059f3b1a5feb62017a39399a22e2d3774d0319fa1e3f3"
+    }
+  },
+  "checks": {
+    "unit": {
+      "tests": 178,
+      "passed": 178
+    },
+    "contexts": {
+      "prefixCommand": "npm run test:contexts",
+      "initialOutcome": "SVG publication assertion failed; remaining commands had not run",
+      "resumedFrom": "npm run test:documents",
+      "resumedOutcome": "All document and remaining context commands passed"
+    },
+    "host": {
+      "browsers": 2,
+      "groupsPerBrowser": 16,
+      "directPerBrowser": 33,
+      "realEventPerBrowser": 33
+    },
+    "network": {
+      "browsers": 2,
+      "independentGroupsPerBrowser": 3
+    },
+    "startup": {
+      "nativeSchedules": 4,
+      "rejectedFaultyProjections": 30
+    },
+    "corpus": {
+      "applications": 8,
+      "browserTaskPairs": 16,
+      "offlineReloads": 16
+    },
+    "workerControls": {
+      "profiles": 3,
+      "normalAndFaultCases": 9,
+      "faults": [
+        "wrong closure parent selection",
+        "missing delegation-parent check"
+      ]
+    }
+  },
+  "logSHA256": {
+    "unit": "4ea3c30b0c372c075ba86628afeee7e0138de782a8d319f8e9be7a1a03f20e0a",
+    "contexts": "82a1759f1eeab0d96fbbaa908cebc9a2d45b301b277c08c055dc9281039522ec",
+    "renderer-repeat": "8d5ef8ec35aca5290f85b48d7fb69cd6bb90262453e90cfda2ebc7a72af0a469",
+    "contexts-resumed": "60d73e266e6da383fe57cac6d64ec3f58be6b22b79195b0f25a9cbc3ed3155bb",
+    "host": "3e24fe1006b9829d6bd673c32c8a846aaa74d06e966d98509db56eeb9f0966ff",
+    "network": "6b497cf7d9093e3c26e078162362ce72994b6cbcd260c823d27cdd60ec9cd703",
+    "startup": "aaba146e2c4a8676c2dba9af8d57c30056a49263af71e4a3cc5344124b771d6b",
+    "startup-model": "082bf1144a00416426ab65f3b3a865f67bacf7a3de26410047ea5a67140f1c50",
+    "corpus": "8e68310f68f9119a15d4e06538fa02d298da6f1737dfe640d55857aaca7b6ae2",
+    "controls": "2da39b7275462cfc4426aa94ebfde6bf0114ea8920ce478a26aa7bdd1ce925c4",
+    "authority": "eb45f669771acf18f04fdeaf1acf3c94c2f936118e0fd9fefb7b864cc78f41a2",
+    "registry": "366c485b2f9758ae2e310f4a15e605559039a6dcf29615fbaf9b3c058955268d"
+  },
+  "svgObservation": {
+    "fixture": "test/document-renderer.ts",
+    "actual": {
+      "initial": 0,
+      "loaded": 0,
+      "later": 40,
+      "root": "image/svg+xml"
+    },
+    "expected": {
+      "initial": 40,
+      "loaded": 40,
+      "later": 40,
+      "root": "image/svg+xml"
+    },
+    "repetitions": "Standalone fixture and resumed document suite passed in both browsers without renderer source changes",
+    "cause": "unresolved",
+    "classification": "compatibility/layout observation; no confinement conclusion inferred"
+  },
+  "wholeConfinementEstablished": false
+}

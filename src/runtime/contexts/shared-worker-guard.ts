@@ -1,3 +1,4 @@
+import { createHTTPWorkerControl } from './worker-client.ts';
 import {
   strings,
   internalArray,
@@ -28,7 +29,7 @@ const NativeURL = URL;
 const href = ownDescriptor(URL.prototype, 'href')!.get!;
 const stringify = JSON.stringify;
 const context = readWorkerMetadata('shared-worker');
-const realm = prepareWorkerRealm(context, 'connect');
+const realm = prepareWorkerRealm(context, 'connect', createHTTPWorkerControl(context));
 const { apply, method, accessor, propertyOwner } = realm.tools;
 const namespace = parseSharedWorkerKey(nativeName);
 if (

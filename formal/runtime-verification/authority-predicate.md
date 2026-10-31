@@ -16,7 +16,7 @@ the owned records and their prototypes.
 
 The preconditions require ordinary objects with owned data properties.
 Identity, application, generation, kind, URL and state are strings; parent is
-null or a string. The current policy version is 3, which the runner checks
+null or a string. The current policy version is 4, which the runner checks
 against its source declaration. Refusal contracts allow arbitrary numeric
 expected versions. Separate-record contracts own two disjoint records; aliased
 contracts own one. Prototypes may differ and are not required to be frozen.

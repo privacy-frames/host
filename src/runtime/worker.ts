@@ -14,7 +14,7 @@ import {
   INSTALLED_CONTENT_REQUEST,
   INSTALLED_RESOURCE_REQUEST,
   DOCUMENT_CONTROL_REQUEST,
-  WORKER_CLOSE_REQUEST,
+  WORKER_CONTROL_REQUEST,
 } from '../shared/types.ts';
 import {
   parseResourceRequest,
@@ -24,7 +24,8 @@ import {
 import { admitInstallation } from './admission.ts';
 import { CONTEXT_POLICY_VERSION, ContextRegistry } from './contexts/model.ts';
 import type { WorkerBootstrapMetadata } from './contexts/model.ts';
-import { closeWorkerChild } from './contexts/worker-control.ts';
+import { requestWorkerControl } from './contexts/worker-control.ts';
+import { readDocumentRequest } from './contexts/document-request.ts';
 import { workerResourceAliases } from './contexts/worker-aliases.ts';
 import { controllerContextStorage } from './contexts/controller-store.ts';
 import { contextResourceResponse } from './contexts/resources.ts';
@@ -188,7 +189,7 @@ worker.addEventListener('message', (event) => {
     (packet.type === INSTALLED_CONTENT_REQUEST ||
       packet.type === INSTALLED_RESOURCE_REQUEST ||
       packet.type === DOCUMENT_CONTROL_REQUEST ||
-      packet.type === WORKER_CLOSE_REQUEST)
+      packet.type === WORKER_CONTROL_REQUEST)
   ) {
     const port = event.ports[0];
     if (!port) return;
@@ -199,13 +200,9 @@ worker.addEventListener('message', (event) => {
             event.source && 'id' in event.source
               ? await worker.clients.get(event.source.id)
               : undefined;
-          if (packet.type === WORKER_CLOSE_REQUEST) {
-            const closed = await closeWorkerChild(
-              client,
-              'id' in packet ? packet.id : undefined,
-              contexts,
-            );
-            port.postMessage({ ok: true, value: { closed } });
+          if (packet.type === WORKER_CONTROL_REQUEST) {
+            const value = await requestWorkerControl(client, packet, contexts);
+            port.postMessage({ ok: true, value });
             return;
           }
           if (packet.type === DOCUMENT_CONTROL_REQUEST) {
@@ -361,6 +358,35 @@ worker.addEventListener('fetch', (event) => {
           : event.clientId
             ? await worker.clients.get(event.clientId)
             : null;
+      if (url.pathname.endsWith('/__contexts/control')) {
+        if (
+          !boundWorker ||
+          !client ||
+          req.method !== 'POST' ||
+          req.destination !== '' ||
+          req.mode === 'navigate' ||
+          event.resultingClientId ||
+          url.search ||
+          url.hash
+        )
+          return Response.error();
+        try {
+          const app = await getApp(boundWorker.application);
+          if (
+            !app ||
+            url.href !== new URL('__contexts/control', applicationURL(app, BASE)).href
+          )
+            return Response.error();
+          const value = await requestWorkerControl(
+            client,
+            await readDocumentRequest(req),
+            contexts,
+          );
+          return response(JSON.stringify(value), 'application/json');
+        } catch {
+          return Response.error();
+        }
+      }
       // Fragments are application-local routing state, including on reload. They do
       // not select a different installed document or authorize a resource request.
       url.hash = '';
@@ -527,22 +553,6 @@ worker.addEventListener('fetch', (event) => {
               controllerSource: new URL('sw.js', BASE).href,
             },
           );
-        }
-        const closing = url.pathname
-          .slice(contextPrefix.length)
-          .match(/^([a-f0-9-]{36})\/close$/);
-        if (
-          closing &&
-          req.method === 'POST' &&
-          req.mode !== 'navigate' &&
-          req.destination === '' &&
-          !url.search &&
-          client &&
-          boundWorker &&
-          (await runtimeIdentity(client)) === app.id
-        ) {
-          const closed = await closeWorkerChild(client, closing[1], contexts);
-          return response('', 'text/plain', closed ? 200 : 404);
         }
         return Response.error();
       }

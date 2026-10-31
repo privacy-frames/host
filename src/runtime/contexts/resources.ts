@@ -27,7 +27,7 @@ export interface ContextResourceDiagnostic {
   boundClient?: string;
 }
 /** Some nested worker requests have no browser client ID. Their bootstrap-issued
- * bearer grants only this context's immutable resource graph and synchronization. */
+ * bearer grants only this context's immutable resource graph. */
 export async function contextResourceResponse(
   event: Pick<FetchEvent, 'request' | 'clientId'> &
     Partial<Pick<FetchEvent, 'resultingClientId'>>,
@@ -41,7 +41,7 @@ export async function contextResourceResponse(
   if (url.origin !== base.origin) return undefined;
   const match = strings.match(
     url.pathname,
-    /\/__contexts\/([a-f0-9-]{36})\/(ready|resources\/.+)$/,
+    /\/__contexts\/([a-f0-9-]{36})\/(resources\/.+)$/,
   );
   if (!match) return undefined;
   const deny = async (reason: string) => {
@@ -77,13 +77,6 @@ export async function contextResourceResponse(
     `__contexts/${capability.identity.id}/`,
     applicationURL(app, base),
   );
-  if (match[2] === 'ready') {
-    if (url.href !== new URL('ready', directory).href || event.request.destination !== '')
-      return deny('ready-shape');
-    if (!(await registry.isCapabilityCurrent(match[1], event.clientId, capability)))
-      return deny('ready-state');
-    return response('', 'text/plain');
-  }
   // Firefox labels descendant module imports as "worker". Unlike a new Worker
   // startup, that fetch has the exact existing worker client and no reserved
   // resulting client. Bearer possession alone never admits that destination.

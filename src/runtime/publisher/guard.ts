@@ -1,3 +1,4 @@
+import { createHTTPWorkerControl } from '../contexts/worker-client.ts';
 import {
   internalArray,
   internalMap,
@@ -39,7 +40,7 @@ if (
   namespace[1] !== context.identity.installationGeneration
 )
   throw new Error('Publisher namespace leaves its application');
-const realm = prepareWorkerRealm(context, 'connect');
+const realm = prepareWorkerRealm(context, 'connect', createHTTPWorkerControl(context));
 const { apply, define } = realm.tools;
 const nameOwner = realm.tools.propertyOwner(worker, 'name');
 if (nameOwner) realm.tools.accessor(nameOwner, 'name', internalRecord({ get: () => '' }));

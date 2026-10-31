@@ -21,7 +21,7 @@ const versions = parsed.statements
   );
 assert.equal(versions.length, 1);
 assert(versions[0].initializer && ts.isNumericLiteral(versions[0].initializer));
-assert.equal(versions[0].initializer.text, '3', 'Review policy-version proof premises');
+assert.equal(versions[0].initializer.text, '4', 'Review policy-version proof premises');
 const declarations = parsed.statements
   .filter(ts.isFunctionDeclaration)
   .filter((declaration) => declaration.name?.text === 'sameAuthority');
@@ -72,7 +72,7 @@ function values(prefix: string): RecordFields {
     installationGeneration: '#' + prefix + 'generation',
     parent: '#' + prefix + 'parent',
     kind: '#' + prefix + 'kind',
-    policyVersion: '3',
+    policyVersion: '4',
     url: '#' + prefix + 'url',
     state: '#' + prefix + 'phase',
     proto: '#' + prefix + 'proto',
@@ -289,7 +289,7 @@ await writeFile(
       runnerSHA256: hash(await readFile(import.meta.filename, 'utf8')),
       preconditions: [
         'Records are ordinary objects with owned writable data properties and arbitrary prototypes. Separate-record contracts require disjoint ownership; aliased contracts own one record.',
-        'Identity, application, generation, kind, URL and state fields are strings. Parent is null for a root or a string for a child. Current policy version is 3; expected policy versions may be arbitrary numbers in refusal contracts. A selected mismatch is sufficient even when other fields differ.',
+        'Identity, application, generation, kind, URL and state fields are strings. Parent is null for a root or a string for a child. Current policy version is 4; expected policy versions may be arbitrary numbers in refusal contracts. A selected mismatch is sufficient even when other fields differ.',
         'This function alone does not reject a closed current record: resolve/resolveWorker must filter it before calling. Proving that caller contract and preservation through async operations remains open.',
         'Extraction, TypeScript erasure, Gillian semantics, verifier, solver and native/caller contracts remain trusted. No proof of the complete registry follows from these contracts.',
       ],

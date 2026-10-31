@@ -141,23 +141,10 @@ test('resource bearers never admit context startups, navigation, request bodies 
   assert.equal(f.reads(), 0);
 });
 
-test('readiness is replayable and concurrent but grants no authority after closure', async () => {
+test('the resource bearer no longer exposes an HTTP readiness route', async () => {
   const f = await fixture();
-  const responses = await Promise.all(
-    Array.from({ length: 8 }, () => f.request(readyURL)),
-  );
-  assert(responses.every((response) => response?.status === 200));
-  assert.equal(f.records.get('actual-worker')?.state, 'preparing');
-  assert.equal((await f.request(readyURL, 'actual-worker'))?.status, 200);
-  assert.equal((await f.request(readyURL, 'other'))?.type, 'error');
-  assert.equal((await f.request(readyURL, '', 'script'))?.type, 'error');
-  assert.equal(
-    (await f.request(readyURL.replace('/runtime/', '/other/')))?.type,
-    'error',
-  );
-  assert.equal(await f.registry.closeChild('actual-parent', app.id, context), true);
-  assert.equal((await f.request(readyURL))?.type, 'error');
-  assert.equal((await f.request(resourceURL))?.type, 'error');
+  for (const caller of ['', 'actual-worker', 'actual-parent', 'other'])
+    assert.equal(await f.request(readyURL, caller), undefined);
   assert.equal(f.reads(), 0);
 });
 
@@ -209,12 +196,11 @@ test('Firefox module descendants require an existing exact worker and no new res
   assert.equal(f.reads(), 1);
 });
 
-test('replacing an installation revokes its old graph and readiness bearers', async () => {
+test('replacing an installation revokes its old graph bearers', async () => {
   const f = await fixture();
   assert.equal((await f.request(resourceURL))?.status, 200);
   f.replaceInstallation();
   assert.equal((await f.request(resourceURL))?.type, 'error');
-  assert.equal((await f.request(readyURL))?.type, 'error');
   assert.equal(
     (await f.request(resourceURL, 'actual-worker', 'worker', 'GET', 'cors', ''))?.type,
     'error',

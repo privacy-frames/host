@@ -206,15 +206,20 @@ checks a source fix; it does not show that all other browser effects are modeled
 
 ## Atomic context bindings across controllers
 
-Window-owned dedicated-worker termination now requests closure over the captured
-controller message transport. The controller derives the parent from the actual
-message source and revalidates its installation before delegating to the same
-atomic storage operation. Packet-supplied parent and application fields grant no
-authority. Worker parents retain their HTTP adapter; that route now rejects
-window parents. See the [native closure checks](runtime-verification/worker-closure.md)
-for the durable-state observation and test-only parent-selection fault. This
-transport change does not establish native termination, full protocol refinement
-or the remaining maintenance-channel repair.
+Dedicated-worker verification and closure now use a persistent private parent
+broker, separate from the short-lived startup port. A relay prepends its own
+factory-selected child ID; the controller follows native parent/client bindings
+from the actual sender, checking application, generation, kind and current policy
+version at each hop. Packet assertions cannot supply a different actor. This
+reuses the atomic owner-scoped closure operation after selecting the parent.
+
+Shared and publisher roots use an explicit authenticated HTTP adapter for the
+same protocol. The former per-context readiness and closure routes are removed.
+See the [native control checks](runtime-verification/worker-closure.md) for actual
+actor/database observations and separate parent-selection and delegation faults.
+Context policy version 4 rejects bindings from the former bootstrap protocol.
+Serial actor revalidation does not establish one atomic ancestry snapshot, native
+termination, complete protocol refinement or the maintenance-channel repair.
 
 `ContextRegistry` now delegates insertion and closure to dedicated storage
 operations. The former CacheStorage implementation checked absence, wrote a

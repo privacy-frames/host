@@ -1,7 +1,7 @@
 import { internalRecord } from '../../shared/primordials.ts';
 import { isApplicationRoute } from '../../shared/application-navigation.ts';
 
-export const CONTEXT_POLICY_VERSION = 3;
+export const CONTEXT_POLICY_VERSION = 4;
 
 export type ContextKind = 'window' | 'dedicated-worker' | 'shared-worker' | 'worklet';
 export type ContextState = 'preparing' | 'ready' | 'running' | 'closed';

@@ -20,6 +20,9 @@ prepareWorkerRealm(
     aliases: [],
   },
   'message',
+  async () => {
+    throw new Error('This binding fixture does not execute publisher code');
+  },
 );
 (async () => {
   try {

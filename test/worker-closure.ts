@@ -6,7 +6,12 @@ declare global {
     closureFixtureWorker?: Worker;
     workerCloseFixture(
       id: unknown,
-    ): Promise<{ ok: boolean; value?: { closed: boolean } }>;
+    ): Promise<{ ok: boolean; value?: { closed?: boolean; verified?: boolean } }>;
+    workerControlFixture(
+      operation: string,
+      path: string[],
+      id?: unknown,
+    ): Promise<{ ok: boolean; value?: { closed?: boolean; verified?: boolean } }>;
     workerStateFixture(id: string): Promise<string | undefined>;
   }
 }
@@ -28,7 +33,7 @@ export async function installWorkerClosureProbe(context: BrowserContext) {
     const index = IDBObjectStore.prototype.index;
     const read = IDBIndex.prototype.get;
     const closeDatabase = IDBDatabase.prototype.close;
-    window.workerCloseFixture = (id) =>
+    window.workerControlFixture = (operation, path, id) =>
       new Promise((resolve, reject) => {
         const channel = new MessageChannel();
         const timer = setTimeout(
@@ -42,7 +47,9 @@ export async function installWorkerClosureProbe(context: BrowserContext) {
         };
         apply(servicePost, apply(controller, container, []), [
           {
-            type: 'privacy-worker-close',
+            type: 'privacy-worker-control',
+            operation,
+            path,
             id,
             parent: 'forged-parent',
             application: 'forged-app',
@@ -50,6 +57,7 @@ export async function installWorkerClosureProbe(context: BrowserContext) {
           [channel.port2],
         ]);
       });
+    window.workerCloseFixture = (id) => window.workerControlFixture('close', [], id);
     window.workerStateFixture = (id) =>
       new Promise((resolve, reject) => {
         const request: IDBOpenDBRequest = apply(openDatabase, databaseFactory, [
@@ -95,6 +103,7 @@ export async function checkWorkerClosure(
   // These fixture-only native handles inspect the actual durable binding;
   // they are captured before preparation and never shipped in the host.
   const workerCreated = app.waitForEvent('worker');
+  void workerCreated.catch(() => {});
   await app.evaluate(async () => {
     const worker = new Worker('worker.js');
     window.closureFixtureWorker = worker;
@@ -117,6 +126,16 @@ export async function checkWorkerClosure(
   const sibling = await context.newPage();
   await sibling.goto(app.url(), { waitUntil: 'commit' });
   await sibling.waitForFunction(() => Reflect.get(globalThis, 'workerFixtureReady'));
+  const verification = await app.evaluate(
+    (id) => window.workerControlFixture('verify', [id]),
+    closingID,
+  );
+  assert.deepEqual(verification, { ok: true, value: { verified: true } });
+  const wrongParentVerification = await sibling.evaluate(
+    (id) => window.workerControlFixture('verify', [id]),
+    closingID,
+  );
+  assert.equal(wrongParentVerification.ok, false, 'Sibling verified an unrelated worker');
   const wrongOwner = await sibling.evaluate(
     (id) => window.workerCloseFixture(id),
     closingID,
@@ -153,12 +172,20 @@ export async function checkWorkerClosure(
     );
     await app.waitForTimeout(25);
   }
+  const closedVerification = await app.evaluate(
+    (id) => window.workerControlFixture('verify', [id]),
+    closingID,
+  );
+  assert.equal(closedVerification.ok, false);
   await app.waitForTimeout(1000);
   const closureTraffic = traffic.slice(trafficCount);
   assert.deepEqual(closureTraffic, [], 'Window worker closure emitted HTTP');
   const closure = {
     id: closingID,
     wrongOwner,
+    verification,
+    wrongParentVerification,
+    closedVerification,
     state: 'closed',
     observationMilliseconds: 1000,
     requests: closureTraffic,

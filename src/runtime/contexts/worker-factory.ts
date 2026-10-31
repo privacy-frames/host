@@ -3,6 +3,8 @@ import {
   ownDescriptor,
   internalRecord,
 } from '../../shared/primordials.ts';
+import { serveWorkerParent } from './worker-client.ts';
+import type { WorkerControl } from './worker-protocol.ts';
 import type { PolicyTools } from '../enforcement/native.ts';
 import type { ResourceAliases } from '../resource-aliases.ts';
 
@@ -13,7 +15,7 @@ export interface WorkerFactoryContext {
   applicationURL: string;
   baseURL: () => string;
   resources: ResourceAliases;
-  closeChild(id: string): Promise<unknown>;
+  control: WorkerControl;
 }
 
 interface QueuedMessage {
@@ -26,6 +28,7 @@ interface WorkerLifecycle {
   closed: boolean;
   queue: QueuedMessage[];
   port: MessagePort | null;
+  broker?: { close(): void };
   id: string;
   closeRequested: boolean;
 }
@@ -126,7 +129,7 @@ export function createWorkerFactory(
   function revoke(lifecycle: WorkerLifecycle) {
     if (lifecycle.closeRequested) return;
     lifecycle.closeRequested = true;
-    context.closeChild(lifecycle.id).catch(() => {});
+    context.control('close', [], lifecycle.id).catch(() => {});
   }
 
   function failed(worker: Worker, lifecycle: WorkerLifecycle, message: string) {
@@ -134,6 +137,7 @@ export function createWorkerFactory(
     lifecycle.closed = true;
     lifecycle.queue.length = 0;
     closePort(lifecycle);
+    lifecycle.broker?.close();
     revoke(lifecycle);
     apply(nativeTerminate, worker, []);
     apply(nativeDispatch, worker, [
@@ -159,6 +163,7 @@ export function createWorkerFactory(
     lifecycle.closed = true;
     lifecycle.queue.length = 0;
     closePort(lifecycle);
+    lifecycle.broker?.close();
     revoke(lifecycle);
     return apply(nativeTerminate, this, []);
   });
@@ -210,14 +215,24 @@ export function createWorkerFactory(
               lifecycle.closed = true;
               lifecycle.queue.length = 0;
               closePort(lifecycle);
+              lifecycle.broker?.close();
               revoke(lifecycle);
             }
           },
         ]);
+        const broker = new NativeChannel();
+        const brokerLocal: MessagePort = apply(getPort1, broker, []);
+        const brokerRemote: MessagePort = apply(getPort2, broker, []);
+        lifecycle.broker = serveWorkerParent(
+          brokerLocal,
+          id,
+          context.control,
+          () => !lifecycle.closed,
+        );
         // This first native message precedes every message from the returned handle.
         apply(nativePost, worker, [
           internalRecord({ type: 'pf-context-bootstrap' }),
-          [port2],
+          internalArray([port2, brokerRemote]),
         ]);
         apply(tools.nativeAdd, port1, [
           'message',

@@ -152,7 +152,7 @@ jobs:
       - run: npm run build
       - run: npx playwright install --with-deps chromium firefox
         timeout-minutes: 5
-      - name: Check window-owned worker closure and parent-selection control
+      - name: Check worker parent brokers and authorization controls
         id: worker_closure
         run: |
           rm -f formal/runtime-verification/worker-closure-browser.json

@@ -60,6 +60,8 @@ export const boundaries: readonly Boundary[] = [
     sources: [
       'src/runtime/contexts/worker-factory.ts',
       'src/runtime/contexts/worker-control.ts',
+      'src/runtime/contexts/worker-client.ts',
+      'src/runtime/contexts/worker-protocol.ts',
       'src/runtime/contexts/worker-guard.ts',
       'src/runtime/contexts/worker-realm.ts',
     ],

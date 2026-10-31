@@ -3,7 +3,6 @@ import {
   internalArray,
   internalMap,
   internalSet,
-  ownDescriptor,
   internalRecord,
 } from '../../shared/primordials.ts';
 import { sealRuntimeBindings } from '../bindings.ts';
@@ -18,16 +17,15 @@ import { installEffectPolicy } from '../enforcement/effects.ts';
 import { resourceAliases } from '../resource-aliases.ts';
 import { scopeContextStorage } from './storage.ts';
 import { relocateRuntimeModule } from '../modules.ts';
+import type { WorkerControl } from './worker-protocol.ts';
 import { createWorkerFactory } from './worker-factory.ts';
 import { createSharedWorkerFactory } from './shared-worker-factory.ts';
 const worker = self as unknown as DedicatedWorkerGlobalScope;
 const rawAdd = EventTarget.prototype.addEventListener;
 const rawImport = worker.importScripts;
-const rawFetch = fetch;
 const rawCreateURL = URL.createObjectURL;
 const rawRevokeURL = URL.revokeObjectURL;
 const NativeBlob = Blob;
-const responseOK = ownDescriptor(Response.prototype, 'ok')!.get!;
 function metadata(
   value: unknown,
   kind: 'dedicated-worker' | 'shared-worker',
@@ -138,6 +136,7 @@ export function readWorkerMetadata(kind: 'dedicated-worker' | 'shared-worker') {
 export function prepareWorkerRealm(
   context: WorkerBootstrapMetadata,
   listenerType: 'message' | 'connect',
+  control: WorkerControl,
 ) {
   prepareRuntimeIntrinsics();
   const tools = createPolicyTools();
@@ -160,15 +159,7 @@ export function prepareWorkerRealm(
       applicationURL: context.applicationURL,
       baseURL: () => scriptBase,
       resources,
-      closeChild: (id: string) =>
-        apply(rawFetch, worker, [
-          apply(
-            readHref,
-            new NativeURL(`__contexts/${id}/close`, context.applicationURL),
-            [],
-          ),
-          internalRecord({ method: 'POST', credentials: 'omit' }),
-        ]),
+      control,
     }),
   );
   const sharedFactory = createSharedWorkerFactory(
@@ -196,11 +187,6 @@ export function prepareWorkerRealm(
   const readOrigin = descriptor(NativeURL.prototype, 'origin')!.get!;
   const readHref = descriptor(NativeURL.prototype, 'href')!.get!;
   const runtimeOrigin: string = apply(readOrigin, new NativeURL(context.runtime), []);
-  const readyURL: string = apply(
-    readHref,
-    new NativeURL('__contexts/' + context.identity.id + '/ready', context.applicationURL),
-    [],
-  );
   const locationValues = internalMap<string, string>();
   const locationGetters = internalMap<string, Function>();
   for (const name of [
@@ -337,9 +323,7 @@ export function prepareWorkerRealm(
           entry = blob!;
         } else if (strings.startsWith(source, 'blob:'))
           throw new Error('Worker Blob bytes are missing');
-        const ready: Response = await apply(rawFetch, worker, [readyURL]);
-        if (!apply(responseOK, ready, []))
-          throw new Error('Worker context could not enter running state');
+        await control('verify', []);
         applicationListenerReady = notify;
         if (module) await import(entry);
         else apply(rawImport, worker, [entry]);
