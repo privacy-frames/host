@@ -78,6 +78,14 @@ leaves authorized requests intact. A checked counterexample authorizes a request
 unregisters its scope, then transmits it. This is a model result, not a newly
 observed browser schedule.
 
+The separate [same-scope queue experiment and model](registration-fence.md)
+refine that scheduling question. The prefix model permits unregistration between
+authorization and transmission without modeling native API job ordering. Its
+counterexample must not be presented as an observed same-scope
+`update()`/`unregister()` sequence. The queue model establishes a conditional
+fence; it does not cancel effects transmitted before acknowledgment or prevent a
+later covering registration.
+
 Fourteen checked propositions cover prefix separation, initial safety,
 single-step preservation, arbitrary finite traces, the no-network consequence
 and concrete counterexamples. Safety requires every registration to be

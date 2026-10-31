@@ -88,7 +88,7 @@
     "formal/publisher-routes.md": "54b1b7cedf2260ff34e264c8827753b1caea113b533c7473926f428111ef6022",
     "formal/route-review/README.md": "def9f578cf05dbd6ded8f518833ba924d81acfce8a9d43fbd003679987cf77bd",
     "formal/route-review/triage.json": "3e5ab07e2747d1d329f13be013bc5268671c054ee8c5470e9e952b8a72a7e855",
-    "formal/runtime-verification/README.md": "baf6eed1a7474d1cfe1c3cddb67143637fe5697ad48422d861d26adfedeed4d2",
+    "formal/runtime-verification/README.md": "757b7cf64951a3a21bae50ed7fa01f70f7cdd48d19b410cd3f45578c93bf7e73",
     "formal/runtime-verification/document-publication-check.ts": "53860e7c9687d3c59499d9effbd30afc9b569144c174a786600af2935e65ef7f",
     "formal/runtime-verification/document-publication-compatibility.json": "1088389b2b01cb451f58858438a5b06127813c31733b91a93b35450fb67fe90c",
     "formal/runtime-verification/document-publication-result.json": "53d60db8b0fd747e4c76aa43b4ac05b7ebca11ba3aaf1d17a6df71ad812dce41",
@@ -197,13 +197,13 @@
     "formal/runtime-verification/message-resource-broker.md": "345bae8945881bf052e83f23cd209f7da19660a7286e450877f27112a63aae85",
     "formal/runtime-verification/registration-overlap.ts": "d05906f8b74054d9b35b7e4867590282eb0b66fe424b37a49a79e54619e43861",
     "formal/runtime-verification/registration-overlap.json": "7069acdfc3df48645721c881e9d3457e02fb92f8f1aa8757776437f4682e5b09",
-    "formal/runtime-verification/registration-overlap.md": "3277a6cef765881ac87e9a0b2f1c35314c6d8bfe32450a53304d9b35d9787dad",
+    "formal/runtime-verification/registration-overlap.md": "bc94f026455b7fe646d5596ae5061489ee449f014056ea32b9a234b0b47ff7d0",
     "formal/runtime-verification/boundaries.ts": "80151393d0bc34c4af708d88395d93321e424c9b534760b1caacf0cbc3989326",
     "formal/runtime-verification/implementation-inventory.json": "b7b29f2c4d519a4483ba263ff294a16e9d68c463a41b7983ba77da82b5899bd3",
     "formal/runtime-verification/inventory.ts": "30a433edc9bc21d25c4790a9540e6eeb271f382c12f4fefeccd1dba1b75a47c2",
     "formal/runtime-verification/RegistrationLifetime.lean": "331eb33dd0d4dc0abd3e2b6b29818b2abee9d97f2267f8ec9d921c449781a2b3",
-    "formal/runtime-verification/registration-lifetime-check.ts": "d3b5b7453badf4efbd66be71c0d2cbd91702a4dba5c28181e92690f9063a435e",
-    "formal/runtime-verification/registration-lifetime.json": "611782fadf9f94fa1423fe051694013b0adab34ffe7d93f6fe16f8ea4becb3c6",
+    "formal/runtime-verification/registration-lifetime-check.ts": "2053d82633b4b016bcb177827c0640152d35a7d091d937f9314ec647452c7d31",
+    "formal/runtime-verification/registration-lifetime.json": "312da0da4ce7b511c759a95aeb16aeb49812360b30ca4556887ce3e0f2d18d6b",
     "formal/runtime-verification/root-content-compatibility.json": "3d132bf67e97e4ca98f3239dc04413c50dffc7fc8b82dc12a17977f49959750d",
     "test/content-broker.test.ts": "790555b13fa71f965a0b72ae0962dbf68af461d318e1cda62cfa1d2bcac5360c",
     "src/runtime/controller-client.ts": "a420699a6ebeaf45c0bdc4a87b9a6f1f0d8e102fae165864f601846c6df9ce33",
@@ -276,7 +276,12 @@
     "formal/runtime-verification/authority-predicate.md": "be5b7c553fc9f0e515a923800e30b7b5855e621e3881ee4f4f90158e76f2e902",
     "formal/runtime-verification/authority-predicate.json": "bbe289c18c770c0564ca5d02cc6f9ba2eea5170fd1c452bcaa65046657b8c1c4",
     "formal/runtime-verification/gillian-report.test.ts": "a4d5550e24ac238acb9ab35c3bf4e2aa3833979bd42195d9439a9613230c7fd6",
-    "formal/runtime-verification/authority-predicate-check.ts": "245819db13befe006f57ce873babb7a56c7cf9912d66eae2fa79ec98461af25a"
+    "formal/runtime-verification/authority-predicate-check.ts": "245819db13befe006f57ce873babb7a56c7cf9912d66eae2fa79ec98461af25a",
+    "formal/runtime-verification/registration-fence.ts": "cd933b873dead7104b07717d633912616ce18aa89ad0d9196b0d9378c96126ad",
+    "formal/runtime-verification/registration-fence.json": "bb83363c29ba1fc3579dfc8a650752e5b4501fc5e7159c84af85cfb9f41474d1",
+    "formal/runtime-verification/registration-fence.md": "9ebc2e76ad0f94f489b1f03a7a1dd95e51a596fddcf6b721f6104e807cb7df3d",
+    "formal/runtime-verification/RegistrationQueue.lean": "4d5d4503935296a4d513984e1441c6a8284a185a553d9b3968a17f8bff38bfd3",
+    "formal/runtime-verification/registration-queue.json": "c9e837e99b16c4ab838f59f6e0bd9ee547eb56596427553a6bfbf87bcd30e071"
   },
   "claims": [
     {
@@ -1432,6 +1437,25 @@
             "formal/runtime-verification/registration-lifetime-check.ts",
             "formal/runtime-verification/registration-lifetime.json"
           ]
+        },
+        {
+          "kind": "discovery",
+          "description": "Nine native samples across Chromium, Firefox and forced-stale Firefox hold an independently received update response. Unregister remains pending until release; the later queued update fails without a second request, while the no-unregister control emits two. The unchanged-script fixture retains the old worker reference and records partial failure receipts. This is selected same-scope ordering evidence, not a global drain or production launch barrier.",
+          "paths": [
+            "formal/runtime-verification/registration-fence.ts",
+            "formal/runtime-verification/registration-fence.json",
+            "formal/runtime-verification/registration-fence.md"
+          ]
+        },
+        {
+          "kind": "formal_theorem",
+          "description": "Nine Lean queue theorems establish that an acknowledged single-scope unregister fences further modeled update requests for arbitrary finite traces, subject to no registration replacement and serial job execution. Earlier transmitted requests remain counted. Queue bypass, retained registration and unchecked preservation proofs are rejected. Exact axiom reports require propext for six theorems and no axioms for three concrete cases. Native refinement, changed-script lifecycle work and other queues remain open.",
+          "paths": [
+            "formal/runtime-verification/RegistrationQueue.lean",
+            "formal/runtime-verification/registration-lifetime-check.ts",
+            "formal/runtime-verification/registration-queue.json",
+            "formal/runtime-verification/registration-fence.md"
+          ]
         }
       ],
       "open_obligations": [
@@ -1443,7 +1467,8 @@
         "Prevent later launch/registration activity from reviving a private execution scope while its clients or queued work remain; distinct-scope observations and the abstract lemma do not implement or verify this allocation/lifetime condition.",
         "The prefix/queue model now accounts for ancestor and descendant coverage and distinguishes authorization from transmission. Establish its initial no-authorized-private-request condition, actual URL/registration lookup semantics, controller inheritance and native pending-operation correspondence; none follows from absence of the old exact registration.",
         "The eighteen-case local-document experiment finds no uniform child controller transport after unregistration: Chromium Blob documents have no controller, and Firefox local-child requests time out while parent controls succeed. Integrate an authenticated parent transport rather than assuming inherited controller delivery.",
-        "Production document and popup configuration/content now use an owning-parent channel with native client and generation admission. Prove private-channel/factory ownership through all callers and complete local bootstrap/resource delivery and registration lifetime; fixed-resource relay success does not establish C4."
+        "Production document and popup configuration/content now use an owning-parent channel with native client and generation admission. Prove private-channel/factory ownership through all callers and complete local bootstrap/resource delivery and registration lifetime; fixed-resource relay success does not establish C4.",
+        "Connect the same-scope queue fence to actual soft-update scheduling and production launch; account for changed-script installation/activation, extended events, other queues and later covering registrations. The prefix model counterexample permits schedules not established for native same-scope API jobs; neither model proves cancellation of prior transmitted requests."
       ],
       "disposition": "unverified",
       "control_status": {

@@ -79,6 +79,29 @@ jobs:
         with:
           name: context-storage-contract
           path: results/contexts/controller-storage.json
+  registration-fence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium firefox
+        timeout-minutes: 5
+      - name: Observe same-scope update and unregister ordering
+        id: registration_fence
+        run: |
+          rm -f formal/runtime-verification/registration-fence.json
+          npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --types node --target ES2022 --module NodeNext --moduleResolution NodeNext --allowImportingTsExtensions --lib ES2022,DOM,WebWorker --skipLibCheck formal/runtime-verification/registration-fence.ts
+          node formal/runtime-verification/registration-fence.ts
+      - uses: actions/upload-artifact@v4
+        if: always() && (steps.registration_fence.outcome == 'success' || steps.registration_fence.outcome == 'failure')
+        with:
+          name: native-registration-fence
+          path: formal/runtime-verification/registration-fence.json
   maintenance:
     runs-on: ubuntu-latest
     timeout-minutes: 15

@@ -1,0 +1,616 @@
+{
+  "scope": "Native same-scope update/unregister ordering with an independently observed HTTP response gate. Script request arrival precedes the gate; this is not interception before transmission, a production launch barrier or a whole-browser drain proof.",
+  "completed": true,
+  "runnerSHA256": "cd933b873dead7104b07717d633912616ce18aa89ad0d9196b0d9378c96126ad",
+  "browserProfileSHA256": "c161489dfce9c3124474d1416440c9876b0a8fce329d2f09fa16f99af744e3a0",
+  "packageLockSHA256": "4e8c7b0964047f1c9fd3f82956b08d381817fa86fb2f7d47d4a10458dc5e62ed",
+  "serviceWorkerSHA256": "b43fd9ff100ddd552b73054b7c2ce5655a4686a179b84576767e82be1ac6a6e2",
+  "observationMilliseconds": 1000,
+  "heldObservationMilliseconds": 500,
+  "rows": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStaleCheck": false,
+      "mode": "idle-unregister",
+      "initial": {
+        "token": "e98b36f0-6cd4-4b0f-b5cf-0ec98f947ab8",
+        "scope": "http://127.0.0.1:32983/one/"
+      },
+      "retainedToken": "e98b36f0-6cd4-4b0f-b5cf-0ec98f947ab8",
+      "unregisterBeforeRelease": false,
+      "registrations": [],
+      "outcome": {
+        "events": [
+          {
+            "name": "unregister",
+            "operation": "unregister",
+            "event": "start",
+            "at": 1793478970721
+          },
+          {
+            "name": "update-after",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478970728
+          }
+        ],
+        "outcomes": [
+          {
+            "name": "unregister",
+            "ok": true,
+            "value": true,
+            "at": 1793478970724
+          },
+          {
+            "name": "update-after",
+            "ok": false,
+            "error": "TypeError: Failed to update a ServiceWorker for scope ('http://127.0.0.1:32983/one/') with script ('http://127.0.0.1:32983/sw.js'): Not found",
+            "at": 1793478970728
+          }
+        ]
+      },
+      "requests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStaleCheck": false,
+      "mode": "held-update-unregister",
+      "initial": {
+        "token": "8fb349db-f9cc-4bbf-8252-5d5467a48b9a",
+        "scope": "http://127.0.0.1:32983/one/"
+      },
+      "retainedToken": "8fb349db-f9cc-4bbf-8252-5d5467a48b9a",
+      "beforeRelease": {
+        "events": [
+          {
+            "name": "update-before",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478972332
+          },
+          {
+            "name": "unregister",
+            "operation": "unregister",
+            "event": "start",
+            "at": 1793478972336
+          },
+          {
+            "name": "update-after",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478972336
+          }
+        ],
+        "outcomes": []
+      },
+      "releasedAt": 1793478972839,
+      "unregisterBeforeRelease": false,
+      "connectionClosedBeforeRelease": false,
+      "registrations": [],
+      "outcome": {
+        "events": [
+          {
+            "name": "update-before",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478972332
+          },
+          {
+            "name": "unregister",
+            "operation": "unregister",
+            "event": "start",
+            "at": 1793478972336
+          },
+          {
+            "name": "update-after",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478972336
+          }
+        ],
+        "outcomes": [
+          {
+            "name": "update-before",
+            "ok": true,
+            "value": {},
+            "at": 1793478972844
+          },
+          {
+            "name": "unregister",
+            "ok": true,
+            "value": true,
+            "at": 1793478972845
+          },
+          {
+            "name": "update-after",
+            "ok": false,
+            "error": "TypeError: Failed to update a ServiceWorker for scope ('http://127.0.0.1:32983/one/') with script ('http://127.0.0.1:32983/sw.js'): Not found",
+            "at": 1793478972845
+          }
+        ]
+      },
+      "requests": [
+        {
+          "path": "/sw.js",
+          "time": 1793478972333,
+          "held": true
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStaleCheck": false,
+      "mode": "held-update-control",
+      "initial": {
+        "token": "d340bc04-c12a-49ed-ac4b-5bec6e6ae65b",
+        "scope": "http://127.0.0.1:32983/one/"
+      },
+      "retainedToken": "d340bc04-c12a-49ed-ac4b-5bec6e6ae65b",
+      "beforeRelease": {
+        "events": [
+          {
+            "name": "update-before",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478974450
+          }
+        ],
+        "outcomes": []
+      },
+      "releasedAt": 1793478974956,
+      "unregisterBeforeRelease": false,
+      "connectionClosedBeforeRelease": false,
+      "registrations": [
+        "http://127.0.0.1:32983/one/"
+      ],
+      "outcome": {
+        "events": [
+          {
+            "name": "update-before",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478974450
+          },
+          {
+            "name": "update-after",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478974962
+          }
+        ],
+        "outcomes": [
+          {
+            "name": "update-before",
+            "ok": true,
+            "value": {},
+            "at": 1793478974960
+          },
+          {
+            "name": "update-after",
+            "ok": true,
+            "value": {},
+            "at": 1793478974966
+          }
+        ]
+      },
+      "requests": [
+        {
+          "path": "/sw.js",
+          "time": 1793478974452,
+          "held": true
+        },
+        {
+          "path": "/sw.js",
+          "time": 1793478974963,
+          "held": false
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": false,
+      "mode": "idle-unregister",
+      "initial": {
+        "token": "705294ed-ebaf-4c25-a0f9-1be19665536e",
+        "scope": "http://127.0.0.1:32983/one/"
+      },
+      "retainedToken": "705294ed-ebaf-4c25-a0f9-1be19665536e",
+      "unregisterBeforeRelease": false,
+      "registrations": [],
+      "outcome": {
+        "events": [
+          {
+            "name": "unregister",
+            "operation": "unregister",
+            "event": "start",
+            "at": 1793478978107
+          },
+          {
+            "name": "update-after",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478978115
+          }
+        ],
+        "outcomes": [
+          {
+            "name": "unregister",
+            "ok": true,
+            "value": true,
+            "at": 1793478978110
+          },
+          {
+            "name": "update-after",
+            "ok": false,
+            "error": "TypeError: Failed to update the ServiceWorker for scope http://127.0.0.1:32983/one/ because the registration has been uninstalled since the update was scheduled.",
+            "at": 1793478979218
+          }
+        ]
+      },
+      "requests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": false,
+      "mode": "held-update-unregister",
+      "initial": {
+        "token": "9b60f8c8-d373-43bb-a2bc-2cca2cf4b1c8",
+        "scope": "http://127.0.0.1:32983/one/"
+      },
+      "retainedToken": "9b60f8c8-d373-43bb-a2bc-2cca2cf4b1c8",
+      "beforeRelease": {
+        "events": [
+          {
+            "name": "update-before",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478981097
+          },
+          {
+            "name": "unregister",
+            "operation": "unregister",
+            "event": "start",
+            "at": 1793478982186
+          },
+          {
+            "name": "update-after",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478982186
+          }
+        ],
+        "outcomes": []
+      },
+      "releasedAt": 1793478982690,
+      "unregisterBeforeRelease": false,
+      "connectionClosedBeforeRelease": false,
+      "registrations": [],
+      "outcome": {
+        "events": [
+          {
+            "name": "update-before",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478981097
+          },
+          {
+            "name": "unregister",
+            "operation": "unregister",
+            "event": "start",
+            "at": 1793478982186
+          },
+          {
+            "name": "update-after",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478982186
+          }
+        ],
+        "outcomes": [
+          {
+            "name": "update-before",
+            "ok": true,
+            "value": {},
+            "at": 1793478982692
+          },
+          {
+            "name": "unregister",
+            "ok": true,
+            "value": true,
+            "at": 1793478982692
+          },
+          {
+            "name": "update-after",
+            "ok": false,
+            "error": "TypeError: Failed to update the ServiceWorker for scope http://127.0.0.1:32983/one/ because the registration has been uninstalled since the update was scheduled.",
+            "at": 1793478983187
+          }
+        ]
+      },
+      "requests": [
+        {
+          "path": "/sw.js",
+          "time": 1793478982183,
+          "held": true
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": false,
+      "mode": "held-update-control",
+      "initial": {
+        "token": "5abfa6c9-dc87-403f-93a8-9b8ea02f05ec",
+        "scope": "http://127.0.0.1:32983/one/"
+      },
+      "retainedToken": "5abfa6c9-dc87-403f-93a8-9b8ea02f05ec",
+      "beforeRelease": {
+        "events": [
+          {
+            "name": "update-before",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478985042
+          }
+        ],
+        "outcomes": []
+      },
+      "releasedAt": 1793478986550,
+      "unregisterBeforeRelease": false,
+      "connectionClosedBeforeRelease": false,
+      "registrations": [
+        "http://127.0.0.1:32983/one/"
+      ],
+      "outcome": {
+        "events": [
+          {
+            "name": "update-before",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478985042
+          },
+          {
+            "name": "update-after",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478986557
+          }
+        ],
+        "outcomes": [
+          {
+            "name": "update-before",
+            "ok": true,
+            "value": {},
+            "at": 1793478986552
+          },
+          {
+            "name": "update-after",
+            "ok": true,
+            "value": {},
+            "at": 1793478987623
+          }
+        ]
+      },
+      "requests": [
+        {
+          "path": "/sw.js",
+          "time": 1793478986046,
+          "held": true
+        },
+        {
+          "path": "/sw.js",
+          "time": 1793478987620,
+          "held": false
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": true,
+      "mode": "idle-unregister",
+      "initial": {
+        "token": "a0e11427-08ad-4b09-90a6-68135e49ce6f",
+        "scope": "http://127.0.0.1:32983/one/"
+      },
+      "retainedToken": "a0e11427-08ad-4b09-90a6-68135e49ce6f",
+      "unregisterBeforeRelease": false,
+      "registrations": [],
+      "outcome": {
+        "events": [
+          {
+            "name": "unregister",
+            "operation": "unregister",
+            "event": "start",
+            "at": 1793478991016
+          },
+          {
+            "name": "update-after",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478991023
+          }
+        ],
+        "outcomes": [
+          {
+            "name": "unregister",
+            "ok": true,
+            "value": true,
+            "at": 1793478991017
+          },
+          {
+            "name": "update-after",
+            "ok": false,
+            "error": "TypeError: Failed to update the ServiceWorker for scope http://127.0.0.1:32983/one/ because the registration has been uninstalled since the update was scheduled.",
+            "at": 1793478992024
+          }
+        ]
+      },
+      "requests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": true,
+      "mode": "held-update-unregister",
+      "initial": {
+        "token": "7231e56b-4bba-4958-8bb5-27c145da78bf",
+        "scope": "http://127.0.0.1:32983/one/"
+      },
+      "retainedToken": "7231e56b-4bba-4958-8bb5-27c145da78bf",
+      "beforeRelease": {
+        "events": [
+          {
+            "name": "update-before",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478993858
+          },
+          {
+            "name": "unregister",
+            "operation": "unregister",
+            "event": "start",
+            "at": 1793478994961
+          },
+          {
+            "name": "update-after",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478994961
+          }
+        ],
+        "outcomes": []
+      },
+      "releasedAt": 1793478995466,
+      "unregisterBeforeRelease": false,
+      "connectionClosedBeforeRelease": false,
+      "registrations": [],
+      "outcome": {
+        "events": [
+          {
+            "name": "update-before",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478993858
+          },
+          {
+            "name": "unregister",
+            "operation": "unregister",
+            "event": "start",
+            "at": 1793478994961
+          },
+          {
+            "name": "update-after",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478994961
+          }
+        ],
+        "outcomes": [
+          {
+            "name": "update-before",
+            "ok": true,
+            "value": {},
+            "at": 1793478995469
+          },
+          {
+            "name": "unregister",
+            "ok": true,
+            "value": true,
+            "at": 1793478995469
+          },
+          {
+            "name": "update-after",
+            "ok": false,
+            "error": "TypeError: Failed to update the ServiceWorker for scope http://127.0.0.1:32983/one/ because the registration has been uninstalled since the update was scheduled.",
+            "at": 1793478995963
+          }
+        ]
+      },
+      "requests": [
+        {
+          "path": "/sw.js",
+          "time": 1793478994959,
+          "held": true
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": true,
+      "mode": "held-update-control",
+      "initial": {
+        "token": "06d5cc37-d855-4948-b51c-098c48e5fc5c",
+        "scope": "http://127.0.0.1:32983/one/"
+      },
+      "retainedToken": "06d5cc37-d855-4948-b51c-098c48e5fc5c",
+      "beforeRelease": {
+        "events": [
+          {
+            "name": "update-before",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478997808
+          }
+        ],
+        "outcomes": []
+      },
+      "releasedAt": 1793478999317,
+      "unregisterBeforeRelease": false,
+      "connectionClosedBeforeRelease": false,
+      "registrations": [
+        "http://127.0.0.1:32983/one/"
+      ],
+      "outcome": {
+        "events": [
+          {
+            "name": "update-before",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478997808
+          },
+          {
+            "name": "update-after",
+            "operation": "update",
+            "event": "start",
+            "at": 1793478999320
+          }
+        ],
+        "outcomes": [
+          {
+            "name": "update-before",
+            "ok": true,
+            "value": {},
+            "at": 1793478999318
+          },
+          {
+            "name": "update-after",
+            "ok": true,
+            "value": {},
+            "at": 1793479000325
+          }
+        ]
+      },
+      "requests": [
+        {
+          "path": "/sw.js",
+          "time": 1793478998811,
+          "held": true
+        },
+        {
+          "path": "/sw.js",
+          "time": 1793479000324,
+          "held": false
+        }
+      ]
+    }
+  ],
+  "completedAt": "2026-10-31T20:36:41.639Z"
+}

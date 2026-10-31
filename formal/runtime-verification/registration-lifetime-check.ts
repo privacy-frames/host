@@ -7,7 +7,9 @@ import { resolve } from 'node:path';
 const root = resolve(import.meta.dirname, '../..');
 const scratch = resolve(root, '.tools/registration-lifetime');
 const receipt = new URL('./registration-lifetime.json', import.meta.url);
+const queueReceipt = new URL('./registration-queue.json', import.meta.url);
 await rm(receipt, { force: true });
+await rm(queueReceipt, { force: true });
 await rm(scratch, { recursive: true, force: true });
 await mkdir(scratch, { recursive: true });
 const lean = process.env.PF_LEAN || resolve(root, '.tools/lean-4.35.0-linux/bin/lean');
@@ -161,4 +163,128 @@ await writeFile(
 );
 console.log(
   'Fourteen prefix/queue theorems checked; delivery, exact-scope-only and unchecked-proof controls rejected',
+);
+
+// The prefix model deliberately permits schedules that the per-scope API queue
+// can exclude. Check that queue separately, without claiming browser refinement.
+const queueSource = await readFile(
+  new URL('./RegistrationQueue.lean', import.meta.url),
+  'utf8',
+);
+const queueTheorems = [
+  'initial_well_formed',
+  'held_update_blocks_queue',
+  'step_preserves_well_formed',
+  'acknowledged_step_no_request',
+  'arbitrary_trace_well_formed',
+  'acknowledged_arbitrary_trace_no_request',
+  'held_unregister_not_acknowledged',
+  'fence_does_not_erase_prior_request',
+  'without_unregister_two_requests',
+];
+const queueReports = (source: string) =>
+  source +
+  '\n' +
+  queueTheorems.map((name) => `#print axioms RegistrationQueue.${name}`).join('\n') +
+  '\n';
+const queueExpected = queueTheorems
+  .map((name, index) =>
+    index < 6
+      ? `'RegistrationQueue.${name}' depends on axioms: [propext]`
+      : `'RegistrationQueue.${name}' does not depend on any axioms`,
+  )
+  .join('\n');
+function validateQueueReports(output: string) {
+  assert.equal(output.trim(), queueExpected, 'Unexpected queue theorem/axiom reports');
+}
+const queueChecked = queueReports(queueSource);
+const queuePath = resolve(scratch, 'QueueChecked.lean');
+await writeFile(queuePath, queueChecked);
+const queueProof = check(queuePath);
+assert.equal(queueProof.status, 0, queueProof.stdout + queueProof.stderr);
+assert.equal(queueProof.stderr, '');
+validateQueueReports(queueProof.stdout);
+await writeFile(resolve(scratch, 'queue-proof.log'), queueProof.stdout);
+const queueControls = [];
+for (const control of [
+  {
+    name: 'queue-bypass-held-update',
+    anchor: 'if state.updateInFlight then state',
+    replacement: 'if False then state',
+  },
+  {
+    name: 'queue-retain-registration',
+    anchor: 'registered := false, pending := rest, unregisterAcknowledged := true',
+    replacement: 'registered := true, pending := rest, unregisterAcknowledged := true',
+  },
+]) {
+  assert.equal(queueSource.split(control.anchor).length, 2);
+  const faulty = queueSource.replace(control.anchor, control.replacement);
+  const path = resolve(scratch, control.name + '.lean');
+  await writeFile(path, faulty);
+  const result = check(path);
+  assert.equal(result.status, 1, result.stdout + result.stderr);
+  assert.match(result.stdout, /error: (Tactic|Type mismatch|Application type mismatch)/);
+  await writeFile(resolve(scratch, control.name + '.log'), result.stdout + result.stderr);
+  queueControls.push({
+    name: control.name,
+    disposition: 'proof-rejected',
+    sourceSHA256: hash(faulty),
+    outputSHA256: hash(result.stdout + result.stderr),
+  });
+}
+const queueProofStart = queueSource.indexOf('theorem step_preserves_well_formed ');
+const queueProofEnd = queueSource.indexOf('\ntheorem acknowledged_step_no_request ');
+const queueBody = queueSource.indexOf(':= by\n', queueProofStart);
+assert(queueProofStart >= 0 && queueBody > queueProofStart && queueProofEnd > queueBody);
+const queueUnchecked = queueReports(
+  queueSource.slice(0, queueBody) + ':= by\n  sorry\n' + queueSource.slice(queueProofEnd),
+);
+const queueUncheckedPath = resolve(scratch, 'queue-unchecked-proof.lean');
+await writeFile(queueUncheckedPath, queueUnchecked);
+const queueUncheckedResult = check(queueUncheckedPath);
+assert.equal(queueUncheckedResult.status, 0);
+assert.match(queueUncheckedResult.stdout, /depends on axioms:.*sorryAx/);
+const strippedReports = queueUncheckedResult.stdout
+  .split('\n')
+  .filter((line) => line.startsWith("'RegistrationQueue."))
+  .join('\n');
+assert.throws(() => validateQueueReports(strippedReports), /Unexpected queue theorem/);
+await writeFile(
+  resolve(scratch, 'queue-unchecked-proof.log'),
+  queueUncheckedResult.stdout,
+);
+queueControls.push({
+  name: 'queue-unchecked-proof',
+  disposition: 'axiom-report-rejected',
+  sourceSHA256: hash(queueUnchecked),
+  outputSHA256: hash(queueUncheckedResult.stdout + queueUncheckedResult.stderr),
+});
+await writeFile(
+  queueReceipt,
+  JSON.stringify(
+    {
+      scope:
+        'Unbounded single-scope update/unregister queue model. An acknowledgment fences future modeled updates without erasing earlier requests. This is not a browser refinement proof, global job drain or production launch barrier.',
+      preconditions: [
+        'One scope and storage key; no re-registration, replacement or external modification of registration state during the modeled lifetime.',
+        'Update and unregister jobs start serially; an active update must finish before the next job starts.',
+        'Requests are counted at update start, before response completion; earlier requests remain counted after unregistration.',
+        'Changed-worker install/activate work, other browser queues, native controller inheritance, scope selection and production launch correspondence remain outside this model.',
+      ],
+      modelSHA256: hash(queueSource),
+      checkedSourceSHA256: hash(queueChecked),
+      runnerSHA256: hash(await readFile(import.meta.filename)),
+      leanVersion: version,
+      leanExecutableSHA256: hash(await readFile(lean)),
+      proofOutput: queueProof.stdout.trim(),
+      controls: queueControls,
+      completedAt: new Date().toISOString(),
+    },
+    null,
+    2,
+  ) + '\n',
+);
+console.log(
+  'Nine queue theorems checked; ordering, registration and unchecked-proof controls rejected',
 );

@@ -1,171 +1,177 @@
 # Completing the runtime confinement argument
 
-This plan orders the remaining work under the eight stages in
-[the verification programme](README.md). Its starting point is revision
-`f680d8efa24b2f483d738067534a522fc816fe54`. It does not replace the
-[C1–C8 contract](../threat-model.md) or treat earlier component results as a
-complete runtime proof.
+This execution plan follows the eight stages in [the verification programme](README.md).
+It updates the remaining work against revision
+`087ca7e64f6401ee678f0e89d38fcb5997c382ee`. Implementation stays on the separate
+`runtime-confinement-proof` worktree and branch. This planning revision changes no
+runtime code or deployed site.
 
-The target remains a static web host running ordinary, unchanged JavaScript
-applications. After confinement starts, application activity must not cause a
-remote request, including a request to the runtime origin. Occurrence and timing
-matter even when a request carries no private bytes. Storage namespaces are a
-compatibility feature; enforcement-state integrity remains a security obligation.
+The target remains [C1–C8](../threat-model.md): confined application activity cannot
+cause a remote request or connection, including to the runtime origin. Whether
+and when a request occurs count as observations. Private state may already exist
+at launch. Ordinary asynchronous JavaScript, permitted prototype modification,
+unchanged applications and static hosting remain requirements. Storage namespaces
+are a compatibility feature; enforcement-state integrity remains necessary.
 
-## 1. Make each obligation independently reviewable
+## Starting position
 
-For each C1–C8 obligation, record the implementation owner, preconditions,
-postconditions, browser premises, proof artifact, native test and unresolved
-dependencies. Distinguish checked implementation properties, bounded observations,
-browser assumptions and known counterexamples. An unknown entry remains open.
+Atomic context binding and owner-scoped closure now use IndexedDB. Private parent
+channels and selected executable state functions have native tests or deductive
+checks. Complete protocol correspondence and browser coverage remain open.
 
-Pin the browser builds, configuration, toolchain and exact source used for each
-result. State which retained registrations, permissions, pending operations and
-stored policies setup can establish. Where setup cannot establish a prerequisite,
-record that gap rather than assuming a fresh browser profile.
+Application-triggered service-worker updates remain a demonstrated violation.
+The local registration-fence experiment adds nine native observations:
+same-scope unregistration waited for a held update, and a later update failed
+without a second request. It covers an unchanged script and selected schedules;
+it establishes neither a production launch barrier nor a whole-browser drain.
 
-Acceptance: the final theorem's premises can be traced to these entries without
-an assumption that already says all application effects are mediated.
+The latest model workflow also lacks a Chromium maintenance positive control:
+neither sample produced the expected update. Diagnose that missing observation
+before using the workflow as evidence for a repair.
 
-## 2. Resolve the demonstrated browser-maintenance channel
+## 1. State the theorem and its premises
 
-Application-triggered service-worker updates currently contradict C4. Start with
-the existing receiver-observed reproductions and preserve them as regression
-tests. Root content and window resource reads already use private messages;
-production context bootstraps and registration lifetime still need work.
+Define the external observations, confinement start, trusted host actions and
+application-influenced actions. Include retained registrations, permissions,
+policies and pending operations in the initial state.
 
-First integrate the tested parent-channel primitive into child-document and
-popup configuration and content delivery. Bind it to the actual owning Window,
-installation, generation and context lifetime. Install its receiver before guest
-listeners. Revalidate parent and child authority after asynchronous reads and
-close pending channels on cancellation. Retain preparation-before-execution.
-This step alone does not repair the maintenance channel.
+For each C1–C8 obligation, record its executable owner, assumptions, proof,
+browser contract and unresolved dependencies. Assign each premise a status:
+proved, reviewed browser contract, tested observation, assumption, counterexample
+or unresolved. An assumption that every application effect is mediated would
+assume the desired conclusion.
 
-Next evaluate local delivery for dedicated workers, shared workers, worklets,
-publisher executors, module graphs and DOM/CSS resources. Specify controller
-inheritance, covering registrations and queued updates alongside each proposed
-bootstrap. Blob URLs, unregistration and a fresh scope identifier are candidates
-with known limitations, not accepted repairs by themselves.
+**Acceptance:** one theorem statement and obligation table whose premises can be
+reviewed independently.
 
-Acceptance: the existing maintenance counterexamples stop producing remote
-requests in both supported browsers, with working positive controls. Exercise
-stale and overlapping registrations, concurrent launches, restart and queued
-work. Establish why the candidate prevents the underlying trigger beyond the
-observed schedules. A supported context that cannot establish confinement must
-fail before application execution.
+## 2. Map authority and simplify the implementation
 
-If this cannot be achieved with the available web primitives, retain the exact
-counterexample and identify the unmet platform contract. Tests alone cannot
-establish impossibility, and suppressing the observation cannot close C4.
+Trace actual entry points, dependencies, aliases, native references, getters,
+callbacks and asynchronous continuations. Start with resource delivery, context
+creation, management messages and durable enforcement records. The syntax
+inventory locates work; it does not establish ownership or coverage.
 
-## 3. Reduce and account for implementation authority
+For each boundary, specify private state, captured operations, accepted inputs,
+returned authority and immediate or deferred effects. Move decisions into private
+trusted components where that removes application-accessible enforcement state.
+Delete duplicated paths only when the remaining boundary has an explicit contract
+and compatibility evidence.
 
-Trace authority through the actual code, including aliases, dependencies, native
-references, getters, callbacks, promise continuations and messages. Use the syntax
-inventory to locate work; a complete list of call sites is not an ownership proof.
-For each adapter, specify both the authority it accepts and the authority it
-returns, including immediate and deferred effects.
+**Acceptance:** a reviewed authority map with an owner and contract for every
+identified authority-producing path. Unresolved references remain obligations.
 
-Move admission and lifecycle decisions into private trusted components where that
-removes application-accessible enforcement state. Keep the application-facing
-adapter small. Require every removed restriction to have a named remaining
-enforcement boundary and compatibility evidence. Do not spend this pass proving
-cross-application storage confidentiality, which is outside the agreed contract.
+## 3. Resolve context and registration lifetimes
 
-Acceptance: every authority-producing path has an implementation owner and a
-contract; unresolved native references and dependency behavior are explicit.
+Finish the registration-fence experiment, preserve its controls and add it to CI.
+Model the scope-specific update/unregister queue and relate it to the
+[Service Workers job algorithms](https://w3c.github.io/ServiceWorker/#schedule-job).
+Review changed scripts, install/activate work, overlapping registrations,
+controller retention, restart and work already queued at launch. Unregistration
+must not be treated as cancellation of an already transmitted request.
 
-## 4. Extend proofs from state helpers to complete protocols
+Then evaluate production bootstrap and delivery. Private root-content and selected
+parent-channel reads already exist. HTTP shells, workers, modules, worklets,
+publisher executors and DOM/CSS resources still need an account of browser
+maintenance. Evaluate local delivery and registration lifetime together; earlier
+experiments rule out treating Blob URLs or unregistration alone as the repair.
 
-Use the selected direct JavaScript verification method on the executable
-authorization, admission and publication components. Begin with callers of the
-already-checked document begin/cancel functions. Prove that callers own the state
-the helper contracts require and that permitted prototype mutation cannot change
-that state or its captured enforcement operations.
+For each supported context, identify the event that grants usable execution
+authority. Establish preparation before that event and confinement of pending work
+after closure or replacement. Preserve offline relaunch and unchanged applications.
 
-Cover malformed inputs, exceptions, reentrancy, asynchronous suspension,
-generation changes, cancellation and resource failure. Define a linearization
-point for each grant, read and revocation. Resolve the demonstrated multi-instance
-registry binding race by repairing it or proving why the conflicting execution
-cannot occur or cannot violate C1–C8.
+**Acceptance:** prevent the original maintenance counterexample through an
+explained mechanism, with working controls in both browsers. If no candidate meets
+the contract, retain the reproduction, identify the missing platform primitive
+and leave the full claim open.
 
-Use the lifecycle models for arbitrary execution lengths, queues, replacement
-and persistence. Connect each model transition to an executable operation and
-show how implementation steps preserve the abstraction, including steps that do
-not change modeled state. Check the correspondence itself; trace acceptance only
-covers the traces exercised.
+## 4. Verify executable protocols and model correspondence
 
-Acceptance: component contracts are checked, callers establish their premises,
-and composition covers each supported context protocol. Publish the trusted
-semantics, extraction, compiler, verifier and solver assumptions.
+Extend direct JavaScript verification from the checked state helpers and authority
+predicate to their callers. Establish heap ownership, validated inputs and captured
+operations under prototype mutation. Include exceptions, reentrancy, malformed
+messages and suspension across changes of authority.
 
-## 5. Establish coverage of browser effects
+Define a linearization point for each grant, delivery and revocation. Verify the
+context-store transaction callbacks and connect commits to registry transitions.
+A browser atomicity contract does not prove its callback implementation.
 
-Review specification algorithms and retained browser state as well as API names.
-Include HTML/CSS loads, navigation, connections, permissions, identity mechanisms,
-background agents, service-worker maintenance and handoffs to other actors.
-Repeat the analysis for every supported context kind.
+Define a relation from concrete state to lifecycle-model state. Show that each
+executable step corresponds to a permitted transition or preserves the abstraction
+without changing modeled state. Prove initialization and preservation for arbitrary
+finite executions. Retain bounded trace comparisons as tests of this relation.
 
-For each mechanism, record its prerequisites, specification path, reachable
-authority, immediate or queued effect and disposition: mediated, unavailable
-under an established prerequisite, or harmless for a stated reason. Record
-unknown mechanisms and dependencies. Review browser implementation and test
-material where the relied-on behavior is underspecified or differs in practice.
+**Acceptance:** checked contracts, caller obligations and refinement lemmas.
+Record trusted semantics, extraction, compiler, verifier and solver assumptions.
+Verifier output is not an independently checked proof certificate unless a
+separate checker actually checks it.
 
-Use WebSpec only for behavior represented in its pinned model. A model omitting
-registration updates cannot discharge the update obligation. State the universe
-covered by any completeness claim and the browser contracts outside that model.
+## 5. Justify coverage of browser communication
 
-Acceptance: every identified effect path has a justified disposition and no
-unresolved path is counted as covered. Browser upgrades invalidate the affected
-coverage claims until reviewed.
+Derive an effect catalogue from specification algorithms, browser source where
+needed, exposed interfaces, markup, CSS and retained state. Include direct network
+APIs, navigation, identity and permissions, background agents, maintenance and
+handoffs to other actors. Review every supported context kind.
 
-## 6. Test the assumptions and test the tests
+Record prerequisites, reachable authority, queued effects and enforcement for
+each path. Classify it as mediated, unavailable under an established prerequisite,
+or harmless for a stated reason. Unknown paths stay open.
 
-For each relied-on browser restriction, run a confined attempt and a working
-unrestricted control against an independent receiver. Where applicable, remove
-that actual enforcement step in a temporary test build and require the test to
-detect the resulting failure. Keep faulty builds out of deployed artifacts.
+Use WebSpec only for behavior represented in its pinned semantics. The current
+assessment found that its worker abstraction omits the registration/update
+lifecycle needed here. Extend a model only for a concrete obligation, with browser
+correspondence reviewed separately.
 
-Include HTTP, connection establishment, DNS and relevant non-HTTP transports;
-fixed-URL effects count. Exercise retained state, pending operations, nested
-contexts, prototype mutation, malformed messages, interrupted preparation and
-resource loss. Translate model counterexamples into implementation regressions.
+**Acceptance:** no unresolved communication path in the declared, reviewed browser
+environment. Explain how the catalogue was derived and where its coverage ends;
+an API-name inventory alone cannot establish exhaustiveness. Browser changes
+reopen affected premises.
 
-Acceptance: each receipt identifies source, artifacts, browser configuration,
-receiver observations and observation bounds. Missing positive controls leave
-missing evidence. Successful bounded tests support the stated browser contract;
-they do not prove all future schedules.
+## 6. Challenge the boundaries and test the tests
 
-## 7. Compose and independently check the argument
+Pair each applicable confined attempt with a working unrestricted control and an
+independent receiver. Include HTTP, connections, DNS and non-HTTP transports;
+fixed-URL requests count. Exercise retained state, nested contexts, asynchronous
+overlap, resource loss and interrupted preparation.
 
-Establish initialization of C1–C8, preservation by every admitted transition and
-their implication for the external observation policy. Attach implementation
-correspondence and browser coverage to this argument. Have the checker reject
-missing obligations, stale source hashes and absent proof results rather than
-reporting success from the number of passing tests.
+Where feasible, remove the actual mitigation in an isolated temporary build and
+require the test to detect the forbidden effect. Keep faulty builds out of
+release artifacts. Translate model counterexamples into executable regressions.
+Preserve partial observations from failing runs.
 
-Separate mechanically checked results from manual browser arguments and explicit
-assumptions in the final statement. Do not label the result complete while the
-maintenance counterexample or another required premise remains unresolved.
+**Acceptance:** reproducible receipts tied to source, artifacts, browser versions,
+configuration, controls and observation bounds. Missing controls and unexplained
+flakiness remain missing evidence.
 
-Acceptance: a reader can follow each part of the confinement claim to checked
-code, a reviewed browser contract or a clearly stated unresolved obligation.
+## 7. Compose and check the argument
+
+Prove initialization of C1–C8, preservation by every admitted transition, and their
+implication for the external-observation policy. Supply implementation-refinement
+and browser-coverage premises from the preceding stages. Include deferred effects
+at the composition boundary.
+
+Extend the claim checker to reject missing obligations, stale evidence, absent
+proof results and unsupported dependencies. Challenge it with removed evidence,
+changed source and incomplete proof reports. Distinguish structural checking from
+proof checking and manual review.
+
+**Acceptance:** every theorem premise traces to its evidence or explicit assumption.
+A remaining counterexample prevents the complete claim regardless of the number
+of passing checks.
 
 ## 8. Validate and publish the exact candidate
 
-Keep implementation on the separate research worktree and retain the recoverable
-remote baseline. Once the candidate is fixed, freeze source and build inputs and
-run the required proofs, models, native security tests and unchanged application
-corpus. Preserve offline reload and supported context behavior; record any lost
-compatibility rather than silently dropping it from the corpus.
+Freeze source and build inputs. Run the required proofs, models, native security
+tests and unchanged application corpus. Recheck offline reload, nested contexts
+and permitted prototype modification. Record lost compatibility rather than
+removing failing applications from the evaluation.
 
-Update the report with the property actually established, its assumptions and
-remaining gaps. Deploy only a candidate that passes the applicable release checks,
-then verify the public artifacts and a fresh installation. Distinguish those
-results from desktop PWA and real-device mobile validation.
+Keep the report concise: established property, assumptions, evidence and remaining
+gaps. Preserve the recoverable remote baseline. Deploy only after applicable
+release checks pass, then verify public artifacts and a fresh installation.
+Report desktop PWA and real-device mobile results separately when performed.
 
-The deliverables are the implementation, reproducible checks, proof and browser
-contracts, coverage and correspondence records, and a concise report. If complete
-confinement remains unestablished, the report must name the obstruction and retain
-the strongest verified component results without promoting them to the full claim.
+The final package contains implementation, proof statements, correspondence and
+coverage records, reproducible checks and the report. Full confinement remains
+unestablished until every required obligation is discharged. If the platform
+prevents that result, publish the precise obstruction alongside the component
+properties that were established.

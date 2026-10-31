@@ -1,0 +1,36 @@
+{
+  "scope": "Unbounded single-scope update/unregister queue model. An acknowledgment fences future modeled updates without erasing earlier requests. This is not a browser refinement proof, global job drain or production launch barrier.",
+  "preconditions": [
+    "One scope and storage key; no re-registration, replacement or external modification of registration state during the modeled lifetime.",
+    "Update and unregister jobs start serially; an active update must finish before the next job starts.",
+    "Requests are counted at update start, before response completion; earlier requests remain counted after unregistration.",
+    "Changed-worker install/activate work, other browser queues, native controller inheritance, scope selection and production launch correspondence remain outside this model."
+  ],
+  "modelSHA256": "4d5d4503935296a4d513984e1441c6a8284a185a553d9b3968a17f8bff38bfd3",
+  "checkedSourceSHA256": "ab53c24e623f3e4c9b1af28f10b404fd450cffa6feeedbc52c5e3bcaac64077f",
+  "runnerSHA256": "2053d82633b4b016bcb177827c0640152d35a7d091d937f9314ec647452c7d31",
+  "leanVersion": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+  "leanExecutableSHA256": "bf8d54e4714cc4b03d3f6bb34c83b7202b87e49c8bfcbff6895c085bb90ceb38",
+  "proofOutput": "'RegistrationQueue.initial_well_formed' depends on axioms: [propext]\n'RegistrationQueue.held_update_blocks_queue' depends on axioms: [propext]\n'RegistrationQueue.step_preserves_well_formed' depends on axioms: [propext]\n'RegistrationQueue.acknowledged_step_no_request' depends on axioms: [propext]\n'RegistrationQueue.arbitrary_trace_well_formed' depends on axioms: [propext]\n'RegistrationQueue.acknowledged_arbitrary_trace_no_request' depends on axioms: [propext]\n'RegistrationQueue.held_unregister_not_acknowledged' does not depend on any axioms\n'RegistrationQueue.fence_does_not_erase_prior_request' does not depend on any axioms\n'RegistrationQueue.without_unregister_two_requests' does not depend on any axioms",
+  "controls": [
+    {
+      "name": "queue-bypass-held-update",
+      "disposition": "proof-rejected",
+      "sourceSHA256": "3968b7f67d297ab70791b12d784dafcf3a8204d55242e2d26a5d7dd531cea2b3",
+      "outputSHA256": "b4dfd46cf7bda9f28dac61560baf4e2b1fe7432a91708ab0aa3a8de55f00c8f3"
+    },
+    {
+      "name": "queue-retain-registration",
+      "disposition": "proof-rejected",
+      "sourceSHA256": "75fc1f13669940be8c1eed446d777dd112ff2797224473a6c45c9969bc560d05",
+      "outputSHA256": "3be314e7405341c46bf26b96809022d3d7497d4eed50d9aaac157d8cc2ac0b93"
+    },
+    {
+      "name": "queue-unchecked-proof",
+      "disposition": "axiom-report-rejected",
+      "sourceSHA256": "0fe478a745ce15492e90b168806d0468a33d2609b3ecbfe163f8f18d1e183e35",
+      "outputSHA256": "e7eb442c2407f43e108fe83176722c7a987749b3fb2d4dc7b0ce527e15fbe023"
+    }
+  ],
+  "completedAt": "2026-10-31T20:37:14.639Z"
+}

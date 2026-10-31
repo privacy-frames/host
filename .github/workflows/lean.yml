@@ -93,6 +93,7 @@ jobs:
       - run: python3 formal/path-lean/check.py
       - name: Check prefix registration lifetimes and proof controls
         run: |
+          rm -f formal/runtime-verification/registration-lifetime.json formal/runtime-verification/registration-queue.json
           npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --types node --target ES2022 --module NodeNext --moduleResolution NodeNext --allowImportingTsExtensions --skipLibCheck formal/runtime-verification/registration-lifetime-check.ts
           node formal/runtime-verification/registration-lifetime-check.ts
       - uses: actions/upload-artifact@v4
@@ -101,6 +102,7 @@ jobs:
           name: registration-lifetime-model
           path: |
             formal/runtime-verification/registration-lifetime.json
+            formal/runtime-verification/registration-queue.json
             .tools/registration-lifetime/*.lean
             .tools/registration-lifetime/*.log
           include-hidden-files: true

@@ -112,6 +112,10 @@ arguments even where the abstract publication contract is shared.
   launch obligations. Its prefix/queue model checks arbitrary finite traces and
   separates authorization from later transmission; actual launch and browser
   correspondence remain open.
+  The [same-scope registration fence](registration-fence.md) adds native queue
+  observations and an unbounded queue model. It distinguishes a serialized
+  update/unregister boundary from the earlier model's unconstrained scheduling;
+  neither result establishes the production launch barrier.
   The [local document transport experiment](local-document-controller.md) shows
   that the existing controller client does not work uniformly in unregistered
   local children. The [private parent-channel primitive](private-parent-channel.md)
@@ -137,7 +141,7 @@ The complete runtime claim remains unestablished.
 ## Execution order for the remaining work
 
 The [completion plan](completion-plan.md) expands this sequence into reviewable
-implementation, proof, browser-coverage and release gates from revision `f680d8e`.
+implementation, proof, browser-coverage and release gates from revision `087ca7e`.
 
 The eight stages above describe the argument we need. The sequence below orders
 the remaining implementation and verification work. Passing one gate does not
