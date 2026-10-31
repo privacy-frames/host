@@ -1,0 +1,232 @@
+{
+  "scope": "Actual installed window fetch and native local-response controls, with selected GET Request/header, clone, binary, Wasm and abort behavior. The forced-stale Firefox control bypasses only the window fetch message adapter. Receiver observations are bounded; other native HTTP paths remain outside this result.",
+  "provenance": {
+    "capturedAt": "2026-10-31T15:06:08.226Z",
+    "revision": "c5e710648bd326b96576fdc2a8b5336d8911fd65",
+    "dirty": true,
+    "sourceSHA256": "749a8188aeb5b2d7a57862090dc2092eeca20cda3aa418f5fd7c3b3e3f2a4320",
+    "runner": "formal/runtime-verification/resource-fetch-browser.ts",
+    "runnerSHA256": "8eb22bfd33c867869b788230816c97e24d541e6fbf647ea0587cc2d2b20c52e5",
+    "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
+    "artifacts": {
+      "dist-manager/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-manager/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-manager/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-manager/index.html": "0ea2b29b0ef6946140c54c2dc2147bffe4de82b9ed13eb4fdcae97a81cfd56f7",
+      "dist-manager/manager.js": "e361950a8774ca901a2b669e55041e15931e079bcdf5cd66e2b95d3986ce0730",
+      "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-manager/sw.js": "d3107827d22262ac7f64b9f31b935163ced4bd227c1489db609d039bdac8a033",
+      "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
+      "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
+      "dist-runtime/document-guard.js": "ff09ae7169148dc07814e40b35be23e3370479c4001e9265bfdf2a36cc746ba9",
+      "dist-runtime/guard.js": "2be2080675a870d7c2adfcb5fff9b05c1e4fb6562ba00eacd16c2eeffa3bad85",
+      "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
+      "dist-runtime/publisher-worker-guard.js": "b1ac13860c6732e441d63d58e090baea04b18288ab3f890ade0f55d22c22ebc0",
+      "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-runtime/shared-worker-guard.js": "96a3c1086f9de09a02a7ea335d1898513563bf7f09b078de23cc1402f1704e2a",
+      "dist-runtime/sw.js": "4781761ae3b1c44ead0121b9ef2a02eed984b21f530dcd9cd542aafadef82107",
+      "dist-runtime/worker-guard.js": "ccd59c5ea899bf225c37c7cfaf4677d1c648d83e132ec62e98ec91877ad2d89f",
+      "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
+      "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-installation/index.html": "3ca67c9966dd6eaaddb08a331c4c422a70d79bed1acecddada56764ba4ac8e5f",
+      "dist-installation/installation.js": "6cd0a3f3f4494dee2db059f3b1a5feb62017a39399a22e2d3774d0319fa1e3f3"
+    }
+  },
+  "sourcePath": "src/runtime/contexts/window-realm.ts",
+  "sourceSHA256": "7b329b2d6570547fc615c86bfbb384604e6703f44e42002d5c5be6b5f2be360e",
+  "normalGuardSHA256": "2be2080675a870d7c2adfcb5fff9b05c1e4fb6562ba00eacd16c2eeffa3bad85",
+  "alteredGuardSHA256": "c01478a3bb074d91d463d098aa32ae6c68766f93d18d7822362cb31b18507038",
+  "observationMilliseconds": 3000,
+  "rows": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStale": false,
+      "mode": "native",
+      "bit": "0",
+      "result": "skipped",
+      "guardHashes": [],
+      "runtime": [],
+      "publisherTraffic": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStale": false,
+      "mode": "native",
+      "bit": "1",
+      "result": "{\"sum\":42,\"binary\":[0,128,255],\"clone\":21,\"url\":\"http://127.0.0.1:40037/data.json\",\"type\":\"basic\",\"wasm\":true,\"aborted\":true,\"integrityRefused\":true}",
+      "guardHashes": [],
+      "runtime": [],
+      "publisherTraffic": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStale": false,
+      "mode": "normal",
+      "bit": "0",
+      "result": "skipped",
+      "guardHashes": [
+        "2be2080675a870d7c2adfcb5fff9b05c1e4fb6562ba00eacd16c2eeffa3bad85"
+      ],
+      "runtime": [],
+      "publisherTraffic": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStale": false,
+      "mode": "normal",
+      "bit": "1",
+      "result": "{\"sum\":42,\"binary\":[0,128,255],\"clone\":21,\"url\":\"http://127.0.0.1:4211/runtime/VhQj2IcFf44/local-resource-fixture/data.json\",\"type\":\"basic\",\"wasm\":true,\"aborted\":true,\"integrityRefused\":true}",
+      "guardHashes": [
+        "2be2080675a870d7c2adfcb5fff9b05c1e4fb6562ba00eacd16c2eeffa3bad85"
+      ],
+      "runtime": [],
+      "publisherTraffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": false,
+      "mode": "native",
+      "bit": "0",
+      "result": "skipped",
+      "guardHashes": [],
+      "runtime": [],
+      "publisherTraffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": false,
+      "mode": "native",
+      "bit": "1",
+      "result": "{\"sum\":42,\"binary\":[0,128,255],\"clone\":21,\"url\":\"http://127.0.0.1:40037/data.json\",\"type\":\"basic\",\"wasm\":true,\"aborted\":true,\"integrityRefused\":true}",
+      "guardHashes": [],
+      "runtime": [],
+      "publisherTraffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": false,
+      "mode": "normal",
+      "bit": "0",
+      "result": "skipped",
+      "guardHashes": [
+        "2be2080675a870d7c2adfcb5fff9b05c1e4fb6562ba00eacd16c2eeffa3bad85"
+      ],
+      "runtime": [],
+      "publisherTraffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": false,
+      "mode": "normal",
+      "bit": "1",
+      "result": "{\"sum\":42,\"binary\":[0,128,255],\"clone\":21,\"url\":\"http://127.0.0.1:4211/runtime/VhQj2IcFf44/local-resource-fixture/data.json\",\"type\":\"basic\",\"wasm\":true,\"aborted\":true,\"integrityRefused\":true}",
+      "guardHashes": [
+        "2be2080675a870d7c2adfcb5fff9b05c1e4fb6562ba00eacd16c2eeffa3bad85"
+      ],
+      "runtime": [],
+      "publisherTraffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": true,
+      "mode": "native",
+      "bit": "0",
+      "result": "skipped",
+      "guardHashes": [],
+      "runtime": [],
+      "publisherTraffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": true,
+      "mode": "native",
+      "bit": "1",
+      "result": "{\"sum\":42,\"binary\":[0,128,255],\"clone\":21,\"url\":\"http://127.0.0.1:40037/data.json\",\"type\":\"basic\",\"wasm\":true,\"aborted\":true,\"integrityRefused\":true}",
+      "guardHashes": [],
+      "runtime": [],
+      "publisherTraffic": [
+        {
+          "path": "/sw.js",
+          "time": 1793459244100
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": true,
+      "mode": "normal",
+      "bit": "0",
+      "result": "skipped",
+      "guardHashes": [
+        "2be2080675a870d7c2adfcb5fff9b05c1e4fb6562ba00eacd16c2eeffa3bad85"
+      ],
+      "runtime": [],
+      "publisherTraffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": true,
+      "mode": "normal",
+      "bit": "1",
+      "result": "{\"sum\":42,\"binary\":[0,128,255],\"clone\":21,\"url\":\"http://127.0.0.1:4211/runtime/VhQj2IcFf44/local-resource-fixture/data.json\",\"type\":\"basic\",\"wasm\":true,\"aborted\":true,\"integrityRefused\":true}",
+      "guardHashes": [
+        "2be2080675a870d7c2adfcb5fff9b05c1e4fb6562ba00eacd16c2eeffa3bad85"
+      ],
+      "runtime": [],
+      "publisherTraffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": true,
+      "mode": "altered",
+      "bit": "0",
+      "result": "skipped",
+      "guardHashes": [
+        "c01478a3bb074d91d463d098aa32ae6c68766f93d18d7822362cb31b18507038"
+      ],
+      "runtime": [],
+      "publisherTraffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": true,
+      "mode": "altered",
+      "bit": "1",
+      "result": "{\"sum\":42,\"binary\":[0,128,255],\"clone\":21,\"url\":\"http://127.0.0.1:4211/runtime/VhQj2IcFf44/local-resource-fixture/data.json\",\"type\":\"basic\",\"wasm\":true,\"aborted\":true,\"integrityRefused\":true}",
+      "guardHashes": [
+        "c01478a3bb074d91d463d098aa32ae6c68766f93d18d7822362cb31b18507038"
+      ],
+      "runtime": [
+        {
+          "port": 4211,
+          "path": "/runtime/sw.js",
+          "method": "GET"
+        }
+      ],
+      "publisherTraffic": []
+    }
+  ],
+  "completedAt": "2026-10-31T15:08:00.646Z"
+}

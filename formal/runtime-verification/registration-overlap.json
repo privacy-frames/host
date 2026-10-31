@@ -1,6 +1,6 @@
 {
-  "scope": "Native same-origin registration overlap after unregistering an existing controlled client. Identical worker script URLs, with absent, reused and distinct new scopes. The second worker does not claim clients. Not a production launch protocol or proof of scope isolation.",
-  "runnerSHA256": "ea1edfc91c81eb1443f0fce8cc93a5bf72080287fad33ae813cd19bf4c068da3",
+  "scope": "Native same-origin registration overlap after unregistering an existing controlled client. Identical worker script URLs, with absent, reused, distinct sibling and ancestor new scopes. The second worker does not claim clients. All four observed patterns are asserted. Not a production launch protocol or proof of scope isolation.",
+  "runnerSHA256": "d05906f8b74054d9b35b7e4867590282eb0b66fe424b37a49a79e54619e43861",
   "browserProfileSHA256": "c161489dfce9c3124474d1416440c9876b0a8fce329d2f09fa16f99af744e3a0",
   "packageLockSHA256": "4e8c7b0964047f1c9fd3f82956b08d381817fa86fb2f7d47d4a10458dc5e62ed",
   "serviceWorkerSHA256": "a5643d3ac8a89dfc6875618870b463953e3add2bc287359cf2d57456a128b83e",
@@ -12,13 +12,14 @@
       "forcedStaleCheck": false,
       "overlap": "absent",
       "operation": "fetch",
-      "oldInstance": "90d44797-5b4f-42a7-9a34-4275bb2558b6",
+      "oldInstance": "395ceab8-f5e4-44f1-8367-f621efcb53d8",
       "secondInstance": null,
+      "registrationScopes": [],
       "result": {
-        "body": "90d44797-5b4f-42a7-9a34-4275bb2558b6"
+        "body": "395ceab8-f5e4-44f1-8367-f621efcb53d8"
       },
-      "actionStarted": 1793452579101,
-      "observationEnded": 1793452582105,
+      "actionStarted": 1793460355977,
+      "observationEnded": 1793460358980,
       "requests": []
     },
     {
@@ -27,14 +28,15 @@
       "forcedStaleCheck": false,
       "overlap": "absent",
       "operation": "srcdoc",
-      "oldInstance": "714ab197-2e6d-4c97-a66b-306de5291400",
+      "oldInstance": "3a55caa4-b49e-4745-851a-e0b0e225c1d5",
       "secondInstance": null,
+      "registrationScopes": [],
       "result": {
         "body": "Local frame",
-        "childControllerURL": "http://127.0.0.1:42991/sw.js"
+        "childControllerURL": "http://127.0.0.1:37395/sw.js"
       },
-      "actionStarted": 1793452585222,
-      "observationEnded": 1793452588229,
+      "actionStarted": 1793460362074,
+      "observationEnded": 1793460365080,
       "requests": []
     },
     {
@@ -43,14 +45,15 @@
       "forcedStaleCheck": false,
       "overlap": "absent",
       "operation": "blob-frame",
-      "oldInstance": "3a3b5334-f62d-45b9-90de-79006af72167",
+      "oldInstance": "a1113e0c-de5a-40b6-9583-609fabddc523",
       "secondInstance": null,
+      "registrationScopes": [],
       "result": {
         "body": "Local frame",
         "childControllerURL": null
       },
-      "actionStarted": 1793452591324,
-      "observationEnded": 1793452594332,
+      "actionStarted": 1793460368173,
+      "observationEnded": 1793460371180,
       "requests": []
     },
     {
@@ -59,13 +62,16 @@
       "forcedStaleCheck": false,
       "overlap": "reused",
       "operation": "fetch",
-      "oldInstance": "6bde4581-2eb1-44c5-b1f9-40356927d1c9",
-      "secondInstance": "6bde4581-2eb1-44c5-b1f9-40356927d1c9",
+      "oldInstance": "bb260a1f-da5f-4219-ad69-dd73c8c194fb",
+      "secondInstance": "bb260a1f-da5f-4219-ad69-dd73c8c194fb",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/one/"
+      ],
       "result": {
-        "body": "6bde4581-2eb1-44c5-b1f9-40356927d1c9"
+        "body": "bb260a1f-da5f-4219-ad69-dd73c8c194fb"
       },
-      "actionStarted": 1793452597432,
-      "observationEnded": 1793452600435,
+      "actionStarted": 1793460374276,
+      "observationEnded": 1793460377279,
       "requests": []
     },
     {
@@ -74,14 +80,17 @@
       "forcedStaleCheck": false,
       "overlap": "reused",
       "operation": "srcdoc",
-      "oldInstance": "88414912-b002-4f4e-a306-37df95fd424c",
-      "secondInstance": "88414912-b002-4f4e-a306-37df95fd424c",
+      "oldInstance": "7f089488-cbee-4d25-b1a1-cf79fa2383bb",
+      "secondInstance": "7f089488-cbee-4d25-b1a1-cf79fa2383bb",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/one/"
+      ],
       "result": {
         "body": "Local frame",
-        "childControllerURL": "http://127.0.0.1:42991/sw.js"
+        "childControllerURL": "http://127.0.0.1:37395/sw.js"
       },
-      "actionStarted": 1793452603532,
-      "observationEnded": 1793452606538,
+      "actionStarted": 1793460380374,
+      "observationEnded": 1793460383380,
       "requests": []
     },
     {
@@ -90,14 +99,17 @@
       "forcedStaleCheck": false,
       "overlap": "reused",
       "operation": "blob-frame",
-      "oldInstance": "cbbd9a00-d749-43bf-a01d-60a842cdbd28",
-      "secondInstance": "cbbd9a00-d749-43bf-a01d-60a842cdbd28",
+      "oldInstance": "b9e85a5b-7217-45f1-8432-4712aeafaf17",
+      "secondInstance": "b9e85a5b-7217-45f1-8432-4712aeafaf17",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/one/"
+      ],
       "result": {
         "body": "Local frame",
         "childControllerURL": null
       },
-      "actionStarted": 1793452609636,
-      "observationEnded": 1793452612645,
+      "actionStarted": 1793460386471,
+      "observationEnded": 1793460389479,
       "requests": []
     },
     {
@@ -106,13 +118,16 @@
       "forcedStaleCheck": false,
       "overlap": "distinct",
       "operation": "fetch",
-      "oldInstance": "42ae3bd9-9521-45b2-ba23-2d896462479a",
-      "secondInstance": "122a1c93-ffc9-4c12-af27-69a3f869ae0e",
+      "oldInstance": "4f57cb51-2e14-4f50-b8b4-ed3c5a01a85d",
+      "secondInstance": "c0518cfa-ea44-4226-8d3c-9da2cd596cff",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/two/"
+      ],
       "result": {
-        "body": "42ae3bd9-9521-45b2-ba23-2d896462479a"
+        "body": "4f57cb51-2e14-4f50-b8b4-ed3c5a01a85d"
       },
-      "actionStarted": 1793452615776,
-      "observationEnded": 1793452618780,
+      "actionStarted": 1793460392607,
+      "observationEnded": 1793460395610,
       "requests": []
     },
     {
@@ -121,14 +136,17 @@
       "forcedStaleCheck": false,
       "overlap": "distinct",
       "operation": "srcdoc",
-      "oldInstance": "88476cf9-7073-4b80-b9e7-0a5d26cd43fa",
-      "secondInstance": "7e86fe2a-a286-4bf7-b1c4-2cbf30b75bd6",
+      "oldInstance": "488574c7-6b30-4384-a84b-adaa74f7e49b",
+      "secondInstance": "8b9d4bce-1718-4593-9cd4-dc10ee9c1833",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/two/"
+      ],
       "result": {
         "body": "Local frame",
-        "childControllerURL": "http://127.0.0.1:42991/sw.js"
+        "childControllerURL": "http://127.0.0.1:37395/sw.js"
       },
-      "actionStarted": 1793452621915,
-      "observationEnded": 1793452624921,
+      "actionStarted": 1793460398735,
+      "observationEnded": 1793460401741,
       "requests": []
     },
     {
@@ -137,14 +155,73 @@
       "forcedStaleCheck": false,
       "overlap": "distinct",
       "operation": "blob-frame",
-      "oldInstance": "088f30a6-e515-4aba-ba9e-4abf0ccad4af",
-      "secondInstance": "fd9a5858-414f-438a-857e-65e9a180ebde",
+      "oldInstance": "ee7df334-be07-4235-bb28-986d473edee8",
+      "secondInstance": "5be5aa57-0441-48aa-b9e9-61618f514036",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/two/"
+      ],
       "result": {
         "body": "Local frame",
         "childControllerURL": null
       },
-      "actionStarted": 1793452628047,
-      "observationEnded": 1793452631059,
+      "actionStarted": 1793460404867,
+      "observationEnded": 1793460407878,
+      "requests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStaleCheck": false,
+      "overlap": "ancestor",
+      "operation": "fetch",
+      "oldInstance": "5b0aafe7-4c50-4e6c-81d6-5c05a8998cdf",
+      "secondInstance": "53cfaf22-a2e2-489f-a521-3b7897c0a715",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/"
+      ],
+      "result": {
+        "body": "5b0aafe7-4c50-4e6c-81d6-5c05a8998cdf"
+      },
+      "actionStarted": 1793460411003,
+      "observationEnded": 1793460414007,
+      "requests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStaleCheck": false,
+      "overlap": "ancestor",
+      "operation": "srcdoc",
+      "oldInstance": "c6b88089-6218-4d5f-905a-1285e7f59f94",
+      "secondInstance": "2054da2e-6e7e-4581-a127-d27b91756d7e",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/"
+      ],
+      "result": {
+        "body": "Local frame",
+        "childControllerURL": "http://127.0.0.1:37395/sw.js"
+      },
+      "actionStarted": 1793460417132,
+      "observationEnded": 1793460420138,
+      "requests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStaleCheck": false,
+      "overlap": "ancestor",
+      "operation": "blob-frame",
+      "oldInstance": "3116c0b5-347e-4a9f-aef6-af309bfbe6db",
+      "secondInstance": "f19953de-0e80-42c7-9f91-be58a9105c74",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/"
+      ],
+      "result": {
+        "body": "Local frame",
+        "childControllerURL": null
+      },
+      "actionStarted": 1793460423262,
+      "observationEnded": 1793460426269,
       "requests": []
     },
     {
@@ -153,13 +230,14 @@
       "forcedStaleCheck": false,
       "overlap": "absent",
       "operation": "fetch",
-      "oldInstance": "3a2b52d6-5875-454c-b90b-d3e10aa299a2",
+      "oldInstance": "ee060e6a-1c5a-4137-bfea-94834816aeef",
       "secondInstance": null,
+      "registrationScopes": [],
       "result": {
-        "body": "3a2b52d6-5875-454c-b90b-d3e10aa299a2"
+        "body": "ee060e6a-1c5a-4137-bfea-94834816aeef"
       },
-      "actionStarted": 1793452635343,
-      "observationEnded": 1793452638348,
+      "actionStarted": 1793460430415,
+      "observationEnded": 1793460433421,
       "requests": []
     },
     {
@@ -168,14 +246,15 @@
       "forcedStaleCheck": false,
       "overlap": "absent",
       "operation": "srcdoc",
-      "oldInstance": "c46d58d6-bb0b-4529-9768-b84c607f65df",
+      "oldInstance": "cd3b01ad-c5ce-490a-937f-cba9e9789867",
       "secondInstance": null,
+      "registrationScopes": [],
       "result": {
         "body": "Local frame",
-        "childControllerURL": "http://127.0.0.1:42991/sw.js"
+        "childControllerURL": "http://127.0.0.1:37395/sw.js"
       },
-      "actionStarted": 1793452641729,
-      "observationEnded": 1793452644739,
+      "actionStarted": 1793460436766,
+      "observationEnded": 1793460439776,
       "requests": []
     },
     {
@@ -184,14 +263,15 @@
       "forcedStaleCheck": false,
       "overlap": "absent",
       "operation": "blob-frame",
-      "oldInstance": "f4af9520-aa78-4a0c-b91f-2788d7bb3f1d",
+      "oldInstance": "cbf4ba9b-39f7-429b-8a04-0adb17f809e3",
       "secondInstance": null,
+      "registrationScopes": [],
       "result": {
         "body": "Local frame",
-        "childControllerURL": "http://127.0.0.1:42991/sw.js"
+        "childControllerURL": "http://127.0.0.1:37395/sw.js"
       },
-      "actionStarted": 1793452648099,
-      "observationEnded": 1793452651108,
+      "actionStarted": 1793460443123,
+      "observationEnded": 1793460446132,
       "requests": []
     },
     {
@@ -200,13 +280,16 @@
       "forcedStaleCheck": false,
       "overlap": "reused",
       "operation": "fetch",
-      "oldInstance": "ed9a06fd-68e5-4c9a-b2f6-ef80308abfe3",
-      "secondInstance": "30a1f88a-2c5f-41cf-af46-7adb3803e601",
+      "oldInstance": "08c43522-78bb-4870-9c3b-29f2e34e7d9f",
+      "secondInstance": "38ba3310-9d86-4c2e-82ad-194668caf8a4",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/one/"
+      ],
       "result": {
-        "body": "ed9a06fd-68e5-4c9a-b2f6-ef80308abfe3"
+        "body": "08c43522-78bb-4870-9c3b-29f2e34e7d9f"
       },
-      "actionStarted": 1793452654510,
-      "observationEnded": 1793452657516,
+      "actionStarted": 1793460449512,
+      "observationEnded": 1793460452517,
       "requests": []
     },
     {
@@ -215,18 +298,21 @@
       "forcedStaleCheck": false,
       "overlap": "reused",
       "operation": "srcdoc",
-      "oldInstance": "1c360cce-178b-47ed-8a87-eed8f226a822",
-      "secondInstance": "787b5781-a1bf-4d6f-a212-102d01e5c836",
+      "oldInstance": "7b16efeb-aa63-4176-81bd-1c69f11dd051",
+      "secondInstance": "1feb0548-ddb7-423e-9008-d6b2e37ea2d9",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/one/"
+      ],
       "result": {
         "body": "Local frame",
-        "childControllerURL": "http://127.0.0.1:42991/sw.js"
+        "childControllerURL": "http://127.0.0.1:37395/sw.js"
       },
-      "actionStarted": 1793452660919,
-      "observationEnded": 1793452663928,
+      "actionStarted": 1793460455903,
+      "observationEnded": 1793460458914,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793452661933
+          "time": 1793460457007
         }
       ]
     },
@@ -236,18 +322,21 @@
       "forcedStaleCheck": false,
       "overlap": "reused",
       "operation": "blob-frame",
-      "oldInstance": "a1cee519-7fc6-4c96-b0f8-b438d112ec6c",
-      "secondInstance": "04d7c349-8dbe-453b-8e56-598ac3216a34",
+      "oldInstance": "1220dfcd-8ee1-43c8-b732-83964aa1bd9d",
+      "secondInstance": "873cf185-b493-44b1-bdd2-85b0d8eebc60",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/one/"
+      ],
       "result": {
         "body": "Local frame",
-        "childControllerURL": "http://127.0.0.1:42991/sw.js"
+        "childControllerURL": "http://127.0.0.1:37395/sw.js"
       },
-      "actionStarted": 1793452667329,
-      "observationEnded": 1793452670338,
+      "actionStarted": 1793460462297,
+      "observationEnded": 1793460465308,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793452668342
+          "time": 1793460463309
         }
       ]
     },
@@ -257,13 +346,16 @@
       "forcedStaleCheck": false,
       "overlap": "distinct",
       "operation": "fetch",
-      "oldInstance": "d76619bd-3c88-4140-8a23-0cb6205bd77e",
-      "secondInstance": "900f3842-33dd-43d1-a083-1855bb72f28a",
+      "oldInstance": "91d6676e-74e4-4512-8fcb-7c595866b6fb",
+      "secondInstance": "2f70a955-1261-4d23-929b-3a4b59aa2bb7",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/two/"
+      ],
       "result": {
-        "body": "d76619bd-3c88-4140-8a23-0cb6205bd77e"
+        "body": "91d6676e-74e4-4512-8fcb-7c595866b6fb"
       },
-      "actionStarted": 1793452673760,
-      "observationEnded": 1793452676766,
+      "actionStarted": 1793460468684,
+      "observationEnded": 1793460471689,
       "requests": []
     },
     {
@@ -272,14 +364,17 @@
       "forcedStaleCheck": false,
       "overlap": "distinct",
       "operation": "srcdoc",
-      "oldInstance": "6988be2a-5385-43af-8621-77a20d3ae1c1",
-      "secondInstance": "beaa3ed9-3edf-42b5-bc5c-706fca00417a",
+      "oldInstance": "fd443308-9d32-4e86-bf35-e726b4bbafe4",
+      "secondInstance": "ecd3485d-e889-48c8-ac57-990a159b45dd",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/two/"
+      ],
       "result": {
         "body": "Local frame",
-        "childControllerURL": "http://127.0.0.1:42991/sw.js"
+        "childControllerURL": "http://127.0.0.1:37395/sw.js"
       },
-      "actionStarted": 1793452680173,
-      "observationEnded": 1793452683185,
+      "actionStarted": 1793460475077,
+      "observationEnded": 1793460478086,
       "requests": []
     },
     {
@@ -288,96 +383,174 @@
       "forcedStaleCheck": false,
       "overlap": "distinct",
       "operation": "blob-frame",
-      "oldInstance": "a9795ce5-4033-42c0-aa83-e11327af319e",
-      "secondInstance": "387dbb08-7621-49bd-8b69-455b01fd2425",
+      "oldInstance": "763bbe16-cf16-4404-a979-780f97892720",
+      "secondInstance": "36c0d7ee-3756-49e4-88d7-f0d86dc1471e",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/two/"
+      ],
       "result": {
         "body": "Local frame",
-        "childControllerURL": "http://127.0.0.1:42991/sw.js"
+        "childControllerURL": "http://127.0.0.1:37395/sw.js"
       },
-      "actionStarted": 1793452686591,
-      "observationEnded": 1793452689601,
+      "actionStarted": 1793460481459,
+      "observationEnded": 1793460484469,
       "requests": []
     },
     {
       "browser": "firefox",
       "version": "155.0",
-      "forcedStaleCheck": true,
-      "overlap": "absent",
+      "forcedStaleCheck": false,
+      "overlap": "ancestor",
       "operation": "fetch",
-      "oldInstance": "130db909-e1c1-46aa-9c23-dc931f06011e",
-      "secondInstance": null,
+      "oldInstance": "a5c16d70-fa1e-4b9a-b06c-4884812ce74b",
+      "secondInstance": "4c8eebbe-4eeb-4d44-8dba-1a69f0880daa",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/"
+      ],
       "result": {
-        "body": "130db909-e1c1-46aa-9c23-dc931f06011e"
+        "body": "a5c16d70-fa1e-4b9a-b06c-4884812ce74b"
       },
-      "actionStarted": 1793452694072,
-      "observationEnded": 1793452697076,
+      "actionStarted": 1793460487846,
+      "observationEnded": 1793460490852,
       "requests": []
     },
     {
       "browser": "firefox",
       "version": "155.0",
-      "forcedStaleCheck": true,
-      "overlap": "absent",
+      "forcedStaleCheck": false,
+      "overlap": "ancestor",
       "operation": "srcdoc",
-      "oldInstance": "2d1f495b-62c2-472d-a5a8-7d02d71565f3",
-      "secondInstance": null,
+      "oldInstance": "ccce8966-8a81-418e-ac37-338d64caaa69",
+      "secondInstance": "989f75d6-0265-4bbb-9691-7a4c5c261b6b",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/"
+      ],
       "result": {
         "body": "Local frame",
-        "childControllerURL": "http://127.0.0.1:42991/sw.js"
+        "childControllerURL": "http://127.0.0.1:37395/sw.js"
       },
-      "actionStarted": 1793452700427,
-      "observationEnded": 1793452703437,
-      "requests": []
-    },
-    {
-      "browser": "firefox",
-      "version": "155.0",
-      "forcedStaleCheck": true,
-      "overlap": "absent",
-      "operation": "blob-frame",
-      "oldInstance": "c95ca10b-dc22-4ffc-8b40-56bc743f845e",
-      "secondInstance": null,
-      "result": {
-        "body": "Local frame",
-        "childControllerURL": "http://127.0.0.1:42991/sw.js"
-      },
-      "actionStarted": 1793452706820,
-      "observationEnded": 1793452709830,
-      "requests": []
-    },
-    {
-      "browser": "firefox",
-      "version": "155.0",
-      "forcedStaleCheck": true,
-      "overlap": "reused",
-      "operation": "fetch",
-      "oldInstance": "f745336a-664b-4275-8b4a-ef363eb3dbe0",
-      "secondInstance": "41f85560-93f2-4795-8db4-413ff30cbee7",
-      "result": {
-        "body": "f745336a-664b-4275-8b4a-ef363eb3dbe0"
-      },
-      "actionStarted": 1793452713234,
-      "observationEnded": 1793452716239,
-      "requests": []
-    },
-    {
-      "browser": "firefox",
-      "version": "155.0",
-      "forcedStaleCheck": true,
-      "overlap": "reused",
-      "operation": "srcdoc",
-      "oldInstance": "22cf13ff-9e46-4ffc-91d8-e58ffdf96147",
-      "secondInstance": "e36d276c-7bd3-4450-b912-6ae6ba6fbec3",
-      "result": {
-        "body": "Local frame",
-        "childControllerURL": "http://127.0.0.1:42991/sw.js"
-      },
-      "actionStarted": 1793452719661,
-      "observationEnded": 1793452722673,
+      "actionStarted": 1793460494549,
+      "observationEnded": 1793460497558,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793452720700
+          "time": 1793460495603
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": false,
+      "overlap": "ancestor",
+      "operation": "blob-frame",
+      "oldInstance": "698674ba-29db-4aae-b7a1-7071170be76c",
+      "secondInstance": "16cb279e-8532-411d-a999-7454a1e30759",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/"
+      ],
+      "result": {
+        "body": "Local frame",
+        "childControllerURL": "http://127.0.0.1:37395/sw.js"
+      },
+      "actionStarted": 1793460500933,
+      "observationEnded": 1793460503943,
+      "requests": [
+        {
+          "path": "/sw.js",
+          "time": 1793460501945
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": true,
+      "overlap": "absent",
+      "operation": "fetch",
+      "oldInstance": "93dfdb1c-d509-4369-a804-12736d57116f",
+      "secondInstance": null,
+      "registrationScopes": [],
+      "result": {
+        "body": "93dfdb1c-d509-4369-a804-12736d57116f"
+      },
+      "actionStarted": 1793460508298,
+      "observationEnded": 1793460511303,
+      "requests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": true,
+      "overlap": "absent",
+      "operation": "srcdoc",
+      "oldInstance": "c2601d96-f64a-4906-98b0-92a03707432c",
+      "secondInstance": null,
+      "registrationScopes": [],
+      "result": {
+        "body": "Local frame",
+        "childControllerURL": "http://127.0.0.1:37395/sw.js"
+      },
+      "actionStarted": 1793460514674,
+      "observationEnded": 1793460517683,
+      "requests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": true,
+      "overlap": "absent",
+      "operation": "blob-frame",
+      "oldInstance": "a9d41d68-a695-4600-a10b-fde8a07af79d",
+      "secondInstance": null,
+      "registrationScopes": [],
+      "result": {
+        "body": "Local frame",
+        "childControllerURL": "http://127.0.0.1:37395/sw.js"
+      },
+      "actionStarted": 1793460521009,
+      "observationEnded": 1793460524018,
+      "requests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": true,
+      "overlap": "reused",
+      "operation": "fetch",
+      "oldInstance": "ea190e10-a9a0-45c8-ad1a-617bde68013f",
+      "secondInstance": "f4d65305-8dfa-4794-a7c4-ca06a353f702",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/one/"
+      ],
+      "result": {
+        "body": "ea190e10-a9a0-45c8-ad1a-617bde68013f"
+      },
+      "actionStarted": 1793460527385,
+      "observationEnded": 1793460530390,
+      "requests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": true,
+      "overlap": "reused",
+      "operation": "srcdoc",
+      "oldInstance": "ad5a8a56-93a7-4c78-9605-41377a18af37",
+      "secondInstance": "6e77e206-ddae-4463-9d5d-2b5d3ece9c9d",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/one/"
+      ],
+      "result": {
+        "body": "Local frame",
+        "childControllerURL": "http://127.0.0.1:37395/sw.js"
+      },
+      "actionStarted": 1793460533774,
+      "observationEnded": 1793460536781,
+      "requests": [
+        {
+          "path": "/sw.js",
+          "time": 1793460534884
         }
       ]
     },
@@ -387,18 +560,21 @@
       "forcedStaleCheck": true,
       "overlap": "reused",
       "operation": "blob-frame",
-      "oldInstance": "432e033c-4814-4954-ac27-3e4fd166692a",
-      "secondInstance": "c8745634-2a30-453f-a4ed-954831c8dc16",
+      "oldInstance": "4796395c-bf39-4e6b-9d2d-40e03ed8b6b6",
+      "secondInstance": "8ba5d86c-2135-4525-a64d-f119cd91061b",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/one/"
+      ],
       "result": {
         "body": "Local frame",
-        "childControllerURL": "http://127.0.0.1:42991/sw.js"
+        "childControllerURL": "http://127.0.0.1:37395/sw.js"
       },
-      "actionStarted": 1793452726076,
-      "observationEnded": 1793452729084,
+      "actionStarted": 1793460540167,
+      "observationEnded": 1793460543176,
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793452727086
+          "time": 1793460541179
         }
       ]
     },
@@ -408,13 +584,16 @@
       "forcedStaleCheck": true,
       "overlap": "distinct",
       "operation": "fetch",
-      "oldInstance": "f497c1df-2676-40d8-bda9-c199e72ac8cb",
-      "secondInstance": "32862f4a-fee9-4811-bfe4-7ab72c311f2f",
+      "oldInstance": "4039cbfb-04a5-47f9-8f60-28ea776a2472",
+      "secondInstance": "61ad1254-4c72-49dd-b95f-dbc34eaab2a9",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/two/"
+      ],
       "result": {
-        "body": "f497c1df-2676-40d8-bda9-c199e72ac8cb"
+        "body": "4039cbfb-04a5-47f9-8f60-28ea776a2472"
       },
-      "actionStarted": 1793452732483,
-      "observationEnded": 1793452735488,
+      "actionStarted": 1793460546540,
+      "observationEnded": 1793460549545,
       "requests": []
     },
     {
@@ -423,14 +602,17 @@
       "forcedStaleCheck": true,
       "overlap": "distinct",
       "operation": "srcdoc",
-      "oldInstance": "a1e31d0a-974d-4dce-b2ee-53ce57b303b6",
-      "secondInstance": "78274e9b-8c21-4c35-9410-9ee081f0e9cf",
+      "oldInstance": "e44e47db-e929-4e59-b279-0fbde77de212",
+      "secondInstance": "adb4a9a3-57ac-4df0-aea1-f17b5cac82b8",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/two/"
+      ],
       "result": {
         "body": "Local frame",
-        "childControllerURL": "http://127.0.0.1:42991/sw.js"
+        "childControllerURL": "http://127.0.0.1:37395/sw.js"
       },
-      "actionStarted": 1793452738898,
-      "observationEnded": 1793452741907,
+      "actionStarted": 1793460552920,
+      "observationEnded": 1793460555929,
       "requests": []
     },
     {
@@ -439,16 +621,85 @@
       "forcedStaleCheck": true,
       "overlap": "distinct",
       "operation": "blob-frame",
-      "oldInstance": "9575a23c-e33a-43be-95f1-97654e15388f",
-      "secondInstance": "453dc63b-6625-4a8e-9881-0a4f72c3610b",
+      "oldInstance": "a51ba855-e34e-4b58-a45e-35d09f79324f",
+      "secondInstance": "311a29d0-ab75-4640-badd-9240484be428",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/two/"
+      ],
       "result": {
         "body": "Local frame",
-        "childControllerURL": "http://127.0.0.1:42991/sw.js"
+        "childControllerURL": "http://127.0.0.1:37395/sw.js"
       },
-      "actionStarted": 1793452745313,
-      "observationEnded": 1793452748322,
+      "actionStarted": 1793460559301,
+      "observationEnded": 1793460562311,
       "requests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": true,
+      "overlap": "ancestor",
+      "operation": "fetch",
+      "oldInstance": "bd9ddc3b-8090-422e-ab81-6916ab13bc7b",
+      "secondInstance": "161c0fdf-e282-48f7-8ea2-a147ddbc230c",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/"
+      ],
+      "result": {
+        "body": "bd9ddc3b-8090-422e-ab81-6916ab13bc7b"
+      },
+      "actionStarted": 1793460565706,
+      "observationEnded": 1793460568710,
+      "requests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": true,
+      "overlap": "ancestor",
+      "operation": "srcdoc",
+      "oldInstance": "a8af91a3-5d4e-4b68-942f-32199ec5a87f",
+      "secondInstance": "a81c654a-0682-4e8d-aea1-ced88034d8b5",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/"
+      ],
+      "result": {
+        "body": "Local frame",
+        "childControllerURL": "http://127.0.0.1:37395/sw.js"
+      },
+      "actionStarted": 1793460572407,
+      "observationEnded": 1793460575415,
+      "requests": [
+        {
+          "path": "/sw.js",
+          "time": 1793460573417
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleCheck": true,
+      "overlap": "ancestor",
+      "operation": "blob-frame",
+      "oldInstance": "b6d3abdc-2985-450a-9218-1582405b142e",
+      "secondInstance": "ccd8a320-dc8a-4cf0-b658-647505de8f55",
+      "registrationScopes": [
+        "http://127.0.0.1:37395/"
+      ],
+      "result": {
+        "body": "Local frame",
+        "childControllerURL": "http://127.0.0.1:37395/sw.js"
+      },
+      "actionStarted": 1793460578791,
+      "observationEnded": 1793460581800,
+      "requests": [
+        {
+          "path": "/sw.js",
+          "time": 1793460579802
+        }
+      ]
     }
   ],
-  "completedAt": "2026-10-31T13:19:08.558Z"
+  "completedAt": "2026-10-31T15:29:41.996Z"
 }

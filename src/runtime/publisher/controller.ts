@@ -614,7 +614,7 @@ export function createPublisherController(options: Options) {
       return executor?.browserClient === clientId && executor.contextId === bound.id;
     },
     async intercept(
-      event: FetchEvent,
+      event: Pick<FetchEvent, 'request' | 'clientId' | 'resultingClientId'>,
       app: StoredInstallation,
       resource: Resource,
       baseResponse: Response,

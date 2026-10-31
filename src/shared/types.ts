@@ -1,4 +1,5 @@
 export const INSTALLED_CONTENT_REQUEST = 'privacy-installed-content';
+export const INSTALLED_RESOURCE_REQUEST = 'privacy-installed-resource';
 
 /** Publicly downloaded resources become immutable installation inputs. */
 export interface Resource {

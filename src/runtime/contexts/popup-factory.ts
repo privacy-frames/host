@@ -12,6 +12,9 @@ import {
   parseDocumentRegistration,
   type DocumentRegistration,
 } from './document-protocol.ts';
+// Control-plane requests retain the pre-adapter native operation.
+const nativeFetch = fetch;
+
 interface PopupFactoryOptions {
   applicationURL: string;
   baseURL(): string;
@@ -46,7 +49,6 @@ export function createPopupFactory(tools: PolicyTools, options: PopupFactoryOpti
   const nativeClose = owner.close;
   const nativeFocus = owner.focus;
   const nativePost = owner.postMessage;
-  const nativeFetch = fetch;
   const nativeClone = structuredClone;
   const NativeWeakMap = WeakMap;
   const NativeTypeError = TypeError;

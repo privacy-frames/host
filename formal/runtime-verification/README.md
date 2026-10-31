@@ -104,7 +104,9 @@ arguments even where the abstract publication contract is shared.
   identify scope reuse during private execution as a separate launch obligation.
 - Stage 5: root content now uses an authenticated private controller request; the
   publisher client shares its captured transport. See the
-  [root content integration](root-content-broker.md). Resource and adapter proofs
+  [root content integration](root-content-broker.md). Window fetch/cache downloads
+  now use the [shared local resource reader](resource-fetch.md), with actual
+  adapter-bypass and forced-stale browser controls. Resource and adapter proofs
   and the remaining context delivery paths are open.
 - Stage 7: browser validation is in progress for the root content integration;
   broader coverage and lifecycle obligations remain open.

@@ -7,6 +7,9 @@ import type {
   WorkletRegistration,
 } from './worklet-types.ts';
 
+// Control-plane requests retain the pre-adapter native operation.
+const nativeFetch = fetch;
+
 interface WorkletFactoryOptions {
   applicationURL: string;
   resources: Pick<ResourceAliases, 'mapURL' | 'isInstalledURL'>;
@@ -26,7 +29,6 @@ export function createWorkletFactory(
   if (typeof Worklet !== 'function') return undefined;
   const { apply, descriptor, accessor, propertyOwner, str, fail } = tools;
   const nativeAdd = Worklet.prototype.addModule;
-  const nativeFetch = fetch;
   const NativePromise = Promise;
   const promiseThen = Promise.prototype.then;
   const NativeURL = URL;

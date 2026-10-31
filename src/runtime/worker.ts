@@ -1,18 +1,24 @@
-import { webManifest, manifestURL } from './pwa.ts';
+import { manifestURL } from './pwa.ts';
 import { getApp, listApps, putApp, deleteApp, getResource } from './storage.ts';
 import { mime } from '../shared/policy.ts';
 import {
   applicationURL,
   applicationIdentity,
-  resourceURL,
   publicAlias,
 } from '../shared/runtime-url.ts';
 import type { RuntimeEvent } from '../shared/types.ts';
 import { isApplicationRoute } from '../shared/application-navigation.ts';
 import { response } from './response-policy.ts';
-import { css } from './document.ts';
 import { readInstalledContent } from './content-broker.ts';
-import { INSTALLED_CONTENT_REQUEST } from '../shared/types.ts';
+import {
+  INSTALLED_CONTENT_REQUEST,
+  INSTALLED_RESOURCE_REQUEST,
+} from '../shared/types.ts';
+import {
+  parseResourceRequest,
+  readInstalledResource,
+  readPublicInstallationResource,
+} from './resource-broker.ts';
 import { admitInstallation } from './admission.ts';
 import { CONTEXT_POLICY_VERSION, ContextRegistry } from './contexts/model.ts';
 import type { WorkerBootstrapMetadata } from './contexts/model.ts';
@@ -176,7 +182,8 @@ worker.addEventListener('message', (event) => {
     packet &&
     typeof packet === 'object' &&
     'type' in packet &&
-    packet.type === INSTALLED_CONTENT_REQUEST
+    (packet.type === INSTALLED_CONTENT_REQUEST ||
+      packet.type === INSTALLED_RESOURCE_REQUEST)
   ) {
     const port = event.ports[0];
     if (!port) return;
@@ -187,8 +194,35 @@ worker.addEventListener('message', (event) => {
             event.source && 'id' in event.source
               ? await worker.clients.get(event.source.id)
               : undefined;
-          const value = await readInstalledContent(client, contexts, BASE);
-          port.postMessage({ ok: true, value });
+          if (packet.type === INSTALLED_CONTENT_REQUEST) {
+            const value = await readInstalledContent(client, contexts, BASE);
+            port.postMessage({ ok: true, value });
+            return;
+          }
+          const request = parseResourceRequest(packet);
+          const result = await readInstalledResource(
+            client,
+            request,
+            contexts,
+            BASE,
+            (app, resource, value) =>
+              publishers.intercept(
+                { request, clientId: client?.id || '', resultingClientId: '' },
+                app,
+                resource,
+                value,
+              ),
+          );
+          if (result.type === 'error') throw new Error('Resource response refused');
+          const body = await result.arrayBuffer();
+          const value = {
+            url: request.url,
+            status: result.status,
+            statusText: result.statusText,
+            headers: Array.from(result.headers),
+            body,
+          };
+          port.postMessage({ ok: true, value }, [body]);
         } catch (error) {
           port.postMessage({
             ok: false,
@@ -345,20 +379,9 @@ worker.addEventListener('fetch', (event) => {
         );
         if (apps.length === 1) {
           const app = apps[0];
-          if (publicRoute[2] === '__manifest.webmanifest')
-            return response(
-              JSON.stringify(webManifest(app, BASE)),
-              'application/manifest+json',
-            );
-          const resource = app.resources[Number(publicRoute[3])];
-          const admitted = webManifest(app, BASE).icons.some(
-            (icon) => new URL(icon.src, BASE).href === url.href,
+          return (
+            (await readPublicInstallationResource(app, url, BASE)) || Response.error()
           );
-          if (admitted && resource)
-            return response(
-              await getResource(app.id, resource.path, app.generation),
-              resource.contentType,
-            );
         }
         return Response.error();
       }
@@ -534,48 +557,19 @@ worker.addEventListener('fetch', (event) => {
           },
         );
       }
-      if (req.method === 'GET') {
-        const original =
-          url.origin === BASE.origin
-            ? new URL(url.pathname + url.search, new URL(app.source).origin).href
-            : null;
-        const resource = app.resources.find(
-          (r) =>
-            resourceURL(app, r.path, BASE).href === url.href ||
-            r.url === url.href ||
-            (original && r.url === original),
-        );
-        if (resource) {
-          record('installed', req.url, req.method);
-          const baseResponse = response(
-            await getResource(app.id, resource.path, app.generation),
-            resource.contentType || mime(resource.path),
+      if (req.method === 'GET' && client) {
+        try {
+          const result = await readInstalledResource(
+            client,
+            req,
+            contexts,
+            BASE,
+            (app, resource, value) => publishers.intercept(event, app, resource, value),
           );
-          const result = await publishers.intercept(event, app, resource, baseResponse);
-          if (
-            result.ok &&
-            result.headers.get('content-type')?.split(';')[0].trim().toLowerCase() ===
-              'text/css'
-          ) {
-            const rewritten = response(
-              css(app, await result.text(), resource.url, BASE),
-              'text/css',
-              result.status,
-            );
-            for (const name of [
-              'content-language',
-              'cache-control',
-              'expires',
-              'last-modified',
-              'etag',
-              'vary',
-            ]) {
-              const value = result.headers.get(name);
-              if (value !== null) rewritten.headers.set(name, value);
-            }
-            return rewritten;
-          }
+          record('installed', req.url, req.method);
           return result;
+        } catch {
+          // Admission and generation failures remain local in either transport.
         }
       }
       record('blocked', req.url, req.method);

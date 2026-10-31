@@ -54,7 +54,7 @@ try {
         : {},
     );
     try {
-      for (const overlap of ['absent', 'reused', 'distinct'] as const) {
+      for (const overlap of ['absent', 'reused', 'distinct', 'ancestor'] as const) {
         for (const operation of ['fetch', 'srcdoc', 'blob-frame'] as const) {
           const context = await browser.newContext();
           try {
@@ -135,12 +135,25 @@ try {
                         registration.active!.postMessage('identity', [channel.port2]);
                       });
                     },
-                    overlap === 'reused' ? '/one/' : '/two/',
+                    overlap === 'reused'
+                      ? '/one/'
+                      : overlap === 'ancestor'
+                        ? '/'
+                        : '/two/',
                   );
             if (secondInstance !== null) {
               assert.equal(typeof secondInstance, 'string');
-              if (overlap === 'distinct') assert.notEqual(secondInstance, oldInstance);
+              if (overlap !== 'reused') assert.notEqual(secondInstance, oldInstance);
             }
+            const registrationScopes = await setup.evaluate(async () =>
+              (await navigator.serviceWorker.getRegistrations()).map(
+                (value) => value.scope,
+              ),
+            );
+            assert.equal(
+              registrationScopes.includes(origin + '/one/'),
+              overlap === 'reused',
+            );
             assert(
               await original.evaluate(
                 () =>
@@ -204,11 +217,6 @@ try {
             await original.waitForTimeout(3000);
             const requests = traffic.slice(start);
             assert(requests.every((request) => request.path === '/sw.js'));
-            assert.equal(
-              requests.length > 0,
-              profile.engine === firefox && overlap === 'reused' && operation !== 'fetch',
-              'Observed overlap behavior changed; review the browser contract',
-            );
             const row = {
               browser: profile.engine.name(),
               version: browser.version(),
@@ -217,6 +225,7 @@ try {
               operation,
               oldInstance,
               secondInstance,
+              registrationScopes,
               result,
               actionStarted,
               observationEnded: Date.now(),
@@ -224,6 +233,13 @@ try {
             };
             rows.push(row);
             console.log(JSON.stringify(row));
+            assert.equal(
+              requests.length > 0,
+              profile.engine === firefox &&
+                (overlap === 'reused' || overlap === 'ancestor') &&
+                operation !== 'fetch',
+              'Observed overlap behavior changed; review the browser contract',
+            );
           } finally {
             await context.close();
           }
@@ -239,7 +255,7 @@ try {
     JSON.stringify(
       {
         scope:
-          'Native same-origin registration overlap after unregistering an existing controlled client. Identical worker script URLs, with absent, reused and distinct new scopes. The second worker does not claim clients. Not a production launch protocol or proof of scope isolation.',
+          'Native same-origin registration overlap after unregistering an existing controlled client. Identical worker script URLs, with absent, reused, distinct sibling and ancestor new scopes. The second worker does not claim clients. All four observed patterns are asserted. Not a production launch protocol or proof of scope isolation.',
         runnerSHA256: digest(await readFile(import.meta.filename)),
         browserProfileSHA256: digest(
           await readFile(new URL('../../test/browser-profile.ts', import.meta.url)),

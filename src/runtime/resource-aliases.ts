@@ -11,6 +11,7 @@ type AliasTools = Pick<PolicyTools, 'method' | 'accessor' | 'descriptor' | 'appl
   target?: object;
   baseURL?: () => string;
   documentSourceURL?: () => string;
+  fetchResource?: typeof fetch;
 };
 
 export interface ResourceAliases {
@@ -35,11 +36,12 @@ export function resourceAliases({
   target = globalThis,
   baseURL,
   documentSourceURL,
+  fetchResource,
 }: AliasTools): ResourceAliases {
   const NativeURL = URL;
   const NativeRequest = Request;
   const NativeString = String;
-  const nativeFetch = fetch;
+  const nativeFetch = fetchResource || fetch;
   const nativeDocument = typeof document === 'object' ? document : null;
   const nativeBase =
     typeof Node === 'function' ? descriptor(Node.prototype, 'baseURI')?.get : undefined;

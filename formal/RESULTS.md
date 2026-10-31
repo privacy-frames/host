@@ -144,6 +144,17 @@ Web Platform Test leads without treating those leads as passing runtime tests.
 The [claim ledger](claims/README.md) records enforcement, controls and open
 obligations separately, with a check for changes to the cited artifacts.
 
+The [message resource reader](runtime-verification/resource-fetch.md) replaces
+window resource fetches with private controller requests and shares admission
+logic with native HTTP loads. Its installed test includes a byte-matched guard,
+native local-response controls and an actual adapter bypass. Forced-stale
+Firefox emits a service-worker update in the native and bypass read cases but
+not the normal message case. Worker and native context paths remain separate
+maintenance obligations. The [scope overlap experiment](runtime-verification/registration-overlap.md)
+also observes updates from local document creation when an ancestor registration
+is present, despite the exact old scope remaining absent. The existing abstract
+scope model does not establish that browser behavior.
+
 The [Lean authority-graph proofs](lean/README.md) establish a conditional result
 for arbitrary finite reference chains and checked edge additions. They do not
 prove that the browser or runtime satisfies their premises.

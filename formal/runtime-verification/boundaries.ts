@@ -119,9 +119,13 @@ export const boundaries: readonly Boundary[] = [
     id: 'resource-delivery',
     obligation:
       'Deliver only authorized local resources and bootstrap routes, with no outgoing fallback.',
-    invariants: ['C1', 'C2', 'C4', 'C6', 'C7', 'C8'],
+    invariants: ['C1', 'C2', 'C4', 'C5', 'C6', 'C7', 'C8'],
     sources: [
       'src/runtime/worker.ts',
+      'src/runtime/resource-broker.ts',
+      'src/runtime/resource-fetch.ts',
+      'src/runtime/resource-aliases.ts',
+      'src/runtime/controller-client.ts',
       'src/runtime/contexts/resources.ts',
       'src/runtime/response-policy.ts',
     ],

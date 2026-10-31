@@ -6,6 +6,9 @@ import {
 import type { PolicyTools } from '../enforcement/native.ts';
 import type { ResourceAliases } from '../resource-aliases.ts';
 
+// Control-plane requests retain the pre-adapter native operation.
+const nativeFetch = fetch;
+
 export interface WorkerFactoryContext {
   applicationURL: string;
   baseURL: () => string;
@@ -48,7 +51,6 @@ export function createWorkerFactory(
   const nativePost = NativeWorker.prototype.postMessage;
   const nativeTerminate = NativeWorker.prototype.terminate;
   const nativeClone = structuredClone;
-  const nativeFetch = fetch;
   const NativeChannel = MessageChannel;
   const getPort1 = ownDescriptor(NativeChannel.prototype, 'port1')!.get!;
   const getPort2 = ownDescriptor(NativeChannel.prototype, 'port2')!.get!;

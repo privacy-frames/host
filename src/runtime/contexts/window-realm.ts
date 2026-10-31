@@ -1,3 +1,6 @@
+import { createControllerClient } from '../controller-client.ts';
+import { createResourceFetch } from '../resource-fetch.ts';
+import { INSTALLED_RESOURCE_REQUEST } from '../../shared/types.ts';
 import { internalRecord } from '../../shared/primordials.ts';
 import { sealRuntimeBindings } from '../bindings.ts';
 import { createPopupFactory } from './popup-factory.ts';
@@ -59,6 +62,14 @@ export function prepareWindowRealm({
   let resourceBase = applicationURL;
   let sharedIdentity: SharedWorkerIdentity | undefined;
   const policy = createTrustedPolicy(applicationURL);
+  const controller = createControllerClient();
+  const fetchResource = createResourceFetch(
+    (url, headers) =>
+      controller.request(
+        internalRecord({ type: INSTALLED_RESOURCE_REQUEST, url, headers }),
+      ),
+    tools,
+  );
   const resources = resourceAliases(
     internalRecord({
       method,
@@ -67,6 +78,7 @@ export function prepareWindowRealm({
       apply,
       baseURL: () => resourceBase,
       documentSourceURL: () => sourceURL,
+      fetchResource,
     }),
   );
   const publisher = createPublisherContainer(

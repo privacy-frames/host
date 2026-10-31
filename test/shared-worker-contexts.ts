@@ -144,6 +144,7 @@ try {
       context.setDefaultTimeout(20000);
       await context.addInitScript(() => {
         const Native = SharedWorker,
+          nativeFetch = fetch,
           read = Object.getOwnPropertyDescriptor(SharedWorker.prototype, 'port')!.get!,
           post = MessagePort.prototype.postMessage,
           start = MessagePort.prototype.start,
@@ -151,6 +152,10 @@ try {
           apply = Reflect.apply;
         Object.defineProperty(globalThis, '__rawShared', {
           value: {
+            // Trusted fixture setup uses the native control protocol directly.
+            // Application fetch is restricted to the admitted resource graph.
+            fetch: (input: RequestInfo | URL, init?: RequestInit) =>
+              apply(nativeFetch, globalThis, [input, init]),
             create: (url: string, name: string) => {
               const handle = new Native(url, { name, credentials: 'omit' });
               return { handle, port: apply(read, handle, []) };
@@ -219,20 +224,20 @@ try {
       assert.notEqual(isolated.value.host.application, a.value.host.application);
       assert.equal(isolated.value.location, a.value.location);
       const malformed = await first.evaluate(async (source) => {
+        const raw = Reflect.get(globalThis, '__rawShared');
         const address = new URL('__contexts/shared/connect', location.href);
         const ticket = await (
-          await fetch(address, {
+          await raw.fetch(address, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ source, type: 'classic', name: 'state' }),
           })
         ).json();
-        await fetch(new URL('__contexts/shared/disconnect', location.href), {
+        await raw.fetch(new URL('__contexts/shared/disconnect', location.href), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ ticket: ticket.ticket }),
         });
-        const raw = Reflect.get(globalThis, '__rawShared');
         const connection = raw.create(ticket.bootstrapURL, ticket.key);
         const channel = new MessageChannel();
         let appMessages = 0;
@@ -262,7 +267,12 @@ try {
         });
         raw.close(connection.port);
         channel.port1.close();
-        return { response, appMessages };
+        return {
+          response,
+          appMessages,
+          key: ticket.key,
+          generation: ticket.installationGeneration,
+        };
       }, publisher + '/shared.js');
       assert.equal(malformed.response.type, 'privacy-shared-failed');
       assert.equal(malformed.appMessages, 0);
@@ -437,20 +447,25 @@ try {
       assert.equal(regenerated.value.count, 1);
       assert.equal(regenerated.value.host.application, a.value.host.application);
       const newIdentity = await replacement.evaluate(async (source) => {
+        const raw = Reflect.get(globalThis, '__rawShared');
         const response = await (
-          await fetch(new URL('__contexts/shared/connect', location.href), {
+          await raw.fetch(new URL('__contexts/shared/connect', location.href), {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ source, type: 'classic', name: 'state' }),
           })
         ).json();
-        await fetch(new URL('__contexts/shared/disconnect', location.href), {
+        await raw.fetch(new URL('__contexts/shared/disconnect', location.href), {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ ticket: response.ticket }),
         });
         return { key: response.key, generation: response.installationGeneration };
       }, publisher + '/shared.js');
+      assert.equal(typeof malformed.generation, 'string');
+      assert.equal(typeof malformed.key, 'string');
+      assert.equal(typeof newIdentity.generation, 'string');
+      assert.equal(typeof newIdentity.key, 'string');
       assert.notEqual(newIdentity.generation, malformed.generation);
       assert.notEqual(newIdentity.key, malformed.key);
       const unaffectedOther = await request(other, {});

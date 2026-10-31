@@ -18,6 +18,9 @@ import {
   type DocumentGeneration,
   type DocumentPublicationState,
 } from './document-publication.ts';
+// Control-plane requests retain the pre-adapter native operation.
+const nativeFetch = fetch;
+
 export interface DocumentContextPolicy {
   isContextElement(node: unknown): node is Element;
   created(node: Element): void;
@@ -94,7 +97,6 @@ export function createDocumentFactory(
     protocol = getURL('protocol'),
     hash = getURL('hash');
   const runtimeOrigin: string = apply(origin, new NativeURL(options.applicationURL), []);
-  const nativeFetch = fetch;
   const setTimer = window.setTimeout,
     clearTimer = window.clearTimeout;
   const responseJSON = Response.prototype.json,

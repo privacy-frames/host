@@ -16,6 +16,9 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
+      - name: Install Chromium for the admission contract fixture
+        run: npx playwright install --with-deps chromium
+        timeout-minutes: 10
       - name: Check runtime types and unit contracts
         run: |
           npm run typecheck
@@ -99,6 +102,28 @@ jobs:
             formal/runtime-verification/maintenance-unregistered.json
             formal/runtime-verification/message-resource-broker.json
             formal/runtime-verification/message-resource-broker-relaxed.json
+  resource-fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium firefox
+        timeout-minutes: 5
+      - name: Check installed message resource reads and actual transport bypass
+        run: |
+          npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/runtime-verification/resource-fetch-browser.ts
+          node formal/runtime-verification/resource-fetch-browser.ts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: installed-resource-fetch-evidence
+          path: formal/runtime-verification/resource-fetch-browser.json
   registration-overlap:
     runs-on: ubuntu-latest
     timeout-minutes: 10
