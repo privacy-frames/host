@@ -1,31 +1,56 @@
 {
-  "scope": "Native SharedWorker reuse using production namespace helpers. Changed server script represents a later bootstrap deployment. Does not exercise production admission, prove an escape, or establish a production repair.",
+  "scope": "Native SharedWorker policy partition using bundled production namespace helpers at current and preceding policy constants, plus a test-only partition-removal fault. Changed server script represents a later bootstrap deployment. Checks instance sharing and fresh script fetches; does not exercise complete production admission, revoke old globals, or establish no remote effects.",
+  "policyVersion": 5,
+  "bundles": [
+    {
+      "mode": "production",
+      "version": 5,
+      "sha256": "163a49059407196a1067f3595352b1508878ff44e9d7c4a9f8d0739b5d94ad26"
+    },
+    {
+      "mode": "production",
+      "version": 4,
+      "sha256": "aa1373cb5c091184f0a419f445d0f63654f81068edec9ce0d6a33f560d112aaa"
+    },
+    {
+      "mode": "omitted-policy",
+      "version": 5,
+      "sha256": "1d48bd2eea40a6871dc6cd9585588d08c2f7f54da308ae7b80d89fe2c6f398c1"
+    },
+    {
+      "mode": "omitted-policy",
+      "version": 4,
+      "sha256": "1d48bd2eea40a6871dc6cd9585588d08c2f7f54da308ae7b80d89fe2c6f398c1"
+    }
+  ],
   "completed": true,
   "sourceSHA256": {
-    "formal/runtime-verification/worker-policy-overlap.ts": "794dc0fafbae6bd880492a3fcc9e56e8ae80795612a23e844c6e9c6bb29f6f45",
-    "src/shared/shared-worker.ts": "628cd871c0853c1ecf8a750eccdffd8b1573f00559079ec7b313a756fb5ab672",
+    "formal/runtime-verification/worker-policy-overlap.ts": "650d8112e8f764d57d3fd96812d04c0f300ea0cc4b5899a46f3bd908329a24e1",
+    "src/shared/shared-worker.ts": "6d8363312e8c33b53343b5a841951691abdbdaf4879501f03c0d29fec24d4956",
+    "src/shared/context-policy.ts": "e80666f94eb741880d6b9d928a10c6f8a8bc9bff01d46f066eb6cf53143ebb5c",
     "src/shared/primordials.ts": "422a992a7e863c1b3b09f7d1484f10fa66a0300cdea007dfe485c9bf0c1e980c",
-    "src/runtime/publisher/protocol.ts": "2facf0d152606b30661d75fe68a7b86f6c3e73fb2125d61039889bb771ff9de4",
+    "src/runtime/publisher/protocol.ts": "f5f110c8006cacae1c675a45850ca540e9598d80e84b12d51b639c04893b42ee",
     "test/browser-profile.ts": "c161489dfce9c3124474d1416440c9876b0a8fce329d2f09fa16f99af744e3a0",
     "package-lock.json": "4e8c7b0964047f1c9fd3f82956b08d381817fa86fb2f7d47d4a10458dc5e62ed"
   },
   "rows": [
     {
+      "mode": "production",
       "browser": "chromium",
       "version": "153.0.8010.12",
       "kind": "shared",
       "type": "classic",
       "original": {
         "revision": 1,
-        "instance": "d47e013b-a407-48be-b242-b85464321687"
+        "instance": "2ce47807-8b94-4ae1-ac78-4ffb59eb959f"
       },
       "reused": {
         "revision": 1,
-        "instance": "d47e013b-a407-48be-b242-b85464321687"
+        "instance": "2ce47807-8b94-4ae1-ac78-4ffb59eb959f"
       },
       "partitioned": {
         "revision": 2,
-        "instance": "20f7eb6a-793d-4028-868b-3aa8cb47446a"
+        "instance": "e0a95bda-f1f9-4d4c-b7dd-4783bf904ad5"
       },
       "fetches": {
         "initial": 1,
@@ -34,21 +59,22 @@
       }
     },
     {
+      "mode": "production",
       "browser": "chromium",
       "version": "153.0.8010.12",
       "kind": "shared",
       "type": "module",
       "original": {
         "revision": 1,
-        "instance": "9f5dd407-c2ae-40ca-a71b-f645b1f7fe87"
+        "instance": "594db74c-161b-4e8c-b414-abbb7f50581c"
       },
       "reused": {
         "revision": 1,
-        "instance": "9f5dd407-c2ae-40ca-a71b-f645b1f7fe87"
+        "instance": "594db74c-161b-4e8c-b414-abbb7f50581c"
       },
       "partitioned": {
         "revision": 2,
-        "instance": "77b89951-b7cf-4d38-8462-4571d87ae495"
+        "instance": "7e72bf75-6330-4bba-b286-e9f1cb914f3f"
       },
       "fetches": {
         "initial": 1,
@@ -57,21 +83,22 @@
       }
     },
     {
+      "mode": "production",
       "browser": "chromium",
       "version": "153.0.8010.12",
       "kind": "publisher",
       "type": "classic",
       "original": {
         "revision": 1,
-        "instance": "6ce4df4d-a7b6-479d-b5a9-29520a0a9f7b"
+        "instance": "ef951a96-e198-4a85-a121-1c2af630e1e3"
       },
       "reused": {
         "revision": 1,
-        "instance": "6ce4df4d-a7b6-479d-b5a9-29520a0a9f7b"
+        "instance": "ef951a96-e198-4a85-a121-1c2af630e1e3"
       },
       "partitioned": {
         "revision": 2,
-        "instance": "48a9dd2e-2449-4f42-abeb-eff86978d27c"
+        "instance": "a5e67a54-c044-4bbe-8f4c-8777a3621748"
       },
       "fetches": {
         "initial": 1,
@@ -80,21 +107,22 @@
       }
     },
     {
+      "mode": "production",
       "browser": "chromium",
       "version": "153.0.8010.12",
       "kind": "publisher",
       "type": "module",
       "original": {
         "revision": 1,
-        "instance": "4ed52931-c06c-41da-95b4-161767cb9bb0"
+        "instance": "c6fda839-8c78-4b94-9889-da2632042401"
       },
       "reused": {
         "revision": 1,
-        "instance": "4ed52931-c06c-41da-95b4-161767cb9bb0"
+        "instance": "c6fda839-8c78-4b94-9889-da2632042401"
       },
       "partitioned": {
         "revision": 2,
-        "instance": "4ad83122-e874-4ec6-a638-8b24dcd04ecc"
+        "instance": "455de4ed-065c-4031-b678-72ab6f323198"
       },
       "fetches": {
         "initial": 1,
@@ -103,21 +131,118 @@
       }
     },
     {
+      "mode": "omitted-policy",
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "shared",
+      "type": "classic",
+      "original": {
+        "revision": 1,
+        "instance": "746cbeac-2f12-428f-b7fc-bdb8760769d3"
+      },
+      "reused": {
+        "revision": 1,
+        "instance": "746cbeac-2f12-428f-b7fc-bdb8760769d3"
+      },
+      "partitioned": {
+        "revision": 1,
+        "instance": "746cbeac-2f12-428f-b7fc-bdb8760769d3"
+      },
+      "fetches": {
+        "initial": 1,
+        "reused": 0,
+        "partitioned": 0
+      }
+    },
+    {
+      "mode": "omitted-policy",
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "shared",
+      "type": "module",
+      "original": {
+        "revision": 1,
+        "instance": "953335a7-aad7-45f5-b09e-fb6fa8d10df2"
+      },
+      "reused": {
+        "revision": 1,
+        "instance": "953335a7-aad7-45f5-b09e-fb6fa8d10df2"
+      },
+      "partitioned": {
+        "revision": 1,
+        "instance": "953335a7-aad7-45f5-b09e-fb6fa8d10df2"
+      },
+      "fetches": {
+        "initial": 1,
+        "reused": 0,
+        "partitioned": 0
+      }
+    },
+    {
+      "mode": "omitted-policy",
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "publisher",
+      "type": "classic",
+      "original": {
+        "revision": 1,
+        "instance": "e76962b9-af7b-40ba-9173-501338144099"
+      },
+      "reused": {
+        "revision": 1,
+        "instance": "e76962b9-af7b-40ba-9173-501338144099"
+      },
+      "partitioned": {
+        "revision": 1,
+        "instance": "e76962b9-af7b-40ba-9173-501338144099"
+      },
+      "fetches": {
+        "initial": 1,
+        "reused": 0,
+        "partitioned": 0
+      }
+    },
+    {
+      "mode": "omitted-policy",
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "publisher",
+      "type": "module",
+      "original": {
+        "revision": 1,
+        "instance": "4f4976b0-baa0-43ba-956a-25ad5fba64ad"
+      },
+      "reused": {
+        "revision": 1,
+        "instance": "4f4976b0-baa0-43ba-956a-25ad5fba64ad"
+      },
+      "partitioned": {
+        "revision": 1,
+        "instance": "4f4976b0-baa0-43ba-956a-25ad5fba64ad"
+      },
+      "fetches": {
+        "initial": 1,
+        "reused": 0,
+        "partitioned": 0
+      }
+    },
+    {
+      "mode": "production",
       "browser": "firefox",
       "version": "155.0",
       "kind": "shared",
       "type": "classic",
       "original": {
         "revision": 1,
-        "instance": "5048a931-2279-4d28-a6eb-e6947321afb2"
+        "instance": "dac7f7ad-834d-47a2-a389-a96d5e528a70"
       },
       "reused": {
         "revision": 1,
-        "instance": "5048a931-2279-4d28-a6eb-e6947321afb2"
+        "instance": "dac7f7ad-834d-47a2-a389-a96d5e528a70"
       },
       "partitioned": {
         "revision": 2,
-        "instance": "b9e7ca86-a666-4ca5-a8dc-bd39b6b8851e"
+        "instance": "ab3f0b18-2aa2-4020-968c-50cf89135c05"
       },
       "fetches": {
         "initial": 1,
@@ -126,21 +251,22 @@
       }
     },
     {
+      "mode": "production",
       "browser": "firefox",
       "version": "155.0",
       "kind": "shared",
       "type": "module",
       "original": {
         "revision": 1,
-        "instance": "b8e89ceb-05ec-4609-b9be-f9e2e7bb93b4"
+        "instance": "e82de09f-c53c-46ce-b80e-e3a3648351bc"
       },
       "reused": {
         "revision": 1,
-        "instance": "b8e89ceb-05ec-4609-b9be-f9e2e7bb93b4"
+        "instance": "e82de09f-c53c-46ce-b80e-e3a3648351bc"
       },
       "partitioned": {
         "revision": 2,
-        "instance": "320c5be6-1dbb-414d-b821-348b4381ca08"
+        "instance": "7644fccb-ffe9-4640-bc68-4b84edefeecc"
       },
       "fetches": {
         "initial": 1,
@@ -149,21 +275,22 @@
       }
     },
     {
+      "mode": "production",
       "browser": "firefox",
       "version": "155.0",
       "kind": "publisher",
       "type": "classic",
       "original": {
         "revision": 1,
-        "instance": "e88d1d2d-14b5-4026-9a21-437039ea2a03"
+        "instance": "fbba3c41-6221-41bd-a181-75e7f7e763ab"
       },
       "reused": {
         "revision": 1,
-        "instance": "e88d1d2d-14b5-4026-9a21-437039ea2a03"
+        "instance": "fbba3c41-6221-41bd-a181-75e7f7e763ab"
       },
       "partitioned": {
         "revision": 2,
-        "instance": "c400bc25-aefa-4180-bbb9-91cf6ce2e770"
+        "instance": "6f09f685-b3d6-4e0a-b24c-f73fa2909f1f"
       },
       "fetches": {
         "initial": 1,
@@ -172,26 +299,123 @@
       }
     },
     {
+      "mode": "production",
       "browser": "firefox",
       "version": "155.0",
       "kind": "publisher",
       "type": "module",
       "original": {
         "revision": 1,
-        "instance": "6449e067-3b18-4b15-a117-efd1cf3b8fff"
+        "instance": "6399a2d0-62d8-42b2-90b8-44d9ec3379d8"
       },
       "reused": {
         "revision": 1,
-        "instance": "6449e067-3b18-4b15-a117-efd1cf3b8fff"
+        "instance": "6399a2d0-62d8-42b2-90b8-44d9ec3379d8"
       },
       "partitioned": {
         "revision": 2,
-        "instance": "ccc10b84-7305-4b6f-95c4-8ddc2dc81737"
+        "instance": "4a7390c0-fa01-4f50-bbfe-101c394dcfb4"
       },
       "fetches": {
         "initial": 1,
         "reused": 0,
         "partitioned": 1
+      }
+    },
+    {
+      "mode": "omitted-policy",
+      "browser": "firefox",
+      "version": "155.0",
+      "kind": "shared",
+      "type": "classic",
+      "original": {
+        "revision": 1,
+        "instance": "8211dcd7-0046-4adc-bd69-315cd7115c39"
+      },
+      "reused": {
+        "revision": 1,
+        "instance": "8211dcd7-0046-4adc-bd69-315cd7115c39"
+      },
+      "partitioned": {
+        "revision": 1,
+        "instance": "8211dcd7-0046-4adc-bd69-315cd7115c39"
+      },
+      "fetches": {
+        "initial": 1,
+        "reused": 0,
+        "partitioned": 0
+      }
+    },
+    {
+      "mode": "omitted-policy",
+      "browser": "firefox",
+      "version": "155.0",
+      "kind": "shared",
+      "type": "module",
+      "original": {
+        "revision": 1,
+        "instance": "bb4c6276-bc7d-47e3-9855-7b3d03001122"
+      },
+      "reused": {
+        "revision": 1,
+        "instance": "bb4c6276-bc7d-47e3-9855-7b3d03001122"
+      },
+      "partitioned": {
+        "revision": 1,
+        "instance": "bb4c6276-bc7d-47e3-9855-7b3d03001122"
+      },
+      "fetches": {
+        "initial": 1,
+        "reused": 0,
+        "partitioned": 0
+      }
+    },
+    {
+      "mode": "omitted-policy",
+      "browser": "firefox",
+      "version": "155.0",
+      "kind": "publisher",
+      "type": "classic",
+      "original": {
+        "revision": 1,
+        "instance": "2ccc3900-712b-455a-a0c7-e92002d4db2a"
+      },
+      "reused": {
+        "revision": 1,
+        "instance": "2ccc3900-712b-455a-a0c7-e92002d4db2a"
+      },
+      "partitioned": {
+        "revision": 1,
+        "instance": "2ccc3900-712b-455a-a0c7-e92002d4db2a"
+      },
+      "fetches": {
+        "initial": 1,
+        "reused": 0,
+        "partitioned": 0
+      }
+    },
+    {
+      "mode": "omitted-policy",
+      "browser": "firefox",
+      "version": "155.0",
+      "kind": "publisher",
+      "type": "module",
+      "original": {
+        "revision": 1,
+        "instance": "30ea06ca-d176-4deb-b3d7-d4117d1d7fe0"
+      },
+      "reused": {
+        "revision": 1,
+        "instance": "30ea06ca-d176-4deb-b3d7-d4117d1d7fe0"
+      },
+      "partitioned": {
+        "revision": 1,
+        "instance": "30ea06ca-d176-4deb-b3d7-d4117d1d7fe0"
+      },
+      "fetches": {
+        "initial": 1,
+        "reused": 0,
+        "partitioned": 0
       }
     }
   ]

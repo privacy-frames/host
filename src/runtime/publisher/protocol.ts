@@ -1,5 +1,8 @@
+import { CONTEXT_POLICY_VERSION } from '../../shared/context-policy.ts';
 import type { PublisherRegistration } from './store.ts';
 import { strings, internalRecord, internalData } from '../../shared/primordials.ts';
+const namespace = 'privacy-publisher-policy-' + CONTEXT_POLICY_VERSION + ':';
+const stringifyJSON = JSON.stringify;
 const arrayIsArray = Array.isArray;
 const parseJSON = JSON.parse;
 export const PUBLISHER_RPC = 'privacy-publisher-rpc';
@@ -21,14 +24,12 @@ export function publisherString(value: unknown): string {
   return value;
 }
 export function publisherName(application: string, generation: string, id: string) {
-  return 'privacy-publisher-v1:' + JSON.stringify([application, generation, id]);
+  return namespace + stringifyJSON([application, generation, id]);
 }
 export function parsePublisherName(value: string): [string, string, string] {
-  if (!strings.startsWith(value, 'privacy-publisher-v1:'))
+  if (!strings.startsWith(value, namespace))
     throw new Error('Invalid publisher-worker namespace');
-  const fields: unknown = internalData(
-    parseJSON(strings.slice(value, 'privacy-publisher-v1:'.length)),
-  );
+  const fields: unknown = internalData(parseJSON(strings.slice(value, namespace.length)));
   if (
     !arrayIsArray(fields) ||
     fields.length !== 3 ||

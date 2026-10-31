@@ -76,6 +76,8 @@ export const boundaries: readonly Boundary[] = [
       'src/runtime/contexts/shared-worker-guard.ts',
       'src/runtime/contexts/shared-controller.ts',
       'src/runtime/contexts/shared-connections.ts',
+      'src/shared/shared-worker.ts',
+      'src/shared/context-policy.ts',
     ],
   },
   {
@@ -102,6 +104,8 @@ export const boundaries: readonly Boundary[] = [
       'src/runtime/publisher/events.ts',
       'src/runtime/publisher/client.ts',
       'src/runtime/publisher/store.ts',
+      'src/runtime/publisher/protocol.ts',
+      'src/shared/context-policy.ts',
     ],
   },
   {
@@ -111,6 +115,7 @@ export const boundaries: readonly Boundary[] = [
     invariants: ['C2', 'C3', 'C6', 'C7'],
     sources: [
       'src/runtime/contexts/model.ts',
+      'src/shared/context-policy.ts',
       'src/runtime/contexts/controller-store.ts',
     ],
   },

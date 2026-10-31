@@ -1,3 +1,4 @@
+import { CONTEXT_POLICY_VERSION } from './context-policy.ts';
 import { strings, internalRecord, internalData } from './primordials.ts';
 export type SharedWorkerType = 'classic' | 'module';
 export interface SharedWorkerIdentity {
@@ -18,6 +19,7 @@ export interface SharedWorkerConnection extends SharedWorkerIdentity {
   key: string;
   connection: string;
 }
+const namespace = 'privacy-shared-policy-' + CONTEXT_POLICY_VERSION + ':';
 const stringify = JSON.stringify;
 const parse = JSON.parse;
 const isArray = Array.isArray;
@@ -28,7 +30,7 @@ export function sharedWorkerKey(
   source: SharedWorkerSource,
 ) {
   return (
-    'privacy-shared-v1:' +
+    namespace +
     stringify([
       identity.application,
       identity.installationGeneration,
@@ -41,10 +43,10 @@ export function sharedWorkerKey(
 export function parseSharedWorkerKey(
   key: string,
 ): (SharedWorkerIdentity & SharedWorkerSource) | undefined {
-  if (!strings.startsWith(key, 'privacy-shared-v1:')) return;
+  if (!strings.startsWith(key, namespace)) return;
   let fields: unknown;
   try {
-    fields = internalData(parse(strings.slice(key, 'privacy-shared-v1:'.length)));
+    fields = internalData(parse(strings.slice(key, namespace.length)));
   } catch {
     return;
   }

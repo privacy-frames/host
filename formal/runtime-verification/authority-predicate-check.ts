@@ -12,7 +12,34 @@ await rm(receipt, { force: true });
 const sourcePath = 'src/runtime/contexts/model.ts';
 const source = await readFile(resolve(root, sourcePath), 'utf8');
 const parsed = ts.createSourceFile(sourcePath, source, ts.ScriptTarget.Latest, true);
-const versions = parsed.statements
+const policyPath = 'src/shared/context-policy.ts';
+const policySource = await readFile(resolve(root, policyPath), 'utf8');
+const policyParsed = ts.createSourceFile(
+  policyPath,
+  policySource,
+  ts.ScriptTarget.Latest,
+  true,
+);
+const imports = parsed.statements
+  .filter(ts.isImportDeclaration)
+  .filter(
+    (statement) =>
+      ts.isStringLiteral(statement.moduleSpecifier) &&
+      statement.moduleSpecifier.text === '../../shared/context-policy.ts',
+  );
+assert.equal(imports.length, 1);
+assert(!imports[0].importClause?.isTypeOnly);
+const bindings = imports[0].importClause?.namedBindings;
+assert(bindings && ts.isNamedImports(bindings));
+assert(
+  bindings.elements.some(
+    (element) =>
+      element.name.text === 'CONTEXT_POLICY_VERSION' &&
+      !element.propertyName &&
+      !element.isTypeOnly,
+  ),
+);
+const versions = policyParsed.statements
   .filter(ts.isVariableStatement)
   .flatMap((statement) => [...statement.declarationList.declarations])
   .filter(
@@ -20,8 +47,10 @@ const versions = parsed.statements
       ts.isIdentifier(value.name) && value.name.text === 'CONTEXT_POLICY_VERSION',
   );
 assert.equal(versions.length, 1);
+assert(ts.isVariableDeclarationList(versions[0].parent));
+assert(versions[0].parent.flags & ts.NodeFlags.Const);
 assert(versions[0].initializer && ts.isNumericLiteral(versions[0].initializer));
-assert.equal(versions[0].initializer.text, '4', 'Review policy-version proof premises');
+assert.equal(versions[0].initializer.text, '5', 'Review policy-version proof premises');
 const declarations = parsed.statements
   .filter(ts.isFunctionDeclaration)
   .filter((declaration) => declaration.name?.text === 'sameAuthority');
@@ -72,7 +101,7 @@ function values(prefix: string): RecordFields {
     installationGeneration: '#' + prefix + 'generation',
     parent: '#' + prefix + 'parent',
     kind: '#' + prefix + 'kind',
-    policyVersion: '4',
+    policyVersion: '5',
     url: '#' + prefix + 'url',
     state: '#' + prefix + 'phase',
     proto: '#' + prefix + 'proto',
@@ -285,11 +314,13 @@ await writeFile(
       typescriptVersion: ts.version,
       source: sourcePath,
       sourceSHA256: hash(source),
+      policySource: policyPath,
+      policySourceSHA256: hash(policySource),
       functionSHA256: hash(original),
       runnerSHA256: hash(await readFile(import.meta.filename, 'utf8')),
       preconditions: [
         'Records are ordinary objects with owned writable data properties and arbitrary prototypes. Separate-record contracts require disjoint ownership; aliased contracts own one record.',
-        'Identity, application, generation, kind, URL and state fields are strings. Parent is null for a root or a string for a child. Current policy version is 4; expected policy versions may be arbitrary numbers in refusal contracts. A selected mismatch is sufficient even when other fields differ.',
+        'Identity, application, generation, kind, URL and state fields are strings. Parent is null for a root or a string for a child. Current policy version is 5; expected policy versions may be arbitrary numbers in refusal contracts. A selected mismatch is sufficient even when other fields differ.',
         'This function alone does not reject a closed current record: resolve/resolveWorker must filter it before calling. Proving that caller contract and preservation through async operations remains open.',
         'Extraction, TypeScript erasure, Gillian semantics, verifier, solver and native/caller contracts remain trusted. No proof of the complete registry follows from these contracts.',
       ],

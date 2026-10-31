@@ -1,10 +1,9 @@
 # Completing the runtime confinement argument
 
 This execution plan follows the eight stages in [the verification programme](README.md).
-It updates the remaining work against revision
-`087ca7e64f6401ee678f0e89d38fcb5997c382ee`. Implementation stays on the separate
-`runtime-confinement-proof` worktree and branch. This planning revision changes no
-runtime code or deployed site.
+Implementation stays on the separate `runtime-confinement-proof` worktree and
+branch. The current policy-5 candidate adds native worker namespace partitioning;
+complete confinement and deployment remain pending.
 
 The target remains [C1–C8](../threat-model.md): confined application activity cannot
 cause a remote request or connection, including to the runtime origin. Whether
@@ -66,13 +65,12 @@ The registration-fence fixture, controls and scope-specific queue model now run
 in CI. Establish their correspondence to the
 [Service Workers job algorithms](https://w3c.github.io/ServiceWorker/#schedule-job).
 Review changed scripts, install/activate work, overlapping registrations,
-controller retention, restart and work already queued at launch. Review surviving
-shared/publisher globals across policy-version changes: their current native names
-contain application generation, not host policy version. The
-[native namespace experiment](worker-policy-overlap.md) now observes old-global
-reuse in both browsers even after bootstrap script bytes change. Establish fresh execution
-or an explicit refusal before treating the existing upgrade cases as coverage of
-that overlap. Unregistration must not be treated as cancellation of an already
+controller retention, restart and work already queued at launch. Native
+shared/publisher names now include host policy version 5. The
+[namespace experiment](worker-policy-overlap.md) checks fresh globals across
+policy versions, sharing within one version, and policy-omission faults in both
+browsers. Complete admission and mixed-policy lifetime correspondence remain open.
+Unregistration must not be treated as cancellation of an already
 transmitted request.
 
 Dedicated-worker verification and nested closure now use a private parent broker

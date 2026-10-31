@@ -139,6 +139,10 @@ arguments even where the abstract publication contract is shared.
   native bindings. Shared/publisher roots retain an explicit worker-only HTTP
   adapter. Native parent-selection and delegation faults are detected; complete
   protocol refinement and local bootstrap/resource delivery remain open.
+  Shared/publisher native names now include context policy version 5. The
+  [namespace experiment](worker-policy-overlap.md) checks fresh globals across
+  policy constants, same-policy sharing and eight policy-omission faults. Retained
+  old globals and complete mixed-policy lifetimes remain open.
 - Stage 7: browser validation is in progress for the root content integration;
   broader coverage and lifecycle obligations remain open.
 - Stage 8: pending. Earlier component evidence remains available, with

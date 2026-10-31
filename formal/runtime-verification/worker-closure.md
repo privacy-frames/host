@@ -36,7 +36,9 @@ Native script bootstraps, module loading, resources and other shared/publisher
 operations still need local delivery. These paths retain the demonstrated
 maintenance-channel obligation. This change does not establish C4.
 
-The two-port bootstrap uses context policy version 4. Old bindings are refused
+The two-port bootstrap now uses context policy version 5. Shared and publisher
+native names also include that version; the [namespace checks](worker-policy-overlap.md)
+cover fresh globals and sharing across selected policy-overlap schedules. Old bindings are refused
 rather than admitted under the new protocol. The actual authority-predicate check
 has been updated to that version; its field-comparison contracts retain their
 existing ownership and caller assumptions.
@@ -77,7 +79,15 @@ remaining adapter's integration separately.
 The [version-4 compatibility receipt](worker-broker-compatibility.json) records
 all eight unchanged applications passing their selected standalone and confined
 tasks in both browsers, including offline reloads. Its source and artifact hashes
-match the native control and upgrade checks.
+match the policy-4 native control and upgrade checks. This historical receipt
+does not validate the policy-5 candidate.
+
+The [policy-5 validation record](worker-policy-validation.json) records a clean
+context-suite invocation, nine worker-control samples, four startup schedules,
+and the [sixteen application comparisons](worker-policy-compatibility.json).
+All eight unchanged applications pass their tasks in both browsers and reload
+offline. The native namespace experiment separately detects all eight
+policy-partition omissions.
 
 The [validation record](worker-broker-validation.json) retains an initial SVG
 publication assertion: initial and load-time widths were zero, while a later read

@@ -158,6 +158,17 @@ jobs:
           rm -f formal/runtime-verification/worker-closure-browser.json
           npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/runtime-verification/worker-closure-browser.ts
           node formal/runtime-verification/worker-closure-browser.ts
+      - name: Check native worker policy partitions and omission controls
+        id: worker_policy
+        run: |
+          rm -f formal/runtime-verification/worker-policy-overlap.json
+          npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/runtime-verification/worker-policy-overlap.ts
+          node formal/runtime-verification/worker-policy-overlap.ts
+      - uses: actions/upload-artifact@v4
+        if: always() && (steps.worker_policy.outcome == 'success' || steps.worker_policy.outcome == 'failure')
+        with:
+          name: worker-policy-partitions
+          path: formal/runtime-verification/worker-policy-overlap.json
       - uses: actions/upload-artifact@v4
         if: always() && (steps.worker_closure.outcome == 'success' || steps.worker_closure.outcome == 'failure')
         with:
