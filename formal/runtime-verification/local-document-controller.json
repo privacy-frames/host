@@ -1,12 +1,16 @@
 {
   "completed": true,
-  "scope": "Native local child documents after parent unregistration, actual controller-client and resource-fetch adapters, native source lookup and fixed trusted resource fixture. Not production admission, lifecycle, preparation or complete confinement.",
-  "runnerSHA256": "aaeac78436cf2627b3f3ecfbffd896d05b55ba74e5100fe3be0a98f1b628e8be",
-  "childScriptSHA256": "6bad2200b697016c5815ea37b47292ed9f938bac8a7f405a7cd9270364677054",
+  "parentRelay": false,
+  "scope": "Native local child documents after parent unregistration; direct or explicitly parent-mediated transport using actual production channel/resource adapters and a fixed trusted resource fixture. Relay identity denotes the parent, not native child authentication. Not production admission, preparation or complete confinement.",
+  "runnerSHA256": "ea811f7a42758ab2187e05d0f6a8ad79db04dc1f4b411a8df8ab41d8d7eac084",
+  "childScriptSHA256": "f1b45fdc305533cbda00c8b0ac06bd034ebd9c5937dfcf3ce6efdf4f1487e705",
+  "parentScriptSHA256": "23fbc66efb188972f00be342b1221975bc9d25d0ca02191fa7393c232e77c55d",
   "workerSHA256": "462662bad16a14e59f2b1c1c3001d40e5604b3512800cda5f85796e9288b896d",
   "policy": "default-src 'none'; script-src 'nonce-fixture'; frame-src blob:; worker-src 'self'; connect-src 'none'",
   "sourceHashes": {
-    "src/runtime/controller-client.ts": "292ff3280e528d0e3096564c2aae78639b6de4553de815bbf5d3ca9fa4b9e1f1",
+    "src/runtime/controller-client.ts": "a420699a6ebeaf45c0bdc4a87b9a6f1f0d8e102fae165864f601846c6df9ce33",
+    "src/runtime/private-channel.ts": "923c307092870e32dde49079e5174abe694c45b2282edb8451d200dcc2abacae",
+    "src/runtime/contexts/parent-channel.ts": "a08adb57841df2dc7b77f4da4a0a47c219d7573967fdf3ddcea1bc0c4e14a2d0",
     "src/runtime/resource-fetch.ts": "c900d9b0e5778b2f003e8e3a18a4f3bd17628700fbad8ef060cbba280c5389c9",
     "src/runtime/enforcement/native.ts": "e67d8b858933334efaa44b8823fd1176ba428c9e0613e72ed28c41af302803ac",
     "src/shared/primordials.ts": "422a992a7e863c1b3b09f7d1484f10fa66a0300cdea007dfe485c9bf0c1e980c"
@@ -19,13 +23,13 @@
       "later": "absent",
       "carrier": "srcdoc",
       "registrations": [],
-      "original": "12ca33dc-839d-443e-99c9-355ab007a992",
+      "original": "284bddf4-648f-4a46-b706-85b59ffc8c67",
       "result": {
         "type": "local-child-result",
         "ok": true,
         "identity": {
-          "instance": "12ca33dc-839d-443e-99c9-355ab007a992",
-          "id": "b3f112dd-05cd-4beb-97ac-a09548829dcb",
+          "instance": "284bddf4-648f-4a46-b706-85b59ffc8c67",
+          "id": "9586888f-21a6-4509-9454-9f021c40345b",
           "url": "about:srcdoc",
           "type": "window",
           "messageSourceURL": ""
@@ -38,11 +42,11 @@
       "parentIdentity": {
         "ok": true,
         "value": {
-          "instance": "12ca33dc-839d-443e-99c9-355ab007a992",
-          "id": "69696cdb-4ca2-4bf8-9595-7a9eade986a6",
-          "url": "http://127.0.0.1:41117/one/page",
+          "instance": "284bddf4-648f-4a46-b706-85b59ffc8c67",
+          "id": "505e5467-019b-4a79-ad9b-1fbafe38de16",
+          "url": "http://127.0.0.1:36071/one/page",
           "type": "window",
-          "messageSourceURL": "http://127.0.0.1:41117/one/page"
+          "messageSourceURL": "http://127.0.0.1:36071/one/page"
         }
       },
       "trace": {
@@ -51,37 +55,37 @@
           {
             "phase": "received",
             "operation": "identity",
-            "id": "69696cdb-4ca2-4bf8-9595-7a9eade986a6",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "505e5467-019b-4a79-ad9b-1fbafe38de16",
+            "url": "http://127.0.0.1:36071/one/page"
           },
           {
             "phase": "lookup-completed",
             "operation": "identity",
-            "id": "69696cdb-4ca2-4bf8-9595-7a9eade986a6",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "505e5467-019b-4a79-ad9b-1fbafe38de16",
+            "url": "http://127.0.0.1:36071/one/page"
           },
           {
             "phase": "received",
             "operation": "identity",
-            "id": "b3f112dd-05cd-4beb-97ac-a09548829dcb",
+            "id": "9586888f-21a6-4509-9454-9f021c40345b",
             "url": ""
           },
           {
             "phase": "lookup-completed",
             "operation": "identity",
-            "id": "b3f112dd-05cd-4beb-97ac-a09548829dcb",
+            "id": "9586888f-21a6-4509-9454-9f021c40345b",
             "url": "about:srcdoc"
           },
           {
             "phase": "received",
             "operation": "read",
-            "id": "b3f112dd-05cd-4beb-97ac-a09548829dcb",
+            "id": "9586888f-21a6-4509-9454-9f021c40345b",
             "url": ""
           },
           {
             "phase": "lookup-completed",
             "operation": "read",
-            "id": "b3f112dd-05cd-4beb-97ac-a09548829dcb",
+            "id": "9586888f-21a6-4509-9454-9f021c40345b",
             "url": "about:srcdoc"
           }
         ]
@@ -95,21 +99,21 @@
       "later": "absent",
       "carrier": "blob",
       "registrations": [],
-      "original": "0b06406c-d5d6-4387-b89c-a6bded50606e",
+      "original": "af3ed02d-21e5-4d85-9abf-bacdcfa1ef08",
       "result": {
         "type": "local-child-result",
         "ok": false,
         "error": "Error: Host controller is unavailable",
-        "documentURL": "blob:http://127.0.0.1:41117/04a89a82-f3b5-4896-beb9-3027241493c4"
+        "documentURL": "blob:http://127.0.0.1:36071/45ea85f5-e4f1-4055-8e51-b0e735a36dae"
       },
       "parentIdentity": {
         "ok": true,
         "value": {
-          "instance": "0b06406c-d5d6-4387-b89c-a6bded50606e",
-          "id": "2184e579-3a0e-4760-80a2-0cbdadc796ee",
-          "url": "http://127.0.0.1:41117/one/page",
+          "instance": "af3ed02d-21e5-4d85-9abf-bacdcfa1ef08",
+          "id": "6dcea8fd-1d80-40d7-83b0-a3e1e47b48b7",
+          "url": "http://127.0.0.1:36071/one/page",
           "type": "window",
-          "messageSourceURL": "http://127.0.0.1:41117/one/page"
+          "messageSourceURL": "http://127.0.0.1:36071/one/page"
         }
       },
       "trace": {
@@ -118,14 +122,14 @@
           {
             "phase": "received",
             "operation": "identity",
-            "id": "2184e579-3a0e-4760-80a2-0cbdadc796ee",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "6dcea8fd-1d80-40d7-83b0-a3e1e47b48b7",
+            "url": "http://127.0.0.1:36071/one/page"
           },
           {
             "phase": "lookup-completed",
             "operation": "identity",
-            "id": "2184e579-3a0e-4760-80a2-0cbdadc796ee",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "6dcea8fd-1d80-40d7-83b0-a3e1e47b48b7",
+            "url": "http://127.0.0.1:36071/one/page"
           }
         ]
       },
@@ -138,15 +142,15 @@
       "later": "sibling",
       "carrier": "srcdoc",
       "registrations": [
-        "http://127.0.0.1:41117/two/"
+        "http://127.0.0.1:36071/two/"
       ],
-      "original": "b83d7917-7577-4a49-ba8f-cea2fd4f43c0",
+      "original": "a8113462-cf73-4b3d-a87e-d03ecc87e1b3",
       "result": {
         "type": "local-child-result",
         "ok": true,
         "identity": {
-          "instance": "b83d7917-7577-4a49-ba8f-cea2fd4f43c0",
-          "id": "ce695e6d-e866-4d59-a0cf-c3eeaacf3d99",
+          "instance": "a8113462-cf73-4b3d-a87e-d03ecc87e1b3",
+          "id": "39d5fd60-0ee8-4d55-9908-9a032702d965",
           "url": "about:srcdoc",
           "type": "window",
           "messageSourceURL": ""
@@ -159,11 +163,11 @@
       "parentIdentity": {
         "ok": true,
         "value": {
-          "instance": "b83d7917-7577-4a49-ba8f-cea2fd4f43c0",
-          "id": "496db905-0486-4b3d-84ba-98ea747f7625",
-          "url": "http://127.0.0.1:41117/one/page",
+          "instance": "a8113462-cf73-4b3d-a87e-d03ecc87e1b3",
+          "id": "c731532f-bd6e-4262-8e31-646e6fa85453",
+          "url": "http://127.0.0.1:36071/one/page",
           "type": "window",
-          "messageSourceURL": "http://127.0.0.1:41117/one/page"
+          "messageSourceURL": "http://127.0.0.1:36071/one/page"
         }
       },
       "trace": {
@@ -172,37 +176,37 @@
           {
             "phase": "received",
             "operation": "identity",
-            "id": "496db905-0486-4b3d-84ba-98ea747f7625",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "c731532f-bd6e-4262-8e31-646e6fa85453",
+            "url": "http://127.0.0.1:36071/one/page"
           },
           {
             "phase": "lookup-completed",
             "operation": "identity",
-            "id": "496db905-0486-4b3d-84ba-98ea747f7625",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "c731532f-bd6e-4262-8e31-646e6fa85453",
+            "url": "http://127.0.0.1:36071/one/page"
           },
           {
             "phase": "received",
             "operation": "identity",
-            "id": "ce695e6d-e866-4d59-a0cf-c3eeaacf3d99",
+            "id": "39d5fd60-0ee8-4d55-9908-9a032702d965",
             "url": ""
           },
           {
             "phase": "lookup-completed",
             "operation": "identity",
-            "id": "ce695e6d-e866-4d59-a0cf-c3eeaacf3d99",
+            "id": "39d5fd60-0ee8-4d55-9908-9a032702d965",
             "url": "about:srcdoc"
           },
           {
             "phase": "received",
             "operation": "read",
-            "id": "ce695e6d-e866-4d59-a0cf-c3eeaacf3d99",
+            "id": "39d5fd60-0ee8-4d55-9908-9a032702d965",
             "url": ""
           },
           {
             "phase": "lookup-completed",
             "operation": "read",
-            "id": "ce695e6d-e866-4d59-a0cf-c3eeaacf3d99",
+            "id": "39d5fd60-0ee8-4d55-9908-9a032702d965",
             "url": "about:srcdoc"
           }
         ]
@@ -216,23 +220,23 @@
       "later": "sibling",
       "carrier": "blob",
       "registrations": [
-        "http://127.0.0.1:41117/two/"
+        "http://127.0.0.1:36071/two/"
       ],
-      "original": "78f9d051-32ab-4d60-969b-5de8015025c7",
+      "original": "99d8d013-30d3-4d7d-95c0-515c4ff3775d",
       "result": {
         "type": "local-child-result",
         "ok": false,
         "error": "Error: Host controller is unavailable",
-        "documentURL": "blob:http://127.0.0.1:41117/c9c7a55c-c0e8-4a1a-8223-c85d155dbdde"
+        "documentURL": "blob:http://127.0.0.1:36071/11711d3c-92c3-467c-988c-02e3778568f9"
       },
       "parentIdentity": {
         "ok": true,
         "value": {
-          "instance": "78f9d051-32ab-4d60-969b-5de8015025c7",
-          "id": "1222d58c-97ba-4f25-b149-bf6bd9cef88b",
-          "url": "http://127.0.0.1:41117/one/page",
+          "instance": "99d8d013-30d3-4d7d-95c0-515c4ff3775d",
+          "id": "ed0684ab-615a-4aa8-ada0-ea0c2034a5b2",
+          "url": "http://127.0.0.1:36071/one/page",
           "type": "window",
-          "messageSourceURL": "http://127.0.0.1:41117/one/page"
+          "messageSourceURL": "http://127.0.0.1:36071/one/page"
         }
       },
       "trace": {
@@ -241,14 +245,14 @@
           {
             "phase": "received",
             "operation": "identity",
-            "id": "1222d58c-97ba-4f25-b149-bf6bd9cef88b",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "ed0684ab-615a-4aa8-ada0-ea0c2034a5b2",
+            "url": "http://127.0.0.1:36071/one/page"
           },
           {
             "phase": "lookup-completed",
             "operation": "identity",
-            "id": "1222d58c-97ba-4f25-b149-bf6bd9cef88b",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "ed0684ab-615a-4aa8-ada0-ea0c2034a5b2",
+            "url": "http://127.0.0.1:36071/one/page"
           }
         ]
       },
@@ -261,15 +265,15 @@
       "later": "ancestor",
       "carrier": "srcdoc",
       "registrations": [
-        "http://127.0.0.1:41117/"
+        "http://127.0.0.1:36071/"
       ],
-      "original": "152117e3-8b8c-4726-b89a-bb636f175907",
+      "original": "08d076e0-3346-498a-8c56-c12e11e95b80",
       "result": {
         "type": "local-child-result",
         "ok": true,
         "identity": {
-          "instance": "152117e3-8b8c-4726-b89a-bb636f175907",
-          "id": "f2724cda-06ee-45a4-8c5f-79d60468c5e6",
+          "instance": "08d076e0-3346-498a-8c56-c12e11e95b80",
+          "id": "66913770-2b70-42a6-b8a7-15aea9120684",
           "url": "about:srcdoc",
           "type": "window",
           "messageSourceURL": ""
@@ -282,11 +286,11 @@
       "parentIdentity": {
         "ok": true,
         "value": {
-          "instance": "152117e3-8b8c-4726-b89a-bb636f175907",
-          "id": "8d874d30-a45d-4677-8268-a03636d2f269",
-          "url": "http://127.0.0.1:41117/one/page",
+          "instance": "08d076e0-3346-498a-8c56-c12e11e95b80",
+          "id": "1e9f6875-8255-4be1-89be-8ac767f5fcb3",
+          "url": "http://127.0.0.1:36071/one/page",
           "type": "window",
-          "messageSourceURL": "http://127.0.0.1:41117/one/page"
+          "messageSourceURL": "http://127.0.0.1:36071/one/page"
         }
       },
       "trace": {
@@ -295,37 +299,37 @@
           {
             "phase": "received",
             "operation": "identity",
-            "id": "8d874d30-a45d-4677-8268-a03636d2f269",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "1e9f6875-8255-4be1-89be-8ac767f5fcb3",
+            "url": "http://127.0.0.1:36071/one/page"
           },
           {
             "phase": "lookup-completed",
             "operation": "identity",
-            "id": "8d874d30-a45d-4677-8268-a03636d2f269",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "1e9f6875-8255-4be1-89be-8ac767f5fcb3",
+            "url": "http://127.0.0.1:36071/one/page"
           },
           {
             "phase": "received",
             "operation": "identity",
-            "id": "f2724cda-06ee-45a4-8c5f-79d60468c5e6",
+            "id": "66913770-2b70-42a6-b8a7-15aea9120684",
             "url": ""
           },
           {
             "phase": "lookup-completed",
             "operation": "identity",
-            "id": "f2724cda-06ee-45a4-8c5f-79d60468c5e6",
+            "id": "66913770-2b70-42a6-b8a7-15aea9120684",
             "url": "about:srcdoc"
           },
           {
             "phase": "received",
             "operation": "read",
-            "id": "f2724cda-06ee-45a4-8c5f-79d60468c5e6",
+            "id": "66913770-2b70-42a6-b8a7-15aea9120684",
             "url": ""
           },
           {
             "phase": "lookup-completed",
             "operation": "read",
-            "id": "f2724cda-06ee-45a4-8c5f-79d60468c5e6",
+            "id": "66913770-2b70-42a6-b8a7-15aea9120684",
             "url": "about:srcdoc"
           }
         ]
@@ -339,23 +343,23 @@
       "later": "ancestor",
       "carrier": "blob",
       "registrations": [
-        "http://127.0.0.1:41117/"
+        "http://127.0.0.1:36071/"
       ],
-      "original": "29521fae-3611-41cf-8e7a-c1ce39d9e422",
+      "original": "43f4d6d6-5e8f-451d-8fd6-5d28a0c5257c",
       "result": {
         "type": "local-child-result",
         "ok": false,
         "error": "Error: Host controller is unavailable",
-        "documentURL": "blob:http://127.0.0.1:41117/d2cc52e6-cac1-4137-8861-2f7416f56604"
+        "documentURL": "blob:http://127.0.0.1:36071/caf10fe4-930d-4908-9fc0-441805d055c5"
       },
       "parentIdentity": {
         "ok": true,
         "value": {
-          "instance": "29521fae-3611-41cf-8e7a-c1ce39d9e422",
-          "id": "52f207dd-f0cb-4e57-be88-365db51c0987",
-          "url": "http://127.0.0.1:41117/one/page",
+          "instance": "43f4d6d6-5e8f-451d-8fd6-5d28a0c5257c",
+          "id": "2079c822-cdae-43f7-adef-31995f8c41de",
+          "url": "http://127.0.0.1:36071/one/page",
           "type": "window",
-          "messageSourceURL": "http://127.0.0.1:41117/one/page"
+          "messageSourceURL": "http://127.0.0.1:36071/one/page"
         }
       },
       "trace": {
@@ -364,14 +368,14 @@
           {
             "phase": "received",
             "operation": "identity",
-            "id": "52f207dd-f0cb-4e57-be88-365db51c0987",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "2079c822-cdae-43f7-adef-31995f8c41de",
+            "url": "http://127.0.0.1:36071/one/page"
           },
           {
             "phase": "lookup-completed",
             "operation": "identity",
-            "id": "52f207dd-f0cb-4e57-be88-365db51c0987",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "2079c822-cdae-43f7-adef-31995f8c41de",
+            "url": "http://127.0.0.1:36071/one/page"
           }
         ]
       },
@@ -384,7 +388,7 @@
       "later": "absent",
       "carrier": "srcdoc",
       "registrations": [],
-      "original": "8ad4a547-351d-4724-bfcc-f14240dec770",
+      "original": "43cc8c5f-3d11-4298-9eb1-41fdc23e683d",
       "result": {
         "type": "local-child-result",
         "ok": false,
@@ -394,11 +398,11 @@
       "parentIdentity": {
         "ok": true,
         "value": {
-          "instance": "8ad4a547-351d-4724-bfcc-f14240dec770",
-          "id": "6491f69d-0d89-45ea-964b-9d983bd27a0f",
-          "url": "http://127.0.0.1:41117/one/page",
+          "instance": "43cc8c5f-3d11-4298-9eb1-41fdc23e683d",
+          "id": "abce11d3-e5f7-4881-8e49-85d0fe063b4e",
+          "url": "http://127.0.0.1:36071/one/page",
           "type": "window",
-          "messageSourceURL": "http://127.0.0.1:41117/one/page"
+          "messageSourceURL": "http://127.0.0.1:36071/one/page"
         }
       },
       "trace": {
@@ -407,14 +411,14 @@
           {
             "phase": "received",
             "operation": "identity",
-            "id": "6491f69d-0d89-45ea-964b-9d983bd27a0f",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "abce11d3-e5f7-4881-8e49-85d0fe063b4e",
+            "url": "http://127.0.0.1:36071/one/page"
           },
           {
             "phase": "lookup-completed",
             "operation": "identity",
-            "id": "6491f69d-0d89-45ea-964b-9d983bd27a0f",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "abce11d3-e5f7-4881-8e49-85d0fe063b4e",
+            "url": "http://127.0.0.1:36071/one/page"
           }
         ]
       },
@@ -427,21 +431,21 @@
       "later": "absent",
       "carrier": "blob",
       "registrations": [],
-      "original": "036e318b-558f-4ab5-9adc-afe79e18f890",
+      "original": "4bb2d21e-59da-4907-9064-13abd7169964",
       "result": {
         "type": "local-child-result",
         "ok": false,
         "error": "Error: Host request timed out",
-        "documentURL": "blob:http://127.0.0.1:41117/3690d921-7e10-4970-978d-f621ee0da6b7"
+        "documentURL": "blob:http://127.0.0.1:36071/6edbe7ac-a8be-4fab-95af-1765eb9309e8"
       },
       "parentIdentity": {
         "ok": true,
         "value": {
-          "instance": "036e318b-558f-4ab5-9adc-afe79e18f890",
-          "id": "a6d4f7c2-3b39-4737-8e37-eb2914c9a897",
-          "url": "http://127.0.0.1:41117/one/page",
+          "instance": "4bb2d21e-59da-4907-9064-13abd7169964",
+          "id": "8570411f-af56-42dc-b242-5ce8e289b00e",
+          "url": "http://127.0.0.1:36071/one/page",
           "type": "window",
-          "messageSourceURL": "http://127.0.0.1:41117/one/page"
+          "messageSourceURL": "http://127.0.0.1:36071/one/page"
         }
       },
       "trace": {
@@ -450,14 +454,14 @@
           {
             "phase": "received",
             "operation": "identity",
-            "id": "a6d4f7c2-3b39-4737-8e37-eb2914c9a897",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "8570411f-af56-42dc-b242-5ce8e289b00e",
+            "url": "http://127.0.0.1:36071/one/page"
           },
           {
             "phase": "lookup-completed",
             "operation": "identity",
-            "id": "a6d4f7c2-3b39-4737-8e37-eb2914c9a897",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "8570411f-af56-42dc-b242-5ce8e289b00e",
+            "url": "http://127.0.0.1:36071/one/page"
           }
         ]
       },
@@ -470,9 +474,9 @@
       "later": "sibling",
       "carrier": "srcdoc",
       "registrations": [
-        "http://127.0.0.1:41117/two/"
+        "http://127.0.0.1:36071/two/"
       ],
-      "original": "054352cc-6176-4d08-85b3-5ad393d8024d",
+      "original": "9010d3a7-2f63-4411-a132-1a482387f895",
       "result": {
         "type": "local-child-result",
         "ok": false,
@@ -482,11 +486,11 @@
       "parentIdentity": {
         "ok": true,
         "value": {
-          "instance": "054352cc-6176-4d08-85b3-5ad393d8024d",
-          "id": "144303a8-fc25-40a4-a6ab-603dd5a43926",
-          "url": "http://127.0.0.1:41117/one/page",
+          "instance": "9010d3a7-2f63-4411-a132-1a482387f895",
+          "id": "76f90162-a911-4941-ba25-babc72576569",
+          "url": "http://127.0.0.1:36071/one/page",
           "type": "window",
-          "messageSourceURL": "http://127.0.0.1:41117/one/page"
+          "messageSourceURL": "http://127.0.0.1:36071/one/page"
         }
       },
       "trace": {
@@ -495,14 +499,14 @@
           {
             "phase": "received",
             "operation": "identity",
-            "id": "144303a8-fc25-40a4-a6ab-603dd5a43926",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "76f90162-a911-4941-ba25-babc72576569",
+            "url": "http://127.0.0.1:36071/one/page"
           },
           {
             "phase": "lookup-completed",
             "operation": "identity",
-            "id": "144303a8-fc25-40a4-a6ab-603dd5a43926",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "76f90162-a911-4941-ba25-babc72576569",
+            "url": "http://127.0.0.1:36071/one/page"
           }
         ]
       },
@@ -515,23 +519,23 @@
       "later": "sibling",
       "carrier": "blob",
       "registrations": [
-        "http://127.0.0.1:41117/two/"
+        "http://127.0.0.1:36071/two/"
       ],
-      "original": "dfa2cf9a-b6fd-498a-95f2-c0212d2874a7",
+      "original": "f0e8e3e8-1ead-41ab-90cb-3e99e6ad18ce",
       "result": {
         "type": "local-child-result",
         "ok": false,
         "error": "Error: Host request timed out",
-        "documentURL": "blob:http://127.0.0.1:41117/eec5d197-226e-49ff-8be9-8e5d22d19620"
+        "documentURL": "blob:http://127.0.0.1:36071/1aff3370-5403-41fd-8862-070e9c950e63"
       },
       "parentIdentity": {
         "ok": true,
         "value": {
-          "instance": "dfa2cf9a-b6fd-498a-95f2-c0212d2874a7",
-          "id": "87c9b89d-4409-4846-ba03-a4feec54e5d9",
-          "url": "http://127.0.0.1:41117/one/page",
+          "instance": "f0e8e3e8-1ead-41ab-90cb-3e99e6ad18ce",
+          "id": "22afeaf3-9704-4592-b28a-f6634ea6bf61",
+          "url": "http://127.0.0.1:36071/one/page",
           "type": "window",
-          "messageSourceURL": "http://127.0.0.1:41117/one/page"
+          "messageSourceURL": "http://127.0.0.1:36071/one/page"
         }
       },
       "trace": {
@@ -540,14 +544,14 @@
           {
             "phase": "received",
             "operation": "identity",
-            "id": "87c9b89d-4409-4846-ba03-a4feec54e5d9",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "22afeaf3-9704-4592-b28a-f6634ea6bf61",
+            "url": "http://127.0.0.1:36071/one/page"
           },
           {
             "phase": "lookup-completed",
             "operation": "identity",
-            "id": "87c9b89d-4409-4846-ba03-a4feec54e5d9",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "22afeaf3-9704-4592-b28a-f6634ea6bf61",
+            "url": "http://127.0.0.1:36071/one/page"
           }
         ]
       },
@@ -560,9 +564,9 @@
       "later": "ancestor",
       "carrier": "srcdoc",
       "registrations": [
-        "http://127.0.0.1:41117/"
+        "http://127.0.0.1:36071/"
       ],
-      "original": "30a854c2-ba25-40e3-801a-1dcd0c93f435",
+      "original": "544a152b-9a11-40d9-b7ed-28e4f04cc30a",
       "result": {
         "type": "local-child-result",
         "ok": false,
@@ -572,11 +576,11 @@
       "parentIdentity": {
         "ok": true,
         "value": {
-          "instance": "30a854c2-ba25-40e3-801a-1dcd0c93f435",
-          "id": "f4d03d4d-a835-463d-a637-e728ae295301",
-          "url": "http://127.0.0.1:41117/one/page",
+          "instance": "544a152b-9a11-40d9-b7ed-28e4f04cc30a",
+          "id": "33cd01de-6658-43cd-af7b-eaf8428e6a4f",
+          "url": "http://127.0.0.1:36071/one/page",
           "type": "window",
-          "messageSourceURL": "http://127.0.0.1:41117/one/page"
+          "messageSourceURL": "http://127.0.0.1:36071/one/page"
         }
       },
       "trace": {
@@ -585,21 +589,21 @@
           {
             "phase": "received",
             "operation": "identity",
-            "id": "f4d03d4d-a835-463d-a637-e728ae295301",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "33cd01de-6658-43cd-af7b-eaf8428e6a4f",
+            "url": "http://127.0.0.1:36071/one/page"
           },
           {
             "phase": "lookup-completed",
             "operation": "identity",
-            "id": "f4d03d4d-a835-463d-a637-e728ae295301",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "33cd01de-6658-43cd-af7b-eaf8428e6a4f",
+            "url": "http://127.0.0.1:36071/one/page"
           }
         ]
       },
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793465064762
+          "time": 1793470096430
         }
       ]
     },
@@ -610,23 +614,23 @@
       "later": "ancestor",
       "carrier": "blob",
       "registrations": [
-        "http://127.0.0.1:41117/"
+        "http://127.0.0.1:36071/"
       ],
-      "original": "a24291ec-af44-468f-9b9a-80e1d1530ac1",
+      "original": "2156eca8-2773-4b8f-a728-8eae98f05b07",
       "result": {
         "type": "local-child-result",
         "ok": false,
         "error": "Error: Host request timed out",
-        "documentURL": "blob:http://127.0.0.1:41117/06e0012a-22d2-4ead-85d0-f2fbb0d9a77b"
+        "documentURL": "blob:http://127.0.0.1:36071/619453ea-086c-4027-b3bb-51cc50f7a1b3"
       },
       "parentIdentity": {
         "ok": true,
         "value": {
-          "instance": "a24291ec-af44-468f-9b9a-80e1d1530ac1",
-          "id": "053fecf8-b794-47a0-acaa-0e3f7367a769",
-          "url": "http://127.0.0.1:41117/one/page",
+          "instance": "2156eca8-2773-4b8f-a728-8eae98f05b07",
+          "id": "1911b84d-2f2c-4019-acb9-a239f34816c8",
+          "url": "http://127.0.0.1:36071/one/page",
           "type": "window",
-          "messageSourceURL": "http://127.0.0.1:41117/one/page"
+          "messageSourceURL": "http://127.0.0.1:36071/one/page"
         }
       },
       "trace": {
@@ -635,21 +639,21 @@
           {
             "phase": "received",
             "operation": "identity",
-            "id": "053fecf8-b794-47a0-acaa-0e3f7367a769",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "1911b84d-2f2c-4019-acb9-a239f34816c8",
+            "url": "http://127.0.0.1:36071/one/page"
           },
           {
             "phase": "lookup-completed",
             "operation": "identity",
-            "id": "053fecf8-b794-47a0-acaa-0e3f7367a769",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "1911b84d-2f2c-4019-acb9-a239f34816c8",
+            "url": "http://127.0.0.1:36071/one/page"
           }
         ]
       },
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793465091154
+          "time": 1793470122844
         }
       ]
     },
@@ -660,7 +664,7 @@
       "later": "absent",
       "carrier": "srcdoc",
       "registrations": [],
-      "original": "839ded95-503a-40d9-b003-07c5d08b6f0c",
+      "original": "59196ab4-c49e-4c6c-ae10-9636c334ab18",
       "result": {
         "type": "local-child-result",
         "ok": false,
@@ -670,11 +674,11 @@
       "parentIdentity": {
         "ok": true,
         "value": {
-          "instance": "839ded95-503a-40d9-b003-07c5d08b6f0c",
-          "id": "6001404d-da16-420f-b30c-ef456dfd39da",
-          "url": "http://127.0.0.1:41117/one/page",
+          "instance": "59196ab4-c49e-4c6c-ae10-9636c334ab18",
+          "id": "fd0afba3-281b-4a20-9cb5-fba863a77e6b",
+          "url": "http://127.0.0.1:36071/one/page",
           "type": "window",
-          "messageSourceURL": "http://127.0.0.1:41117/one/page"
+          "messageSourceURL": "http://127.0.0.1:36071/one/page"
         }
       },
       "trace": {
@@ -683,14 +687,14 @@
           {
             "phase": "received",
             "operation": "identity",
-            "id": "6001404d-da16-420f-b30c-ef456dfd39da",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "fd0afba3-281b-4a20-9cb5-fba863a77e6b",
+            "url": "http://127.0.0.1:36071/one/page"
           },
           {
             "phase": "lookup-completed",
             "operation": "identity",
-            "id": "6001404d-da16-420f-b30c-ef456dfd39da",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "fd0afba3-281b-4a20-9cb5-fba863a77e6b",
+            "url": "http://127.0.0.1:36071/one/page"
           }
         ]
       },
@@ -703,21 +707,21 @@
       "later": "absent",
       "carrier": "blob",
       "registrations": [],
-      "original": "450dfe4d-d7e0-45fb-bf7a-1e83e2f07b8b",
+      "original": "52e04225-44ca-4317-89de-4f3df7ddc633",
       "result": {
         "type": "local-child-result",
         "ok": false,
         "error": "Error: Host request timed out",
-        "documentURL": "blob:http://127.0.0.1:41117/ceb82d62-6163-4b41-8958-faffbaf0a80c"
+        "documentURL": "blob:http://127.0.0.1:36071/79206dd0-0eee-472d-8536-14cef87d12a8"
       },
       "parentIdentity": {
         "ok": true,
         "value": {
-          "instance": "450dfe4d-d7e0-45fb-bf7a-1e83e2f07b8b",
-          "id": "a04f94fd-2268-4da4-934c-907480e3ce92",
-          "url": "http://127.0.0.1:41117/one/page",
+          "instance": "52e04225-44ca-4317-89de-4f3df7ddc633",
+          "id": "26f2c98b-42d5-4d22-aef2-0964bb4731a5",
+          "url": "http://127.0.0.1:36071/one/page",
           "type": "window",
-          "messageSourceURL": "http://127.0.0.1:41117/one/page"
+          "messageSourceURL": "http://127.0.0.1:36071/one/page"
         }
       },
       "trace": {
@@ -726,14 +730,14 @@
           {
             "phase": "received",
             "operation": "identity",
-            "id": "a04f94fd-2268-4da4-934c-907480e3ce92",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "26f2c98b-42d5-4d22-aef2-0964bb4731a5",
+            "url": "http://127.0.0.1:36071/one/page"
           },
           {
             "phase": "lookup-completed",
             "operation": "identity",
-            "id": "a04f94fd-2268-4da4-934c-907480e3ce92",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "26f2c98b-42d5-4d22-aef2-0964bb4731a5",
+            "url": "http://127.0.0.1:36071/one/page"
           }
         ]
       },
@@ -746,9 +750,9 @@
       "later": "sibling",
       "carrier": "srcdoc",
       "registrations": [
-        "http://127.0.0.1:41117/two/"
+        "http://127.0.0.1:36071/two/"
       ],
-      "original": "7cec84cb-f78b-41c2-b679-e25b177ea595",
+      "original": "43b69413-f113-49d9-bbf7-cbb1aaa8eee7",
       "result": {
         "type": "local-child-result",
         "ok": false,
@@ -758,11 +762,11 @@
       "parentIdentity": {
         "ok": true,
         "value": {
-          "instance": "7cec84cb-f78b-41c2-b679-e25b177ea595",
-          "id": "f66eb4b2-06c5-4bad-ab89-9f200c2d900d",
-          "url": "http://127.0.0.1:41117/one/page",
+          "instance": "43b69413-f113-49d9-bbf7-cbb1aaa8eee7",
+          "id": "2e188b68-a09c-457a-ba7f-be1f0e025e7a",
+          "url": "http://127.0.0.1:36071/one/page",
           "type": "window",
-          "messageSourceURL": "http://127.0.0.1:41117/one/page"
+          "messageSourceURL": "http://127.0.0.1:36071/one/page"
         }
       },
       "trace": {
@@ -771,14 +775,14 @@
           {
             "phase": "received",
             "operation": "identity",
-            "id": "f66eb4b2-06c5-4bad-ab89-9f200c2d900d",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "2e188b68-a09c-457a-ba7f-be1f0e025e7a",
+            "url": "http://127.0.0.1:36071/one/page"
           },
           {
             "phase": "lookup-completed",
             "operation": "identity",
-            "id": "f66eb4b2-06c5-4bad-ab89-9f200c2d900d",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "2e188b68-a09c-457a-ba7f-be1f0e025e7a",
+            "url": "http://127.0.0.1:36071/one/page"
           }
         ]
       },
@@ -791,23 +795,23 @@
       "later": "sibling",
       "carrier": "blob",
       "registrations": [
-        "http://127.0.0.1:41117/two/"
+        "http://127.0.0.1:36071/two/"
       ],
-      "original": "da92cfcb-6d99-438f-8ba9-5b888b511fb5",
+      "original": "3269ad8e-f04d-42f4-9825-8a8010971db3",
       "result": {
         "type": "local-child-result",
         "ok": false,
         "error": "Error: Host request timed out",
-        "documentURL": "blob:http://127.0.0.1:41117/5b56f18b-771c-443e-8516-7ee926d12f6d"
+        "documentURL": "blob:http://127.0.0.1:36071/f9f114ee-a153-4119-990a-88e45b6ad642"
       },
       "parentIdentity": {
         "ok": true,
         "value": {
-          "instance": "da92cfcb-6d99-438f-8ba9-5b888b511fb5",
-          "id": "16ad47cf-7545-431a-971c-1808050bf51f",
-          "url": "http://127.0.0.1:41117/one/page",
+          "instance": "3269ad8e-f04d-42f4-9825-8a8010971db3",
+          "id": "7f34ade1-5091-4074-8fd8-16a48c82791e",
+          "url": "http://127.0.0.1:36071/one/page",
           "type": "window",
-          "messageSourceURL": "http://127.0.0.1:41117/one/page"
+          "messageSourceURL": "http://127.0.0.1:36071/one/page"
         }
       },
       "trace": {
@@ -816,14 +820,14 @@
           {
             "phase": "received",
             "operation": "identity",
-            "id": "16ad47cf-7545-431a-971c-1808050bf51f",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "7f34ade1-5091-4074-8fd8-16a48c82791e",
+            "url": "http://127.0.0.1:36071/one/page"
           },
           {
             "phase": "lookup-completed",
             "operation": "identity",
-            "id": "16ad47cf-7545-431a-971c-1808050bf51f",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "7f34ade1-5091-4074-8fd8-16a48c82791e",
+            "url": "http://127.0.0.1:36071/one/page"
           }
         ]
       },
@@ -836,9 +840,9 @@
       "later": "ancestor",
       "carrier": "srcdoc",
       "registrations": [
-        "http://127.0.0.1:41117/"
+        "http://127.0.0.1:36071/"
       ],
-      "original": "022cacb0-2c2c-4730-8c97-43918dbc161b",
+      "original": "6ff49394-4b86-475f-b852-da540f783dfe",
       "result": {
         "type": "local-child-result",
         "ok": false,
@@ -848,11 +852,11 @@
       "parentIdentity": {
         "ok": true,
         "value": {
-          "instance": "022cacb0-2c2c-4730-8c97-43918dbc161b",
-          "id": "71ef932f-3122-456b-935f-af0a73ed3114",
-          "url": "http://127.0.0.1:41117/one/page",
+          "instance": "6ff49394-4b86-475f-b852-da540f783dfe",
+          "id": "29b52676-250d-410b-9be0-1f38413eb579",
+          "url": "http://127.0.0.1:36071/one/page",
           "type": "window",
-          "messageSourceURL": "http://127.0.0.1:41117/one/page"
+          "messageSourceURL": "http://127.0.0.1:36071/one/page"
         }
       },
       "trace": {
@@ -861,21 +865,21 @@
           {
             "phase": "received",
             "operation": "identity",
-            "id": "71ef932f-3122-456b-935f-af0a73ed3114",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "29b52676-250d-410b-9be0-1f38413eb579",
+            "url": "http://127.0.0.1:36071/one/page"
           },
           {
             "phase": "lookup-completed",
             "operation": "identity",
-            "id": "71ef932f-3122-456b-935f-af0a73ed3114",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "29b52676-250d-410b-9be0-1f38413eb579",
+            "url": "http://127.0.0.1:36071/one/page"
           }
         ]
       },
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793465223874
+          "time": 1793470255465
         }
       ]
     },
@@ -886,23 +890,23 @@
       "later": "ancestor",
       "carrier": "blob",
       "registrations": [
-        "http://127.0.0.1:41117/"
+        "http://127.0.0.1:36071/"
       ],
-      "original": "344dfd61-c3ee-4024-9b48-00fa40d515c6",
+      "original": "69db9e91-cf2c-478a-934d-8135df907c4d",
       "result": {
         "type": "local-child-result",
         "ok": false,
         "error": "Error: Host request timed out",
-        "documentURL": "blob:http://127.0.0.1:41117/8f2eb323-d943-4c56-8029-ebb1425b8f34"
+        "documentURL": "blob:http://127.0.0.1:36071/dfc771cb-fccf-41d6-916a-2748d2201512"
       },
       "parentIdentity": {
         "ok": true,
         "value": {
-          "instance": "344dfd61-c3ee-4024-9b48-00fa40d515c6",
-          "id": "bdaa071d-3f5e-4201-a186-bb4e9ce09275",
-          "url": "http://127.0.0.1:41117/one/page",
+          "instance": "69db9e91-cf2c-478a-934d-8135df907c4d",
+          "id": "6f04d2cd-0105-48d6-926b-416ceb331c2f",
+          "url": "http://127.0.0.1:36071/one/page",
           "type": "window",
-          "messageSourceURL": "http://127.0.0.1:41117/one/page"
+          "messageSourceURL": "http://127.0.0.1:36071/one/page"
         }
       },
       "trace": {
@@ -911,21 +915,21 @@
           {
             "phase": "received",
             "operation": "identity",
-            "id": "bdaa071d-3f5e-4201-a186-bb4e9ce09275",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "6f04d2cd-0105-48d6-926b-416ceb331c2f",
+            "url": "http://127.0.0.1:36071/one/page"
           },
           {
             "phase": "lookup-completed",
             "operation": "identity",
-            "id": "bdaa071d-3f5e-4201-a186-bb4e9ce09275",
-            "url": "http://127.0.0.1:41117/one/page"
+            "id": "6f04d2cd-0105-48d6-926b-416ceb331c2f",
+            "url": "http://127.0.0.1:36071/one/page"
           }
         ]
       },
       "requests": [
         {
           "path": "/sw.js",
-          "time": 1793465250282
+          "time": 1793470281863
         }
       ]
     }

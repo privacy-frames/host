@@ -1,0 +1,1432 @@
+{
+  "completed": true,
+  "parentRelay": true,
+  "scope": "Native local child documents after parent unregistration; direct or explicitly parent-mediated transport using actual production channel/resource adapters and a fixed trusted resource fixture. Relay identity denotes the parent, not native child authentication. Not production admission, preparation or complete confinement.",
+  "runnerSHA256": "ea811f7a42758ab2187e05d0f6a8ad79db04dc1f4b411a8df8ab41d8d7eac084",
+  "childScriptSHA256": "d8fb12ee115400fa8c67ac001a3a3435aa4871f15b07213fe7dac33b07f82eb5",
+  "parentScriptSHA256": "23fbc66efb188972f00be342b1221975bc9d25d0ca02191fa7393c232e77c55d",
+  "workerSHA256": "462662bad16a14e59f2b1c1c3001d40e5604b3512800cda5f85796e9288b896d",
+  "policy": "default-src 'none'; script-src 'nonce-fixture'; frame-src blob:; worker-src 'self'; connect-src 'none'",
+  "sourceHashes": {
+    "src/runtime/controller-client.ts": "a420699a6ebeaf45c0bdc4a87b9a6f1f0d8e102fae165864f601846c6df9ce33",
+    "src/runtime/private-channel.ts": "923c307092870e32dde49079e5174abe694c45b2282edb8451d200dcc2abacae",
+    "src/runtime/contexts/parent-channel.ts": "a08adb57841df2dc7b77f4da4a0a47c219d7573967fdf3ddcea1bc0c4e14a2d0",
+    "src/runtime/resource-fetch.ts": "c900d9b0e5778b2f003e8e3a18a4f3bd17628700fbad8ef060cbba280c5389c9",
+    "src/runtime/enforcement/native.ts": "e67d8b858933334efaa44b8823fd1176ba428c9e0613e72ed28c41af302803ac",
+    "src/shared/primordials.ts": "422a992a7e863c1b3b09f7d1484f10fa66a0300cdea007dfe485c9bf0c1e980c"
+  },
+  "rows": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStale": false,
+      "later": "absent",
+      "carrier": "srcdoc",
+      "registrations": [],
+      "original": "6c34ee42-5c14-40a4-9173-d76969c1ad75",
+      "result": {
+        "type": "local-child-result",
+        "ok": true,
+        "identity": {
+          "instance": "6c34ee42-5c14-40a4-9173-d76969c1ad75",
+          "id": "284c3701-6263-443b-a9a3-4d207b2ba45c",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        },
+        "result": {
+          "value": 42
+        },
+        "documentURL": "about:srcdoc"
+      },
+      "parentIdentity": {
+        "ok": true,
+        "value": {
+          "instance": "6c34ee42-5c14-40a4-9173-d76969c1ad75",
+          "id": "284c3701-6263-443b-a9a3-4d207b2ba45c",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        }
+      },
+      "trace": {
+        "ok": true,
+        "value": [
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "284c3701-6263-443b-a9a3-4d207b2ba45c",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "284c3701-6263-443b-a9a3-4d207b2ba45c",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "284c3701-6263-443b-a9a3-4d207b2ba45c",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "284c3701-6263-443b-a9a3-4d207b2ba45c",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "read",
+            "id": "284c3701-6263-443b-a9a3-4d207b2ba45c",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "read",
+            "id": "284c3701-6263-443b-a9a3-4d207b2ba45c",
+            "url": "http://127.0.0.1:43523/one/page"
+          }
+        ]
+      },
+      "requests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStale": false,
+      "later": "absent",
+      "carrier": "blob",
+      "registrations": [],
+      "original": "62693e73-3f48-4bbc-8192-3c88c02a50ae",
+      "result": {
+        "type": "local-child-result",
+        "ok": true,
+        "identity": {
+          "instance": "62693e73-3f48-4bbc-8192-3c88c02a50ae",
+          "id": "5adda3ce-9421-46f5-8bce-b75a96659d9f",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        },
+        "result": {
+          "value": 42
+        },
+        "documentURL": "blob:http://127.0.0.1:43523/609a6a82-f489-4c87-9322-579cd2e56a9c"
+      },
+      "parentIdentity": {
+        "ok": true,
+        "value": {
+          "instance": "62693e73-3f48-4bbc-8192-3c88c02a50ae",
+          "id": "5adda3ce-9421-46f5-8bce-b75a96659d9f",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        }
+      },
+      "trace": {
+        "ok": true,
+        "value": [
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "5adda3ce-9421-46f5-8bce-b75a96659d9f",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "5adda3ce-9421-46f5-8bce-b75a96659d9f",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "5adda3ce-9421-46f5-8bce-b75a96659d9f",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "5adda3ce-9421-46f5-8bce-b75a96659d9f",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "read",
+            "id": "5adda3ce-9421-46f5-8bce-b75a96659d9f",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "read",
+            "id": "5adda3ce-9421-46f5-8bce-b75a96659d9f",
+            "url": "http://127.0.0.1:43523/one/page"
+          }
+        ]
+      },
+      "requests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStale": false,
+      "later": "sibling",
+      "carrier": "srcdoc",
+      "registrations": [
+        "http://127.0.0.1:43523/two/"
+      ],
+      "original": "9966925e-e74e-4c1f-89c4-c44551eb3bed",
+      "result": {
+        "type": "local-child-result",
+        "ok": true,
+        "identity": {
+          "instance": "9966925e-e74e-4c1f-89c4-c44551eb3bed",
+          "id": "17a5d2b8-2540-4514-b9b3-eca661dc7102",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        },
+        "result": {
+          "value": 42
+        },
+        "documentURL": "about:srcdoc"
+      },
+      "parentIdentity": {
+        "ok": true,
+        "value": {
+          "instance": "9966925e-e74e-4c1f-89c4-c44551eb3bed",
+          "id": "17a5d2b8-2540-4514-b9b3-eca661dc7102",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        }
+      },
+      "trace": {
+        "ok": true,
+        "value": [
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "17a5d2b8-2540-4514-b9b3-eca661dc7102",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "17a5d2b8-2540-4514-b9b3-eca661dc7102",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "17a5d2b8-2540-4514-b9b3-eca661dc7102",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "17a5d2b8-2540-4514-b9b3-eca661dc7102",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "read",
+            "id": "17a5d2b8-2540-4514-b9b3-eca661dc7102",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "read",
+            "id": "17a5d2b8-2540-4514-b9b3-eca661dc7102",
+            "url": "http://127.0.0.1:43523/one/page"
+          }
+        ]
+      },
+      "requests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStale": false,
+      "later": "sibling",
+      "carrier": "blob",
+      "registrations": [
+        "http://127.0.0.1:43523/two/"
+      ],
+      "original": "e1bedd25-4a06-4794-9771-4756a038e639",
+      "result": {
+        "type": "local-child-result",
+        "ok": true,
+        "identity": {
+          "instance": "e1bedd25-4a06-4794-9771-4756a038e639",
+          "id": "08734f53-0ab6-4687-930d-d364efd9bb46",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        },
+        "result": {
+          "value": 42
+        },
+        "documentURL": "blob:http://127.0.0.1:43523/7203d86d-a30b-4671-9986-e2efeda46268"
+      },
+      "parentIdentity": {
+        "ok": true,
+        "value": {
+          "instance": "e1bedd25-4a06-4794-9771-4756a038e639",
+          "id": "08734f53-0ab6-4687-930d-d364efd9bb46",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        }
+      },
+      "trace": {
+        "ok": true,
+        "value": [
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "08734f53-0ab6-4687-930d-d364efd9bb46",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "08734f53-0ab6-4687-930d-d364efd9bb46",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "08734f53-0ab6-4687-930d-d364efd9bb46",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "08734f53-0ab6-4687-930d-d364efd9bb46",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "read",
+            "id": "08734f53-0ab6-4687-930d-d364efd9bb46",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "read",
+            "id": "08734f53-0ab6-4687-930d-d364efd9bb46",
+            "url": "http://127.0.0.1:43523/one/page"
+          }
+        ]
+      },
+      "requests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStale": false,
+      "later": "ancestor",
+      "carrier": "srcdoc",
+      "registrations": [
+        "http://127.0.0.1:43523/"
+      ],
+      "original": "232df862-87d5-4c8e-9df3-08809b8fcdaf",
+      "result": {
+        "type": "local-child-result",
+        "ok": true,
+        "identity": {
+          "instance": "232df862-87d5-4c8e-9df3-08809b8fcdaf",
+          "id": "99d3f958-dc82-4369-8a4d-b669fc1366db",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        },
+        "result": {
+          "value": 42
+        },
+        "documentURL": "about:srcdoc"
+      },
+      "parentIdentity": {
+        "ok": true,
+        "value": {
+          "instance": "232df862-87d5-4c8e-9df3-08809b8fcdaf",
+          "id": "99d3f958-dc82-4369-8a4d-b669fc1366db",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        }
+      },
+      "trace": {
+        "ok": true,
+        "value": [
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "99d3f958-dc82-4369-8a4d-b669fc1366db",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "99d3f958-dc82-4369-8a4d-b669fc1366db",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "99d3f958-dc82-4369-8a4d-b669fc1366db",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "99d3f958-dc82-4369-8a4d-b669fc1366db",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "read",
+            "id": "99d3f958-dc82-4369-8a4d-b669fc1366db",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "read",
+            "id": "99d3f958-dc82-4369-8a4d-b669fc1366db",
+            "url": "http://127.0.0.1:43523/one/page"
+          }
+        ]
+      },
+      "requests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStale": false,
+      "later": "ancestor",
+      "carrier": "blob",
+      "registrations": [
+        "http://127.0.0.1:43523/"
+      ],
+      "original": "7e66846a-b08b-4d92-ba87-b4f5483169ed",
+      "result": {
+        "type": "local-child-result",
+        "ok": true,
+        "identity": {
+          "instance": "7e66846a-b08b-4d92-ba87-b4f5483169ed",
+          "id": "816249fa-f683-4d12-a03d-cb49db0fa24e",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        },
+        "result": {
+          "value": 42
+        },
+        "documentURL": "blob:http://127.0.0.1:43523/96509bf0-4cad-45a8-8e54-3f7497076b0e"
+      },
+      "parentIdentity": {
+        "ok": true,
+        "value": {
+          "instance": "7e66846a-b08b-4d92-ba87-b4f5483169ed",
+          "id": "816249fa-f683-4d12-a03d-cb49db0fa24e",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        }
+      },
+      "trace": {
+        "ok": true,
+        "value": [
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "816249fa-f683-4d12-a03d-cb49db0fa24e",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "816249fa-f683-4d12-a03d-cb49db0fa24e",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "816249fa-f683-4d12-a03d-cb49db0fa24e",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "816249fa-f683-4d12-a03d-cb49db0fa24e",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "read",
+            "id": "816249fa-f683-4d12-a03d-cb49db0fa24e",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "read",
+            "id": "816249fa-f683-4d12-a03d-cb49db0fa24e",
+            "url": "http://127.0.0.1:43523/one/page"
+          }
+        ]
+      },
+      "requests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": false,
+      "later": "absent",
+      "carrier": "srcdoc",
+      "registrations": [],
+      "original": "1c7cbd9f-e4a7-44ef-9ba9-b326bc000c1d",
+      "result": {
+        "type": "local-child-result",
+        "ok": true,
+        "identity": {
+          "instance": "1c7cbd9f-e4a7-44ef-9ba9-b326bc000c1d",
+          "id": "c56d9604-07a0-4807-90e9-cbd3052f08da",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        },
+        "result": {
+          "value": 42
+        },
+        "documentURL": "about:srcdoc"
+      },
+      "parentIdentity": {
+        "ok": true,
+        "value": {
+          "instance": "1c7cbd9f-e4a7-44ef-9ba9-b326bc000c1d",
+          "id": "c56d9604-07a0-4807-90e9-cbd3052f08da",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        }
+      },
+      "trace": {
+        "ok": true,
+        "value": [
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "c56d9604-07a0-4807-90e9-cbd3052f08da",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "c56d9604-07a0-4807-90e9-cbd3052f08da",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "c56d9604-07a0-4807-90e9-cbd3052f08da",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "c56d9604-07a0-4807-90e9-cbd3052f08da",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "read",
+            "id": "c56d9604-07a0-4807-90e9-cbd3052f08da",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "read",
+            "id": "c56d9604-07a0-4807-90e9-cbd3052f08da",
+            "url": "http://127.0.0.1:43523/one/page"
+          }
+        ]
+      },
+      "requests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": false,
+      "later": "absent",
+      "carrier": "blob",
+      "registrations": [],
+      "original": "5af2eec6-7990-4b9c-9539-97d97aa0c690",
+      "result": {
+        "type": "local-child-result",
+        "ok": true,
+        "identity": {
+          "instance": "5af2eec6-7990-4b9c-9539-97d97aa0c690",
+          "id": "eee11f45-bf38-46a5-af3b-f2b9f2315006",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        },
+        "result": {
+          "value": 42
+        },
+        "documentURL": "blob:http://127.0.0.1:43523/c915f509-86ee-42a4-8b24-ed7c5f805f69"
+      },
+      "parentIdentity": {
+        "ok": true,
+        "value": {
+          "instance": "5af2eec6-7990-4b9c-9539-97d97aa0c690",
+          "id": "eee11f45-bf38-46a5-af3b-f2b9f2315006",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        }
+      },
+      "trace": {
+        "ok": true,
+        "value": [
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "eee11f45-bf38-46a5-af3b-f2b9f2315006",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "eee11f45-bf38-46a5-af3b-f2b9f2315006",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "eee11f45-bf38-46a5-af3b-f2b9f2315006",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "eee11f45-bf38-46a5-af3b-f2b9f2315006",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "read",
+            "id": "eee11f45-bf38-46a5-af3b-f2b9f2315006",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "read",
+            "id": "eee11f45-bf38-46a5-af3b-f2b9f2315006",
+            "url": "http://127.0.0.1:43523/one/page"
+          }
+        ]
+      },
+      "requests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": false,
+      "later": "sibling",
+      "carrier": "srcdoc",
+      "registrations": [
+        "http://127.0.0.1:43523/two/"
+      ],
+      "original": "d27e5ebd-87f9-4c46-8200-73df301cc3f1",
+      "result": {
+        "type": "local-child-result",
+        "ok": true,
+        "identity": {
+          "instance": "d27e5ebd-87f9-4c46-8200-73df301cc3f1",
+          "id": "8cca3a01-bf90-4b5b-ac97-c1a4b0f7fd8c",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        },
+        "result": {
+          "value": 42
+        },
+        "documentURL": "about:srcdoc"
+      },
+      "parentIdentity": {
+        "ok": true,
+        "value": {
+          "instance": "d27e5ebd-87f9-4c46-8200-73df301cc3f1",
+          "id": "8cca3a01-bf90-4b5b-ac97-c1a4b0f7fd8c",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        }
+      },
+      "trace": {
+        "ok": true,
+        "value": [
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "8cca3a01-bf90-4b5b-ac97-c1a4b0f7fd8c",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "8cca3a01-bf90-4b5b-ac97-c1a4b0f7fd8c",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "8cca3a01-bf90-4b5b-ac97-c1a4b0f7fd8c",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "8cca3a01-bf90-4b5b-ac97-c1a4b0f7fd8c",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "read",
+            "id": "8cca3a01-bf90-4b5b-ac97-c1a4b0f7fd8c",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "read",
+            "id": "8cca3a01-bf90-4b5b-ac97-c1a4b0f7fd8c",
+            "url": "http://127.0.0.1:43523/one/page"
+          }
+        ]
+      },
+      "requests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": false,
+      "later": "sibling",
+      "carrier": "blob",
+      "registrations": [
+        "http://127.0.0.1:43523/two/"
+      ],
+      "original": "db320292-3203-4de9-b100-00c5f0eb0f86",
+      "result": {
+        "type": "local-child-result",
+        "ok": true,
+        "identity": {
+          "instance": "db320292-3203-4de9-b100-00c5f0eb0f86",
+          "id": "611319f4-2ede-4309-a250-09458e11482b",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        },
+        "result": {
+          "value": 42
+        },
+        "documentURL": "blob:http://127.0.0.1:43523/628c3c3e-7378-4e9a-82d0-c0f45b234ed9"
+      },
+      "parentIdentity": {
+        "ok": true,
+        "value": {
+          "instance": "db320292-3203-4de9-b100-00c5f0eb0f86",
+          "id": "611319f4-2ede-4309-a250-09458e11482b",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        }
+      },
+      "trace": {
+        "ok": true,
+        "value": [
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "611319f4-2ede-4309-a250-09458e11482b",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "611319f4-2ede-4309-a250-09458e11482b",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "611319f4-2ede-4309-a250-09458e11482b",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "611319f4-2ede-4309-a250-09458e11482b",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "read",
+            "id": "611319f4-2ede-4309-a250-09458e11482b",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "read",
+            "id": "611319f4-2ede-4309-a250-09458e11482b",
+            "url": "http://127.0.0.1:43523/one/page"
+          }
+        ]
+      },
+      "requests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": false,
+      "later": "ancestor",
+      "carrier": "srcdoc",
+      "registrations": [
+        "http://127.0.0.1:43523/"
+      ],
+      "original": "e5834623-44d3-4f39-a15b-321add921d60",
+      "result": {
+        "type": "local-child-result",
+        "ok": true,
+        "identity": {
+          "instance": "e5834623-44d3-4f39-a15b-321add921d60",
+          "id": "51827ede-577d-4e50-93bc-445cff01b13e",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        },
+        "result": {
+          "value": 42
+        },
+        "documentURL": "about:srcdoc"
+      },
+      "parentIdentity": {
+        "ok": true,
+        "value": {
+          "instance": "e5834623-44d3-4f39-a15b-321add921d60",
+          "id": "51827ede-577d-4e50-93bc-445cff01b13e",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        }
+      },
+      "trace": {
+        "ok": true,
+        "value": [
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "51827ede-577d-4e50-93bc-445cff01b13e",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "51827ede-577d-4e50-93bc-445cff01b13e",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "51827ede-577d-4e50-93bc-445cff01b13e",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "51827ede-577d-4e50-93bc-445cff01b13e",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "read",
+            "id": "51827ede-577d-4e50-93bc-445cff01b13e",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "read",
+            "id": "51827ede-577d-4e50-93bc-445cff01b13e",
+            "url": "http://127.0.0.1:43523/one/page"
+          }
+        ]
+      },
+      "requests": [
+        {
+          "path": "/sw.js",
+          "time": 1793470015782
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": false,
+      "later": "ancestor",
+      "carrier": "blob",
+      "registrations": [
+        "http://127.0.0.1:43523/"
+      ],
+      "original": "fd66a5a0-6cf7-47c6-93fb-c28a5b42a2cc",
+      "result": {
+        "type": "local-child-result",
+        "ok": true,
+        "identity": {
+          "instance": "fd66a5a0-6cf7-47c6-93fb-c28a5b42a2cc",
+          "id": "8207738d-66ff-495b-9c12-87c3ce54ddd4",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        },
+        "result": {
+          "value": 42
+        },
+        "documentURL": "blob:http://127.0.0.1:43523/19ab5a51-9449-444c-86ff-7490ffbcebac"
+      },
+      "parentIdentity": {
+        "ok": true,
+        "value": {
+          "instance": "fd66a5a0-6cf7-47c6-93fb-c28a5b42a2cc",
+          "id": "8207738d-66ff-495b-9c12-87c3ce54ddd4",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        }
+      },
+      "trace": {
+        "ok": true,
+        "value": [
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "8207738d-66ff-495b-9c12-87c3ce54ddd4",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "8207738d-66ff-495b-9c12-87c3ce54ddd4",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "8207738d-66ff-495b-9c12-87c3ce54ddd4",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "8207738d-66ff-495b-9c12-87c3ce54ddd4",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "read",
+            "id": "8207738d-66ff-495b-9c12-87c3ce54ddd4",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "read",
+            "id": "8207738d-66ff-495b-9c12-87c3ce54ddd4",
+            "url": "http://127.0.0.1:43523/one/page"
+          }
+        ]
+      },
+      "requests": [
+        {
+          "path": "/sw.js",
+          "time": 1793470022177
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": true,
+      "later": "absent",
+      "carrier": "srcdoc",
+      "registrations": [],
+      "original": "08c3d215-4d72-45cf-8cd8-7a0aa45171a9",
+      "result": {
+        "type": "local-child-result",
+        "ok": true,
+        "identity": {
+          "instance": "08c3d215-4d72-45cf-8cd8-7a0aa45171a9",
+          "id": "d9898c33-e198-4a82-9eac-2a75cc78dcbc",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        },
+        "result": {
+          "value": 42
+        },
+        "documentURL": "about:srcdoc"
+      },
+      "parentIdentity": {
+        "ok": true,
+        "value": {
+          "instance": "08c3d215-4d72-45cf-8cd8-7a0aa45171a9",
+          "id": "d9898c33-e198-4a82-9eac-2a75cc78dcbc",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        }
+      },
+      "trace": {
+        "ok": true,
+        "value": [
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "d9898c33-e198-4a82-9eac-2a75cc78dcbc",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "d9898c33-e198-4a82-9eac-2a75cc78dcbc",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "d9898c33-e198-4a82-9eac-2a75cc78dcbc",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "d9898c33-e198-4a82-9eac-2a75cc78dcbc",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "read",
+            "id": "d9898c33-e198-4a82-9eac-2a75cc78dcbc",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "read",
+            "id": "d9898c33-e198-4a82-9eac-2a75cc78dcbc",
+            "url": "http://127.0.0.1:43523/one/page"
+          }
+        ]
+      },
+      "requests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": true,
+      "later": "absent",
+      "carrier": "blob",
+      "registrations": [],
+      "original": "e7d6c665-22cc-4871-bebc-8c6517262b6f",
+      "result": {
+        "type": "local-child-result",
+        "ok": true,
+        "identity": {
+          "instance": "e7d6c665-22cc-4871-bebc-8c6517262b6f",
+          "id": "a19d1b9c-8703-459a-940d-bac5987c2857",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        },
+        "result": {
+          "value": 42
+        },
+        "documentURL": "blob:http://127.0.0.1:43523/88dbc652-c789-4b8a-bff3-cf1c4207b109"
+      },
+      "parentIdentity": {
+        "ok": true,
+        "value": {
+          "instance": "e7d6c665-22cc-4871-bebc-8c6517262b6f",
+          "id": "a19d1b9c-8703-459a-940d-bac5987c2857",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        }
+      },
+      "trace": {
+        "ok": true,
+        "value": [
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "a19d1b9c-8703-459a-940d-bac5987c2857",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "a19d1b9c-8703-459a-940d-bac5987c2857",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "a19d1b9c-8703-459a-940d-bac5987c2857",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "a19d1b9c-8703-459a-940d-bac5987c2857",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "read",
+            "id": "a19d1b9c-8703-459a-940d-bac5987c2857",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "read",
+            "id": "a19d1b9c-8703-459a-940d-bac5987c2857",
+            "url": "http://127.0.0.1:43523/one/page"
+          }
+        ]
+      },
+      "requests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": true,
+      "later": "sibling",
+      "carrier": "srcdoc",
+      "registrations": [
+        "http://127.0.0.1:43523/two/"
+      ],
+      "original": "d7acaff3-e9a1-4d74-92b9-bb35bbc50558",
+      "result": {
+        "type": "local-child-result",
+        "ok": true,
+        "identity": {
+          "instance": "d7acaff3-e9a1-4d74-92b9-bb35bbc50558",
+          "id": "54d15f4b-33f1-431b-ab86-05a9440b0ffa",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        },
+        "result": {
+          "value": 42
+        },
+        "documentURL": "about:srcdoc"
+      },
+      "parentIdentity": {
+        "ok": true,
+        "value": {
+          "instance": "d7acaff3-e9a1-4d74-92b9-bb35bbc50558",
+          "id": "54d15f4b-33f1-431b-ab86-05a9440b0ffa",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        }
+      },
+      "trace": {
+        "ok": true,
+        "value": [
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "54d15f4b-33f1-431b-ab86-05a9440b0ffa",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "54d15f4b-33f1-431b-ab86-05a9440b0ffa",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "54d15f4b-33f1-431b-ab86-05a9440b0ffa",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "54d15f4b-33f1-431b-ab86-05a9440b0ffa",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "read",
+            "id": "54d15f4b-33f1-431b-ab86-05a9440b0ffa",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "read",
+            "id": "54d15f4b-33f1-431b-ab86-05a9440b0ffa",
+            "url": "http://127.0.0.1:43523/one/page"
+          }
+        ]
+      },
+      "requests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": true,
+      "later": "sibling",
+      "carrier": "blob",
+      "registrations": [
+        "http://127.0.0.1:43523/two/"
+      ],
+      "original": "00d8c122-52fb-414c-b50e-1ec2fa39e6d3",
+      "result": {
+        "type": "local-child-result",
+        "ok": true,
+        "identity": {
+          "instance": "00d8c122-52fb-414c-b50e-1ec2fa39e6d3",
+          "id": "3110c33a-225c-4986-9316-d9c8789553ae",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        },
+        "result": {
+          "value": 42
+        },
+        "documentURL": "blob:http://127.0.0.1:43523/2175d25b-5491-417e-97a7-22137a400fe6"
+      },
+      "parentIdentity": {
+        "ok": true,
+        "value": {
+          "instance": "00d8c122-52fb-414c-b50e-1ec2fa39e6d3",
+          "id": "3110c33a-225c-4986-9316-d9c8789553ae",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        }
+      },
+      "trace": {
+        "ok": true,
+        "value": [
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "3110c33a-225c-4986-9316-d9c8789553ae",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "3110c33a-225c-4986-9316-d9c8789553ae",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "3110c33a-225c-4986-9316-d9c8789553ae",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "3110c33a-225c-4986-9316-d9c8789553ae",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "read",
+            "id": "3110c33a-225c-4986-9316-d9c8789553ae",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "read",
+            "id": "3110c33a-225c-4986-9316-d9c8789553ae",
+            "url": "http://127.0.0.1:43523/one/page"
+          }
+        ]
+      },
+      "requests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": true,
+      "later": "ancestor",
+      "carrier": "srcdoc",
+      "registrations": [
+        "http://127.0.0.1:43523/"
+      ],
+      "original": "47f93eed-1160-4552-8667-65fca24c64cd",
+      "result": {
+        "type": "local-child-result",
+        "ok": true,
+        "identity": {
+          "instance": "47f93eed-1160-4552-8667-65fca24c64cd",
+          "id": "2a7fab96-09b8-4402-844d-af728c3e7985",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        },
+        "result": {
+          "value": 42
+        },
+        "documentURL": "about:srcdoc"
+      },
+      "parentIdentity": {
+        "ok": true,
+        "value": {
+          "instance": "47f93eed-1160-4552-8667-65fca24c64cd",
+          "id": "2a7fab96-09b8-4402-844d-af728c3e7985",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        }
+      },
+      "trace": {
+        "ok": true,
+        "value": [
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "2a7fab96-09b8-4402-844d-af728c3e7985",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "2a7fab96-09b8-4402-844d-af728c3e7985",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "2a7fab96-09b8-4402-844d-af728c3e7985",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "2a7fab96-09b8-4402-844d-af728c3e7985",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "read",
+            "id": "2a7fab96-09b8-4402-844d-af728c3e7985",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "read",
+            "id": "2a7fab96-09b8-4402-844d-af728c3e7985",
+            "url": "http://127.0.0.1:43523/one/page"
+          }
+        ]
+      },
+      "requests": [
+        {
+          "path": "/sw.js",
+          "time": 1793470055035
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": true,
+      "later": "ancestor",
+      "carrier": "blob",
+      "registrations": [
+        "http://127.0.0.1:43523/"
+      ],
+      "original": "175899ea-32aa-433b-aa91-cd3533fb65e3",
+      "result": {
+        "type": "local-child-result",
+        "ok": true,
+        "identity": {
+          "instance": "175899ea-32aa-433b-aa91-cd3533fb65e3",
+          "id": "2aea52bb-8793-42d7-a639-49eba88ab805",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        },
+        "result": {
+          "value": 42
+        },
+        "documentURL": "blob:http://127.0.0.1:43523/3e53a15e-ad9d-4de9-8dd5-5ff6c5a0e5da"
+      },
+      "parentIdentity": {
+        "ok": true,
+        "value": {
+          "instance": "175899ea-32aa-433b-aa91-cd3533fb65e3",
+          "id": "2aea52bb-8793-42d7-a639-49eba88ab805",
+          "url": "http://127.0.0.1:43523/one/page",
+          "type": "window",
+          "messageSourceURL": "http://127.0.0.1:43523/one/page"
+        }
+      },
+      "trace": {
+        "ok": true,
+        "value": [
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "2aea52bb-8793-42d7-a639-49eba88ab805",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "2aea52bb-8793-42d7-a639-49eba88ab805",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "identity",
+            "id": "2aea52bb-8793-42d7-a639-49eba88ab805",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "identity",
+            "id": "2aea52bb-8793-42d7-a639-49eba88ab805",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "received",
+            "operation": "read",
+            "id": "2aea52bb-8793-42d7-a639-49eba88ab805",
+            "url": "http://127.0.0.1:43523/one/page"
+          },
+          {
+            "phase": "lookup-completed",
+            "operation": "read",
+            "id": "2aea52bb-8793-42d7-a639-49eba88ab805",
+            "url": "http://127.0.0.1:43523/one/page"
+          }
+        ]
+      },
+      "requests": [
+        {
+          "path": "/sw.js",
+          "time": 1793470061365
+        }
+      ]
+    }
+  ]
+}

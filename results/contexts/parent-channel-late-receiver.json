@@ -1,0 +1,135 @@
+{
+  "provenance": {
+    "capturedAt": "2026-10-31T17:57:44.774Z",
+    "revision": "67cb4bce0cb8def781e3d1f565f46183d8dea3c4",
+    "dirty": true,
+    "sourceSHA256": "d733fdf63a19f80177d1875f89ee7374cb0f7833a36a44f7fb45cd1e961f708c",
+    "runner": "test/parent-channel.ts",
+    "runnerSHA256": "f39eb76aaba6afbe958d57d0a2e597cdb96fa0513ed64b9d15c4332baa1bc552",
+    "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
+    "artifacts": {
+      "dist-manager/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-manager/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-manager/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-manager/index.html": "0ea2b29b0ef6946140c54c2dc2147bffe4de82b9ed13eb4fdcae97a81cfd56f7",
+      "dist-manager/manager.js": "e361950a8774ca901a2b669e55041e15931e079bcdf5cd66e2b95d3986ce0730",
+      "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-manager/sw.js": "01ff219780a71e1448e9c60542aa2fa54cf574d713b53c4cef3ba3c078f06c89",
+      "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
+      "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
+      "dist-runtime/document-guard.js": "3f789788bedc0069fc153ccbcf37f4557e9a0a13650067b86efc8e1cdcbd7fa9",
+      "dist-runtime/guard.js": "707fc3c42ad36cc2be9a9ad498c9eb1f05f3d97a84b36cacbeee77e3fca6034a",
+      "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
+      "dist-runtime/publisher-worker-guard.js": "b1ac13860c6732e441d63d58e090baea04b18288ab3f890ade0f55d22c22ebc0",
+      "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-runtime/shared-worker-guard.js": "96a3c1086f9de09a02a7ea335d1898513563bf7f09b078de23cc1402f1704e2a",
+      "dist-runtime/sw.js": "ae630f77741bd6ca742d467f4cafc819db577cddff87ebd09affe830a9ccf50e",
+      "dist-runtime/worker-guard.js": "ccd59c5ea899bf225c37c7cfaf4677d1c648d83e132ec62e98ec91877ad2d89f",
+      "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
+      "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-installation/index.html": "3ca67c9966dd6eaaddb08a331c4c422a70d79bed1acecddada56764ba4ac8e5f",
+      "dist-installation/installation.js": "6cd0a3f3f4494dee2db059f3b1a5feb62017a39399a22e2d3774d0319fa1e3f3"
+    }
+  },
+  "lateReceiver": true,
+  "sourceSHA256": "a08adb57841df2dc7b77f4da4a0a47c219d7573967fdf3ddcea1bc0c4e14a2d0",
+  "alteredSourceSHA256": "0a89f510680b8331bf32636fc34935e51fd0e3b3e3b57a17e3df8c14edd6b548",
+  "fixtureSHA256": "528ab7b3c7f1a8ce23c446dd5156055c75b66f5d07b2a2b3714911e897dd2335",
+  "scope": "Actual private parent channel and native browser windows/ports; test-only public hooks and fixed-data handler, not production installation/admission or full confinement",
+  "rows": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "childCapture": {
+        "rawDenied": true,
+        "nativeControlCalls": 1,
+        "observed": 0,
+        "value": {
+          "value": 42
+        }
+      },
+      "parentCapture": {
+        "rawDenied": true,
+        "nativeControlCalls": 1,
+        "observed": 0,
+        "value": {
+          "ok": true,
+          "value": {
+            "value": 42
+          }
+        }
+      },
+      "earlyExposures": 2,
+      "forgeProbe": {
+        "ok": true,
+        "value": {
+          "value": 99
+        }
+      },
+      "checks": [
+        "earlier-application-listener",
+        "wrong-window",
+        "wrong-key",
+        "wrong-origin",
+        "synthetic-event",
+        "replay",
+        "old-generation-key",
+        "pending-close",
+        "pending-generation-change",
+        "closed-read",
+        "message-only-no-http"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "childCapture": {
+        "rawDenied": true,
+        "nativeControlCalls": 1,
+        "observed": 0,
+        "value": {
+          "value": 42
+        }
+      },
+      "parentCapture": {
+        "rawDenied": true,
+        "nativeControlCalls": 1,
+        "observed": 0,
+        "value": {
+          "ok": true,
+          "value": {
+            "value": 42
+          }
+        }
+      },
+      "earlyExposures": 2,
+      "forgeProbe": {
+        "ok": true,
+        "value": {
+          "value": 99
+        }
+      },
+      "checks": [
+        "earlier-application-listener",
+        "wrong-window",
+        "wrong-key",
+        "wrong-origin",
+        "synthetic-event",
+        "replay",
+        "old-generation-key",
+        "pending-close",
+        "pending-generation-change",
+        "closed-read",
+        "message-only-no-http"
+      ]
+    }
+  ]
+}

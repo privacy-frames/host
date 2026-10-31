@@ -6,6 +6,8 @@ import { build } from 'esbuild';
 import { chromium, firefox } from 'playwright';
 import { launch } from '../../test/browser-profile.ts';
 
+const parentRelay = process.env.PF_DOCUMENT_PARENT_RELAY === '1';
+const relayKey = 'local-document-fixture';
 // A native browser prerequisite experiment. The transport and fetch adapter are
 // production code; this fixed-resource worker is not runtime admission or C1.
 const compiled = await build({
@@ -13,13 +15,21 @@ const compiled = await build({
     resolveDir: process.cwd(),
     loader: 'ts',
     contents: `
-      import { createControllerClient } from './src/runtime/controller-client.ts';
+      ${
+        parentRelay
+          ? "import { connectParentChannel } from './src/runtime/contexts/parent-channel.ts';"
+          : "import { createControllerClient } from './src/runtime/controller-client.ts';"
+      }
       import { createResourceFetch } from './src/runtime/resource-fetch.ts';
       import { createPolicyTools } from './src/runtime/enforcement/native.ts';
       const runtimeOrigin = self.origin;
       (async () => {
         try {
-          const host = createControllerClient();
+          const host = ${
+            parentRelay
+              ? `await connectParentChannel(parent,runtimeOrigin,${JSON.stringify(relayKey)})`
+              : 'createControllerClient()'
+          };
           const identity = await host.request({type:'identity'});
           const localFetch = createResourceFetch(
             (url, headers) => host.request({type:'read',url,headers}),
@@ -40,6 +50,40 @@ const compiled = await build({
   format: 'iife',
   target: 'es2022',
 });
+const parentBundle = await build({
+  stdin: {
+    resolveDir: process.cwd(),
+    loader: 'ts',
+    contents: `
+      import { acceptChildChannel } from './src/runtime/contexts/parent-channel.ts';
+      import { createControllerClient } from './src/runtime/controller-client.ts';
+      import { ownDescriptor } from './src/shared/primordials.ts';
+      const apply=Reflect.apply;
+      const frameWindow=ownDescriptor(HTMLIFrameElement.prototype,'contentWindow').get;
+      const connected=ownDescriptor(Node.prototype,'isConnected').get;
+      globalThis.installLocalDocumentRelay=(frame,key)=>{
+        const host=createControllerClient();
+        let current=true;
+        const server=acceptChildChannel({
+          child:()=>apply(frameWindow,frame,[]),origin:location.origin,key,
+          isCurrent:()=>current && apply(connected,frame,[]),
+          handle:(message:unknown)=>{
+            if(!message || typeof message!=='object' || !('type' in message) ||
+              (message.type!=='identity' && message.type!=='read'))
+              throw new Error('Unsupported fixture relay operation');
+            return host.request(message);
+          },
+        });
+        return ()=>{current=false;server.close();};
+      };
+    `,
+  },
+  bundle: true,
+  write: false,
+  format: 'iife',
+  target: 'es2022',
+});
+const parentScript = parentBundle.outputFiles[0].text;
 const childScript = compiled.outputFiles[0].text;
 const childHTML =
   '<!doctype html><script nonce="fixture">' +
@@ -85,7 +129,10 @@ const policy =
 const receiver = http.createServer((request, response) => {
   requests.push({ path: request.url || '/', time: Date.now() });
   response.setHeader('Cache-Control', 'no-store');
-  if (request.url === '/sw.js') {
+  if (request.url === '/parent.js') {
+    response.setHeader('Content-Type', 'text/javascript');
+    response.end(parentScript);
+  } else if (request.url === '/sw.js') {
     response.setHeader('Content-Type', 'text/javascript');
     response.end(worker);
   } else if (request.url === '/network-control') {
@@ -94,7 +141,10 @@ const receiver = http.createServer((request, response) => {
   } else {
     response.setHeader('Content-Type', 'text/html');
     if (request.url !== '/control') response.setHeader('Content-Security-Policy', policy);
-    response.end('<!doctype html><title>Local document controller probe</title>');
+    response.end(
+      '<!doctype html><title>Local document controller probe</title>' +
+        (parentRelay ? '<script nonce="fixture" src="/parent.js"></script>' : ''),
+    );
   }
 });
 await new Promise<void>((resolve) => receiver.listen(0, '127.0.0.1', resolve));
@@ -231,13 +281,17 @@ try {
             }
             const start = requests.length;
             const result = await parent.evaluate(
-              ({ carrier, html }) =>
+              ({ carrier, html, parentRelay, relayKey }) =>
                 new Promise<unknown>((resolve) => {
                   const frame = document.createElement('iframe');
                   let blob: string | undefined;
+                  const cleanupRelay = parentRelay
+                    ? Reflect.get(window, 'installLocalDocumentRelay')(frame, relayKey)
+                    : undefined;
                   const finish = (value: unknown) => {
                     clearTimeout(timer);
                     removeEventListener('message', receive);
+                    cleanupRelay?.();
                     frame.remove();
                     if (blob) URL.revokeObjectURL(blob);
                     resolve(value);
@@ -265,7 +319,7 @@ try {
                   }
                   document.body.append(frame);
                 }),
-              { carrier, html: childHTML },
+              { carrier, html: childHTML, parentRelay, relayKey },
             );
             await parent.waitForTimeout(3000);
             const observed = requests.slice(start);
@@ -303,6 +357,8 @@ try {
             rows.push(row);
             console.log(JSON.stringify(row));
             assert(result && typeof result === 'object' && 'ok' in result);
+            if (parentRelay)
+              assert.equal(result.ok, true, 'Parent-mediated local read failed');
             if (result.ok === true) {
               assert(
                 'identity' in result &&
@@ -316,7 +372,17 @@ try {
               );
               assert('instance' in result.identity);
               // Use the looked-up native client; the message source URL can be empty.
-              if (later !== 'ancestor') assert.equal(result.identity.instance, original);
+              if (parentRelay || later !== 'ancestor')
+                assert.equal(result.identity.instance, original);
+              if (parentRelay) {
+                assert(
+                  'value' in parentIdentity &&
+                    parentIdentity.value &&
+                    typeof parentIdentity.value === 'object' &&
+                    'id' in parentIdentity.value,
+                );
+                assert.equal(result.identity.id, parentIdentity.value.id);
+              }
               assert('result' in result);
               assert.deepEqual(result.result, { value: 42 });
             } else {
@@ -347,19 +413,26 @@ try {
     createHash('sha256').update(value).digest('hex');
   const sourcePaths = [
     'src/runtime/controller-client.ts',
+    'src/runtime/private-channel.ts',
+    'src/runtime/contexts/parent-channel.ts',
     'src/runtime/resource-fetch.ts',
     'src/runtime/enforcement/native.ts',
     'src/shared/primordials.ts',
   ];
   await writeFile(
-    new URL('./local-document-controller.json', import.meta.url),
+    new URL(
+      parentRelay ? './parent-document-broker.json' : './local-document-controller.json',
+      import.meta.url,
+    ),
     JSON.stringify(
       {
         completed,
+        parentRelay,
         scope:
-          'Native local child documents after parent unregistration, actual controller-client and resource-fetch adapters, native source lookup and fixed trusted resource fixture. Not production admission, lifecycle, preparation or complete confinement.',
+          'Native local child documents after parent unregistration; direct or explicitly parent-mediated transport using actual production channel/resource adapters and a fixed trusted resource fixture. Relay identity denotes the parent, not native child authentication. Not production admission, preparation or complete confinement.',
         runnerSHA256: hash(await readFile(import.meta.filename)),
         childScriptSHA256: hash(childScript),
+        parentScriptSHA256: hash(parentScript),
         workerSHA256: hash(worker),
         policy,
         sourceHashes: Object.fromEntries(

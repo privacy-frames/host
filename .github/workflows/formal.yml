@@ -134,17 +134,34 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
+      - run: npm run build
       - run: npx playwright install --with-deps chromium firefox
         timeout-minutes: 5
+      - name: Check native parent authentication and pending closure
+        run: |
+          npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker test/parent-channel.ts
+          node test/parent-channel.ts
+      - name: Detect late receiver exposure and forged replies
+        run: node test/parent-channel.ts
+        env:
+          PARENT_CHANNEL_LATE_RECEIVER: '1'
       - name: Characterize local document controller delivery after unregistration
         run: |
           npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/runtime-verification/local-document-controller.ts
           node formal/runtime-verification/local-document-controller.ts
+      - name: Check parent-mediated local document delivery
+        run: node formal/runtime-verification/local-document-controller.ts
+        env:
+          PF_DOCUMENT_PARENT_RELAY: '1'
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: local-document-controller-evidence
-          path: formal/runtime-verification/local-document-controller.json
+          path: |
+            formal/runtime-verification/local-document-controller.json
+            formal/runtime-verification/parent-document-broker.json
+            results/contexts/parent-channel.json
+            results/contexts/parent-channel-late-receiver.json
   registration-overlap:
     runs-on: ubuntu-latest
     timeout-minutes: 10
