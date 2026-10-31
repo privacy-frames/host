@@ -1,3 +1,4 @@
+import { fixtureControllerMessages } from './fixtures/controller-messages.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -48,6 +49,8 @@ const sw = `
   self.addEventListener('install', () => self.skipWaiting());
   self.addEventListener('activate', event => event.waitUntil(self.clients.claim()));
   const log = [];
+${fixtureControllerMessages('log')}
+
   const setup = new Set([
     '/', '/native', '/native-SW', '/prepared/',
     '/prepared-reporting-control/', '/fixture.js',
@@ -142,6 +145,7 @@ const receipt = {
   sourceHashes: Object.fromEntries(
     await Promise.all(
       [
+        'formal/fixtures/controller-messages.ts',
         'src/runtime/contexts/window-realm.ts',
         'src/runtime/publisher/controller.ts',
         'src/runtime/enforcement/native-markup.ts',
@@ -257,7 +261,7 @@ try {
         } else assert.deepEqual(reports, []);
         if (profile.startsWith('prepared')) {
           assert.equal(state.mode, 'network-isolated');
-          assert.equal(state.ordinaryFetch, 'SW blocked');
+          assert.equal(state.ordinaryFetch, 'TypeError');
           assert.equal(state.meta, 'SecurityError');
           assert(!observed.some((item) => item.url.includes('unknown-local')));
         }

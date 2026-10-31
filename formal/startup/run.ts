@@ -33,8 +33,8 @@ instrumented = patch(
 );
 instrumented = patch(
   instrumented,
-  '      const documentResponse = await documents(event);',
-  '      const gateResponse = await observedPause(event);\n      if (gateResponse) return gateResponse;\n      const documentResponse = await documents(event);\n      if (documentResponse) await observedTrace({kind:"document-response",url:event.request.url,client:event.clientId,resulting:event.resultingClientId,status:documentResponse.status});',
+  '      const documentResponse = await documents.respond(event);',
+  '      const gateResponse = await observedPause(event);\n      if (gateResponse) return gateResponse;\n      const documentResponse = await documents.respond(event);\n      if (documentResponse) await observedTrace({kind:"document-response",url:event.request.url,client:event.clientId,resulting:event.resultingClientId,status:documentResponse.status});',
 );
 const bundles: Record<string, string> = {};
 for (const version of ['A', 'B']) {

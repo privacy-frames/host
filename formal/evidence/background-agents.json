@@ -1,14 +1,15 @@
 {
-  "revision": "35a6ad1a68e3aff649ec2be4d503d2779d56a56e",
-  "testedAt": "2026-10-30T16:03:21.103Z",
-  "origin": "http://127.0.0.1:40035",
+  "revision": "ade02b19e5d619b877817ee18cc0731fca8140f3",
+  "testedAt": "2026-10-31T16:59:17.033Z",
+  "origin": "http://127.0.0.1:34303",
   "scope": "Actual prepareWindowRealm after seeding an active native origin-wide registration. Native acquisition, prototype/brand recovery, sync scheduling and background fetch are distinguished. Missing/failed positive controls are unverified, not contained.",
-  "runnerSHA256": "71634cad6f09189ef923c0dfd4e1c360502328f9879901551b60e8d7d29bb525",
-  "fixtureSHA256": "5991f4f7596972a73f3d4252994669dbf281878eb28cef571d2191342d005977",
+  "runnerSHA256": "e0fbd8e9e2815c46b2368b16537db6c931d39b859ef05561af08352028c2df3d",
+  "fixtureSHA256": "3576a93b74e3cf075759e118d336e632e64b061a89dd6a90b124994eca8a0e10",
   "sourceHashes": {
+    "formal/fixtures/controller-messages.ts": "690578c2b88520312a41ddf730d5a4bde289b9e25e41dad6a1e373ca7eef9a03",
     "src/runtime/enforcement/effects.ts": "466c165e4ef9d82e2011c85cd2639e3f7e7152309c49fbb5c8962ed0fd1bb691",
-    "src/runtime/publisher/client.ts": "e9eb2dfc4cab4e0e577f7ab2fbee8e310e1ebbdc042ea4c95ba954cef264b9cf",
-    "src/runtime/contexts/window-realm.ts": "06cae24e208c2471a511ef718037bbb82ae8000a18069d7b50ecd1a956da649d"
+    "src/runtime/publisher/client.ts": "f668571015c6f87441bb856ca92378753ab7f7afcae845ad3d9ef505aa0e9d42",
+    "src/runtime/contexts/window-realm.ts": "27d051dcc9015b683c6f6d304fe31e8bd7dabcd05a5ee0ad93e9fa4f0bfe37a6"
   },
   "rows": [
     {
@@ -57,7 +58,7 @@
         "--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4",
         "--no-sandbox",
         "--enable-automation",
-        "--user-data-dir=/tmp/playwright_chromiumdev_profile-P3uqxy",
+        "--user-data-dir=/tmp/playwright_chromiumdev_profile-haaWf5",
         "--remote-debugging-pipe",
         "--no-startup-window",
         "--noerrdialogs",
@@ -72,11 +73,11 @@
       "headers": {
         "connection": "keep-alive",
         "content-length": "66",
-        "date": "Fri, 30 Oct 2026 16:03:23 GMT",
+        "date": "Sat, 31 Oct 2026 16:59:19 GMT",
         "keep-alive": "timeout=5",
         "cache-control": "no-store",
         "connection-allowlist": "(response-origin); redirects=block; webrtc=block",
-        "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src http://127.0.0.1:40035/__contexts/ http://127.0.0.1:40035/sw.js; worker-src http://127.0.0.1:40035/__contexts/ http://127.0.0.1:40035/sw.js; form-action 'none'; base-uri 'none'",
+        "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src http://127.0.0.1:34303/__contexts/ http://127.0.0.1:34303/sw.js; worker-src http://127.0.0.1:34303/__contexts/ http://127.0.0.1:34303/sw.js; form-action 'none'; base-uri 'none'",
         "content-type": "text/html",
         "cross-origin-opener-policy": "same-origin",
         "permissions-policy": "camera=(), microphone=(self), geolocation=(), usb=(), serial=(), hid=(), bluetooth=(), payment=(), attribution-reporting=(), browsing-topics=(), interest-cohort=(), identity-credentials-get=()",
@@ -97,12 +98,12 @@
       },
       "nativeReceiverTraffic": [
         {
-          "url": "/receiver?sync=native-c13c604c-c0c4-4119-b1d5-05c514b75b70",
+          "url": "/receiver?sync=native-ba1ac0d9-97e3-4acb-8686-7a351ebf8983",
           "method": "GET",
           "body": ""
         },
         {
-          "url": "/receiver?background=native-c13c604c-c0c4-4119-b1d5-05c514b75b70",
+          "url": "/receiver?background=native-ba1ac0d9-97e3-4acb-8686-7a351ebf8983",
           "method": "GET",
           "body": ""
         }
@@ -161,8 +162,8 @@
           "message": "Publisher script is not installed"
         },
         "ordinaryFetch": {
-          "outcome": "returned",
-          "value": "SW blocked"
+          "outcome": "TypeError",
+          "message": "Local resource unavailable"
         }
       },
       "after": {
@@ -178,7 +179,7 @@
       "headers": {
         "cache-control": "no-store",
         "connection-allowlist": "(response-origin); redirects=block; webrtc=block",
-        "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src http://127.0.0.1:40035/__contexts/ http://127.0.0.1:40035/sw.js; worker-src http://127.0.0.1:40035/__contexts/ http://127.0.0.1:40035/sw.js; form-action 'none'; base-uri 'none'",
+        "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src http://127.0.0.1:34303/__contexts/ http://127.0.0.1:34303/sw.js; worker-src http://127.0.0.1:34303/__contexts/ http://127.0.0.1:34303/sw.js; form-action 'none'; base-uri 'none'",
         "content-type": "text/html",
         "cross-origin-opener-policy": "same-origin",
         "permissions-policy": "camera=(), microphone=(self), geolocation=(), usb=(), serial=(), hid=(), bluetooth=(), payment=(), attribution-reporting=(), browsing-topics=(), interest-cohort=(), identity-credentials-get=()",
@@ -186,7 +187,7 @@
         "x-content-type-options": "nosniff",
         "x-dns-prefetch-control": "off",
         "x-frame-options": "DENY",
-        "date": "Fri, 30 Oct 2026 16:03:26 GMT",
+        "date": "Sat, 31 Oct 2026 16:59:22 GMT",
         "connection": "keep-alive",
         "keep-alive": "timeout=5",
         "content-length": "66"
@@ -253,8 +254,8 @@
           "message": "Publisher script is not installed"
         },
         "ordinaryFetch": {
-          "outcome": "returned",
-          "value": "SW blocked"
+          "outcome": "TypeError",
+          "message": "Local resource unavailable"
         }
       },
       "after": {
@@ -282,12 +283,12 @@
       "body": ""
     },
     {
-      "url": "/receiver?sync=native-c13c604c-c0c4-4119-b1d5-05c514b75b70",
+      "url": "/receiver?sync=native-ba1ac0d9-97e3-4acb-8686-7a351ebf8983",
       "method": "GET",
       "body": ""
     },
     {
-      "url": "/receiver?background=native-c13c604c-c0c4-4119-b1d5-05c514b75b70",
+      "url": "/receiver?background=native-ba1ac0d9-97e3-4acb-8686-7a351ebf8983",
       "method": "GET",
       "body": ""
     },

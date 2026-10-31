@@ -28,7 +28,7 @@ preparation-time reference is handed to application code.
 | Native `ready` / `controller` getter applied to virtual container   | TypeError from native receiver validation                |
 | Construct native ServiceWorkerContainer / ServiceWorkerRegistration | TypeError                                                |
 | Register an unadmitted script                                       | SecurityError                                            |
-| Ordinary marker-bearing receiver fetch                              | Worker-generated refusal; no receiver request            |
+| Ordinary marker-bearing receiver fetch                              | Local resource TypeError; no receiver request            |
 
 Chromium also rejects native `backgroundFetch`, `sync` and `periodicSync` getters
 applied to an object created with `ServiceWorkerRegistration.prototype`. Giving

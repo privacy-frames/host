@@ -1,22 +1,23 @@
 {
-  "revision": "2b7aca373a4dc7e327e1372a16ff6f8c6e4e822f",
-  "testedAt": "2026-10-30T16:41:43.483Z",
-  "origin": "http://127.0.0.1:40147",
+  "revision": "ade02b19e5d619b877817ee18cc0731fca8140f3",
+  "testedAt": "2026-10-31T16:59:35.915Z",
+  "origin": "http://127.0.0.1:43591",
   "scope": "Experimental WebAppInstallation/InstallElement explicitly enabled in a temporary persistent full-Chromium profile. Native malformed-manifest receiver control does not install an app. Current unflagged availability is separate. Prepared runtime uses actual source/generated headers; no production changes.",
   "specification": "https://github.com/WICG/install-element/blob/8645e61de5af0fadde87db75c99028461585a8a4/index.html",
   "implementationIDL": "https://github.com/chromium/chromium/blob/153.0.8010.12/third_party/blink/renderer/modules/web_install/navigator_web_install.idl",
-  "runnerSHA256": "99eefc68344e07f762c3d65b0d8096868858797ce6f78ccfb611b41f495dc7ab",
-  "fixtureSHA256": "7b1a998ef714b90a33f36f827893ee644bedf9a3449e36bf1dcfc0357f6d3a6b",
+  "runnerSHA256": "5e7be7bb169e89d7218f29651662c39652e1c825d93d2959fe24b1173a2a918a",
+  "fixtureSHA256": "999d745b200b99555361b9c22e54440953e1939243cfe1556e420004639877b7",
   "sourceHashes": {
+    "formal/fixtures/controller-messages.ts": "690578c2b88520312a41ddf730d5a4bde289b9e25e41dad6a1e373ca7eef9a03",
     "src/runtime/response-policy.ts": "f21946f76dd37233ea7e48dd969a59e09343315f3a044e4be66ae4324fb9efb2",
-    "src/runtime/contexts/window-realm.ts": "06cae24e208c2471a511ef718037bbb82ae8000a18069d7b50ecd1a956da649d",
+    "src/runtime/contexts/window-realm.ts": "27d051dcc9015b683c6f6d304fe31e8bd7dabcd05a5ee0ad93e9fa4f0bfe37a6",
     "src/runtime/enforcement/effects.ts": "466c165e4ef9d82e2011c85cd2639e3f7e7152309c49fbb5c8962ed0fd1bb691"
   },
   "rows": [
     {
       "profile": "native",
       "entry": "imperative",
-      "marker": "native-imperative-5d46c311-f64e-41c5-b9b7-495d4f4fe102",
+      "marker": "native-imperative-6b3a7607-f65a-4556-b0f6-486c3e33dbd5",
       "state": {
         "error": "DataError",
         "message": "The data provided does not meet requirements."
@@ -26,13 +27,13 @@
         "connection": "keep-alive",
         "content-length": "50",
         "content-type": "text/html",
-        "date": "Fri, 30 Oct 2026 16:41:43 GMT",
+        "date": "Sat, 31 Oct 2026 16:59:36 GMT",
         "keep-alive": "timeout=5"
       },
       "markerTraffic": [
         {
-          "at": "2026-10-30T16:41:43.947Z",
-          "url": "/manifest?native-imperative-5d46c311-f64e-41c5-b9b7-495d4f4fe102",
+          "at": "2026-10-31T16:59:36.359Z",
+          "url": "/manifest?native-imperative-6b3a7607-f65a-4556-b0f6-486c3e33dbd5",
           "method": "GET",
           "body": ""
         }
@@ -41,7 +42,7 @@
     {
       "profile": "native",
       "entry": "declarative",
-      "marker": "native-declarative-0a234ed0-e933-419c-a36f-40b8c63fee2d",
+      "marker": "native-declarative-43e70ba8-a9c9-4cd2-8750-7acb1e3245e6",
       "state": {
         "created": "HTMLInstallElement",
         "beforeClick": {
@@ -57,13 +58,13 @@
         "connection": "keep-alive",
         "content-length": "50",
         "content-type": "text/html",
-        "date": "Fri, 30 Oct 2026 16:41:44 GMT",
+        "date": "Sat, 31 Oct 2026 16:59:36 GMT",
         "keep-alive": "timeout=5"
       },
       "markerTraffic": [
         {
-          "at": "2026-10-30T16:41:45.320Z",
-          "url": "/manifest?native-declarative-0a234ed0-e933-419c-a36f-40b8c63fee2d",
+          "at": "2026-10-31T16:59:37.737Z",
+          "url": "/manifest?native-declarative-43e70ba8-a9c9-4cd2-8750-7acb1e3245e6",
           "method": "GET",
           "body": ""
         }
@@ -72,7 +73,7 @@
     {
       "profile": "native-worker",
       "entry": "imperative",
-      "marker": "native-worker-imperative-0200d389-2104-4501-b655-3fd88968f74a",
+      "marker": "native-worker-imperative-1e5ac2e7-3937-4f2a-a222-d152f2f25109",
       "state": {
         "error": "DataError",
         "message": "The data provided does not meet requirements."
@@ -82,13 +83,13 @@
         "connection": "keep-alive",
         "content-length": "50",
         "content-type": "text/html",
-        "date": "Fri, 30 Oct 2026 16:41:46 GMT",
+        "date": "Sat, 31 Oct 2026 16:59:39 GMT",
         "keep-alive": "timeout=5"
       },
       "markerTraffic": [
         {
-          "at": "2026-10-30T16:41:46.663Z",
-          "url": "/manifest?native-worker-imperative-0200d389-2104-4501-b655-3fd88968f74a",
+          "at": "2026-10-31T16:59:39.085Z",
+          "url": "/manifest?native-worker-imperative-1e5ac2e7-3937-4f2a-a222-d152f2f25109",
           "method": "GET",
           "body": ""
         }
@@ -97,7 +98,7 @@
     {
       "profile": "native-worker",
       "entry": "declarative",
-      "marker": "native-worker-declarative-c4aea223-8004-49ac-aaf1-45bbf4bef23b",
+      "marker": "native-worker-declarative-12719b8e-b3c1-4d15-aeb4-ca391b636497",
       "state": {
         "created": "HTMLInstallElement",
         "beforeClick": {
@@ -113,13 +114,13 @@
         "connection": "keep-alive",
         "content-length": "50",
         "content-type": "text/html",
-        "date": "Fri, 30 Oct 2026 16:41:46 GMT",
+        "date": "Sat, 31 Oct 2026 16:59:39 GMT",
         "keep-alive": "timeout=5"
       },
       "markerTraffic": [
         {
-          "at": "2026-10-30T16:41:48.025Z",
-          "url": "/manifest?native-worker-declarative-c4aea223-8004-49ac-aaf1-45bbf4bef23b",
+          "at": "2026-10-31T16:59:40.451Z",
+          "url": "/manifest?native-worker-declarative-12719b8e-b3c1-4d15-aeb4-ca391b636497",
           "method": "GET",
           "body": ""
         }
@@ -128,7 +129,7 @@
     {
       "profile": "prepared",
       "entry": "imperative",
-      "marker": "prepared-imperative-c86f19e6-51eb-4a1b-a1a4-28c0e55c2586",
+      "marker": "prepared-imperative-f48a9d47-e7c7-4dbb-b85e-e18060293437",
       "state": {
         "error": "SecurityError",
         "message": "Failed to execute 'install' on 'Navigator': API is not allowed in sandboxed contexts."
@@ -136,11 +137,11 @@
       "headers": {
         "connection": "keep-alive",
         "content-length": "70",
-        "date": "Fri, 30 Oct 2026 16:41:49 GMT",
+        "date": "Sat, 31 Oct 2026 16:59:41 GMT",
         "keep-alive": "timeout=5",
         "cache-control": "no-store",
         "connection-allowlist": "(response-origin); redirects=block; webrtc=block",
-        "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src http://127.0.0.1:40147/__contexts/ http://127.0.0.1:40147/app/sw.js; worker-src http://127.0.0.1:40147/__contexts/ http://127.0.0.1:40147/app/sw.js; form-action 'none'; base-uri 'none'",
+        "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src http://127.0.0.1:43591/__contexts/ http://127.0.0.1:43591/app/sw.js; worker-src http://127.0.0.1:43591/__contexts/ http://127.0.0.1:43591/app/sw.js; form-action 'none'; base-uri 'none'",
         "content-type": "text/html",
         "cross-origin-opener-policy": "same-origin",
         "permissions-policy": "camera=(), microphone=(self), geolocation=(), usb=(), serial=(), hid=(), bluetooth=(), payment=(), attribution-reporting=(), browsing-topics=(), interest-cohort=(), identity-credentials-get=()",
@@ -154,7 +155,7 @@
     {
       "profile": "prepared",
       "entry": "declarative",
-      "marker": "prepared-declarative-051f0261-2582-4700-aa73-c10a256adc5b",
+      "marker": "prepared-declarative-f0e5dbee-2bd6-4f58-8876-4ea51cbb8043",
       "state": {
         "created": "HTMLInstallElement",
         "beforeClick": {
@@ -168,11 +169,11 @@
       "headers": {
         "connection": "keep-alive",
         "content-length": "70",
-        "date": "Fri, 30 Oct 2026 16:41:49 GMT",
+        "date": "Sat, 31 Oct 2026 16:59:42 GMT",
         "keep-alive": "timeout=5",
         "cache-control": "no-store",
         "connection-allowlist": "(response-origin); redirects=block; webrtc=block",
-        "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src http://127.0.0.1:40147/__contexts/ http://127.0.0.1:40147/app/sw.js; worker-src http://127.0.0.1:40147/__contexts/ http://127.0.0.1:40147/app/sw.js; form-action 'none'; base-uri 'none'",
+        "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src http://127.0.0.1:43591/__contexts/ http://127.0.0.1:43591/app/sw.js; worker-src http://127.0.0.1:43591/__contexts/ http://127.0.0.1:43591/app/sw.js; form-action 'none'; base-uri 'none'",
         "content-type": "text/html",
         "cross-origin-opener-policy": "same-origin",
         "permissions-policy": "camera=(), microphone=(self), geolocation=(), usb=(), serial=(), hid=(), bluetooth=(), payment=(), attribution-reporting=(), browsing-topics=(), interest-cohort=(), identity-credentials-get=()",
@@ -186,133 +187,133 @@
   ],
   "traffic": [
     {
-      "at": "2026-10-30T16:41:43.652Z",
+      "at": "2026-10-31T16:59:36.086Z",
       "url": "/native",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T16:41:43.664Z",
+      "at": "2026-10-31T16:59:36.098Z",
       "url": "/favicon.ico",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T16:41:43.888Z",
+      "at": "2026-10-31T16:59:36.320Z",
       "url": "/native",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T16:41:43.900Z",
+      "at": "2026-10-31T16:59:36.330Z",
       "url": "/favicon.ico",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T16:41:43.924Z",
+      "at": "2026-10-31T16:59:36.349Z",
       "url": "/native",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T16:41:43.941Z",
+      "at": "2026-10-31T16:59:36.357Z",
       "url": "/favicon.ico",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T16:41:43.947Z",
-      "url": "/manifest?native-imperative-5d46c311-f64e-41c5-b9b7-495d4f4fe102",
+      "at": "2026-10-31T16:59:36.359Z",
+      "url": "/manifest?native-imperative-6b3a7607-f65a-4556-b0f6-486c3e33dbd5",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T16:41:44.289Z",
+      "at": "2026-10-31T16:59:36.703Z",
       "url": "/native",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T16:41:44.297Z",
+      "at": "2026-10-31T16:59:36.712Z",
       "url": "/favicon.ico",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T16:41:45.320Z",
-      "url": "/manifest?native-declarative-0a234ed0-e933-419c-a36f-40b8c63fee2d",
+      "at": "2026-10-31T16:59:37.737Z",
+      "url": "/manifest?native-declarative-43e70ba8-a9c9-4cd2-8750-7acb1e3245e6",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T16:41:46.633Z",
+      "at": "2026-10-31T16:59:39.051Z",
       "url": "/app/sw.js",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T16:41:46.653Z",
+      "at": "2026-10-31T16:59:39.072Z",
       "url": "/app/native",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T16:41:46.663Z",
-      "url": "/manifest?native-worker-imperative-0200d389-2104-4501-b655-3fd88968f74a",
+      "at": "2026-10-31T16:59:39.085Z",
+      "url": "/manifest?native-worker-imperative-1e5ac2e7-3937-4f2a-a222-d152f2f25109",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T16:41:46.998Z",
+      "at": "2026-10-31T16:59:39.421Z",
       "url": "/app/native",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T16:41:48.025Z",
-      "url": "/manifest?native-worker-declarative-c4aea223-8004-49ac-aaf1-45bbf4bef23b",
+      "at": "2026-10-31T16:59:40.451Z",
+      "url": "/manifest?native-worker-declarative-12719b8e-b3c1-4d15-aeb4-ca391b636497",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T16:41:48.512Z",
+      "at": "2026-10-31T16:59:40.944Z",
       "url": "/app/sw.js",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T16:41:49.349Z",
+      "at": "2026-10-31T16:59:41.775Z",
       "url": "/app/prepared/",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T16:41:49.361Z",
+      "at": "2026-10-31T16:59:41.786Z",
       "url": "/app/fixture.js",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T16:41:49.909Z",
+      "at": "2026-10-31T16:59:42.340Z",
       "url": "/app/prepared/",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T16:41:49.918Z",
+      "at": "2026-10-31T16:59:42.350Z",
       "url": "/app/fixture.js",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T16:41:51.659Z",
+      "at": "2026-10-31T16:59:44.093Z",
       "url": "/app/sw.js",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T16:41:52.472Z",
+      "at": "2026-10-31T16:59:44.912Z",
       "url": "/app/native",
       "method": "GET",
       "body": ""
@@ -371,7 +372,7 @@
     "--enable-features=WebAppInstallation",
     "--enable-blink-features=InstallElement",
     "--enable-automation",
-    "--user-data-dir=/tmp/pf-web-install-IfMxKA",
+    "--user-data-dir=/tmp/pf-web-install-1E0uvR",
     "--remote-debugging-pipe",
     "--noerrdialogs",
     "--ozone-platform=headless",
@@ -384,55 +385,55 @@
   ],
   "workerEvents": [
     {
-      "url": "http://127.0.0.1:40147/app/native",
+      "url": "http://127.0.0.1:43591/app/native",
       "method": "GET"
     },
     {
-      "url": "http://127.0.0.1:40147/favicon.ico",
+      "url": "http://127.0.0.1:43591/favicon.ico",
       "method": "GET"
     },
     {
-      "url": "http://127.0.0.1:40147/app/native",
+      "url": "http://127.0.0.1:43591/app/native",
       "method": "GET"
     },
     {
-      "url": "http://127.0.0.1:40147/favicon.ico",
+      "url": "http://127.0.0.1:43591/favicon.ico",
       "method": "GET"
     },
     {
-      "url": "http://127.0.0.1:40147/app/prepared/",
+      "url": "http://127.0.0.1:43591/app/prepared/",
       "method": "GET"
     },
     {
-      "url": "http://127.0.0.1:40147/app/fixture.js",
+      "url": "http://127.0.0.1:43591/app/fixture.js",
       "method": "GET"
     },
     {
-      "url": "http://127.0.0.1:40147/favicon.ico",
+      "url": "http://127.0.0.1:43591/favicon.ico",
       "method": "GET"
     },
     {
-      "url": "http://127.0.0.1:40147/app/prepared/",
+      "url": "http://127.0.0.1:43591/app/prepared/",
       "method": "GET"
     },
     {
-      "url": "http://127.0.0.1:40147/app/fixture.js",
+      "url": "http://127.0.0.1:43591/app/fixture.js",
       "method": "GET"
     },
     {
-      "url": "http://127.0.0.1:40147/favicon.ico",
+      "url": "http://127.0.0.1:43591/favicon.ico",
       "method": "GET"
     },
     {
-      "url": "http://127.0.0.1:40147/app/native",
+      "url": "http://127.0.0.1:43591/app/native",
       "method": "GET"
     },
     {
-      "url": "http://127.0.0.1:40147/favicon.ico",
+      "url": "http://127.0.0.1:43591/favicon.ico",
       "method": "GET"
     },
     {
-      "url": "http://127.0.0.1:40147/app/events",
+      "url": "http://127.0.0.1:43591/app/events",
       "method": "GET"
     }
   ],

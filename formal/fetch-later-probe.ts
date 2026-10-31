@@ -1,3 +1,4 @@
+import { fixtureControllerMessages } from './fixtures/controller-messages.ts';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
@@ -53,6 +54,8 @@ const sw = `
   self.addEventListener('install', () => self.skipWaiting());
   self.addEventListener('activate', event => event.waitUntil(self.clients.claim()));
   const events = [];
+${fixtureControllerMessages('events')}
+
   const setup = new Set(['/app/native', '/app/prepared/', '/app/fault/', '/app/fixture.js', '/app/fault-fixture.js']);
   self.addEventListener('fetch', event => {
     const url = new URL(event.request.url);
@@ -128,14 +131,16 @@ const receipt = {
     .digest('hex'),
   sourceHashes: Object.fromEntries(
     await Promise.all(
-      ['src/runtime/enforcement/effects.ts', 'src/runtime/contexts/window-realm.ts'].map(
-        async (path) => [
-          path,
-          createHash('sha256')
-            .update(await readFile(join(root, path)))
-            .digest('hex'),
-        ],
-      ),
+      [
+        'formal/fixtures/controller-messages.ts',
+        'src/runtime/enforcement/effects.ts',
+        'src/runtime/contexts/window-realm.ts',
+      ].map(async (path) => [
+        path,
+        createHash('sha256')
+          .update(await readFile(join(root, path)))
+          .digest('hex'),
+      ]),
     ),
   ),
   rows: [],
@@ -249,9 +254,13 @@ try {
               } catch (error) {
                 state.recovery = error.name;
               }
-              state.ordinaryFetch = await (
-                await fetch('/receiver?ordinary-' + marker)
-              ).text();
+              try {
+                state.ordinaryFetch = await (
+                  await fetch('/receiver?ordinary-' + marker)
+                ).text();
+              } catch (error) {
+                state.ordinaryFetch = error.name;
+              }
             }
             return state;
           },
@@ -278,7 +287,7 @@ try {
         } else {
           assert.equal(state.call.error, 'SecurityError');
           assert.equal(state.recovery, 'SecurityError');
-          assert.equal(state.ordinaryFetch, 'SW blocked');
+          assert.equal(state.ordinaryFetch, 'TypeError');
           await observer.waitForTimeout(1500);
         }
         const markerTraffic = traffic

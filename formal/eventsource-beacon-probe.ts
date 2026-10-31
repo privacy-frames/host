@@ -35,6 +35,12 @@ const worker = `
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', event => event.waitUntil(self.clients.claim()));
 const events = [];
+self.addEventListener('message', event => {
+  if (event.data?.type === 'privacy-publisher-rpc' && event.data.operation === 'status') {
+    event.ports[0].postMessage({ok:true,value:null});
+    event.ports[0].close();
+  }
+});
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   events.push({url: url.href, method: event.request.method});
@@ -245,7 +251,12 @@ try {
               const events = await observer.evaluate(
                 async () => (await (await fetch('/events')).json()) as { url: string }[],
               );
-              assert(events.some((item) => item.url.includes(marker)));
+              assert.equal(result.result, 'TypeError');
+              assert.equal(
+                events.some((item) => item.url.includes(marker)),
+                false,
+                'Prepared POST must fail locally before a native fetch event',
+              );
             }
           }
           observations.push({

@@ -102,6 +102,9 @@ arguments even where the abstract publication contract is shared.
   open.
   The [registration overlap experiment and model](registration-overlap.md)
   identify scope reuse during private execution as a separate launch obligation.
+  The [local document transport experiment](local-document-controller.md) shows
+  that the existing controller client does not work uniformly in unregistered
+  local children; a parent-mediated transport remains an integration obligation.
 - Stage 5: root content now uses an authenticated private controller request; the
   publisher client shares its captured transport. See the
   [root content integration](root-content-broker.md). Window fetch/cache downloads

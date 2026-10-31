@@ -385,18 +385,14 @@ try {
       );
       context.on('request', (request) => {
         if (
-          request.url().includes('__document-intents') ||
           request.url().includes('__contexts') ||
           request.url().includes('document-guard')
         ) {
           logs.push('REQUEST ' + request.method() + ' ' + request.url());
-          if (request.url().includes('__document-intents') && request.method() === 'POST')
-            logs.push('SYNTHETIC INTENT ' + request.postData());
         }
       });
       context.on('response', async (response) => {
         if (
-          response.url().includes('__document-intents') ||
           response.url().includes('__contexts') ||
           response.url().includes('document-guard')
         ) {

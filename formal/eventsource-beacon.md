@@ -19,7 +19,9 @@ The same fixture also instantiates a small WebAssembly module whose exported
 function calls an imported JavaScript function. That function makes a
 marker-bearing POST with `fetch`. The test checks that the Wasm import actually
 ran: the native POST reaches the receiver, while the fixture service worker
-observes and blocks it in both worker-controlled and prepared windows.
+observes and blocks it in the worker-controlled window. The prepared window
+rejects POST in its local resource adapter before a native fetch event; the
+fixture checks the TypeError result and absence of that marker in the worker log.
 
 This tests selected same-origin calls and one Wasm import in a prepared window. It does not cover
 installed-app startup, workers, recovered references, all destinations, or the

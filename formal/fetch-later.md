@@ -23,7 +23,7 @@ Calling the current property descriptor recovered from the Window prototype chai
 also raises SecurityError. The fixture tests both immediate activation and a
 60-second deferred request followed by closing the prepared page. Private markers
 are created after preparation. Neither attempt reaches the independent HTTP
-receiver; an ordinary marker-bearing fetch receives the worker's refusal.
+receiver; an ordinary marker-bearing fetch is rejected locally with TypeError.
 
 A final native immediate upload after both prepared pages have closed confirms
 that the uploader still works. The fixture then rechecks all recorded traffic

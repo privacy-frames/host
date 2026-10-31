@@ -1,36 +1,36 @@
 {
-  "testedAt": "2026-10-30T15:35:27.103Z",
-  "revision": "37c00647802756ce71be47e8bdeeeeb8f2e5f8f5",
+  "testedAt": "2026-10-31T16:59:12.637Z",
+  "revision": "ade02b19e5d619b877817ee18cc0731fca8140f3",
   "scope": "Full Chromium; actual prepareWindowRealm and generated production headers. NEL is deliberately seeded as prior origin state. Configured reporting is a trusted-header adverse control, not production configuration. Temporary HTTPS uses the WPT-style SPKI certificate exception. No claim about arbitrary deployment state or Firefox modern reporting.",
-  "origin": "https://127.0.0.1:33095",
-  "collectorOrigin": "https://127.0.0.1:36937",
+  "origin": "https://127.0.0.1:33333",
+  "collectorOrigin": "https://127.0.0.1:42347",
   "rows": [
     {
       "profile": "native-modern",
-      "marker": "native-modern-bbec10b9-32ad-49c8-84be-04ab63bdc5b3",
+      "marker": "native-modern-d948d529-896d-4bc9-bd1f-e3f298a59330",
       "delivered": true
     },
     {
       "profile": "native-NEL-before",
-      "marker": "nel-before-310159e7-98b2-4ac9-a59e-05e3c5d9a4f5",
+      "marker": "nel-before-72d34d0e-b4a6-4a84-a598-edc5aefc2ded",
       "delivered": true
     },
     {
       "profile": "prepared-production-headers",
-      "marker": "prepared-private-3f85540e-ec18-497b-8286-a22c5bc05024",
+      "marker": "prepared-private-ea93c39e-0d63-4f46-9319-c5f3f65ddf32",
       "state": {
         "mode": "network-isolated",
-        "fetch": "SW blocked",
-        "post": "SW blocked"
+        "fetch": "TypeError",
+        "post": "TypeError"
       },
       "headers": {
         "connection": "keep-alive",
         "content-length": "76",
-        "date": "Fri, 30 Oct 2026 15:35:27 GMT",
+        "date": "Sat, 31 Oct 2026 16:59:13 GMT",
         "keep-alive": "timeout=5",
         "cache-control": "no-store",
         "connection-allowlist": "(response-origin); redirects=block; webrtc=block",
-        "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src https://127.0.0.1:33095/__contexts/ https://127.0.0.1:33095/app/sw.js; worker-src https://127.0.0.1:33095/__contexts/ https://127.0.0.1:33095/app/sw.js; form-action 'none'; base-uri 'none'",
+        "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src https://127.0.0.1:33333/__contexts/ https://127.0.0.1:33333/app/sw.js; worker-src https://127.0.0.1:33333/__contexts/ https://127.0.0.1:33333/app/sw.js; form-action 'none'; base-uri 'none'",
         "content-type": "text/html",
         "cross-origin-opener-policy": "same-origin",
         "permissions-policy": "camera=(), microphone=(self), geolocation=(), usb=(), serial=(), hid=(), bluetooth=(), payment=(), attribution-reporting=(), browsing-topics=(), interest-cohort=(), identity-credentials-get=()",
@@ -43,50 +43,38 @@
       "markerUploads": [],
       "workerEvents": [
         {
-          "url": "https://127.0.0.1:33095/app/",
+          "url": "https://127.0.0.1:33333/app/",
           "method": "GET"
         },
         {
-          "url": "https://127.0.0.1:33095/app/fixture.js",
+          "url": "https://127.0.0.1:33333/app/fixture.js",
           "method": "GET"
         },
         {
-          "url": "https://127.0.0.1:33095/favicon.ico",
+          "url": "https://127.0.0.1:33333/favicon.ico",
           "method": "GET"
         },
         {
-          "url": "https://127.0.0.1:33095/unknown?prepared-private-3f85540e-ec18-497b-8286-a22c5bc05024",
-          "method": "GET"
-        },
-        {
-          "url": "https://127.0.0.1:33095/unknown-post",
-          "method": "POST"
-        },
-        {
-          "url": "https://127.0.0.1:33095/unknown-image?prepared-private-3f85540e-ec18-497b-8286-a22c5bc05024",
-          "method": "GET"
-        },
-        {
-          "url": "https://127.0.0.1:33095/app/events",
+          "url": "https://127.0.0.1:33333/unknown-image?prepared-private-ea93c39e-0d63-4f46-9319-c5f3f65ddf32",
           "method": "GET"
         }
       ]
     },
     {
       "profile": "prepared-configured-header",
-      "marker": "prepared-private-21215db0-112b-4662-85e2-e7840c352a32",
+      "marker": "prepared-private-77cef7fb-f10a-4f55-b12b-2fdbb4d90c81",
       "state": {
         "mode": "network-isolated",
-        "fetch": "SW blocked",
-        "post": "SW blocked"
+        "fetch": "TypeError",
+        "post": "TypeError"
       },
       "headers": {
         "connection": "keep-alive",
         "content-length": "76",
-        "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src https://127.0.0.1:33095/__contexts/ https://127.0.0.1:33095/app/sw.js; worker-src https://127.0.0.1:33095/__contexts/ https://127.0.0.1:33095/app/sw.js; form-action 'none'; base-uri 'none'; report-to default",
-        "date": "Fri, 30 Oct 2026 15:35:30 GMT",
+        "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src https://127.0.0.1:33333/__contexts/ https://127.0.0.1:33333/app/sw.js; worker-src https://127.0.0.1:33333/__contexts/ https://127.0.0.1:33333/app/sw.js; form-action 'none'; base-uri 'none'; report-to default",
+        "date": "Sat, 31 Oct 2026 16:59:16 GMT",
         "keep-alive": "timeout=5",
-        "reporting-endpoints": "default=\"https://127.0.0.1:36937/configured\"",
+        "reporting-endpoints": "default=\"https://127.0.0.1:42347/configured\"",
         "cache-control": "no-store",
         "connection-allowlist": "(response-origin); redirects=block; webrtc=block",
         "content-type": "text/html",
@@ -100,262 +88,239 @@
       "markerTraffic": [],
       "markerUploads": [
         {
-          "at": "2026-10-30T15:35:31.032Z",
+          "at": "2026-10-31T16:59:16.585Z",
           "url": "/configured",
           "method": "POST",
           "type": "application/reports+json",
-          "body": "[{\"age\":0,\"body\":{\"blockedURL\":\"https://outside.invalid/prepared-private-21215db0-112b-4662-85e2-e7840c352a32\",\"disposition\":\"enforce\",\"documentURL\":\"https://127.0.0.1:33095/app/configured/\",\"effectiveDirective\":\"img-src\",\"originalPolicy\":\"sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src https://127.0.0.1:33095/__contexts/ https://127.0.0.1:33095/app/sw.js; worker-src https://127.0.0.1:33095/__contexts/ https://127.0.0.1:33095/app/sw.js; form-action 'none'; base-uri 'none'; report-to default\",\"referrer\":\"\",\"sample\":\"\",\"statusCode\":200},\"type\":\"csp-violation\",\"url\":\"https://127.0.0.1:33095/app/configured/\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"}]"
+          "body": "[{\"age\":0,\"body\":{\"blockedURL\":\"https://outside.invalid/prepared-private-77cef7fb-f10a-4f55-b12b-2fdbb4d90c81\",\"disposition\":\"enforce\",\"documentURL\":\"https://127.0.0.1:33333/app/configured/\",\"effectiveDirective\":\"img-src\",\"originalPolicy\":\"sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src https://127.0.0.1:33333/__contexts/ https://127.0.0.1:33333/app/sw.js; worker-src https://127.0.0.1:33333/__contexts/ https://127.0.0.1:33333/app/sw.js; form-action 'none'; base-uri 'none'; report-to default\",\"referrer\":\"\",\"sample\":\"\",\"statusCode\":200},\"type\":\"csp-violation\",\"url\":\"https://127.0.0.1:33333/app/configured/\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"}]"
         }
       ],
       "workerEvents": [
         {
-          "url": "https://127.0.0.1:33095/app/",
+          "url": "https://127.0.0.1:33333/app/",
           "method": "GET"
         },
         {
-          "url": "https://127.0.0.1:33095/app/fixture.js",
+          "url": "https://127.0.0.1:33333/app/fixture.js",
           "method": "GET"
         },
         {
-          "url": "https://127.0.0.1:33095/favicon.ico",
+          "url": "https://127.0.0.1:33333/favicon.ico",
           "method": "GET"
         },
         {
-          "url": "https://127.0.0.1:33095/unknown?prepared-private-3f85540e-ec18-497b-8286-a22c5bc05024",
+          "url": "https://127.0.0.1:33333/unknown-image?prepared-private-ea93c39e-0d63-4f46-9319-c5f3f65ddf32",
           "method": "GET"
         },
         {
-          "url": "https://127.0.0.1:33095/unknown-post",
-          "method": "POST"
-        },
-        {
-          "url": "https://127.0.0.1:33095/unknown-image?prepared-private-3f85540e-ec18-497b-8286-a22c5bc05024",
+          "url": "https://127.0.0.1:33333/app/configured/",
           "method": "GET"
         },
         {
-          "url": "https://127.0.0.1:33095/app/events",
+          "url": "https://127.0.0.1:33333/app/fixture.js",
           "method": "GET"
         },
         {
-          "url": "https://127.0.0.1:33095/app/configured/",
+          "url": "https://127.0.0.1:33333/favicon.ico",
           "method": "GET"
         },
         {
-          "url": "https://127.0.0.1:33095/app/fixture.js",
-          "method": "GET"
-        },
-        {
-          "url": "https://127.0.0.1:33095/favicon.ico",
-          "method": "GET"
-        },
-        {
-          "url": "https://127.0.0.1:33095/unknown?prepared-private-21215db0-112b-4662-85e2-e7840c352a32",
-          "method": "GET"
-        },
-        {
-          "url": "https://127.0.0.1:33095/unknown-post",
-          "method": "POST"
-        },
-        {
-          "url": "https://127.0.0.1:33095/unknown-image?prepared-private-21215db0-112b-4662-85e2-e7840c352a32",
-          "method": "GET"
-        },
-        {
-          "url": "https://127.0.0.1:33095/app/events",
+          "url": "https://127.0.0.1:33333/unknown-image?prepared-private-77cef7fb-f10a-4f55-b12b-2fdbb4d90c81",
           "method": "GET"
         }
       ]
     },
     {
       "profile": "native-NEL-after",
-      "marker": "nel-after-f87351fa-2c5b-46cc-9b22-ddc4014fe58f",
+      "marker": "nel-after-da657c62-200f-4ded-acab-92a0fa62395a",
       "delivered": true
     }
   ],
   "traffic": [
     {
-      "at": "2026-10-30T15:35:27.276Z",
+      "at": "2026-10-31T16:59:12.813Z",
       "url": "/native-modern",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T15:35:27.395Z",
+      "at": "2026-10-31T16:59:12.931Z",
       "url": "/seed",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T15:35:27.404Z",
+      "at": "2026-10-31T16:59:12.940Z",
       "url": "/favicon.ico",
       "method": "GET",
       "body": "",
-      "referer": "https://127.0.0.1:33095/seed"
+      "referer": "https://127.0.0.1:33333/seed"
     },
     {
-      "at": "2026-10-30T15:35:27.405Z",
-      "url": "/native?nel-before-310159e7-98b2-4ac9-a59e-05e3c5d9a4f5",
+      "at": "2026-10-31T16:59:12.941Z",
+      "url": "/native?nel-before-72d34d0e-b4a6-4a84-a598-edc5aefc2ded",
       "method": "GET",
       "body": "",
-      "referer": "https://127.0.0.1:33095/seed"
+      "referer": "https://127.0.0.1:33333/seed"
     },
     {
-      "at": "2026-10-30T15:35:27.512Z",
+      "at": "2026-10-31T16:59:13.048Z",
       "url": "/app/sw.js",
       "method": "GET",
       "body": "",
-      "referer": "https://127.0.0.1:33095/seed"
+      "referer": "https://127.0.0.1:33333/seed"
     },
     {
-      "at": "2026-10-30T15:35:27.531Z",
+      "at": "2026-10-31T16:59:13.069Z",
       "url": "/app/",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T15:35:27.542Z",
+      "at": "2026-10-31T16:59:13.081Z",
       "url": "/app/fixture.js",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T15:35:30.751Z",
+      "at": "2026-10-31T16:59:16.298Z",
       "url": "/app/sw.js",
       "method": "GET",
       "body": "",
-      "referer": "https://127.0.0.1:33095/app/sw.js"
+      "referer": "https://127.0.0.1:33333/app/sw.js"
     },
     {
-      "at": "2026-10-30T15:35:30.794Z",
+      "at": "2026-10-31T16:59:16.339Z",
       "url": "/app/configured/",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T15:35:30.804Z",
+      "at": "2026-10-31T16:59:16.349Z",
       "url": "/app/fixture.js",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T15:35:31.041Z",
-      "url": "/native?nel-after-f87351fa-2c5b-46cc-9b22-ddc4014fe58f",
+      "at": "2026-10-31T16:59:16.594Z",
+      "url": "/native?nel-after-da657c62-200f-4ded-acab-92a0fa62395a",
       "method": "GET",
       "body": "",
-      "referer": "https://127.0.0.1:33095/seed"
+      "referer": "https://127.0.0.1:33333/seed"
     }
   ],
   "uploads": [
     {
-      "at": "2026-10-30T15:35:27.294Z",
+      "at": "2026-10-31T16:59:12.830Z",
       "url": "/modern",
       "method": "OPTIONS",
       "body": ""
     },
     {
-      "at": "2026-10-30T15:35:27.294Z",
+      "at": "2026-10-31T16:59:12.830Z",
       "url": "/modern",
       "method": "POST",
       "type": "application/reports+json",
-      "body": "[{\"age\":0,\"body\":{\"blockedURL\":\"https://127.0.0.1:33095/blocked?native-modern-bbec10b9-32ad-49c8-84be-04ab63bdc5b3\",\"disposition\":\"enforce\",\"documentURL\":\"https://127.0.0.1:33095/native-modern\",\"effectiveDirective\":\"img-src\",\"originalPolicy\":\"img-src 'none'; report-to default\",\"referrer\":\"\",\"sample\":\"\",\"statusCode\":200},\"type\":\"csp-violation\",\"url\":\"https://127.0.0.1:33095/native-modern\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"}]"
+      "body": "[{\"age\":0,\"body\":{\"blockedURL\":\"https://127.0.0.1:33333/blocked?native-modern-d948d529-896d-4bc9-bd1f-e3f298a59330\",\"disposition\":\"enforce\",\"documentURL\":\"https://127.0.0.1:33333/native-modern\",\"effectiveDirective\":\"img-src\",\"originalPolicy\":\"img-src 'none'; report-to default\",\"referrer\":\"\",\"sample\":\"\",\"statusCode\":200},\"type\":\"csp-violation\",\"url\":\"https://127.0.0.1:33333/native-modern\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"}]"
     },
     {
-      "at": "2026-10-30T15:35:27.398Z",
+      "at": "2026-10-31T16:59:12.934Z",
       "url": "/nel",
       "method": "OPTIONS",
       "body": ""
     },
     {
-      "at": "2026-10-30T15:35:27.398Z",
+      "at": "2026-10-31T16:59:12.935Z",
       "url": "/nel",
       "method": "POST",
       "type": "application/reports+json",
-      "body": "[{\"age\":1,\"body\":{\"elapsed_time\":0,\"method\":\"GET\",\"phase\":\"application\",\"protocol\":\"http/1.1\",\"referrer\":\"\",\"sampling_fraction\":1.0,\"server_ip\":\"127.0.0.1\",\"status_code\":200,\"type\":\"ok\"},\"type\":\"network-error\",\"url\":\"https://127.0.0.1:33095/seed\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"}]"
+      "body": "[{\"age\":1,\"body\":{\"elapsed_time\":0,\"method\":\"GET\",\"phase\":\"application\",\"protocol\":\"http/1.1\",\"referrer\":\"\",\"sampling_fraction\":1.0,\"server_ip\":\"127.0.0.1\",\"status_code\":200,\"type\":\"ok\"},\"type\":\"network-error\",\"url\":\"https://127.0.0.1:33333/seed\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"}]"
     },
     {
-      "at": "2026-10-30T15:35:27.497Z",
+      "at": "2026-10-31T16:59:13.033Z",
       "url": "/nel",
       "method": "OPTIONS",
       "body": ""
     },
     {
-      "at": "2026-10-30T15:35:27.497Z",
+      "at": "2026-10-31T16:59:13.033Z",
       "url": "/nel",
       "method": "POST",
       "type": "application/reports+json",
-      "body": "[{\"age\":90,\"body\":{\"elapsed_time\":0,\"method\":\"GET\",\"phase\":\"application\",\"protocol\":\"http/1.1\",\"referrer\":\"https://127.0.0.1:33095/seed\",\"sampling_fraction\":1.0,\"server_ip\":\"127.0.0.1\",\"status_code\":200,\"type\":\"ok\"},\"type\":\"network-error\",\"url\":\"https://127.0.0.1:33095/native?nel-before-310159e7-98b2-4ac9-a59e-05e3c5d9a4f5\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"},{\"age\":91,\"body\":{\"elapsed_time\":1,\"method\":\"GET\",\"phase\":\"application\",\"protocol\":\"http/1.1\",\"referrer\":\"https://127.0.0.1:33095/seed\",\"sampling_fraction\":1.0,\"server_ip\":\"127.0.0.1\",\"status_code\":200,\"type\":\"ok\"},\"type\":\"network-error\",\"url\":\"https://127.0.0.1:33095/favicon.ico\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"}]"
+      "body": "[{\"age\":91,\"body\":{\"elapsed_time\":0,\"method\":\"GET\",\"phase\":\"application\",\"protocol\":\"http/1.1\",\"referrer\":\"https://127.0.0.1:33333/seed\",\"sampling_fraction\":1.0,\"server_ip\":\"127.0.0.1\",\"status_code\":200,\"type\":\"ok\"},\"type\":\"network-error\",\"url\":\"https://127.0.0.1:33333/favicon.ico\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"},{\"age\":90,\"body\":{\"elapsed_time\":0,\"method\":\"GET\",\"phase\":\"application\",\"protocol\":\"http/1.1\",\"referrer\":\"https://127.0.0.1:33333/seed\",\"sampling_fraction\":1.0,\"server_ip\":\"127.0.0.1\",\"status_code\":200,\"type\":\"ok\"},\"type\":\"network-error\",\"url\":\"https://127.0.0.1:33333/native?nel-before-72d34d0e-b4a6-4a84-a598-edc5aefc2ded\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"}]"
     },
     {
-      "at": "2026-10-30T15:35:27.597Z",
+      "at": "2026-10-31T16:59:13.134Z",
       "url": "/nel",
       "method": "OPTIONS",
       "body": ""
     },
     {
-      "at": "2026-10-30T15:35:27.597Z",
+      "at": "2026-10-31T16:59:13.135Z",
       "url": "/nel",
       "method": "POST",
       "type": "application/reports+json",
-      "body": "[{\"age\":49,\"body\":{\"elapsed_time\":5,\"method\":\"GET\",\"phase\":\"application\",\"protocol\":\"http/1.1\",\"referrer\":\"\",\"sampling_fraction\":1.0,\"server_ip\":\"127.0.0.1\",\"status_code\":200,\"type\":\"ok\"},\"type\":\"network-error\",\"url\":\"https://127.0.0.1:33095/app/fixture.js\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"},{\"age\":84,\"body\":{\"elapsed_time\":1,\"method\":\"GET\",\"phase\":\"application\",\"protocol\":\"http/1.1\",\"referrer\":\"https://127.0.0.1:33095/seed\",\"sampling_fraction\":1.0,\"server_ip\":\"127.0.0.1\",\"status_code\":200,\"type\":\"ok\"},\"type\":\"network-error\",\"url\":\"https://127.0.0.1:33095/app/sw.js\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"},{\"age\":63,\"body\":{\"elapsed_time\":2,\"method\":\"GET\",\"phase\":\"application\",\"protocol\":\"http/1.1\",\"referrer\":\"\",\"sampling_fraction\":1.0,\"server_ip\":\"127.0.0.1\",\"status_code\":200,\"type\":\"ok\"},\"type\":\"network-error\",\"url\":\"https://127.0.0.1:33095/app/\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"}]"
+      "body": "[{\"age\":85,\"body\":{\"elapsed_time\":1,\"method\":\"GET\",\"phase\":\"application\",\"protocol\":\"http/1.1\",\"referrer\":\"https://127.0.0.1:33333/seed\",\"sampling_fraction\":1.0,\"server_ip\":\"127.0.0.1\",\"status_code\":200,\"type\":\"ok\"},\"type\":\"network-error\",\"url\":\"https://127.0.0.1:33333/app/sw.js\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"},{\"age\":46,\"body\":{\"elapsed_time\":6,\"method\":\"GET\",\"phase\":\"application\",\"protocol\":\"http/1.1\",\"referrer\":\"\",\"sampling_fraction\":1.0,\"server_ip\":\"127.0.0.1\",\"status_code\":200,\"type\":\"ok\"},\"type\":\"network-error\",\"url\":\"https://127.0.0.1:33333/app/fixture.js\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"},{\"age\":61,\"body\":{\"elapsed_time\":3,\"method\":\"GET\",\"phase\":\"application\",\"protocol\":\"http/1.1\",\"referrer\":\"\",\"sampling_fraction\":1.0,\"server_ip\":\"127.0.0.1\",\"status_code\":200,\"type\":\"ok\"},\"type\":\"network-error\",\"url\":\"https://127.0.0.1:33333/app/\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"}]"
     },
     {
-      "at": "2026-10-30T15:35:30.752Z",
+      "at": "2026-10-31T16:59:16.299Z",
       "url": "/nel",
       "method": "OPTIONS",
       "body": ""
     },
     {
-      "at": "2026-10-30T15:35:30.752Z",
+      "at": "2026-10-31T16:59:16.300Z",
       "url": "/nel",
       "method": "POST",
       "type": "application/reports+json",
-      "body": "[{\"age\":0,\"body\":{\"elapsed_time\":1,\"method\":\"GET\",\"phase\":\"application\",\"protocol\":\"http/1.1\",\"referrer\":\"https://127.0.0.1:33095/app/sw.js\",\"sampling_fraction\":1.0,\"server_ip\":\"127.0.0.1\",\"status_code\":200,\"type\":\"ok\"},\"type\":\"network-error\",\"url\":\"https://127.0.0.1:33095/app/sw.js\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"}]"
+      "body": "[{\"age\":0,\"body\":{\"elapsed_time\":1,\"method\":\"GET\",\"phase\":\"application\",\"protocol\":\"http/1.1\",\"referrer\":\"https://127.0.0.1:33333/app/sw.js\",\"sampling_fraction\":1.0,\"server_ip\":\"127.0.0.1\",\"status_code\":200,\"type\":\"ok\"},\"type\":\"network-error\",\"url\":\"https://127.0.0.1:33333/app/sw.js\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"}]"
     },
     {
-      "at": "2026-10-30T15:35:30.853Z",
+      "at": "2026-10-31T16:59:16.400Z",
       "url": "/nel",
       "method": "OPTIONS",
       "body": ""
     },
     {
-      "at": "2026-10-30T15:35:30.853Z",
+      "at": "2026-10-31T16:59:16.400Z",
       "url": "/nel",
       "method": "POST",
       "type": "application/reports+json",
-      "body": "[{\"age\":44,\"body\":{\"elapsed_time\":4,\"method\":\"GET\",\"phase\":\"application\",\"protocol\":\"http/1.1\",\"referrer\":\"\",\"sampling_fraction\":1.0,\"server_ip\":\"127.0.0.1\",\"status_code\":200,\"type\":\"ok\"},\"type\":\"network-error\",\"url\":\"https://127.0.0.1:33095/app/fixture.js\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"},{\"age\":57,\"body\":{\"elapsed_time\":1,\"method\":\"GET\",\"phase\":\"application\",\"protocol\":\"http/1.1\",\"referrer\":\"\",\"sampling_fraction\":1.0,\"server_ip\":\"127.0.0.1\",\"status_code\":200,\"type\":\"ok\"},\"type\":\"network-error\",\"url\":\"https://127.0.0.1:33095/app/configured/\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"}]"
+      "body": "[{\"age\":46,\"body\":{\"elapsed_time\":4,\"method\":\"GET\",\"phase\":\"application\",\"protocol\":\"http/1.1\",\"referrer\":\"\",\"sampling_fraction\":1.0,\"server_ip\":\"127.0.0.1\",\"status_code\":200,\"type\":\"ok\"},\"type\":\"network-error\",\"url\":\"https://127.0.0.1:33333/app/fixture.js\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"},{\"age\":59,\"body\":{\"elapsed_time\":1,\"method\":\"GET\",\"phase\":\"application\",\"protocol\":\"http/1.1\",\"referrer\":\"\",\"sampling_fraction\":1.0,\"server_ip\":\"127.0.0.1\",\"status_code\":200,\"type\":\"ok\"},\"type\":\"network-error\",\"url\":\"https://127.0.0.1:33333/app/configured/\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"}]"
     },
     {
-      "at": "2026-10-30T15:35:31.032Z",
+      "at": "2026-10-31T16:59:16.584Z",
       "url": "/configured",
       "method": "OPTIONS",
       "body": ""
     },
     {
-      "at": "2026-10-30T15:35:31.032Z",
+      "at": "2026-10-31T16:59:16.585Z",
       "url": "/configured",
       "method": "POST",
       "type": "application/reports+json",
-      "body": "[{\"age\":0,\"body\":{\"blockedURL\":\"https://outside.invalid/prepared-private-21215db0-112b-4662-85e2-e7840c352a32\",\"disposition\":\"enforce\",\"documentURL\":\"https://127.0.0.1:33095/app/configured/\",\"effectiveDirective\":\"img-src\",\"originalPolicy\":\"sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src https://127.0.0.1:33095/__contexts/ https://127.0.0.1:33095/app/sw.js; worker-src https://127.0.0.1:33095/__contexts/ https://127.0.0.1:33095/app/sw.js; form-action 'none'; base-uri 'none'; report-to default\",\"referrer\":\"\",\"sample\":\"\",\"statusCode\":200},\"type\":\"csp-violation\",\"url\":\"https://127.0.0.1:33095/app/configured/\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"}]"
+      "body": "[{\"age\":0,\"body\":{\"blockedURL\":\"https://outside.invalid/prepared-private-77cef7fb-f10a-4f55-b12b-2fdbb4d90c81\",\"disposition\":\"enforce\",\"documentURL\":\"https://127.0.0.1:33333/app/configured/\",\"effectiveDirective\":\"img-src\",\"originalPolicy\":\"sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src https://127.0.0.1:33333/__contexts/ https://127.0.0.1:33333/app/sw.js; worker-src https://127.0.0.1:33333/__contexts/ https://127.0.0.1:33333/app/sw.js; form-action 'none'; base-uri 'none'; report-to default\",\"referrer\":\"\",\"sample\":\"\",\"statusCode\":200},\"type\":\"csp-violation\",\"url\":\"https://127.0.0.1:33333/app/configured/\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"}]"
     },
     {
-      "at": "2026-10-30T15:35:31.132Z",
+      "at": "2026-10-31T16:59:16.685Z",
       "url": "/nel",
       "method": "OPTIONS",
       "body": ""
     },
     {
-      "at": "2026-10-30T15:35:31.133Z",
+      "at": "2026-10-31T16:59:16.685Z",
       "url": "/nel",
       "method": "POST",
       "type": "application/reports+json",
-      "body": "[{\"age\":90,\"body\":{\"elapsed_time\":0,\"method\":\"GET\",\"phase\":\"application\",\"protocol\":\"http/1.1\",\"referrer\":\"https://127.0.0.1:33095/seed\",\"sampling_fraction\":1.0,\"server_ip\":\"127.0.0.1\",\"status_code\":200,\"type\":\"ok\"},\"type\":\"network-error\",\"url\":\"https://127.0.0.1:33095/native?nel-after-f87351fa-2c5b-46cc-9b22-ddc4014fe58f\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"}]"
+      "body": "[{\"age\":89,\"body\":{\"elapsed_time\":1,\"method\":\"GET\",\"phase\":\"application\",\"protocol\":\"http/1.1\",\"referrer\":\"https://127.0.0.1:33333/seed\",\"sampling_fraction\":1.0,\"server_ip\":\"127.0.0.1\",\"status_code\":200,\"type\":\"ok\"},\"type\":\"network-error\",\"url\":\"https://127.0.0.1:33333/native?nel-after-da657c62-200f-4ded-acab-92a0fa62395a\",\"user_agent\":\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36\"}]"
     }
   ],
-  "runnerSHA256": "ba698be93f5e44b6bb12a62554dc017a988f7bcd36ee60d55f06b262b42b2ca4",
-  "fixtureSHA256": "df1eb2a29c4f42c927f61480c88049575c0108c289e93b28e22661bb6f541f06",
+  "runnerSHA256": "e027b169db67ea066c11eff5f491738f339f3444016a39e02c53bfc8bf05277c",
+  "fixtureSHA256": "67e58f791292c5ddc0fc4908c5baad2fdb0993288bca06dc7ed4d9fa574426a3",
   "sourceHashes": {
+    "formal/fixtures/controller-messages.ts": "690578c2b88520312a41ddf730d5a4bde289b9e25e41dad6a1e373ca7eef9a03",
     "src/runtime/response-policy.ts": "f21946f76dd37233ea7e48dd969a59e09343315f3a044e4be66ae4324fb9efb2",
-    "src/runtime/contexts/window-realm.ts": "06cae24e208c2471a511ef718037bbb82ae8000a18069d7b50ecd1a956da649d"
+    "src/runtime/contexts/window-realm.ts": "27d051dcc9015b683c6f6d304fe31e8bd7dabcd05a5ee0ad93e9fa4f0bfe37a6"
   },
   "version": "153.0.8010.12",
   "actualArguments": [
@@ -403,8 +368,8 @@
     "--no-sandbox",
     "--enable-automation",
     "--short-reporting-delay",
-    "--ignore-certificate-errors-spki-list=pIhJvdprdwYnnkViBK/5ZzU8ZPxLtRbWzfX3bwZYZ0E=",
-    "--user-data-dir=/tmp/playwright_chromiumdev_profile-jdHgrv",
+    "--ignore-certificate-errors-spki-list=0O8gczQqKbLj9RBviD57Ai7lopvr0UVbf5SqYXr77OM=",
+    "--user-data-dir=/tmp/playwright_chromiumdev_profile-NGub2P",
     "--remote-debugging-pipe",
     "--no-startup-window",
     "--noerrdialogs",

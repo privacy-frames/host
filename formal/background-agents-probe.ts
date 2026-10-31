@@ -1,3 +1,4 @@
+import { fixtureControllerMessages } from './fixtures/controller-messages.ts';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
@@ -34,6 +35,7 @@ const fixture = await build({
   plugins: [await trustedPolicyPlugin(root)],
 });
 const sw = `
+${fixtureControllerMessages()}
   self.addEventListener('install', () => self.skipWaiting());
   self.addEventListener('activate', event => event.waitUntil(self.clients.claim()));
   self.addEventListener('sync', event => {
@@ -97,6 +99,7 @@ const receipt = {
   sourceHashes: Object.fromEntries(
     await Promise.all(
       [
+        'formal/fixtures/controller-messages.ts',
         'src/runtime/enforcement/effects.ts',
         'src/runtime/publisher/client.ts',
         'src/runtime/contexts/window-realm.ts',
@@ -264,7 +267,7 @@ try {
         assert.equal(prepared[key].outcome, 'TypeError', key);
       for (const key of ['prototypeList', 'prototypeLookup', 'register'])
         assert.equal(prepared[key].outcome, 'SecurityError', key);
-      assert.equal(prepared.ordinaryFetch.value, 'SW blocked');
+      assert.equal(prepared.ordinaryFetch.outcome, 'TypeError');
       for (const key of ['backgroundFetch', 'sync', 'periodicSync'])
         assert(['TypeError', 'not-exposed'].includes(prepared[key].outcome), key);
       await page.waitForTimeout(1500);

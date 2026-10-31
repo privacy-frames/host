@@ -1,10 +1,10 @@
 {
   "scope": "Same-origin EventSource, sendBeacon and a Wasm-invoked JavaScript fetch in a prepared Window, with an independent receiver and a fixture service worker. Not installed-app lifecycle or worker coverage.",
-  "revision": "122ef5234dae16a42d05ba9461a43f2900645671",
-  "runnerSHA256": "b7164ccf1e2c1cf99cabc49d9033f1ac3b17118283c44c41f24e79b14f50ade6",
-  "bundleSHA256": "fc64ddd0bdb6157c692367065bb0c7d779100352598729604437d56635133e0b",
+  "revision": "ade02b19e5d619b877817ee18cc0731fca8140f3",
+  "runnerSHA256": "f284bab42d0b0d8a82d1de096c06a60f6283f99233ea13d4e7f08b82ca459ddc",
+  "bundleSHA256": "de873541d0b9fea7d0d3e640007753c50eb3f22563461c05e9401174155e66f8",
   "sourceHashes": {
-    "src/runtime/contexts/window-realm.ts": "06cae24e208c2471a511ef718037bbb82ae8000a18069d7b50ecd1a956da649d",
+    "src/runtime/contexts/window-realm.ts": "27d051dcc9015b683c6f6d304fe31e8bd7dabcd05a5ee0ad93e9fa4f0bfe37a6",
     "src/runtime/enforcement/effects.ts": "466c165e4ef9d82e2011c85cd2639e3f7e7152309c49fbb5c8962ed0fd1bb691",
     "src/runtime/response-policy.ts": "f21946f76dd37233ea7e48dd969a59e09343315f3a044e4be66ae4324fb9efb2",
     "scripts/trusted-policy.ts": "93cc9dffdee1683b74faa06251b4f8ab16eaf5294047b5783f156cb6417a5e36",
@@ -19,13 +19,13 @@
         {
           "phase": "native",
           "kind": "eventsource",
-          "marker": "native-eventsource-9b26dad3-50e5-4959-8e8c-f236868247c1",
+          "marker": "native-eventsource-313daad4-20b1-4fc7-b461-84d265cc1ef9",
           "result": {
             "result": "message"
           },
           "received": [
             {
-              "url": "/sse?native-eventsource-9b26dad3-50e5-4959-8e8c-f236868247c1",
+              "url": "/sse?native-eventsource-313daad4-20b1-4fc7-b461-84d265cc1ef9",
               "method": "GET",
               "body": ""
             }
@@ -34,38 +34,38 @@
         {
           "phase": "native",
           "kind": "beacon",
-          "marker": "native-beacon-4d34d47f-f62d-466f-846a-db95166dc454",
+          "marker": "native-beacon-5e2b3519-296f-4b1a-997c-63c8ad0d625c",
           "result": {
             "result": "true"
           },
           "received": [
             {
-              "url": "/beacon?native-beacon-4d34d47f-f62d-466f-846a-db95166dc454",
+              "url": "/beacon?native-beacon-5e2b3519-296f-4b1a-997c-63c8ad0d625c",
               "method": "POST",
-              "body": "native-beacon-4d34d47f-f62d-466f-846a-db95166dc454"
+              "body": "native-beacon-5e2b3519-296f-4b1a-997c-63c8ad0d625c"
             }
           ]
         },
         {
           "phase": "native",
           "kind": "wasm",
-          "marker": "native-wasm-ba52f2c1-1244-4e4a-bc4f-2be2c52baf5b",
+          "marker": "native-wasm-5b46869a-e957-4001-b933-03b829c8562b",
           "result": {
             "result": "http-200",
             "invoked": true
           },
           "received": [
             {
-              "url": "/beacon?native-wasm-ba52f2c1-1244-4e4a-bc4f-2be2c52baf5b",
+              "url": "/beacon?native-wasm-5b46869a-e957-4001-b933-03b829c8562b",
               "method": "POST",
-              "body": "native-wasm-ba52f2c1-1244-4e4a-bc4f-2be2c52baf5b"
+              "body": "native-wasm-5b46869a-e957-4001-b933-03b829c8562b"
             }
           ]
         },
         {
           "phase": "worker",
           "kind": "eventsource",
-          "marker": "worker-eventsource-5047e8ba-1f6a-4112-9b43-c18e64e8d835",
+          "marker": "worker-eventsource-f46f27db-6d97-4e46-b0d1-40dc10e12298",
           "result": {
             "result": "error"
           },
@@ -74,7 +74,7 @@
         {
           "phase": "worker",
           "kind": "beacon",
-          "marker": "worker-beacon-797bab4f-54d4-40e8-a73c-ac6333b781a5",
+          "marker": "worker-beacon-b0ab8cbe-a3bf-4e40-a47c-86661fb934d2",
           "result": {
             "result": "true"
           },
@@ -83,7 +83,7 @@
         {
           "phase": "worker",
           "kind": "wasm",
-          "marker": "worker-wasm-edbe6e24-15c4-432e-8179-b48a78cf0a30",
+          "marker": "worker-wasm-1c501ff3-da9b-4bd8-a225-749a89a3392e",
           "result": {
             "result": "http-403",
             "invoked": true
@@ -93,7 +93,7 @@
         {
           "phase": "prepared",
           "kind": "eventsource",
-          "marker": "prepared-eventsource-3423a7de-222a-4a6e-a1d1-689ba57de6ec",
+          "marker": "prepared-eventsource-b9e6e5d8-9f38-41b4-ab80-42d293ef51a7",
           "result": {
             "result": "SecurityError"
           },
@@ -102,7 +102,7 @@
         {
           "phase": "prepared",
           "kind": "beacon",
-          "marker": "prepared-beacon-ea88aee4-9ac4-43ef-b82c-4fd66db754fa",
+          "marker": "prepared-beacon-1a5f1340-e5e0-4e86-98c2-1aef415b42d6",
           "result": {
             "result": "SecurityError"
           },
@@ -111,9 +111,9 @@
         {
           "phase": "prepared",
           "kind": "wasm",
-          "marker": "prepared-wasm-e3bfe3d6-96f6-4ccf-997f-116466ac3920",
+          "marker": "prepared-wasm-25c4a817-b106-4ddf-8bbf-6fe6bd037fe1",
           "result": {
-            "result": "http-403",
+            "result": "TypeError",
             "invoked": true
           },
           "received": []
@@ -127,13 +127,13 @@
         {
           "phase": "native",
           "kind": "eventsource",
-          "marker": "native-eventsource-0790f8d9-fc94-4ad5-a17a-5dd7d2eb228a",
+          "marker": "native-eventsource-cb02dd5d-d59b-406f-aaf8-0c7536195a24",
           "result": {
             "result": "message"
           },
           "received": [
             {
-              "url": "/sse?native-eventsource-0790f8d9-fc94-4ad5-a17a-5dd7d2eb228a",
+              "url": "/sse?native-eventsource-cb02dd5d-d59b-406f-aaf8-0c7536195a24",
               "method": "GET",
               "body": ""
             }
@@ -142,38 +142,38 @@
         {
           "phase": "native",
           "kind": "beacon",
-          "marker": "native-beacon-c2fe3a37-3ec8-4f79-ac8c-e675f4914cc1",
+          "marker": "native-beacon-73eb6f16-95b8-4e09-96ae-ab14f03dbecb",
           "result": {
             "result": "true"
           },
           "received": [
             {
-              "url": "/beacon?native-beacon-c2fe3a37-3ec8-4f79-ac8c-e675f4914cc1",
+              "url": "/beacon?native-beacon-73eb6f16-95b8-4e09-96ae-ab14f03dbecb",
               "method": "POST",
-              "body": "native-beacon-c2fe3a37-3ec8-4f79-ac8c-e675f4914cc1"
+              "body": "native-beacon-73eb6f16-95b8-4e09-96ae-ab14f03dbecb"
             }
           ]
         },
         {
           "phase": "native",
           "kind": "wasm",
-          "marker": "native-wasm-6a506b11-8980-4c3c-be65-b43b1f11bf81",
+          "marker": "native-wasm-d8ea6472-de8f-4434-9a10-acf35c80a56e",
           "result": {
             "result": "http-200",
             "invoked": true
           },
           "received": [
             {
-              "url": "/beacon?native-wasm-6a506b11-8980-4c3c-be65-b43b1f11bf81",
+              "url": "/beacon?native-wasm-d8ea6472-de8f-4434-9a10-acf35c80a56e",
               "method": "POST",
-              "body": "native-wasm-6a506b11-8980-4c3c-be65-b43b1f11bf81"
+              "body": "native-wasm-d8ea6472-de8f-4434-9a10-acf35c80a56e"
             }
           ]
         },
         {
           "phase": "worker",
           "kind": "eventsource",
-          "marker": "worker-eventsource-796a05fe-d940-4d46-860b-908c67aee720",
+          "marker": "worker-eventsource-9ad858b7-1796-4b14-a4e6-42db1d7046a1",
           "result": {
             "result": "error"
           },
@@ -182,7 +182,7 @@
         {
           "phase": "worker",
           "kind": "beacon",
-          "marker": "worker-beacon-32e7cef1-3e90-4144-b6f1-df98ef94ec86",
+          "marker": "worker-beacon-52a8b6d0-1ea0-4df0-9f52-09363ccceed6",
           "result": {
             "result": "true"
           },
@@ -191,7 +191,7 @@
         {
           "phase": "worker",
           "kind": "wasm",
-          "marker": "worker-wasm-f8e36999-2025-43ab-8564-372114ae2f91",
+          "marker": "worker-wasm-d8885ff1-99ca-4b26-a37c-104179cff96d",
           "result": {
             "result": "http-403",
             "invoked": true
@@ -201,7 +201,7 @@
         {
           "phase": "prepared",
           "kind": "eventsource",
-          "marker": "prepared-eventsource-e3890bb5-b8eb-4f7c-b5e4-86751174af6d",
+          "marker": "prepared-eventsource-02efa2b4-17f5-4278-88d9-d601e16cdc1d",
           "result": {
             "result": "SecurityError"
           },
@@ -210,7 +210,7 @@
         {
           "phase": "prepared",
           "kind": "beacon",
-          "marker": "prepared-beacon-f8ba71e1-97ed-49c6-97e7-322992be3130",
+          "marker": "prepared-beacon-ed3a9d36-2309-4e64-85d1-3242befe4df7",
           "result": {
             "result": "SecurityError"
           },
@@ -219,9 +219,9 @@
         {
           "phase": "prepared",
           "kind": "wasm",
-          "marker": "prepared-wasm-3248b5f5-8e0b-45b4-8e75-88879b891eff",
+          "marker": "prepared-wasm-79933cb8-cdbb-4941-a63b-da68655f36ce",
           "result": {
-            "result": "http-403",
+            "result": "TypeError",
             "invoked": true
           },
           "received": []

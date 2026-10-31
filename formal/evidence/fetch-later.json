@@ -1,14 +1,15 @@
 {
-  "revision": "0f0d43cda8bdfbeccfc5846cea7af1d4bba69e7b",
-  "testedAt": "2026-10-30T18:24:00.712Z",
-  "origin": "http://127.0.0.1:34153",
+  "revision": "ade02b19e5d619b877817ee18cc0731fca8140f3",
+  "testedAt": "2026-10-31T16:59:24.404Z",
+  "origin": "http://127.0.0.1:39557",
   "scope": "fetchLater native delivery, page-close flush, blocking-worker behavior and actual current prepareWindowRealm. A test-only bundle removes only the fetchLater denial and must disclose its marker after closing. Private markers are created after preparation; each native control requires independent HTTP delivery. Firefox absence is recorded without a containment claim.",
-  "runnerSHA256": "8e4bb7a7a0badcc43ccc61670c6b2588699f67113b0f62d227674a3de4e1e3b7",
-  "fixtureSHA256": "ec1a7a8ddecae9a15e8be702cfe583aa495e0fd3b0747e778c835b482d075ab4",
-  "faultFixtureSHA256": "ffe740846309b369d5bb1592b78d7e273ac264917e1ce4a49e3f32ee893bfc22",
+  "runnerSHA256": "112af8c8267916e08cf8f73813160c26fb212fe497271ae626df7616bc5f18aa",
+  "fixtureSHA256": "4cb7fd65ae5fc63c9ffd51c810fdb79df0e97641cefb263fd7455e6602cd5570",
+  "faultFixtureSHA256": "9fb74e25e73dc0d6feb5fe9b5499b0de00019582a5f77141d077d7b35d5c8e5d",
   "sourceHashes": {
+    "formal/fixtures/controller-messages.ts": "690578c2b88520312a41ddf730d5a4bde289b9e25e41dad6a1e373ca7eef9a03",
     "src/runtime/enforcement/effects.ts": "466c165e4ef9d82e2011c85cd2639e3f7e7152309c49fbb5c8962ed0fd1bb691",
-    "src/runtime/contexts/window-realm.ts": "06cae24e208c2471a511ef718037bbb82ae8000a18069d7b50ecd1a956da649d"
+    "src/runtime/contexts/window-realm.ts": "27d051dcc9015b683c6f6d304fe31e8bd7dabcd05a5ee0ad93e9fa4f0bfe37a6"
   },
   "rows": [
     {
@@ -18,7 +19,7 @@
       "cases": [
         {
           "profile": "native-immediate",
-          "marker": "native-immediate-7730bce0-6330-4be1-8bc4-10ef6440b6f3",
+          "marker": "native-immediate-25d8e77a-d3e3-4e02-97ec-2789ad3a90e9",
           "state": {
             "call": {
               "result": "scheduled",
@@ -32,21 +33,21 @@
             "connection": "keep-alive",
             "content-length": "53",
             "content-type": "text/html",
-            "date": "Fri, 30 Oct 2026 18:24:00 GMT",
+            "date": "Sat, 31 Oct 2026 16:59:24 GMT",
             "keep-alive": "timeout=5"
           },
           "markerTraffic": [
             {
-              "at": "2026-10-30T18:24:00.942Z",
-              "url": "/receiver?native-immediate-7730bce0-6330-4be1-8bc4-10ef6440b6f3",
+              "at": "2026-10-31T16:59:24.629Z",
+              "url": "/receiver?native-immediate-25d8e77a-d3e3-4e02-97ec-2789ad3a90e9",
               "method": "POST",
-              "body": "native-immediate-7730bce0-6330-4be1-8bc4-10ef6440b6f3"
+              "body": "native-immediate-25d8e77a-d3e3-4e02-97ec-2789ad3a90e9"
             }
           ]
         },
         {
           "profile": "native-close",
-          "marker": "native-close-ce5ba6ce-dbb8-407e-9bef-28ed7d6b7912",
+          "marker": "native-close-d2d1e7b9-bfa1-4f04-8393-dbdb4062fe94",
           "state": {
             "call": {
               "result": "scheduled",
@@ -60,22 +61,22 @@
             "connection": "keep-alive",
             "content-length": "53",
             "content-type": "text/html",
-            "date": "Fri, 30 Oct 2026 18:24:00 GMT",
+            "date": "Sat, 31 Oct 2026 16:59:24 GMT",
             "keep-alive": "timeout=5"
           },
           "beforeCloseTraffic": [],
           "markerTraffic": [
             {
-              "at": "2026-10-30T18:24:01.189Z",
-              "url": "/receiver?native-close-ce5ba6ce-dbb8-407e-9bef-28ed7d6b7912",
+              "at": "2026-10-31T16:59:24.877Z",
+              "url": "/receiver?native-close-d2d1e7b9-bfa1-4f04-8393-dbdb4062fe94",
               "method": "POST",
-              "body": "native-close-ce5ba6ce-dbb8-407e-9bef-28ed7d6b7912"
+              "body": "native-close-d2d1e7b9-bfa1-4f04-8393-dbdb4062fe94"
             }
           ]
         },
         {
           "profile": "native-worker-close",
-          "marker": "native-worker-close-dc3fa8c2-3698-44a2-b502-2b31c1109103",
+          "marker": "native-worker-close-b8e27936-9551-4328-a03f-77937e4637b2",
           "state": {
             "call": {
               "result": "scheduled",
@@ -89,22 +90,22 @@
             "connection": "keep-alive",
             "content-length": "53",
             "content-type": "text/html",
-            "date": "Fri, 30 Oct 2026 18:24:01 GMT",
+            "date": "Sat, 31 Oct 2026 16:59:25 GMT",
             "keep-alive": "timeout=5"
           },
           "beforeCloseTraffic": [],
           "markerTraffic": [
             {
-              "at": "2026-10-30T18:24:01.530Z",
-              "url": "/receiver?native-worker-close-dc3fa8c2-3698-44a2-b502-2b31c1109103",
+              "at": "2026-10-31T16:59:25.221Z",
+              "url": "/receiver?native-worker-close-b8e27936-9551-4328-a03f-77937e4637b2",
               "method": "POST",
-              "body": "native-worker-close-dc3fa8c2-3698-44a2-b502-2b31c1109103"
+              "body": "native-worker-close-b8e27936-9551-4328-a03f-77937e4637b2"
             }
           ]
         },
         {
           "profile": "prepared-immediate",
-          "marker": "prepared-immediate-9dffa491-ccdf-4f89-a067-6c177047fe44",
+          "marker": "prepared-immediate-856a6c86-9e79-4e5c-bbc3-135f89ae782b",
           "state": {
             "mode": "network-isolated",
             "call": {
@@ -112,16 +113,16 @@
               "message": "Operation fetchLater prohibited by application host"
             },
             "recovery": "SecurityError",
-            "ordinaryFetch": "SW blocked"
+            "ordinaryFetch": "TypeError"
           },
           "headers": {
             "connection": "keep-alive",
             "content-length": "70",
-            "date": "Fri, 30 Oct 2026 18:24:01 GMT",
+            "date": "Sat, 31 Oct 2026 16:59:25 GMT",
             "keep-alive": "timeout=5",
             "cache-control": "no-store",
             "connection-allowlist": "(response-origin); redirects=block; webrtc=block",
-            "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src http://127.0.0.1:34153/__contexts/ http://127.0.0.1:34153/app/sw.js; worker-src http://127.0.0.1:34153/__contexts/ http://127.0.0.1:34153/app/sw.js; form-action 'none'; base-uri 'none'",
+            "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src http://127.0.0.1:39557/__contexts/ http://127.0.0.1:39557/app/sw.js; worker-src http://127.0.0.1:39557/__contexts/ http://127.0.0.1:39557/app/sw.js; form-action 'none'; base-uri 'none'",
             "content-type": "text/html",
             "cross-origin-opener-policy": "same-origin",
             "permissions-policy": "camera=(), microphone=(self), geolocation=(), usb=(), serial=(), hid=(), bluetooth=(), payment=(), attribution-reporting=(), browsing-topics=(), interest-cohort=(), identity-credentials-get=()",
@@ -134,7 +135,7 @@
         },
         {
           "profile": "prepared-close",
-          "marker": "prepared-close-4b8f319b-aa6a-4bef-8ff6-5244aad595c9",
+          "marker": "prepared-close-19669187-f1a4-41e9-92c5-e3fadb7dd53c",
           "state": {
             "mode": "network-isolated",
             "call": {
@@ -142,16 +143,16 @@
               "message": "Operation fetchLater prohibited by application host"
             },
             "recovery": "SecurityError",
-            "ordinaryFetch": "SW blocked"
+            "ordinaryFetch": "TypeError"
           },
           "headers": {
             "connection": "keep-alive",
             "content-length": "70",
-            "date": "Fri, 30 Oct 2026 18:24:03 GMT",
+            "date": "Sat, 31 Oct 2026 16:59:27 GMT",
             "keep-alive": "timeout=5",
             "cache-control": "no-store",
             "connection-allowlist": "(response-origin); redirects=block; webrtc=block",
-            "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src http://127.0.0.1:34153/__contexts/ http://127.0.0.1:34153/app/sw.js; worker-src http://127.0.0.1:34153/__contexts/ http://127.0.0.1:34153/app/sw.js; form-action 'none'; base-uri 'none'",
+            "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src http://127.0.0.1:39557/__contexts/ http://127.0.0.1:39557/app/sw.js; worker-src http://127.0.0.1:39557/__contexts/ http://127.0.0.1:39557/app/sw.js; form-action 'none'; base-uri 'none'",
             "content-type": "text/html",
             "cross-origin-opener-policy": "same-origin",
             "permissions-policy": "camera=(), microphone=(self), geolocation=(), usb=(), serial=(), hid=(), bluetooth=(), payment=(), attribution-reporting=(), browsing-topics=(), interest-cohort=(), identity-credentials-get=()",
@@ -165,7 +166,7 @@
         },
         {
           "profile": "fault-close",
-          "marker": "fault-close-8ad06ae3-6681-4869-8952-54db4791a456",
+          "marker": "fault-close-79cc46bf-203f-401d-beaa-723559d42385",
           "state": {
             "mode": "network-isolated",
             "call": {
@@ -178,11 +179,11 @@
           "headers": {
             "connection": "keep-alive",
             "content-length": "76",
-            "date": "Fri, 30 Oct 2026 18:24:05 GMT",
+            "date": "Sat, 31 Oct 2026 16:59:29 GMT",
             "keep-alive": "timeout=5",
             "cache-control": "no-store",
             "connection-allowlist": "(response-origin); redirects=block; webrtc=block",
-            "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src http://127.0.0.1:34153/__contexts/ http://127.0.0.1:34153/app/sw.js; worker-src http://127.0.0.1:34153/__contexts/ http://127.0.0.1:34153/app/sw.js; form-action 'none'; base-uri 'none'",
+            "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src http://127.0.0.1:39557/__contexts/ http://127.0.0.1:39557/app/sw.js; worker-src http://127.0.0.1:39557/__contexts/ http://127.0.0.1:39557/app/sw.js; form-action 'none'; base-uri 'none'",
             "content-type": "text/html",
             "cross-origin-opener-policy": "same-origin",
             "permissions-policy": "camera=(), microphone=(self), geolocation=(), usb=(), serial=(), hid=(), bluetooth=(), payment=(), attribution-reporting=(), browsing-topics=(), interest-cohort=(), identity-credentials-get=()",
@@ -194,10 +195,10 @@
           "beforeCloseTraffic": [],
           "markerTraffic": [
             {
-              "at": "2026-10-30T18:24:05.852Z",
-              "url": "/receiver?fault-close-8ad06ae3-6681-4869-8952-54db4791a456",
+              "at": "2026-10-31T16:59:29.494Z",
+              "url": "/receiver?fault-close-79cc46bf-203f-401d-beaa-723559d42385",
               "method": "POST",
-              "body": "fault-close-8ad06ae3-6681-4869-8952-54db4791a456"
+              "body": "fault-close-79cc46bf-203f-401d-beaa-723559d42385"
             }
           ]
         }
@@ -246,7 +247,7 @@
         "--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4",
         "--no-sandbox",
         "--enable-automation",
-        "--user-data-dir=/tmp/playwright_chromiumdev_profile-J81W8n",
+        "--user-data-dir=/tmp/playwright_chromiumdev_profile-TUoA9i",
         "--remote-debugging-pipe",
         "--no-startup-window",
         "--noerrdialogs",
@@ -258,68 +259,60 @@
         "--enable-unsafe-swiftshader"
       ],
       "finalControl": {
-        "marker": "native-after-10770311-f5c1-4421-8a87-6d11a30afd29",
+        "marker": "native-after-9d766077-f74e-4257-a8f3-93b4abcff23d",
         "delivered": true
       },
       "workerEvents": [
         {
-          "url": "http://127.0.0.1:34153/app/native",
+          "url": "http://127.0.0.1:39557/app/native",
           "method": "GET"
         },
         {
-          "url": "http://127.0.0.1:34153/favicon.ico",
+          "url": "http://127.0.0.1:39557/favicon.ico",
           "method": "GET"
         },
         {
-          "url": "http://127.0.0.1:34153/app/prepared/",
+          "url": "http://127.0.0.1:39557/app/prepared/",
           "method": "GET"
         },
         {
-          "url": "http://127.0.0.1:34153/app/fixture.js",
+          "url": "http://127.0.0.1:39557/app/fixture.js",
           "method": "GET"
         },
         {
-          "url": "http://127.0.0.1:34153/favicon.ico",
+          "url": "http://127.0.0.1:39557/favicon.ico",
           "method": "GET"
         },
         {
-          "url": "http://127.0.0.1:34153/receiver?ordinary-prepared-immediate-9dffa491-ccdf-4f89-a067-6c177047fe44",
+          "url": "http://127.0.0.1:39557/app/prepared/",
           "method": "GET"
         },
         {
-          "url": "http://127.0.0.1:34153/app/prepared/",
+          "url": "http://127.0.0.1:39557/app/fixture.js",
           "method": "GET"
         },
         {
-          "url": "http://127.0.0.1:34153/app/fixture.js",
+          "url": "http://127.0.0.1:39557/favicon.ico",
           "method": "GET"
         },
         {
-          "url": "http://127.0.0.1:34153/favicon.ico",
+          "url": "http://127.0.0.1:39557/app/fault/",
           "method": "GET"
         },
         {
-          "url": "http://127.0.0.1:34153/receiver?ordinary-prepared-close-4b8f319b-aa6a-4bef-8ff6-5244aad595c9",
+          "url": "http://127.0.0.1:39557/app/fault-fixture.js",
           "method": "GET"
         },
         {
-          "url": "http://127.0.0.1:34153/app/fault/",
+          "url": "http://127.0.0.1:39557/favicon.ico",
           "method": "GET"
         },
         {
-          "url": "http://127.0.0.1:34153/app/fault-fixture.js",
+          "url": "http://127.0.0.1:39557/app/native",
           "method": "GET"
         },
         {
-          "url": "http://127.0.0.1:34153/favicon.ico",
-          "method": "GET"
-        },
-        {
-          "url": "http://127.0.0.1:34153/app/native",
-          "method": "GET"
-        },
-        {
-          "url": "http://127.0.0.1:34153/app/events",
+          "url": "http://127.0.0.1:39557/app/events",
           "method": "GET"
         }
       ]
@@ -333,133 +326,133 @@
   ],
   "traffic": [
     {
-      "at": "2026-10-30T18:24:00.893Z",
+      "at": "2026-10-31T16:59:24.586Z",
       "url": "/native",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T18:24:00.906Z",
+      "at": "2026-10-31T16:59:24.596Z",
       "url": "/favicon.ico",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T18:24:00.928Z",
+      "at": "2026-10-31T16:59:24.617Z",
       "url": "/native",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T18:24:00.938Z",
+      "at": "2026-10-31T16:59:24.625Z",
       "url": "/favicon.ico",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T18:24:00.942Z",
-      "url": "/receiver?native-immediate-7730bce0-6330-4be1-8bc4-10ef6440b6f3",
+      "at": "2026-10-31T16:59:24.629Z",
+      "url": "/receiver?native-immediate-25d8e77a-d3e3-4e02-97ec-2789ad3a90e9",
       "method": "POST",
-      "body": "native-immediate-7730bce0-6330-4be1-8bc4-10ef6440b6f3"
+      "body": "native-immediate-25d8e77a-d3e3-4e02-97ec-2789ad3a90e9"
     },
     {
-      "at": "2026-10-30T18:24:00.969Z",
+      "at": "2026-10-31T16:59:24.658Z",
       "url": "/native",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T18:24:00.982Z",
+      "at": "2026-10-31T16:59:24.667Z",
       "url": "/favicon.ico",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T18:24:01.189Z",
-      "url": "/receiver?native-close-ce5ba6ce-dbb8-407e-9bef-28ed7d6b7912",
+      "at": "2026-10-31T16:59:24.877Z",
+      "url": "/receiver?native-close-d2d1e7b9-bfa1-4f04-8393-dbdb4062fe94",
       "method": "POST",
-      "body": "native-close-ce5ba6ce-dbb8-407e-9bef-28ed7d6b7912"
+      "body": "native-close-d2d1e7b9-bfa1-4f04-8393-dbdb4062fe94"
     },
     {
-      "at": "2026-10-30T18:24:01.293Z",
+      "at": "2026-10-31T16:59:24.980Z",
       "url": "/app/sw.js",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T18:24:01.311Z",
+      "at": "2026-10-31T16:59:25.003Z",
       "url": "/app/native",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T18:24:01.530Z",
-      "url": "/receiver?native-worker-close-dc3fa8c2-3698-44a2-b502-2b31c1109103",
+      "at": "2026-10-31T16:59:25.221Z",
+      "url": "/receiver?native-worker-close-b8e27936-9551-4328-a03f-77937e4637b2",
       "method": "POST",
-      "body": "native-worker-close-dc3fa8c2-3698-44a2-b502-2b31c1109103"
+      "body": "native-worker-close-b8e27936-9551-4328-a03f-77937e4637b2"
     },
     {
-      "at": "2026-10-30T18:24:01.643Z",
+      "at": "2026-10-31T16:59:25.339Z",
       "url": "/app/prepared/",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T18:24:01.655Z",
+      "at": "2026-10-31T16:59:25.351Z",
       "url": "/app/fixture.js",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T18:24:03.418Z",
+      "at": "2026-10-31T16:59:27.100Z",
       "url": "/app/prepared/",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T18:24:03.428Z",
+      "at": "2026-10-31T16:59:27.109Z",
       "url": "/app/fixture.js",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T18:24:05.390Z",
+      "at": "2026-10-31T16:59:29.055Z",
       "url": "/app/fault/",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T18:24:05.399Z",
+      "at": "2026-10-31T16:59:29.064Z",
       "url": "/app/fault-fixture.js",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T18:24:05.852Z",
-      "url": "/receiver?fault-close-8ad06ae3-6681-4869-8952-54db4791a456",
+      "at": "2026-10-31T16:59:29.494Z",
+      "url": "/receiver?fault-close-79cc46bf-203f-401d-beaa-723559d42385",
       "method": "POST",
-      "body": "fault-close-8ad06ae3-6681-4869-8952-54db4791a456"
+      "body": "fault-close-79cc46bf-203f-401d-beaa-723559d42385"
     },
     {
-      "at": "2026-10-30T18:24:05.952Z",
-      "url": "/receiver?native-after-10770311-f5c1-4421-8a87-6d11a30afd29",
+      "at": "2026-10-31T16:59:29.594Z",
+      "url": "/receiver?native-after-9d766077-f74e-4257-a8f3-93b4abcff23d",
       "method": "POST",
-      "body": "native-after-10770311-f5c1-4421-8a87-6d11a30afd29"
+      "body": "native-after-9d766077-f74e-4257-a8f3-93b4abcff23d"
     },
     {
-      "at": "2026-10-30T18:24:06.056Z",
+      "at": "2026-10-31T16:59:29.701Z",
       "url": "/app/native",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T18:24:06.814Z",
+      "at": "2026-10-31T16:59:30.503Z",
       "url": "/native",
       "method": "GET",
       "body": ""
     },
     {
-      "at": "2026-10-30T18:24:06.923Z",
+      "at": "2026-10-31T16:59:30.616Z",
       "url": "/favicon.ico",
       "method": "GET",
       "body": ""

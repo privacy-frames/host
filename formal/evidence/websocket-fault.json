@@ -1,13 +1,14 @@
 {
   "scope": "Actual window preparation and generated response policy; test-only mutation removes exactly the WebSocket deny-list entry. Same-origin independent WebSocket upgrade receiver; no installed-app or all-context claim.",
-  "revision": "f31a19b310361233901b6f9f84bde322c7b1b3a0",
-  "runnerSHA256": "2b550d353a680a12e9121209abfa974fbb8b4ad4a0841f0c019ada4a11e401ed",
+  "revision": "ade02b19e5d619b877817ee18cc0731fca8140f3",
+  "runnerSHA256": "a49673f4a979e91de6eeb6425ee9174209324d37b569f3804d62c2e04f2a6729",
   "effectsSHA256": "466c165e4ef9d82e2011c85cd2639e3f7e7152309c49fbb5c8962ed0fd1bb691",
-  "normalBundleSHA256": "c4c122dad018a688b3608ab8515821bf2ee884a62605bb4fbb17e63c7454f9bc",
-  "faultBundleSHA256": "4100cf5df4f7b31f8caa6e19cf3aff8bb387e5570f94a29a701b0e63b2b5b646",
+  "normalBundleSHA256": "059a172c24458fab5aad6a0c3622ca40bea2071f4a00827c300d9d0e357dbd26",
+  "faultBundleSHA256": "805abb25296427379ba38a451aca02aeb7d847c726f9bd935cdc43e911ba14d2",
   "completed": true,
   "sourceHashes": {
-    "src/runtime/contexts/window-realm.ts": "06cae24e208c2471a511ef718037bbb82ae8000a18069d7b50ecd1a956da649d",
+    "formal/fixtures/controller-messages.ts": "690578c2b88520312a41ddf730d5a4bde289b9e25e41dad6a1e373ca7eef9a03",
+    "src/runtime/contexts/window-realm.ts": "27d051dcc9015b683c6f6d304fe31e8bd7dabcd05a5ee0ad93e9fa4f0bfe37a6",
     "src/runtime/response-policy.ts": "f21946f76dd37233ea7e48dd969a59e09343315f3a044e4be66ae4324fb9efb2",
     "scripts/trusted-policy.ts": "93cc9dffdee1683b74faa06251b4f8ab16eaf5294047b5783f156cb6417a5e36",
     "package-lock.json": "4e8c7b0964047f1c9fd3f82956b08d381817fa86fb2f7d47d4a10458dc5e62ed"
@@ -19,14 +20,14 @@
       "attempts": [
         {
           "profile": "native",
-          "marker": "native-dba07aec-5414-43ce-8ef0-076b413b4d43",
+          "marker": "native-e5e35130-2c9d-43a5-8f18-9f414f3dace3",
           "result": {
             "outcome": "open"
           },
           "observed": [
             {
-              "path": "/receive?native-dba07aec-5414-43ce-8ef0-076b413b4d43",
-              "origin": "http://127.0.0.1:35337"
+              "path": "/receive?native-e5e35130-2c9d-43a5-8f18-9f414f3dace3",
+              "origin": "http://127.0.0.1:34505"
             }
           ],
           "headers": {
@@ -34,13 +35,13 @@
             "connection": "keep-alive",
             "content-length": "55",
             "content-type": "text/html",
-            "date": "Fri, 30 Oct 2026 18:34:41 GMT",
+            "date": "Sat, 31 Oct 2026 16:59:31 GMT",
             "keep-alive": "timeout=5"
           }
         },
         {
           "profile": "normal",
-          "marker": "normal-e0deb243-c2ae-4e83-a210-06e2c1fae305",
+          "marker": "normal-0a48e639-242e-4919-9e94-8ac3a49c8e2e",
           "result": {
             "outcome": "SecurityError",
             "mode": "network-isolated"
@@ -49,11 +50,11 @@
           "headers": {
             "connection": "keep-alive",
             "content-length": "69",
-            "date": "Fri, 30 Oct 2026 18:34:42 GMT",
+            "date": "Sat, 31 Oct 2026 16:59:31 GMT",
             "keep-alive": "timeout=5",
             "cache-control": "no-store",
             "connection-allowlist": "(response-origin); redirects=block; webrtc=block",
-            "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src http://127.0.0.1:35337/__contexts/ http://127.0.0.1:35337/app/sw.js; worker-src http://127.0.0.1:35337/__contexts/ http://127.0.0.1:35337/app/sw.js; form-action 'none'; base-uri 'none'",
+            "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src http://127.0.0.1:34505/__contexts/ http://127.0.0.1:34505/app/sw.js; worker-src http://127.0.0.1:34505/__contexts/ http://127.0.0.1:34505/app/sw.js; form-action 'none'; base-uri 'none'",
             "content-type": "text/html",
             "cross-origin-opener-policy": "same-origin",
             "permissions-policy": "camera=(), microphone=(self), geolocation=(), usb=(), serial=(), hid=(), bluetooth=(), payment=(), attribution-reporting=(), browsing-topics=(), interest-cohort=(), identity-credentials-get=()",
@@ -65,25 +66,25 @@
         },
         {
           "profile": "fault",
-          "marker": "fault-ca035b24-6fe1-4063-85e2-c0984c107ff4",
+          "marker": "fault-c3fd5a9a-1725-4cb3-b46a-45bd1195984f",
           "result": {
             "outcome": "open",
             "mode": "network-isolated"
           },
           "observed": [
             {
-              "path": "/receive?fault-ca035b24-6fe1-4063-85e2-c0984c107ff4",
-              "origin": "http://127.0.0.1:35337"
+              "path": "/receive?fault-c3fd5a9a-1725-4cb3-b46a-45bd1195984f",
+              "origin": "http://127.0.0.1:34505"
             }
           ],
           "headers": {
             "connection": "keep-alive",
             "content-length": "68",
-            "date": "Fri, 30 Oct 2026 18:34:42 GMT",
+            "date": "Sat, 31 Oct 2026 16:59:32 GMT",
             "keep-alive": "timeout=5",
             "cache-control": "no-store",
             "connection-allowlist": "(response-origin); redirects=block; webrtc=block",
-            "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src http://127.0.0.1:35337/__contexts/ http://127.0.0.1:35337/app/sw.js; worker-src http://127.0.0.1:35337/__contexts/ http://127.0.0.1:35337/app/sw.js; form-action 'none'; base-uri 'none'",
+            "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src http://127.0.0.1:34505/__contexts/ http://127.0.0.1:34505/app/sw.js; worker-src http://127.0.0.1:34505/__contexts/ http://127.0.0.1:34505/app/sw.js; form-action 'none'; base-uri 'none'",
             "content-type": "text/html",
             "cross-origin-opener-policy": "same-origin",
             "permissions-policy": "camera=(), microphone=(self), geolocation=(), usb=(), serial=(), hid=(), bluetooth=(), payment=(), attribution-reporting=(), browsing-topics=(), interest-cohort=(), identity-credentials-get=()",
@@ -109,20 +110,20 @@
       "attempts": [
         {
           "profile": "native",
-          "marker": "native-669cb263-7844-475c-a57c-c66e6dc8fdf1",
+          "marker": "native-40b6fec3-eda6-4fe7-a9e2-d1fc9dbab2f5",
           "result": {
             "outcome": "open"
           },
           "observed": [
             {
-              "path": "/receive?native-669cb263-7844-475c-a57c-c66e6dc8fdf1",
-              "origin": "http://127.0.0.1:35337"
+              "path": "/receive?native-40b6fec3-eda6-4fe7-a9e2-d1fc9dbab2f5",
+              "origin": "http://127.0.0.1:34505"
             }
           ],
           "headers": {
             "cache-control": "no-store",
             "content-type": "text/html",
-            "date": "Fri, 30 Oct 2026 18:34:44 GMT",
+            "date": "Sat, 31 Oct 2026 16:59:33 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5",
             "content-length": "55"
@@ -130,7 +131,7 @@
         },
         {
           "profile": "normal",
-          "marker": "normal-53bcb688-e207-45bd-957c-05223dc3642d",
+          "marker": "normal-2f050984-f595-4980-8432-45837f2dcb21",
           "result": {
             "outcome": "SecurityError",
             "mode": "network-isolated"
@@ -139,7 +140,7 @@
           "headers": {
             "cache-control": "no-store",
             "connection-allowlist": "(response-origin); redirects=block; webrtc=block",
-            "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src http://127.0.0.1:35337/__contexts/ http://127.0.0.1:35337/app/sw.js; worker-src http://127.0.0.1:35337/__contexts/ http://127.0.0.1:35337/app/sw.js; form-action 'none'; base-uri 'none'",
+            "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src http://127.0.0.1:34505/__contexts/ http://127.0.0.1:34505/app/sw.js; worker-src http://127.0.0.1:34505/__contexts/ http://127.0.0.1:34505/app/sw.js; form-action 'none'; base-uri 'none'",
             "content-type": "text/html",
             "cross-origin-opener-policy": "same-origin",
             "permissions-policy": "camera=(), microphone=(self), geolocation=(), usb=(), serial=(), hid=(), bluetooth=(), payment=(), attribution-reporting=(), browsing-topics=(), interest-cohort=(), identity-credentials-get=()",
@@ -147,7 +148,7 @@
             "x-content-type-options": "nosniff",
             "x-dns-prefetch-control": "off",
             "x-frame-options": "DENY",
-            "date": "Fri, 30 Oct 2026 18:34:45 GMT",
+            "date": "Sat, 31 Oct 2026 16:59:34 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5",
             "content-length": "69"
@@ -155,21 +156,21 @@
         },
         {
           "profile": "fault",
-          "marker": "fault-a77e232e-65bb-4dc6-a23d-c3f02891511c",
+          "marker": "fault-d86d55b4-245c-4620-9253-e2e86976f3cb",
           "result": {
             "outcome": "open",
             "mode": "network-isolated"
           },
           "observed": [
             {
-              "path": "/receive?fault-a77e232e-65bb-4dc6-a23d-c3f02891511c",
-              "origin": "http://127.0.0.1:35337"
+              "path": "/receive?fault-d86d55b4-245c-4620-9253-e2e86976f3cb",
+              "origin": "http://127.0.0.1:34505"
             }
           ],
           "headers": {
             "cache-control": "no-store",
             "connection-allowlist": "(response-origin); redirects=block; webrtc=block",
-            "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src http://127.0.0.1:35337/__contexts/ http://127.0.0.1:35337/app/sw.js; worker-src http://127.0.0.1:35337/__contexts/ http://127.0.0.1:35337/app/sw.js; form-action 'none'; base-uri 'none'",
+            "content-security-policy": "sandbox allow-scripts allow-same-origin allow-forms; frame-ancestors 'none'; default-src 'none'; manifest-src 'self'; script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' blob: data:; media-src 'self' blob: data:; object-src 'none'; frame-src http://127.0.0.1:34505/__contexts/ http://127.0.0.1:34505/app/sw.js; worker-src http://127.0.0.1:34505/__contexts/ http://127.0.0.1:34505/app/sw.js; form-action 'none'; base-uri 'none'",
             "content-type": "text/html",
             "cross-origin-opener-policy": "same-origin",
             "permissions-policy": "camera=(), microphone=(self), geolocation=(), usb=(), serial=(), hid=(), bluetooth=(), payment=(), attribution-reporting=(), browsing-topics=(), interest-cohort=(), identity-credentials-get=()",
@@ -177,7 +178,7 @@
             "x-content-type-options": "nosniff",
             "x-dns-prefetch-control": "off",
             "x-frame-options": "DENY",
-            "date": "Fri, 30 Oct 2026 18:34:45 GMT",
+            "date": "Sat, 31 Oct 2026 16:59:34 GMT",
             "connection": "keep-alive",
             "keep-alive": "timeout=5",
             "content-length": "68"

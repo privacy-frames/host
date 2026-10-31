@@ -1,3 +1,4 @@
+import { fixtureControllerMessages } from './fixtures/controller-messages.ts';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { createHash, randomUUID, X509Certificate } from 'node:crypto';
@@ -72,6 +73,8 @@ const sw = `
   self.addEventListener('install', () => self.skipWaiting());
   self.addEventListener('activate', event => event.waitUntil(self.clients.claim()));
   const events = [];
+${fixtureControllerMessages('events')}
+
   const setup = new Set(['/app/', '/app/configured/', '/app/fixture.js']);
   self.addEventListener('fetch', event => {
     const url = new URL(event.request.url);
@@ -200,14 +203,16 @@ const receipt = {
     .digest('hex'),
   sourceHashes: Object.fromEntries(
     await Promise.all(
-      ['src/runtime/response-policy.ts', 'src/runtime/contexts/window-realm.ts'].map(
-        async (path) => [
-          path,
-          createHash('sha256')
-            .update(await readFile(join(root, path)))
-            .digest('hex'),
-        ],
-      ),
+      [
+        'formal/fixtures/controller-messages.ts',
+        'src/runtime/response-policy.ts',
+        'src/runtime/contexts/window-realm.ts',
+      ].map(async (path) => [
+        path,
+        createHash('sha256')
+          .update(await readFile(join(root, path)))
+          .digest('hex'),
+      ]),
     ),
   ),
 };
@@ -273,10 +278,18 @@ try {
     const marker = 'prepared-private-' + randomUUID();
     const state = await page.evaluate(async (marker) => {
       const results = { mode: globalThis.privacyHost?.mode, fetch: null, post: null };
-      results.fetch = await (await fetch('/unknown?' + marker)).text();
-      results.post = await (
-        await fetch('/unknown-post', { method: 'POST', body: marker })
-      ).text();
+      try {
+        results.fetch = await (await fetch('/unknown?' + marker)).text();
+      } catch (error) {
+        results.fetch = error.name;
+      }
+      try {
+        results.post = await (
+          await fetch('/unknown-post', { method: 'POST', body: marker })
+        ).text();
+      } catch (error) {
+        results.post = error.name;
+      }
       const image = new Image();
       image.src = '/unknown-image?' + marker;
       document.body.append(image);
@@ -285,8 +298,8 @@ try {
       document.body.append(blocked);
       return results;
     }, marker);
-    assert.equal(state.fetch, 'SW blocked');
-    assert.equal(state.post, 'SW blocked');
+    assert.equal(state.fetch, 'TypeError');
+    assert.equal(state.post, 'TypeError');
     if (configured) await waitForUpload(marker);
     else await page.waitForTimeout(3000);
     const markerTraffic = traffic

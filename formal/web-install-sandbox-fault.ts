@@ -1,3 +1,4 @@
+import { fixtureControllerMessages } from './fixtures/controller-messages.ts';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { createHash, randomUUID } from 'node:crypto';
@@ -38,6 +39,8 @@ const sw = `
   self.addEventListener('install', () => self.skipWaiting());
   self.addEventListener('activate', event => event.waitUntil(self.clients.claim()));
   const events = [];
+${fixtureControllerMessages('events')}
+
   const setup = new Set(['/app/native', '/app/prepared/', '/app/fault/', '/app/fixture.js']);
   self.addEventListener('fetch', event => {
     const url = new URL(event.request.url);
@@ -121,6 +124,7 @@ const receipt = {
   sourceHashes: Object.fromEntries(
     await Promise.all(
       [
+        'formal/fixtures/controller-messages.ts',
         'src/runtime/response-policy.ts',
         'src/runtime/contexts/window-realm.ts',
         'src/runtime/enforcement/effects.ts',
