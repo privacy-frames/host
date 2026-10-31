@@ -8,18 +8,16 @@ import { applicationIdentity, publicAlias } from '../shared/runtime-url.ts';
 import { createDocumentRenderer } from './contexts/document-renderer.ts';
 import { parseInstalledDocument } from './contexts/document-protocol.ts';
 import { prepareWindowRealm } from './contexts/window-realm.ts';
+import { createControllerClient } from './controller-client.ts';
+import { INSTALLED_CONTENT_REQUEST } from '../shared/types.ts';
 
 // The entry installs document-exit cancellation before initializing this module.
 // Capture startup operations before preparing the realm or running application code.
 const nativeApply = Reflect.apply;
-const nativeFetch = window.fetch;
-const responseJSON = Response.prototype.json;
-const responseOK = ownDescriptor(Response.prototype, 'ok')!.get!;
 const rawText = ownDescriptor(Node.prototype, 'textContent')!.set!;
 const rawCreate = Document.prototype.createElement;
 const rawAppend = Node.prototype.appendChild;
 const nativeDocument = document;
-const nativeWindow = window;
 const trustedBody = document.body;
 const manifest = document.querySelector('head > link[rel="manifest"]');
 const logError = console.error.bind(console);
@@ -53,6 +51,7 @@ export function startRootGuard(bootstrapScript: Element | null) {
     const appURL = new URL(entry);
     if (applicationIdentity(appURL, new URL('./', guardURL)) !== route)
       throw new Error('Invalid canonical application URL');
+    const host = createControllerClient();
     const realm = prepareWindowRealm(
       internalRecord({
         application: app,
@@ -73,14 +72,11 @@ export function startRootGuard(bootstrapScript: Element | null) {
         retainedHeadNodes: manifest ? internalArray([manifest]) : internalArray(),
       }),
     );
-    const content = new URL(appURL);
-    content.search = '?host-content=1';
     const start = async () => {
-      const response = await nativeApply(nativeFetch, nativeWindow, [content.href]);
-      if (!nativeApply(responseOK, response, []))
-        throw new Error('Installed content unavailable');
       const data = parseInstalledDocument(
-        internalData(await nativeApply(responseJSON, response, [])),
+        internalData(
+          await host.request(internalRecord({ type: INSTALLED_CONTENT_REQUEST })),
+        ),
         appURL.href,
       );
       realm.admitContent(data);

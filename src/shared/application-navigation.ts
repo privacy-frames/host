@@ -8,8 +8,6 @@ const pathname = descriptor(NativeURL.prototype, 'pathname')!.get!;
 const search = descriptor(NativeURL.prototype, 'search')!.get!;
 const hash = descriptor(NativeURL.prototype, 'hash')!.get!;
 const href = descriptor(NativeURL.prototype, 'href')!.get!;
-const SearchParams = URLSearchParams;
-const has = URLSearchParams.prototype.has;
 
 function address(input: string) {
   const url = new NativeURL(input);
@@ -30,8 +28,7 @@ export function isApplicationRoute(input: string, applicationURL: string): boole
     if (
       !strings.endsWith(entry.pathname, '/') ||
       target.origin !== entry.origin ||
-      !strings.startsWith(target.pathname, entry.pathname) ||
-      apply(has, new SearchParams(target.search), ['host-content'])
+      !strings.startsWith(target.pathname, entry.pathname)
     )
       return false;
     return strings

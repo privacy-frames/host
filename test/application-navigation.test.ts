@@ -53,13 +53,12 @@ test('history mapping and browser identity reject foreign and internal addresses
     entry + 'nested/__contexts/worker.js',
     entry + '%5f%5fcontexts/worker.js',
     entry + '%2f..%2fconnect.html',
-    entry + '?host-content=1',
-    entry + '?h%6fst-content=1',
     entry + '../outside/',
   ]) {
     assert.equal(isApplicationRoute(target, entry), false, target);
     assert.equal(applicationHistoryURL(target, entry, entry, source), undefined, target);
   }
   assert.equal(isApplicationRoute(entry + 'editor?image=1#view', entry), true);
+  assert.equal(isApplicationRoute(entry + '?host-content=1', entry), true);
   assert.equal(isApplicationRoute('not a URL', entry), false);
 });

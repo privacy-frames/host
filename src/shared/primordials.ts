@@ -52,7 +52,7 @@ export function internalData<T>(value: T): T {
     apply(seenAdd, seen, [candidate]);
     if (array) internalArray(candidate);
     else internalRecord(candidate);
-    for (const key of ownKeys(candidate)) {
+    for (const key of internalArray(ownKeys(candidate))) {
       const property = descriptor(candidate, key)!;
       if (hasOwn(property, 'value')) normalize(property.value);
     }

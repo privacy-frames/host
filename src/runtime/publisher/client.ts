@@ -1,3 +1,4 @@
+import { createControllerClient } from '../controller-client.ts';
 import {
   strings,
   internalArray,
@@ -19,22 +20,13 @@ import type { PublisherRegistration } from './store.ts';
 const NativeSharedWorker = globalThis.SharedWorker;
 const sharedPort =
   NativeSharedWorker && ownDescriptor(NativeSharedWorker.prototype, 'port')!.get!;
-const serviceWorkerGetter = ownDescriptor(Navigator.prototype, 'serviceWorker')?.get;
-const controllerGetter =
-  globalThis.ServiceWorkerContainer &&
-  ownDescriptor(ServiceWorkerContainer.prototype, 'controller')?.get;
-const nativeControllerPost =
-  globalThis.ServiceWorker && ServiceWorker.prototype.postMessage;
 const rawAdd = EventTarget.prototype.addEventListener;
 const rawDispatch = EventTarget.prototype.dispatchEvent;
 const rawStop = Event.prototype.stopImmediatePropagation;
-const rawStart = MessagePort.prototype.start;
-const rawClose = MessagePort.prototype.close;
 const dataGetter = ownDescriptor(MessageEvent.prototype, 'data')!.get!;
 const sourceGetter = ownDescriptor(MessageEvent.prototype, 'source')!.get!;
 const portsGetter = ownDescriptor(MessageEvent.prototype, 'ports')!.get!;
 const trustedGetter = ownDescriptor(new MessageEvent('message'), 'isTrusted')!.get!;
-const NativeChannel = MessageChannel;
 const NativeEventTarget = EventTarget;
 const NativeEvent = Event;
 const NativeMessageEvent = MessageEvent;
@@ -48,8 +40,6 @@ const NativePromise = Promise;
 const NativeError = Error;
 const NativeDOMException = DOMException;
 const apply = Reflect.apply;
-const nativeTimer = setTimeout;
-const clearTimer = clearTimeout;
 export interface ForegroundWorker extends EventTarget {
   readonly scriptURL: string;
   readonly state: 'activated';
@@ -105,15 +95,8 @@ export function createPublisherContainer({
   installationSourceURL,
   resources,
 }: PublisherClientOptions) {
-  const nativeNavigator = navigator;
-  const nativeContainer = serviceWorkerGetter
-    ? apply(serviceWorkerGetter, nativeNavigator, [])
-    : null;
-  if (!nativeContainer || !controllerGetter || !nativeControllerPost)
-    throw new NativeError(
-      'Foreground publisher workers require native service workers and SharedWorker',
-    );
-  const nativeController = () => apply(controllerGetter, nativeContainer, []);
+  const host = createControllerClient();
+  const nativeController = host.controller;
   class Container extends NativeEventTarget implements ForegroundContainer {
     get controller() {
       return current?.active || null;
@@ -180,54 +163,10 @@ export function createPublisherContainer({
     payload?: unknown,
     ports: Transferable[] = [],
   ): Promise<unknown> {
-    return new NativePromise((resolve, reject) => {
-      const controller = nativeController();
-      if (!controller) {
-        reject(new NativeError('Host controller is unavailable'));
-        return;
-      }
-      const channel = new NativeChannel();
-      const timer = apply(nativeTimer, window, [
-        () => {
-          apply(rawClose, channel.port1, []);
-          reject(new NativeError('Publisher host request timed out'));
-        },
-        20000,
-      ]);
-      apply(rawAdd, channel.port1, [
-        'message',
-        (event: MessageEvent) => {
-          apply(clearTimer, window, [timer]);
-          apply(rawClose, channel.port1, []);
-          try {
-            const result = publisherObject(protocolData(apply(dataGetter, event, [])));
-            if (result.ok === true) resolve(result.value);
-            else
-              reject(
-                new NativeError(
-                  typeof result.error === 'string'
-                    ? result.error
-                    : 'Publisher host rejected request',
-                ),
-              );
-          } catch (error) {
-            reject(error);
-          }
-        },
-        internalRecord({ once: true }),
-      ]);
-      apply(rawStart, channel.port1, []);
-      try {
-        apply(nativeControllerPost, controller, [
-          internalRecord({ type: PUBLISHER_RPC, operation, payload }),
-          [channel.port2, ...ports],
-        ]);
-      } catch (error) {
-        apply(clearTimer, window, [timer]);
-        apply(rawClose, channel.port1, []);
-        reject(error);
-      }
-    });
+    return host.request(
+      internalRecord({ type: PUBLISHER_RPC, operation, payload }),
+      ports,
+    );
   }
   function eventHandler(target: EventTarget, type: string) {
     let handler: ((event: Event) => void) | null = null;
@@ -367,65 +306,62 @@ export function createPublisherContainer({
       launching.delete(launch.registration.id);
     }
   }
-  apply(rawAdd, nativeContainer, [
-    'message',
-    (event: MessageEvent) => {
-      if (
-        !apply(trustedGetter, event, []) ||
-        apply(sourceGetter, event, []) !== nativeController()
-      )
-        return;
-      const data: unknown = protocolData(apply(dataGetter, event, []));
-      if (!data || typeof data !== 'object' || !('type' in data)) return;
-      if (data.type === PUBLISHER_LAUNCH) {
-        apply(rawStop, event, []);
-        if ('launch' in data) void start(data.launch).catch(() => {});
-      } else if (data.type === 'privacy-publisher-state') {
-        apply(rawStop, event, []);
-        if (!('registration' in data)) return;
-        if (data.registration === null) {
-          if (current) {
-            current = undefined;
-            apply(rawDispatch, container, [new NativeEvent('controllerchange')]);
-          }
-        } else {
-          const record = parsePublisherRegistration(data.registration);
-          if (
-            typeof record.id !== 'string' ||
-            typeof record.script !== 'string' ||
-            typeof record.scope !== 'string'
-          )
-            return;
-          const value = registration(record);
-          if (current !== value) {
-            current = value;
-            resolveReady(value);
-            apply(rawDispatch, container, [new NativeEvent('controllerchange')]);
-          }
+  host.listen((event: MessageEvent) => {
+    if (
+      !apply(trustedGetter, event, []) ||
+      apply(sourceGetter, event, []) !== nativeController()
+    )
+      return;
+    const data: unknown = protocolData(apply(dataGetter, event, []));
+    if (!data || typeof data !== 'object' || !('type' in data)) return;
+    if (data.type === PUBLISHER_LAUNCH) {
+      apply(rawStop, event, []);
+      if ('launch' in data) void start(data.launch).catch(() => {});
+    } else if (data.type === 'privacy-publisher-state') {
+      apply(rawStop, event, []);
+      if (!('registration' in data)) return;
+      if (data.registration === null) {
+        if (current) {
+          current = undefined;
+          apply(rawDispatch, container, [new NativeEvent('controllerchange')]);
         }
-      } else if (data.type === 'privacy-publisher-application-message') {
-        apply(rawStop, event, []);
+      } else {
+        const record = parsePublisherRegistration(data.registration);
         if (
-          !('registration' in data) ||
-          typeof data.registration !== 'string' ||
-          !('data' in data)
+          typeof record.id !== 'string' ||
+          typeof record.script !== 'string' ||
+          typeof record.scope !== 'string'
         )
           return;
-        const view = views.get(data.registration);
-        if (!view) return;
-        const message = new NativeMessageEvent(
-          'message',
-          internalRecord({
-            data: data.data,
-            ports: internalArray([...apply(portsGetter, event, [])]),
-            origin: new NativeURL(view.active.scriptURL).origin,
-          }),
-        );
-        Object.defineProperty(message, 'source', internalRecord({ value: view.active }));
-        apply(rawDispatch, container, [message]);
+        const value = registration(record);
+        if (current !== value) {
+          current = value;
+          resolveReady(value);
+          apply(rawDispatch, container, [new NativeEvent('controllerchange')]);
+        }
       }
-    },
-  ]);
+    } else if (data.type === 'privacy-publisher-application-message') {
+      apply(rawStop, event, []);
+      if (
+        !('registration' in data) ||
+        typeof data.registration !== 'string' ||
+        !('data' in data)
+      )
+        return;
+      const view = views.get(data.registration);
+      if (!view) return;
+      const message = new NativeMessageEvent(
+        'message',
+        internalRecord({
+          data: data.data,
+          ports: internalArray([...apply(portsGetter, event, [])]),
+          origin: new NativeURL(view.active.scriptURL).origin,
+        }),
+      );
+      Object.defineProperty(message, 'source', internalRecord({ value: view.active }));
+      apply(rawDispatch, container, [message]);
+    }
+  });
   for (const type of ['message', 'messageerror', 'controllerchange'])
     eventHandler(container, type);
   Object.freeze(Container.prototype);

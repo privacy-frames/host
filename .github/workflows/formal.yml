@@ -16,6 +16,10 @@ jobs:
           node-version: '24'
           cache: npm
       - run: npm ci
+      - name: Check runtime types and unit contracts
+        run: |
+          npm run typecheck
+          npm run test:unit
       - run: python3 formal/claims/check.py
       - name: Check the runtime implementation review inventory
         run: |

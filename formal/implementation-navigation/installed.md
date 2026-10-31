@@ -11,8 +11,10 @@ The baseline root guard is rebuilt from source and must match the ordinary
 cancellation call in the `navigate` listener. The test server substitutes that
 bundle for the root guard in a fresh browser context; other runtime artifacts
 remain unchanged. It records the actual guard response hash and requires the
-root shell, guard and installed-content response to come from the real host
-service worker.
+root shell and guard to come from the real host service worker. Successful
+application rendering uses the private content message implemented by that
+hashed guard; the former installed-content HTTP request must be absent. The
+fixture does not independently observe the private message port.
 
 The normal runtime bridge disables navigation preload during setup. After
 installation, trusted test code in that bridge verifies the disabled state,

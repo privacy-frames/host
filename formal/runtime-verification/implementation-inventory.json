@@ -4,7 +4,7 @@
   "typescriptVersion": "6.0.3",
   "contractSHA256": "57c378112e1d53c1223955a6e0a28b546e0a6ec3e90895f0deec46908ca9017f",
   "generatorSHA256": "30a433edc9bc21d25c4790a9540e6eeb271f382c12f4fefeccd1dba1b75a47c2",
-  "boundaryDefinitionsSHA256": "e6260374db4a9b9414207fe549c7d5a6410c636ffac8440a5334962aba8fd2bb",
+  "boundaryDefinitionsSHA256": "ab8a84f588dcbe7d46070057bdb224dacdadad7233302dc2b78ed4dfe2324d0e",
   "boundaries": [
     {
       "id": "root-publication",
@@ -18,6 +18,8 @@
       "sources": [
         "src/runtime/guard.ts",
         "src/runtime/root-guard.ts",
+        "src/runtime/controller-client.ts",
+        "src/runtime/content-broker.ts",
         "src/runtime/contexts/window-realm.ts",
         "src/runtime/enforcement/document-exit.ts"
       ]
@@ -281,6 +283,15 @@
       "sitesSHA256": "ee59cd763d7b44e2ed654876a1a68aa2a1e27aed76569d2af462da83ccf6d634"
     },
     {
+      "path": "src/runtime/content-broker.ts",
+      "sourceSHA256": "496b6fdbf93fbb9424369154ed148e4bab5c0a1feea4068adec3bb0958ec327d",
+      "boundaries": [
+        "root-publication"
+      ],
+      "siteCount": 19,
+      "sitesSHA256": "94324620d369a6c8c29c6c514da8a0e7d354def512ec85f837248011c4771faa"
+    },
+    {
       "path": "src/runtime/contexts/controller-store.ts",
       "sourceSHA256": "92f35bfec481f9ff704afef964826b35f70f9f49ce7607066238280cce887fe7",
       "boundaries": [
@@ -500,6 +511,15 @@
       "sitesSHA256": "21380c6e923b7342721d5635150e9c4d10e54f53083d5f063288b4b37624f12f"
     },
     {
+      "path": "src/runtime/controller-client.ts",
+      "sourceSHA256": "292ff3280e528d0e3096564c2aae78639b6de4553de815bbf5d3ca9fa4b9e1f1",
+      "boundaries": [
+        "root-publication"
+      ],
+      "siteCount": 57,
+      "sitesSHA256": "2043ffc9acdc7e5e3a133cfb5766df167b4df7df2da29e00f5d4edd7d07d44e3"
+    },
+    {
       "path": "src/runtime/enforcement/document-exit.ts",
       "sourceSHA256": "c39a159e4f82701b64826ac025048904b5414215c2f40c27d46ef62dabc6e8af",
       "boundaries": [
@@ -582,12 +602,12 @@
     },
     {
       "path": "src/runtime/publisher/client.ts",
-      "sourceSHA256": "e9eb2dfc4cab4e0e577f7ab2fbee8e310e1ebbdc042ea4c95ba954cef264b9cf",
+      "sourceSHA256": "f668571015c6f87441bb856ca92378753ab7f7afcae845ad3d9ef505aa0e9d42",
       "boundaries": [
         "publisher-execution"
       ],
-      "siteCount": 208,
-      "sitesSHA256": "5000565105825662da257fccbed8efdb4f61bf73ca2a27385aeff09e7cf8665f"
+      "siteCount": 173,
+      "sitesSHA256": "2acd3b41f8291f7019bb35359f9b3562607a60473315ef12a74b3e5d50ed6569"
     },
     {
       "path": "src/runtime/publisher/controller.ts",
@@ -636,12 +656,12 @@
     },
     {
       "path": "src/runtime/root-guard.ts",
-      "sourceSHA256": "55204242a95dded90dc1f269af10adb20d830210b90a65185a77e91c812b1437",
+      "sourceSHA256": "70db83fd30629386ae04af44e78969ebdbc8f03e42a7aee6e63082db83e8e2d0",
       "boundaries": [
         "root-publication"
       ],
-      "siteCount": 55,
-      "sitesSHA256": "8f363cc9b57e1f04498c71f07f4e1484d4d9ff680af0fdda3d13220b9e3311de"
+      "siteCount": 48,
+      "sitesSHA256": "18c3512042db60347e6bc82da46b31cb23cb45798819c195dfa748ebecf45b78"
     },
     {
       "path": "src/runtime/storage.ts",
@@ -672,13 +692,13 @@
     },
     {
       "path": "src/runtime/worker.ts",
-      "sourceSHA256": "7fba94edacc170650ff8445a0220eb9e365df7590b5d8625d632315251811046",
+      "sourceSHA256": "b990fc7aa47e5496bef1e19be6d645e43d0e615be1c34facdc2af43a7b0daff3",
       "boundaries": [
         "resource-delivery",
         "browser-owned-maintenance"
       ],
-      "siteCount": 377,
-      "sitesSHA256": "811e2c57ebadacc557c21ece39a6047cddda79b328c9457449eae4b2dfdc99bc"
+      "siteCount": 375,
+      "sitesSHA256": "0cc01b2c3b8716d9364c42d090e2e03e3ef9767ce50819f2be10387c07a6e21b"
     },
     {
       "path": "src/shared/policy.ts",
@@ -691,12 +711,12 @@
     },
     {
       "path": "src/shared/primordials.ts",
-      "sourceSHA256": "8e80d12807448d56af43f63fcfc4e93a3af53380cf458d5c44183bc1439548d5",
+      "sourceSHA256": "422a992a7e863c1b3b09f7d1484f10fa66a0300cdea007dfe485c9bf0c1e980c",
       "boundaries": [
         "trusted-runtime-state"
       ],
-      "siteCount": 100,
-      "sitesSHA256": "b5adefa40b117522588063e08e08ffcb2a3a0636698e14c5e1e3917e8b57c355"
+      "siteCount": 101,
+      "sitesSHA256": "8b9ae94edef6fce9a0ccb0d461598042f74f5577cf6ebb404d411db7dc104eed"
     },
     {
       "path": "src/shared/runtime-url.ts",

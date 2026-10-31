@@ -176,8 +176,6 @@ try {
             new URL('/runtime/connect.html', entry).href,
             new URL('/runtime/anotherapp1/fixture/', entry).href,
             entry + '__contexts/raw.js',
-            entry + '?host-content=1',
-            entry + '?h%6fst-content=1',
           ];
           return attempts.map((url) => {
             try {

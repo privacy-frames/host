@@ -98,13 +98,129 @@ arguments even where the abstract publication contract is shared.
   missing registration/update lifecycle for this obligation.
   A [message resource prototype](message-resource-broker.md) passes selected worker
   reads and confirmed Chromium restarts without HTTP, with working receiver
-  controls. Production integration and document behavior remain open.
+  controls. Production integration for worker reads and document behavior remain
+  open.
   The [registration overlap experiment and model](registration-overlap.md)
   identify scope reuse during private execution as a separate launch obligation.
-- Stages 5, 7 and 8: pending. Earlier component evidence remains available, with
+- Stage 5: root content now uses an authenticated private controller request; the
+  publisher client shares its captured transport. See the
+  [root content integration](root-content-broker.md). Resource and adapter proofs
+  and the remaining context delivery paths are open.
+- Stage 7: browser validation is in progress for the root content integration;
+  broader coverage and lifecycle obligations remain open.
+- Stage 8: pending. Earlier component evidence remains available, with
   its original assumptions and source hashes.
 
 The complete runtime claim remains unestablished.
+
+## Execution order for the remaining work
+
+The eight stages above describe the argument we need. The sequence below orders
+the remaining implementation and verification work. Passing one gate does not
+discharge the later gates. Keep development on the separate research worktree;
+retain the current remote baseline until a candidate passes release validation.
+
+### 1. Close the observed maintenance channel
+
+Replace the root document's HTTP content read with a private message request to
+the controller. Authenticate the actual browser client, derive its installation
+from trusted bindings, and recheck the generation after asynchronous reads. Reuse
+the existing private controller transport where possible and remove the replaced
+HTTP route. Missing content must fail locally.
+
+Then extend local delivery to the context and resource paths that still provoke
+HTTP or registration updates. Evaluate Blob bootstraps, message delivery and
+registration lifetime together. The existing experiments rule out treating Blob
+URLs or unregistration alone as the repair. Preserve ordinary application
+execution and prototype extension; do not add publisher-specific branches.
+
+Gate: the original installed-worker counterexample must stop producing requests
+in both browsers. Exercise concurrent launches, stale registrations, retained
+controllers, queued work and controller restarts. Test documents, modules,
+dedicated and shared workers, worklets and publisher executors separately. A
+context that cannot meet the contract must fail before application execution.
+If the platform prevents the repair, retain the reproducible counterexample and
+identify the missing browser primitive.
+
+### 2. Establish implementation authority and ownership
+
+Trace actual authority from entry points through dependencies, aliases, returned
+references, callbacks and asynchronous continuations. The syntax inventory is a
+locator for this review, not its completion criterion. For each boundary, record
+its inputs, owned state, captured native operations, publication point, effects
+and revocation rule.
+
+Move decisions away from application-accessible state where that removes a proof
+obligation. Keep the application-facing adapters small. Remove duplicated checks
+only after establishing which remaining boundary enforces the same property.
+
+Gate: each authority-producing path has a contract and a concrete implementation
+owner. Unresolved aliases, dependencies or native behavior remain explicit gaps.
+
+### 3. Verify the executable protocols
+
+Extend the selected direct JavaScript verification method from the two document
+state functions to their callers and the resource and publication protocols.
+Prove ownership and preservation of private enforcement state under permitted
+prototype mutation. Cover validation, exceptions, reentrancy, asynchronous
+generation changes, authenticated grants and resource failure.
+
+Use the unbounded lifecycle models for queues, replacement, concurrent registry
+access and registration lifetime. For each modeled transition, identify the
+executable operation and establish its correspondence. Resolve the known
+multi-instance registry race rather than assuming atomic storage updates.
+
+Gate: each component has checked preconditions and postconditions, callers
+establish those preconditions, and executable transitions preserve the shared
+invariant. Record compiler, verifier, solver and browser assumptions separately.
+
+### 4. Establish browser coverage
+
+Build an effect catalogue from specification algorithms as well as exposed
+interfaces. Include HTML and CSS loads, navigation, connections, permissions,
+stored policies, identity mechanisms, background agents, browser maintenance and
+handoffs to other actors. Cover initial retained state and every supported
+context kind.
+
+For each mechanism, record the relevant specification steps, implementation
+adapter or browser restriction, prerequisites, deferred work and supporting
+evidence. Use WebSpec only for obligations represented by its actual model;
+registration and update behavior require additional modeling and correspondence.
+Do not count an absent test or interface name as a coverage argument.
+
+Gate: every mechanism in the declared browser environment has a justified
+disposition. Uninspectable state and unmodeled behavior remain named assumptions
+or blockers. Pin browser versions and review coverage when those versions change.
+
+### 5. Challenge the contracts with browser tests
+
+For each relied-on mitigation, pair a confined attempt with an unrestricted
+positive control and, where applicable, removal of that actual mitigation in an
+isolated test build. Observe independent receivers, including requests carrying
+no payload. Include lifecycle schedules, pending effects, retained state,
+malformed messages, resource loss and failures during preparation.
+
+Gate: controls demonstrate that the observation can detect the effect, and the
+confined case preserves the stated contract. Record source and artifact hashes,
+browser versions, settings and observation bounds. A passing bounded experiment
+supports a browser contract; it does not prove arbitrary traces.
+
+### 6. Compose the argument and validate the release
+
+Connect initialization, component preservation, context creation and the browser
+effect catalogue to C1–C8. State why those invariants imply no forbidden external
+effect. Keep tested observations, proved implementation properties and assumed
+platform behavior distinct in the final claim.
+
+Run the relevant security checks and the unchanged third-party application
+corpus. Update evidence for the exact candidate, publish the proof statements
+and remaining gaps, then deploy only after the candidate passes release checks.
+Verify public bytes and a fresh installation after deployment.
+
+The outcome is either a conditional confinement theorem with its implementation
+and browser premises discharged for the declared environment, or a narrower set
+of established properties accompanied by the precise obstruction to the complete
+claim. An unresolved platform premise cannot be closed by adding more tests.
 
 ## Implementation review inventory
 

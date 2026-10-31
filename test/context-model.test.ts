@@ -134,7 +134,6 @@ test('root window identity survives only routes inside its installed application
   );
   for (const url of [
     value.url + '__contexts/raw.js',
-    value.url + '?host-content=1',
     'https://runtime.test/runtime/connect.html',
     'https://runtime.test/runtime/anotherapp1/example/',
     'https://publisher.test/',

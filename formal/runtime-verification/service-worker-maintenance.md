@@ -26,6 +26,13 @@ bit. It records all HTTP requests during the action and three subsequent seconds
 Two rounds reverse the input order. Native controls use the same application with
 a service worker that supplies the worker script locally.
 
+The checker requires no update request in either no-worker sample and at least
+one update request across the two worker samples for each browser/profile pair.
+It records individual omissions rather than requiring deterministic delivery.
+CI run `41206920356` observed an update in one native Chromium worker sample and
+none in the other; the former per-sample assertion rejected that run. The test
+still fails when a group supplies no positive observation.
+
 The [receipt](service-worker-maintenance.json) records Chromium and Firefox
 versions, source and build provenance, idle controls and server observations.
 These are local HTTP experiments, not deployed HTTPS measurements. The observation

@@ -16,6 +16,8 @@ export const boundaries: readonly Boundary[] = [
     sources: [
       'src/runtime/guard.ts',
       'src/runtime/root-guard.ts',
+      'src/runtime/controller-client.ts',
+      'src/runtime/content-broker.ts',
       'src/runtime/contexts/window-realm.ts',
       'src/runtime/enforcement/document-exit.ts',
     ],

@@ -233,17 +233,15 @@ try {
               (response) =>
                 response.url() === before && response.request().isNavigationRequest(),
             );
-            const contentResponse = responses.find(
-              (response) =>
-                new URL(response.url()).searchParams.get('host-content') === '1',
-            );
-            assert(
-              guardResponse && rootResponse && contentResponse,
-              'Root startup responses missing',
-            );
+            assert(guardResponse && rootResponse, 'Root startup responses missing');
             assert(guardResponse.fromServiceWorker());
             assert(rootResponse.fromServiceWorker());
-            assert(contentResponse.fromServiceWorker());
+            assert(
+              !responses.some((response) =>
+                new URL(response.url()).searchParams.has('host-content'),
+              ),
+              'Root content must not use the replaced HTTP endpoint',
+            );
             const servedGuard = hash(await guardResponse.body());
             assert.equal(servedGuard, hash(profile === 'normal' ? normal : altered));
             const headers = await rootResponse.allHeaders();
@@ -255,7 +253,7 @@ try {
             startup = {
               rootFromServiceWorker: true,
               guardFromServiceWorker: true,
-              contentFromServiceWorker: true,
+              contentTransport: 'message, inferred from rendered app and hashed guard',
               servedGuardSHA256: servedGuard,
               headers,
             };

@@ -10,7 +10,9 @@ import {
 import type { RuntimeEvent } from '../shared/types.ts';
 import { isApplicationRoute } from '../shared/application-navigation.ts';
 import { response } from './response-policy.ts';
-import { css, prepareRuntimeDocument } from './document.ts';
+import { css } from './document.ts';
+import { readInstalledContent } from './content-broker.ts';
+import { INSTALLED_CONTENT_REQUEST } from '../shared/types.ts';
 import { admitInstallation } from './admission.ts';
 import { CONTEXT_POLICY_VERSION, ContextRegistry } from './contexts/model.ts';
 import type { WorkerBootstrapMetadata } from './contexts/model.ts';
@@ -169,6 +171,36 @@ async function runtimeIdentity(
 }
 let managementQueue = Promise.resolve();
 worker.addEventListener('message', (event) => {
+  const packet: unknown = event.data;
+  if (
+    packet &&
+    typeof packet === 'object' &&
+    'type' in packet &&
+    packet.type === INSTALLED_CONTENT_REQUEST
+  ) {
+    const port = event.ports[0];
+    if (!port) return;
+    event.waitUntil(
+      (async () => {
+        try {
+          const client =
+            event.source && 'id' in event.source
+              ? await worker.clients.get(event.source.id)
+              : undefined;
+          const value = await readInstalledContent(client, contexts, BASE);
+          port.postMessage({ ok: true, value });
+        } catch (error) {
+          port.postMessage({
+            ok: false,
+            error: error instanceof Error ? error.message : String(error),
+          });
+        } finally {
+          port.close();
+        }
+      })(),
+    );
+    return;
+  }
   if (publishers.handlesMessage(event.data)) {
     event.waitUntil(publishers.message(event));
     return;
@@ -500,32 +532,6 @@ worker.addEventListener('fetch', (event) => {
             frameSource: new URL('__contexts/', entry).href,
             controllerSource: new URL('sw.js', BASE).href,
           },
-        );
-      }
-      if (
-        url.origin === entry.origin &&
-        url.pathname === entry.pathname &&
-        url.search === '?host-content=1' &&
-        req.method === 'GET'
-      ) {
-        if (!client) return Response.error();
-        const root = await contexts.resolve(client);
-        if (
-          !root ||
-          root.kind !== 'window' ||
-          root.parent !== null ||
-          root.application !== app.id ||
-          root.installationGeneration !== app.generation
-        )
-          return Response.error();
-        const bytes = await getResource(app.id, app.manifest.entry, app.generation);
-        if (!(await contexts.isCurrent(client, root))) return Response.error();
-        return response(
-          JSON.stringify({
-            ...prepareRuntimeDocument(app, bytes, BASE),
-            installationGeneration: app.generation,
-          }),
-          'application/json',
         );
       }
       if (req.method === 'GET') {

@@ -59,6 +59,7 @@ assert(address && typeof address !== 'string');
 const origin = `http://127.0.0.1:${address.port}`;
 const host = await servers({ receiver: false });
 const samples: object[] = [];
+const groups: object[] = [];
 const provenance = await testProvenance(import.meta.url);
 const receipt = new URL('./service-worker-maintenance.json', import.meta.url);
 await rm(receipt, { force: true });
@@ -85,6 +86,7 @@ try {
     const browser = await launch(engine);
     try {
       for (const confined of [false, true]) {
+        let positiveSamples = 0;
         // Reverse the order in a second round, using a fresh browser context for
         // every sample so registration state is never shared across bit cases.
         for (const [sample, bit] of ['0', '1', '1', '0'].entries()) {
@@ -169,12 +171,23 @@ try {
               bit,
               JSON.stringify(row),
             );
-            assert.equal(updateRequests.length > 0, bit === '1');
+            if (bit === '0') assert.equal(updateRequests.length, 0);
+            else if (updateRequests.length > 0) positiveSamples++;
             if (confined) assert.equal(publisherTraffic.length, 0);
           } finally {
             await context.close();
           }
         }
+        // Scheduling/coalescing can suppress an individual update check. A
+        // counterexample requires an observed effect, not delivery on every run.
+        assert(positiveSamples > 0, 'No worker-triggered update observed in this group');
+        groups.push({
+          browser: engine.name(),
+          confined,
+          positiveSamples,
+          workerSamples: 2,
+          noWorkerSamples: 2,
+        });
       }
     } finally {
       await browser.close();
@@ -192,6 +205,7 @@ try {
           'Native and actual confined worker creation, chosen by a private input bit, compared with no-worker and idle controls. Fixed-URL service-worker maintenance is observed at independent HTTP servers. Bounded observations do not establish exhaustive browser behavior or channel capacity.',
         provenance,
         samples,
+        groups,
         observationMilliseconds: 3000,
         completedAt: new Date().toISOString(),
       },
