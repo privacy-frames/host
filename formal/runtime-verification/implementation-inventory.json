@@ -4,7 +4,7 @@
   "typescriptVersion": "6.0.3",
   "contractSHA256": "57c378112e1d53c1223955a6e0a28b546e0a6ec3e90895f0deec46908ca9017f",
   "generatorSHA256": "30a433edc9bc21d25c4790a9540e6eeb271f382c12f4fefeccd1dba1b75a47c2",
-  "boundaryDefinitionsSHA256": "baa17ddb7b1aeb1eb3e8ecc5a3ff430ddf50dd8e1d50f4cc36a6c521e05602cb",
+  "boundaryDefinitionsSHA256": "8372d7d02bbb0197683b6148331c1f777511d1d16a008e2036ae8e9edffdd80b",
   "boundaries": [
     {
       "id": "script-url-admission",
@@ -38,6 +38,7 @@
       "sources": [
         "src/runtime/guard.ts",
         "src/runtime/root-guard.ts",
+        "src/runtime/bootstrap-source.ts",
         "src/runtime/controller-client.ts",
         "src/runtime/private-channel.ts",
         "src/runtime/content-broker.ts",
@@ -60,6 +61,7 @@
         "src/runtime/contexts/document-publication.ts",
         "src/runtime/contexts/document-guard.ts",
         "src/runtime/contexts/document-main.ts",
+        "src/runtime/bootstrap-source.ts",
         "src/runtime/contexts/document-controller.ts",
         "src/runtime/contexts/document-client.ts",
         "src/runtime/contexts/document-parent.ts",
@@ -383,6 +385,16 @@
       "sitesSHA256": "ee59cd763d7b44e2ed654876a1a68aa2a1e27aed76569d2af462da83ccf6d634"
     },
     {
+      "path": "src/runtime/bootstrap-source.ts",
+      "sourceSHA256": "3dfc20cf084be4bfb1daa44f2f818ce385c584665b9679186d33b8ca96c52b95",
+      "boundaries": [
+        "root-publication",
+        "document-publication"
+      ],
+      "siteCount": 13,
+      "sitesSHA256": "8e2a16c3802d8960e395060580e97fccb66960b6e28869e8370b734188f767a3"
+    },
+    {
       "path": "src/runtime/content-broker.ts",
       "sourceSHA256": "496b6fdbf93fbb9424369154ed148e4bab5c0a1feea4068adec3bb0958ec327d",
       "boundaries": [
@@ -421,13 +433,13 @@
     },
     {
       "path": "src/runtime/contexts/document-controller.ts",
-      "sourceSHA256": "2cb9fd221a66d8deec8daef84c11db7711a4a81d0165207433252b828b9fdc96",
+      "sourceSHA256": "3bdd871d6bfd0da4ef5cdef4cfbece1f2896f68d04d92317acd2d290fe5f70fc",
       "boundaries": [
         "document-publication",
         "local-module-delivery"
       ],
-      "siteCount": 172,
-      "sitesSHA256": "c0eeb7fb83566581ffc880a814748dff0775fb5ce12baf78ebd62f7dbd1c95bb"
+      "siteCount": 154,
+      "sitesSHA256": "cc937f6bd7da294eab66511e9f324d35130abc7cf3f558ad3e4a06eefda325a1"
     },
     {
       "path": "src/runtime/contexts/document-factory.ts",
@@ -459,12 +471,12 @@
     },
     {
       "path": "src/runtime/contexts/document-main.ts",
-      "sourceSHA256": "1a2bf8c8d6bd07ca6626c01b05e47a2827ef50997d1b85fe70bc85925ff5c3c8",
+      "sourceSHA256": "b4199d5ad32d0aa503238a619ca99ae7c0935d18c7899f9f7fe6ac3f2293a481",
       "boundaries": [
         "document-publication"
       ],
-      "siteCount": 140,
-      "sitesSHA256": "a9aa4d15e81490507b41116bc5930e005e3f7e561aff86a40e78684e8bc04f53"
+      "siteCount": 142,
+      "sitesSHA256": "85cf6f23803d2eeb228062820b39747d3f106c6c024acd91c1239d12c920a8d2"
     },
     {
       "path": "src/runtime/contexts/document-parent.ts",
@@ -598,12 +610,12 @@
     },
     {
       "path": "src/runtime/contexts/window-scripts.ts",
-      "sourceSHA256": "13e17eb0f4332ce17abde913ae8f4b6404a9aed834463a8dbdd104f59b3a2178",
+      "sourceSHA256": "d3fd2a9ab050c9e1bc087a19ace0b2a7f579ff4032f187cdf8ceb7aad8749d74",
       "boundaries": [
         "local-module-delivery"
       ],
       "siteCount": 80,
-      "sitesSHA256": "d04b4912f780c884fd6ca9fff477c30992126c8aa2f71a171c767e4dce81cfc4"
+      "sitesSHA256": "6f35ec5029c39a7718f7a41bdfc4416a0bf434d25d254319ce1ba202dc1e4e66"
     },
     {
       "path": "src/runtime/contexts/worker-aliases.ts",
@@ -987,12 +999,12 @@
     },
     {
       "path": "src/runtime/root-guard.ts",
-      "sourceSHA256": "4f6791ab394edd7dcf6b0c1d8287cc807c1ce0e4b2e07b75b553abd2f40ab07c",
+      "sourceSHA256": "bcb21c2d3b2c8a06384604b923e3365d6a50d66a01d6fa80c4ecbb4402437211",
       "boundaries": [
         "root-publication"
       ],
-      "siteCount": 51,
-      "sitesSHA256": "209ecf7c8bb9e756125e0ba2a65a1880ecbf37e3e4006bab3bce5c888a9f148a"
+      "siteCount": 57,
+      "sitesSHA256": "5ef81510cff3440e6c39dda269bdcbb11165c10c48fcda0765ca416126064449"
     },
     {
       "path": "src/runtime/script-resources.ts",
@@ -1033,13 +1045,13 @@
     },
     {
       "path": "src/runtime/worker.ts",
-      "sourceSHA256": "e99e0f8012582a23fb166c799fe75dff1a6250e97e68d1cb0d165a367e205258",
+      "sourceSHA256": "80902f271e066d384107bf9405520fe1c889993cb8f37c1f292dd401211ac464",
       "boundaries": [
         "resource-delivery",
         "browser-owned-maintenance"
       ],
-      "siteCount": 380,
-      "sitesSHA256": "be55147bba47fe8a43c64d9fc0951306032ffdf6c1e608460e2ea8e75a60fc5d"
+      "siteCount": 386,
+      "sitesSHA256": "77fdf7f6720dd94dee6c3998055b3ec27d0e5432822a5c3d35d6eeb92a687cf1"
     },
     {
       "path": "src/shared/context-policy.ts",

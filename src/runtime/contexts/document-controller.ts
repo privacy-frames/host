@@ -1,3 +1,4 @@
+import { bootstrapSource } from '../bootstrap-source.ts';
 import { strings, internalRecord } from '../../shared/primordials.ts';
 import { parseDocumentSurface } from './document-surface.ts';
 import { applicationURL, resourceURL } from '../../shared/runtime-url.ts';
@@ -61,35 +62,6 @@ export function createDocumentController(options: DocumentControllerOptions) {
     const url = new URL(request.url);
     url.hash = '';
     if (url.origin !== base.origin) return;
-    // Trusted code is public, but this entry point serves only a reserved child.
-    // Avoid clients.get while its first parser-blocking script is still loading.
-    if (url.pathname === new URL('document-guard.js', base).pathname) {
-      const id = url.searchParams.get('context');
-      if (
-        request.method !== 'GET' ||
-        request.destination !== 'script' ||
-        request.mode === 'navigate' ||
-        !id ||
-        url.search !== '?context=' + id ||
-        !new RegExp('^' + UUID + '$').test(id)
-      )
-        return Response.error();
-      const intent = await intents.inspect(id);
-      if (!intent || intent.state !== 'bound' || intent.childClient !== event.clientId)
-        return Response.error();
-      const app = await getApp(intent.application);
-      const bound =
-        app &&
-        (await contexts.resolve(
-          internalRecord({
-            id: event.clientId,
-            url: bootstrapURL(app, intent, base).href,
-          }),
-        ));
-      if (!app || app.generation !== intent.installationGeneration || bound?.id !== id)
-        return Response.error();
-      return (await options.bootstrap()) || Response.error();
-    }
     const match = strings.match(url.pathname, routePattern);
     if (!match) return;
     const intent = await intents.inspect(match[1]);
@@ -135,7 +107,8 @@ export function createDocumentController(options: DocumentControllerOptions) {
       }
       const source = new URL('document-guard.js', base);
       source.search = '?context=' + intent.id;
-      const script = `<script ${intent.kind === 'svg' ? 'href' : 'src'}="${source.href}" nonce="${intent.nonce}" data-privacy-context="${intent.id}"></script>`;
+      const code = await bootstrapSource(await options.bootstrap());
+      const script = `<script ${intent.kind === 'svg' ? 'href' : 'src'}="${code}" data-privacy-bootstrap-url="${source.href}" nonce="${intent.nonce}" data-privacy-context="${intent.id}"></script>`;
       const shell =
         intent.kind === 'svg'
           ? `<svg xmlns="http://www.w3.org/2000/svg">${script}</svg>`

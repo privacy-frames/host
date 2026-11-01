@@ -32,6 +32,7 @@ export const boundaries: readonly Boundary[] = [
     sources: [
       'src/runtime/guard.ts',
       'src/runtime/root-guard.ts',
+      'src/runtime/bootstrap-source.ts',
       'src/runtime/controller-client.ts',
       'src/runtime/private-channel.ts',
       'src/runtime/content-broker.ts',
@@ -49,6 +50,7 @@ export const boundaries: readonly Boundary[] = [
       'src/runtime/contexts/document-publication.ts',
       'src/runtime/contexts/document-guard.ts',
       'src/runtime/contexts/document-main.ts',
+      'src/runtime/bootstrap-source.ts',
       'src/runtime/contexts/document-controller.ts',
       'src/runtime/contexts/document-client.ts',
       'src/runtime/contexts/document-parent.ts',

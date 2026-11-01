@@ -59,6 +59,44 @@ at launch. Ordinary asynchronous JavaScript, permitted prototype modification,
 unchanged applications and static hosting remain requirements. Storage namespaces
 are a compatibility feature; enforcement-state integrity remains necessary.
 
+The next candidate delivers the trusted root and child Window kernels through
+data URLs from cached host bytes, removing the child HTTP kernel route. The
+expanded native-policy fixture passes 24 HTML-inline, HTML-data and SVG-data
+cases at production bootstrap size. Installed dynamic-script and document-context
+checks pass in both browsers. Production HTTP denial remains pending.
+
+The [native worklet comparison](native-worklet-policy.md) passes twelve cases
+with working HTTP controls. Blob dependency graphs run under HTTP-denying script
+policy, but neither engine applies a Window import map to a worklet graph.
+Worklets therefore require separate local graph preparation before that policy
+can be integrated across all supported contexts.
+
+The compiler calibration rejects esbuild's handling of cyclic lexical
+initialization: native Worklets reject the source, while its bundled output
+runs. The pinned Rollup browser distribution retains the selected native
+rejection. Shared identity, live bindings, repeated entries and compilation in
+the trusted production environment still require positive comparisons.
+
+The next candidate's complete eight-app command fails after 32 successful tasks:
+Firefox StackEdit's screenshot times out waiting for fallback fonts, preventing
+its offline check. A focused unchanged run reproduces the screenshot failure.
+An [owned diagnostic](local-kernel-font-diagnostic.json) continues after that
+failure and passes offline persistence;
+it is not a passing result for the original command. Standalone native font
+probes settle for valid bytes, 404 and service-worker network errors. An additional
+[diagnostic](local-kernel-font-offline-diagnostic.json) switches offline before
+the screenshot and still encounters the font wait. The font cause remains open;
+neither diagnostic changes the original test or application. Their archived
+runner texts preserve the exact environment-specific scripts used.
+
+The [policy-12 CI record](ci-policy12.json) retains the remote validation failures.
+Its WebAssembly failure reproduces locally: Window preparation resolves captured
+relative imports against the publisher base rather than the installed resource
+path. The next candidate fixes that base and passes the unchanged WebAssembly
+fixture, including offline reload and module-worker execution, in both browsers.
+The CI diagnostic resolver call now supplies its parent URL, and the positive
+readiness calibration uses a separate startup deadline from its negative controls.
+
 ## Starting position
 
 The [spelling-service comparison](ua-spelling.md) reproduces a browser-owned
@@ -132,7 +170,7 @@ The stages below describe the complete argument. Execute the remaining work in
 the following order, retaining a checkpoint after each accepted change. Planning
 does not authorize treating any outstanding obligation as satisfied.
 
-1. **Reconcile the evidence.** Preserve remote revision `bff311f` and the policy-12
+1. **Reconcile the evidence.** Preserve remote revision `416cde6` and the next
    candidate separately. Record which source, build, browser settings
    and runner produced each receipt. Keep failed and inconclusive comparisons.
    Update the claim ledger only after reviewing the evidence it references.

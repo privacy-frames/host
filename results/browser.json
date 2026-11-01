@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-01T12:05:43.229Z",
+  "date": "2026-11-01T13:28:55.314Z",
   "browsers": [
     {
       "name": "chromium",
@@ -28,7 +28,7 @@
         "adversary: Connecting to 'http://127.0.0.1:4366/disclosure?value=private-marker-chromium&route=ping' violates the following Content Security Policy directive: \"connect-src 'self' blob: data:\". The action has been blocked.",
         "adversary: Loading the image 'http://127.0.0.1:4366/disclosure?value=private-marker-chromium&route=image' violates the following Content Security Policy directive: \"img-src 'self' data: blob:\". The action has been blocked.",
         "adversary: Loading the image 'http://127.0.0.1:4366/disclosure?value=private-marker-chromium&route=css' violates the following Content Security Policy directive: \"img-src 'self' data: blob:\". The action has been blocked.",
-        "playground: Running the JavaScript URL violates the following Content Security Policy directive 'script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-2387fb5ac3904c00bfbbb0664174b515''. Either the 'unsafe-inline' keyword, a hash ('sha256-...'), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present. The action has been blocked.",
+        "playground: Running the JavaScript URL violates the following Content Security Policy directive 'script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-261cf2a72e5f450ab2e77587665f9466''. Either the 'unsafe-inline' keyword, a hash ('sha256-...'), or a nonce ('nonce-...') is required to enable inline execution. Note that hashes do not apply to event handlers, style attributes and javascript: navigations unless the 'unsafe-hashes' keyword is present. The action has been blocked.",
         "Failed to load resource: the server responded with a status of 404 (Not Found)"
       ],
       "runtimeIsolation": {
@@ -539,7 +539,7 @@
       "scriptControl": [
         {
           "port": 4366,
-          "path": "/script?value=script-control-94c93c99-53e7-4700-b5e5-f1dd5a36b019",
+          "path": "/script?value=script-control-6aa1a593-76e8-412b-99d9-71a46b171750",
           "method": "GET"
         }
       ],
@@ -604,25 +604,30 @@
         },
         {
           "port": 4366,
-          "path": "/disclosure?value=control-marker-chromium&route=xhr",
-          "method": "POST",
-          "origin": "http://127.0.0.1:4215"
-        },
-        {
-          "port": 4366,
           "path": "/disclosure?value=control-marker-chromium&route=ping",
           "method": "POST",
           "origin": "http://127.0.0.1:4215"
         },
         {
           "port": 4366,
-          "path": "/socket?value=control-marker-chromium",
-          "method": "UPGRADE"
+          "path": "/disclosure?value=control-marker-chromium&route=xhr",
+          "method": "POST",
+          "origin": "http://127.0.0.1:4215"
+        },
+        {
+          "port": 4366,
+          "path": "/disclosure?value=control-marker-chromium&route=navigation",
+          "method": "GET"
         },
         {
           "port": 4366,
           "path": "/disclosure?value=control-marker-chromium&route=image",
           "method": "GET"
+        },
+        {
+          "port": 4366,
+          "path": "/socket?value=control-marker-chromium",
+          "method": "UPGRADE"
         },
         {
           "port": 4366,
@@ -658,18 +663,18 @@
         "Uncontrolled virtual runtime URL serves 404 without application code"
       ],
       "errors": [
-        "notes: [JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 24653}]",
-        "notes: [JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 24653}]",
-        "image: [JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 24653}]",
-        "notes: [JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 24653}]",
-        "adversary: [JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 24653}]",
-        "adversary: [JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (connect-src) at http://127.0.0.1:4366/disclosure?value=private-marker-firefox&route=xhr because it violates the following directive: “connect-src 'self' blob: data:”\" {file: \"blob:http://127.0.0.1:4211/66f4b090-1cfd-459b-8866-7c8517206130\" line: 196}]",
-        "adversary: [JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (form-action) at http://127.0.0.1:4366/disclosure?value=private-marker-firefox&route=form because it violates the following directive: “form-action 'none'”\" {file: \"blob:http://127.0.0.1:4211/66f4b090-1cfd-459b-8866-7c8517206130\" line: 218}]",
-        "adversary: [JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4366/disclosure?value=private-marker-firefox&route=image because it violates the following directive: “img-src 'self' data: blob:”\" {file: \"http://127.0.0.1:4211/runtime/guard.js\" line: 32122}]",
-        "adversary: [JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4366/disclosure?value=private-marker-firefox&route=css because it violates the following directive: “img-src 'self' data: blob:”\" {file: \"http://127.0.0.1:4211/runtime/KGi0prdKV8M/adversary/\" line: 0}]",
-        "playground: [JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 24653}]",
-        "playground: [JavaScript Error: \"Content-Security-Policy: The page’s settings blocked an inline script (script-src-elem) from being executed because it violates the following directive: “script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-053fe9dba4f546d8a31221ffd6b6bdf2'”. Consider using a hash ('sha256-7DCA9I+N8CEcxl85+FFBgrexA3CEyhiIkSe9WQlLcME=') or a nonce.\nSource: javascript:window.__jsurlEscape=1;'<h1>e…\" {file: \"http://127.0.0.1:4211/runtime/0vpdLR01oXs/playground/\" line: 0}]",
-        "notes: [JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 24653}]"
+        "notes: [JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 24648}]",
+        "notes: [JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 24648}]",
+        "image: [JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 24648}]",
+        "notes: [JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 24648}]",
+        "adversary: [JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 24648}]",
+        "adversary: [JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (connect-src) at http://127.0.0.1:4366/disclosure?value=private-marker-firefox&route=xhr because it violates the following directive: “connect-src 'self' blob: data:”\" {file: \"blob:http://127.0.0.1:4211/d18116d6-350a-42fe-984c-97d686295375\" line: 196}]",
+        "adversary: [JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (form-action) at http://127.0.0.1:4366/disclosure?value=private-marker-firefox&route=form because it violates the following directive: “form-action 'none'”\" {file: \"blob:http://127.0.0.1:4211/d18116d6-350a-42fe-984c-97d686295375\" line: 218}]",
+        "adversary: [JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4366/disclosure?value=private-marker-firefox&route=image because it violates the following directive: “img-src 'self' data: blob:”\" {file: \"data:text/javascript;charset=utf-8;base64,InVzZSBzdHJpY3QiOwoidXNlIHN0cmljdCI7CigoKSA9PiB7CiAgdmFyIF9fY3JlYXRlID0gT2JqZWN0LmNyZWF0ZTsKICB2YXIgX19kZWZQcm9wID0gT2JqZWN0LmRlZmluZVByb3BlcnR5OwogIHZhciBfX2dldE93blByb3BEZXNjID0gT2JqZWN0LmdldE93blByb3BlcnR5RGVzY3JpcHRvcjsKICB2YXIgX19nZXRPd25Qcm9wTmFtZXMgPSBPYmplY3QuZ2V0T3duUHJvcGVydHlOYW1lczsKICB2YXIgX19nZXRQcm90b09mID0gT2JqZWN0LmdldFByb3RvdHlwZU9mOwogIHZhciBfX2hhc093blByb3AgPSBPYmplY3QucHJvdG90eXBlLmhhc093blByb3BlcnR5OwogIHZhciBfX2VzbSA9IChmbiwgcmVzLCBlcnIpID0+IG\" line: 32122}]",
+        "adversary: [JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4366/disclosure?value=private-marker-firefox&route=css because it violates the following directive: “img-src 'self' data: blob:”\" {file: \"data:text/javascript;charset=utf-8;base64,InVzZSBzdHJpY3QiOwoidXNlIHN0cmljdCI7CigoKSA9PiB7CiAgdmFyIF9fY3JlYXRlID0gT2JqZWN0LmNyZWF0ZTsKICB2YXIgX19kZWZQcm9wID0gT2JqZWN0LmRlZmluZVByb3BlcnR5OwogIHZhciBfX2dldE93blByb3BEZXNjID0gT2JqZWN0LmdldE93blByb3BlcnR5RGVzY3JpcHRvcjsKICB2YXIgX19nZXRPd25Qcm9wTmFtZXMgPSBPYmplY3QuZ2V0T3duUHJvcGVydHlOYW1lczsKICB2YXIgX19nZXRQcm90b09mID0gT2JqZWN0LmdldFByb3RvdHlwZU9mOwogIHZhciBfX2hhc093blByb3AgPSBPYmplY3QucHJvdG90eXBlLmhhc093blByb3BlcnR5OwogIHZhciBfX2VzbSA9IChmbiwgcmVzLCBlcnIpID0+IG\" line: 13192}]",
+        "playground: [JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 24648}]",
+        "playground: [JavaScript Error: \"Content-Security-Policy: The page’s settings blocked an inline script (script-src-elem) from being executed because it violates the following directive: “script-src 'self' blob: 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-bbf8a4f9695040e09c7dc7a2b44861db'”. Consider using a hash ('sha256-7DCA9I+N8CEcxl85+FFBgrexA3CEyhiIkSe9WQlLcME=') or a nonce.\nSource: javascript:window.__jsurlEscape=1;'<h1>e…\" {file: \"http://127.0.0.1:4211/runtime/0vpdLR01oXs/playground/\" line: 0}]",
+        "notes: [JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 24648}]"
       ],
       "runtimeIsolation": {
         "origin": "http://127.0.0.1:4211",
@@ -1179,7 +1184,7 @@
       "scriptControl": [
         {
           "port": 4366,
-          "path": "/script?value=script-control-bbb4efd5-eeaf-4b58-b907-34c477146d4a",
+          "path": "/script?value=script-control-a48e85ba-86b5-4d15-9797-f1364d1d7309",
           "method": "GET"
         }
       ],
@@ -1260,12 +1265,12 @@
         },
         {
           "port": 4366,
-          "path": "/disclosure?value=control-marker-firefox&route=css",
+          "path": "/disclosure?value=control-marker-firefox&route=navigation",
           "method": "GET"
         },
         {
           "port": 4366,
-          "path": "/disclosure?value=control-marker-firefox&route=navigation",
+          "path": "/disclosure?value=control-marker-firefox&route=css",
           "method": "GET"
         }
       ]

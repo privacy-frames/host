@@ -66,13 +66,16 @@ let bootstrapClient: PrivateClient | undefined;
 async function start(script: Element | null) {
   if (!script) throw new Error('Trusted document bootstrap is missing');
   const id = documentIdentifier(apply(getAttribute, script, ['data-privacy-context']));
-  const scriptSource =
+  const physicalSource =
     apply(getAttribute, script, ['src']) || apply(getAttribute, script, ['href']);
-  if (!scriptSource) throw new Error('Trusted document script address is missing');
+  const scriptSource = apply(getAttribute, script, ['data-privacy-bootstrap-url']);
+  if (!scriptSource || !physicalSource?.startsWith('data:text/javascript;'))
+    throw new Error('Trusted local document bootstrap is missing');
   const runtime = new nativeURL('./', scriptSource);
   if (
+    runtime.origin !== documentURL.origin ||
     new nativeURL(scriptSource).href !==
-    new nativeURL(`document-guard.js?context=${id}`, runtime).href
+      new nativeURL(`document-guard.js?context=${id}`, runtime).href
   )
     throw new Error('Unexpected document bootstrap script');
   const workerGetter = descriptor(Navigator.prototype, 'serviceWorker')?.get;

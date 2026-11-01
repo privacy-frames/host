@@ -187,7 +187,9 @@ self.onmessage = async event => {
   try {
     const entry = new URL(${JSON.stringify(actualGuard ? '/app/entry.js' : '/entry.js')}, fixtureBase).href;
     const target = new URL('/native-target.js', fixtureBase).href;
-    progress('resolve', importShim.resolve(entry));
+    // The dependency's supplied default resolver requires an explicit parent
+    // when a custom resolve hook is installed. This is diagnostic resolution.
+    progress('resolve', importShim.resolve(entry, fixtureBase));
     progress('options', {shimMode:self.esmsInitOptions.shimMode, location:location.href});
     Promise.resolve(42).then(value => progress('promise', value));
     first = event.data === 'native-graph-control' ? await nativeImport(entry) : await importShim(entry);
@@ -218,7 +220,7 @@ self.onmessage = async event => {
   } catch (error) {
     await new Promise(resolve => setTimeout(resolve, 100));
     postMessage({first:first?.value, local, reads:${actualGuard ? 'fixtureModuleReads()' : 'reads'}, graph, violations,
-      failure:String(error), errorName:error?.name});
+      failure:String(error), errorName:error?.name, errorStack:error?.stack});
   }
 };
 postMessage({type:'bootstrap-ready'});`;

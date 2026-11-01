@@ -42,7 +42,17 @@ export function startRootGuard(bootstrapScript: Element | null) {
       );
     if (!(bootstrapScript instanceof HTMLScriptElement))
       throw new Error('Trusted bootstrap script is missing');
-    const guardURL = new URL(bootstrapScript.src);
+    const address = bootstrapScript.getAttribute('data-privacy-bootstrap-url');
+    if (!address || !bootstrapScript.src.startsWith('data:text/javascript;'))
+      throw new Error('Trusted local bootstrap is missing');
+    const guardURL = new URL(address);
+    if (
+      guardURL.origin !== location.origin ||
+      guardURL.search ||
+      guardURL.hash ||
+      guardURL.href !== new URL('guard.js', new URL('./', guardURL)).href
+    )
+      throw new Error('Unexpected root bootstrap address');
     const app = bootstrapScript.getAttribute('data-installation');
     const entry = bootstrapScript.getAttribute('data-application-url');
     const route = applicationIdentity(location.href, new URL('./', guardURL));

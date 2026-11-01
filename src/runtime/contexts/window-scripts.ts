@@ -69,7 +69,9 @@ export function createWindowScripts(
         const source: string = apply(decode, decoder, [body]);
         return relocateRuntimeModule(
           module ? relocateImportMeta(source, base) : source,
-          base,
+          // Captured imports are relative to their installed resource path.
+          // The publisher address remains the logical import.meta location.
+          url,
           resources,
           true,
         );

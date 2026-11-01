@@ -1,0 +1,119 @@
+{
+  "scope": "Terminal CI conclusions for historical revision 416cde6; these are not verification of the later local-kernel candidate. Maintenance evidence remains incomplete, and complete confinement remains unestablished.",
+  "recordedAt": "2026-11-01T13:30:04.593135+00:00",
+  "runs": [
+    {
+      "run": "41308259944",
+      "revision": "416cde63bc8d168b321db3dfe07b0461b52000cd",
+      "status": "completed",
+      "conclusion": "failure",
+      "url": "https://github.com/privacy-frames/host/actions/runs/41308259944",
+      "jobs": [
+        {
+          "name": "build",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "name": "deploy",
+          "status": "completed",
+          "conclusion": "skipped"
+        }
+      ]
+    },
+    {
+      "run": "41308259993",
+      "revision": "416cde63bc8d168b321db3dfe07b0461b52000cd",
+      "status": "completed",
+      "conclusion": "failure",
+      "url": "https://github.com/privacy-frames/host/actions/runs/41308259993",
+      "jobs": [
+        {
+          "name": "worker-closure",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "resource-fetch",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "maintenance",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "registration-overlap",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "worker-startup-maintenance",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "name": "browser-spelling",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "model",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "registration-fence",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "module-delivery-policy",
+          "status": "completed",
+          "conclusion": "failure"
+        },
+        {
+          "name": "webtransport",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "fedcm",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "local-documents",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    },
+    {
+      "run": "41308260005",
+      "revision": "416cde63bc8d168b321db3dfe07b0461b52000cd",
+      "status": "completed",
+      "conclusion": "success",
+      "url": "https://github.com/privacy-frames/host/actions/runs/41308260005",
+      "jobs": [
+        {
+          "name": "javascript",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "proof",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    "Pages validation failed waiting for the WebAssembly fixture; deployment was skipped. The local reproduction later identified installed module imports being resolved against their publisher base.",
+    "The prepared-worker component failed during a diagnostic importShim.resolve call without an explicit parent URL.",
+    "The positive async-false calibration timed out at its 100 ms startup deadline.",
+    "The fresh worker-maintenance comparison lacked a Chromium module-native positive control and is inconclusive. The forced-age comparison also failed; inspect its retained receipts before assigning a new security result."
+  ]
+}

@@ -1,4 +1,5 @@
 import { manifestURL } from './pwa.ts';
+import { bootstrapSource } from './bootstrap-source.ts';
 import { getApp, listApps, putApp, deleteApp, getResource } from './storage.ts';
 import { mime } from '../shared/policy.ts';
 import {
@@ -594,9 +595,10 @@ worker.addEventListener('fetch', (event) => {
           url: entry.href,
         });
         const script = new URL('guard.js', BASE).href;
+        const code = await bootstrapSource(await (await caches.open(BOOT)).match(script));
         const nonce = crypto.randomUUID().replaceAll('-', '');
         return response(
-          `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${app.manifest.name.replace(/[&<>"]/g, (c) => (({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;' }) as Record<string, string>)[c] || c)}</title><link rel="manifest" href="${manifestURL(app, BASE).href}"></head><body><script src="${script}" nonce="${nonce}" data-installation="${app.id}" data-application-url="${entry.href}"></script></body></html>`,
+          `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${app.manifest.name.replace(/[&<>"]/g, (c) => (({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;' }) as Record<string, string>)[c] || c)}</title><link rel="manifest" href="${manifestURL(app, BASE).href}"></head><body><script src="${code}" data-privacy-bootstrap-url="${script}" nonce="${nonce}" data-installation="${app.id}" data-application-url="${entry.href}"></script></body></html>`,
           'text/html',
           200,
           {

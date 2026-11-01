@@ -91,6 +91,15 @@ void start().catch(error=>{window.fixtureError=String(error)});
     plugins: [await trustedPolicyPlugin(process.cwd())],
   })
 ).outputFiles[0].text;
+// Exercise the local data-URL path at the current production bootstrap size.
+const bootstrapBytes = Math.max(
+  (await readFile('dist-runtime/guard.js')).byteLength,
+  (await readFile('dist-runtime/document-guard.js')).byteLength,
+);
+const dataBootstrap =
+  bootstrap + '/*' + 'x'.repeat(Math.max(0, bootstrapBytes - bootstrap.length)) + '*/';
+const dataURL =
+  'data:text/javascript;base64,' + Buffer.from(dataBootstrap).toString('base64');
 const traffic: string[] = [];
 const server = http.createServer((request, response) => {
   const url = new URL(request.url || '/', 'http://fixture.invalid');
@@ -105,16 +114,20 @@ const server = http.createServer((request, response) => {
     if (url.searchParams.get('document') === 'svg') {
       response.setHeader('Content-Type', 'image/svg+xml');
       response.end(
-        '<svg xmlns="http://www.w3.org/2000/svg"><script href="data:text/javascript;base64,' +
-          Buffer.from(bootstrap).toString('base64') +
+        '<svg xmlns="http://www.w3.org/2000/svg"><script href="' +
+          dataURL +
           '"></script></svg>',
       );
     } else {
       response.setHeader('Content-Type', 'text/html; charset=utf-8');
       response.end(
-        '<!doctype html><head><script>' +
-          bootstrap.replaceAll('</script', '<\\/script') +
-          '</script></head><body></body>',
+        url.searchParams.get('document') === 'html-data'
+          ? '<!doctype html><head><script src="' +
+              dataURL +
+              '"></script></head><body></body>'
+          : '<!doctype html><head><script>' +
+              bootstrap.replaceAll('</script', '<\\/script') +
+              '</script></head><body></body>',
       );
     }
   } else if (url.pathname in graph || url.pathname === '/receiver.js') {
@@ -132,7 +145,7 @@ try {
   for (const [name, engine] of Object.entries({ chromium, firefox })) {
     const browser = await launch(engine);
     try {
-      for (const document of ['html', 'svg']) {
+      for (const document of ['html', 'html-data', 'svg']) {
         for (const mode of ['native', 'control', 'local', 'denied']) {
           const context = await browser.newContext();
           try {
@@ -236,6 +249,9 @@ try {
         runnerBefore,
         runnerAfter,
         bootstrapSHA256: digest(bootstrap),
+        productionBootstrapBytes: bootstrapBytes,
+        dataBootstrapBytes: Buffer.byteLength(dataBootstrap),
+        dataBootstrapSHA256: digest(dataBootstrap),
         rows,
       },
       null,

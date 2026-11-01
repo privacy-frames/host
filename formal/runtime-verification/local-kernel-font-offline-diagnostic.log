@@ -1,0 +1,39 @@
+firefox stackedit standalone TASK PASS
+FONT SNAPSHOT FAILURE firefox stackedit confined TimeoutError: page.screenshot: Timeout 12000ms exceeded.
+Call log:
+[2m  - taking page screenshot[22m
+[2m  - waiting for fonts to load...[22m
+
+FONT SNAPSHOT STATE {
+  status: 'loading',
+  ready: false,
+  fonts: [
+    { family: 'KaTeX_AMS', status: 'loading' },
+    { family: 'KaTeX_Caligraphic', status: 'unloaded' },
+    { family: 'KaTeX_Caligraphic', status: 'unloaded' },
+    { family: 'KaTeX_Fraktur', status: 'unloaded' },
+    { family: 'KaTeX_Fraktur', status: 'unloaded' },
+    { family: 'KaTeX_Main', status: 'unloaded' },
+    { family: 'KaTeX_Main', status: 'unloaded' },
+    { family: 'KaTeX_Main', status: 'unloaded' },
+    { family: 'KaTeX_Main', status: 'loading' },
+    { family: 'KaTeX_Math', status: 'unloaded' },
+    { family: 'KaTeX_Math', status: 'loading' },
+    { family: 'KaTeX_SansSerif', status: 'unloaded' },
+    { family: 'KaTeX_SansSerif', status: 'unloaded' },
+    { family: 'KaTeX_SansSerif', status: 'unloaded' },
+    { family: 'KaTeX_Script', status: 'unloaded' },
+    { family: 'KaTeX_Size1', status: 'unloaded' },
+    { family: 'KaTeX_Size2', status: 'loading' },
+    { family: 'KaTeX_Size3', status: 'unloaded' },
+    { family: 'KaTeX_Size4', status: 'unloaded' },
+    { family: 'KaTeX_Typewriter', status: 'unloaded' },
+    { family: 'Lato', status: 'error' },
+    { family: 'Lato', status: 'error' },
+    { family: 'Lato', status: 'error' },
+    { family: 'Lato', status: 'unloaded' },
+    { family: 'Roboto Mono', status: 'error' },
+    { family: 'Roboto Mono', status: 'unloaded' }
+  ]
+}
+firefox stackedit confined TASK PASS

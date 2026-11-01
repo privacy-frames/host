@@ -1,0 +1,25 @@
+
+> test:corpus
+> node test/local-corpus.ts
+
+firefox stackedit standalone TASK PASS
+firefox stackedit confined TASK PASS
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Eight-app native/confined task and offline comparison failed
+
+1 !== 0
+
+    at file:///home/damen/Projects/privacy-frames-runtime-proof/test/local-corpus.ts:35:10
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.2.0

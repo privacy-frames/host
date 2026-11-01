@@ -18,7 +18,9 @@ try {
     const browser = await launch(engine);
     try {
       const page = await browser.newPage();
-      const handle = await page.waitForFunction(async () => false, {}, { timeout: 100 });
+      // Browser injection and first execution can exceed the negative control's
+      // observation window on CI. This positive control must actually execute.
+      const handle = await page.waitForFunction(async () => false, {}, { timeout: 5000 });
       const asyncValue: unknown = await handle.jsonValue();
       await handle.dispose();
       assert.equal(asyncValue, false);

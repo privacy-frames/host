@@ -14,8 +14,8 @@ modules that wait for document lifecycle events. An earlier shim-wrapper attempt
 announced readiness before the application module began; it was removed.
 
 The [native-policy fixture](native-window-policy.ts) uses the actual Window
-script helper with a fixed trusted resource reader. All sixteen cases pass in
-Chromium and Firefox, across HTML and SVG. Restricted cases begin with a response
+script helper with a fixed trusted resource reader. All 24 cases pass in
+Chromium and Firefox, across inline HTML, data-URL HTML and data-URL SVG. Restricted cases begin with a response
 policy permitting local Blob/data scripts, inline scripts and evaluation while
 denying HTTP scripts and connections. Local graphs execute without observed HTTP
 requests. A generated native import bypasses the adapter: the unrestricted
@@ -25,12 +25,27 @@ The [receipt](native-window-policy.json) binds source, build, runner and bootstr
 hashes. This fixture contains no service-worker lifecycle or actor-authentication
 proof.
 
-The HTML bootstrap is inline. Firefox rejects a parser-created inline SVG script
+The fixture retains an inline HTML control. Firefox rejects a parser-created inline SVG script
 under the fixture's Trusted Types policy before setup can run. The
 [initial receipt](native-window-policy-svg-initial.json) stops after twelve cases;
 it is a failed bootstrap experiment. A self-contained data-URL SVG script avoids
 that sink and passes the complete comparison. No remote bootstrap request is
-needed by this fixture.
+needed by this fixture. The data-URL variants now pad the fixture kernel to the
+larger compiled production kernel's size; the receipt records both byte counts.
+
+The next production candidate delivers root and child Window kernels from cached
+host bytes through data URLs. Missing, refused, empty, non-JavaScript and failed
+body reads reject preparation. The child HTTP kernel route has been removed.
+Installed dynamic-script and document-context comparisons pass in both browsers;
+the response policy still admits runtime-origin HTTP.
+
+The separate WebAssembly check exposed an installed-path bug after the original
+regression suite passed. Installation had relocated a module's outside-directory
+dependency into `resources/`, but Window preparation resolved that stored import
+against the publisher URL. Preparation now resolves imports against the installed
+resource URL while retaining the publisher address for logical `import.meta`.
+The unchanged fixture passes its transitive import, WebAssembly computation,
+offline reload and confined module-worker checks in both browsers.
 
 The initial corpus also exposed preparation cost and a task-readiness race.
 Preparing every script variant through an AST delayed CyberChef and its embedded
@@ -57,7 +72,7 @@ a deadline, including for a pending observation. Four unit controls cover false,
 eventually true, pending and throwing observations. The publisher stylesheet
 readiness check now uses the same helper.
 
-The current aged-registration comparison retains two generated-import requests
+The policy-12 aged-registration comparison retains two generated-import requests
 for the fixed runtime service-worker URL, with working native controls for every
 worker-loading group in the 32-sample comparison. Production responses still admit runtime-origin HTTP scripts. Applying the
 independent native policy requires preparing every admitted context and resource
