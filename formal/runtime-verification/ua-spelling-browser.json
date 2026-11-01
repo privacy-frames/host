@@ -1,19 +1,48 @@
 {
   "completed": true,
-  "started": "2026-11-01T06:37:51.528Z",
-  "finished": "2026-11-01T06:38:19.398Z",
+  "transportErrors": [
+    {
+      "code": "ECONNRESET",
+      "message": "read ECONNRESET",
+      "time": "2026-11-01T09:03:14.112Z"
+    },
+    {
+      "code": "ECONNRESET",
+      "message": "socket hang up",
+      "time": "2026-11-01T09:03:14.118Z"
+    },
+    {
+      "code": "ECONNRESET",
+      "message": "aborted",
+      "time": "2026-11-01T09:03:14.119Z"
+    }
+  ],
+  "unexpectedTransportErrors": [],
+  "resetControlCaptured": true,
+  "partialControlCaptured": true,
+  "partialControlEvidence": [
+    {
+      "path": "/fixture-partial-control",
+      "bytes": 35,
+      "containsMarker": true,
+      "complete": false,
+      "aborted": true
+    }
+  ],
+  "started": "2026-11-01T09:03:13.968Z",
+  "finished": "2026-11-01T09:03:41.263Z",
   "scope": "Owned browser-service comparison with synthetic text and a local TLS receiver. The actual runtime must remain quiet; a temporary build restoring the native spelling setter must transmit. Other browser configurations and services remain open.",
   "wholeConfinementEstablished": false,
   "receiver": "Loopback only; unknown proxy targets rejected; no service request forwarded upstream.",
-  "runnerSHA256": "09ab9738634ed6991268d61448ba4ab23714fed9f24f73a87280f5f4b4e7094a",
+  "runnerSHA256": "6211a963f4fe92d7a172ed2d729dcebb8c7c3b9bb56b883fcbdba245d4050497",
   "runnerStable": true,
   "provenance": {
-    "capturedAt": "2026-11-01T06:37:51.558Z",
-    "revision": "23ca1b17d330730209bc4c990f19aadd9c81753a",
+    "capturedAt": "2026-11-01T09:03:13.998Z",
+    "revision": "64a1f0b77b06e7f12ef69c907ff04aec6f3fa5d1",
     "dirty": true,
-    "sourceSHA256": "cb8dddfd611b8e04e0ab1517e1e137df68f3697c2b09bce1a254f5a2e45626f3",
+    "sourceSHA256": "bbc340ba3de2fdd537dd35f7781b9de6366809c54f57e387831f6e9abe48e552",
     "runner": "formal/runtime-verification/ua-spelling-browser.ts",
-    "runnerSHA256": "09ab9738634ed6991268d61448ba4ab23714fed9f24f73a87280f5f4b4e7094a",
+    "runnerSHA256": "6211a963f4fe92d7a172ed2d729dcebb8c7c3b9bb56b883fcbdba245d4050497",
     "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
     "artifacts": {
       "dist-manager/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -24,21 +53,21 @@
       "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-manager/sw.js": "6f2273e0e5cd348829e0216462e1d3dde3a663425e9b9033f6eb8cd62805deaf",
+      "dist-manager/sw.js": "270f1d3d95420814ba604c742304cd02878608ef800f226efb3d8b94f777a967",
       "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
       "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
       "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
-      "dist-runtime/document-guard.js": "32490d89aa1d6d4a6a61a317c22f856a4a5353a3d3dc91e8dd86d9ae22e9a0bb",
-      "dist-runtime/guard.js": "073eac121321a5ccff8a6107e559e104c2f3fd8001557d298f287378835c4898",
+      "dist-runtime/document-guard.js": "45d81712545fbe1877c6acdd0f78dcca8d8309d1e4231b117b45c4ae37e2a64f",
+      "dist-runtime/guard.js": "6cb478106855c5f5ca28b4f0a2bf74bebb5b0f923b851ebe08acfef2fa6ea3a2",
       "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
       "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
-      "dist-runtime/publisher-worker-guard.js": "8a8d950e2fdaa8e77be40e51b31722cdb9984bfbcab94ef1b5755f39426c26d0",
+      "dist-runtime/publisher-worker-guard.js": "40c387a418a9407dd0afab01e3600220776b34ea34fdb437a65efd5fd77b757e",
       "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-runtime/shared-worker-guard.js": "314a095747e9a928392418837bea6e6ecaea198d8f0bc96a6e5b4216efd936b3",
-      "dist-runtime/sw.js": "85a966780fabb89d20ceb99f22df8192e8f8cd5c5d8b191f873e7c144ce1f505",
+      "dist-runtime/shared-worker-guard.js": "dba8b89c2c6fb4256307a7f62f427f60a29e102dc124ae7c72c2f8f658cb89ff",
+      "dist-runtime/sw.js": "708fb3d8324b45a5e419f107ef79f84332c40175d72161e4533ac81098ae5bb5",
       "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
       "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
@@ -52,7 +81,7 @@
     "path": "src/runtime/enforcement/native-attributes.ts",
     "sourceSHA256": "aa564ddc38e58c5d40d7aea085a932b71f64f01f8adc4aa723b887d4595f3783",
     "alteredSourceSHA256": "bd48c2d97072f7f6ab5dabe942a6ae829452dda7a13e59d658d8dcf6230e383e",
-    "guardSHA256": "e8a3321986c1a8d6fa7a2bce02b88041bbcaebacc80c7511d59c135d9f0f9476",
+    "guardSHA256": "0495915fa988d120d262ea6e95e7ec4e563ad7d80b63c2500af79ef1b0e81644",
     "releaseArtifactsModified": false
   },
   "headful": false,
@@ -68,12 +97,14 @@
         {
           "path": "/spelling/v2/spelling/check",
           "bytes": 85,
-          "containsMarker": true
+          "containsMarker": true,
+          "complete": true,
+          "aborted": false
         }
       ],
       "connects": [
         {
-          "host": "update.googleapis.com",
+          "host": "www.google.com",
           "accepted": false
         },
         {
@@ -89,15 +120,15 @@
           "accepted": false
         },
         {
+          "host": "accounts.google.com",
+          "accepted": false
+        },
+        {
           "host": "www.googleapis.com",
           "accepted": true
         },
         {
           "host": "redirector.gvt1.com",
-          "accepted": false
-        },
-        {
-          "host": "accounts.google.com",
           "accepted": false
         },
         {
@@ -118,7 +149,9 @@
         {
           "path": "/spelling/v2/spelling/check",
           "bytes": 85,
-          "containsMarker": true
+          "containsMarker": true,
+          "complete": true,
+          "aborted": false
         }
       ],
       "connects": [
@@ -143,19 +176,15 @@
           "accepted": false
         },
         {
+          "host": "content-autofill.googleapis.com",
+          "accepted": false
+        },
+        {
           "host": "www.googleapis.com",
           "accepted": true
         },
         {
           "host": "redirector.gvt1.com",
-          "accepted": false
-        },
-        {
-          "host": "accounts.google.com",
-          "accepted": false
-        },
-        {
-          "host": "content-autofill.googleapis.com",
           "accepted": false
         }
       ],
@@ -253,6 +282,14 @@
       "requests": [],
       "connects": [
         {
+          "host": "update.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "www.google.com",
+          "accepted": false
+        },
+        {
           "host": "www.google.com",
           "accepted": false
         },
@@ -270,10 +307,6 @@
         },
         {
           "host": "www.google.com",
-          "accepted": false
-        },
-        {
-          "host": "content-autofill.googleapis.com",
           "accepted": false
         },
         {
@@ -290,6 +323,10 @@
         },
         {
           "host": "www.google.com",
+          "accepted": false
+        },
+        {
+          "host": "content-autofill.googleapis.com",
           "accepted": false
         },
         {
@@ -342,12 +379,18 @@
         {
           "path": "/spelling/v2/spelling/check",
           "bytes": 85,
-          "containsMarker": true
+          "containsMarker": true,
+          "complete": true,
+          "aborted": false
         }
       ],
       "connects": [
         {
           "host": "update.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "www.google.com",
           "accepted": false
         },
         {
@@ -379,15 +422,15 @@
           "accepted": false
         },
         {
-          "host": "www.google.com",
-          "accepted": false
-        },
-        {
-          "host": "www.google.com",
-          "accepted": false
-        },
-        {
           "host": "content-autofill.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "www.google.com",
+          "accepted": false
+        },
+        {
+          "host": "www.google.com",
           "accepted": false
         },
         {
@@ -419,6 +462,10 @@
       "requests": [],
       "connects": [
         {
+          "host": "www.google.com",
+          "accepted": false
+        },
+        {
           "host": "update.googleapis.com",
           "accepted": false
         },
@@ -427,7 +474,7 @@
           "accepted": false
         },
         {
-          "host": "www.google.com",
+          "host": "content-autofill.googleapis.com",
           "accepted": false
         },
         {
@@ -440,10 +487,6 @@
         },
         {
           "host": "accounts.google.com",
-          "accepted": false
-        },
-        {
-          "host": "content-autofill.googleapis.com",
           "accepted": false
         },
         {
@@ -475,6 +518,10 @@
       "requests": [],
       "connects": [
         {
+          "host": "www.google.com",
+          "accepted": false
+        },
+        {
           "host": "content-autofill.googleapis.com",
           "accepted": false
         },
@@ -487,19 +534,15 @@
           "accepted": false
         },
         {
-          "host": "www.google.com",
-          "accepted": false
-        },
-        {
           "host": "content-autofill.googleapis.com",
-          "accepted": false
-        },
-        {
-          "host": "redirector.gvt1.com",
           "accepted": false
         },
         {
           "host": "accounts.google.com",
+          "accepted": false
+        },
+        {
+          "host": "redirector.gvt1.com",
           "accepted": false
         },
         {
@@ -511,11 +554,11 @@
           "accepted": false
         },
         {
-          "host": "content-autofill.googleapis.com",
+          "host": "accounts.google.com",
           "accepted": false
         },
         {
-          "host": "accounts.google.com",
+          "host": "content-autofill.googleapis.com",
           "accepted": false
         }
       ],

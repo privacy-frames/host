@@ -44,27 +44,53 @@ execFileSync(
   { stdio: 'ignore' },
 );
 const sockets = new Set<Socket>();
-const services: Array<{ path: string; bytes: number; containsMarker: boolean }> = [];
+const services: Array<{
+  path: string;
+  bytes: number;
+  containsMarker: boolean;
+  complete: boolean;
+  aborted: boolean;
+}> = [];
 const connects: Array<{ host: string; accepted: boolean }> = [];
+const transportErrors: Array<{ code?: string; message: string; time: string }> = [];
+function recordTransportError(error: Error) {
+  const code = 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+  transportErrors.push({
+    code,
+    message: error.message,
+    time: new Date().toISOString(),
+  });
+}
 function track(socket: Socket) {
   sockets.add(socket);
   socket.once('close', () => sockets.delete(socket));
+  socket.on('error', recordTransportError);
 }
 const receiver = https.createServer(
   { key: await readFile(key), cert: await readFile(cert) },
   (request, response) => {
+    const service = {
+      path: new URL(request.url || '/', 'https://local').pathname,
+      bytes: 0,
+      containsMarker: false,
+      complete: false,
+      aborted: false,
+    };
+    services.push(service);
     let body = '';
     request.setEncoding('utf8');
+    request.on('error', recordTransportError);
+    request.on('aborted', () => {
+      service.aborted = true;
+    });
     request.on('data', (part: string) => {
       body += part;
+      service.bytes = Buffer.byteLength(body);
+      service.containsMarker = body.includes(marker);
       if (body.length > 1024 * 1024) request.destroy();
     });
     request.on('end', () => {
-      services.push({
-        path: new URL(request.url || '/', 'https://local').pathname,
-        bytes: Buffer.byteLength(body),
-        containsMarker: body.includes(marker),
-      });
+      service.complete = true;
       response.setHeader('Content-Type', 'application/json');
       response.end(
         JSON.stringify({
@@ -170,7 +196,56 @@ const runtimeFiles = new Map<string, Uint8Array>();
 const runtime = await servers({ receiver: false, runtimeFiles });
 let completed = false;
 let failure: string | undefined;
+let resetControlCaptured = false;
+let partialControlCaptured = false;
+let partialControlEvidence: typeof services = [];
 try {
+  // Calibrate the recorder against an actual peer reset, including sockets that
+  // close before a CONNECT request has installed the relay's error callbacks.
+  const resetBaseline = transportErrors.length;
+  const accepted = new Promise<Socket>((resolve) => proxy.once('connection', resolve));
+  const resetClient = net.connect(proxyAddress.port, '127.0.0.1');
+  const peer = await accepted;
+  await new Promise<void>((resolve, reject) => {
+    peer.once('close', resolve);
+    resetClient.once('error', reject);
+    if (resetClient.connecting)
+      resetClient.once('connect', () => resetClient.resetAndDestroy());
+    else resetClient.resetAndDestroy();
+  });
+  resetControlCaptured = transportErrors
+    .slice(resetBaseline)
+    .some((error) => error.code === 'ECONNRESET');
+  assert(resetControlCaptured, 'The fixture did not record its controlled peer reset');
+  const partialBaseline = services.length;
+  await new Promise<void>((resolve, reject) => {
+    const deadline = setTimeout(
+      () => reject(new Error('Partial receiver control timed out')),
+      5000,
+    );
+    const partial = https.request({
+      hostname: '127.0.0.1',
+      port: receiverPort,
+      path: '/fixture-partial-control',
+      method: 'POST',
+      rejectUnauthorized: false,
+      headers: { 'Content-Length': Buffer.byteLength(marker) + 128 },
+    });
+    partial.on('error', recordTransportError);
+    receiver.once('request', (request) => {
+      request.once('data', () => partial.destroy());
+      request.once('aborted', () => {
+        clearTimeout(deadline);
+        resolve();
+      });
+    });
+    partial.write(marker);
+  });
+  partialControlEvidence = services.slice(partialBaseline);
+  partialControlCaptured = partialControlEvidence.some(
+    (service) => service.containsMarker && service.aborted && !service.complete,
+  );
+  assert(partialControlCaptured, 'The receiver discarded an already transmitted marker');
   for (const mode of [
     'native-control',
     'strict-csp',
@@ -300,11 +375,24 @@ try {
   const sourceStable = provenance.sourceSHA256 === after.sourceSHA256;
   const artifactsStable =
     JSON.stringify(provenance.artifacts) === JSON.stringify(after.artifacts);
+  const unexpectedTransportErrors = transportErrors.filter(
+    (error) => error.code !== 'ECONNRESET' && error.code !== 'EPIPE',
+  );
   await writeFile(
     new URL('./ua-spelling-browser.json', import.meta.url),
     JSON.stringify(
       {
-        completed: completed && stable && sourceStable && artifactsStable,
+        completed:
+          completed &&
+          stable &&
+          sourceStable &&
+          artifactsStable &&
+          !unexpectedTransportErrors.length,
+        transportErrors,
+        unexpectedTransportErrors,
+        resetControlCaptured,
+        partialControlCaptured,
+        partialControlEvidence,
         started,
         finished: new Date().toISOString(),
         scope:
@@ -333,6 +421,7 @@ try {
     ) + '\n',
   );
   await rm(directory, { recursive: true, force: true });
+  assert.deepEqual(unexpectedTransportErrors, [], 'Unexpected fixture transport failure');
   assert(stable, 'Spelling fixture source changed during execution');
   assert(
     sourceStable && artifactsStable,

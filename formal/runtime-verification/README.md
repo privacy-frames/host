@@ -27,6 +27,11 @@ maintenance requests. All eight unchanged applications pass their selected
 native/confined tasks in both browsers and sixteen offline reloads, with stable
 source and build inputs. Production native HTTP admission remains open.
 
+The [Window module-policy comparison](window-module-policy.md) now completes
+eighteen component cases, including working native HTTP controls and local graph
+semantics. Its restricted cases deny native imports and mutable-registry HTTP
+selection. Full Window preparation and production policy integration remain open.
+
 The target is the contract in [the threat model](../threat-model.md). Applications
 remain ordinary JavaScript, including asynchronous execution and prototype
 modification. The host remains a static web application. Publisher-specific

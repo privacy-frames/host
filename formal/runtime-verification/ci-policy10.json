@@ -1,0 +1,96 @@
+{
+  "scope": "Independent CI evidence for policy-10 revision 64a1f0b. Selected component successes do not establish confinement. Forced-age maintenance fails on two generated-native-import effects; the spelling harness terminated before producing its service receipt.",
+  "sourceRevision": "64a1f0b77b06e7f12ef69c907ff04aec6f3fa5d1",
+  "wholeConfinementEstablished": false,
+  "runs": {
+    "model": 41290243332,
+    "authority": 41290243267,
+    "host": 41290242966
+  },
+  "freshMaintenance": {
+    "completed": true,
+    "samples": 64,
+    "missingNativeControls": [],
+    "violations": []
+  },
+  "forcedAgeMaintenance": {
+    "samples": 32,
+    "missingNativeControls": [],
+    "violations": [
+      {
+        "browser": "firefox",
+        "workerType": "module-native",
+        "sample": 1,
+        "bit": "1",
+        "runtime": [
+          {
+            "port": 4211,
+            "path": "/runtime/sw.js",
+            "method": "GET"
+          }
+        ],
+        "publisherTraffic": []
+      },
+      {
+        "browser": "firefox",
+        "workerType": "module-native",
+        "sample": 2,
+        "bit": "1",
+        "runtime": [
+          {
+            "port": 4211,
+            "path": "/runtime/sw.js",
+            "method": "GET"
+          }
+        ],
+        "publisherTraffic": []
+      }
+    ],
+    "securityPolicyPassed": false
+  },
+  "preparedWorkerModulePolicy": {
+    "completed": true,
+    "cases": 24
+  },
+  "spellingHarnessFailure": {
+    "job": 124799801106,
+    "url": "https://github.com/privacy-frames/host/actions/runs/41290243332/job/124799801106",
+    "completedServiceReceiptAvailable": false,
+    "domReceiptAvailable": true,
+    "rawJobLogSHA256": "616949e3388ee268c879f33971bdba1e3e6f7a73486064a689b8237a9c01cdbc",
+    "excerpt": [
+      "2026-11-01T08:47:11.2101059Z native-control marker requests 1",
+      "2026-11-01T08:47:12.5435056Z strict-csp marker requests 1",
+      "2026-11-01T08:47:21.5146340Z runtime marker requests 0",
+      "2026-11-01T08:47:24.7646277Z runtime-idl-fault marker requests 1",
+      "2026-11-01T08:47:32.1354548Z attribute-disabled marker requests 0",
+      "2026-11-01T08:47:32.4784971Z node:events:505",
+      "2026-11-01T08:47:32.4788299Z     throw er; // Unhandled 'error' event",
+      "2026-11-01T08:47:32.4789076Z     ^",
+      "2026-11-01T08:47:32.4789425Z ",
+      "2026-11-01T08:47:32.4789787Z Error: read ECONNRESET",
+      "2026-11-01T08:47:32.4790530Z     at TCP.onStreamRead (node:internal/stream_base_commons:221:20)",
+      "2026-11-01T08:47:32.4791398Z Emitted 'error' event on Socket instance at:",
+      "2026-11-01T08:47:32.4792399Z     at emitErrorNT (node:internal/streams/destroy:170:8)",
+      "2026-11-01T08:47:32.4793282Z     at emitErrorCloseNT (node:internal/streams/destroy:129:3)",
+      "2026-11-01T08:47:32.4794360Z     at process.processTicksAndRejections (node:internal/process/task_queues:90:21) {",
+      "2026-11-01T08:47:32.4795281Z   errno: -104,",
+      "2026-11-01T08:47:32.4795814Z   code: 'ECONNRESET',",
+      "2026-11-01T08:47:32.4796357Z   syscall: 'read'",
+      "2026-11-01T08:47:32.4796861Z }",
+      "2026-11-01T08:47:32.4797216Z ",
+      "2026-11-01T08:47:32.4797528Z Node.js v24.22.1",
+      "2026-11-01T08:47:32.5166344Z ##[error]Process completed with exit code 1.",
+      "2026-11-01T08:47:32.5222270Z ##[group]Run npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/runtime-verification/spelling-dom-browser.ts",
+      "2026-11-01T08:47:32.5224454Z npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/runtime-verification/spelling-dom-browser.ts",
+      "2026-11-01T08:47:32.5225723Z node formal/runtime-verification/spelling-dom-browser.ts",
+      "2026-11-01T08:47:32.5245739Z shell: /usr/bin/bash -e {0}"
+    ],
+    "classification": "Uncaught Socket ECONNRESET terminated the receiver. This is a harness failure, not a passing or complete service comparison."
+  },
+  "artifacts": {
+    "formal/runtime-verification/service-worker-maintenance-ci-policy10.json": "55667e0a3f1964a18a42f1dc0308b8397f92b960840fb8b26073993791692f8a",
+    "formal/runtime-verification/service-worker-startup-stale-ci-policy10.json": "9efdbbaba00731fb37b33c9f1d0cd27fa7bd58ae45b6d7cf65a8cf7884831514",
+    "formal/runtime-verification/module-loader-guard-ci-policy10.json": "c5d6063c18f199a409a2e3f72729a6cf0db17f491fd366965c82d69a74e6d9aa"
+  }
+}

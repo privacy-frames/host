@@ -32,6 +32,13 @@ never forwards service traffic upstream. The receipt saves request paths, byte
 counts and whether the synthetic marker occurred; it saves no raw body or API key.
 The test-only certificate exception is not runtime configuration.
 
+The receiver records requests and arriving body bytes before completion, so an
+aborted request retains any marker already received. An owned partial-request
+control checks that behavior. A separate TCP reset control verifies recording of
+peer resets before proxy relay setup. Expected `ECONNRESET` and `EPIPE` errors are
+retained as diagnostics; other transport errors fail the fixture. Browser controls
+still require an observed marker, and restricted cases still require its absence.
+
 Run after `npm run build`:
 
 ```sh

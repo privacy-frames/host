@@ -3,7 +3,7 @@
   "scope": "Claims are review obligations, not a blanket confinement certification. Evidence is specific to its saved revision, browser, state and receiver; source digests detect drift, not proof. Policy-10 worker delivery changes have selected new component evidence; earlier receipts retain their historical scopes and do not establish complete current C1-C8 coverage.",
   "source_baseline": "0f0d43cda8bdfbeccfc5846cea7af1d4bba69e7b",
   "artifact_sha256": {
-    ".github/workflows/formal.yml": "ba02f8014b0de8d0f132f11d1932ef5627b7829634c61f2b76aa239e1aa2a259",
+    ".github/workflows/formal.yml": "596aa42b115d10d9ecb213eeb9a2a95700ea187498f2aa8f7d6e7e1c92758586",
     "formal/admission/implementation-results.json": "8484858f6f903ad46049999cf79634027e5f53cd1c6c7a89d7b27cf2606daa4d",
     "formal/admission/model-results.json": "a55c1e6cecd803b18bba88778899e7f57142de3dbd1bb9e87b8330b921e1be63",
     "formal/browser-features.json": "7ed31f047c607772cfdaffed193310c9b14ee4f071dbb37412521ef4af7b443b",
@@ -102,7 +102,7 @@
     "formal/route-review/README.md": "def9f578cf05dbd6ded8f518833ba924d81acfce8a9d43fbd003679987cf77bd",
     "formal/route-review/triage.json": "685b7f8bba8a4bd394ab7c7ecbf3fbf01fe045503ec8b831754e397e11f2630d",
     "formal/runtime-verification/PublicationModel.lean": "73e252a862122b493d8a0e45a1834a0ead1ecdaebf44ceee41cb542b19ac544b",
-    "formal/runtime-verification/README.md": "0e8f297d7bc33c52c685ff1bd4b2c0c1cebcc44f4c92193f18c37304660efb2a",
+    "formal/runtime-verification/README.md": "b4092d36ab47fbc46d60b1153e1cd4fb0a483620bf56ee67333e29dddc7a547a",
     "formal/runtime-verification/RegistrationLifetime.lean": "331eb33dd0d4dc0abd3e2b6b29818b2abee9d97f2267f8ec9d921c449781a2b3",
     "formal/runtime-verification/RegistrationQueue.lean": "4d5d4503935296a4d513984e1441c6a8284a185a553d9b3968a17f8bff38bfd3",
     "formal/runtime-verification/atomic-context-compatibility.json": "731658cca4896ee5c13d5c6ce85cea7924f3af53e8ce2c62fccc0d1186069402",
@@ -112,6 +112,7 @@
     "formal/runtime-verification/blob-worker-identity.json": "a74f50164d2184ac9c077e2fcdd39d0590a9807899886f1f642cd16d813c2bc0",
     "formal/runtime-verification/blob-worker-identity.ts": "2f77260568f723d91ed45c7a08bd374035a8176770151647daf0c19e515fc366",
     "formal/runtime-verification/boundaries.ts": "52342fd479428cf1c376807a6998dfab4d8da8cb28a2b9d72b253b2eb91040d6",
+    "formal/runtime-verification/ci-policy10.json": "e5a7bb72bacd86273b9264f428e1472ac608b98a8d23d26d6ea146061b760cf1",
     "formal/runtime-verification/ci-startup-policy8.json": "92f87107919317b544e8f7324ab8cf90f79bd3aaf3e6b9d7e3500b9d3d2d6fe4",
     "formal/runtime-verification/classic-script-fragments.json": "9ae472beaf4669d1047d530b3530e67e8d5d64c194c8130c201330c007279c75",
     "formal/runtime-verification/document-control-compatibility.json": "9ffd44b02a9bddb946e4e6202e351ce66c62157462ef32957d2ccf3df4d3ec16",
@@ -154,13 +155,14 @@
     "formal/runtime-verification/module-loader-browser.json": "874452e46581125acd42e1aaffa55314982b9e46176c7393ac853ee5259c1f80",
     "formal/runtime-verification/module-loader-browser.ts": "30cb5f94c260c5a5f2948ec44270457f4eafccb7bf95c753bfd492688be38e59",
     "formal/runtime-verification/module-loader-guard-browser.json": "c540d06318750fffb4ad5d0579cbc260c4aa4a5ba1f18a11f903cedf3ec64e7e",
+    "formal/runtime-verification/module-loader-guard-ci-policy10.json": "c5d6063c18f199a409a2e3f72729a6cf0db17f491fd366965c82d69a74e6d9aa",
     "formal/runtime-verification/module-loader-http-root-initial.json": "c77f73be02b6b9cec166479184813ece461ea2b68621d35972cc8bdab83d324d",
     "formal/runtime-verification/parent-document-broker.json": "346ad693f78fa667cbdcd2c8e04efe300c67fbd8f7a2429b410701b74a741921",
     "formal/runtime-verification/parent-document-compatibility.json": "968ed80bdb719720283c13c2c861a4bbfe3e2081cb6a00dc20aa85b46f918ec6",
     "formal/runtime-verification/policy10-corpus.log": "d8c5648cc7f39100c1ea9d9b08535ddc8546e523310cde0de6e7a14b7329a21a",
     "formal/runtime-verification/policy10-full-test.log": "2b22890a1a7800d7bca59c2320eb42243b75b8d7421ff6f046cd7b432e8c79f0",
     "formal/runtime-verification/policy10-unit-test.log": "a36ee38815c5bbff363ebc469b2116a7b97141be2533b9aff1e86b0c8920b3bf",
-    "formal/runtime-verification/policy10-validation.json": "e2dbadaa5dd5d93e76a4cd9ee37060d47f3235c97dd4671837e60fc2049a3650",
+    "formal/runtime-verification/policy10-validation.json": "42c64955155b03c3152638e385102a0d70b8d0f49f6a4d7bf79ce22b82b0538f",
     "formal/runtime-verification/policy9-validation.json": "b01610f0db1bd66ab2be6b32b64abafc871547221ef8cab9567d2d5dd52c012d",
     "formal/runtime-verification/private-channel-compatibility.json": "f06b56152180f692553814ec86cf548bdc8e2f3195c9bd4aae59ce3d615fedd5",
     "formal/runtime-verification/private-parent-channel.md": "259d59b6ff7e754321f24b04aa21de7308c186e6286ef87da5ca5436c50bf062",
@@ -182,6 +184,7 @@
     "formal/runtime-verification/root-content-compatibility.json": "3d132bf67e97e4ca98f3239dc04413c50dffc7fc8b82dc12a17977f49959750d",
     "formal/runtime-verification/script-url-gate.md": "57e46825db49229f8a309a7cc1d14f36a63ef5e3e0c640d005e5df970b850bcf",
     "formal/runtime-verification/script-url-validation.json": "baf573949ac000369db1b8a5c77a2eb9234013c2d5e098ebc49a028a9aa5cfa8",
+    "formal/runtime-verification/service-worker-maintenance-ci-policy10.json": "55667e0a3f1964a18a42f1dc0308b8397f92b960840fb8b26073993791692f8a",
     "formal/runtime-verification/service-worker-maintenance-ci-policy8.json": "eda13c9ee044651e360017bcebb16fe24c70aab4eed97bdcb6fb7bb3f2fc29b5",
     "formal/runtime-verification/service-worker-maintenance-ci-policy9.json": "c66a8ef836425178c7b802f76c1a150e3cffd3c1b9be26897a7cdc8cfa94e5e8",
     "formal/runtime-verification/service-worker-maintenance-policy6.json": "80042d68bdfbffbbfbb76a471f2867b0e4f5862e2973004feb098d7ee22f37d3",
@@ -190,6 +193,7 @@
     "formal/runtime-verification/service-worker-maintenance.json": "c213efb9f01c673f4a7886c74903e4c86134c2de5a39516b291df9677c5d1eed",
     "formal/runtime-verification/service-worker-maintenance.md": "5e0cc9e71c93b5bd07cc3206628bdef8940cc1d9123a04898ee45f340e08b28b",
     "formal/runtime-verification/service-worker-maintenance.ts": "a41bf1b0dce84502b173badb24ef7d035d4a4ac9dd7583aa37f9d4e9f776ae1c",
+    "formal/runtime-verification/service-worker-startup-stale-ci-policy10.json": "9efdbbaba00731fb37b33c9f1d0cd27fa7bd58ae45b6d7cf65a8cf7884831514",
     "formal/runtime-verification/service-worker-startup-stale-ci-policy9.json": "6072088f7092acaec712cea4032229f1e640ab8a58628118b8b562a380786cc3",
     "formal/runtime-verification/service-worker-startup-stale-policy10-generated-initial.json": "daa57f8c0180ed155f0a8c5e19519bf4119a5138f1735537118e47e6bc0c4063",
     "formal/runtime-verification/service-worker-startup-stale-policy7.json": "4d3f162e0361faa6b306a7c9b8daf023177950e3944c261ad3beab4755dcfc26",
@@ -202,13 +206,17 @@
     "formal/runtime-verification/spelling-dom-browser.ts": "1c66cc63009bce57fdd14f3b46cd4ee43b134af555268247bd6a5e61852cff60",
     "formal/runtime-verification/spelling-removal-corpus-initial.json": "5fbff9d2c248a70c385d01f03eb0bdf67bf7bc9d2fb886edf606b3fb875f0d6c",
     "formal/runtime-verification/ua-spelling-assessment.json": "b60c7d9a2e78239b3091416cebe12080ae66f4d281dad27fec8a3adaaa69cfa0",
-    "formal/runtime-verification/ua-spelling-browser.json": "840f49d1e247116fd5cb99450a1973006cdfd877a0e26060b9871c3e6c2ede24",
-    "formal/runtime-verification/ua-spelling-browser.ts": "09ab9738634ed6991268d61448ba4ab23714fed9f24f73a87280f5f4b4e7094a",
+    "formal/runtime-verification/ua-spelling-browser.json": "a3c894d55a43f900768c7a60968039ea7271e684627f331be85343043bfdcda9",
+    "formal/runtime-verification/ua-spelling-browser.ts": "6211a963f4fe92d7a172ed2d729dcebb8c7c3b9bb56b883fcbdba245d4050497",
     "formal/runtime-verification/ua-spelling-policy8-before.json": "35be1de996b5d688439386404629a7b1b724b0013c41e132b870b57026fd9dc9",
-    "formal/runtime-verification/ua-spelling.md": "7e42061c37d0c97253fd45b69ad5e6846c46ca66da2dd237c8551bd1202ca273",
+    "formal/runtime-verification/ua-spelling.md": "bca7b41c243b60a663bc82e50a17775beeb94510897197d0bc619aaabcb7d44e",
     "formal/runtime-verification/webspec-assessment.json": "2afb6343fc9523bfcaaf2ce409ee16401dfc65ab9172e0d83549212491fd3ed8",
     "formal/runtime-verification/webspec-assessment.md": "dec1fc859e4ab1eececb53a4d4e0250e1d641f4d155fe4bcc7380cd2d1118553",
     "formal/runtime-verification/webspec-assessment.ts": "a1b1730235d0a1730e8eb6ca646dd4573f6550c3fec6cf92c375e29bcd9a509d",
+    "formal/runtime-verification/window-module-policy-event-snapshot-initial.json": "8f033d5f26ad423ed8d853f675bd217a02bc50f0dcf1ca1fc88d5342295c17ca",
+    "formal/runtime-verification/window-module-policy.json": "6086e4493c7c88b72f91aabb082a3fcdc56d5f23d53e29a8d765ef23a1c02c33",
+    "formal/runtime-verification/window-module-policy.md": "d19673be79730ac1a47f086083b874492f123c7f37655ceb38f714dfab450661",
+    "formal/runtime-verification/window-module-policy.ts": "441cfad4141d68046507e378971f0aa9699b8ddbb8eecab5949feca79dfd0998",
     "formal/runtime-verification/worker-broker-compatibility.json": "818af29bc66837c77d9a24fa1717924b1b3f6a7273a608cf715996a0e6c11489",
     "formal/runtime-verification/worker-broker-validation.json": "a0850f7f1fa2d7a0ff5fe9a77c3557ad47f693ff60687a5bf76bd84d814f0bea",
     "formal/runtime-verification/worker-caller-browser.json": "16173e8ab3a8cb7c9fa52decff6c296273fbedcb338de7a0e2b48d6d13cafae2",
@@ -313,6 +321,7 @@
     "src/runtime/enforcement/script-urls.ts": "2c43c31ab427d7f7f0ded3a7b41539cc8b1c5981c2a55b974a318d7a7a878d66",
     "src/runtime/enforcement/scripts.ts": "f4395182ce91a96d2fa69e0a5a1eaf388f126a0f322af345c27ce75384f2d0f8",
     "src/runtime/guard.ts": "208c30e160e4f944a027d55ae69d9cd40c1c7e915b92e77b950023dd18b4120b",
+    "src/runtime/intrinsics.ts": "77be8492843077c3667132782cd1d9b68caa4c793d206dea7d858e4004977883",
     "src/runtime/module-loader.ts": "e081ec951f1d33e7a969ebb66237efedb91525e98cd7a207f8ebbdffe4b13e35",
     "src/runtime/modules.ts": "156be04a5883b2e36c14615672deb6351bb4f303d0375768689e54e03d1106cf",
     "src/runtime/private-channel.ts": "923c307092870e32dde49079e5174abe694c45b2282edb8451d200dcc2abacae",
@@ -1643,6 +1652,15 @@
             "formal/runtime-verification/service-worker-maintenance.ts",
             "formal/runtime-verification/service-worker-startup-stale.json",
             "formal/runtime-verification/policy10-validation.json"
+          ]
+        },
+        {
+          "kind": "discovery",
+          "description": "Independent CI at revision 64a1f0b completes 64 fresh samples with working native controls and zero confined HTTP. Its 32 forced-age samples retain the two generated-native-import maintenance effects. Native HTTP admission and complete C4 remain open.",
+          "paths": [
+            "formal/runtime-verification/ci-policy10.json",
+            "formal/runtime-verification/service-worker-maintenance-ci-policy10.json",
+            "formal/runtime-verification/service-worker-startup-stale-ci-policy10.json"
           ]
         }
       ],
@@ -3092,6 +3110,14 @@
             "formal/runtime-verification/module-loader-browser.ts",
             "formal/runtime-verification/module-loader-assessment.md"
           ]
+        },
+        {
+          "kind": "confined_test",
+          "description": "CI at revision 64a1f0b independently completes all 24 actual-preparation worker component cases. Fixture resource and verification authority still do not establish the complete installed-host protocol.",
+          "paths": [
+            "formal/runtime-verification/module-loader-guard-ci-policy10.json",
+            "formal/runtime-verification/ci-policy10.json"
+          ]
         }
       ],
       "open_obligations": [
@@ -3166,6 +3192,16 @@
             "formal/runtime-verification/spelling-removal-corpus-initial.json",
             "formal/runtime-verification/spelling-coercion-initial.json",
             "formal/runtime-verification/spelling-callback-control-initial.json",
+            "formal/runtime-verification/ua-spelling.md"
+          ]
+        },
+        {
+          "kind": "discovery",
+          "description": "The previous CI receiver terminated on an unhandled socket reset and produced no completed service receipt. The current recorder handles and retains peer-close errors, rejects unexpected transport errors, and records bodies as bytes arrive. Real TCP-reset and partial-HTTP controls pass; the aborted request retains its already received synthetic marker. All six browser comparisons pass locally with the actual runtime and setter omission. This does not establish other browser configurations or services.",
+          "paths": [
+            "formal/runtime-verification/ci-policy10.json",
+            "formal/runtime-verification/ua-spelling-browser.ts",
+            "formal/runtime-verification/ua-spelling-browser.json",
             "formal/runtime-verification/ua-spelling.md"
           ]
         }
@@ -3245,6 +3281,58 @@
         "Production CSP still permits runtime-origin HTTP. Establish local-only native script admission before application execution in every supported context, including generated native imports.",
         "Complete the native semantic comparison for import attributes, phase imports, module identity and lifetime behavior; preserve unchanged applications.",
         "Prove caller ownership and model correspondence, and establish browser-effect coverage, retained-state conditions and composition for C1-C8."
+      ],
+      "control_status": {
+        "native_control": "recorded",
+        "confined_test": "recorded",
+        "fault_control": "not-recorded"
+      }
+    },
+    {
+      "id": "window_module_policy_prerequisite",
+      "title": "Local module delivery under a Window native script policy",
+      "disposition": "unverified",
+      "preconditions": "An owned Window receives intrinsic and Trusted Types preparation, registers a fixture controller and obtains fixed local Responses. A later native CSP denies HTTP scripts and connections. The fixture is not the complete production Window preparation or actor-authentication protocol.",
+      "enforcement": "The production module loader delivers the fixed graph using its local fetch/source hooks. An additional native policy independently rejects HTTP import and mutable-registry HTTP selection; removal of its meta element does not remove enforcement.",
+      "source_paths": [
+        "src/runtime/module-loader.ts",
+        "src/runtime/modules.ts",
+        "src/runtime/intrinsics.ts",
+        "src/runtime/enforcement/script-urls.ts",
+        "src/runtime/enforcement/application-policies.ts",
+        "src/shared/script-url-policy.ts"
+      ],
+      "evidence": [
+        {
+          "kind": "native_control",
+          "description": "Native graph and unrestricted import/registry controls complete in Chromium, Firefox and forced-age Firefox. Real HTTP receiver requests calibrate the two import routes.",
+          "paths": [
+            "formal/runtime-verification/window-module-policy.ts",
+            "formal/runtime-verification/window-module-policy.json"
+          ]
+        },
+        {
+          "kind": "confined_test",
+          "description": "All eighteen component cases pass with stable source, build and runner inputs. Restricted local graphs preserve the selected live state, identity, dynamic import, import.meta and top-level-await observations. Native HTTP attempts reject with actual policy events and zero observed HTTP during the operation and three subsequent seconds.",
+          "paths": [
+            "formal/runtime-verification/window-module-policy.json",
+            "formal/runtime-verification/window-module-policy.md",
+            "formal/runtime-verification/policy10-validation.json"
+          ]
+        },
+        {
+          "kind": "discovery",
+          "description": "An initial eleven-case fixture receipt snapshots the returned event array before Firefox delivers a queued policy event. The corrected runner retrieves events after its observation window. The initial source is identified by digest only; this diagnostic is not evidence of a browser policy failure or a complete production comparison.",
+          "paths": [
+            "formal/runtime-verification/window-module-policy-event-snapshot-initial.json",
+            "formal/runtime-verification/window-module-policy.md"
+          ]
+        }
+      ],
+      "open_obligations": [
+        "Integrate local initial and dynamic script delivery before production Window publication, preserving classic global declarations, handlers, module identity and unchanged applications.",
+        "Apply and preserve the native policy across all admitted contexts, including shared/publisher roots, child documents, worklets, retained registrations and generated native imports.",
+        "Prove production resource authority, caller ownership, captured operations, lifecycle correspondence and browser-effect coverage before composing C1-C8."
       ],
       "control_status": {
         "native_control": "recorded",

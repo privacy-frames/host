@@ -118,6 +118,20 @@
       "nativeAndConfinedTasks": 32,
       "offlineReloads": 16,
       "sourceAndArtifactsStable": true
+    },
+    "windowModulePolicyPrerequisite": {
+      "command": "node formal/runtime-verification/window-module-policy.ts",
+      "exitCode": 0,
+      "cases": 18,
+      "scope": "Window script-loader component with intrinsic and Trusted Types preparation, fixed fixture resources and additional native CSP. Full Window preparation and production authority are not established."
+    },
+    "spellingReceiverCalibration": {
+      "command": "node formal/runtime-verification/ua-spelling-browser.ts",
+      "exitCode": 0,
+      "cases": 6,
+      "resetControlCaptured": true,
+      "partialControlCaptured": true,
+      "scope": "Normal Chromium profile; synthetic markers, owned local receiver and actual runtime setter omission. Other configurations and services remain open."
     }
   },
   "evidence": {
@@ -129,10 +143,13 @@
     "formal/runtime-verification/authority-predicate.json": "976f436316b3ed9e634fd4df1097f7e51ac0499a803ff704ce434f9a235543ea",
     "formal/runtime-verification/service-worker-startup-stale.json": "c298688ffe8e83fd88da81fc266b48e3b65a676e0b44dbe46ee375506a4ec73e",
     "results/trusted-runtime/compatibility-local.json": "2894aa283f11748c756f48344c7b0112cd31ec4b2b563e568935b3df5bade453",
-    "formal/runtime-verification/policy10-corpus.log": "d8c5648cc7f39100c1ea9d9b08535ddc8546e523310cde0de6e7a14b7329a21a"
+    "formal/runtime-verification/policy10-corpus.log": "d8c5648cc7f39100c1ea9d9b08535ddc8546e523310cde0de6e7a14b7329a21a",
+    "formal/runtime-verification/window-module-policy.json": "6086e4493c7c88b72f91aabb082a3fcdc56d5f23d53e29a8d765ef23a1c02c33",
+    "formal/runtime-verification/ua-spelling-browser.json": "a3c894d55a43f900768c7a60968039ea7271e684627f331be85343043bfdcda9",
+    "formal/runtime-verification/ci-policy10.json": "e5a7bb72bacd86273b9264f428e1472ac608b98a8d23d26d6ea146061b760cf1"
   },
   "pending": [
-    "Revalidate fresh-registration maintenance and complete native policy integration across every supported context.",
+    "Integrate independent native script policy across every supported context and revalidate the resulting release candidate.",
     "Complete implementation caller ownership, lifecycle refinement, browser coverage and composition obligations."
   ]
 }

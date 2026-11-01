@@ -19,6 +19,13 @@ quiet. Generated native imports still cause two private-bit-dependent requests
 for the fixed runtime service-worker script. The command fails, retaining the
 counterexample that the independent native policy must address.
 
+The Window module-policy prerequisite now passes eighteen native component cases
+under intrinsic and Trusted Types preparation. Local graphs preserve the selected
+semantics; the added native policy rejects HTTP imports and registry bypasses.
+The next production change must prepare local initial and dynamic scripts before
+publication, apply that policy, and preserve it in every supported child context.
+The fixture does not establish full Window preparation or resource authority.
+
 The target remains [C1–C8](../threat-model.md): confined application activity cannot
 cause a remote request or connection, including to the runtime origin. Whether
 and when a request occurs count as observations. Private state may already exist
