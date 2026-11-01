@@ -1,5 +1,12 @@
 # Runtime confinement verification
 
+The [policy-11 candidate](window-script-inventory.md) supplies validated JavaScript
+inventories for root and child Windows using the worker MIME classifier. Its
+[validation](policy11-validation.json) records 202 unit checks, the full regression
+suite, all eight unchanged application comparisons and sixteen offline reloads
+against stable source and build inputs. Local Window delivery and production
+native HTTP denial remain pending.
+
 This work implements the eight-stage plan for a compositional confinement
 argument. The baseline is host revision
 `6a2ce294d3d8717e7a6b207d064891c45fea4e11`. Development uses the
@@ -27,7 +34,7 @@ maintenance requests. All eight unchanged applications pass their selected
 native/confined tasks in both browsers and sixteen offline reloads, with stable
 source and build inputs. Production native HTTP admission remains open.
 
-The [Window module-policy comparison](window-module-policy.md) now completes
+The policy-10 [Window module-policy comparison](window-module-policy.md) completes
 eighteen component cases, including working native HTTP controls and local graph
 semantics. Its restricted cases deny native imports and mutable-registry HTTP
 selection. Full Window preparation and production policy integration remain open.

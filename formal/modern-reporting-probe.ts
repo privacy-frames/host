@@ -57,7 +57,7 @@ const fixture = await build({
         application: 'modern-report-probe', applicationURL,
         scriptNonce: 'fixture', enableDocumentContexts: true,
       });
-      realm.admitContent({
+      realm.admitContent({scripts: [],
         installationGeneration: 'generation', aliases: [], source: applicationURL,
       });
       globalThis.prepared = true;

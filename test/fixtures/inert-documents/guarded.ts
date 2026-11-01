@@ -46,6 +46,7 @@ window.runInertProbe = async (receiver: string): Promise<ProbeResult> => {
     scriptNonce: 'inert-guard',
     enableDocumentContexts: true,
   }).admitContent({
+    scripts: [],
     source: location.origin + '/app/',
     installationGeneration: 'generation-a',
     aliases: [[location.origin + '/local.svg', location.origin + '/local.svg']],

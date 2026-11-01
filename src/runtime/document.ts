@@ -4,6 +4,7 @@ import { type DocumentContentInput } from './contexts/document-content-types.ts'
 import { resourceURL } from '../shared/runtime-url.ts';
 import type { Installation } from '../shared/types.ts';
 import { manifestURL } from './pwa.ts';
+import { scriptResourceURLs } from './script-resources.ts';
 export function alias(
   app: Installation,
   input: string,
@@ -67,6 +68,10 @@ export function prepareRuntimeDocument(
     source: app.source,
     documentBase,
     aliases,
+    scripts: scriptResourceURLs(
+      app.resources,
+      (resource) => resourceURL(app, resource.path, runtime).href,
+    ),
     manifestURL: manifestURL(app, runtime).href,
     document,
   });

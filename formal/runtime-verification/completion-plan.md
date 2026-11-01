@@ -26,6 +26,14 @@ The next production change must prepare local initial and dynamic scripts before
 publication, apply that policy, and preserve it in every supported child context.
 The fixture does not establish full Window preparation or resource authority.
 
+Policy 11 now supplies a validated installed-script inventory to root and child
+Windows, sharing the worker MIME classifier. The unknown-input parser rejects
+missing or sparse lists, duplicate entries and addresses outside the admitted
+resource map. Its 202 unit checks, full regression suite and unchanged eight-app
+comparison pass with sixteen offline reloads and stable source/build inputs.
+This is the protocol input for local Window delivery; that delivery and the
+independent native policy still need implementation before publication.
+
 The target remains [C1–C8](../threat-model.md): confined application activity cannot
 cause a remote request or connection, including to the runtime origin. Whether
 and when a request occurs count as observations. Private state may already exist

@@ -4,6 +4,7 @@ import {
   parseDocumentRegistration,
   parseDocumentBootstrap,
   parseDocumentContentInput,
+  parseWindowContentMetadata,
 } from '../src/runtime/contexts/document-protocol.ts';
 import { CONTEXT_POLICY_VERSION } from '../src/runtime/contexts/model.ts';
 
@@ -29,9 +30,48 @@ const configuration = {
   content: {
     installationGeneration: 'host-generation',
     aliases: [['https://publisher.test/asset.js', applicationURL + 'asset.js']],
+    scripts: [applicationURL + 'asset.js'],
     source: 'https://publisher.test/',
   },
 };
+
+test('Window script inventories require unique admitted canonical resources', () => {
+  assert.deepEqual(
+    Array.from(parseWindowContentMetadata(configuration.content, applicationURL).scripts),
+    configuration.content.scripts,
+  );
+  for (const scripts of [
+    undefined,
+    null,
+    'asset.js',
+    [undefined],
+    new Array(1),
+    ['https://publisher.test/asset.js'],
+    [applicationURL + 'other.js'],
+    [applicationURL + 'asset.js#secret'],
+    [applicationURL + 'asset.js?secret=1'],
+    [applicationURL + 'asset.js', applicationURL + 'asset.js'],
+  ])
+    assert.throws(() =>
+      parseWindowContentMetadata({ ...configuration.content, scripts }, applicationURL),
+    );
+  const accessor = { ...configuration.content };
+  Object.defineProperty(accessor, 'scripts', {
+    get() {
+      throw new Error('Untrusted accessor was invoked');
+    },
+  });
+  assert.throws(
+    () => parseWindowContentMetadata(accessor, applicationURL),
+    /requires data properties/,
+  );
+  assert.throws(() =>
+    parseWindowContentMetadata(
+      { ...configuration.content, aliases: new Array(1), scripts: [] },
+      applicationURL,
+    ),
+  );
+});
 
 test('registration addresses are fixed to the owning application, context and media type', () => {
   assert.deepEqual(

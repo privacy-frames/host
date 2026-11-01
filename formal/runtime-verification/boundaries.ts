@@ -98,6 +98,10 @@ export const boundaries: readonly Boundary[] = [
       'Deliver admitted JavaScript graphs locally, preserve import semantics, and establish native HTTP denial independently of mutable loader records.',
     invariants: ['C2', 'C3', 'C4', 'C5', 'C8'],
     sources: [
+      'src/runtime/script-resources.ts',
+      'src/runtime/document.ts',
+      'src/runtime/contexts/document-protocol.ts',
+      'src/runtime/contexts/document-controller.ts',
       'src/runtime/module-loader.ts',
       'src/runtime/modules.ts',
       'src/runtime/resource-fetch.ts',

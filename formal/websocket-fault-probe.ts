@@ -20,7 +20,7 @@ const input = `
     application: 'websocket-fault-probe', applicationURL,
     scriptNonce: 'fixture', enableDocumentContexts: true,
   });
-  realm.admitContent({ installationGeneration: 'generation', aliases: [], source: applicationURL });
+  realm.admitContent({scripts: [], installationGeneration: 'generation', aliases: [], source: applicationURL });
   globalThis.prepared = true;
 `;
 

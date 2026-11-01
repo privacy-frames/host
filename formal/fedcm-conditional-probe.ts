@@ -42,7 +42,7 @@ async function compile(sourceRoot) {
           scriptNonce: 'fixture',
           enableDocumentContexts: true,
         });
-        realm.admitContent({
+        realm.admitContent({scripts: [],
           installationGeneration: 'generation',
           aliases: [],
           source: location.origin + '/app/',

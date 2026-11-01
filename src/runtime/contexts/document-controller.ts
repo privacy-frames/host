@@ -1,6 +1,7 @@
 import { strings, internalRecord } from '../../shared/primordials.ts';
 import { parseDocumentSurface } from './document-surface.ts';
-import { applicationURL } from '../../shared/runtime-url.ts';
+import { applicationURL, resourceURL } from '../../shared/runtime-url.ts';
+import { scriptResourceURLs } from '../script-resources.ts';
 import { response } from '../response-policy.ts';
 import { getApp, getResource } from '../storage.ts';
 import type { StoredInstallation } from '../storage.ts';
@@ -308,6 +309,10 @@ export function createDocumentController(options: DocumentControllerOptions) {
         content: internalRecord({
           installationGeneration: app.generation,
           aliases: content.input.aliases.map(([source, mapped]) => [source, mapped]),
+          scripts: scriptResourceURLs(
+            app.resources,
+            (resource) => resourceURL(app, resource.path, base).href,
+          ),
           source: app.source,
           documentBase: content.input.baseURL || content.input.sourceURL,
         }),

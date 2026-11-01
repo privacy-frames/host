@@ -25,7 +25,7 @@ const fixture = await build({
         application:'web-install-probe', applicationURL,
         scriptNonce:'fixture', enableDocumentContexts:true,
       });
-      realm.admitContent({installationGeneration:'generation', aliases:[], source:applicationURL});
+      realm.admitContent({scripts: [],installationGeneration:'generation', aliases:[], source:applicationURL});
       globalThis.prepared = true;
     `,
   },

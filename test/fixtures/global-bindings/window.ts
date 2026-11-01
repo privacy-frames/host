@@ -10,6 +10,7 @@ prepareWindowRealm({
   applicationURL: location.origin + '/app/',
   scriptNonce: 'fixture',
 }).admitContent({
+  scripts: [],
   installationGeneration: 'generation-a',
   source: location.origin + '/app/',
   aliases: [],

@@ -14,7 +14,7 @@ const input = `
 import {prepareWindowRealm} from './src/runtime/contexts/window-realm.ts';
 const applicationURL=location.origin+location.pathname;
 const realm=prepareWindowRealm({application:'preload-fault',applicationURL,scriptNonce:'fixture',enableDocumentContexts:true});
-realm.admitContent({installationGeneration:'generation',aliases:[],source:applicationURL});
+realm.admitContent({scripts: [],installationGeneration:'generation',aliases:[],source:applicationURL});
 globalThis.prepared=true;`;
 async function fixture(mutate: boolean) {
   let mutations = 0;

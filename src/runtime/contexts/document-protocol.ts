@@ -1,4 +1,10 @@
-import { strings, ownDescriptor, internalRecord } from '../../shared/primordials.ts';
+import {
+  strings,
+  ownDescriptor,
+  internalRecord,
+  internalSet,
+  internalArray,
+} from '../../shared/primordials.ts';
 import { parseDocumentSurface, type DocumentSurface } from './document-surface.ts';
 import type { WindowContentMetadata } from './window-realm.ts';
 import type { DocumentContentInput } from './document-content-types.ts';
@@ -63,7 +69,8 @@ function address(value: unknown, webOnly = false): string {
 function aliases(value: unknown, applicationURL: string): [string, string][] {
   if (!Array.isArray(value) || value.length > 1000)
     throw new Error('Invalid document resource graph');
-  return value.map((entry) => {
+  const result = internalArray<[string, string]>();
+  for (const entry of value) {
     if (!Array.isArray(entry) || entry.length !== 2)
       throw new Error('Invalid document resource alias');
     const source = address(entry[0], true);
@@ -74,8 +81,9 @@ function aliases(value: unknown, applicationURL: string): [string, string][] {
       !strings.startsWith(target, applicationURL)
     )
       throw new Error('Document resource leaves its application');
-    return [source, target];
-  });
+    result.push([source, target]);
+  }
+  return result;
 }
 export function parseDocumentRegistration(
   value: unknown,
@@ -105,9 +113,24 @@ export function parseWindowContentMetadata(
   applicationURL: string,
 ): WindowContentMetadata {
   const documentBase = field(value, 'documentBase');
+  const resources = aliases(field(value, 'aliases'), applicationURL);
+  const scripts = field(value, 'scripts');
+  if (!Array.isArray(scripts) || scripts.length > LIMITS.files)
+    throw new Error('Invalid document script inventory');
+  const targets = internalSet(resources.map((entry) => entry[1]));
+  const seen = internalSet<string>();
+  const checkedScripts = internalArray<string>();
+  for (const input of scripts) {
+    const url = address(input, true);
+    if (!targets.has(url) || seen.has(url))
+      throw new Error('Document script is not a unique admitted resource');
+    seen.add(url);
+    checkedScripts.push(url);
+  }
   return internalRecord({
     installationGeneration: string(field(value, 'installationGeneration')),
-    aliases: aliases(field(value, 'aliases'), applicationURL),
+    aliases: resources,
+    scripts: checkedScripts,
     source: address(field(value, 'source'), true),
     ...(documentBase === undefined
       ? internalRecord({})

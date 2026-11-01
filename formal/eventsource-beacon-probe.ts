@@ -20,7 +20,7 @@ const fixture = await build({
     const realm = prepareWindowRealm({ application: 'effect-probe',
       applicationURL: location.origin + '/app/', scriptNonce: 'fixture',
       enableDocumentContexts: true });
-    realm.admitContent({ installationGeneration: 'generation', aliases: [],
+    realm.admitContent({scripts: [], installationGeneration: 'generation', aliases: [],
       source: location.origin + '/app/' });
     globalThis.prepared = true;
   `,

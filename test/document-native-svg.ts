@@ -10,7 +10,7 @@ const nonce = 'native-svg-bootstrap';
 const csp = `sandbox allow-scripts allow-same-origin allow-forms;default-src 'none';script-src 'self' blob: 'nonce-${nonce}' 'unsafe-eval';connect-src 'self';img-src 'self' blob: data:;style-src 'unsafe-inline';frame-src 'self';worker-src 'self'`;
 const compiled = await build({
   stdin: {
-    contents: `import {prepareWindowRealm} from './src/runtime/contexts/window-realm.ts';const prepared=prepareWindowRealm({application:'native-svg-app',applicationURL:${JSON.stringify(origin + '/child')},scriptNonce:${JSON.stringify(nonce)}});prepared.admitContent({installationGeneration:'fixture-generation',aliases:[[${JSON.stringify(origin + '/resource')},${JSON.stringify(origin + '/resource')}],[${JSON.stringify(origin + '/helper.js')},${JSON.stringify(origin + '/helper.js')}]],source:${JSON.stringify(origin + '/child')}});Object.defineProperty(window,'__commonPreparation',{value:true});`,
+    contents: `import {prepareWindowRealm} from './src/runtime/contexts/window-realm.ts';const prepared=prepareWindowRealm({application:'native-svg-app',applicationURL:${JSON.stringify(origin + '/child')},scriptNonce:${JSON.stringify(nonce)}});prepared.admitContent({scripts: [${JSON.stringify(origin + '/helper.js')}],installationGeneration:'fixture-generation',aliases:[[${JSON.stringify(origin + '/resource')},${JSON.stringify(origin + '/resource')}],[${JSON.stringify(origin + '/helper.js')},${JSON.stringify(origin + '/helper.js')}]],source:${JSON.stringify(origin + '/child')}});Object.defineProperty(window,'__commonPreparation',{value:true});`,
     resolveDir: process.cwd(),
   },
   banner: { js: '"use strict";' },

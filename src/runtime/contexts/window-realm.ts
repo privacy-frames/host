@@ -31,6 +31,7 @@ import { prepareScriptURLs } from '../enforcement/script-urls.ts';
 export interface WindowContentMetadata {
   installationGeneration: string;
   aliases: [string, string][];
+  scripts: string[];
   source: string;
   documentBase?: string;
 }

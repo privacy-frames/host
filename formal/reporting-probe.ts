@@ -29,7 +29,7 @@ const fixture = await build({
         scriptNonce: 'fixture',
         enableDocumentContexts: true,
       });
-      realm.admitContent({
+      realm.admitContent({scripts: [],
         installationGeneration: 'generation',
         aliases: [],
         source: applicationURL,

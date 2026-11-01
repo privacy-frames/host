@@ -1,9 +1,9 @@
 {
   "provenance": {
-    "capturedAt": "2026-11-01T08:32:04.669Z",
-    "revision": "0e6c9f6c51b5896f438c5755ef27be4f4c63387e",
+    "capturedAt": "2026-11-01T09:28:20.452Z",
+    "revision": "dea998d1049840609fd26e4007574ca75136cd8c",
     "dirty": true,
-    "sourceSHA256": "bbc340ba3de2fdd537dd35f7781b9de6366809c54f57e387831f6e9abe48e552",
+    "sourceSHA256": "6a481c87b830db68ac289ebd44741fbd5f6e34831d414837c12740ae01ed14b1",
     "runner": "test/publisher-contexts.ts",
     "runnerSHA256": "8f66e97fda6b329d12ca9eb8e144ea4d4c7e0e6b257401ec197bd59c46bf83f3",
     "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
@@ -16,26 +16,26 @@
       "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-manager/sw.js": "270f1d3d95420814ba604c742304cd02878608ef800f226efb3d8b94f777a967",
+      "dist-manager/sw.js": "c66302f492421194cca0a773440e9859a88d7fe4f4f207c7f0d6e24618e08f9d",
       "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
       "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
       "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
-      "dist-runtime/document-guard.js": "45d81712545fbe1877c6acdd0f78dcca8d8309d1e4231b117b45c4ae37e2a64f",
-      "dist-runtime/guard.js": "6cb478106855c5f5ca28b4f0a2bf74bebb5b0f923b851ebe08acfef2fa6ea3a2",
+      "dist-runtime/document-guard.js": "abdf53ef6ca157eda9a494990e5d4ab01f0a78eb2a85da3156648c812555d37d",
+      "dist-runtime/guard.js": "d416c392356f10f1d4e0fe9f350ee8d80d9362746e30e673c5b9f12e7a787703",
       "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
       "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
-      "dist-runtime/publisher-worker-guard.js": "40c387a418a9407dd0afab01e3600220776b34ea34fdb437a65efd5fd77b757e",
+      "dist-runtime/publisher-worker-guard.js": "2dc749bd7ab5ffe2a5782fa2985da04913827e05dc221128f93b9408626ef0b3",
       "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-runtime/shared-worker-guard.js": "dba8b89c2c6fb4256307a7f62f427f60a29e102dc124ae7c72c2f8f658cb89ff",
-      "dist-runtime/sw.js": "708fb3d8324b45a5e419f107ef79f84332c40175d72161e4533ac81098ae5bb5",
+      "dist-runtime/shared-worker-guard.js": "b6bde12d77632c03ae46ac96a2b772ef054eab3c9edf0edca324ad10746b581f",
+      "dist-runtime/sw.js": "5a2c6e71a5ed9cd3f350ec999a81eaad5a61f742c0f80d9f3e53ed72297e8d11",
       "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
       "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
       "dist-installation/index.html": "3ca67c9966dd6eaaddb08a331c4c422a70d79bed1acecddada56764ba4ac8e5f",
-      "dist-installation/installation.js": "3f6fc6dc876e1ac2aa1430f003f602ec980cf437fc9132734e136269df63ca3d"
+      "dist-installation/installation.js": "6b1e23ff06bb695a0f42773f8dd75b56f3e46f2ef338cac3b04845b6b1b7401f"
     }
   },
   "browsers": [
@@ -43,12 +43,12 @@
       "name": "chromium",
       "version": "153.0.8010.12",
       "registration": {
-        "scope": "http://127.0.0.1:40723/publisher-lab/",
+        "scope": "http://127.0.0.1:42991/publisher-lab/",
         "controller": true
       },
       "physicalRegistration": {
-        "scope": "http://127.0.0.1:40723/publisher-lab/",
-        "script": "http://127.0.0.1:40723/publisher-lab/foreground.js",
+        "scope": "http://127.0.0.1:42991/publisher-lab/",
+        "script": "http://127.0.0.1:42991/publisher-lab/foreground.js",
         "privateReads": 0,
         "publicReads": 6
       },
@@ -70,7 +70,7 @@
         "denied": true,
         "external": true,
         "clients": [
-          "c743f863-8c16-4e79-9a63-58935288df59"
+          "6978b7dd-0589-4abc-b70d-1ffd227a1515"
         ],
         "seen": []
       },
@@ -99,8 +99,8 @@
         "denied": true,
         "external": true,
         "clients": [
-          "56a46ad6-2e75-4e85-a14f-b7fbcdb0997f",
-          "c743f863-8c16-4e79-9a63-58935288df59"
+          "124402c8-6f94-461a-bfc3-6bfadb887ed2",
+          "6978b7dd-0589-4abc-b70d-1ffd227a1515"
         ],
         "seen": [
           "/publisher-lab/value.txt",
@@ -131,8 +131,8 @@
         "denied": true,
         "external": true,
         "clients": [
-          "56a46ad6-2e75-4e85-a14f-b7fbcdb0997f",
-          "c743f863-8c16-4e79-9a63-58935288df59"
+          "124402c8-6f94-461a-bfc3-6bfadb887ed2",
+          "6978b7dd-0589-4abc-b70d-1ffd227a1515"
         ],
         "seen": []
       },
@@ -145,12 +145,12 @@
       "name": "firefox",
       "version": "155.0",
       "registration": {
-        "scope": "http://127.0.0.1:40723/publisher-lab/",
+        "scope": "http://127.0.0.1:42991/publisher-lab/",
         "controller": true
       },
       "physicalRegistration": {
-        "scope": "http://127.0.0.1:40723/publisher-lab/",
-        "script": "http://127.0.0.1:40723/publisher-lab/foreground.js",
+        "scope": "http://127.0.0.1:42991/publisher-lab/",
+        "script": "http://127.0.0.1:42991/publisher-lab/foreground.js",
         "privateReads": 0,
         "publicReads": 6
       },
@@ -172,7 +172,7 @@
         "denied": true,
         "external": true,
         "clients": [
-          "bef2b626-4bbf-4997-b217-f5b20d1c8ef2"
+          "357284a2-4cbc-42ad-85be-df03b47de965"
         ],
         "seen": []
       },
@@ -201,8 +201,8 @@
         "denied": true,
         "external": true,
         "clients": [
-          "44d46921-0ca0-4e24-8b78-d1d0805be2f6",
-          "bef2b626-4bbf-4997-b217-f5b20d1c8ef2"
+          "a62830ba-ba87-4989-bfec-a4aa89c149df",
+          "357284a2-4cbc-42ad-85be-df03b47de965"
         ],
         "seen": [
           "/publisher-lab/value.txt",
@@ -233,14 +233,14 @@
         "denied": true,
         "external": true,
         "clients": [
-          "44d46921-0ca0-4e24-8b78-d1d0805be2f6",
-          "bef2b626-4bbf-4997-b217-f5b20d1c8ef2"
+          "a62830ba-ba87-4989-bfec-a4aa89c149df",
+          "357284a2-4cbc-42ad-85be-df03b47de965"
         ],
         "seen": []
       },
       "moduleValue": "mediated:immutable",
       "logs": [
-        "[JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 18470}]"
+        "[JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 18486}]"
       ],
       "publisherRuntimeRequests": [],
       "receiverRequests": []

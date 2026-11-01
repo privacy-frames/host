@@ -93,6 +93,16 @@ test('static documents, local sources and captured bases use one immutable resou
     );
     assert.equal(prepared.documentBase, 'https://publisher.test/assets/');
     assert.equal(prepared.document.kind, 'html');
+    const inlineAlias = prepared.aliases.find(([source]) =>
+      source.endsWith('/inline/inline.js'),
+    );
+    assert(inlineAlias);
+    assert(prepared.scripts.includes(inlineAlias[1]));
+    assert(
+      prepared.scripts.every((url) =>
+        prepared.aliases.some(([, target]) => target === url),
+      ),
+    );
     assert.equal('head' in prepared, false);
     assert.equal('body' in prepared, false);
     const content = compileDocumentContent(prepared.document);

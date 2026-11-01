@@ -231,7 +231,7 @@ const retainedManifest=document.getElementById('trusted-manifest');let manifestR
 const initialDocument=document,initialWindow=window,initialAddress=location.href,container=navigator.serviceWorker,readController=Object.getOwnPropertyDescriptor(ServiceWorkerContainer.prototype,'controller').get,initialController=apply(readController,container,[]);
 const committed=document.readyState==='complete'?Promise.resolve():new Promise(resolve=>addEventListener('load',event=>{if([window,document,document.documentElement].includes(event.target))resolve()},true));
 const realm=prepareWindowRealm({application:'renderer-fixture',applicationURL:${JSON.stringify(origin + '/app/')},documentURL:location.href,scriptNonce:${JSON.stringify(nonce)}});
-realm.admitContent({installationGeneration:'fixture-generation',aliases:${JSON.stringify(aliases)},source:${JSON.stringify(compiled.sourceURL)},documentBase:${JSON.stringify(compiled.baseURL)}});
+realm.admitContent({scripts: ${JSON.stringify(aliases.map(([, target]) => target))},installationGeneration:'fixture-generation',aliases:${JSON.stringify(aliases)},source:${JSON.stringify(compiled.sourceURL)},documentBase:${JSON.stringify(compiled.baseURL)}});
 const rendered=${JSON.stringify(compiled)};
 let callbackCount=0;
 let childStartup,childStartupHeld=false;
