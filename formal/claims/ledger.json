@@ -88,7 +88,7 @@
     "formal/publisher-routes.md": "54b1b7cedf2260ff34e264c8827753b1caea113b533c7473926f428111ef6022",
     "formal/route-review/README.md": "def9f578cf05dbd6ded8f518833ba924d81acfce8a9d43fbd003679987cf77bd",
     "formal/route-review/triage.json": "3e5ab07e2747d1d329f13be013bc5268671c054ee8c5470e9e952b8a72a7e855",
-    "formal/runtime-verification/README.md": "d6a1d27feff0553afe66d870e455bae325b9f4becd9618390fc907e2a81b27ee",
+    "formal/runtime-verification/README.md": "b24194ee8500bb79611988c9730fc0539e44d7cec1d4d2aba6fed7e67ced37d0",
     "formal/runtime-verification/document-publication-check.ts": "53860e7c9687d3c59499d9effbd30afc9b569144c174a786600af2935e65ef7f",
     "formal/runtime-verification/document-publication-compatibility.json": "1088389b2b01cb451f58858438a5b06127813c31733b91a93b35450fb67fe90c",
     "formal/runtime-verification/document-publication-result.json": "53d60db8b0fd747e4c76aa43b4ac05b7ebca11ba3aaf1d17a6df71ad812dce41",
@@ -298,7 +298,7 @@
     "formal/runtime-verification/worker-policy-overlap.ts": "650d8112e8f764d57d3fd96812d04c0f300ea0cc4b5899a46f3bd908329a24e1",
     "formal/runtime-verification/worker-policy-overlap.json": "34caffc168e0cf0d9de2f62aea79e32faf180ce8d4d134a840d6a13062ea9c4c",
     "formal/runtime-verification/worker-policy-overlap.md": "2aa9c52db30cf4f32d498d161255674c84d550119aecc7d551914acea076a22c",
-    ".github/workflows/formal.yml": "e37a9eb164db53e7be4cc064923ba55eecc7d35e594e3849270e48aead1e95fe",
+    ".github/workflows/formal.yml": "e7602871033b9ffa1a220d605cb473a6a0fc69234f9fef0f02514be02982d4c4",
     "formal/runtime-verification/worker-policy-compatibility.json": "cb8478e5ebfaf57cc0c23079e819a1396f7971628635cb931b7746913696667b",
     "formal/runtime-verification/worker-policy-validation.json": "084f29483875b98bfc1df6d2f6244cdfb47dd0845628de7e3ad2f15d3764b459",
     "src/runtime/publisher/protocol.ts": "f5f110c8006cacae1c675a45850ca540e9598d80e84b12d51b639c04893b42ee",
@@ -310,7 +310,12 @@
     "formal/runtime-verification/worker-resource-compatibility.json": "fcbc045f3585f2d1b2bae62cd8e653e8c319e18c23ed47627866082fcdfd8b3e",
     "formal/runtime-verification/worker-resource-fetch-browser.json": "7dbcfcbc26c55ea0582e2d12b07dec55bf8cf5d0f49a67745b2a3577347b485b",
     "formal/runtime-verification/worker-resource-validation.json": "a870ee8338aa3250c3efbe92336387580779d6107984c20fc3d1bdde450ac837",
-    "src/runtime/contexts/worker-resource-protocol.ts": "aa5b444b987d60ce6dcacf74715756a290a2d440b39004a851a1c75f03f3c9fe"
+    "src/runtime/contexts/worker-resource-protocol.ts": "aa5b444b987d60ce6dcacf74715756a290a2d440b39004a851a1c75f03f3c9fe",
+    "formal/runtime-verification/blob-worker-identity.json": "a74f50164d2184ac9c077e2fcdd39d0590a9807899886f1f642cd16d813c2bc0",
+    "formal/runtime-verification/blob-worker-identity.ts": "2f77260568f723d91ed45c7a08bd374035a8176770151647daf0c19e515fc366",
+    "formal/runtime-verification/local-bootstrap-policy.json": "7a8ff769bcba77cbe2ecbc8ccbc401208b3cc73a2a07680ffe3951bdfaab41a1",
+    "formal/runtime-verification/local-bootstrap-policy.ts": "e9d7f858f05b504624fa9984169fdabd184e4bbca83fb880a9eb6ff599fe165c",
+    "formal/runtime-verification/local-worker-bootstrap.md": "feb42b41b12f050d95b9dba88feac0686201512092480eb9cf39d7453ff30b5f"
   },
   "claims": [
     {
@@ -2625,6 +2630,51 @@
         "native_control": "recorded",
         "confined_test": "recorded",
         "fault_control": "recorded"
+      }
+    },
+    {
+      "id": "local_worker_bootstrap_prerequisites",
+      "title": "Native identity discovery and typed source admission prerequisites for local workers",
+      "preconditions": "Native metadata-only fixtures run on owned loopback origins in the recorded Chromium and Firefox builds. No untrusted application or production guard is executed. HTTP worker fetch identity and ordinary worker execution supply positive controls. The production worker factory, CSP and admission protocol remain unchanged.",
+      "enforcement": "This entry records browser contracts under investigation, not runtime enforcement. Clients.matchAll with includeUncontrolled discovers a live Blob worker and Clients.get resolves its native ID. Native Trusted Types gates URL strings at Worker construction; an intentionally private test policy supplies branded URLs. A default policy can preserve HTML/Script values while refusing every script URL. Fresh same-origin globals and inherited policy behavior remain explicit obstacles to a policy-only argument.",
+      "source_paths": [
+        "src/runtime/contexts/worker-factory.ts",
+        "src/runtime/contexts/worker-guard.ts",
+        "src/runtime/contexts/model.ts",
+        "src/runtime/response-policy.ts"
+      ],
+      "evidence": [
+        {
+          "kind": "native_control",
+          "description": "Twelve cases cover classic/module Blob workers, registration retention/unregistration, Chromium, Firefox and forced-stale Firefox. The HTTP bootstrap supplies a real resulting-client ID; window-source lookup and enumeration also work. Every Blob URL identifies exactly one native worker, resolves through Clients.get, appears in the worker-only query and differs from the HTTP worker ID. Owned native handles and transferred ports exchange matching metadata. No Blob fetch event or HTTP request occurs after quiet setup through the following three seconds.",
+          "paths": [
+            "formal/runtime-verification/blob-worker-identity.ts",
+            "formal/runtime-verification/blob-worker-identity.json"
+          ]
+        },
+        {
+          "kind": "discovery",
+          "description": "Ten CSP/Trusted Types cases have ordinary execution controls. Exact Blob-URL source input blocks both scripts. Named-policy worker construction rejects strings and accepts private trusted values; a fresh same-origin test child can mint an accepted URL. Additional trusted-types none blocks child/worker policy creation, including a Blob made in another helper document. A default policy that refuses all script URLs preserves basic HTML/eval and rejects raw worker/script-src inputs and explicit URL creation with a spoofed sink. These are native candidate-policy observations, not current-runtime attacks or a production mitigation.",
+          "paths": [
+            "formal/runtime-verification/local-bootstrap-policy.ts",
+            "formal/runtime-verification/local-bootstrap-policy.json",
+            "formal/runtime-verification/local-worker-bootstrap.md",
+            ".github/workflows/formal.yml"
+          ]
+        }
+      ],
+      "open_obligations": [
+        "Implement and prove factory ownership, unique URL issuance, actual-client lookup, parent/generation validation and late-binding cancellation. Native URL matching alone does not establish creator authority.",
+        "Before allowing Blob worker sources in production CSP, establish private URL minting, non-exposure of reusable trusted values, safe native sink calls, and preparation of every app-reachable global. Preserve existing DOM and navigation mediation.",
+        "Evaluate the unchanged application corpus and all host script-URL sinks under any proposed Trusted Types policy. Basic HTML/eval success is not full compatibility evidence.",
+        "Deliver entry scripts, synchronous classic dependencies and module graphs locally; specify registration queue/lifetime behavior and controller restart. These experiments do not repair the maintenance counterexample or establish C1\u2013C8.",
+        "Observations are bounded and pinned to recorded browser/configuration versions. They do not establish exhaustive browser coverage or implementation refinement."
+      ],
+      "disposition": "reviewed-scoped",
+      "control_status": {
+        "native_control": "recorded",
+        "confined_test": "not-recorded",
+        "fault_control": "not-recorded"
       }
     }
   ]

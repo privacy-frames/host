@@ -78,6 +78,11 @@ with native ancestry checks. Dedicated-worker GET/cache reads also relay through
 existing context-resource resolver. Shared and publisher roots retain an
 authenticated HTTP adapter. The former per-context readiness and closure routes are removed.
 
+The [local bootstrap prerequisites](local-worker-bootstrap.md) now establish
+native Blob-worker discovery in twelve browser cases. Ten source-policy cases
+identify a private TrustedScriptURL gate while exposing the fresh-realm and
+inherited-policy obligations. Production CSP and factories remain unchanged.
+
 Then evaluate production bootstrap and delivery. Private root-content and selected
 parent-channel reads already exist. HTTP shells, workers, modules, worklets,
 publisher executors and DOM/CSS resources still need an account of browser

@@ -1,0 +1,1831 @@
+{
+  "scope": "Native worker identity and private-port association prerequisite. Uses a controlled metadata-only script, not production admission, guard preparation, or full confinement. Missing enumeration is bounded observation.",
+  "completed": true,
+  "sourceSHA256": {
+    "formal/runtime-verification/blob-worker-identity.ts": "2f77260568f723d91ed45c7a08bd374035a8176770151647daf0c19e515fc366",
+    "test/browser-profile.ts": "c161489dfce9c3124474d1416440c9876b0a8fce329d2f09fa16f99af744e3a0",
+    "package-lock.json": "4e8c7b0964047f1c9fd3f82956b08d381817fa86fb2f7d47d4a10458dc5e62ed"
+  },
+  "rows": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStale": false,
+      "unregister": false,
+      "type": "classic",
+      "httpWorker": {
+        "url": "http://127.0.0.1:40049/app/http.js",
+        "ready": {
+          "instance": "ffeeea36-18f8-42f1-a9e1-c0f69a292d1a",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "undefined"
+        },
+        "proof": {
+          "instance": "ffeeea36-18f8-42f1-a9e1-c0f69a292d1a",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "undefined"
+        }
+      },
+      "before": {
+        "source": {
+          "id": "d1e38c15-2cb3-4cc6-a288-df5182786126",
+          "url": "http://127.0.0.1:40049/app/",
+          "type": "window"
+        },
+        "lists": {
+          "all": [
+            {
+              "id": "d1e38c15-2cb3-4cc6-a288-df5182786126",
+              "url": "http://127.0.0.1:40049/app/",
+              "type": "window"
+            },
+            {
+              "id": "b8350e0d-90b8-4a94-8944-3de41a0a61f9",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "worker": [
+            {
+              "id": "b8350e0d-90b8-4a94-8944-3de41a0a61f9",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "sharedworker": []
+        },
+        "fetches": [
+          {
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "clientId": "d1e38c15-2cb3-4cc6-a288-df5182786126",
+            "resultingClientId": "b8350e0d-90b8-4a94-8944-3de41a0a61f9",
+            "destination": "worker"
+          }
+        ],
+        "known": {
+          "id": "b8350e0d-90b8-4a94-8944-3de41a0a61f9",
+          "url": "http://127.0.0.1:40049/app/http.js",
+          "type": "worker"
+        }
+      },
+      "blobWorker": {
+        "url": "blob:http://127.0.0.1:40049/95c5a4c5-1164-4f30-a6dc-1761b49f6927",
+        "ready": {
+          "instance": "78389360-20b1-468b-8b2a-c0f281bc4912",
+          "href": "blob:http://127.0.0.1:40049/95c5a4c5-1164-4f30-a6dc-1761b49f6927",
+          "serviceWorkerContainer": "undefined"
+        },
+        "proof": {
+          "instance": "78389360-20b1-468b-8b2a-c0f281bc4912",
+          "href": "blob:http://127.0.0.1:40049/95c5a4c5-1164-4f30-a6dc-1761b49f6927",
+          "serviceWorkerContainer": "undefined"
+        }
+      },
+      "observations": [
+        {
+          "source": {
+            "id": "d1e38c15-2cb3-4cc6-a288-df5182786126",
+            "url": "http://127.0.0.1:40049/app/",
+            "type": "window"
+          },
+          "lists": {
+            "all": [
+              {
+                "id": "d1e38c15-2cb3-4cc6-a288-df5182786126",
+                "url": "http://127.0.0.1:40049/app/",
+                "type": "window"
+              },
+              {
+                "id": "b8350e0d-90b8-4a94-8944-3de41a0a61f9",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "9c06d71e-842b-41fc-80c1-8688308bd44b",
+                "url": "blob:http://127.0.0.1:40049/95c5a4c5-1164-4f30-a6dc-1761b49f6927",
+                "type": "worker"
+              }
+            ],
+            "worker": [
+              {
+                "id": "b8350e0d-90b8-4a94-8944-3de41a0a61f9",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "9c06d71e-842b-41fc-80c1-8688308bd44b",
+                "url": "blob:http://127.0.0.1:40049/95c5a4c5-1164-4f30-a6dc-1761b49f6927",
+                "type": "worker"
+              }
+            ],
+            "sharedworker": []
+          },
+          "fetches": [
+            {
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "clientId": "d1e38c15-2cb3-4cc6-a288-df5182786126",
+              "resultingClientId": "b8350e0d-90b8-4a94-8944-3de41a0a61f9",
+              "destination": "worker"
+            }
+          ],
+          "known": {
+            "id": "b8350e0d-90b8-4a94-8944-3de41a0a61f9",
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "type": "worker"
+          }
+        }
+      ],
+      "candidates": [
+        {
+          "id": "9c06d71e-842b-41fc-80c1-8688308bd44b",
+          "url": "blob:http://127.0.0.1:40049/95c5a4c5-1164-4f30-a6dc-1761b49f6927",
+          "type": "worker"
+        }
+      ],
+      "resolved": [
+        {
+          "id": "9c06d71e-842b-41fc-80c1-8688308bd44b",
+          "url": "blob:http://127.0.0.1:40049/95c5a4c5-1164-4f30-a6dc-1761b49f6927",
+          "type": "worker"
+        }
+      ],
+      "observationMilliseconds": 3000,
+      "outgoing": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStale": false,
+      "unregister": false,
+      "type": "module",
+      "httpWorker": {
+        "url": "http://127.0.0.1:40049/app/http.js",
+        "ready": {
+          "instance": "e4529ae2-8be0-487e-9473-e827b8e4e2aa",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "undefined"
+        },
+        "proof": {
+          "instance": "e4529ae2-8be0-487e-9473-e827b8e4e2aa",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "undefined"
+        }
+      },
+      "before": {
+        "source": {
+          "id": "264957c3-edee-4454-a9b8-5824e84e6045",
+          "url": "http://127.0.0.1:40049/app/",
+          "type": "window"
+        },
+        "lists": {
+          "all": [
+            {
+              "id": "264957c3-edee-4454-a9b8-5824e84e6045",
+              "url": "http://127.0.0.1:40049/app/",
+              "type": "window"
+            },
+            {
+              "id": "6018813c-d185-4c99-8fe2-ea012f1658fc",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "worker": [
+            {
+              "id": "6018813c-d185-4c99-8fe2-ea012f1658fc",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "sharedworker": []
+        },
+        "fetches": [
+          {
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "clientId": "264957c3-edee-4454-a9b8-5824e84e6045",
+            "resultingClientId": "6018813c-d185-4c99-8fe2-ea012f1658fc",
+            "destination": "worker"
+          }
+        ],
+        "known": {
+          "id": "6018813c-d185-4c99-8fe2-ea012f1658fc",
+          "url": "http://127.0.0.1:40049/app/http.js",
+          "type": "worker"
+        }
+      },
+      "blobWorker": {
+        "url": "blob:http://127.0.0.1:40049/b1b35bc7-62c4-4901-ab30-043215a8f2aa",
+        "ready": {
+          "instance": "2a6e4f88-8457-4ec4-8852-43c532920a5e",
+          "href": "blob:http://127.0.0.1:40049/b1b35bc7-62c4-4901-ab30-043215a8f2aa",
+          "serviceWorkerContainer": "undefined"
+        },
+        "proof": {
+          "instance": "2a6e4f88-8457-4ec4-8852-43c532920a5e",
+          "href": "blob:http://127.0.0.1:40049/b1b35bc7-62c4-4901-ab30-043215a8f2aa",
+          "serviceWorkerContainer": "undefined"
+        }
+      },
+      "observations": [
+        {
+          "source": {
+            "id": "264957c3-edee-4454-a9b8-5824e84e6045",
+            "url": "http://127.0.0.1:40049/app/",
+            "type": "window"
+          },
+          "lists": {
+            "all": [
+              {
+                "id": "264957c3-edee-4454-a9b8-5824e84e6045",
+                "url": "http://127.0.0.1:40049/app/",
+                "type": "window"
+              },
+              {
+                "id": "6018813c-d185-4c99-8fe2-ea012f1658fc",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "240b7374-928c-4ef0-b689-35933aa79612",
+                "url": "blob:http://127.0.0.1:40049/b1b35bc7-62c4-4901-ab30-043215a8f2aa",
+                "type": "worker"
+              }
+            ],
+            "worker": [
+              {
+                "id": "6018813c-d185-4c99-8fe2-ea012f1658fc",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "240b7374-928c-4ef0-b689-35933aa79612",
+                "url": "blob:http://127.0.0.1:40049/b1b35bc7-62c4-4901-ab30-043215a8f2aa",
+                "type": "worker"
+              }
+            ],
+            "sharedworker": []
+          },
+          "fetches": [
+            {
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "clientId": "264957c3-edee-4454-a9b8-5824e84e6045",
+              "resultingClientId": "6018813c-d185-4c99-8fe2-ea012f1658fc",
+              "destination": "worker"
+            }
+          ],
+          "known": {
+            "id": "6018813c-d185-4c99-8fe2-ea012f1658fc",
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "type": "worker"
+          }
+        }
+      ],
+      "candidates": [
+        {
+          "id": "240b7374-928c-4ef0-b689-35933aa79612",
+          "url": "blob:http://127.0.0.1:40049/b1b35bc7-62c4-4901-ab30-043215a8f2aa",
+          "type": "worker"
+        }
+      ],
+      "resolved": [
+        {
+          "id": "240b7374-928c-4ef0-b689-35933aa79612",
+          "url": "blob:http://127.0.0.1:40049/b1b35bc7-62c4-4901-ab30-043215a8f2aa",
+          "type": "worker"
+        }
+      ],
+      "observationMilliseconds": 3000,
+      "outgoing": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStale": false,
+      "unregister": true,
+      "type": "classic",
+      "httpWorker": {
+        "url": "http://127.0.0.1:40049/app/http.js",
+        "ready": {
+          "instance": "0361e438-acc6-435e-bc33-d8600f8b7354",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "undefined"
+        },
+        "proof": {
+          "instance": "0361e438-acc6-435e-bc33-d8600f8b7354",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "undefined"
+        }
+      },
+      "before": {
+        "source": {
+          "id": "83ffffb6-8904-43ab-8a5c-1a6c5bb1de1f",
+          "url": "http://127.0.0.1:40049/app/",
+          "type": "window"
+        },
+        "lists": {
+          "all": [
+            {
+              "id": "83ffffb6-8904-43ab-8a5c-1a6c5bb1de1f",
+              "url": "http://127.0.0.1:40049/app/",
+              "type": "window"
+            },
+            {
+              "id": "411a2212-f94e-4051-96d8-4052a1291edf",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "worker": [
+            {
+              "id": "411a2212-f94e-4051-96d8-4052a1291edf",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "sharedworker": []
+        },
+        "fetches": [
+          {
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "clientId": "83ffffb6-8904-43ab-8a5c-1a6c5bb1de1f",
+            "resultingClientId": "411a2212-f94e-4051-96d8-4052a1291edf",
+            "destination": "worker"
+          }
+        ],
+        "known": {
+          "id": "411a2212-f94e-4051-96d8-4052a1291edf",
+          "url": "http://127.0.0.1:40049/app/http.js",
+          "type": "worker"
+        }
+      },
+      "blobWorker": {
+        "url": "blob:http://127.0.0.1:40049/ed46d2d1-abad-4bcd-9dc9-23fb040f9531",
+        "ready": {
+          "instance": "e259023d-c701-4675-9c40-40e533e797b5",
+          "href": "blob:http://127.0.0.1:40049/ed46d2d1-abad-4bcd-9dc9-23fb040f9531",
+          "serviceWorkerContainer": "undefined"
+        },
+        "proof": {
+          "instance": "e259023d-c701-4675-9c40-40e533e797b5",
+          "href": "blob:http://127.0.0.1:40049/ed46d2d1-abad-4bcd-9dc9-23fb040f9531",
+          "serviceWorkerContainer": "undefined"
+        }
+      },
+      "observations": [
+        {
+          "source": {
+            "id": "83ffffb6-8904-43ab-8a5c-1a6c5bb1de1f",
+            "url": "http://127.0.0.1:40049/app/",
+            "type": "window"
+          },
+          "lists": {
+            "all": [
+              {
+                "id": "83ffffb6-8904-43ab-8a5c-1a6c5bb1de1f",
+                "url": "http://127.0.0.1:40049/app/",
+                "type": "window"
+              },
+              {
+                "id": "411a2212-f94e-4051-96d8-4052a1291edf",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "aab2d90c-b44f-4ddb-9dc7-70b902706b92",
+                "url": "blob:http://127.0.0.1:40049/ed46d2d1-abad-4bcd-9dc9-23fb040f9531",
+                "type": "worker"
+              }
+            ],
+            "worker": [
+              {
+                "id": "411a2212-f94e-4051-96d8-4052a1291edf",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "aab2d90c-b44f-4ddb-9dc7-70b902706b92",
+                "url": "blob:http://127.0.0.1:40049/ed46d2d1-abad-4bcd-9dc9-23fb040f9531",
+                "type": "worker"
+              }
+            ],
+            "sharedworker": []
+          },
+          "fetches": [
+            {
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "clientId": "83ffffb6-8904-43ab-8a5c-1a6c5bb1de1f",
+              "resultingClientId": "411a2212-f94e-4051-96d8-4052a1291edf",
+              "destination": "worker"
+            }
+          ],
+          "known": {
+            "id": "411a2212-f94e-4051-96d8-4052a1291edf",
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "type": "worker"
+          }
+        }
+      ],
+      "candidates": [
+        {
+          "id": "aab2d90c-b44f-4ddb-9dc7-70b902706b92",
+          "url": "blob:http://127.0.0.1:40049/ed46d2d1-abad-4bcd-9dc9-23fb040f9531",
+          "type": "worker"
+        }
+      ],
+      "resolved": [
+        {
+          "id": "aab2d90c-b44f-4ddb-9dc7-70b902706b92",
+          "url": "blob:http://127.0.0.1:40049/ed46d2d1-abad-4bcd-9dc9-23fb040f9531",
+          "type": "worker"
+        }
+      ],
+      "observationMilliseconds": 3000,
+      "outgoing": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStale": false,
+      "unregister": true,
+      "type": "module",
+      "httpWorker": {
+        "url": "http://127.0.0.1:40049/app/http.js",
+        "ready": {
+          "instance": "a1322a1c-0954-4c10-83d3-9305bd114bed",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "undefined"
+        },
+        "proof": {
+          "instance": "a1322a1c-0954-4c10-83d3-9305bd114bed",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "undefined"
+        }
+      },
+      "before": {
+        "source": {
+          "id": "c832a702-b455-481b-b195-8a4d36c72717",
+          "url": "http://127.0.0.1:40049/app/",
+          "type": "window"
+        },
+        "lists": {
+          "all": [
+            {
+              "id": "c832a702-b455-481b-b195-8a4d36c72717",
+              "url": "http://127.0.0.1:40049/app/",
+              "type": "window"
+            },
+            {
+              "id": "c070067e-8bc6-4fab-bb2f-b85c8ad5354a",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "worker": [
+            {
+              "id": "c070067e-8bc6-4fab-bb2f-b85c8ad5354a",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "sharedworker": []
+        },
+        "fetches": [
+          {
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "clientId": "c832a702-b455-481b-b195-8a4d36c72717",
+            "resultingClientId": "c070067e-8bc6-4fab-bb2f-b85c8ad5354a",
+            "destination": "worker"
+          }
+        ],
+        "known": {
+          "id": "c070067e-8bc6-4fab-bb2f-b85c8ad5354a",
+          "url": "http://127.0.0.1:40049/app/http.js",
+          "type": "worker"
+        }
+      },
+      "blobWorker": {
+        "url": "blob:http://127.0.0.1:40049/ca44023f-4aeb-4f0a-98a8-c386f9cb8c68",
+        "ready": {
+          "instance": "074b8c60-ed56-472c-a78d-7f93d9973f6d",
+          "href": "blob:http://127.0.0.1:40049/ca44023f-4aeb-4f0a-98a8-c386f9cb8c68",
+          "serviceWorkerContainer": "undefined"
+        },
+        "proof": {
+          "instance": "074b8c60-ed56-472c-a78d-7f93d9973f6d",
+          "href": "blob:http://127.0.0.1:40049/ca44023f-4aeb-4f0a-98a8-c386f9cb8c68",
+          "serviceWorkerContainer": "undefined"
+        }
+      },
+      "observations": [
+        {
+          "source": {
+            "id": "c832a702-b455-481b-b195-8a4d36c72717",
+            "url": "http://127.0.0.1:40049/app/",
+            "type": "window"
+          },
+          "lists": {
+            "all": [
+              {
+                "id": "c832a702-b455-481b-b195-8a4d36c72717",
+                "url": "http://127.0.0.1:40049/app/",
+                "type": "window"
+              },
+              {
+                "id": "c070067e-8bc6-4fab-bb2f-b85c8ad5354a",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "7c80231e-eb0c-486f-b45f-ee1c566ce178",
+                "url": "blob:http://127.0.0.1:40049/ca44023f-4aeb-4f0a-98a8-c386f9cb8c68",
+                "type": "worker"
+              }
+            ],
+            "worker": [
+              {
+                "id": "c070067e-8bc6-4fab-bb2f-b85c8ad5354a",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "7c80231e-eb0c-486f-b45f-ee1c566ce178",
+                "url": "blob:http://127.0.0.1:40049/ca44023f-4aeb-4f0a-98a8-c386f9cb8c68",
+                "type": "worker"
+              }
+            ],
+            "sharedworker": []
+          },
+          "fetches": [
+            {
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "clientId": "c832a702-b455-481b-b195-8a4d36c72717",
+              "resultingClientId": "c070067e-8bc6-4fab-bb2f-b85c8ad5354a",
+              "destination": "worker"
+            }
+          ],
+          "known": {
+            "id": "c070067e-8bc6-4fab-bb2f-b85c8ad5354a",
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "type": "worker"
+          }
+        }
+      ],
+      "candidates": [
+        {
+          "id": "7c80231e-eb0c-486f-b45f-ee1c566ce178",
+          "url": "blob:http://127.0.0.1:40049/ca44023f-4aeb-4f0a-98a8-c386f9cb8c68",
+          "type": "worker"
+        }
+      ],
+      "resolved": [
+        {
+          "id": "7c80231e-eb0c-486f-b45f-ee1c566ce178",
+          "url": "blob:http://127.0.0.1:40049/ca44023f-4aeb-4f0a-98a8-c386f9cb8c68",
+          "type": "worker"
+        }
+      ],
+      "observationMilliseconds": 3000,
+      "outgoing": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": false,
+      "unregister": false,
+      "type": "classic",
+      "httpWorker": {
+        "url": "http://127.0.0.1:40049/app/http.js",
+        "ready": {
+          "instance": "78b12ed5-b226-4813-9bc6-23f4036cf5e6",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "object"
+        },
+        "proof": {
+          "instance": "78b12ed5-b226-4813-9bc6-23f4036cf5e6",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "object"
+        }
+      },
+      "before": {
+        "source": {
+          "id": "d47ba148-f1cf-46d0-aa81-66be69abe679",
+          "url": "http://127.0.0.1:40049/app/",
+          "type": "window"
+        },
+        "lists": {
+          "all": [
+            {
+              "id": "d47ba148-f1cf-46d0-aa81-66be69abe679",
+              "url": "http://127.0.0.1:40049/app/",
+              "type": "window"
+            },
+            {
+              "id": "73b2bd06-0b28-41a4-ae23-03dbae3c7194",
+              "url": "http://127.0.0.1:40049/app/sw.js",
+              "type": "serviceworker"
+            },
+            {
+              "id": "b81f38bc-c6ba-4ccc-8313-e98388ddf68b",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "worker": [
+            {
+              "id": "b81f38bc-c6ba-4ccc-8313-e98388ddf68b",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "sharedworker": []
+        },
+        "fetches": [
+          {
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "clientId": "d47ba148-f1cf-46d0-aa81-66be69abe679",
+            "resultingClientId": "b81f38bc-c6ba-4ccc-8313-e98388ddf68b",
+            "destination": "worker"
+          }
+        ],
+        "known": {
+          "id": "b81f38bc-c6ba-4ccc-8313-e98388ddf68b",
+          "url": "http://127.0.0.1:40049/app/http.js",
+          "type": "worker"
+        }
+      },
+      "blobWorker": {
+        "url": "blob:http://127.0.0.1:40049/354ad976-e8fa-4255-97c8-89025d556515",
+        "ready": {
+          "instance": "f2572b4d-554d-4037-883c-266b21885a29",
+          "href": "blob:http://127.0.0.1:40049/354ad976-e8fa-4255-97c8-89025d556515",
+          "serviceWorkerContainer": "object"
+        },
+        "proof": {
+          "instance": "f2572b4d-554d-4037-883c-266b21885a29",
+          "href": "blob:http://127.0.0.1:40049/354ad976-e8fa-4255-97c8-89025d556515",
+          "serviceWorkerContainer": "object"
+        }
+      },
+      "observations": [
+        {
+          "source": {
+            "id": "d47ba148-f1cf-46d0-aa81-66be69abe679",
+            "url": "http://127.0.0.1:40049/app/",
+            "type": "window"
+          },
+          "lists": {
+            "all": [
+              {
+                "id": "d47ba148-f1cf-46d0-aa81-66be69abe679",
+                "url": "http://127.0.0.1:40049/app/",
+                "type": "window"
+              },
+              {
+                "id": "73b2bd06-0b28-41a4-ae23-03dbae3c7194",
+                "url": "http://127.0.0.1:40049/app/sw.js",
+                "type": "serviceworker"
+              },
+              {
+                "id": "b81f38bc-c6ba-4ccc-8313-e98388ddf68b",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "09ee0ea7-22d8-4125-bcad-f8f5dcedf596",
+                "url": "blob:http://127.0.0.1:40049/354ad976-e8fa-4255-97c8-89025d556515",
+                "type": "worker"
+              }
+            ],
+            "worker": [
+              {
+                "id": "b81f38bc-c6ba-4ccc-8313-e98388ddf68b",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "09ee0ea7-22d8-4125-bcad-f8f5dcedf596",
+                "url": "blob:http://127.0.0.1:40049/354ad976-e8fa-4255-97c8-89025d556515",
+                "type": "worker"
+              }
+            ],
+            "sharedworker": []
+          },
+          "fetches": [
+            {
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "clientId": "d47ba148-f1cf-46d0-aa81-66be69abe679",
+              "resultingClientId": "b81f38bc-c6ba-4ccc-8313-e98388ddf68b",
+              "destination": "worker"
+            }
+          ],
+          "known": {
+            "id": "b81f38bc-c6ba-4ccc-8313-e98388ddf68b",
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "type": "worker"
+          }
+        }
+      ],
+      "candidates": [
+        {
+          "id": "09ee0ea7-22d8-4125-bcad-f8f5dcedf596",
+          "url": "blob:http://127.0.0.1:40049/354ad976-e8fa-4255-97c8-89025d556515",
+          "type": "worker"
+        }
+      ],
+      "resolved": [
+        {
+          "id": "09ee0ea7-22d8-4125-bcad-f8f5dcedf596",
+          "url": "blob:http://127.0.0.1:40049/354ad976-e8fa-4255-97c8-89025d556515",
+          "type": "worker"
+        }
+      ],
+      "observationMilliseconds": 3000,
+      "outgoing": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": false,
+      "unregister": false,
+      "type": "module",
+      "httpWorker": {
+        "url": "http://127.0.0.1:40049/app/http.js",
+        "ready": {
+          "instance": "17c6b52b-202e-4755-9e51-b94c9c73e64c",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "object"
+        },
+        "proof": {
+          "instance": "17c6b52b-202e-4755-9e51-b94c9c73e64c",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "object"
+        }
+      },
+      "before": {
+        "source": {
+          "id": "447b71e8-919c-40fb-8f07-68e10a78f657",
+          "url": "http://127.0.0.1:40049/app/",
+          "type": "window"
+        },
+        "lists": {
+          "all": [
+            {
+              "id": "447b71e8-919c-40fb-8f07-68e10a78f657",
+              "url": "http://127.0.0.1:40049/app/",
+              "type": "window"
+            },
+            {
+              "id": "b5c3be94-b169-4d12-bd8d-9ee199ca62d3",
+              "url": "http://127.0.0.1:40049/app/sw.js",
+              "type": "serviceworker"
+            },
+            {
+              "id": "406de0af-3970-49ee-84da-4b26c2af9f75",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "worker": [
+            {
+              "id": "406de0af-3970-49ee-84da-4b26c2af9f75",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "sharedworker": []
+        },
+        "fetches": [
+          {
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "clientId": "447b71e8-919c-40fb-8f07-68e10a78f657",
+            "resultingClientId": "406de0af-3970-49ee-84da-4b26c2af9f75",
+            "destination": "worker"
+          }
+        ],
+        "known": {
+          "id": "406de0af-3970-49ee-84da-4b26c2af9f75",
+          "url": "http://127.0.0.1:40049/app/http.js",
+          "type": "worker"
+        }
+      },
+      "blobWorker": {
+        "url": "blob:http://127.0.0.1:40049/2ddb9f1a-f753-407c-a50b-d502425c537a",
+        "ready": {
+          "instance": "bbd887b9-5b44-41f9-96bf-a774241f500c",
+          "href": "blob:http://127.0.0.1:40049/2ddb9f1a-f753-407c-a50b-d502425c537a",
+          "serviceWorkerContainer": "object"
+        },
+        "proof": {
+          "instance": "bbd887b9-5b44-41f9-96bf-a774241f500c",
+          "href": "blob:http://127.0.0.1:40049/2ddb9f1a-f753-407c-a50b-d502425c537a",
+          "serviceWorkerContainer": "object"
+        }
+      },
+      "observations": [
+        {
+          "source": {
+            "id": "447b71e8-919c-40fb-8f07-68e10a78f657",
+            "url": "http://127.0.0.1:40049/app/",
+            "type": "window"
+          },
+          "lists": {
+            "all": [
+              {
+                "id": "447b71e8-919c-40fb-8f07-68e10a78f657",
+                "url": "http://127.0.0.1:40049/app/",
+                "type": "window"
+              },
+              {
+                "id": "b5c3be94-b169-4d12-bd8d-9ee199ca62d3",
+                "url": "http://127.0.0.1:40049/app/sw.js",
+                "type": "serviceworker"
+              },
+              {
+                "id": "406de0af-3970-49ee-84da-4b26c2af9f75",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "c5849a05-f00c-4024-9abb-4271cf7c82fd",
+                "url": "blob:http://127.0.0.1:40049/2ddb9f1a-f753-407c-a50b-d502425c537a",
+                "type": "worker"
+              }
+            ],
+            "worker": [
+              {
+                "id": "406de0af-3970-49ee-84da-4b26c2af9f75",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "c5849a05-f00c-4024-9abb-4271cf7c82fd",
+                "url": "blob:http://127.0.0.1:40049/2ddb9f1a-f753-407c-a50b-d502425c537a",
+                "type": "worker"
+              }
+            ],
+            "sharedworker": []
+          },
+          "fetches": [
+            {
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "clientId": "447b71e8-919c-40fb-8f07-68e10a78f657",
+              "resultingClientId": "406de0af-3970-49ee-84da-4b26c2af9f75",
+              "destination": "worker"
+            }
+          ],
+          "known": {
+            "id": "406de0af-3970-49ee-84da-4b26c2af9f75",
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "type": "worker"
+          }
+        }
+      ],
+      "candidates": [
+        {
+          "id": "c5849a05-f00c-4024-9abb-4271cf7c82fd",
+          "url": "blob:http://127.0.0.1:40049/2ddb9f1a-f753-407c-a50b-d502425c537a",
+          "type": "worker"
+        }
+      ],
+      "resolved": [
+        {
+          "id": "c5849a05-f00c-4024-9abb-4271cf7c82fd",
+          "url": "blob:http://127.0.0.1:40049/2ddb9f1a-f753-407c-a50b-d502425c537a",
+          "type": "worker"
+        }
+      ],
+      "observationMilliseconds": 3000,
+      "outgoing": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": false,
+      "unregister": true,
+      "type": "classic",
+      "httpWorker": {
+        "url": "http://127.0.0.1:40049/app/http.js",
+        "ready": {
+          "instance": "34c0b14e-9bf3-4c44-aa76-65ca37b45297",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "object"
+        },
+        "proof": {
+          "instance": "34c0b14e-9bf3-4c44-aa76-65ca37b45297",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "object"
+        }
+      },
+      "before": {
+        "source": {
+          "id": "ca380789-f049-483c-ba24-703366bbacd3",
+          "url": "http://127.0.0.1:40049/app/",
+          "type": "window"
+        },
+        "lists": {
+          "all": [
+            {
+              "id": "ca380789-f049-483c-ba24-703366bbacd3",
+              "url": "http://127.0.0.1:40049/app/",
+              "type": "window"
+            },
+            {
+              "id": "fc2f60be-e56a-4cc0-b2d6-ae244483d928",
+              "url": "http://127.0.0.1:40049/app/sw.js",
+              "type": "serviceworker"
+            },
+            {
+              "id": "c10431fc-23a1-49b6-9ddc-3fa10f2259dd",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "worker": [
+            {
+              "id": "c10431fc-23a1-49b6-9ddc-3fa10f2259dd",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "sharedworker": []
+        },
+        "fetches": [
+          {
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "clientId": "ca380789-f049-483c-ba24-703366bbacd3",
+            "resultingClientId": "c10431fc-23a1-49b6-9ddc-3fa10f2259dd",
+            "destination": "worker"
+          }
+        ],
+        "known": {
+          "id": "c10431fc-23a1-49b6-9ddc-3fa10f2259dd",
+          "url": "http://127.0.0.1:40049/app/http.js",
+          "type": "worker"
+        }
+      },
+      "blobWorker": {
+        "url": "blob:http://127.0.0.1:40049/28c17453-f4bf-472e-9969-8fa1121e6ec5",
+        "ready": {
+          "instance": "3a0ac993-fdd3-4fd7-a55e-e778eaedf873",
+          "href": "blob:http://127.0.0.1:40049/28c17453-f4bf-472e-9969-8fa1121e6ec5",
+          "serviceWorkerContainer": "object"
+        },
+        "proof": {
+          "instance": "3a0ac993-fdd3-4fd7-a55e-e778eaedf873",
+          "href": "blob:http://127.0.0.1:40049/28c17453-f4bf-472e-9969-8fa1121e6ec5",
+          "serviceWorkerContainer": "object"
+        }
+      },
+      "observations": [
+        {
+          "source": {
+            "id": "ca380789-f049-483c-ba24-703366bbacd3",
+            "url": "http://127.0.0.1:40049/app/",
+            "type": "window"
+          },
+          "lists": {
+            "all": [
+              {
+                "id": "ca380789-f049-483c-ba24-703366bbacd3",
+                "url": "http://127.0.0.1:40049/app/",
+                "type": "window"
+              },
+              {
+                "id": "fc2f60be-e56a-4cc0-b2d6-ae244483d928",
+                "url": "http://127.0.0.1:40049/app/sw.js",
+                "type": "serviceworker"
+              },
+              {
+                "id": "c10431fc-23a1-49b6-9ddc-3fa10f2259dd",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "d28e5dd2-c25b-4e71-858e-68ff348be9b9",
+                "url": "blob:http://127.0.0.1:40049/28c17453-f4bf-472e-9969-8fa1121e6ec5",
+                "type": "worker"
+              }
+            ],
+            "worker": [
+              {
+                "id": "c10431fc-23a1-49b6-9ddc-3fa10f2259dd",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "d28e5dd2-c25b-4e71-858e-68ff348be9b9",
+                "url": "blob:http://127.0.0.1:40049/28c17453-f4bf-472e-9969-8fa1121e6ec5",
+                "type": "worker"
+              }
+            ],
+            "sharedworker": []
+          },
+          "fetches": [
+            {
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "clientId": "ca380789-f049-483c-ba24-703366bbacd3",
+              "resultingClientId": "c10431fc-23a1-49b6-9ddc-3fa10f2259dd",
+              "destination": "worker"
+            }
+          ],
+          "known": {
+            "id": "c10431fc-23a1-49b6-9ddc-3fa10f2259dd",
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "type": "worker"
+          }
+        }
+      ],
+      "candidates": [
+        {
+          "id": "d28e5dd2-c25b-4e71-858e-68ff348be9b9",
+          "url": "blob:http://127.0.0.1:40049/28c17453-f4bf-472e-9969-8fa1121e6ec5",
+          "type": "worker"
+        }
+      ],
+      "resolved": [
+        {
+          "id": "d28e5dd2-c25b-4e71-858e-68ff348be9b9",
+          "url": "blob:http://127.0.0.1:40049/28c17453-f4bf-472e-9969-8fa1121e6ec5",
+          "type": "worker"
+        }
+      ],
+      "observationMilliseconds": 3000,
+      "outgoing": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": false,
+      "unregister": true,
+      "type": "module",
+      "httpWorker": {
+        "url": "http://127.0.0.1:40049/app/http.js",
+        "ready": {
+          "instance": "c6af1b29-e4ab-46c3-9200-c4dbeb7e823b",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "object"
+        },
+        "proof": {
+          "instance": "c6af1b29-e4ab-46c3-9200-c4dbeb7e823b",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "object"
+        }
+      },
+      "before": {
+        "source": {
+          "id": "5d4ade45-b42f-4743-902f-2238c5a33428",
+          "url": "http://127.0.0.1:40049/app/",
+          "type": "window"
+        },
+        "lists": {
+          "all": [
+            {
+              "id": "5d4ade45-b42f-4743-902f-2238c5a33428",
+              "url": "http://127.0.0.1:40049/app/",
+              "type": "window"
+            },
+            {
+              "id": "a767ba66-10b4-4418-9270-41ae958cc3ce",
+              "url": "http://127.0.0.1:40049/app/sw.js",
+              "type": "serviceworker"
+            },
+            {
+              "id": "0060363d-6262-4910-b20e-2ed9a002249e",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "worker": [
+            {
+              "id": "0060363d-6262-4910-b20e-2ed9a002249e",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "sharedworker": []
+        },
+        "fetches": [
+          {
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "clientId": "5d4ade45-b42f-4743-902f-2238c5a33428",
+            "resultingClientId": "0060363d-6262-4910-b20e-2ed9a002249e",
+            "destination": "worker"
+          }
+        ],
+        "known": {
+          "id": "0060363d-6262-4910-b20e-2ed9a002249e",
+          "url": "http://127.0.0.1:40049/app/http.js",
+          "type": "worker"
+        }
+      },
+      "blobWorker": {
+        "url": "blob:http://127.0.0.1:40049/be860ab7-7421-411a-9b3b-dffcd69d5d8d",
+        "ready": {
+          "instance": "7db05b01-3196-45ba-8fec-f29f132be196",
+          "href": "blob:http://127.0.0.1:40049/be860ab7-7421-411a-9b3b-dffcd69d5d8d",
+          "serviceWorkerContainer": "object"
+        },
+        "proof": {
+          "instance": "7db05b01-3196-45ba-8fec-f29f132be196",
+          "href": "blob:http://127.0.0.1:40049/be860ab7-7421-411a-9b3b-dffcd69d5d8d",
+          "serviceWorkerContainer": "object"
+        }
+      },
+      "observations": [
+        {
+          "source": {
+            "id": "5d4ade45-b42f-4743-902f-2238c5a33428",
+            "url": "http://127.0.0.1:40049/app/",
+            "type": "window"
+          },
+          "lists": {
+            "all": [
+              {
+                "id": "5d4ade45-b42f-4743-902f-2238c5a33428",
+                "url": "http://127.0.0.1:40049/app/",
+                "type": "window"
+              },
+              {
+                "id": "a767ba66-10b4-4418-9270-41ae958cc3ce",
+                "url": "http://127.0.0.1:40049/app/sw.js",
+                "type": "serviceworker"
+              },
+              {
+                "id": "0060363d-6262-4910-b20e-2ed9a002249e",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "7957ca1b-c348-44b1-ac68-9a54a88e666a",
+                "url": "blob:http://127.0.0.1:40049/be860ab7-7421-411a-9b3b-dffcd69d5d8d",
+                "type": "worker"
+              }
+            ],
+            "worker": [
+              {
+                "id": "0060363d-6262-4910-b20e-2ed9a002249e",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "7957ca1b-c348-44b1-ac68-9a54a88e666a",
+                "url": "blob:http://127.0.0.1:40049/be860ab7-7421-411a-9b3b-dffcd69d5d8d",
+                "type": "worker"
+              }
+            ],
+            "sharedworker": []
+          },
+          "fetches": [
+            {
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "clientId": "5d4ade45-b42f-4743-902f-2238c5a33428",
+              "resultingClientId": "0060363d-6262-4910-b20e-2ed9a002249e",
+              "destination": "worker"
+            }
+          ],
+          "known": {
+            "id": "0060363d-6262-4910-b20e-2ed9a002249e",
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "type": "worker"
+          }
+        }
+      ],
+      "candidates": [
+        {
+          "id": "7957ca1b-c348-44b1-ac68-9a54a88e666a",
+          "url": "blob:http://127.0.0.1:40049/be860ab7-7421-411a-9b3b-dffcd69d5d8d",
+          "type": "worker"
+        }
+      ],
+      "resolved": [
+        {
+          "id": "7957ca1b-c348-44b1-ac68-9a54a88e666a",
+          "url": "blob:http://127.0.0.1:40049/be860ab7-7421-411a-9b3b-dffcd69d5d8d",
+          "type": "worker"
+        }
+      ],
+      "observationMilliseconds": 3000,
+      "outgoing": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": true,
+      "unregister": false,
+      "type": "classic",
+      "httpWorker": {
+        "url": "http://127.0.0.1:40049/app/http.js",
+        "ready": {
+          "instance": "59b2ee9b-1d5b-40a6-bcd9-10378428f502",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "object"
+        },
+        "proof": {
+          "instance": "59b2ee9b-1d5b-40a6-bcd9-10378428f502",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "object"
+        }
+      },
+      "before": {
+        "source": {
+          "id": "4a149c39-fd68-406f-b0cd-2c2061bf041d",
+          "url": "http://127.0.0.1:40049/app/",
+          "type": "window"
+        },
+        "lists": {
+          "all": [
+            {
+              "id": "4a149c39-fd68-406f-b0cd-2c2061bf041d",
+              "url": "http://127.0.0.1:40049/app/",
+              "type": "window"
+            },
+            {
+              "id": "d8e11d26-bf67-4c55-b865-0ce8ecf43d50",
+              "url": "http://127.0.0.1:40049/app/sw.js",
+              "type": "serviceworker"
+            },
+            {
+              "id": "74bdda8d-0f7e-4bfc-bbe4-08bc9c329e37",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "worker": [
+            {
+              "id": "74bdda8d-0f7e-4bfc-bbe4-08bc9c329e37",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "sharedworker": []
+        },
+        "fetches": [
+          {
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "clientId": "4a149c39-fd68-406f-b0cd-2c2061bf041d",
+            "resultingClientId": "74bdda8d-0f7e-4bfc-bbe4-08bc9c329e37",
+            "destination": "worker"
+          }
+        ],
+        "known": {
+          "id": "74bdda8d-0f7e-4bfc-bbe4-08bc9c329e37",
+          "url": "http://127.0.0.1:40049/app/http.js",
+          "type": "worker"
+        }
+      },
+      "blobWorker": {
+        "url": "blob:http://127.0.0.1:40049/f9ae18a7-5e9e-4cac-9140-f2e571bc3d6c",
+        "ready": {
+          "instance": "38d66aa5-f47d-44bb-914e-9818d9f6a33c",
+          "href": "blob:http://127.0.0.1:40049/f9ae18a7-5e9e-4cac-9140-f2e571bc3d6c",
+          "serviceWorkerContainer": "object"
+        },
+        "proof": {
+          "instance": "38d66aa5-f47d-44bb-914e-9818d9f6a33c",
+          "href": "blob:http://127.0.0.1:40049/f9ae18a7-5e9e-4cac-9140-f2e571bc3d6c",
+          "serviceWorkerContainer": "object"
+        }
+      },
+      "observations": [
+        {
+          "source": {
+            "id": "4a149c39-fd68-406f-b0cd-2c2061bf041d",
+            "url": "http://127.0.0.1:40049/app/",
+            "type": "window"
+          },
+          "lists": {
+            "all": [
+              {
+                "id": "4a149c39-fd68-406f-b0cd-2c2061bf041d",
+                "url": "http://127.0.0.1:40049/app/",
+                "type": "window"
+              },
+              {
+                "id": "d8e11d26-bf67-4c55-b865-0ce8ecf43d50",
+                "url": "http://127.0.0.1:40049/app/sw.js",
+                "type": "serviceworker"
+              },
+              {
+                "id": "74bdda8d-0f7e-4bfc-bbe4-08bc9c329e37",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "d5aa434e-d343-438a-9753-efdb24956a59",
+                "url": "blob:http://127.0.0.1:40049/f9ae18a7-5e9e-4cac-9140-f2e571bc3d6c",
+                "type": "worker"
+              }
+            ],
+            "worker": [
+              {
+                "id": "74bdda8d-0f7e-4bfc-bbe4-08bc9c329e37",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "d5aa434e-d343-438a-9753-efdb24956a59",
+                "url": "blob:http://127.0.0.1:40049/f9ae18a7-5e9e-4cac-9140-f2e571bc3d6c",
+                "type": "worker"
+              }
+            ],
+            "sharedworker": []
+          },
+          "fetches": [
+            {
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "clientId": "4a149c39-fd68-406f-b0cd-2c2061bf041d",
+              "resultingClientId": "74bdda8d-0f7e-4bfc-bbe4-08bc9c329e37",
+              "destination": "worker"
+            }
+          ],
+          "known": {
+            "id": "74bdda8d-0f7e-4bfc-bbe4-08bc9c329e37",
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "type": "worker"
+          }
+        }
+      ],
+      "candidates": [
+        {
+          "id": "d5aa434e-d343-438a-9753-efdb24956a59",
+          "url": "blob:http://127.0.0.1:40049/f9ae18a7-5e9e-4cac-9140-f2e571bc3d6c",
+          "type": "worker"
+        }
+      ],
+      "resolved": [
+        {
+          "id": "d5aa434e-d343-438a-9753-efdb24956a59",
+          "url": "blob:http://127.0.0.1:40049/f9ae18a7-5e9e-4cac-9140-f2e571bc3d6c",
+          "type": "worker"
+        }
+      ],
+      "observationMilliseconds": 3000,
+      "outgoing": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": true,
+      "unregister": false,
+      "type": "module",
+      "httpWorker": {
+        "url": "http://127.0.0.1:40049/app/http.js",
+        "ready": {
+          "instance": "8a473c19-e3a0-4843-a8cc-2484d24cbe85",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "object"
+        },
+        "proof": {
+          "instance": "8a473c19-e3a0-4843-a8cc-2484d24cbe85",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "object"
+        }
+      },
+      "before": {
+        "source": {
+          "id": "934c4317-09c4-4d9f-a3d6-83e5a872fafd",
+          "url": "http://127.0.0.1:40049/app/",
+          "type": "window"
+        },
+        "lists": {
+          "all": [
+            {
+              "id": "934c4317-09c4-4d9f-a3d6-83e5a872fafd",
+              "url": "http://127.0.0.1:40049/app/",
+              "type": "window"
+            },
+            {
+              "id": "5bdd9f02-5a77-4fc2-ae43-aa60dee54a65",
+              "url": "http://127.0.0.1:40049/app/sw.js",
+              "type": "serviceworker"
+            },
+            {
+              "id": "c32cd5de-3b16-4172-a83b-179925aea3fc",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "worker": [
+            {
+              "id": "c32cd5de-3b16-4172-a83b-179925aea3fc",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "sharedworker": []
+        },
+        "fetches": [
+          {
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "clientId": "934c4317-09c4-4d9f-a3d6-83e5a872fafd",
+            "resultingClientId": "c32cd5de-3b16-4172-a83b-179925aea3fc",
+            "destination": "worker"
+          }
+        ],
+        "known": {
+          "id": "c32cd5de-3b16-4172-a83b-179925aea3fc",
+          "url": "http://127.0.0.1:40049/app/http.js",
+          "type": "worker"
+        }
+      },
+      "blobWorker": {
+        "url": "blob:http://127.0.0.1:40049/e872bc7c-797d-4ff3-817c-985067df64f1",
+        "ready": {
+          "instance": "f64fac0c-65c2-4aee-b97a-4a19bd5f98d1",
+          "href": "blob:http://127.0.0.1:40049/e872bc7c-797d-4ff3-817c-985067df64f1",
+          "serviceWorkerContainer": "object"
+        },
+        "proof": {
+          "instance": "f64fac0c-65c2-4aee-b97a-4a19bd5f98d1",
+          "href": "blob:http://127.0.0.1:40049/e872bc7c-797d-4ff3-817c-985067df64f1",
+          "serviceWorkerContainer": "object"
+        }
+      },
+      "observations": [
+        {
+          "source": {
+            "id": "934c4317-09c4-4d9f-a3d6-83e5a872fafd",
+            "url": "http://127.0.0.1:40049/app/",
+            "type": "window"
+          },
+          "lists": {
+            "all": [
+              {
+                "id": "934c4317-09c4-4d9f-a3d6-83e5a872fafd",
+                "url": "http://127.0.0.1:40049/app/",
+                "type": "window"
+              },
+              {
+                "id": "5bdd9f02-5a77-4fc2-ae43-aa60dee54a65",
+                "url": "http://127.0.0.1:40049/app/sw.js",
+                "type": "serviceworker"
+              },
+              {
+                "id": "c32cd5de-3b16-4172-a83b-179925aea3fc",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "0594627f-6511-4a0e-9471-88fa5fc35724",
+                "url": "blob:http://127.0.0.1:40049/e872bc7c-797d-4ff3-817c-985067df64f1",
+                "type": "worker"
+              }
+            ],
+            "worker": [
+              {
+                "id": "c32cd5de-3b16-4172-a83b-179925aea3fc",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "0594627f-6511-4a0e-9471-88fa5fc35724",
+                "url": "blob:http://127.0.0.1:40049/e872bc7c-797d-4ff3-817c-985067df64f1",
+                "type": "worker"
+              }
+            ],
+            "sharedworker": []
+          },
+          "fetches": [
+            {
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "clientId": "934c4317-09c4-4d9f-a3d6-83e5a872fafd",
+              "resultingClientId": "c32cd5de-3b16-4172-a83b-179925aea3fc",
+              "destination": "worker"
+            }
+          ],
+          "known": {
+            "id": "c32cd5de-3b16-4172-a83b-179925aea3fc",
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "type": "worker"
+          }
+        }
+      ],
+      "candidates": [
+        {
+          "id": "0594627f-6511-4a0e-9471-88fa5fc35724",
+          "url": "blob:http://127.0.0.1:40049/e872bc7c-797d-4ff3-817c-985067df64f1",
+          "type": "worker"
+        }
+      ],
+      "resolved": [
+        {
+          "id": "0594627f-6511-4a0e-9471-88fa5fc35724",
+          "url": "blob:http://127.0.0.1:40049/e872bc7c-797d-4ff3-817c-985067df64f1",
+          "type": "worker"
+        }
+      ],
+      "observationMilliseconds": 3000,
+      "outgoing": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": true,
+      "unregister": true,
+      "type": "classic",
+      "httpWorker": {
+        "url": "http://127.0.0.1:40049/app/http.js",
+        "ready": {
+          "instance": "a09db46f-cafc-4151-b2d6-02a302907626",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "object"
+        },
+        "proof": {
+          "instance": "a09db46f-cafc-4151-b2d6-02a302907626",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "object"
+        }
+      },
+      "before": {
+        "source": {
+          "id": "5e633d4f-4534-4e7b-a679-185a7dc7e305",
+          "url": "http://127.0.0.1:40049/app/",
+          "type": "window"
+        },
+        "lists": {
+          "all": [
+            {
+              "id": "5e633d4f-4534-4e7b-a679-185a7dc7e305",
+              "url": "http://127.0.0.1:40049/app/",
+              "type": "window"
+            },
+            {
+              "id": "c532187d-78a6-46cd-9518-f432f26dddd4",
+              "url": "http://127.0.0.1:40049/app/sw.js",
+              "type": "serviceworker"
+            },
+            {
+              "id": "6c83117c-a85c-49eb-9612-d32c6a5b937c",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "worker": [
+            {
+              "id": "6c83117c-a85c-49eb-9612-d32c6a5b937c",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "sharedworker": []
+        },
+        "fetches": [
+          {
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "clientId": "5e633d4f-4534-4e7b-a679-185a7dc7e305",
+            "resultingClientId": "6c83117c-a85c-49eb-9612-d32c6a5b937c",
+            "destination": "worker"
+          }
+        ],
+        "known": {
+          "id": "6c83117c-a85c-49eb-9612-d32c6a5b937c",
+          "url": "http://127.0.0.1:40049/app/http.js",
+          "type": "worker"
+        }
+      },
+      "blobWorker": {
+        "url": "blob:http://127.0.0.1:40049/f37ac56b-b40f-4631-86dd-2da41ded3f62",
+        "ready": {
+          "instance": "fdf65ab7-b4c2-468b-a6c9-22d69e2db331",
+          "href": "blob:http://127.0.0.1:40049/f37ac56b-b40f-4631-86dd-2da41ded3f62",
+          "serviceWorkerContainer": "object"
+        },
+        "proof": {
+          "instance": "fdf65ab7-b4c2-468b-a6c9-22d69e2db331",
+          "href": "blob:http://127.0.0.1:40049/f37ac56b-b40f-4631-86dd-2da41ded3f62",
+          "serviceWorkerContainer": "object"
+        }
+      },
+      "observations": [
+        {
+          "source": {
+            "id": "5e633d4f-4534-4e7b-a679-185a7dc7e305",
+            "url": "http://127.0.0.1:40049/app/",
+            "type": "window"
+          },
+          "lists": {
+            "all": [
+              {
+                "id": "5e633d4f-4534-4e7b-a679-185a7dc7e305",
+                "url": "http://127.0.0.1:40049/app/",
+                "type": "window"
+              },
+              {
+                "id": "c532187d-78a6-46cd-9518-f432f26dddd4",
+                "url": "http://127.0.0.1:40049/app/sw.js",
+                "type": "serviceworker"
+              },
+              {
+                "id": "6c83117c-a85c-49eb-9612-d32c6a5b937c",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "7e984957-3a21-4c44-b8ef-e214882c3216",
+                "url": "blob:http://127.0.0.1:40049/f37ac56b-b40f-4631-86dd-2da41ded3f62",
+                "type": "worker"
+              }
+            ],
+            "worker": [
+              {
+                "id": "6c83117c-a85c-49eb-9612-d32c6a5b937c",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "7e984957-3a21-4c44-b8ef-e214882c3216",
+                "url": "blob:http://127.0.0.1:40049/f37ac56b-b40f-4631-86dd-2da41ded3f62",
+                "type": "worker"
+              }
+            ],
+            "sharedworker": []
+          },
+          "fetches": [
+            {
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "clientId": "5e633d4f-4534-4e7b-a679-185a7dc7e305",
+              "resultingClientId": "6c83117c-a85c-49eb-9612-d32c6a5b937c",
+              "destination": "worker"
+            }
+          ],
+          "known": {
+            "id": "6c83117c-a85c-49eb-9612-d32c6a5b937c",
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "type": "worker"
+          }
+        }
+      ],
+      "candidates": [
+        {
+          "id": "7e984957-3a21-4c44-b8ef-e214882c3216",
+          "url": "blob:http://127.0.0.1:40049/f37ac56b-b40f-4631-86dd-2da41ded3f62",
+          "type": "worker"
+        }
+      ],
+      "resolved": [
+        {
+          "id": "7e984957-3a21-4c44-b8ef-e214882c3216",
+          "url": "blob:http://127.0.0.1:40049/f37ac56b-b40f-4631-86dd-2da41ded3f62",
+          "type": "worker"
+        }
+      ],
+      "observationMilliseconds": 3000,
+      "outgoing": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStale": true,
+      "unregister": true,
+      "type": "module",
+      "httpWorker": {
+        "url": "http://127.0.0.1:40049/app/http.js",
+        "ready": {
+          "instance": "e4f01e16-f83d-49d6-ada1-e41445aa2202",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "object"
+        },
+        "proof": {
+          "instance": "e4f01e16-f83d-49d6-ada1-e41445aa2202",
+          "href": "http://127.0.0.1:40049/app/http.js",
+          "serviceWorkerContainer": "object"
+        }
+      },
+      "before": {
+        "source": {
+          "id": "846d43d4-5847-495b-9ef3-c5eb5e635ff8",
+          "url": "http://127.0.0.1:40049/app/",
+          "type": "window"
+        },
+        "lists": {
+          "all": [
+            {
+              "id": "846d43d4-5847-495b-9ef3-c5eb5e635ff8",
+              "url": "http://127.0.0.1:40049/app/",
+              "type": "window"
+            },
+            {
+              "id": "0b64c871-06a0-4ae1-be85-20d01b2b67c9",
+              "url": "http://127.0.0.1:40049/app/sw.js",
+              "type": "serviceworker"
+            },
+            {
+              "id": "efe1fd89-ecc8-44fc-9554-2280c0fa5c99",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "worker": [
+            {
+              "id": "efe1fd89-ecc8-44fc-9554-2280c0fa5c99",
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "type": "worker"
+            }
+          ],
+          "sharedworker": []
+        },
+        "fetches": [
+          {
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "clientId": "846d43d4-5847-495b-9ef3-c5eb5e635ff8",
+            "resultingClientId": "efe1fd89-ecc8-44fc-9554-2280c0fa5c99",
+            "destination": "worker"
+          }
+        ],
+        "known": {
+          "id": "efe1fd89-ecc8-44fc-9554-2280c0fa5c99",
+          "url": "http://127.0.0.1:40049/app/http.js",
+          "type": "worker"
+        }
+      },
+      "blobWorker": {
+        "url": "blob:http://127.0.0.1:40049/4b4f8987-da80-4dbf-8242-660aca99f65f",
+        "ready": {
+          "instance": "67c225f5-cf9f-4343-be5a-ba4eacbf784c",
+          "href": "blob:http://127.0.0.1:40049/4b4f8987-da80-4dbf-8242-660aca99f65f",
+          "serviceWorkerContainer": "object"
+        },
+        "proof": {
+          "instance": "67c225f5-cf9f-4343-be5a-ba4eacbf784c",
+          "href": "blob:http://127.0.0.1:40049/4b4f8987-da80-4dbf-8242-660aca99f65f",
+          "serviceWorkerContainer": "object"
+        }
+      },
+      "observations": [
+        {
+          "source": {
+            "id": "846d43d4-5847-495b-9ef3-c5eb5e635ff8",
+            "url": "http://127.0.0.1:40049/app/",
+            "type": "window"
+          },
+          "lists": {
+            "all": [
+              {
+                "id": "846d43d4-5847-495b-9ef3-c5eb5e635ff8",
+                "url": "http://127.0.0.1:40049/app/",
+                "type": "window"
+              },
+              {
+                "id": "0b64c871-06a0-4ae1-be85-20d01b2b67c9",
+                "url": "http://127.0.0.1:40049/app/sw.js",
+                "type": "serviceworker"
+              },
+              {
+                "id": "efe1fd89-ecc8-44fc-9554-2280c0fa5c99",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "98723fc7-d0b4-45f2-bb86-b6faf204dc4d",
+                "url": "blob:http://127.0.0.1:40049/4b4f8987-da80-4dbf-8242-660aca99f65f",
+                "type": "worker"
+              }
+            ],
+            "worker": [
+              {
+                "id": "efe1fd89-ecc8-44fc-9554-2280c0fa5c99",
+                "url": "http://127.0.0.1:40049/app/http.js",
+                "type": "worker"
+              },
+              {
+                "id": "98723fc7-d0b4-45f2-bb86-b6faf204dc4d",
+                "url": "blob:http://127.0.0.1:40049/4b4f8987-da80-4dbf-8242-660aca99f65f",
+                "type": "worker"
+              }
+            ],
+            "sharedworker": []
+          },
+          "fetches": [
+            {
+              "url": "http://127.0.0.1:40049/app/http.js",
+              "clientId": "846d43d4-5847-495b-9ef3-c5eb5e635ff8",
+              "resultingClientId": "efe1fd89-ecc8-44fc-9554-2280c0fa5c99",
+              "destination": "worker"
+            }
+          ],
+          "known": {
+            "id": "efe1fd89-ecc8-44fc-9554-2280c0fa5c99",
+            "url": "http://127.0.0.1:40049/app/http.js",
+            "type": "worker"
+          }
+        }
+      ],
+      "candidates": [
+        {
+          "id": "98723fc7-d0b4-45f2-bb86-b6faf204dc4d",
+          "url": "blob:http://127.0.0.1:40049/4b4f8987-da80-4dbf-8242-660aca99f65f",
+          "type": "worker"
+        }
+      ],
+      "resolved": [
+        {
+          "id": "98723fc7-d0b4-45f2-bb86-b6faf204dc4d",
+          "url": "blob:http://127.0.0.1:40049/4b4f8987-da80-4dbf-8242-660aca99f65f",
+          "type": "worker"
+        }
+      ],
+      "observationMilliseconds": 3000,
+      "outgoing": []
+    }
+  ]
+}

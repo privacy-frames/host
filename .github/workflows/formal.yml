@@ -193,6 +193,11 @@ jobs:
           node formal/runtime-verification/resource-fetch-browser.ts
       - name: Check dedicated worker reads, restart and transport bypass
         run: PF_RESOURCE_CONTEXT=worker node formal/runtime-verification/resource-fetch-browser.ts
+      - name: Check local worker identity and native source-policy prerequisites
+        run: |
+          npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/runtime-verification/blob-worker-identity.ts formal/runtime-verification/local-bootstrap-policy.ts
+          node formal/runtime-verification/blob-worker-identity.ts
+          node formal/runtime-verification/local-bootstrap-policy.ts
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -200,6 +205,8 @@ jobs:
           path: |
             formal/runtime-verification/resource-fetch-browser.json
             formal/runtime-verification/worker-resource-fetch-browser.json
+            formal/runtime-verification/blob-worker-identity.json
+            formal/runtime-verification/local-bootstrap-policy.json
   local-documents:
     runs-on: ubuntu-latest
     timeout-minutes: 12

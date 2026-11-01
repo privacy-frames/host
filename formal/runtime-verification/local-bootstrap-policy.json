@@ -1,0 +1,245 @@
+{
+  "scope": "Native CSP/Trusted Types prerequisites for local bootstrap design. Metadata-only scripts, intentionally accessible test policy and unprepared test frames. Not a production mitigation, application escape, or complete confinement result.",
+  "completed": true,
+  "sourceSHA256": {
+    "formal/runtime-verification/local-bootstrap-policy.ts": "e9d7f858f05b504624fa9984169fdabd184e4bbca83fb880a9eb6ff599fe165c",
+    "test/browser-profile.ts": "c161489dfce9c3124474d1416440c9876b0a8fce329d2f09fa16f99af744e3a0",
+    "package-lock.json": "4e8c7b0964047f1c9fd3f82956b08d381817fa86fb2f7d47d4a10458dc5e62ed"
+  },
+  "rows": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "baseline",
+      "result": {
+        "supported": true,
+        "first": {
+          "outcome": "message",
+          "value": {
+            "label": "host-prefix",
+            "available": true,
+            "created": true
+          }
+        },
+        "application": {
+          "outcome": "message",
+          "value": {
+            "label": "application"
+          }
+        }
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "exact-blob",
+      "result": {
+        "first": {
+          "outcome": "error"
+        },
+        "application": {
+          "outcome": "error"
+        }
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "named",
+      "result": {
+        "supported": true,
+        "duplicateRefused": true,
+        "raw": {
+          "outcome": "throw",
+          "error": "TypeError: Failed to construct 'Worker': This document requires 'TrustedScriptURL' assignment."
+        },
+        "privateURL": {
+          "outcome": "message",
+          "value": {
+            "label": "host-prefix",
+            "available": true,
+            "created": true
+          }
+        },
+        "childPolicy": true,
+        "childURL": {
+          "outcome": "message",
+          "value": {
+            "label": "application"
+          }
+        }
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "named-then-none",
+      "result": {
+        "supported": true,
+        "duplicateRefused": true,
+        "childPolicy": false,
+        "childError": "TypeError: Failed to execute 'createPolicy' on 'TrustedTypePolicyFactory': Policy \"host-runtime\" disallowed.",
+        "callerBlob": {
+          "outcome": "message",
+          "value": {
+            "label": "host-prefix",
+            "available": true,
+            "created": false,
+            "error": "TypeError: Failed to execute 'createPolicy' on 'TrustedTypePolicyFactory': Policy \"host-runtime\" disallowed."
+          }
+        },
+        "helperBlob": {
+          "outcome": "message",
+          "value": {
+            "label": "host-prefix",
+            "available": true,
+            "created": false,
+            "error": "TypeError: Failed to execute 'createPolicy' on 'TrustedTypePolicyFactory': Policy \"host-runtime\" disallowed."
+          }
+        }
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "named-default-reject-url",
+      "result": {
+        "supported": true,
+        "duplicateRefused": true,
+        "raw": {
+          "outcome": "throw",
+          "error": "TypeError: Private script URL required"
+        },
+        "privateURL": {
+          "outcome": "message",
+          "value": {
+            "label": "host-prefix",
+            "available": true,
+            "created": true
+          }
+        },
+        "html": "ordinary HTML",
+        "evaluation": 2,
+        "spoofedSinkRefused": true,
+        "scriptSinkRefused": true
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "baseline",
+      "result": {
+        "supported": true,
+        "first": {
+          "outcome": "message",
+          "value": {
+            "label": "host-prefix",
+            "available": true,
+            "created": true
+          }
+        },
+        "application": {
+          "outcome": "message",
+          "value": {
+            "label": "application"
+          }
+        }
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "exact-blob",
+      "result": {
+        "first": {
+          "outcome": "error"
+        },
+        "application": {
+          "outcome": "error"
+        }
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "named",
+      "result": {
+        "supported": true,
+        "duplicateRefused": true,
+        "raw": {
+          "outcome": "throw",
+          "error": "TypeError: Worker constructor: Sink type mismatch violation blocked by CSP"
+        },
+        "privateURL": {
+          "outcome": "message",
+          "value": {
+            "label": "host-prefix",
+            "available": true,
+            "created": true
+          }
+        },
+        "childPolicy": true,
+        "childURL": {
+          "outcome": "message",
+          "value": {
+            "label": "application"
+          }
+        }
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "named-then-none",
+      "result": {
+        "supported": true,
+        "duplicateRefused": true,
+        "childPolicy": false,
+        "childError": "TypeError: TrustedTypePolicyFactory.createPolicy: Content-Security-Policy blocked creating policy named 'host-runtime'",
+        "callerBlob": {
+          "outcome": "message",
+          "value": {
+            "label": "host-prefix",
+            "available": true,
+            "created": false,
+            "error": "TypeError: TrustedTypePolicyFactory.createPolicy: Content-Security-Policy blocked creating policy named 'host-runtime'"
+          }
+        },
+        "helperBlob": {
+          "outcome": "message",
+          "value": {
+            "label": "host-prefix",
+            "available": true,
+            "created": false,
+            "error": "TypeError: TrustedTypePolicyFactory.createPolicy: Content-Security-Policy blocked creating policy named 'host-runtime'"
+          }
+        }
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "named-default-reject-url",
+      "result": {
+        "supported": true,
+        "duplicateRefused": true,
+        "raw": {
+          "outcome": "throw",
+          "error": "TypeError: Private script URL required"
+        },
+        "privateURL": {
+          "outcome": "message",
+          "value": {
+            "label": "host-prefix",
+            "available": true,
+            "created": true
+          }
+        },
+        "html": "ordinary HTML",
+        "evaluation": 2,
+        "spoofedSinkRefused": true,
+        "scriptSinkRefused": true
+      }
+    }
+  ]
+}
