@@ -184,6 +184,9 @@ jobs:
             formal/runtime-verification/native-window-policy.json \
             formal/runtime-verification/native-worklet-policy.json \
             formal/runtime-verification/worklet-bundler-semantics.json \
+            formal/runtime-verification/local-worklet-graph.json \
+            formal/runtime-verification/local-worklet-graph-omitted-preparation-chromium.json \
+            formal/runtime-verification/local-worklet-graph-omitted-preparation-firefox.json \
             formal/runtime-verification/async-poll-calibration.json \
             formal/runtime-verification/local-shared-issuer-port.json
       - uses: actions/setup-node@v6
@@ -221,6 +224,11 @@ jobs:
         run: |
           npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/runtime-verification/worklet-bundler-semantics.ts
           node formal/runtime-verification/worklet-bundler-semantics.ts
+      - name: Check private worklet graphs and preparation omission controls
+        if: ${{ !cancelled() }}
+        run: |
+          npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/runtime-verification/local-worklet-graph.ts formal/runtime-verification/local-worklet-graph-control.ts
+          node formal/runtime-verification/local-worklet-graph-control.ts
       - name: Check private-port shared-worker issuing prerequisites
         if: ${{ !cancelled() }}
         run: |
@@ -237,6 +245,12 @@ jobs:
             formal/runtime-verification/native-window-policy.json
             formal/runtime-verification/native-worklet-policy.json
             formal/runtime-verification/worklet-bundler-semantics.json
+            formal/runtime-verification/local-worklet-graph.json
+            formal/runtime-verification/local-worklet-graph-normal.log
+            formal/runtime-verification/local-worklet-graph-omitted-preparation-chromium.json
+            formal/runtime-verification/local-worklet-graph-omitted-preparation-chromium.log
+            formal/runtime-verification/local-worklet-graph-omitted-preparation-firefox.json
+            formal/runtime-verification/local-worklet-graph-omitted-preparation-firefox.log
             formal/runtime-verification/async-poll-calibration.json
             formal/runtime-verification/local-shared-issuer-port.json
   worker-closure:

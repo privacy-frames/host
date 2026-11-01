@@ -135,14 +135,20 @@ export const boundaries: readonly Boundary[] = [
   {
     id: 'worklet-publication',
     obligation:
-      'Authenticate the owning actor and install worklet restrictions before publisher module execution.',
-    invariants: ['C1', 'C2', 'C3', 'C4', 'C6', 'C7'],
+      'Authenticate the owning actor, prepare the host guard outside the application compiler graph, and install restrictions before publisher module execution.',
+    invariants: ['C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8'],
     sources: [
       'src/runtime/contexts/worklet-factory.ts',
       'src/runtime/contexts/worklet-controller.ts',
       'src/runtime/contexts/worklet-guard.ts',
       'src/runtime/contexts/worklet-source.ts',
       'src/runtime/contexts/worklet-store.ts',
+      'src/runtime/contexts/worklet-graph.ts',
+      'src/runtime/contexts/worklet-graph-schema.ts',
+      'src/runtime/contexts/worklet-chunks.ts',
+      'scripts/worklet-compiler.ts',
+      'scripts/build.ts',
+      'src/runtime/trusted/source.d.ts',
     ],
   },
   {

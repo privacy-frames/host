@@ -35,6 +35,12 @@ the generated modules run in actual AudioWorklets. The
 compiler hashes and browser outcomes. Neither compiler is admitted to production
 by this single rejection comparison.
 
+The [local graph candidate](local-worklet-graph.md) now runs the compiler in a
+private native service worker with embedded parser bytes. Its selected native
+comparisons preserve shared state, live cyclic bindings and repeated entries.
+The independent host-guard wrapper and preparation-omission controls pass their
+selected checks. Production protocol integration remains pending.
+
 Run after building:
 
 ```sh

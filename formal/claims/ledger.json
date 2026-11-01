@@ -3,7 +3,7 @@
   "scope": "Claims are review obligations, not a blanket confinement certification. Current receipts carry their own source/build scope. Policy-11 historical artifacts are pinned by policy11-validation.json; policy-12 local Window delivery and its independent native-policy fixture are recorded separately. Production HTTP denial, caller correspondence, browser coverage and complete C1-C8 remain open.",
   "source_baseline": "0f0d43cda8bdfbeccfc5846cea7af1d4bba69e7b",
   "artifact_sha256": {
-    ".github/workflows/formal.yml": "1aa68ea1f409cc75914f70d38173bc4f1260ed9e18f615367cbe9068ffd06f4b",
+    ".github/workflows/formal.yml": "02c5fc2a6792b61e002f672ecf3f94a1aee7f57db7c58d8d4923b04d87ad7b1d",
     "formal/admission/implementation-results.json": "8484858f6f903ad46049999cf79634027e5f53cd1c6c7a89d7b27cf2606daa4d",
     "formal/admission/model-results.json": "a55c1e6cecd803b18bba88778899e7f57142de3dbd1bb9e87b8330b921e1be63",
     "formal/browser-features.json": "7ed31f047c607772cfdaffed193310c9b14ee4f071dbb37412521ef4af7b443b",
@@ -113,7 +113,7 @@
     "formal/runtime-verification/authority-predicate.md": "c60a1532c6f4fe38c5e21c73ea56bf824c2ff78507dc8ec6fde52c59b4d3f9ce",
     "formal/runtime-verification/blob-worker-identity.json": "a74f50164d2184ac9c077e2fcdd39d0590a9807899886f1f642cd16d813c2bc0",
     "formal/runtime-verification/blob-worker-identity.ts": "2f77260568f723d91ed45c7a08bd374035a8176770151647daf0c19e515fc366",
-    "formal/runtime-verification/boundaries.ts": "8372d7d02bbb0197683b6148331c1f777511d1d16a008e2036ae8e9edffdd80b",
+    "formal/runtime-verification/boundaries.ts": "c573b7bb722aa8a2e2f233c4258bdb6aebdb7c097510f414812975e44d69c828",
     "formal/runtime-verification/ci-policy10.json": "e5a7bb72bacd86273b9264f428e1472ac608b98a8d23d26d6ea146061b760cf1",
     "formal/runtime-verification/ci-policy11.json": "8556b42b3b02d1da3bd8f1a6965f5e6e2b7fb6de1e059c8041986bf876f28d7e",
     "formal/runtime-verification/ci-policy12.json": "d6d5d13f6499ec318a1d5853bbd287a6b996b3008f2eb373188fab004eef7ace",
@@ -128,7 +128,7 @@
     "formal/runtime-verification/generation-comparison.ts": "61bc8ca641e2e603b55ce3956e66c4b60e621fd455b09afd54cabf377f566a7a",
     "formal/runtime-verification/gillian-report.test.ts": "a4d5550e24ac238acb9ab35c3bf4e2aa3833979bd42195d9439a9613230c7fd6",
     "formal/runtime-verification/gillian.ts": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
-    "formal/runtime-verification/implementation-inventory.json": "afaee8229dcb903e5e62d878661dba8bfe73e8e9e397459f4edc4426f8e32c29",
+    "formal/runtime-verification/implementation-inventory.json": "2dd330ccf27c29b23d96196027eb516e7d067be32ab95b95a7b66d912f0cc4ce",
     "formal/runtime-verification/inventory.ts": "30a433edc9bc21d25c4790a9540e6eeb271f382c12f4fefeccd1dba1b75a47c2",
     "formal/runtime-verification/local-bootstrap-policy.json": "6bb5c4c8a20a480b1162c1f13f373514dc247fe9e8187023e8362266cc79cf70",
     "formal/runtime-verification/local-bootstrap-policy.ts": "7145f5d8c41d550cf425203ee1b18a5f7bf361e79a5c4dd0dd44f18c1d244535",
@@ -147,7 +147,7 @@
     "formal/runtime-verification/local-kernel-font-offline-diagnostic.ts.txt": "aae52b1d8857a7cabff420677fddbda9c7709f9c966fdaac3b42f6b8309050b0",
     "formal/runtime-verification/local-kernel-full-test.log": "c6066470865ea378003f1b49c4199b0157045efa279719e42a4f200d7a3708a9",
     "formal/runtime-verification/local-kernel-stackedit-firefox.log": "585a304fa27b161db1d12e2dfe7dd063187a77388c198f70ea0284eb1fa0baea",
-    "formal/runtime-verification/local-kernel-validation.json": "aa6a173f891c5f28f33a9996f51f26adf42b913300eb0766829bfac11a87ac01",
+    "formal/runtime-verification/local-kernel-validation.json": "b1b81a81a406f7c801a30f1f7163979732734e6ad86774c27c20677d66f4b787",
     "formal/runtime-verification/local-kernel-wasm.log": "e6664772a01f6925ef187a8b9f1a4c3f5f98c803fdc37657699c19e025780b5a",
     "formal/runtime-verification/local-kernel-worker-policy.log": "40b4c915ccdf43aca8445d312c27677a23cd8762d1170a5c1a5cd8bebd011c2f",
     "formal/runtime-verification/local-shared-issuer-port.json": "ea5882eb592d6448d6745e513a4b7ed8099067bf81359048aa77d195d81757bc",
@@ -158,6 +158,19 @@
     "formal/runtime-verification/local-worker-bootstrap.md": "79267c5b33f39c97876b88af0bc5f2585266e005e9aeb595b13d129e5981b088",
     "formal/runtime-verification/local-worker-startup-validation.json": "d472de86a27036b324d1ae124d4e267569ad358f3dcb0d70076b48e14438a575",
     "formal/runtime-verification/local-worker-startup.md": "61c68dcb1dc51c151d0897ff2ab6dbfa235984ff260d5c93a64eb733370d460a",
+    "formal/runtime-verification/local-worklet-controls.log": "922ca2d1e222cf71f9e1b2d33a8715782c5624fbd38484551c91fd91bff83a50",
+    "formal/runtime-verification/local-worklet-graph-control.ts": "b4d3c6031781dde442c2d1f12da08e8a9128b5685a2a8ea2b0ee06df441b42f1",
+    "formal/runtime-verification/local-worklet-graph-normal.log": "573438e99f122d6b30f905fe41bee0f9491f3c9d3c51ae81da8bb04303183fac",
+    "formal/runtime-verification/local-worklet-graph-omitted-preparation-chromium.json": "45cc144871922c960dd4bfe4184133fc29ada0a7e0b2aab9f22ad49e19f55ef2",
+    "formal/runtime-verification/local-worklet-graph-omitted-preparation-chromium.log": "66dfe064e8a3547463c7be2cc6f3768e7d5b8ec0d52b4cf5d123b746c0537387",
+    "formal/runtime-verification/local-worklet-graph-omitted-preparation-firefox.json": "117b8ad32800ab02b5a4c5386b13312fd0a8e2b3b1fe0ddf30fd8b3e80993688",
+    "formal/runtime-verification/local-worklet-graph-omitted-preparation-firefox.log": "daad9283b3c3ceb69697456ee24034587c9df01ad722d0abc5b13dd2fea5aa4d",
+    "formal/runtime-verification/local-worklet-graph.json": "3f37e85ce2a58db4cd39a14e1bd4714a4a7e25422bf0241894cf44675460c19f",
+    "formal/runtime-verification/local-worklet-graph.md": "2cec0cebb59197ee6559a55d07b235b23d105751d010a4d90786d9e382fca0f0",
+    "formal/runtime-verification/local-worklet-graph.ts": "6385e479f1a83cdad95f16042a013125c2d14c4a0d052c7e4f1890c156aaac39",
+    "formal/runtime-verification/local-worklet-regression.log": "06b706a771c904eb347339d9d428c51953de996d05aa3c56492638b44b21c296",
+    "formal/runtime-verification/local-worklet-unit.log": "647cc9b3a21a55ae200a0c0bf0ad7ce5f3a98bb985e4c628084870919dac8c5f",
+    "formal/runtime-verification/local-worklet-validation.json": "0bf65fef25c8b39407013200f990fedbc1616b608bca8bf887e4cb9767664843",
     "formal/runtime-verification/maintenance-backends.json": "9dacd2dc53b294581f48f397660fd1fe6b55ae9018065a733c6605fede6d6936",
     "formal/runtime-verification/maintenance-backends.md": "e5731612cea9ab1548cd7ccace71af268b3bb5d735b234e64401af92f289c055",
     "formal/runtime-verification/maintenance-backends.ts": "d5ef74168c84fe44ac7fed7f7a27af8ae7f84fd11a26b1becba26eab11100c96",
@@ -181,7 +194,7 @@
     "formal/runtime-verification/native-window-policy.md": "a60e8f1b9e0d3e1428f6fc104ef79acac3999ecdb130c78a95087864d3051868",
     "formal/runtime-verification/native-window-policy.ts": "6208fe75931e9fd356504181a9d9fd238c8aff31e434e6615ce46e7c3b1c2ee9",
     "formal/runtime-verification/native-worklet-policy.json": "14264e8f2036548e36ef8de1e87ee77468db7e40226581ba8bb94e139e1816c9",
-    "formal/runtime-verification/native-worklet-policy.md": "1cade0cc69121b75e942009686542e1f51a27ca413fdf6e0c281d86e6eb1f95d",
+    "formal/runtime-verification/native-worklet-policy.md": "0855d205054e4a7ee22b586e34534efe6345890f19fe80e905bcdaebaeadacc0",
     "formal/runtime-verification/native-worklet-policy.ts": "e613045944fff576b66f2ebef5c1ec523ec5392d8735289dbd585be9785a0380",
     "formal/runtime-verification/parent-document-broker.json": "346ad693f78fa667cbdcd2c8e04efe300c67fbd8f7a2429b410701b74a741921",
     "formal/runtime-verification/parent-document-compatibility.json": "968ed80bdb719720283c13c2c861a4bbfe3e2081cb6a00dc20aa85b46f918ec6",
@@ -297,8 +310,8 @@
     "formal/webtransport/results.json": "b97fb9a79cd59263d75f7e1a0a0d1d9269b92af7a9f4b797a9a00f6efdc227e5",
     "formal/worker-registration-probe.ts": "6bcad99b4fe18781e077fc7f45406b8eb5d3b52c18bc2ab57383d7e2c138cb50",
     "formal/worker-registration.md": "c17ec13229015956a09b7bdfa7feaf9433dd2d7f9f991da89bc8fffd6d605445",
-    "package-lock.json": "7c6c477f81e1856b73b8a8420d82aa43ea39478ec986d73d3a823c85e03fb547",
-    "package.json": "e41805efdc70fd8cfaf4a0bfaaf0daaaa5ec00fa2955303a9300af373f96c032",
+    "package-lock.json": "29beded524ea35ec8aa5ce822cdcfa447caba753eb88fecd9a1209bd98a1eea1",
+    "package.json": "d9265cd5b2eec5b321ea428f8fdf2fb5c4b2c6c8dc67282e41cf7049bf6911ad",
     "results/browser.json": "cb0bfa9d8b20739ed2e6e9561624a7b71a3773be01e777f89c5cc9295b5c60a3",
     "results/contexts/controller-storage.json": "3bde34b0ccb3a4eb75f592374b3c00b7b8f5a1c5c6095588bbaca2f99283e06d",
     "results/contexts/csp-startup.json": "ed972f79c658b0930e052666e349dbe0d0b9afe10a8b918c3e6b4c06ac661366",
@@ -316,6 +329,9 @@
     "results/contexts/script-url-gate.json": "37e752e019de6b33935859ea4e10fbb88736f788ced67ab214c32a9fe04ec80c",
     "results/contexts/shared-workers.json": "64d7a40224ed2fd75065c49ac21581daa1ab03701b561c35f359ab6d7feb794c",
     "results/contexts/workers.json": "3cb25c5838dcf4ce4505c3d238063ebe8b2ad9f71089c69e308d012c7e44b937",
+    "results/contexts/worklet-guard.json": "071f5772e1dd6c8c53bf57f31ac69113672aecb46a5eae6417114a740a39490a",
+    "results/contexts/worklet-platform.json": "eef13ccf4f357b4e9daa6556be921c891d91664c84e0fc87273ad884203d811a",
+    "results/contexts/worklets.json": "297f58196da343a1a73164f7a3408b564299aef5d23f2c43cc68cbee507a989c",
     "results/network-firefox.json": "cdaf952c88cfeb692413fc2075f7dc6786ed0f4e14faaa98067e766a4134ef96",
     "results/network.json": "490e217fafa4601c3bf0afc039129a22c2829666c6279aa10d70a235023afa62",
     "results/trusted-runtime/compatibility-local.json": "7c5545ebf932497e78db73e4569f304c5f53b51c14d1bbea7272c9cde8d870c6",
@@ -323,8 +339,9 @@
     "results/trusted-runtime/policy12-cyberchef.json": "b7ee349ef393cc3090e26fbfd76155697a6becc6c8166587ceb6687fc87d5e71",
     "results/trusted-runtime/policy12-stackedit-firefox.json": "5c358762197689245159b4786443e7a9fd52472adac150fad245a84146dc4e10",
     "results/wasm.json": "28008acd10a46da8269617ed41f2bea6e68d3d785435a870632fef25aef5e8f2",
-    "scripts/build.ts": "200e6aaa891bb3f7837759f9e68e49f298160333afaca2f24f54e59c5b1bdbc8",
+    "scripts/build.ts": "bb15e3a22777995d642c0a92b41fb39d4a5f91606c85258a2b9c22a82ca44e77",
     "scripts/trusted-policy.ts": "c3d6558cd78422d52ab971692482bda02c10ff601053471f35f6b5491cfb395d",
+    "scripts/worklet-compiler.ts": "9ec50de9ebb0ff4fb86a61bc22f0c50dc6133e70c5a6b3ae87878aafaea4d3cc",
     "src/bridge/connect.ts": "bd35b868143935b8cfa4f7ce3227644c516b01f5ef82eea2b196e3183f17833b",
     "src/installation/session.ts": "0381b435c49234134d1cb0f20d4e86503fd64ae4e416a5823e26f61e7aaf3f20",
     "src/manager/services/bootstrap.ts": "17176349ebf2d4f1f2fe9662e0e737b5da3f50a52eef7f84b21102158ab16427",
@@ -365,8 +382,11 @@
     "src/runtime/contexts/worker-protocol.ts": "bc90b8c2d2a0ea5fb1a68555af12cc70f5fa3dc252c4557226417cd88adb40cc",
     "src/runtime/contexts/worker-realm.ts": "6b7b1fc504ac1c6d2cf6a59c4e10cb8881a8cd701fea78e61cad6fc39b74572d",
     "src/runtime/contexts/worker-resource-protocol.ts": "aa5b444b987d60ce6dcacf74715756a290a2d440b39004a851a1c75f03f3c9fe",
+    "src/runtime/contexts/worklet-chunks.ts": "93769ee6ad26251020c389e98de6cdb8df7f51ff2c1d88a4e15893954b2334c6",
     "src/runtime/contexts/worklet-controller.ts": "268da6b2d90a980e34a5731450e2dd347fa44d68e44d9c142dd5468ac81b4ef3",
     "src/runtime/contexts/worklet-factory.ts": "b6c4347d35b9deae4e1bf111c1e4ae3b46d94662e044293d1436730f0dc0121e",
+    "src/runtime/contexts/worklet-graph-schema.ts": "700a967bbf6d0a34bf43caa1f93a1c5f2819fa93ff12a2b5d729c9ae0c9fc333",
+    "src/runtime/contexts/worklet-graph.ts": "0f4f5ef9eece2162b6d48fb40b91c3e421dd04564d127ab6a828ff0487c3b515",
     "src/runtime/contexts/worklet-guard.ts": "a26c494bba38ab190640551b59bff4c946edc3e6ebc03bba6167f0de4d48e9fb",
     "src/runtime/controller-client.ts": "a420699a6ebeaf45c0bdc4a87b9a6f1f0d8e102fae165864f601846c6df9ce33",
     "src/runtime/document.ts": "afac1c6bbe5bf312afc450cd13bd54d3bdd80eecdeefb9b9c1bd8dce379d18f5",
@@ -400,6 +420,7 @@
     "src/runtime/storage.ts": "3f25382228184cf46609e26562fd815c1701f88d8fc4af19d9a61ff79e949c5d",
     "src/runtime/trusted/context.ts": "a616feff34124caef20171ab5db21377c866781d94c6eae15d2c4fc43c59f922",
     "src/runtime/trusted/fragment.ts": "a0c25eeff36057f8f44efe1f0d4a215758c1a965efdcecbb107a602256e34bc0",
+    "src/runtime/trusted/source.d.ts": "3ef183fc805f1071dc2f94584d924540ddb067af2e31bd2f5bc7e12b265f3fe1",
     "src/runtime/worker.ts": "80902f271e066d384107bf9405520fe1c889993cb8f37c1f292dd401211ac464",
     "src/shared/application-navigation.ts": "ff1aa86011a7aa5af0ccf8626f77d0b8a86883d4cc4e21cf92f7f1382d9cbdb4",
     "src/shared/context-policy.ts": "6bc7a5ca6c733e3d869e200382dc3896347ea22ea9a8448cbe4b505ecc39df9c",
@@ -468,6 +489,7 @@
     "test/worker-control.test.ts": "64be68d6132e19c96c7dcc55be924ea52e830abd4c60cbf22a70a65089e52d91",
     "test/worker-namespaces.test.ts": "9613d3fc5555e5450a856329011961e0de041d5e4618eb0bca12d5fd27b89250",
     "test/worklet-contexts.ts": "4535bc5c707138db48764a1ddbeba086fa1950785a5a11cd0d1cfada24bcdd1e",
+    "test/worklet-graph.test.ts": "60b80a8fa8231f257151e209d4d9d641567111f820628668e5c35747da729c83",
     "test/worklet-guard.ts": "6e66d8e41f3a2a8d34ecff988f932a36b598c9f1e7ca144cd0149c1bd1e8fb0c",
     "test/worklet-platform.ts": "1872fe7f40011ec8ce0ef26ef7de59f27720a175de4983755205d608d6c8b7da"
   },
@@ -3840,6 +3862,72 @@
         "native_control": "recorded",
         "confined_test": "not-recorded",
         "fault_control": "not-recorded"
+      }
+    },
+    {
+      "id": "local_worklet_graph_preparation",
+      "title": "Private Worklet compilation, local graph linking and independent host preparation",
+      "disposition": "unverified",
+      "preconditions": "The component fixture supplies fixed immutable source reads and owner metadata. The actual built guard and compiler/parser bytes are trusted host inputs. The production native-actor transport, child ownership and generation correspondence are not integrated.",
+      "enforcement": "The compiler snapshots admitted module data in a private service worker with embedded WASM and no network reader. Strict facades preserve prepared shared-module identity across entries. The Window validates unknown graph data and creates local Blob chunks with captured operations. A separate wrapper imports host preparation before the application graph; native HTTP policy independently gates fetching. The production factory still uses its prior HTTP routes.",
+      "source_paths": [
+        "src/runtime/contexts/worklet-graph.ts",
+        "src/runtime/contexts/worklet-graph-schema.ts",
+        "src/runtime/contexts/worklet-chunks.ts",
+        "scripts/worklet-compiler.ts",
+        "scripts/build.ts",
+        "src/runtime/trusted/source.d.ts",
+        "package.json",
+        "package-lock.json"
+      ],
+      "evidence": [
+        {
+          "kind": "native_control",
+          "description": "Six native/local/prototype-mutated groups compare shared state, cyclic live bindings, repeated and throwing entries, and rejection of cyclic lexical initialization. Native HTTP receiver/dependency controls work in both browsers. Eight real-guard controls compare successful preparation with incompatible metadata, including a second entry after failure; API promise resolution is not treated as successful evaluation.",
+          "paths": [
+            "formal/runtime-verification/local-worklet-graph.ts",
+            "formal/runtime-verification/local-worklet-graph.json",
+            "formal/runtime-verification/local-worklet-graph-normal.log",
+            "formal/runtime-verification/local-worklet-graph.md"
+          ]
+        },
+        {
+          "kind": "confined_test",
+          "description": "Restricted component groups compile in a native private service worker with embedded parser bytes and HTTP-denying script/connect policy, record no compiler fetch attempts, and observe no HTTP during the operations plus 300 ms. An independent raw native module control demonstrates that dependency fetch precedes a rejected guard under permissive policy; the restricted policy prevents that fetch. Wire-data controls and the existing production Worklet regression pass; the index binds their scoped source/build inputs.",
+          "paths": [
+            "formal/runtime-verification/local-worklet-validation.json",
+            "formal/runtime-verification/local-worklet-unit.log",
+            "formal/runtime-verification/local-worklet-regression.log",
+            "test/worklet-graph.test.ts",
+            "results/contexts/worklet-platform.json",
+            "results/contexts/worklet-guard.json",
+            "results/contexts/worklets.json",
+            ".github/workflows/formal.yml"
+          ]
+        },
+        {
+          "kind": "fault_control",
+          "description": "A fresh baseline precedes per-browser omission of the actual preparation dependency in temporary helper bytes. Each child comparison fails at the intended strict-policy assertion: a processor registers despite rejected preparation metadata. The checker rejects unrelated failures and stale receipts, verifies unchanged production source/build and compiler bytes, and requires changed bootstrap bytes.",
+          "paths": [
+            "formal/runtime-verification/local-worklet-graph-control.ts",
+            "formal/runtime-verification/local-worklet-graph-omitted-preparation-chromium.json",
+            "formal/runtime-verification/local-worklet-graph-omitted-preparation-chromium.log",
+            "formal/runtime-verification/local-worklet-graph-omitted-preparation-firefox.json",
+            "formal/runtime-verification/local-worklet-graph-omitted-preparation-firefox.log",
+            "formal/runtime-verification/local-worklet-controls.log"
+          ]
+        }
+      ],
+      "open_obligations": [
+        "Replace the production HTTP factory/controller paths with native-actor-bound private requests, preserving root and child ownership and generation freshness.",
+        "Separate the guest-side dynamic-import rejection helper from the side-effectful mandatory host guard; keep the latter outside the application compiler graph.",
+        "Establish compiler/language compatibility beyond the selected graphs, PaintWorklet integration, guard-byte authentication, concrete caller ownership and lifecycle correspondence.",
+        "Integrate independent native HTTP denial across all contexts and resolve fresh/aged registration and retained-operation counterexamples. Complete C1-C8 composition and browser-effect coverage."
+      ],
+      "control_status": {
+        "native_control": "recorded",
+        "confined_test": "recorded",
+        "fault_control": "recorded"
       }
     }
   ]

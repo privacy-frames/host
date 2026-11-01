@@ -6,6 +6,7 @@ import { resolve } from 'node:path';
 import { appIcon } from './icons.ts';
 import { buildExamples } from './build-examples.ts';
 import { trustedPolicyPlugin } from './trusted-policy.ts';
+import { workletCompilerPlugin } from './worklet-compiler.ts';
 
 const root = resolve(import.meta.dirname, '..');
 const configPath = process.env.HOST_CONFIG || resolve(root, 'deployment/config.json');
@@ -24,6 +25,7 @@ for (const path of [
   'scripts/icons.ts',
   'scripts/report.ts',
   'scripts/trusted-policy.ts',
+  'scripts/worklet-compiler.ts',
 ])
   hash.update(await readFile(resolve(root, path)));
 hash.update(JSON.stringify(config));
@@ -75,7 +77,7 @@ for (const role of roles) {
         : 'iife',
       target: 'es2022',
       jsx: 'automatic',
-      plugins: [trustedPolicy],
+      plugins: [trustedPolicy, workletCompilerPlugin(root)],
     });
   }
   await cp(

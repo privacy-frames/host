@@ -4,7 +4,7 @@
   "typescriptVersion": "6.0.3",
   "contractSHA256": "57c378112e1d53c1223955a6e0a28b546e0a6ec3e90895f0deec46908ca9017f",
   "generatorSHA256": "30a433edc9bc21d25c4790a9540e6eeb271f382c12f4fefeccd1dba1b75a47c2",
-  "boundaryDefinitionsSHA256": "8372d7d02bbb0197683b6148331c1f777511d1d16a008e2036ae8e9edffdd80b",
+  "boundaryDefinitionsSHA256": "c573b7bb722aa8a2e2f233c4258bdb6aebdb7c097510f414812975e44d69c828",
   "boundaries": [
     {
       "id": "script-url-admission",
@@ -166,21 +166,29 @@
     },
     {
       "id": "worklet-publication",
-      "obligation": "Authenticate the owning actor and install worklet restrictions before publisher module execution.",
+      "obligation": "Authenticate the owning actor, prepare the host guard outside the application compiler graph, and install restrictions before publisher module execution.",
       "invariants": [
         "C1",
         "C2",
         "C3",
         "C4",
+        "C5",
         "C6",
-        "C7"
+        "C7",
+        "C8"
       ],
       "sources": [
         "src/runtime/contexts/worklet-factory.ts",
         "src/runtime/contexts/worklet-controller.ts",
         "src/runtime/contexts/worklet-guard.ts",
         "src/runtime/contexts/worklet-source.ts",
-        "src/runtime/contexts/worklet-store.ts"
+        "src/runtime/contexts/worklet-store.ts",
+        "src/runtime/contexts/worklet-graph.ts",
+        "src/runtime/contexts/worklet-graph-schema.ts",
+        "src/runtime/contexts/worklet-chunks.ts",
+        "scripts/worklet-compiler.ts",
+        "scripts/build.ts",
+        "src/runtime/trusted/source.d.ts"
       ]
     },
     {
@@ -329,12 +337,13 @@
   "sources": [
     {
       "path": "scripts/build.ts",
-      "sourceSHA256": "200e6aaa891bb3f7837759f9e68e49f298160333afaca2f24f54e59c5b1bdbc8",
+      "sourceSHA256": "bb15e3a22777995d642c0a92b41fb39d4a5f91606c85258a2b9c22a82ca44e77",
       "boundaries": [
-        "dedicated-worker-publication"
+        "dedicated-worker-publication",
+        "worklet-publication"
       ],
-      "siteCount": 69,
-      "sitesSHA256": "e2579e1cba76152324145e13809bbe80af540ef65805ecf74fc0cb972bed91ef"
+      "siteCount": 70,
+      "sitesSHA256": "373f1f7a32dbd83455aacf0595e095a1d4a116f0126497f60810026d00f6fe9b"
     },
     {
       "path": "scripts/trusted-policy.ts",
@@ -345,6 +354,15 @@
       ],
       "siteCount": 26,
       "sitesSHA256": "6b4d15c89f68abd377344424b45cb2c19666c208275e681d7f30e175dff5835a"
+    },
+    {
+      "path": "scripts/worklet-compiler.ts",
+      "sourceSHA256": "9ec50de9ebb0ff4fb86a61bc22f0c50dc6133e70c5a6b3ae87878aafaea4d3cc",
+      "boundaries": [
+        "worklet-publication"
+      ],
+      "siteCount": 20,
+      "sitesSHA256": "f516601b113056155db31793cedd31ead6a0099807f8891c2e58b080856395a4"
     },
     {
       "path": "src/bridge/connect.ts",
@@ -711,6 +729,15 @@
       "sitesSHA256": "7c45f42f27543bf7ab1b1fb62636ecf3c1b8448eb53c98a5e8c1048c97a532ba"
     },
     {
+      "path": "src/runtime/contexts/worklet-chunks.ts",
+      "sourceSHA256": "93769ee6ad26251020c389e98de6cdb8df7f51ff2c1d88a4e15893954b2334c6",
+      "boundaries": [
+        "worklet-publication"
+      ],
+      "siteCount": 60,
+      "sitesSHA256": "6d413199cbacc0b6449c10f671e4e4f8c9362905397a2e46cab0b6a252be7026"
+    },
+    {
       "path": "src/runtime/contexts/worklet-controller.ts",
       "sourceSHA256": "268da6b2d90a980e34a5731450e2dd347fa44d68e44d9c142dd5468ac81b4ef3",
       "boundaries": [
@@ -727,6 +754,24 @@
       ],
       "siteCount": 123,
       "sitesSHA256": "ecf4de0bf3b8ad78022997ba7ac57b9c1f5e8569b798270010f95165475b875a"
+    },
+    {
+      "path": "src/runtime/contexts/worklet-graph-schema.ts",
+      "sourceSHA256": "700a967bbf6d0a34bf43caa1f93a1c5f2819fa93ff12a2b5d729c9ae0c9fc333",
+      "boundaries": [
+        "worklet-publication"
+      ],
+      "siteCount": 65,
+      "sitesSHA256": "b65ad9fd8c04d2131833d086efc98856cfe1022332d8f6532da3ae41806d4f56"
+    },
+    {
+      "path": "src/runtime/contexts/worklet-graph.ts",
+      "sourceSHA256": "0f4f5ef9eece2162b6d48fb40b91c3e421dd04564d127ab6a828ff0487c3b515",
+      "boundaries": [
+        "worklet-publication"
+      ],
+      "siteCount": 52,
+      "sitesSHA256": "d7b0c53475b33e71c06e8539a19c2822ed93893905446928f9133c225fa63f48"
     },
     {
       "path": "src/runtime/contexts/worklet-guard.ts",
@@ -1042,6 +1087,15 @@
       ],
       "siteCount": 18,
       "sitesSHA256": "74512d4c6cc290ce8b68665292b551085c0321e98ba3356ac5fe1c12fd4a67a9"
+    },
+    {
+      "path": "src/runtime/trusted/source.d.ts",
+      "sourceSHA256": "3ef183fc805f1071dc2f94584d924540ddb067af2e31bd2f5bc7e12b265f3fe1",
+      "boundaries": [
+        "worklet-publication"
+      ],
+      "siteCount": 0,
+      "sitesSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
     },
     {
       "path": "src/runtime/worker.ts",

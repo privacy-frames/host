@@ -74,8 +74,14 @@ can be integrated across all supported contexts.
 The compiler calibration rejects esbuild's handling of cyclic lexical
 initialization: native Worklets reject the source, while its bundled output
 runs. The pinned Rollup browser distribution retains the selected native
-rejection. Shared identity, live bindings, repeated entries and compilation in
-the trusted production environment still require positive comparisons.
+rejection. The [local graph candidate](local-worklet-graph.md) now passes six
+native/private-service-worker comparisons for shared cycles, live bindings,
+repeated and throwing entries, and selected prototype mutation. Eight real-guard
+controls retain preparation before application registration. Per-browser
+omission builds demonstrate that the test detects a missing preparation
+dependency without changing production source or artifacts. The production
+factory and its native HTTP policy still need integration; these component
+results do not close the maintenance counterexample.
 
 The next candidate's complete eight-app command fails after 32 successful tasks:
 Firefox StackEdit's screenshot times out waiting for fallback fonts, preventing

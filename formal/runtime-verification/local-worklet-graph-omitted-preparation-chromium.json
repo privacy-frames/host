@@ -1,0 +1,412 @@
+{
+  "scope": "Actual compile/link helpers with fixed immutable sources, compilation in a private native service worker with embedded WASM and HTTP-denying script/connect policy, an independent host-guard entry wrapper, and native AudioWorklets. Fixed fixture metadata; no production actor authentication, PaintWorklet or lifetime proof.",
+  "completed": false,
+  "omittedPreparation": true,
+  "browserFilter": "chromium",
+  "before": {
+    "capturedAt": "2026-11-01T15:21:38.081Z",
+    "revision": "7b95e5cee3c5687f80a59ee538a72c02a7cd0fe7",
+    "dirty": true,
+    "sourceSHA256": "f7f047330150a560bd4869218e203ad0e114ff1f8df3c0b0c44415b5c057acd1",
+    "runner": "formal/runtime-verification/local-worklet-graph.ts",
+    "runnerSHA256": "6385e479f1a83cdad95f16042a013125c2d14c4a0d052c7e4f1890c156aaac39",
+    "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
+    "artifacts": {
+      "dist-manager/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-manager/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-manager/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-manager/index.html": "0ea2b29b0ef6946140c54c2dc2147bffe4de82b9ed13eb4fdcae97a81cfd56f7",
+      "dist-manager/manager.js": "e361950a8774ca901a2b669e55041e15931e079bcdf5cd66e2b95d3986ce0730",
+      "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-manager/sw.js": "ecfad56dc727a0e7c52224b5e228f23ea9c5b55298385e45ba6b98e6a26167e9",
+      "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
+      "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
+      "dist-runtime/document-guard.js": "9f60af3ab3709983500f37853e0439541b7b502aa13a75945221b839a7ca1172",
+      "dist-runtime/guard.js": "c4131a5e1e089fe3e8608fda9872f64479488cf97cb8e486869ea1271dac849f",
+      "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
+      "dist-runtime/publisher-worker-guard.js": "de236fabfdafb743fc133be95222a89dd030e981fba108afe9ae30890bf267e5",
+      "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-runtime/shared-worker-guard.js": "b7c15ec06c26966d4b7b87d11403ff6690e4410b42b136ae133943f3467e9cd1",
+      "dist-runtime/sw.js": "485d33769010dc267bca1256d16b5bd49fe5eb0382099681cca413bbaa33a5c0",
+      "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
+      "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-installation/index.html": "3ca67c9966dd6eaaddb08a331c4c422a70d79bed1acecddada56764ba4ac8e5f",
+      "dist-installation/installation.js": "98a032cdac2918eb53155971cecc3124fc1c6bd8c6515d8a6c4f904cad3fcae3"
+    }
+  },
+  "after": {
+    "capturedAt": "2026-11-01T15:21:39.195Z",
+    "revision": "7b95e5cee3c5687f80a59ee538a72c02a7cd0fe7",
+    "dirty": true,
+    "sourceSHA256": "f7f047330150a560bd4869218e203ad0e114ff1f8df3c0b0c44415b5c057acd1",
+    "runner": "formal/runtime-verification/local-worklet-graph.ts",
+    "runnerSHA256": "6385e479f1a83cdad95f16042a013125c2d14c4a0d052c7e4f1890c156aaac39",
+    "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
+    "artifacts": {
+      "dist-manager/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-manager/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-manager/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-manager/index.html": "0ea2b29b0ef6946140c54c2dc2147bffe4de82b9ed13eb4fdcae97a81cfd56f7",
+      "dist-manager/manager.js": "e361950a8774ca901a2b669e55041e15931e079bcdf5cd66e2b95d3986ce0730",
+      "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-manager/sw.js": "ecfad56dc727a0e7c52224b5e228f23ea9c5b55298385e45ba6b98e6a26167e9",
+      "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
+      "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
+      "dist-runtime/document-guard.js": "9f60af3ab3709983500f37853e0439541b7b502aa13a75945221b839a7ca1172",
+      "dist-runtime/guard.js": "c4131a5e1e089fe3e8608fda9872f64479488cf97cb8e486869ea1271dac849f",
+      "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
+      "dist-runtime/publisher-worker-guard.js": "de236fabfdafb743fc133be95222a89dd030e981fba108afe9ae30890bf267e5",
+      "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-runtime/shared-worker-guard.js": "b7c15ec06c26966d4b7b87d11403ff6690e4410b42b136ae133943f3467e9cd1",
+      "dist-runtime/sw.js": "485d33769010dc267bca1256d16b5bd49fe5eb0382099681cca413bbaa33a5c0",
+      "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
+      "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-installation/index.html": "3ca67c9966dd6eaaddb08a331c4c422a70d79bed1acecddada56764ba4ac8e5f",
+      "dist-installation/installation.js": "98a032cdac2918eb53155971cecc3124fc1c6bd8c6515d8a6c4f904cad3fcae3"
+    }
+  },
+  "sourceStable": true,
+  "artifactsStable": true,
+  "runnerBefore": "6385e479f1a83cdad95f16042a013125c2d14c4a0d052c7e4f1890c156aaac39",
+  "runnerAfter": "6385e479f1a83cdad95f16042a013125c2d14c4a0d052c7e4f1890c156aaac39",
+  "compilerVersion": "4.67.4",
+  "compilerWasmSHA256": "03871f9063af72bcbdbc6ca03399820c31e8b045952514cb846b38d79eeb8f2d",
+  "bootstrapSHA256": "2861dbaacbcfff10832972c7daf9a3e7bf6e9d84200b7d85f01dea0f6f8b6a5a",
+  "hostGuardSHA256": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
+  "compilerSourceSHA256": "0aa965999c074ec46e686f407b7dd2888b101b121ee600695b488f18d88cfb15",
+  "compilerSourceBytes": 1615421,
+  "graph": {
+    "/one.js": "import {count,increment,readCycle,initializations,guardRuns} from './state.js';\nincrement();\nregisterProcessor('one',class extends AudioWorkletProcessor {\n  constructor(){super();this.port.postMessage({label:'one',count,cycle:readCycle(),initializations,guardRuns});}\n  process(inputs,outputs){outputs[0][0].fill(count/100);return false;}\n});",
+    "/two.js": "import {count,increment,readCycle,initializations,guardRuns} from './state.js';\nincrement();\nregisterProcessor('two',class extends AudioWorkletProcessor {\n  constructor(){super();this.port.postMessage({label:'two',count,cycle:readCycle(),initializations,guardRuns});}\n  process(inputs,outputs){outputs[0][0].fill(count/100);return false;}\n});",
+    "/broken.js": "import {increment} from './state.js'; increment(); throw new Error('Owned partial evaluation control');",
+    "/state.js": "import {runs} from './guard.js';import {read} from './cycle.js';\nexport let count=0;\nexport function increment(){count++;}\nexport function readCycle(){return read();}\nglobalThis.fixtureInitializations=(globalThis.fixtureInitializations||0)+1;\nexport const initializations=globalThis.fixtureInitializations;\nexport const guardRuns=runs;",
+    "/cycle.js": "import {count} from './state.js'; export function read(){return count;}",
+    "/guard.js": "globalThis.fixtureGuardRuns=(globalThis.fixtureGuardRuns||0)+1;export const runs=globalThis.fixtureGuardRuns;",
+    "/tdz-entry.js": "import {left} from './tdz-left.js';globalThis.tdzValue=left;registerProcessor('tdz-probe',class extends AudioWorkletProcessor{process(){return false;}});",
+    "/tdz-left.js": "import {right} from './tdz-right.js';export let left=right;",
+    "/tdz-right.js": "import {left} from './tdz-left.js';export let right=left;"
+  },
+  "rows": [
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "native",
+      "actionStarted": 1793546498358,
+      "observationEnded": 1793546498687,
+      "reads": [],
+      "plans": [],
+      "result": {
+        "messages": [
+          {
+            "label": "one",
+            "count": 3,
+            "cycle": 3,
+            "initializations": 1,
+            "guardRuns": 1
+          },
+          {
+            "label": "two",
+            "count": 3,
+            "cycle": 3,
+            "initializations": 1,
+            "guardRuns": 1
+          }
+        ],
+        "sample": 0.05999999865889549
+      },
+      "throwingResults": [
+        true,
+        true
+      ],
+      "tdzResolved": true,
+      "tdzRegistered": false,
+      "guardControls": null,
+      "dependencyControl": {
+        "resolved": true,
+        "registered": false
+      },
+      "receiverLoaded": true,
+      "traffic": [
+        "/one.js",
+        "/state.js",
+        "/guard.js",
+        "/cycle.js",
+        "/broken.js",
+        "/two.js",
+        "/tdz-entry.js",
+        "/tdz-left.js",
+        "/tdz-right.js",
+        "/receiver.js",
+        "/preparation-dependency.js"
+      ]
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "local",
+      "actionStarted": 1793546498779,
+      "observationEnded": 1793546499139,
+      "reads": [
+        "/one.js",
+        "/state.js",
+        "/guard.js",
+        "/cycle.js",
+        "/broken.js",
+        "/two.js",
+        "/tdz-entry.js",
+        "/tdz-left.js",
+        "/tdz-right.js"
+      ],
+      "plans": [
+        {
+          "entry": "http://127.0.0.1:37439/one.js",
+          "chunks": [
+            {
+              "name": "one.js",
+              "code": "import { increment, guardRuns, initializations, readCycle, count } from './state.js';\nimport './guard.js';\n\nincrement();\nregisterProcessor('one',class extends AudioWorkletProcessor {\n  constructor(){super();this.port.postMessage({label:'one',count,cycle:readCycle(),initializations,guardRuns});}\n  process(inputs,outputs){outputs[0][0].fill(count/100);return false;}\n});\n",
+              "imports": [
+                {
+                  "start": 72,
+                  "end": 84,
+                  "target": "state.js",
+                  "external": false
+                },
+                {
+                  "start": 93,
+                  "end": 105,
+                  "target": "guard.js",
+                  "external": false
+                }
+              ]
+            },
+            {
+              "name": "state.js",
+              "code": "import { runs } from './guard.js';\n\nlet count=0;\nfunction increment(){count++;}\nfunction readCycle(){return read();}\nglobalThis.fixtureInitializations=(globalThis.fixtureInitializations||0)+1;\nconst initializations=globalThis.fixtureInitializations;\nconst guardRuns=runs;\n\nfunction read(){return count;}\n\nexport { count, guardRuns, increment, initializations, read as r, readCycle };\n",
+              "imports": [
+                {
+                  "start": 21,
+                  "end": 33,
+                  "target": "guard.js",
+                  "external": false
+                }
+              ]
+            },
+            {
+              "name": "guard.js",
+              "code": "globalThis.fixtureGuardRuns=(globalThis.fixtureGuardRuns||0)+1;const runs=globalThis.fixtureGuardRuns;\n\nexport { runs };\n",
+              "imports": []
+            },
+            {
+              "name": "cycle.js",
+              "code": "export { r as read } from './state.js';\nimport './guard.js';\n",
+              "imports": [
+                {
+                  "start": 26,
+                  "end": 38,
+                  "target": "state.js",
+                  "external": false
+                },
+                {
+                  "start": 47,
+                  "end": 59,
+                  "target": "guard.js",
+                  "external": false
+                }
+              ]
+            }
+          ],
+          "facades": [
+            {
+              "module": "http://127.0.0.1:37439/one.js",
+              "chunk": "one.js"
+            },
+            {
+              "module": "http://127.0.0.1:37439/state.js",
+              "chunk": "state.js"
+            },
+            {
+              "module": "http://127.0.0.1:37439/guard.js",
+              "chunk": "guard.js"
+            },
+            {
+              "module": "http://127.0.0.1:37439/cycle.js",
+              "chunk": "cycle.js"
+            }
+          ]
+        },
+        {
+          "entry": "http://127.0.0.1:37439/broken.js",
+          "chunks": [
+            {
+              "name": "broken.js",
+              "code": "import { increment } from 'blob:http://127.0.0.1:37439/1a7d0c54-be90-4e21-ac9b-f63a3924db4d';\n\nincrement(); throw new Error('Owned partial evaluation control');\n",
+              "imports": [
+                {
+                  "start": 26,
+                  "end": 92,
+                  "target": "blob:http://127.0.0.1:37439/1a7d0c54-be90-4e21-ac9b-f63a3924db4d",
+                  "external": true
+                }
+              ]
+            }
+          ],
+          "facades": [
+            {
+              "module": "http://127.0.0.1:37439/broken.js",
+              "chunk": "broken.js"
+            }
+          ]
+        },
+        {
+          "entry": "http://127.0.0.1:37439/two.js",
+          "chunks": [
+            {
+              "name": "two.js",
+              "code": "import { increment, guardRuns, initializations, readCycle, count } from 'blob:http://127.0.0.1:37439/1a7d0c54-be90-4e21-ac9b-f63a3924db4d';\n\nincrement();\nregisterProcessor('two',class extends AudioWorkletProcessor {\n  constructor(){super();this.port.postMessage({label:'two',count,cycle:readCycle(),initializations,guardRuns});}\n  process(inputs,outputs){outputs[0][0].fill(count/100);return false;}\n});\n",
+              "imports": [
+                {
+                  "start": 72,
+                  "end": 138,
+                  "target": "blob:http://127.0.0.1:37439/1a7d0c54-be90-4e21-ac9b-f63a3924db4d",
+                  "external": true
+                }
+              ]
+            }
+          ],
+          "facades": [
+            {
+              "module": "http://127.0.0.1:37439/two.js",
+              "chunk": "two.js"
+            }
+          ]
+        },
+        {
+          "entry": "http://127.0.0.1:37439/tdz-entry.js",
+          "chunks": [
+            {
+              "name": "tdz-entry.js",
+              "code": "import { l as left } from './tdz-left-COgqwVpJ.js';\n\nglobalThis.tdzValue=left;registerProcessor('tdz-probe',class extends AudioWorkletProcessor{process(){return false;}});\n",
+              "imports": [
+                {
+                  "start": 26,
+                  "end": 50,
+                  "target": "tdz-left-COgqwVpJ.js",
+                  "external": false
+                }
+              ]
+            },
+            {
+              "name": "tdz-right.js",
+              "code": "export { r as right } from './tdz-left-COgqwVpJ.js';\n",
+              "imports": [
+                {
+                  "start": 27,
+                  "end": 51,
+                  "target": "tdz-left-COgqwVpJ.js",
+                  "external": false
+                }
+              ]
+            },
+            {
+              "name": "tdz-left.js",
+              "code": "export { l as left } from './tdz-left-COgqwVpJ.js';\n",
+              "imports": [
+                {
+                  "start": 26,
+                  "end": 50,
+                  "target": "tdz-left-COgqwVpJ.js",
+                  "external": false
+                }
+              ]
+            },
+            {
+              "name": "tdz-left-COgqwVpJ.js",
+              "code": "let right=left;\n\nlet left=right;\n\nexport { left as l, right as r };\n",
+              "imports": []
+            }
+          ],
+          "facades": [
+            {
+              "module": "http://127.0.0.1:37439/tdz-entry.js",
+              "chunk": "tdz-entry.js"
+            },
+            {
+              "module": "http://127.0.0.1:37439/tdz-right.js",
+              "chunk": "tdz-right.js"
+            },
+            {
+              "module": "http://127.0.0.1:37439/tdz-left.js",
+              "chunk": "tdz-left.js"
+            }
+          ]
+        }
+      ],
+      "result": {
+        "messages": [
+          {
+            "label": "one",
+            "count": 3,
+            "cycle": 3,
+            "initializations": 1,
+            "guardRuns": 1
+          },
+          {
+            "label": "two",
+            "count": 3,
+            "cycle": 3,
+            "initializations": 1,
+            "guardRuns": 1
+          }
+        ],
+        "sample": 0.05999999865889549
+      },
+      "throwingResults": [
+        true,
+        true
+      ],
+      "tdzResolved": true,
+      "tdzRegistered": false,
+      "guardControls": [
+        {
+          "failedPreparation": false,
+          "resolved": [
+            true
+          ],
+          "registered": true,
+          "sample": 0.25
+        },
+        {
+          "failedPreparation": true,
+          "resolved": [
+            true,
+            true
+          ],
+          "registered": true,
+          "sample": 0.25
+        }
+      ],
+      "dependencyControl": {
+        "resolved": false,
+        "registered": false
+      },
+      "receiverLoaded": false,
+      "traffic": []
+    }
+  ]
+}
