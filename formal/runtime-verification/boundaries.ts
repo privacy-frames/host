@@ -10,6 +10,22 @@ export interface Boundary {
 /** Review entry points; this list does not establish complete browser coverage. */
 export const boundaries: readonly Boundary[] = [
   {
+    id: 'script-url-admission',
+    obligation:
+      'Reserve native policies before application execution, verify URL enforcement, and keep minting authority and branded values private through captured native sinks.',
+    invariants: ['C1', 'C2', 'C3', 'C5'],
+    sources: [
+      'src/runtime/enforcement/script-urls.ts',
+      'src/runtime/enforcement/application-policies.ts',
+      'src/shared/script-url-policy.ts',
+      'src/runtime/response-policy.ts',
+      'src/runtime/contexts/window-realm.ts',
+      'src/runtime/contexts/worker-realm.ts',
+      'src/runtime/enforcement/scripts.ts',
+      'src/runtime/trusted/context.ts',
+    ],
+  },
+  {
     id: 'root-publication',
     obligation: 'Prepare the root before rendering or executing publisher content.',
     invariants: ['C1', 'C3', 'C5', 'C8'],

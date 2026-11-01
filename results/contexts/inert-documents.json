@@ -1,11 +1,11 @@
 {
   "provenance": {
-    "capturedAt": "2026-10-31T22:55:59.388Z",
-    "revision": "17e4589f3b75baea17fbd6bddf49bea55746ade8",
+    "capturedAt": "2026-11-01T01:17:55.252Z",
+    "revision": "8dc3e9a8eef98906f9daf6057fbe291ff72f5cb6",
     "dirty": true,
-    "sourceSHA256": "5d37f3c7765c33924801c8a111c279561df79277ccc7e97463c125c32e735fcb",
+    "sourceSHA256": "6306dcd312854b38593a6d359067cad23014c24c04d8bfd95e3f658187c3cf64",
     "runner": "test/inert-documents.ts",
-    "runnerSHA256": "eb8a5e8fceb9bcf9a83572c3b06522c866204f7c06538eb6fb0a12aa347676d6",
+    "runnerSHA256": "e41b4cb109eb92c81cea171bf7585ea7bbebb82a6d6e990aa25b584afc4956fe",
     "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
     "artifacts": {
       "dist-manager/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -16,22 +16,22 @@
       "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-manager/sw.js": "6bdacf5a88e7e58df4547ded1437d8907831941d3f16820080937346fb8fb8d5",
+      "dist-manager/sw.js": "daa6b88d333b34abe2aad5e4476ee36b837c906c032e4afba8eb4ee409beb634",
       "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
       "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
       "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
-      "dist-runtime/document-guard.js": "00759a1fc93d9b7e856bb5e7591d93f38f04f7c8d2e9884cf50829e0b5ce3e00",
-      "dist-runtime/guard.js": "f4ad98f224fcdf9577da6a7e68c70706e280f00d46fb2c3b878673e87c0839df",
+      "dist-runtime/document-guard.js": "6f7f9c97701bd765e4d75a3cfed55a2c238cf36012baf92fb8e4db6df9c55618",
+      "dist-runtime/guard.js": "15721b03c443de070883b76a415a2d4b7d57cdc2db7f53bf231b0f1014e1f202",
       "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
       "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
-      "dist-runtime/publisher-worker-guard.js": "9966ebc2590a74ccc6d73b0fbfb047c899e708190491fb8a26e6764cb18379b7",
+      "dist-runtime/publisher-worker-guard.js": "7241d5302be22333d07fdc076b4f14e19ff3ac44272e9e3155e5c2f234dc3fa3",
       "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-runtime/shared-worker-guard.js": "1611f1dd6303093c0cb9576a50f66574f4f201d9ba56979fe045975585d83f8c",
-      "dist-runtime/sw.js": "9511822df7ad9f0ed29e7c8f3c49afea0a436f24159df389d616d444cbdb3f66",
-      "dist-runtime/worker-guard.js": "f780e48f210325c060dcb297b4de71ff325c53d99ccf9fc1051ee0e823dd3110",
+      "dist-runtime/shared-worker-guard.js": "aada1b670235e1981b72ef45cfb3768420f71e3da3ec55fb11002fe8f32c0abe",
+      "dist-runtime/sw.js": "e2660c324c0341c4c5467dfaab05154bba26f71182ee6a4ad256695dd6c808c0",
+      "dist-runtime/worker-guard.js": "4573d308365d2bc9720451f752974c2a9b3e3cf6d76440faddbaeb14d11ec6a0",
       "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
       "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
@@ -47,11 +47,26 @@
         "checks": 59,
         "insertions": 12,
         "workerLog": {
-          "sourceId": "6cc0a096-5a0e-4871-94dd-d7d06cce87a0",
+          "sourceId": "9ac5dc5d-4c61-430b-90c6-f194c711c2c7",
           "log": [
             {
-              "url": "http://127.0.0.1:44089/local.svg",
-              "clientId": "6cc0a096-5a0e-4871-94dd-d7d06cce87a0",
+              "url": "http://127.0.0.1:35761/working-adoption-control",
+              "clientId": "6e57ce67-4217-42b8-b6ff-6fba154e56f1",
+              "destination": "image"
+            },
+            {
+              "url": "http://127.0.0.1:33357/guarded",
+              "clientId": "6e57ce67-4217-42b8-b6ff-6fba154e56f1",
+              "destination": "document"
+            },
+            {
+              "url": "http://127.0.0.1:33357/fixture.js",
+              "clientId": "9ac5dc5d-4c61-430b-90c6-f194c711c2c7",
+              "destination": "script"
+            },
+            {
+              "url": "http://127.0.0.1:33357/local.svg",
+              "clientId": "9ac5dc5d-4c61-430b-90c6-f194c711c2c7",
               "destination": "image"
             }
           ]
@@ -61,7 +76,6 @@
       },
       "receiverTraffic": [],
       "traffic": [
-        "/sw.js",
         "/local.svg"
       ]
     },
@@ -72,11 +86,31 @@
         "checks": 59,
         "insertions": 12,
         "workerLog": {
-          "sourceId": "56412977-3d0d-48de-9bb2-3637e68d2a33",
+          "sourceId": "be220936-c6e4-425f-bfcf-60a0fce5db57",
           "log": [
             {
-              "url": "http://127.0.0.1:44089/local.svg",
-              "clientId": "56412977-3d0d-48de-9bb2-3637e68d2a33",
+              "url": "http://127.0.0.1:35761/working-adoption-control",
+              "clientId": "d873889f-a44b-470e-bc80-e6f442dc8aca",
+              "destination": "image"
+            },
+            {
+              "url": "http://127.0.0.1:33357/guarded",
+              "clientId": "",
+              "destination": "document"
+            },
+            {
+              "url": "http://127.0.0.1:33357/fixture.js",
+              "clientId": "be220936-c6e4-425f-bfcf-60a0fce5db57",
+              "destination": "script"
+            },
+            {
+              "url": "http://127.0.0.1:33357/favicon.ico",
+              "clientId": "be220936-c6e4-425f-bfcf-60a0fce5db57",
+              "destination": "image"
+            },
+            {
+              "url": "http://127.0.0.1:33357/local.svg",
+              "clientId": "be220936-c6e4-425f-bfcf-60a0fce5db57",
               "destination": "image"
             }
           ]
@@ -86,7 +120,7 @@
       },
       "receiverTraffic": [],
       "traffic": [
-        "/sw.js",
+        "/favicon.ico",
         "/local.svg"
       ]
     }

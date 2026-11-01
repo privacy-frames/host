@@ -2,7 +2,7 @@
 
 This execution plan follows the eight stages in [the verification programme](README.md).
 Implementation stays on the separate `runtime-confinement-proof` worktree and
-branch. The current policy-5 candidate adds native worker namespace partitioning;
+branch. The current policy-6 candidate adds private native script URL admission;
 complete confinement and deployment remain pending.
 
 The target remains [C1–C8](../threat-model.md): confined application activity cannot
@@ -66,7 +66,7 @@ in CI. Establish their correspondence to the
 [Service Workers job algorithms](https://w3c.github.io/ServiceWorker/#schedule-job).
 Review changed scripts, install/activate work, overlapping registrations,
 controller retention, restart and work already queued at launch. Native
-shared/publisher names now include host policy version 5. The
+shared/publisher names now include host policy version 6. The
 [namespace experiment](worker-policy-overlap.md) checks fresh globals across
 policy versions, sharing within one version, and policy-omission faults in both
 browsers. Complete admission and mixed-policy lifetime correspondence remain open.
@@ -81,7 +81,10 @@ authenticated HTTP adapter. The former per-context readiness and closure routes 
 The [local bootstrap prerequisites](local-worker-bootstrap.md) now establish
 native Blob-worker discovery in twelve browser cases. Fourteen source-policy cases
 identify a private TrustedScriptURL gate while exposing the fresh-realm and
-inherited-policy obligations. Production CSP and factories remain unchanged.
+inherited-policy obligations. The [private script URL gate](script-url-gate.md)
+now connects named policies to native runtime sinks and refuses missing
+enforcement. Production worker sources still exclude Blob URLs; bootstrap and
+registration-lifetime integration remain open.
 
 Then evaluate production bootstrap and delivery. Private root-content and selected
 parent-channel reads already exist. HTTP shells, workers, modules, worklets,

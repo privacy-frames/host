@@ -1,3 +1,4 @@
+import { SCRIPT_URL_CSP } from '../src/shared/script-url-policy.ts';
 import assert from 'node:assert/strict';
 import http from 'node:http';
 import { createHash } from 'node:crypto';
@@ -176,7 +177,8 @@ const server = http.createServer((request, response) => {
       'Content-Security-Policy',
       "sandbox allow-scripts allow-same-origin; default-src 'none'; " +
         "script-src 'self' 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-fixture'; " +
-        "style-src 'unsafe-inline'; connect-src 'none'; frame-src 'self'",
+        "style-src 'unsafe-inline'; connect-src 'none'; frame-src 'self'; " +
+        (guarded ? SCRIPT_URL_CSP : ''),
     );
     response.end(
       '<!doctype html><body><pre id="transport"></pre><pre id="receipt"></pre>' +

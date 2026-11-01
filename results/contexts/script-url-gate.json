@@ -1,0 +1,168 @@
+{
+  "scope": "Native tests of the production script-URL gate, including actual missing-enforcement setup refusal. This fixture deliberately exposes a test exerciser, omits the other runtime adapters and permits owned marker HTTP loads; it does not establish complete confinement.",
+  "provenance": {
+    "capturedAt": "2026-11-01T01:14:49.542Z",
+    "revision": "8dc3e9a8eef98906f9daf6057fbe291ff72f5cb6",
+    "dirty": true,
+    "sourceSHA256": "6306dcd312854b38593a6d359067cad23014c24c04d8bfd95e3f658187c3cf64",
+    "runner": "test/script-url-gate.ts",
+    "runnerSHA256": "42e16cb76bd97d5cd1a5ce1843f1063e56b369aab2b94f1388edccadce407f93",
+    "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
+    "artifacts": {
+      "dist-manager/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-manager/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-manager/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-manager/index.html": "0ea2b29b0ef6946140c54c2dc2147bffe4de82b9ed13eb4fdcae97a81cfd56f7",
+      "dist-manager/manager.js": "e361950a8774ca901a2b669e55041e15931e079bcdf5cd66e2b95d3986ce0730",
+      "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-manager/sw.js": "daa6b88d333b34abe2aad5e4476ee36b837c906c032e4afba8eb4ee409beb634",
+      "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
+      "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
+      "dist-runtime/document-guard.js": "6f7f9c97701bd765e4d75a3cfed55a2c238cf36012baf92fb8e4db6df9c55618",
+      "dist-runtime/guard.js": "15721b03c443de070883b76a415a2d4b7d57cdc2db7f53bf231b0f1014e1f202",
+      "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
+      "dist-runtime/publisher-worker-guard.js": "7241d5302be22333d07fdc076b4f14e19ff3ac44272e9e3155e5c2f234dc3fa3",
+      "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-runtime/shared-worker-guard.js": "aada1b670235e1981b72ef45cfb3768420f71e3da3ec55fb11002fe8f32c0abe",
+      "dist-runtime/sw.js": "e2660c324c0341c4c5467dfaab05154bba26f71182ee6a4ad256695dd6c808c0",
+      "dist-runtime/worker-guard.js": "4573d308365d2bc9720451f752974c2a9b3e3cf6d76440faddbaeb14d11ec6a0",
+      "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
+      "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-installation/index.html": "3ca67c9966dd6eaaddb08a331c4c422a70d79bed1acecddada56764ba4ac8e5f",
+      "dist-installation/installation.js": "6cd0a3f3f4494dee2db059f3b1a5feb62017a39399a22e2d3774d0319fa1e3f3"
+    }
+  },
+  "completed": true,
+  "rows": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "normal",
+      "value": {
+        "duplicateRefused": true,
+        "otherPolicyRefused": true,
+        "rawWorkerRefused": true,
+        "rawScriptRefused": true,
+        "application": {
+          "name": "application-html",
+          "nativeHTML": true,
+          "nativeScript": true,
+          "html": "<b>ordinary-policy</b>",
+          "evaluation": 3,
+          "facadeURLRefused": true,
+          "nativeIssuerRefused": true,
+          "duplicateAppRefused": true
+        },
+        "mintCalls": 0,
+        "coercions": 0,
+        "worker": {
+          "refused": true,
+          "after": 29
+        },
+        "marker": 17,
+        "sourceIsString": true,
+        "html": "ordinary",
+        "evaluation": 2
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "missing-enforcement",
+      "status": {
+        "setup": "refused",
+        "failure": "Error: Native worker URL gate is not enforced",
+        "exercise": "undefined"
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "missing-api",
+      "status": {
+        "setup": "refused",
+        "failure": "Error: Native Trusted Types enforcement is unavailable",
+        "exercise": "undefined"
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "occupied-policy",
+      "status": {
+        "setup": "refused",
+        "failure": "TypeError: Failed to execute 'createPolicy' on 'TrustedTypePolicyFactory': Policy with name \"privacy-frames-runtime\" already exists.",
+        "exercise": "undefined"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "normal",
+      "value": {
+        "duplicateRefused": true,
+        "otherPolicyRefused": true,
+        "rawWorkerRefused": true,
+        "rawScriptRefused": true,
+        "application": {
+          "name": "application-html",
+          "nativeHTML": true,
+          "nativeScript": true,
+          "html": "<b>ordinary-policy</b>",
+          "evaluation": 3,
+          "facadeURLRefused": true,
+          "nativeIssuerRefused": true,
+          "duplicateAppRefused": true
+        },
+        "mintCalls": 0,
+        "coercions": 0,
+        "worker": {
+          "refused": true,
+          "after": 29
+        },
+        "marker": 17,
+        "sourceIsString": true,
+        "html": "ordinary",
+        "evaluation": 2
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "missing-enforcement",
+      "status": {
+        "setup": "refused",
+        "failure": "Error: Native worker URL gate is not enforced",
+        "exercise": "undefined"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "missing-api",
+      "status": {
+        "setup": "refused",
+        "failure": "Error: Native Trusted Types enforcement is unavailable",
+        "exercise": "undefined"
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "occupied-policy",
+      "status": {
+        "setup": "refused",
+        "failure": "TypeError: TrustedTypePolicyFactory.createPolicy: Content-Security-Policy blocked creating policy named 'privacy-frames-runtime'",
+        "exercise": "undefined"
+      }
+    }
+  ]
+}

@@ -22,6 +22,7 @@ import { installEffectPolicy } from '../enforcement/effects.ts';
 import { scopeWebStorage } from '../enforcement/web-storage.ts';
 import { createDocumentFactory } from './document-factory.ts';
 import { createTrustedPolicy } from '../trusted/client.ts';
+import { prepareScriptURLs } from '../enforcement/script-urls.ts';
 
 export interface WindowContentMetadata {
   installationGeneration: string;
@@ -60,6 +61,7 @@ export function prepareWindowRealm({
   prepareRuntimeIntrinsics();
   const tools = createPolicyTools();
   const { method, accessor, descriptor, apply, fail, define } = tools;
+  const scriptURL = prepareScriptURLs();
   let applicationWorker: unknown = null;
   let resourceBase = applicationURL;
   let sharedIdentity: SharedWorkerIdentity | undefined;
@@ -90,6 +92,7 @@ export function prepareWindowRealm({
       baseURL: () => resourceBase,
       installationSourceURL: () => sourceURL,
       resources,
+      scriptURL,
     }),
   );
   applicationWorker = publisher.container;
@@ -101,6 +104,7 @@ export function prepareWindowRealm({
       resources,
       control: createWorkerControl(controller.request),
       read: createWorkerResourceRead(controller.request),
+      scriptURL,
     }),
   );
   const createSharedWorker = createSharedWorkerFactory(
@@ -110,6 +114,7 @@ export function prepareWindowRealm({
       baseURL: () => resourceBase,
       resources,
       identity: () => sharedIdentity,
+      scriptURL,
     }),
   );
   const workletAddModule = createWorkletFactory(
@@ -120,6 +125,7 @@ export function prepareWindowRealm({
     tools,
     internalRecord({
       nonce: scriptNonce,
+      scriptURL,
       mapURL: resources.mapURL,
       isInstalledURL: resources.isInstalledURL,
       baseURL: () => resourceBase,

@@ -1,3 +1,5 @@
+import { SCRIPT_URL_CSP } from '../shared/script-url-policy.ts';
+
 interface ResponseOptions {
   scriptNonce?: string;
   workerSource?: string;
@@ -63,6 +65,7 @@ function policy(
     `worker-src ${workerSource}`,
     "form-action 'none'",
     "base-uri 'none'",
+    SCRIPT_URL_CSP,
   ].join('; ');
 }
 

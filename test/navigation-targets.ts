@@ -1,3 +1,4 @@
+import { SCRIPT_URL_CSP } from '../src/shared/script-url-policy.ts';
 import assert from 'node:assert/strict';
 import http from 'node:http';
 import { build } from './build.ts';
@@ -10,7 +11,7 @@ import { testProvenance } from './provenance.ts';
 // not full-runtime no-network claims; the independent receiver measures this gate.
 const bundle = await build({
   stdin: {
-    contents: `import {createPolicyTools} from './src/runtime/enforcement/native.ts';import {createTrustedPolicy} from './src/runtime/trusted/client.ts';
+    contents: `import {prepareScriptURLs} from './src/runtime/enforcement/script-urls.ts';prepareScriptURLs();import {createPolicyTools} from './src/runtime/enforcement/native.ts';import {createTrustedPolicy} from './src/runtime/trusted/client.ts';
 import {installDOMPolicy,installResourceAttributePolicy} from './src/runtime/enforcement/dom.ts';
 import {prepareNavigationPolicy} from './src/runtime/enforcement/navigation.ts';
 const tools=createPolicyTools();const get=Element.prototype.getAttribute;
@@ -37,7 +38,8 @@ const server = http.createServer((req, res) => {
     res.setHeader('Content-Type', 'text/html');
     res.setHeader(
       'Content-Security-Policy',
-      'sandbox allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox',
+      'sandbox allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox; ' +
+        (['/confined', '/foreign'].includes(url.pathname) ? SCRIPT_URL_CSP : ''),
     );
     res.end(
       `<!doctype html><body>${['/confined', '/foreign'].includes(url.pathname) ? (url.pathname === '/confined' ? '<iframe src="/foreign"></iframe>' : '') + '<script src="/policy.js"></script>' : '<script>window.ready=true</script>'}</body>`,

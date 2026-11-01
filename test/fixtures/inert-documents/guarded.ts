@@ -26,7 +26,6 @@ function denied(operation: () => unknown): boolean {
   }
 }
 window.runInertProbe = async (receiver: string): Promise<ProbeResult> => {
-  await navigator.serviceWorker.register('/sw.js');
   await navigator.serviceWorker.ready;
   if (!navigator.serviceWorker.controller)
     await new Promise<void>((resolve) =>

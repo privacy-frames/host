@@ -1,3 +1,4 @@
+import { prepareScriptURLs } from '../../../src/runtime/enforcement/script-urls.ts';
 import { createTrustedPolicy } from '../../../src/runtime/trusted/client.ts';
 import { createPolicyTools } from '../../../src/runtime/enforcement/native.ts';
 import {
@@ -5,6 +6,7 @@ import {
   installResourceAttributePolicy,
 } from '../../../src/runtime/enforcement/dom.ts';
 
+prepareScriptURLs();
 const tools = createPolicyTools();
 const mapURL = (input: unknown): string =>
   String(input) === 'https://publisher.test/theme.css'

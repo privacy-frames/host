@@ -1,3 +1,4 @@
+import { SCRIPT_URL_CSP } from '../src/shared/script-url-policy.ts';
 import assert from 'node:assert/strict';
 import http from 'node:http';
 import { mkdir, writeFile } from 'node:fs/promises';
@@ -149,7 +150,7 @@ const server = http.createServer((req, res) => {
   res.setHeader('Content-Type', isSVG ? 'image/svg+xml' : 'text/html');
   res.setHeader(
     'Content-Security-Policy',
-    `default-src 'none';script-src 'self' blob: 'unsafe-eval' 'nonce-${nonce}';style-src 'unsafe-inline';connect-src 'none';img-src data:;worker-src ${origin}/service-worker.js;manifest-src 'self';object-src 'none';frame-src 'none'`,
+    `default-src 'none';script-src 'self' blob: 'unsafe-eval' 'nonce-${nonce}';style-src 'unsafe-inline';connect-src 'none';img-src data:;worker-src ${origin}/service-worker.js;manifest-src 'self';object-src 'none';frame-src 'none'; ${SCRIPT_URL_CSP}`,
   );
   res.end(
     isSVG

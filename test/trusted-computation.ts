@@ -1,3 +1,4 @@
+import { SCRIPT_URL_CSP } from '../src/shared/script-url-policy.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -23,6 +24,8 @@ const probe = await build({
     resolveDir: process.cwd(),
     contents: `
       import {createTrustedContext} from './src/runtime/trusted/context.ts';
+      import {prepareScriptURLs} from './src/runtime/enforcement/script-urls.ts';
+      prepareScriptURLs();
       const policySource = ${JSON.stringify(policySource)};
       globalThis.probeTrusted = (backend) => {
         const originalFrames = window.length;
@@ -112,7 +115,7 @@ const server = http.createServer((request, response) => {
     'Content-Security-Policy',
     "sandbox allow-scripts allow-same-origin; default-src 'none'; " +
       "script-src 'self' 'unsafe-eval' 'wasm-unsafe-eval' 'nonce-control'; " +
-      `frame-src ${origin}/installed/__contexts/; connect-src 'self'`,
+      `frame-src ${origin}/installed/__contexts/; connect-src 'self'; ${SCRIPT_URL_CSP}`,
   );
   response.end(
     '<!doctype html><body><script nonce="control">let nativeLexical=42;</script>' +

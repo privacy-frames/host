@@ -258,7 +258,12 @@ try {
               try {
                 worker = raw.create(source);
               } catch (error) {
-                resolve({ source, refused: true, synchronous: true });
+                resolve({
+                  source,
+                  refused: true,
+                  synchronous: true,
+                  typedRefusal: error instanceof TypeError,
+                });
                 return;
               }
               const timer = setTimeout(() => {
@@ -286,7 +291,9 @@ try {
         }
       });
       assert(
-        rawWorkers.slice(0, 2).every((result) => result.refused),
+        rawWorkers.every(
+          (result) => result.refused && result.synchronous && result.typedRefusal,
+        ),
         JSON.stringify(rawWorkers),
       );
       assert(!('message' in rawWorkers[2]), JSON.stringify(rawWorkers));
@@ -306,7 +313,7 @@ try {
       if (process.env.WORKER_CONTEXT_DEBUG)
         console.log('raw worker startup events', startupEvents);
       assert(
-        startupEvents.value.some(
+        !startupEvents.value.some(
           (event) =>
             event.kind === 'blocked-context-startup' &&
             event.url === rawWorkers[2].source,

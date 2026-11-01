@@ -1,4 +1,5 @@
 import { internalSet, ownDescriptor, internalRecord } from '../../shared/primordials.ts';
+import type { ScriptURLGate } from '../enforcement/script-urls.ts';
 import type { PolicyTools } from '../enforcement/native.ts';
 import type { ResourceAliases } from '../resource-aliases.ts';
 import {
@@ -36,6 +37,7 @@ const setTimer = setTimeout;
 const clearTimer = clearTimeout;
 
 export interface SharedWorkerFactoryContext {
+  scriptURL: ScriptURLGate;
   applicationURL: string;
   baseURL: () => string;
   resources: ResourceAliases;
@@ -188,7 +190,10 @@ export function createSharedWorkerFactory(
         bodyReady.catch(() => {});
         const handle: SharedWorker = construct(
           NativeSharedWorker,
-          [bootstrapURL, internalRecord({ type, name: key, credentials: 'omit' })],
+          [
+            context.scriptURL(bootstrapURL),
+            internalRecord({ type, name: key, credentials: 'omit' }),
+          ],
           newTarget === factory ? NativeSharedWorker : newTarget,
         );
         const control: MessagePort = apply(nativePort, handle, []);

@@ -2,10 +2,10 @@
   "scope": "Built controller, actual browser clients and native IndexedDB. Window-owned worker closure uses messages and emits no HTTP in the one-second post-commit observation. Delegated verification follows actual native bindings. Test-only parent-selection and delegation-check faults must be detected by the same fixture. This is not complete confinement or an arbitrary-schedule proof.",
   "completed": true,
   "provenance": {
-    "capturedAt": "2026-10-31T23:01:03.619Z",
-    "revision": "17e4589f3b75baea17fbd6bddf49bea55746ade8",
+    "capturedAt": "2026-11-01T01:19:15.689Z",
+    "revision": "8dc3e9a8eef98906f9daf6057fbe291ff72f5cb6",
     "dirty": true,
-    "sourceSHA256": "5d37f3c7765c33924801c8a111c279561df79277ccc7e97463c125c32e735fcb",
+    "sourceSHA256": "6306dcd312854b38593a6d359067cad23014c24c04d8bfd95e3f658187c3cf64",
     "runner": "formal/runtime-verification/worker-closure-browser.ts",
     "runnerSHA256": "6d08f5cae5decce67cab13f2304bbeb7f3d8d7f7b523ac6ee3fb8f7864775d28",
     "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
@@ -18,22 +18,22 @@
       "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-manager/sw.js": "6bdacf5a88e7e58df4547ded1437d8907831941d3f16820080937346fb8fb8d5",
+      "dist-manager/sw.js": "daa6b88d333b34abe2aad5e4476ee36b837c906c032e4afba8eb4ee409beb634",
       "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
       "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
       "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
-      "dist-runtime/document-guard.js": "00759a1fc93d9b7e856bb5e7591d93f38f04f7c8d2e9884cf50829e0b5ce3e00",
-      "dist-runtime/guard.js": "f4ad98f224fcdf9577da6a7e68c70706e280f00d46fb2c3b878673e87c0839df",
+      "dist-runtime/document-guard.js": "6f7f9c97701bd765e4d75a3cfed55a2c238cf36012baf92fb8e4db6df9c55618",
+      "dist-runtime/guard.js": "15721b03c443de070883b76a415a2d4b7d57cdc2db7f53bf231b0f1014e1f202",
       "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
       "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
-      "dist-runtime/publisher-worker-guard.js": "9966ebc2590a74ccc6d73b0fbfb047c899e708190491fb8a26e6764cb18379b7",
+      "dist-runtime/publisher-worker-guard.js": "7241d5302be22333d07fdc076b4f14e19ff3ac44272e9e3155e5c2f234dc3fa3",
       "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-runtime/shared-worker-guard.js": "1611f1dd6303093c0cb9576a50f66574f4f201d9ba56979fe045975585d83f8c",
-      "dist-runtime/sw.js": "9511822df7ad9f0ed29e7c8f3c49afea0a436f24159df389d616d444cbdb3f66",
-      "dist-runtime/worker-guard.js": "f780e48f210325c060dcb297b4de71ff325c53d99ccf9fc1051ee0e823dd3110",
+      "dist-runtime/shared-worker-guard.js": "aada1b670235e1981b72ef45cfb3768420f71e3da3ec55fb11002fe8f32c0abe",
+      "dist-runtime/sw.js": "e2660c324c0341c4c5467dfaab05154bba26f71182ee6a4ad256695dd6c808c0",
+      "dist-runtime/worker-guard.js": "4573d308365d2bc9720451f752974c2a9b3e3cf6d76440faddbaeb14d11ec6a0",
       "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
       "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
@@ -44,17 +44,17 @@
   "runnerSHA256": "6d08f5cae5decce67cab13f2304bbeb7f3d8d7f7b523ac6ee3fb8f7864775d28",
   "helperSHA256": "ee6a9c25b591ba1e5665155aa58afc828b8cfebc519d5835006aea82354a2041",
   "controllerSourceSHA256": "93b91d721f8fe169cf3ac97812d96fba68e0224e0961fc40be18ae1978a47ef5",
-  "factorySourceSHA256": "88ed344a47b269e1904250383318c1c079a5b5bee3988e4a0b87dffdf49d0a84",
+  "factorySourceSHA256": "e270430bcfbae17654d7eb6c8fab89421ab360786e8b15e02a318e8d61cde952",
   "faults": [
     {
       "mode": "owner",
       "sourceSHA256": "40c6f948f8158a9d72f74df2d3369ef4eb53e640c429179a0987ed084dd3d537",
-      "bundleSHA256": "a1f1e4bcad34757536a9824a738e2d61d2264074608979a65d409c3c86a31d1a"
+      "bundleSHA256": "253a4cf4b77ad391d3bee3c770fb17f71e44a540174c299dc2277a725cd65eec"
     },
     {
       "mode": "delegation",
       "sourceSHA256": "50e25478581a8e51364f92fd407eab03addb96595ca4f54ca2ed1401e6dfffbb",
-      "bundleSHA256": "d8ecddebf3d7129f95b840ce84995ffb8dbf1b818b5c82e31950252dedab1b51"
+      "bundleSHA256": "72622f9ad1fd52dac0e4e57761e3cb656210861a7889ab1fc72019535784b7dd"
     }
   ],
   "rows": [
@@ -64,7 +64,7 @@
       "forcedStaleCheck": false,
       "mode": "normal",
       "outcome": {
-        "id": "ec5893dc-f04f-4290-a496-fa0938ee2ffa",
+        "id": "96962dbf-7baa-4bdb-a255-a8b14b1b6328",
         "wrongOwner": {
           "ok": true,
           "value": {
@@ -96,7 +96,7 @@
       "forcedStaleCheck": false,
       "mode": "normal",
       "outcome": {
-        "id": "b0374e9d-834d-4a8d-8dec-2a9b14d0a7ff",
+        "id": "c999f755-dd2a-4138-bbf1-96ca1e39b4dd",
         "wrongOwner": {
           "ok": true,
           "value": {
@@ -128,7 +128,7 @@
       "forcedStaleCheck": true,
       "mode": "normal",
       "outcome": {
-        "id": "94ef4996-253a-48bd-9c64-6cd30f996a07",
+        "id": "eaa23d5c-ec4b-404a-89bf-b3304dff06e9",
         "wrongOwner": {
           "ok": true,
           "value": {
@@ -230,5 +230,5 @@
       }
     }
   ],
-  "completedAt": "2026-10-31T23:01:45.278Z"
+  "completedAt": "2026-11-01T01:19:57.292Z"
 }

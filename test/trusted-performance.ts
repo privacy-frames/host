@@ -1,3 +1,4 @@
+import { SCRIPT_URL_CSP } from '../src/shared/script-url-policy.ts';
 import assert from 'node:assert/strict';
 import http from 'node:http';
 import { createHash } from 'node:crypto';
@@ -14,6 +15,8 @@ const probe = await build({
     contents: `
       import source from 'trusted:policy-source';
       import {createTrustedContext} from './src/runtime/trusted/context.ts';
+      import {prepareScriptURLs} from './src/runtime/enforcement/script-urls.ts';
+      prepareScriptURLs();
       import {createTrustedPolicy} from './src/runtime/trusted/client.ts';
       import {internalData} from './src/shared/primordials.ts';
       import {dispatch} from './src/runtime/trusted/entry.ts';
@@ -101,7 +104,8 @@ const server = http.createServer((request, response) => {
     response.setHeader(
       'Content-Security-Policy',
       "sandbox allow-scripts allow-same-origin; default-src 'none'; " +
-        "script-src 'self' 'unsafe-eval' 'wasm-unsafe-eval'; connect-src 'none'; frame-src 'self'",
+        "script-src 'self' 'unsafe-eval' 'wasm-unsafe-eval'; connect-src 'none'; frame-src 'self'; " +
+        SCRIPT_URL_CSP,
     );
     response.end('<!doctype html><body><script src="/probe.js"></script>');
   }

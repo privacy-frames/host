@@ -1,7 +1,9 @@
 # Local worker bootstrap prerequisites
 
-Two native experiments address the remaining HTTP worker bootstrap. Neither
-changes the production factory, its CSP or its admission protocol.
+Two native experiments address the remaining HTTP worker bootstrap. Their
+fixtures isolate browser behavior from production admission. The subsequent
+[runtime gate integration](script-url-gate.md) retains HTTP worker bootstrap
+and the existing CSP source restrictions.
 
 ## Native identity without a bootstrap fetch
 
@@ -55,8 +57,8 @@ also defines policy creation and default-policy handling. The
 API presence alone is not the enforcement check.
 
 A private script-URL policy, combined with a default policy that permits ordinary
-HTML/Script values but rejects all script URLs, is worth integrating next. Host
-script-URL sinks would need explicit private values. Application code must never
+HTML/Script values but rejects all script URLs, now supplies the runtime gate.
+Host script-URL sinks use explicit private values. Application code must never
 receive a URL-minting policy or a reusable trusted URL. Every application-reachable
 global must already be prepared and have its reserved policies established.
 The fresh-child case shows why DOM/context mediation remains necessary; it is a
@@ -77,9 +79,8 @@ creation failure rather than a failed worker bootstrap.
 
 ## Runtime integration obligations
 
-The current runtime has several callers that supply plain script URL strings.
-The gate must cover them before CSP can require typed inputs. This table records
-the reviewed entry points; it is not a complete browser-sink inventory.
+The runtime integration covers the following callers. This table records the
+reviewed entry points; it is not a complete browser-sink inventory.
 
 | Caller | Required integration |
 | --- | --- |

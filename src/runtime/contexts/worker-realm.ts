@@ -22,6 +22,7 @@ import { relocateRuntimeModule } from '../modules.ts';
 import type { WorkerControl } from './worker-protocol.ts';
 import { createWorkerFactory } from './worker-factory.ts';
 import { createSharedWorkerFactory } from './shared-worker-factory.ts';
+import { prepareScriptURLs } from '../enforcement/script-urls.ts';
 const worker = self as unknown as DedicatedWorkerGlobalScope;
 const rawAdd = EventTarget.prototype.addEventListener;
 const rawImport = worker.importScripts;
@@ -144,6 +145,7 @@ export function prepareWorkerRealm(
   prepareRuntimeIntrinsics();
   const tools = createPolicyTools();
   const { apply, method, accessor, descriptor, propertyOwner, fail } = tools;
+  const scriptURL = prepareScriptURLs();
   let scriptBase = context.applicationURL;
   const fetchResource = createResourceFetch(
     (url, headers) => read([], url, headers),
@@ -169,6 +171,7 @@ export function prepareWorkerRealm(
       resources,
       control,
       read,
+      scriptURL,
     }),
   );
   const sharedFactory = createSharedWorkerFactory(
@@ -177,6 +180,7 @@ export function prepareWorkerRealm(
       applicationURL: context.applicationURL,
       baseURL: () => scriptBase,
       resources,
+      scriptURL,
       identity: () =>
         internalRecord({
           application: context.identity.application,
@@ -237,7 +241,11 @@ export function prepareWorkerRealm(
   const importsOwner = propertyOwner(worker, 'importScripts');
   if (importsOwner)
     method(importsOwner, 'importScripts', (...inputs: unknown[]) =>
-      apply(rawImport, worker, inputs.map(installedScript)),
+      apply(
+        rawImport,
+        worker,
+        inputs.map((input) => scriptURL(installedScript(input))),
+      ),
     );
   Object.defineProperty(
     worker,
@@ -335,7 +343,7 @@ export function prepareWorkerRealm(
         await control('verify', []);
         applicationListenerReady = notify;
         if (module) await import(entry);
-        else apply(rawImport, worker, [entry]);
+        else apply(rawImport, worker, [scriptURL(entry)]);
         notify();
       } finally {
         applicationListenerReady = undefined;

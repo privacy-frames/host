@@ -1,3 +1,4 @@
+import { SCRIPT_URL_CSP } from '../src/shared/script-url-policy.ts';
 import assert from 'node:assert/strict';
 import http from 'node:http';
 import { build } from './build.ts';
@@ -25,13 +26,14 @@ for (const guarded of [false, true]) {
     stdin: {
       resolveDir: process.cwd(),
       contents: `
+import {prepareScriptURLs} from './src/runtime/enforcement/script-urls.ts';
 import {prepareRuntimeIntrinsics} from './src/runtime/intrinsics.ts';
 import {createPolicyTools} from './src/runtime/enforcement/native.ts';import {createTrustedPolicy} from './src/runtime/trusted/client.ts';
 import {installDOMPolicy} from './src/runtime/enforcement/dom.ts';
 import {validateMarkup} from './src/shared/markup.ts';
 const rawCreate=Document.prototype.createElementNS,rawInner=Object.getOwnPropertyDescriptor(Element.prototype,'innerHTML').set,rawAppend=Node.prototype.appendChild,apply=Reflect.apply,define=Object.defineProperty,remove=Reflect.deleteProperty,originalLower=String.prototype.toLowerCase,originalTrim=String.prototype.trim;
 const capturedString=JSON.stringify;
-if(${guarded}){const policy=createTrustedPolicy(location.href);prepareRuntimeIntrinsics();const tools=createPolicyTools();installDOMPolicy(tools,Element.prototype.getAttribute,policy);}
+if(${guarded}){prepareScriptURLs();const policy=createTrustedPolicy(location.href);prepareRuntimeIntrinsics();const tools=createPolicyTools();installDOMPolicy(tools,Element.prototype.getAttribute,policy);}
 window.probeNativeMarkup=()=>{
   const xml=document.contentType==='image/svg+xml';
   const holder=xml?document.getElementById('holder'):apply(rawCreate,document,['http://www.w3.org/1999/xhtml','div']);
@@ -81,7 +83,8 @@ const server = http.createServer((request, response) => {
   response.setHeader('Content-Type', svg ? 'image/svg+xml' : 'text/html');
   response.setHeader(
     'Content-Security-Policy',
-    "default-src * data: blob:;script-src 'self' 'unsafe-eval' 'unsafe-inline';style-src 'unsafe-inline';frame-src *;connect-src *",
+    "default-src * data: blob:;script-src 'self' 'unsafe-eval' 'unsafe-inline';style-src 'unsafe-inline';frame-src *;connect-src *;" +
+      (mode === 'guarded' ? SCRIPT_URL_CSP : ''),
   );
   response.end(
     svg

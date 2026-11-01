@@ -1,6 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { response } from '../src/runtime/response-policy.ts';
+import { SCRIPT_URL_CSP } from '../src/shared/script-url-policy.ts';
+
+test('confined documents and worker responses require the reserved native URL policy', () => {
+  for (const type of ['text/html', 'image/svg+xml', 'text/javascript']) {
+    const policy = response('guarded', type).headers.get('Content-Security-Policy')!;
+    assert(policy.includes(SCRIPT_URL_CSP));
+    assert(!policy.includes('allow-duplicates'));
+  }
+});
 
 test('confined responses deny browser-mediated identity requests', () => {
   assert.match(

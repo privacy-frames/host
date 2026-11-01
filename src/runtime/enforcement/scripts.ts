@@ -2,15 +2,17 @@ import { strings, internalSet, internalRecord } from '../../shared/primordials.t
 import { isDataScript, isExecutableScriptType } from '../../shared/policy.ts';
 import { relocateRuntimeModule } from '../modules.ts';
 import type { PolicyTools } from './native.ts';
+import type { ScriptURLGate } from './script-urls.ts';
 
 export interface ScriptPolicy {
   isScript(node: unknown): node is HTMLScriptElement;
   prepare(node: HTMLScriptElement): void;
-  attribute(node: HTMLScriptElement, name: string, value: unknown): string;
+  attribute(node: HTMLScriptElement, name: string, value: unknown): unknown;
   text(node: HTMLScriptElement, value: string): void;
 }
 
 interface ScriptResources {
+  scriptURL: ScriptURLGate;
   nonce: string;
   mapURL(input: unknown): string;
   isInstalledURL(input: unknown): boolean;
@@ -120,7 +122,7 @@ export function installScriptPolicy(
     return relocateRuntimeModule(text, apply(baseURI, document, []), resources);
   }
 
-  function attribute(node: HTMLScriptElement, name: string, input: unknown): string {
+  function attribute(node: HTMLScriptElement, name: string, input: unknown): unknown {
     const key = strings.toLowerCase(name);
     if (!attributes.has(key) && !/^(?:data-|aria-)/.test(key))
       fail('Script attribute is not admitted');
@@ -140,7 +142,7 @@ export function installScriptPolicy(
       prepare(node);
       const mapped = sourceURL(value);
       logicalSources.set(node, logical);
-      return mapped;
+      return resources.scriptURL(mapped);
     }
     prepare(node);
     return key === 'nonce' ? nonce : value;

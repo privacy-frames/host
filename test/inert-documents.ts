@@ -1,3 +1,4 @@
+import { SCRIPT_URL_CSP } from '../src/shared/script-url-policy.ts';
 import http from 'node:http';
 import assert from 'node:assert/strict';
 import { build } from './build.ts';
@@ -41,7 +42,8 @@ const server = http.createServer((request, response) => {
   if (request.url !== '/control')
     response.setHeader(
       'Content-Security-Policy',
-      "default-src 'none';script-src 'self' 'unsafe-eval' 'nonce-inert-guard';connect-src 'self';img-src 'self';style-src 'unsafe-inline';worker-src 'self';frame-src 'self'",
+      "default-src 'none';script-src 'self' 'unsafe-eval' 'nonce-inert-guard';connect-src 'self';img-src 'self';style-src 'unsafe-inline';worker-src 'self';frame-src 'self'; " +
+        SCRIPT_URL_CSP,
     );
   response.end(
     '<!doctype html><title>Inert documents</title><body>' +
@@ -73,6 +75,16 @@ try {
         page = await context.newPage();
       await page.goto(origin + '/control');
       await page.evaluate(async (receiver) => {
+        await navigator.serviceWorker.register('/sw.js');
+        await navigator.serviceWorker.ready;
+        if (!navigator.serviceWorker.controller)
+          await new Promise<void>((resolve) =>
+            navigator.serviceWorker.addEventListener(
+              'controllerchange',
+              () => resolve(),
+              { once: true },
+            ),
+          );
         const inert = document.implementation.createHTMLDocument('');
         inert.body.innerHTML = '<form></form><form></form>';
         if (inert.body.childNodes.length !== 2)

@@ -82,6 +82,12 @@ arguments even where the abstract publication contract is shared.
 
 ## Progress
 
+Context policy 6 adds a [private native script URL gate](script-url-gate.md).
+Preparation checks actual enforcement before application execution; native
+Worker and script URL consumers receive private branded values. The existing
+worker-source restriction remains in place. Local bootstrap, registration
+lifetime, complete ownership proofs and browser coverage remain open.
+
 - Stage 1: contract being specified and reviewed against current behavior.
 - Stage 2: entry-point review started; complete authority mapping remains open.
 - Stage 3: document generation invalidation now uses private object identities;
@@ -139,7 +145,7 @@ arguments even where the abstract publication contract is shared.
   native bindings. Shared/publisher roots retain an explicit worker-only HTTP
   adapter. Native parent-selection and delegation faults are detected; complete
   protocol refinement and local bootstrap/resource delivery remain open.
-  Shared/publisher native names now include context policy version 5. The
+  Shared/publisher native names now include context policy version 6. The
   [namespace experiment](worker-policy-overlap.md) checks fresh globals across
   policy constants, same-policy sharing and eight policy-omission faults. Retained
   old globals and complete mixed-policy lifetimes remain open.

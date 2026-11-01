@@ -1,3 +1,5 @@
+import { prepareScriptURLs } from '../enforcement/script-urls.ts';
+
 export type TrustedCall = (operation: string, serialized: string) => string;
 
 /** This factory runs before publisher code and never publishes its frame/callable. */
@@ -12,6 +14,7 @@ export function createTrustedContext(source: string): TrustedCall {
   try {
     const frameWindow = frame.contentWindow;
     if (!frameWindow) throw new Error('Trusted frame unavailable');
+    prepareScriptURLs(frameWindow);
     const evaluate: unknown = Reflect.get(frameWindow, 'eval');
     if (typeof evaluate !== 'function')
       throw new Error('Trusted frame evaluator unavailable');

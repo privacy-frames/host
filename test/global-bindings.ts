@@ -1,3 +1,4 @@
+import { SCRIPT_URL_CSP } from '../src/shared/script-url-policy.ts';
 import http from 'node:http';
 import assert from 'node:assert/strict';
 import { build } from './build.ts';
@@ -59,6 +60,8 @@ const outputs = await build({
   banner: { js: '"use strict";' },
 });
 const server = http.createServer((request, response) => {
+  if (request.url === '/window' || request.url === '/worker.js')
+    response.setHeader('Content-Security-Policy', SCRIPT_URL_CSP);
   const file = outputs.outputFiles.find(
     (file) => request.url === '/' + file.path.split('/').pop(),
   );

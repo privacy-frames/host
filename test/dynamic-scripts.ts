@@ -1,3 +1,4 @@
+import { SCRIPT_URL_CSP } from '../src/shared/script-url-policy.ts';
 import assert from 'node:assert/strict';
 import http from 'node:http';
 import { mkdir, writeFile } from 'node:fs/promises';
@@ -13,7 +14,7 @@ let policyCode = '';
 if (policyOnly) {
   const built = await build({
     stdin: {
-      contents: `import 'ses';import {createPolicyTools} from './src/runtime/enforcement/native.ts';import {createTrustedPolicy} from './src/runtime/trusted/client.ts';import {installDOMPolicy,installResourceAttributePolicy} from './src/runtime/enforcement/dom.ts';import {installScriptPolicy} from './src/runtime/enforcement/scripts.ts';const policy=createTrustedPolicy(location.href);lockdown({evalTaming:'unsafe-eval',errorTaming:'safe',consoleTaming:'safe',overrideTaming:'severe'});const tools=createPolicyTools();const rawGet=Element.prototype.getAttribute;const admitted=new Set(['a.js','b.js','module.js'].map(name=>'http://127.0.0.1:4340/dynamic-scripts/'+name));const mapURL=input=>new URL(String(input),document.baseURI).href;const scripts=installScriptPolicy(tools,{nonce:'${nonce}',mapURL,isInstalledURL:input=>admitted.has(String(input))});installDOMPolicy(tools,rawGet,policy,scripts);installResourceAttributePolicy(tools,mapURL,scripts);document.documentElement.dataset.policyReady='true';`,
+      contents: `import 'ses';import {prepareScriptURLs} from './src/runtime/enforcement/script-urls.ts';const scriptURL=prepareScriptURLs();import {createPolicyTools} from './src/runtime/enforcement/native.ts';import {createTrustedPolicy} from './src/runtime/trusted/client.ts';import {installDOMPolicy,installResourceAttributePolicy} from './src/runtime/enforcement/dom.ts';import {installScriptPolicy} from './src/runtime/enforcement/scripts.ts';const policy=createTrustedPolicy(location.href);lockdown({evalTaming:'unsafe-eval',errorTaming:'safe',consoleTaming:'safe',overrideTaming:'severe'});const tools=createPolicyTools();const rawGet=Element.prototype.getAttribute;const admitted=new Set(['a.js','b.js','module.js'].map(name=>'http://127.0.0.1:4340/dynamic-scripts/'+name));const mapURL=input=>new URL(String(input),document.baseURI).href;const scripts=installScriptPolicy(tools,{nonce:'${nonce}',scriptURL,mapURL,isInstalledURL:input=>admitted.has(String(input))});installDOMPolicy(tools,rawGet,policy,scripts);installResourceAttributePolicy(tools,mapURL,scripts);document.documentElement.dataset.policyReady='true';`,
       resolveDir: new URL('../', import.meta.url).pathname,
     },
     banner: { js: '"use strict";' },
@@ -51,7 +52,7 @@ const publisherServer = http.createServer((request, response) => {
     response.setHeader('Content-Type', 'text/html');
     response.setHeader(
       'Content-Security-Policy',
-      `default-src 'none';script-src 'self' blob: 'nonce-${nonce}';connect-src 'self';object-src 'none';frame-src 'none'`,
+      `default-src 'none';script-src 'self' blob: 'nonce-${nonce}';connect-src 'self';object-src 'none';frame-src 'none'; ${SCRIPT_URL_CSP}`,
     );
     response.end(
       '<!doctype html><script src="/policy.js"></script><p id="ready">Isolated script policy fixture</p>',

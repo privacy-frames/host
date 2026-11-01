@@ -1,3 +1,4 @@
+import { SCRIPT_URL_CSP } from '../src/shared/script-url-policy.ts';
 import assert from 'node:assert/strict';
 import http from 'node:http';
 import { mkdir, writeFile } from 'node:fs/promises';
@@ -79,8 +80,10 @@ const candidate = await build({
   stdin: {
     contents: `import {sanitize,sanitizeContext} from './test/dependency/markup-policy.ts';
       globalThis.candidate=(operation,input)=>{
+        try {
         if(operation==='context'){const p=JSON.parse(input);return JSON.stringify(sanitizeContext(p.text,p.localName,p.namespace));}
         return JSON.stringify(sanitize(input,operation==='host'));
+        } catch(error) { return JSON.stringify({fixtureFailure:String(error),stack:error.stack}); }
       };`,
     resolveDir: process.cwd(),
   },
@@ -92,6 +95,8 @@ const candidate = await build({
 const fixture = await build({
   stdin: {
     contents: `import {createTrustedContext} from './src/runtime/trusted/context.ts';
+      import {prepareScriptURLs} from './src/runtime/enforcement/script-urls.ts';
+      prepareScriptURLs();
       import {validateMarkup} from './src/shared/markup.ts';
       const source=${JSON.stringify(candidate.outputFiles[0].text)};
       const call=createTrustedContext('(()=>{'+source+';return globalThis.candidate})()');
@@ -140,7 +145,8 @@ const server = http.createServer((request, response) => {
   );
   response.setHeader(
     'Content-Security-Policy',
-    "default-src 'none'; script-src 'self' 'unsafe-eval'; frame-src 'self'; style-src 'unsafe-inline'",
+    "default-src 'none'; script-src 'self' 'unsafe-eval'; frame-src 'self'; style-src 'unsafe-inline'; " +
+      SCRIPT_URL_CSP,
   );
   response.end(
     request.url === '/fixture.js'
@@ -170,7 +176,13 @@ try {
           (item) => Reflect.get(window, 'probe')(item),
           item,
         );
-        assert(row.frameRemoved && row.host.supported);
+        assert(
+          row.frameRemoved &&
+            row.host.supported &&
+            row.defaults.supported &&
+            row.contextual.supported,
+          JSON.stringify(row),
+        );
         if (item.unsafe) assert(row.candidatePassive && row.contextualPassive, item.name);
         rows.push(row);
       }

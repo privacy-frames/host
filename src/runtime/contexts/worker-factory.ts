@@ -8,6 +8,7 @@ import type { WorkerResourceRead } from './worker-resource-protocol.ts';
 import type { WorkerControl } from './worker-protocol.ts';
 import type { PolicyTools } from '../enforcement/native.ts';
 import type { ResourceAliases } from '../resource-aliases.ts';
+import type { ScriptURLGate } from '../enforcement/script-urls.ts';
 
 // Blob source reads retain the pre-adapter native operation.
 const nativeFetch = fetch;
@@ -18,6 +19,7 @@ export interface WorkerFactoryContext {
   resources: ResourceAliases;
   control: WorkerControl;
   read: WorkerResourceRead;
+  scriptURL: ScriptURLGate;
 }
 
 interface QueuedMessage {
@@ -191,7 +193,7 @@ export function createWorkerFactory(
         const worker: Worker = construct(
           NativeWorker,
           [
-            apply(href, bootstrap, []),
+            context.scriptURL(apply(href, bootstrap, [])),
             internalRecord({ type, name, credentials: 'omit' }),
           ],
           newTarget === factory ? NativeWorker : newTarget,

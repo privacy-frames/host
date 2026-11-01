@@ -7,6 +7,7 @@ import {
   internalRecord,
 } from '../../shared/primordials.ts';
 import type { ResourceAliases } from '../resource-aliases.ts';
+import type { ScriptURLGate } from '../enforcement/script-urls.ts';
 import { publisherRegistrationScope } from './scope.ts';
 import {
   PUBLISHER_RPC,
@@ -40,6 +41,7 @@ const NativePromise = Promise;
 const NativeError = Error;
 const NativeDOMException = DOMException;
 const apply = Reflect.apply;
+const construct = Reflect.construct;
 export interface ForegroundWorker extends EventTarget {
   readonly scriptURL: string;
   readonly state: 'activated';
@@ -75,6 +77,7 @@ export interface ForegroundContainer extends EventTarget {
   startMessages(): void;
 }
 export interface PublisherClientOptions {
+  scriptURL: ScriptURLGate;
   applicationURL: string;
   baseURL(): string;
   installationSourceURL(): string;
@@ -94,6 +97,7 @@ export function createPublisherContainer({
   baseURL,
   installationSourceURL,
   resources,
+  scriptURL,
 }: PublisherClientOptions) {
   const host = createControllerClient();
   const nativeController = host.controller;
@@ -277,14 +281,14 @@ export function createPublisherContainer({
     const existing = launching.get(launch.registration.id);
     if (existing) return existing;
     const pending = (async () => {
-      const executor = new NativeSharedWorker(
-        launch.url,
+      const executor: SharedWorker = construct(NativeSharedWorker, [
+        scriptURL(launch.url),
         internalRecord<WorkerOptions>({
           type: launch.registration.type,
           name: launch.name,
           credentials: 'omit',
         }),
-      );
+      ]);
       const port: MessagePort = apply(sharedPort, executor, []);
       await rpc(
         'attach',

@@ -1,3 +1,4 @@
+import { SCRIPT_URL_CSP } from '../src/shared/script-url-policy.ts';
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { writeFile } from 'node:fs/promises';
@@ -39,6 +40,8 @@ const server = createServer((request, response) => {
     return;
   }
   response.setHeader('Content-Type', 'text/html');
+  if (request.url === '/guarded')
+    response.setHeader('Content-Security-Policy', SCRIPT_URL_CSP);
   response.end(
     "<!doctype html><meta http-equiv=\"Content-Security-Policy\" content=\"default-src * data: blob:;script-src 'self' 'unsafe-eval';style-src * 'unsafe-inline'\"><body>" +
       (request.url === '/guarded' ? '<script src="/fixture.js"></script>' : ''),

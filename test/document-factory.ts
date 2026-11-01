@@ -1,3 +1,4 @@
+import { SCRIPT_URL_CSP } from '../src/shared/script-url-policy.ts';
 import http from 'node:http';
 import assert from 'node:assert/strict';
 import { randomUUID, createHash } from 'node:crypto';
@@ -14,6 +15,7 @@ const fixture = await build({
     resolveDir: process.cwd(),
     sourcefile: 'document-factory-fixture.js',
     contents: `
+import { prepareScriptURLs } from './src/runtime/enforcement/script-urls.ts';
 import { createPolicyTools } from './src/runtime/enforcement/native.ts';
 import {createTrustedPolicy} from './src/runtime/trusted/client.ts';
 import { createDocumentFactory } from './src/runtime/contexts/document-factory.ts';
@@ -35,10 +37,11 @@ const documentControl = async (operation, payload) => {
 };
 const nativePost = window.postMessage;
 const nativeParent = parent;
+const scriptURL = prepareScriptURLs();
 const policy = createTrustedPolicy(location.origin + '/app/');
 const tools = createPolicyTools();
 const resources = { mapURL: value => String(value), isInstalledURL: () => false };
-const scripts = installScriptPolicy(tools, { nonce: 'fixture_nonce', ...resources });
+const scripts = installScriptPolicy(tools, { nonce: 'fixture_nonce', scriptURL, ...resources });
 const documents = createDocumentFactory(tools, { applicationURL: location.origin + '/app/', baseURL: () => location.href, policy, documentControl });
 installDOMPolicy(tools, rawGet, policy, scripts, documents);
 installResourceAttributePolicy(tools, resources.mapURL, scripts, documents);
@@ -84,9 +87,16 @@ const inputs: unknown[] = [];
 let origin = '';
 const server = http.createServer(async (request, target) => {
   const url = new URL(request.url || '/', origin);
+  target.setHeader('Content-Security-Policy', SCRIPT_URL_CSP);
   if (url.pathname === '/fixture.js') {
     target.writeHead(200, { 'Content-Type': 'text/javascript' });
-    target.end(script);
+    const context = url.searchParams.get('context');
+    const registration = context ? registrations.get(context) : undefined;
+    target.end(
+      (registration
+        ? 'globalThis.fixtureRegistration=' + JSON.stringify(registration) + ';\n'
+        : '') + script,
+    );
     return;
   }
   if (url.pathname === '/fixture/close') {
@@ -139,16 +149,16 @@ const server = http.createServer(async (request, target) => {
       target.end();
       return;
     }
-    const config = JSON.stringify(registration);
+    const source = '/fixture.js?context=' + registration.id;
     if (registration.kind === 'svg') {
       target.writeHead(200, { 'Content-Type': 'image/svg+xml' });
       target.end(
-        `<svg xmlns="http://www.w3.org/2000/svg"><script>globalThis.fixtureRegistration=${config};</script><script href="/fixture.js"></script></svg>`,
+        `<svg xmlns="http://www.w3.org/2000/svg"><script href="${source}"></script></svg>`,
       );
     } else {
       target.writeHead(200, { 'Content-Type': 'text/html' });
       target.end(
-        `<!doctype html><script>globalThis.fixtureRegistration=${config};</script><script src="/fixture.js"></script><body>Trusted shell</body>`,
+        `<!doctype html><script src="${source}"></script><body>Trusted shell</body>`,
       );
     }
     return;
@@ -174,6 +184,13 @@ try {
     const browser = await launch(engine);
     try {
       const page = await browser.newPage();
+      page.on('pageerror', (error) =>
+        console.error(name, 'factory page error', error.message),
+      );
+      page.on('console', (message) => {
+        if (message.type() === 'error')
+          console.error(name, 'factory console', message.text());
+      });
       await page.goto(origin + '/parent/');
       const previousInputs = inputs.length;
       const result = await page.evaluate(async () => {

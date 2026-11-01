@@ -16,7 +16,7 @@ the owned records and their prototypes.
 
 The preconditions require ordinary objects with owned data properties.
 Identity, application, generation, kind, URL and state are strings; parent is
-null or a string. The current policy version is 5. The runner checks the registry’s value import
+null or a string. The current policy version is 6. The runner checks the registry’s value import
 and the shared constant’s numeric declaration, and records both source hashes. Refusal contracts allow arbitrary numeric
 expected versions. Separate-record contracts own two disjoint records; aliased
 contracts own one. Prototypes may differ and are not required to be frozen.

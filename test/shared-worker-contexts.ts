@@ -94,6 +94,8 @@ await new Promise<void>((resolve) => publisherServer.listen(4352, '127.0.0.1', r
 await new Promise<void>((resolve) => receiver.listen(4353, '127.0.0.1', resolve));
 const server = await servers({ receiver: false });
 const results = {
+  scope:
+    'Installed shared workers and admission controls. A fixture-only constructor hook retains host-issued bootstrap URL brands to reach the native admission protocol; raw URL refusal is checked separately. The hook is not included in production.',
   provenance: await testProvenance(import.meta.url),
   browsers: [] as object[],
 };
@@ -150,6 +152,35 @@ try {
           start = MessagePort.prototype.start,
           close = MessagePort.prototype.close,
           apply = Reflect.apply;
+        const construct = Reflect.construct;
+        const URLType: unknown = Reflect.get(globalThis, 'TrustedScriptURL');
+        if (typeof URLType !== 'function') throw new Error('Native URL type missing');
+        const text: unknown = Reflect.get(URLType.prototype, 'toString');
+        if (typeof text !== 'function') throw new Error('Native URL stringifier missing');
+        const factory: unknown = Reflect.get(globalThis, 'trustedTypes');
+        if (!factory || typeof factory !== 'object')
+          throw new Error('URL factory missing');
+        const isURL: unknown = Reflect.get(factory, 'isScriptURL');
+        if (typeof isURL !== 'function')
+          throw new Error('Native URL brand check missing');
+        const brands = new Map<string, unknown>();
+        const set = Map.prototype.set;
+        const get = Map.prototype.get;
+        const observed = new Proxy(Native, {
+          construct(target, args: unknown[], newTarget) {
+            if (apply(isURL, factory, [args[0]]) === true) {
+              const url: unknown = apply(text, args[0], []);
+              if (typeof url !== 'string') throw new Error('Bootstrap URL missing');
+              apply(set, brands, [url, args[0]]);
+            }
+            return construct(target, args, newTarget === observed ? Native : newTarget);
+          },
+        });
+        Object.defineProperty(globalThis, 'SharedWorker', {
+          configurable: true,
+          writable: true,
+          value: observed,
+        });
         Object.defineProperty(globalThis, '__rawShared', {
           value: {
             // Trusted fixture setup uses the native control protocol directly.
@@ -157,9 +188,16 @@ try {
             fetch: (input: RequestInfo | URL, init?: RequestInit) =>
               apply(nativeFetch, globalThis, [input, init]),
             create: (url: string, name: string) => {
-              const handle = new Native(url, { name, credentials: 'omit' });
+              const brand: unknown = apply(get, brands, [url]);
+              if (!brand) throw new Error('Fixture did not observe this bootstrap');
+              const handle: SharedWorker = construct(Native, [
+                brand,
+                { name, credentials: 'omit' },
+              ]);
               return { handle, port: apply(read, handle, []) };
             },
+            createRaw: (url: string, name: string) =>
+              new Native(url, { name, credentials: 'omit' }),
             post: (port: MessagePort, data: unknown, ports: Transferable[] = []) =>
               apply(post, port, [data, ports]),
             start: (port: MessagePort) => apply(start, port, []),
@@ -238,6 +276,12 @@ try {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ ticket: ticket.ticket }),
         });
+        let rawURLRefused = false;
+        try {
+          raw.createRaw(ticket.bootstrapURL, ticket.key);
+        } catch (error) {
+          rawURLRefused = error instanceof TypeError;
+        }
         const connection = raw.create(ticket.bootstrapURL, ticket.key);
         const channel = new MessageChannel();
         let appMessages = 0;
@@ -269,12 +313,14 @@ try {
         channel.port1.close();
         return {
           response,
+          rawURLRefused,
           appMessages,
           key: ticket.key,
           generation: ticket.installationGeneration,
         };
       }, publisher + '/shared.js');
       assert.equal(malformed.response.type, 'privacy-shared-failed');
+      assert.equal(malformed.rawURLRefused, true);
       assert.equal(malformed.appMessages, 0);
       const afterMalformed = await request(first, {});
       assert.equal(afterMalformed.connections, 2);
