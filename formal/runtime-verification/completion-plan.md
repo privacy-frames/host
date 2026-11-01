@@ -79,7 +79,7 @@ existing context-resource resolver. Shared and publisher roots retain an
 authenticated HTTP adapter. The former per-context readiness and closure routes are removed.
 
 The [local bootstrap prerequisites](local-worker-bootstrap.md) now establish
-native Blob-worker discovery in twelve browser cases. Ten source-policy cases
+native Blob-worker discovery in twelve browser cases. Fourteen source-policy cases
 identify a private TrustedScriptURL gate while exposing the fresh-realm and
 inherited-policy obligations. Production CSP and factories remain unchanged.
 

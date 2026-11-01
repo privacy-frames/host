@@ -2,7 +2,7 @@
   "scope": "Native CSP/Trusted Types prerequisites for local bootstrap design. Metadata-only scripts, intentionally accessible test policy and unprepared test frames. Not a production mitigation, application escape, or complete confinement result.",
   "completed": true,
   "sourceSHA256": {
-    "formal/runtime-verification/local-bootstrap-policy.ts": "e9d7f858f05b504624fa9984169fdabd184e4bbca83fb880a9eb6ff599fe165c",
+    "formal/runtime-verification/local-bootstrap-policy.ts": "7145f5d8c41d550cf425203ee1b18a5f7bf361e79a5c4dd0dd44f18c1d244535",
     "test/browser-profile.ts": "c161489dfce9c3124474d1416440c9876b0a8fce329d2f09fa16f99af744e3a0",
     "package-lock.json": "4e8c7b0964047f1c9fd3f82956b08d381817fa86fb2f7d47d4a10458dc5e62ed"
   },
@@ -125,6 +125,58 @@
       }
     },
     {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "named-captured-policy",
+      "result": {
+        "supported": true,
+        "duplicateRefused": true,
+        "privateURL": {
+          "outcome": "message",
+          "value": {
+            "label": "host-prefix",
+            "available": true,
+            "created": true
+          }
+        },
+        "raw": {
+          "outcome": "throw",
+          "error": "TypeError: Failed to construct 'Worker': This document requires 'TrustedScriptURL' assignment."
+        },
+        "afterPrivate": {
+          "policyCalls": 0,
+          "coercions": 0
+        },
+        "mutationControl": {
+          "replacementRefused": true,
+          "policyCalls": 1,
+          "coercions": 1,
+          "substituted": true
+        }
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "named-worker-imports",
+      "result": {
+        "supported": true,
+        "duplicateRefused": true,
+        "raw": {
+          "outcome": "throw",
+          "error": "TypeError: Failed to construct 'Worker': This document requires 'TrustedScriptURL' assignment."
+        },
+        "privateURL": {
+          "outcome": "message",
+          "value": {
+            "label": "worker-imports",
+            "rawRefused": true,
+            "after": 17
+          }
+        }
+      }
+    },
+    {
       "browser": "firefox",
       "version": "155.0",
       "mode": "baseline",
@@ -239,6 +291,58 @@
         "evaluation": 2,
         "spoofedSinkRefused": true,
         "scriptSinkRefused": true
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "named-captured-policy",
+      "result": {
+        "supported": true,
+        "duplicateRefused": true,
+        "privateURL": {
+          "outcome": "message",
+          "value": {
+            "label": "host-prefix",
+            "available": true,
+            "created": true
+          }
+        },
+        "raw": {
+          "outcome": "throw",
+          "error": "TypeError: Worker constructor: Sink type mismatch violation blocked by CSP"
+        },
+        "afterPrivate": {
+          "policyCalls": 0,
+          "coercions": 0
+        },
+        "mutationControl": {
+          "replacementRefused": true,
+          "policyCalls": 1,
+          "coercions": 1,
+          "substituted": true
+        }
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "named-worker-imports",
+      "result": {
+        "supported": true,
+        "duplicateRefused": true,
+        "raw": {
+          "outcome": "throw",
+          "error": "TypeError: Worker constructor: Sink type mismatch violation blocked by CSP"
+        },
+        "privateURL": {
+          "outcome": "message",
+          "value": {
+            "label": "worker-imports",
+            "rawRefused": true,
+            "after": 17
+          }
+        }
       }
     }
   ]

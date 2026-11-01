@@ -39,6 +39,8 @@ try {
         'named',
         'named-then-none',
         'named-default-reject-url',
+        'named-captured-policy',
+        'named-worker-imports',
       ] as const) {
         const context = await browser.newContext();
         try {
@@ -156,6 +158,101 @@ postMessage({label:'host-prefix',available,created,error});`;
                 policy(window);
               } catch {
                 duplicate = true;
+              }
+              if (mode === 'named-captured-policy') {
+                if (
+                  !owned ||
+                  typeof owned !== 'object' ||
+                  !('createScriptURL' in owned) ||
+                  typeof owned.createScriptURL !== 'function'
+                )
+                  throw new Error('Private URL policy missing');
+                const mint = owned.createScriptURL;
+                const token = Reflect.apply(mint, owned, [first]);
+                if (!token || typeof token !== 'object')
+                  throw new Error('Native script URL object missing');
+                const policyPrototype = Object.getPrototypeOf(owned);
+                const urlPrototype = Object.getPrototypeOf(token);
+                let policyCalls = 0;
+                let coercions = 0;
+                Object.defineProperty(policyPrototype, 'createScriptURL', {
+                  configurable: true,
+                  value() {
+                    policyCalls++;
+                    throw new Error('Application policy replacement invoked');
+                  },
+                });
+                for (const key of ['toString', 'valueOf', Symbol.toPrimitive])
+                  Object.defineProperty(urlPrototype, key, {
+                    configurable: true,
+                    value() {
+                      coercions++;
+                      return application;
+                    },
+                  });
+                const retained = Reflect.apply(mint, owned, [first]);
+                const privateURL = await worker(retained);
+                const afterPrivate = { policyCalls, coercions };
+                const explicitCoercion = String(retained);
+                let replacementRefused = false;
+                try {
+                  Reflect.apply(owned.createScriptURL, owned, [first]);
+                } catch {
+                  replacementRefused = true;
+                }
+                const raw = await worker(application);
+                return {
+                  supported: true,
+                  duplicateRefused: duplicate,
+                  privateURL,
+                  raw,
+                  afterPrivate,
+                  mutationControl: {
+                    replacementRefused,
+                    policyCalls,
+                    coercions,
+                    substituted: explicitCoercion === application,
+                  },
+                };
+              }
+              if (mode === 'named-worker-imports') {
+                const importSource = URL.createObjectURL(
+                  new Blob(['globalThis.importMarker = 17'], {
+                    type: 'text/javascript',
+                  }),
+                );
+                const importer = URL.createObjectURL(
+                  new Blob(
+                    [
+                      `
+const source = ${JSON.stringify(importSource)};
+const policy = trustedTypes.createPolicy('host-runtime', {
+  createScriptURL: value => value,
+});
+const mint = policy.createScriptURL;
+const nativeImport = importScripts;
+let rawRefused = false;
+try { nativeImport(source); } catch(error) { rawRefused = error instanceof TypeError; }
+const before = globalThis.importMarker;
+const value = Reflect.apply(mint, policy, [source]);
+Reflect.apply(nativeImport, self, [value]);
+postMessage({ label: 'worker-imports', rawRefused, before, after: globalThis.importMarker });
+`,
+                    ],
+                    { type: 'text/javascript' },
+                  ),
+                );
+                try {
+                  return {
+                    supported: true,
+                    duplicateRefused: duplicate,
+                    raw: await worker(importer),
+                    privateURL: await worker(trusted(owned, importer)),
+                  };
+                } finally {
+                  URL.revokeObjectURL(importer);
+                  URL.revokeObjectURL(importSource);
+                }
               }
               if (mode === 'named-default-reject-url') {
                 const tt = factory(window);
@@ -285,14 +382,61 @@ postMessage({label:'host-prefix',available,created,error});`;
             assert('first' in result && result.first?.outcome === 'message');
             assert('application' in result && result.application?.outcome === 'message');
           }
+          if (mode !== 'baseline' && mode !== 'exact-blob')
+            assert('supported' in result && result.supported === true);
+          if (mode === 'exact-blob') {
+            assert('first' in result && result.first?.outcome === 'error');
+            assert('application' in result && result.application?.outcome === 'error');
+          }
+          if (mode === 'named') {
+            assert('childPolicy' in result && result.childPolicy === true);
+            assert('childURL' in result && result.childURL?.outcome === 'message');
+            assert.deepEqual(result.childURL.value, { label: 'application' });
+          }
+          if (mode === 'named-then-none') {
+            assert('childPolicy' in result && result.childPolicy === false);
+            assert('callerBlob' in result && 'helperBlob' in result);
+            for (const entry of [result.callerBlob, result.helperBlob]) {
+              assert(entry?.outcome === 'message');
+              assert(entry.value && typeof entry.value === 'object');
+              assert('created' in entry.value && entry.value.created === false);
+            }
+          }
           if (
-            (mode === 'named' || mode === 'named-default-reject-url') &&
+            (mode === 'named' ||
+              mode === 'named-default-reject-url' ||
+              mode === 'named-captured-policy' ||
+              mode === 'named-worker-imports') &&
             'supported' in result &&
             result.supported
           ) {
             assert('raw' in result && result.raw?.outcome === 'throw');
             assert('privateURL' in result && result.privateURL?.outcome === 'message');
             assert('duplicateRefused' in result && result.duplicateRefused === true);
+          }
+          if (mode === 'named-captured-policy' && 'afterPrivate' in result) {
+            assert.deepEqual(result.afterPrivate, { policyCalls: 0, coercions: 0 });
+            assert.deepEqual(result.mutationControl, {
+              replacementRefused: true,
+              policyCalls: 1,
+              coercions: 1,
+              substituted: true,
+            });
+            assert(
+              'privateURL' in result &&
+                result.privateURL?.value &&
+                typeof result.privateURL.value === 'object' &&
+                'label' in result.privateURL.value &&
+                result.privateURL.value.label === 'host-prefix',
+            );
+          }
+          if (mode === 'named-worker-imports' && 'privateURL' in result) {
+            assert.deepEqual(result.privateURL?.value, {
+              label: 'worker-imports',
+              rawRefused: true,
+              before: undefined,
+              after: 17,
+            });
           }
           if (
             mode === 'named-default-reject-url' &&
@@ -314,7 +458,7 @@ postMessage({label:'host-prefix',available,created,error});`;
       await browser.close();
     }
   }
-  assert.equal(rows.length, 10);
+  assert.equal(rows.length, 14);
   completed = true;
 } catch (error) {
   failure = error instanceof Error ? error.stack : String(error);

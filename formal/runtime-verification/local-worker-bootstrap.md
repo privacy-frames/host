@@ -34,7 +34,7 @@ A private-port reply containing a URL is not itself native identity evidence.
 ## Source admission for Blob workers
 
 Run `node formal/runtime-verification/local-bootstrap-policy.ts`.
-Ten metadata-only cases examine native CSP and Trusted Types in Chromium and
+Fourteen metadata-only cases examine native CSP and Trusted Types in Chromium and
 Firefox. The ordinary controls run both scripts before restrictions. These test
 pages deliberately omit the production DOM and navigation mediators.
 
@@ -45,6 +45,8 @@ pages deliberately omit the production DOM and navigation mediators.
 | Fresh same-origin child                  | The unprepared child could create the same policy name and mint a URL accepted by the parent's native Worker constructor.                                                                                                                             |
 | Additional `trusted-types 'none'`        | The existing parent policy still supplied a working worker URL. Fresh children could not create policies, but neither could the resulting Blob workers. Creating the Blob in a differently configured helper frame did not change that worker result. |
 | Default policy refusing every script URL | Ordinary HTML assignment and eval worked. Raw worker strings and script-src assignments were refused; private policy-created worker URLs ran. Direct default-policy URL creation also failed with a spoofed sink argument.                            |
+| Captured policy method under mutation     | Replacing the policy method and TrustedScriptURL coercion methods did not affect private minting or native Worker construction. Explicit calls confirmed both replacements were active.                                                                 |
+| Classic worker imports                    | A worker created its own named policy. Raw importScripts input was refused before the marker ran; its private TrustedScriptURL loaded that marker.                                                                                                      |
 
 [HTML's Worker constructor](https://html.spec.whatwg.org/multipage/workers.html#dom-worker)
 uses TrustedScriptURL checks. The [Trusted Types specification](https://www.w3.org/TR/trusted-types/)
@@ -60,10 +62,45 @@ global must already be prepared and have its reserved policies established.
 The fresh-child case shows why DOM/context mediation remains necessary; it is a
 counterexample to the policy-only design, not an escape from the current host.
 
+The mutation cases exercise a captured policy method and direct native sink call.
+They record zero application coercion calls during that operation, followed by a
+successful explicit coercion control. Converting the trusted value to a string
+would invoke the replacement and discard the native brand. Production code must
+retain the private policy and captured minting method, then supply the branded
+object directly to its captured native sink. This experiment does not establish
+that every production caller already follows that rule.
+
 The `'none'` experiment also prevents using that directive as a simple blanket
 repair: a worker guard could not create its own policy for later native script
 imports or nested worker construction. Its entry script ran, so this was policy
 creation failure rather than a failed worker bootstrap.
+
+## Runtime integration obligations
+
+The current runtime has several callers that supply plain script URL strings.
+The gate must cover them before CSP can require typed inputs. This table records
+the reviewed entry points; it is not a complete browser-sink inventory.
+
+| Caller | Required integration |
+| --- | --- |
+| `contexts/worker-factory.ts` | Mint the validated host bootstrap URL directly into the captured native Worker constructor. Keep the policy and branded value out of the returned handle. |
+| `contexts/shared-worker-factory.ts` and `publisher/client.ts` | Apply the same rule to both native SharedWorker construction paths, preserving names, type and existing admission checks. |
+| `contexts/worker-realm.ts` | Gate both initial classic entry loading and subsequent importScripts calls. Reserve the worker's policies before loading application code; parent policies do not reserve names in the worker. |
+| `enforcement/scripts.ts`, `enforcement/dom.ts` and `contexts/document-renderer.ts` | Supply private branded URLs to native script setters and attribute calls after existing resource validation. Preserve logical string URLs in application-facing getters and records. |
+| `trusted/context.ts` | Prepare the private computation frame's policies before evaluating its trusted source. The parent default policy does not establish that child's default policy. |
+
+The public default policy must reject every script URL, including explicit calls
+with caller-supplied sink arguments. Its HTML and Script identity callbacks retain
+ordinary application behavior; existing markup, navigation and context controls
+remain responsible for admitting that behavior. Native module loading, worklet
+loading, parser-created scripts and other URL consumers need separate coverage;
+this worker/import experiment does not establish that those paths use this gate.
+
+Integration requires positive tests for unchanged script, worker, shared-worker
+and publisher behavior, plus raw-constructor and fresh-realm rejection controls.
+Test unavailable enforcement as a refused launch, rather than accepting a missing
+Trusted Types API as a successful case. The runner now rejects missing support
+and requires the recorded fresh-child and inherited-policy observations.
 
 ## Production gate
 

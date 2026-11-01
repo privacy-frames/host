@@ -313,9 +313,9 @@
     "src/runtime/contexts/worker-resource-protocol.ts": "aa5b444b987d60ce6dcacf74715756a290a2d440b39004a851a1c75f03f3c9fe",
     "formal/runtime-verification/blob-worker-identity.json": "a74f50164d2184ac9c077e2fcdd39d0590a9807899886f1f642cd16d813c2bc0",
     "formal/runtime-verification/blob-worker-identity.ts": "2f77260568f723d91ed45c7a08bd374035a8176770151647daf0c19e515fc366",
-    "formal/runtime-verification/local-bootstrap-policy.json": "7a8ff769bcba77cbe2ecbc8ccbc401208b3cc73a2a07680ffe3951bdfaab41a1",
-    "formal/runtime-verification/local-bootstrap-policy.ts": "e9d7f858f05b504624fa9984169fdabd184e4bbca83fb880a9eb6ff599fe165c",
-    "formal/runtime-verification/local-worker-bootstrap.md": "feb42b41b12f050d95b9dba88feac0686201512092480eb9cf39d7453ff30b5f"
+    "formal/runtime-verification/local-bootstrap-policy.json": "6bb5c4c8a20a480b1162c1f13f373514dc247fe9e8187023e8362266cc79cf70",
+    "formal/runtime-verification/local-bootstrap-policy.ts": "7145f5d8c41d550cf425203ee1b18a5f7bf361e79a5c4dd0dd44f18c1d244535",
+    "formal/runtime-verification/local-worker-bootstrap.md": "f3ba5d06ae709f6c984af614f5dc256fc08f92d3a226a84d8ec83359e7a7df45"
   },
   "claims": [
     {
@@ -2654,7 +2654,7 @@
         },
         {
           "kind": "discovery",
-          "description": "Ten CSP/Trusted Types cases have ordinary execution controls. Exact Blob-URL source input blocks both scripts. Named-policy worker construction rejects strings and accepts private trusted values; a fresh same-origin test child can mint an accepted URL. Additional trusted-types none blocks child/worker policy creation, including a Blob made in another helper document. A default policy that refuses all script URLs preserves basic HTML/eval and rejects raw worker/script-src inputs and explicit URL creation with a spoofed sink. These are native candidate-policy observations, not current-runtime attacks or a production mitigation.",
+          "description": "Fourteen CSP/Trusted Types cases have ordinary execution controls. Exact Blob-URL source input blocks both scripts. Named-policy worker construction rejects strings and accepts private trusted values; a fresh same-origin test child can mint an accepted URL. Additional trusted-types none blocks child/worker policy creation, including a Blob made in another helper document. A default policy that refuses all script URLs preserves basic HTML/eval and rejects raw worker/script-src inputs and explicit URL creation with a spoofed sink. Captured policy minting and native Worker construction bypass the replaced policy method and URL coercion hooks, with explicit mutation controls. Worker importScripts refuses raw strings and accepts its private branded URL. Missing Trusted Types support and changed recorded child/inheritance behavior fail the runner. These are native candidate-policy observations, not current-runtime attacks or a production mitigation.",
           "paths": [
             "formal/runtime-verification/local-bootstrap-policy.ts",
             "formal/runtime-verification/local-bootstrap-policy.json",
