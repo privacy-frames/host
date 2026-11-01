@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { runInNewContext } from 'node:vm';
 import { relocateRuntimeModule } from '../src/runtime/modules.ts';
 
 const original = 'https://publisher.test/app/module.js';
@@ -157,4 +158,67 @@ test('source and deferred phase imports retain their syntax while relocating res
       relocateRuntimeModule(computed, 'https://publisher.test/app/', resources),
       computed,
     );
+});
+
+test('classic computed imports preserve parentheses, options, nesting and lexical shadowing', () => {
+  const base = 'https://publisher.test/app/classic.js';
+  const calls: unknown[][] = [];
+  const code = `
+    var preservedGlobal = 17;
+    function run(globalThis, self, Function, privacyHost, importShim) {
+      const path = './computed.js';
+      return import((path), ({ with: { type: 'json' } }), /* trailing */);
+    }
+    run(null, null, null, null, null);
+    import((import(('./inner.js'),)), { nested: import('./outer.js') });
+  `;
+  const context = {
+    privacyHost: {
+      importModule(...args: unknown[]) {
+        calls.push(args);
+        return './result.js';
+      },
+    },
+    preservedGlobal: 0,
+  };
+  runInNewContext(relocateRuntimeModule(code, base, resources, true), context);
+  assert.equal(context.preservedGlobal, 17);
+  assert.equal(calls.length, 4);
+  assert.deepEqual(
+    calls.map((args) => [args[0], args[2]]),
+    [
+      ['./computed.js', base],
+      ['./inner.js', base],
+      ['./outer.js', base],
+      ['./result.js', base],
+    ],
+  );
+  const options = calls[0][1];
+  assert(options !== null && typeof options === 'object');
+  assert.equal(Reflect.get(Reflect.get(options, 'with'), 'type'), 'json');
+});
+
+test('classic adapter preserves argument evaluation order and ignores text and phases', () => {
+  const events: string[] = [];
+  const code = `
+    // import('./comment.js')
+    const text = "import('./text.js')";
+    import((mark('specifier')), (mark('options')));
+  `;
+  runInNewContext(relocateRuntimeModule(code, original, resources, true), {
+    mark(value: string) {
+      events.push(value);
+      return value;
+    },
+    privacyHost: {
+      importModule() {
+        events.push('adapter');
+      },
+    },
+  });
+  assert.deepEqual(events, ['specifier', 'options', 'adapter']);
+  for (const phase of ['source', 'defer']) {
+    const source = `import.${phase}(computed)`;
+    assert.equal(relocateRuntimeModule(source, original, resources, true), source);
+  }
 });

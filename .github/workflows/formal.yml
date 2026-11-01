@@ -172,11 +172,11 @@ jobs:
             formal/runtime-verification/service-worker-startup-stale.json
   module-delivery-policy:
     runs-on: ubuntu-latest
-    timeout-minutes: 18
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v6
       - name: Remove the historical module-policy receipt from the checkout
-        run: rm -f formal/runtime-verification/module-loader-browser.json formal/runtime-verification/module-loader-browser-persistent.json formal/runtime-verification/local-shared-issuer-port.json
+        run: rm -f formal/runtime-verification/module-loader-browser.json formal/runtime-verification/module-loader-browser-persistent.json formal/runtime-verification/module-loader-guard-browser.json formal/runtime-verification/local-shared-issuer-port.json
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
@@ -191,6 +191,11 @@ jobs:
       - name: Check the module policy in temporary persistent full-browser profiles
         if: ${{ !cancelled() }}
         run: PF_MODULE_POLICY_PERSISTENT=1 node formal/runtime-verification/module-loader-browser.ts
+      - name: Check module delivery through the prepared runtime worker
+        if: ${{ !cancelled() }}
+        run: |
+          npm run build
+          PF_MODULE_ACTUAL_GUARD=1 node formal/runtime-verification/module-loader-browser.ts
       - name: Check private-port shared-worker issuing prerequisites
         if: ${{ !cancelled() }}
         run: |
@@ -203,6 +208,7 @@ jobs:
           path: |
             formal/runtime-verification/module-loader-browser.json
             formal/runtime-verification/module-loader-browser-persistent.json
+            formal/runtime-verification/module-loader-guard-browser.json
             formal/runtime-verification/local-shared-issuer-port.json
   worker-closure:
     runs-on: ubuntu-latest

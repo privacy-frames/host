@@ -1,0 +1,689 @@
+{
+  "scope": "Classic importScripts, classic dynamic import, module-worker startup and generated native dynamic import with dependencies, chosen by a private input bit. Native groups must demonstrate worker-triggered maintenance; every confined sample must produce zero HTTP requests. No-worker and idle controls use separate fresh contexts. All completed samples are retained before the zero-HTTP assertion. These bounded observations do not establish exhaustive browser behavior or complete confinement.",
+  "provenance": {
+    "capturedAt": "2026-11-01T08:23:29.852Z",
+    "revision": "0e6c9f6c51b5896f438c5755ef27be4f4c63387e",
+    "dirty": true,
+    "sourceSHA256": "bbc340ba3de2fdd537dd35f7781b9de6366809c54f57e387831f6e9abe48e552",
+    "runner": "formal/runtime-verification/service-worker-maintenance.ts",
+    "runnerSHA256": "98c9587fbd10740f305149fb4002c64f5de8b4a9557bef44ea25f715c1c8890f",
+    "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
+    "artifacts": {
+      "dist-manager/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-manager/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-manager/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-manager/index.html": "0ea2b29b0ef6946140c54c2dc2147bffe4de82b9ed13eb4fdcae97a81cfd56f7",
+      "dist-manager/manager.js": "e361950a8774ca901a2b669e55041e15931e079bcdf5cd66e2b95d3986ce0730",
+      "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-manager/sw.js": "270f1d3d95420814ba604c742304cd02878608ef800f226efb3d8b94f777a967",
+      "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
+      "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
+      "dist-runtime/document-guard.js": "45d81712545fbe1877c6acdd0f78dcca8d8309d1e4231b117b45c4ae37e2a64f",
+      "dist-runtime/guard.js": "6cb478106855c5f5ca28b4f0a2bf74bebb5b0f923b851ebe08acfef2fa6ea3a2",
+      "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
+      "dist-runtime/publisher-worker-guard.js": "40c387a418a9407dd0afab01e3600220776b34ea34fdb437a65efd5fd77b757e",
+      "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-runtime/shared-worker-guard.js": "dba8b89c2c6fb4256307a7f62f427f60a29e102dc124ae7c72c2f8f658cb89ff",
+      "dist-runtime/sw.js": "708fb3d8324b45a5e419f107ef79f84332c40175d72161e4533ac81098ae5bb5",
+      "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
+      "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-installation/index.html": "3ca67c9966dd6eaaddb08a331c4c422a70d79bed1acecddada56764ba4ac8e5f",
+      "dist-installation/installation.js": "3f6fc6dc876e1ac2aa1430f003f602ec980cf437fc9132734e136269df63ca3d"
+    }
+  },
+  "forcedStaleAgeCheck": true,
+  "samples": [
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 0,
+      "actionStarted": 1793521415440,
+      "observationEnded": 1793521418484,
+      "confined": false,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "not-created",
+      "workerType": "classic",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 1,
+      "actionStarted": 1793521423238,
+      "observationEnded": 1793521426320,
+      "confined": false,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "terminated-after-ready",
+      "workerType": "classic",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [
+        {
+          "path": "/sw.js",
+          "time": 1793521424301
+        }
+      ],
+      "updateRequests": [
+        {
+          "path": "/sw.js",
+          "time": 1793521424301
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 2,
+      "actionStarted": 1793521431114,
+      "observationEnded": 1793521434193,
+      "confined": false,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "retained-through-observation",
+      "workerType": "classic",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [
+        {
+          "path": "/sw.js",
+          "time": 1793521432173
+        }
+      ],
+      "updateRequests": [
+        {
+          "path": "/sw.js",
+          "time": 1793521432173
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 3,
+      "actionStarted": 1793521438927,
+      "observationEnded": 1793521441986,
+      "confined": false,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "not-created",
+      "workerType": "classic",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 0,
+      "actionStarted": 1793521448992,
+      "observationEnded": 1793521452057,
+      "confined": true,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "not-created",
+      "workerType": "classic",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 1,
+      "actionStarted": 1793521459075,
+      "observationEnded": 1793521462416,
+      "confined": true,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "terminated-after-ready",
+      "workerType": "classic",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 2,
+      "actionStarted": 1793521469482,
+      "observationEnded": 1793521472820,
+      "confined": true,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "retained-through-observation",
+      "workerType": "classic",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 3,
+      "actionStarted": 1793521479849,
+      "observationEnded": 1793521482909,
+      "confined": true,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "not-created",
+      "workerType": "classic",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 0,
+      "actionStarted": 1793521487645,
+      "observationEnded": 1793521490694,
+      "confined": false,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "not-created",
+      "workerType": "classic-dynamic",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 1,
+      "actionStarted": 1793521495410,
+      "observationEnded": 1793521498497,
+      "confined": false,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "terminated-after-ready",
+      "workerType": "classic-dynamic",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [
+        {
+          "path": "/sw.js",
+          "time": 1793521496480
+        }
+      ],
+      "updateRequests": [
+        {
+          "path": "/sw.js",
+          "time": 1793521496480
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 2,
+      "actionStarted": 1793521503554,
+      "observationEnded": 1793521506615,
+      "confined": false,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "retained-through-observation",
+      "workerType": "classic-dynamic",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [
+        {
+          "path": "/sw.js",
+          "time": 1793521504597
+        }
+      ],
+      "updateRequests": [
+        {
+          "path": "/sw.js",
+          "time": 1793521504597
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 3,
+      "actionStarted": 1793521511344,
+      "observationEnded": 1793521514419,
+      "confined": false,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "not-created",
+      "workerType": "classic-dynamic",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 0,
+      "actionStarted": 1793521521431,
+      "observationEnded": 1793521524488,
+      "confined": true,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "not-created",
+      "workerType": "classic-dynamic",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 1,
+      "actionStarted": 1793521531517,
+      "observationEnded": 1793521534857,
+      "confined": true,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "terminated-after-ready",
+      "workerType": "classic-dynamic",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 2,
+      "actionStarted": 1793521541919,
+      "observationEnded": 1793521545258,
+      "confined": true,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "retained-through-observation",
+      "workerType": "classic-dynamic",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 3,
+      "actionStarted": 1793521552277,
+      "observationEnded": 1793521555338,
+      "confined": true,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "not-created",
+      "workerType": "classic-dynamic",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 0,
+      "actionStarted": 1793521560074,
+      "observationEnded": 1793521563120,
+      "confined": false,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "not-created",
+      "workerType": "module",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 1,
+      "actionStarted": 1793521567841,
+      "observationEnded": 1793521570921,
+      "confined": false,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "terminated-after-ready",
+      "workerType": "module",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [
+        {
+          "path": "/sw.js",
+          "time": 1793521568904
+        }
+      ],
+      "updateRequests": [
+        {
+          "path": "/sw.js",
+          "time": 1793521568904
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 2,
+      "actionStarted": 1793521575696,
+      "observationEnded": 1793521578759,
+      "confined": false,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "retained-through-observation",
+      "workerType": "module",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [
+        {
+          "path": "/sw.js",
+          "time": 1793521576741
+        }
+      ],
+      "updateRequests": [
+        {
+          "path": "/sw.js",
+          "time": 1793521576741
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 3,
+      "actionStarted": 1793521583483,
+      "observationEnded": 1793521586541,
+      "confined": false,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "not-created",
+      "workerType": "module",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 0,
+      "actionStarted": 1793521593779,
+      "observationEnded": 1793521596839,
+      "confined": true,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "not-created",
+      "workerType": "module",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 1,
+      "actionStarted": 1793521603858,
+      "observationEnded": 1793521607097,
+      "confined": true,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "terminated-after-ready",
+      "workerType": "module",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 2,
+      "actionStarted": 1793521614151,
+      "observationEnded": 1793521617388,
+      "confined": true,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "retained-through-observation",
+      "workerType": "module",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 3,
+      "actionStarted": 1793521624396,
+      "observationEnded": 1793521627458,
+      "confined": true,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "not-created",
+      "workerType": "module",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 0,
+      "actionStarted": 1793521632206,
+      "observationEnded": 1793521635264,
+      "confined": false,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "not-created",
+      "workerType": "module-native",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 1,
+      "actionStarted": 1793521639983,
+      "observationEnded": 1793521643046,
+      "confined": false,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "terminated-after-ready",
+      "workerType": "module-native",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [
+        {
+          "path": "/sw.js",
+          "time": 1793521641030
+        }
+      ],
+      "updateRequests": [
+        {
+          "path": "/sw.js",
+          "time": 1793521641030
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 2,
+      "actionStarted": 1793521647820,
+      "observationEnded": 1793521650882,
+      "confined": false,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "retained-through-observation",
+      "workerType": "module-native",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [
+        {
+          "path": "/sw.js",
+          "time": 1793521648865
+        }
+      ],
+      "updateRequests": [
+        {
+          "path": "/sw.js",
+          "time": 1793521648865
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 3,
+      "actionStarted": 1793521655602,
+      "observationEnded": 1793521658641,
+      "confined": false,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "not-created",
+      "workerType": "module-native",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 0,
+      "actionStarted": 1793521665638,
+      "observationEnded": 1793521668698,
+      "confined": true,
+      "forcedStaleAgeCheck": true,
+      "workerLifetime": "not-created",
+      "workerType": "module-native",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    }
+  ],
+  "groups": [
+    {
+      "browser": "firefox",
+      "confined": false,
+      "forcedStaleAgeCheck": true,
+      "workerType": "classic",
+      "positiveSamples": 2,
+      "workerSamples": 2,
+      "noWorkerSamples": 2
+    },
+    {
+      "browser": "firefox",
+      "confined": true,
+      "forcedStaleAgeCheck": true,
+      "workerType": "classic",
+      "positiveSamples": 0,
+      "workerSamples": 2,
+      "noWorkerSamples": 2
+    },
+    {
+      "browser": "firefox",
+      "confined": false,
+      "forcedStaleAgeCheck": true,
+      "workerType": "classic-dynamic",
+      "positiveSamples": 2,
+      "workerSamples": 2,
+      "noWorkerSamples": 2
+    },
+    {
+      "browser": "firefox",
+      "confined": true,
+      "forcedStaleAgeCheck": true,
+      "workerType": "classic-dynamic",
+      "positiveSamples": 0,
+      "workerSamples": 2,
+      "noWorkerSamples": 2
+    },
+    {
+      "browser": "firefox",
+      "confined": false,
+      "forcedStaleAgeCheck": true,
+      "workerType": "module",
+      "positiveSamples": 2,
+      "workerSamples": 2,
+      "noWorkerSamples": 2
+    },
+    {
+      "browser": "firefox",
+      "confined": true,
+      "forcedStaleAgeCheck": true,
+      "workerType": "module",
+      "positiveSamples": 0,
+      "workerSamples": 2,
+      "noWorkerSamples": 2
+    },
+    {
+      "browser": "firefox",
+      "confined": false,
+      "forcedStaleAgeCheck": true,
+      "workerType": "module-native",
+      "positiveSamples": 2,
+      "workerSamples": 2,
+      "noWorkerSamples": 2
+    }
+  ],
+  "violations": [],
+  "missingNativeControls": [],
+  "observationMilliseconds": 3000,
+  "completed": false,
+  "completedAt": null,
+  "failure": "TimeoutError: locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#result').filter({ hasText: 'ready' }) to be visible\u001b[22m\n"
+}

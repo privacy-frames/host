@@ -17,6 +17,8 @@ const workerScripts: Record<string, string> = {
   '/dynamic-worker.js':
     'import("./module-dependency.js").then(({ready})=>postMessage(ready));',
   '/module-worker.js': 'import {ready} from "./module-dependency.js";postMessage(ready);',
+  '/native-module-worker.js':
+    'const load=new Function("url","return import(url)");onmessage=event=>load(event.data.nativeURL).then(({ready})=>postMessage(ready),error=>postMessage("refused:"+error.name));',
   '/module-dependency.js': 'export const ready="ready";',
 };
 const main = `
@@ -27,20 +29,22 @@ document.querySelector('#run').onclick = () => {
   }
   const type = document.querySelector('#worker-type').value;
   const source = type === 'module' ? './module-worker.js'
+    : type === 'module-native' ? './native-module-worker.js'
     : type === 'classic-dynamic' ? './dynamic-worker.js' : './worker.js';
-  const worker = new Worker(source, {type:type === 'module' ? 'module' : 'classic'});
+  const worker = new Worker(source, {type:type.startsWith('module') ? 'module' : 'classic'});
   globalThis.maintenanceWorker = worker;
   worker.onmessage = event => {
     document.querySelector('#result').textContent = event.data;
     if (!document.querySelector('#keep-worker').checked) worker.terminate();
   };
+  if (type === 'module-native') worker.postMessage({nativeURL:new URL('./module-dependency.js',location.href).href});
 };
 globalThis.maintenanceProbeReady = true;`;
 const html = `<!doctype html><title>Maintenance probe</title>
 <link rel="icon" href="data:,">
 <input id="private" aria-label="Private bit"><button id="run">Run</button>
 <input id="keep-worker" type="checkbox" aria-label="Keep worker alive">
-<select id="worker-type"><option value="classic">Classic</option><option value="classic-dynamic">Classic dynamic import</option><option value="module">Module</option></select>
+<select id="worker-type"><option value="classic">Classic</option><option value="classic-dynamic">Classic dynamic import</option><option value="module">Module</option><option value="module-native">Generated native import</option></select>
 <output id="result"></output><script src="./main.js"></script>`;
 const nativeServiceWorker = `
 self.addEventListener('install', event => event.waitUntil(self.skipWaiting()));
@@ -123,7 +127,12 @@ try {
         : {},
     );
     try {
-      for (const workerType of ['classic', 'classic-dynamic', 'module']) {
+      for (const workerType of [
+        'classic',
+        'classic-dynamic',
+        'module',
+        'module-native',
+      ]) {
         for (const confined of [false, true]) {
           let positiveSamples = 0;
           // Reverse the order in a second round, using a fresh browser context for
@@ -192,7 +201,14 @@ try {
               await page.locator('#run').click();
               await page
                 .locator('#result')
-                .filter({ hasText: bit === '1' ? 'ready' : 'skipped' })
+                .filter({
+                  hasText:
+                    bit === '0'
+                      ? 'skipped'
+                      : confined && workerType === 'module-native'
+                        ? /^(ready|refused:TypeError)$/
+                        : /^ready$/,
+                })
                 .waitFor();
               await page.waitForTimeout(3000);
               const runtime = host.traffic.slice(start);
@@ -218,6 +234,13 @@ try {
                       ? 'retained-through-observation'
                       : 'terminated-after-ready',
                 workerType,
+                applicationResult: await page.locator('#result').textContent(),
+                nativeImportTarget:
+                  workerType === 'module-native'
+                    ? await page.evaluate(
+                        () => new URL('./module-dependency.js', location.href).href,
+                      )
+                    : undefined,
                 bit,
                 idleRuntime,
                 idlePublisher,
@@ -286,7 +309,7 @@ try {
       JSON.stringify(
         {
           scope:
-            'Classic importScripts, classic dynamic import and module-worker startup with dependencies, chosen by a private input bit. Native groups must demonstrate worker-triggered maintenance; every confined sample must produce zero HTTP requests. No-worker and idle controls use separate fresh contexts. All completed samples are retained before the zero-HTTP assertion. These bounded observations do not establish exhaustive browser behavior or complete confinement.',
+            'Classic importScripts, classic dynamic import, module-worker startup and generated native dynamic import with dependencies, chosen by a private input bit. Native groups must demonstrate worker-triggered maintenance; every confined sample must produce zero HTTP requests. No-worker and idle controls use separate fresh contexts. All completed samples are retained before the zero-HTTP assertion. These bounded observations do not establish exhaustive browser behavior or complete confinement.',
           provenance,
           forcedStaleAgeCheck,
           samples,

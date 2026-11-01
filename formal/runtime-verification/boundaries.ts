@@ -93,6 +93,21 @@ export const boundaries: readonly Boundary[] = [
     ],
   },
   {
+    id: 'local-module-delivery',
+    obligation:
+      'Deliver admitted JavaScript graphs locally, preserve import semantics, and establish native HTTP denial independently of mutable loader records.',
+    invariants: ['C2', 'C3', 'C4', 'C5', 'C8'],
+    sources: [
+      'src/runtime/module-loader.ts',
+      'src/runtime/modules.ts',
+      'src/runtime/resource-fetch.ts',
+      'src/runtime/contexts/worker-realm.ts',
+      'scripts/trusted-policy.ts',
+      'src/runtime/response-policy.ts',
+      'src/shared/script-url-policy.ts',
+    ],
+  },
+  {
     id: 'shared-worker-publication',
     obligation:
       'Authenticate each connection and current generation before exposing a prepared shared executor.',

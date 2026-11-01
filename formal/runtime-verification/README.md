@@ -17,6 +17,16 @@ transmission before that restriction, suppresses it in the selected candidate
 and restores it when a temporary guard omits the actual IDL-setter mitigation.
 User-preference overrides and other browser-service effects remain open.
 
+The [policy-10 candidate](policy10-validation.json) supplies worker module graphs
+through the existing local resource adapter and routes ordinary classic/module
+dynamic imports through one compatibility adapter. The full regression suite and
+201 unit checks pass. Both the independent and actual-preparation module-policy
+fixtures complete 24 cases. The expanded forced-age comparison collects all 32
+samples with working native controls but fails on two generated-native-import
+maintenance requests. All eight unchanged applications pass their selected
+native/confined tasks in both browsers and sixteen offline reloads, with stable
+source and build inputs. Production native HTTP admission remains open.
+
 The target is the contract in [the threat model](../threat-model.md). Applications
 remain ordinary JavaScript, including asynchronous execution and prototype
 modification. The host remains a static web application. Publisher-specific

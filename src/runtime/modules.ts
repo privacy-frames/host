@@ -40,9 +40,10 @@ export function relocateRuntimeModule(
   code: string,
   base: string,
   resources: ModuleResources,
+  localDynamicImports = false,
 ): string {
   try {
-    const imports = internalArray<{ start: number; end: number; specifier: string }>();
+    const edits = internalArray<{ start: number; end: number; text: string }>();
     const visit = (current: SyntaxNode): void => {
       if (
         current.type === 'ImportDeclaration' ||
@@ -53,23 +54,47 @@ export function relocateRuntimeModule(
         const source = node(current.source);
         const value = source && specifier(source);
         if (source && value)
-          imports.push(
-            internalRecord({ start: source.start, end: source.end, specifier: value }),
+          if (/^(?:\.\.?\/|\/|https?:\/\/)/.test(value)) {
+            try {
+              const original: string = apply(href, new NativeURL(value, base), []);
+              const mapped = resources.mapURL(original);
+              if (resources.isInstalledURL(mapped) && mapped !== value)
+                edits.push(
+                  internalRecord({
+                    start: source.start,
+                    end: source.end,
+                    text: stringify(mapped),
+                  }),
+                );
+            } catch {
+              // A Blob-relative failure must not discard other valid imports.
+            }
+          }
+        if (
+          localDynamicImports &&
+          current.type === 'ImportExpression' &&
+          current.phase === undefined &&
+          source
+        ) {
+          // A dynamically constructed accessor has global scope, so application
+          // locals named self/globalThis/Function cannot shadow the adapter.
+          const body = `return globalThis.privacyHost.importModule(value, options, ${stringify(base)})`;
+          const accessor = `(()=>{}).constructor("value","options",${stringify(body)})`;
+          edits.push(
+            internalRecord({
+              start: current.start,
+              end: current.start + 6,
+              text: accessor,
+            }),
           );
+        }
       }
       for (const child of children(current)) visit(child);
     };
     visit(parseProgram(code, parseModule));
-    for (const item of imports.sort((left, right) => right.start - left.start)) {
-      if (!/^(?:\.\.?\/|\/|https?:\/\/)/.test(item.specifier)) continue;
-      const original: string = apply(href, new NativeURL(item.specifier, base), []);
-      const mapped = resources.mapURL(original);
-      if (!resources.isInstalledURL(mapped)) continue;
-      if (mapped === item.specifier) continue;
+    for (const item of edits.sort((left, right) => right.start - left.start)) {
       code =
-        strings.slice(code, 0, item.start) +
-        stringify(mapped) +
-        strings.slice(code, item.end);
+        strings.slice(code, 0, item.start) + item.text + strings.slice(code, item.end);
     }
   } catch {
     // Invalid syntax and unresolved Blob-relative imports keep native behavior.

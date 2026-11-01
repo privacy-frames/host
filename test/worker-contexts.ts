@@ -12,13 +12,24 @@ const publisherURL = 'http://127.0.0.1:4344';
 const provenance = await testProvenance(import.meta.url);
 const receiverURL = 'http://127.0.0.1:4345';
 const workerCode = `
+var fixtureClassicGlobal = 23;
 function readValue() { return new Promise((resolve,reject)=>{const request=indexedDB.open('worker-shared',1);request.onupgradeneeded=()=>request.result.createObjectStore('values');request.onerror=()=>reject(request.error);request.onsuccess=()=>{const db=request.result;const read=db.transaction('values').objectStore('values').get('value');read.onsuccess=()=>{db.close();resolve(read.result??null)};read.onerror=()=>reject(read.error)}}) }
 self.onmessage=async e=>{
  try {
   const op=e.data?.op;
   if(op==='port'){const port=e.data.port;port.onmessage=message=>port.postMessage('pong:'+message.data);port.start();port.postMessage('ready');return}
   if(op==='nested'){const nested=new Worker('nested.js');nested.onerror=event=>{event.preventDefault();postMessage({nestedError:event.message})};nested.onmessage=event=>{postMessage({nested:event.data,host:typeof privacyHost==='object'?privacyHost:null});nested.terminate()};nested.postMessage({value:71,depth:2,target:e.data.target});return}
-  if(op==='dynamic-module'){const result=await import('./helper-module.js');postMessage({dynamicModule:result.value});return}
+  if(op==='dynamic-module'){
+    const order=[];
+    const pending=import({toString(){order.push('specifier-string');return './helper-module.js'}},(order.push('options-expression'),{get with(){order.push('attributes-read');return undefined}}));
+    order.push('after-call');
+    const result=await pending;
+    function shadowed(globalThis,self,Function,privacyHost,importShim){const name='helper-module';return import(('./'+name+'.js'), ({}),)}
+    const computed=await shadowed(null,null,null,null,null);
+    let symbolRejected=false;
+    try{await import(Symbol('invalid-specifier'))}catch(error){symbolRejected=error instanceof TypeError}
+    postMessage({dynamicModule:result.value,computed:computed.value,order,symbolRejected,globalDeclaration:self.fixtureClassicGlobal});return
+  }
   if(op==='storage'){const response=await caches.match('https://cache.invalid/shared');postMessage({value:await readValue(),cached:response?await response.text():null,names:await caches.keys(),databaseNames:await indexedDB.databases()});return}
   if(op==='network'){let fetchRefused=false,importsRefused=false;try{await fetch(e.data.target+'/worker-private-marker')}catch{fetchRefused=true}try{importScripts(e.data.target+'/import-private-marker')}catch{importsRefused=true}postMessage({fetchRefused,importsRefused});return}
   postMessage({bytes:Array.from(new Uint8Array(e.data.buffer||new ArrayBuffer(0))),location:location.href,host:typeof privacyHost==='object'?privacyHost:null,imported:globalThis.importedValue||0});
@@ -208,6 +219,12 @@ try {
     const browser = await launch(engine);
     try {
       const context = await browser.newContext();
+      if (process.env.WORKER_CONTEXT_DEBUG)
+        context.on('page', (page) =>
+          page.on('console', (message) =>
+            console.log(name, message.type(), message.text()),
+          ),
+        );
       context.setDefaultTimeout(15000);
       await installWorkerClosureProbe(context);
       await context.addInitScript(() => {
@@ -406,7 +423,18 @@ try {
       } finally {
         await context.setOffline(false);
       }
-      assert.deepEqual(await dynamicModule(app), { dynamicModule: 13 });
+      assert.deepEqual(await dynamicModule(app), {
+        dynamicModule: 13,
+        computed: 13,
+        order: [
+          'options-expression',
+          'specifier-string',
+          'attributes-read',
+          'after-call',
+        ],
+        symbolRejected: true,
+        globalDeclaration: 23,
+      });
       const nullConstructorOptions = await roundTrip(app, 'classic', 'constructor-null');
       assert.equal(nullConstructorOptions.value.host.context, 'dedicated-worker');
       const nullOptions = await roundTrip(app, 'classic', 'null');
@@ -664,7 +692,18 @@ try {
       assert.equal(connections.length, connectionsBefore);
       const control = await context.newPage();
       await control.goto(publisherURL + '/workers/');
-      assert.deepEqual(await dynamicModule(control), { dynamicModule: 13 });
+      assert.deepEqual(await dynamicModule(control), {
+        dynamicModule: 13,
+        computed: 13,
+        order: [
+          'options-expression',
+          'specifier-string',
+          'attributes-read',
+          'after-call',
+        ],
+        symbolRejected: true,
+        globalDeclaration: 23,
+      });
       const nativeOptions = {
         missing: await control.evaluate(() => {
           const worker = new Worker('worker.js');

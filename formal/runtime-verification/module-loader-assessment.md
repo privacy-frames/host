@@ -7,7 +7,8 @@ browser policy can deny that import while allowing the loader's Blob modules.
 
 The [browser experiment](module-loader-browser.ts) uses the unmodified npm release
 `es-module-shims@2.8.4`. It verifies the package's pinned SHA-512 integrity before
-extracting it under `.tools/`. No dependency is added to the runtime. The
+extracting it under `.tools/`. The policy-10 candidate also pins that release as a
+runtime dependency. The
 [receipt](module-loader-browser.json) records the distribution-file hash, runner
 and launcher hashes, browser versions, native worker URLs and server requests.
 
@@ -93,3 +94,47 @@ and module workers need separate compatibility checks. Module identity, cycles,
 live bindings, import attributes, import.meta and top-level await also need
 validation against native execution. Other resource types and communication
 mechanisms remain C4 obligations.
+
+## Policy-10 worker integration
+
+The candidate initializes the pinned loader after worker preparation and execution
+base setup. Its fetch hook uses the existing local resource adapter. The upstream
+source hook applies the runtime's general dynamic-import relocation before the
+dependency processes JavaScript modules. Classic scripts use the same relocation
+and retain their native global declarations. The build embeds the distribution
+with its MIT license; publisher resources are unchanged.
+
+The classic adapter resolves its host function in native Function global scope,
+so application locals named `globalThis`, `self`, `Function`, `privacyHost` or
+`importShim` cannot shadow it. It preserves the original argument syntax, including
+parentheses and trailing commas. Import phases other than ordinary evaluation
+remain on their existing path. Generated JavaScript containing native imports
+also remains a separate browser-policy obligation.
+
+The expanded worker fixture passes in Chromium and Firefox. It compares computed
+imports, local shadowing, synchronous specifier conversion and options reads,
+Symbol rejection and classic global declarations against native execution. The
+status record remains structured-cloneable: its import adapter is non-enumerable.
+These compatibility checks do not establish an independent native HTTP denial
+policy across production contexts.
+
+The expanded forced-age maintenance comparison collects 32 samples with working
+native controls. Confined classic, classic-dynamic and ordinary module groups
+produce no HTTP in their measured windows. Generated native imports still cause
+two `/runtime/sw.js` requests selected by the private bit, with terminated and
+retained workers. The command fails on those effects. The initial 29-sample run
+is archived separately because its generated-import case timed out before
+measurement completed.
+
+All eight unchanged applications pass their selected native and confined tasks
+in Chromium and Firefox, with sixteen offline reloads. The corpus source and build
+inputs match the prepared-worker comparison. The
+[candidate index](policy10-validation.json) retains both these compatibility
+results and the failed maintenance comparison.
+
+Run `PF_MODULE_ACTUAL_GUARD=1 node
+formal/runtime-verification/module-loader-browser.ts` after building to exercise
+the actual prepared module-worker component. That fixture supplies a fixed local
+resource graph and its own verification capability. Its receipt records source,
+build and runner stability. Production actor authentication, installed-resource
+storage and the full host lifecycle require their separate evidence.

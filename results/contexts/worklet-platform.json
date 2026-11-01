@@ -1,9 +1,9 @@
 {
   "provenance": {
-    "capturedAt": "2026-11-01T06:41:06.062Z",
-    "revision": "23ca1b17d330730209bc4c990f19aadd9c81753a",
+    "capturedAt": "2026-11-01T08:31:29.699Z",
+    "revision": "0e6c9f6c51b5896f438c5755ef27be4f4c63387e",
     "dirty": true,
-    "sourceSHA256": "cb8dddfd611b8e04e0ab1517e1e137df68f3697c2b09bce1a254f5a2e45626f3",
+    "sourceSHA256": "bbc340ba3de2fdd537dd35f7781b9de6366809c54f57e387831f6e9abe48e552",
     "runner": "test/worklet-platform.ts",
     "runnerSHA256": "1872fe7f40011ec8ce0ef26ef7de59f27720a175de4983755205d608d6c8b7da",
     "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
@@ -16,21 +16,21 @@
       "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-manager/sw.js": "6f2273e0e5cd348829e0216462e1d3dde3a663425e9b9033f6eb8cd62805deaf",
+      "dist-manager/sw.js": "270f1d3d95420814ba604c742304cd02878608ef800f226efb3d8b94f777a967",
       "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
       "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
       "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
-      "dist-runtime/document-guard.js": "32490d89aa1d6d4a6a61a317c22f856a4a5353a3d3dc91e8dd86d9ae22e9a0bb",
-      "dist-runtime/guard.js": "073eac121321a5ccff8a6107e559e104c2f3fd8001557d298f287378835c4898",
+      "dist-runtime/document-guard.js": "45d81712545fbe1877c6acdd0f78dcca8d8309d1e4231b117b45c4ae37e2a64f",
+      "dist-runtime/guard.js": "6cb478106855c5f5ca28b4f0a2bf74bebb5b0f923b851ebe08acfef2fa6ea3a2",
       "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
       "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
-      "dist-runtime/publisher-worker-guard.js": "8a8d950e2fdaa8e77be40e51b31722cdb9984bfbcab94ef1b5755f39426c26d0",
+      "dist-runtime/publisher-worker-guard.js": "40c387a418a9407dd0afab01e3600220776b34ea34fdb437a65efd5fd77b757e",
       "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-runtime/shared-worker-guard.js": "314a095747e9a928392418837bea6e6ecaea198d8f0bc96a6e5b4216efd936b3",
-      "dist-runtime/sw.js": "85a966780fabb89d20ceb99f22df8192e8f8cd5c5d8b191f873e7c144ce1f505",
+      "dist-runtime/shared-worker-guard.js": "dba8b89c2c6fb4256307a7f62f427f60a29e102dc124ae7c72c2f8f658cb89ff",
+      "dist-runtime/sw.js": "708fb3d8324b45a5e419f107ef79f84332c40175d72161e4533ac81098ae5bb5",
       "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
       "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
@@ -248,79 +248,79 @@
         }
       },
       "requests": {
-        "ownerClientId": "074913a1-c6fb-4231-9635-a3e2461fcbc4",
+        "ownerClientId": "e659a5a6-9bd6-477a-8476-94b3445d0c0a",
         "events": [
           {
-            "url": "http://127.0.0.1:35169/audio/bootstrap.js",
+            "url": "http://127.0.0.1:33805/audio/bootstrap.js",
             "destination": "audioworklet",
-            "clientId": "074913a1-c6fb-4231-9635-a3e2461fcbc4",
+            "clientId": "e659a5a6-9bd6-477a-8476-94b3445d0c0a",
             "resultingClientId": "",
             "mode": "cors",
             "credentials": "same-origin",
-            "referrer": "http://127.0.0.1:35169/probe/"
+            "referrer": "http://127.0.0.1:33805/probe/"
           },
           {
-            "url": "http://127.0.0.1:35169/audio/prelude.js",
+            "url": "http://127.0.0.1:33805/audio/prelude.js",
             "destination": "audioworklet",
-            "clientId": "074913a1-c6fb-4231-9635-a3e2461fcbc4",
+            "clientId": "e659a5a6-9bd6-477a-8476-94b3445d0c0a",
             "resultingClientId": "",
             "mode": "cors",
             "credentials": "same-origin",
-            "referrer": "http://127.0.0.1:35169/audio/bootstrap.js"
+            "referrer": "http://127.0.0.1:33805/audio/bootstrap.js"
           },
           {
-            "url": "http://127.0.0.1:35169/audio/entry.js",
+            "url": "http://127.0.0.1:33805/audio/entry.js",
             "destination": "audioworklet",
-            "clientId": "074913a1-c6fb-4231-9635-a3e2461fcbc4",
+            "clientId": "e659a5a6-9bd6-477a-8476-94b3445d0c0a",
             "resultingClientId": "",
             "mode": "cors",
             "credentials": "same-origin",
-            "referrer": "http://127.0.0.1:35169/audio/bootstrap.js"
+            "referrer": "http://127.0.0.1:33805/audio/bootstrap.js"
           },
           {
-            "url": "http://127.0.0.1:35169/audio/dependency.js",
+            "url": "http://127.0.0.1:33805/audio/dependency.js",
             "destination": "audioworklet",
-            "clientId": "074913a1-c6fb-4231-9635-a3e2461fcbc4",
+            "clientId": "e659a5a6-9bd6-477a-8476-94b3445d0c0a",
             "resultingClientId": "",
             "mode": "cors",
             "credentials": "same-origin",
-            "referrer": "http://127.0.0.1:35169/audio/entry.js"
+            "referrer": "http://127.0.0.1:33805/audio/entry.js"
           },
           {
-            "url": "http://127.0.0.1:35169/paint/bootstrap.js",
+            "url": "http://127.0.0.1:33805/paint/bootstrap.js",
             "destination": "paintworklet",
-            "clientId": "074913a1-c6fb-4231-9635-a3e2461fcbc4",
+            "clientId": "e659a5a6-9bd6-477a-8476-94b3445d0c0a",
             "resultingClientId": "",
             "mode": "cors",
             "credentials": "same-origin",
-            "referrer": "http://127.0.0.1:35169/probe/"
+            "referrer": "http://127.0.0.1:33805/probe/"
           },
           {
-            "url": "http://127.0.0.1:35169/paint/entry.js",
+            "url": "http://127.0.0.1:33805/paint/entry.js",
             "destination": "paintworklet",
-            "clientId": "074913a1-c6fb-4231-9635-a3e2461fcbc4",
+            "clientId": "e659a5a6-9bd6-477a-8476-94b3445d0c0a",
             "resultingClientId": "",
             "mode": "cors",
             "credentials": "same-origin",
-            "referrer": "http://127.0.0.1:35169/paint/bootstrap.js"
+            "referrer": "http://127.0.0.1:33805/paint/bootstrap.js"
           },
           {
-            "url": "http://127.0.0.1:35169/paint/prelude.js",
+            "url": "http://127.0.0.1:33805/paint/prelude.js",
             "destination": "paintworklet",
-            "clientId": "074913a1-c6fb-4231-9635-a3e2461fcbc4",
+            "clientId": "e659a5a6-9bd6-477a-8476-94b3445d0c0a",
             "resultingClientId": "",
             "mode": "cors",
             "credentials": "same-origin",
-            "referrer": "http://127.0.0.1:35169/paint/bootstrap.js"
+            "referrer": "http://127.0.0.1:33805/paint/bootstrap.js"
           },
           {
-            "url": "http://127.0.0.1:35169/paint/dependency.js",
+            "url": "http://127.0.0.1:33805/paint/dependency.js",
             "destination": "paintworklet",
-            "clientId": "074913a1-c6fb-4231-9635-a3e2461fcbc4",
+            "clientId": "e659a5a6-9bd6-477a-8476-94b3445d0c0a",
             "resultingClientId": "",
             "mode": "cors",
             "credentials": "same-origin",
-            "referrer": "http://127.0.0.1:35169/paint/entry.js"
+            "referrer": "http://127.0.0.1:33805/paint/entry.js"
           }
         ]
       }
@@ -484,43 +484,43 @@
         "reason": "CSS.paintWorklet absent"
       },
       "requests": {
-        "ownerClientId": "28d4e89c-1581-4f61-8643-beab49744bbd",
+        "ownerClientId": "8d1f5af0-7f4b-4c07-80a1-30b0fc792785",
         "events": [
           {
-            "url": "http://127.0.0.1:35169/audio/bootstrap.js",
+            "url": "http://127.0.0.1:33805/audio/bootstrap.js",
             "destination": "audioworklet",
-            "clientId": "28d4e89c-1581-4f61-8643-beab49744bbd",
+            "clientId": "8d1f5af0-7f4b-4c07-80a1-30b0fc792785",
             "resultingClientId": "",
             "mode": "cors",
             "credentials": "same-origin",
-            "referrer": "http://127.0.0.1:35169/probe/"
+            "referrer": "http://127.0.0.1:33805/probe/"
           },
           {
-            "url": "http://127.0.0.1:35169/audio/prelude.js",
+            "url": "http://127.0.0.1:33805/audio/prelude.js",
             "destination": "audioworklet",
-            "clientId": "28d4e89c-1581-4f61-8643-beab49744bbd",
+            "clientId": "8d1f5af0-7f4b-4c07-80a1-30b0fc792785",
             "resultingClientId": "",
             "mode": "cors",
             "credentials": "same-origin",
-            "referrer": "http://127.0.0.1:35169/audio/bootstrap.js"
+            "referrer": "http://127.0.0.1:33805/audio/bootstrap.js"
           },
           {
-            "url": "http://127.0.0.1:35169/audio/entry.js",
+            "url": "http://127.0.0.1:33805/audio/entry.js",
             "destination": "audioworklet",
-            "clientId": "28d4e89c-1581-4f61-8643-beab49744bbd",
+            "clientId": "8d1f5af0-7f4b-4c07-80a1-30b0fc792785",
             "resultingClientId": "",
             "mode": "cors",
             "credentials": "same-origin",
-            "referrer": "http://127.0.0.1:35169/audio/bootstrap.js"
+            "referrer": "http://127.0.0.1:33805/audio/bootstrap.js"
           },
           {
-            "url": "http://127.0.0.1:35169/audio/dependency.js",
+            "url": "http://127.0.0.1:33805/audio/dependency.js",
             "destination": "audioworklet",
-            "clientId": "28d4e89c-1581-4f61-8643-beab49744bbd",
+            "clientId": "8d1f5af0-7f4b-4c07-80a1-30b0fc792785",
             "resultingClientId": "",
             "mode": "cors",
             "credentials": "same-origin",
-            "referrer": "http://127.0.0.1:35169/audio/entry.js"
+            "referrer": "http://127.0.0.1:33805/audio/entry.js"
           }
         ]
       }

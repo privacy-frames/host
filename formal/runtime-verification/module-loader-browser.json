@@ -1,7 +1,24 @@
 {
   "completed": true,
-  "started": "2026-11-01T05:03:11.641Z",
-  "finished": "2026-11-01T05:05:43.328Z",
+  "inputsBefore": {
+    "runner": "30cb5f94c260c5a5f2948ec44270457f4eafccb7bf95c753bfd492688be38e59",
+    "launcher": "c161489dfce9c3124474d1416440c9876b0a8fce329d2f09fa16f99af744e3a0",
+    "packageLock": "7c6c477f81e1856b73b8a8420d82aa43ea39478ec986d73d3a823c85e03fb547"
+  },
+  "inputsAfter": {
+    "runner": "30cb5f94c260c5a5f2948ec44270457f4eafccb7bf95c753bfd492688be38e59",
+    "launcher": "c161489dfce9c3124474d1416440c9876b0a8fce329d2f09fa16f99af744e3a0",
+    "packageLock": "7c6c477f81e1856b73b8a8420d82aa43ea39478ec986d73d3a823c85e03fb547"
+  },
+  "inputsStable": true,
+  "sourceStable": true,
+  "artifactsStable": true,
+  "actualGuard": false,
+  "preparationScope": "Independent dependency experiment without runtime preparation.",
+  "guardSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "parentSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "started": "2026-11-01T08:27:21.636Z",
+  "finished": "2026-11-01T08:29:53.654Z",
   "scope": "Dependency boundary experiment only; not runtime integration or a confinement proof.",
   "rootTransport": "blob",
   "contextMode": "incognito-like",
@@ -10,9 +27,9 @@
   "version": "2.8.4",
   "integrity": "sha512-ea5srn5L89PWVad6Qle6r2kg+HvvLiL/GHqgNx06eFrkERHkrTFWaqo1w8Sd+XI3Xr0iAG5x3ZQ7mQ/hnQzNpA==",
   "loaderSHA256": "47dff4ba191ca594760a67b574c7207c7820c305735147b7ef05877f7cfd64cd",
-  "runnerSHA256": "41debcb0d6a7338757c3f0e125fcf5002ddd23ff35fa9da644334d9848066de9",
+  "runnerSHA256": "30cb5f94c260c5a5f2948ec44270457f4eafccb7bf95c753bfd492688be38e59",
   "launcherSHA256": "c161489dfce9c3124474d1416440c9876b0a8fce329d2f09fa16f99af744e3a0",
-  "packageLockSHA256": "4e8c7b0964047f1c9fd3f82956b08d381817fa86fb2f7d47d4a10458dc5e62ed",
+  "packageLockSHA256": "7c6c477f81e1856b73b8a8420d82aa43ea39478ec986d73d3a823c85e03fb547",
   "rows": [
     {
       "browser": "chromium",
@@ -22,11 +39,11 @@
       "forcedStaleAgeCheck": false,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/8fc2b847-1db8-48aa-af1a-ebe18404a65b"
+        "blob:http://127.0.0.1:38775/8b983e5e-71f7-492a-a552-4bc4aae2b380"
       ],
       "mode": "native-graph-control",
-      "actionStarted": 1793509395472,
-      "observationEnded": 1793509398484,
+      "actionStarted": 1793521645471,
+      "observationEnded": 1793521648484,
       "result": {
         "first": 1,
         "value": 1,
@@ -35,35 +52,35 @@
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": []
       },
       "traffic": [
         {
           "path": "/entry.js",
-          "time": 1793509395475
+          "time": 1793521645474
         },
         {
           "path": "/dependency.js",
-          "time": 1793509395478
+          "time": 1793521645477
         },
         {
           "path": "/state.js",
-          "time": 1793509395478
+          "time": 1793521645477
         },
         {
           "path": "/cycle-a.js",
-          "time": 1793509395478
+          "time": 1793521645478
         },
         {
           "path": "/cycle-b.js",
-          "time": 1793509395480
+          "time": 1793521645480
         },
         {
           "path": "/dynamic.js",
-          "time": 1793509395482
+          "time": 1793521645482
         }
       ]
     },
@@ -75,29 +92,29 @@
       "forcedStaleAgeCheck": false,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/5ce75557-5447-4786-a4a1-485e6e425351"
+        "blob:http://127.0.0.1:38775/9d47f038-ae77-43d6-ba31-1e1890ca3a33"
       ],
       "mode": "local-hook",
-      "actionStarted": 1793509401592,
-      "observationEnded": 1793509404603,
+      "actionStarted": 1793521651590,
+      "observationEnded": 1793521654600,
       "result": {
         "first": 1,
         "value": 1,
         "reads": [
-          "http://127.0.0.1:43627/entry.js",
-          "http://127.0.0.1:43627/dependency.js",
-          "http://127.0.0.1:43627/state.js",
-          "http://127.0.0.1:43627/cycle-a.js",
-          "http://127.0.0.1:43627/cycle-b.js",
-          "http://127.0.0.1:43627/dynamic.js"
+          "http://127.0.0.1:38775/entry.js",
+          "http://127.0.0.1:38775/dependency.js",
+          "http://127.0.0.1:38775/state.js",
+          "http://127.0.0.1:38775/cycle-a.js",
+          "http://127.0.0.1:38775/cycle-b.js",
+          "http://127.0.0.1:38775/dynamic.js"
         ],
-        "local": "blob:http://127.0.0.1:43627/a1450469-63d6-406d-93f1-e53d19d69ee3",
+        "local": "blob:http://127.0.0.1:38775/042caa52-0ede-45bf-a3a6-4225c3070c13",
         "graph": {
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": []
       },
@@ -111,36 +128,36 @@
       "forcedStaleAgeCheck": false,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/9c455d8d-ce9d-4f11-95b4-37fa1918707f"
+        "blob:http://127.0.0.1:38775/9c4038c7-1c2c-4b6f-9cba-1faf920c68c1"
       ],
       "mode": "native-control",
-      "actionStarted": 1793509407705,
-      "observationEnded": 1793509410718,
+      "actionStarted": 1793521657700,
+      "observationEnded": 1793521660712,
       "result": {
         "first": 1,
         "value": 2,
         "reads": [
-          "http://127.0.0.1:43627/entry.js",
-          "http://127.0.0.1:43627/dependency.js",
-          "http://127.0.0.1:43627/state.js",
-          "http://127.0.0.1:43627/cycle-a.js",
-          "http://127.0.0.1:43627/cycle-b.js",
-          "http://127.0.0.1:43627/dynamic.js"
+          "http://127.0.0.1:38775/entry.js",
+          "http://127.0.0.1:38775/dependency.js",
+          "http://127.0.0.1:38775/state.js",
+          "http://127.0.0.1:38775/cycle-a.js",
+          "http://127.0.0.1:38775/cycle-b.js",
+          "http://127.0.0.1:38775/dynamic.js"
         ],
-        "local": "blob:http://127.0.0.1:43627/04cb8cf9-1926-4b16-aa20-a62954e11016",
+        "local": "blob:http://127.0.0.1:38775/675c3ded-dbd6-41a2-bd7c-7b3a2914fbfd",
         "graph": {
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": []
       },
       "traffic": [
         {
           "path": "/native-target.js",
-          "time": 1793509407715
+          "time": 1793521657709
         }
       ]
     },
@@ -152,36 +169,36 @@
       "forcedStaleAgeCheck": false,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/3005ef14-9a5d-434c-b45e-fa028ffa6e4a"
+        "blob:http://127.0.0.1:38775/dccf0b28-390b-4b7c-8b9b-0f565454012b"
       ],
       "mode": "record-change",
-      "actionStarted": 1793509413821,
-      "observationEnded": 1793509416833,
+      "actionStarted": 1793521663812,
+      "observationEnded": 1793521666824,
       "result": {
         "first": 1,
         "value": 2,
         "reads": [
-          "http://127.0.0.1:43627/entry.js",
-          "http://127.0.0.1:43627/dependency.js",
-          "http://127.0.0.1:43627/state.js",
-          "http://127.0.0.1:43627/cycle-a.js",
-          "http://127.0.0.1:43627/cycle-b.js",
-          "http://127.0.0.1:43627/dynamic.js"
+          "http://127.0.0.1:38775/entry.js",
+          "http://127.0.0.1:38775/dependency.js",
+          "http://127.0.0.1:38775/state.js",
+          "http://127.0.0.1:38775/cycle-a.js",
+          "http://127.0.0.1:38775/cycle-b.js",
+          "http://127.0.0.1:38775/dynamic.js"
         ],
-        "local": "blob:http://127.0.0.1:43627/27bc8600-3b5e-4ea6-b343-5bb70cf6e54d",
+        "local": "blob:http://127.0.0.1:38775/2d90c659-f1a3-4eaf-843e-efc402263142",
         "graph": {
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": []
       },
       "traffic": [
         {
           "path": "/native-target.js",
-          "time": 1793509413830
+          "time": 1793521663822
         }
       ]
     },
@@ -193,29 +210,29 @@
       "forcedStaleAgeCheck": false,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/886b5a16-ed18-4dfa-a4f5-18d6527b0bbb"
+        "blob:http://127.0.0.1:38775/79d8863b-69e3-40d2-b97f-c038e855b7a0"
       ],
       "mode": "local-only",
-      "actionStarted": 1793509419936,
-      "observationEnded": 1793509422946,
+      "actionStarted": 1793521669932,
+      "observationEnded": 1793521672943,
       "result": {
         "first": 1,
         "value": 1,
         "reads": [
-          "http://127.0.0.1:43627/entry.js",
-          "http://127.0.0.1:43627/dependency.js",
-          "http://127.0.0.1:43627/state.js",
-          "http://127.0.0.1:43627/cycle-a.js",
-          "http://127.0.0.1:43627/cycle-b.js",
-          "http://127.0.0.1:43627/dynamic.js"
+          "http://127.0.0.1:38775/entry.js",
+          "http://127.0.0.1:38775/dependency.js",
+          "http://127.0.0.1:38775/state.js",
+          "http://127.0.0.1:38775/cycle-a.js",
+          "http://127.0.0.1:38775/cycle-b.js",
+          "http://127.0.0.1:38775/dynamic.js"
         ],
-        "local": "blob:http://127.0.0.1:43627/aa5d2e6e-d8a8-471d-9332-0edbc4428ef9",
+        "local": "blob:http://127.0.0.1:38775/f7771622-61c9-4867-a656-a197adf696b0",
         "graph": {
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": []
       },
@@ -229,37 +246,37 @@
       "forcedStaleAgeCheck": false,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/7a6bba77-456f-444e-a810-7e97b6f4bc21"
+        "blob:http://127.0.0.1:38775/f9e84938-937b-4710-8944-94e5da527302"
       ],
       "mode": "record-change-denied",
-      "actionStarted": 1793509426052,
-      "observationEnded": 1793509429162,
+      "actionStarted": 1793521676045,
+      "observationEnded": 1793521679155,
       "result": {
         "first": 1,
-        "local": "blob:http://127.0.0.1:43627/b950104d-ced1-4a91-abec-a108c75cdc75",
+        "local": "blob:http://127.0.0.1:38775/eb647ec4-e86a-4dc9-9ce3-54767514d6f4",
         "reads": [
-          "http://127.0.0.1:43627/entry.js",
-          "http://127.0.0.1:43627/dependency.js",
-          "http://127.0.0.1:43627/state.js",
-          "http://127.0.0.1:43627/cycle-a.js",
-          "http://127.0.0.1:43627/cycle-b.js",
-          "http://127.0.0.1:43627/dynamic.js"
+          "http://127.0.0.1:38775/entry.js",
+          "http://127.0.0.1:38775/dependency.js",
+          "http://127.0.0.1:38775/state.js",
+          "http://127.0.0.1:38775/cycle-a.js",
+          "http://127.0.0.1:38775/cycle-b.js",
+          "http://127.0.0.1:38775/dynamic.js"
         ],
         "graph": {
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": [
           {
-            "blockedURI": "http://127.0.0.1:43627/native-target.js",
+            "blockedURI": "http://127.0.0.1:38775/native-target.js",
             "effectiveDirective": "script-src-elem",
             "disposition": "enforce"
           }
         ],
-        "failure": "TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:43627/native-target.js",
+        "failure": "TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:38775/native-target.js",
         "errorName": "TypeError"
       },
       "traffic": []
@@ -272,37 +289,37 @@
       "forcedStaleAgeCheck": false,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/de3047f1-ace7-4b14-9dc1-5e9e156a3966"
+        "blob:http://127.0.0.1:38775/052c9ec1-ec6f-41f0-9ee2-6e46b7234f89"
       ],
       "mode": "literal-import-denied",
-      "actionStarted": 1793509432266,
-      "observationEnded": 1793509435376,
+      "actionStarted": 1793521682258,
+      "observationEnded": 1793521685367,
       "result": {
         "first": 1,
-        "local": "blob:http://127.0.0.1:43627/fad3fbb7-88dd-4780-bc10-b3f2a6ba4d1b",
+        "local": "blob:http://127.0.0.1:38775/b9eb0653-df50-4e02-ab87-de15dc9bddc1",
         "reads": [
-          "http://127.0.0.1:43627/entry.js",
-          "http://127.0.0.1:43627/dependency.js",
-          "http://127.0.0.1:43627/state.js",
-          "http://127.0.0.1:43627/cycle-a.js",
-          "http://127.0.0.1:43627/cycle-b.js",
-          "http://127.0.0.1:43627/dynamic.js"
+          "http://127.0.0.1:38775/entry.js",
+          "http://127.0.0.1:38775/dependency.js",
+          "http://127.0.0.1:38775/state.js",
+          "http://127.0.0.1:38775/cycle-a.js",
+          "http://127.0.0.1:38775/cycle-b.js",
+          "http://127.0.0.1:38775/dynamic.js"
         ],
         "graph": {
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": [
           {
-            "blockedURI": "http://127.0.0.1:43627/native-target.js",
+            "blockedURI": "http://127.0.0.1:38775/native-target.js",
             "effectiveDirective": "script-src-elem",
             "disposition": "enforce"
           }
         ],
-        "failure": "TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:43627/native-target.js",
+        "failure": "TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:38775/native-target.js",
         "errorName": "TypeError"
       },
       "traffic": []
@@ -315,37 +332,37 @@
       "forcedStaleAgeCheck": false,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/1bb2eabc-ec9d-4863-9417-8be4ed66ba47"
+        "blob:http://127.0.0.1:38775/b16de51c-81c9-4643-b352-007221ca3f9c"
       ],
       "mode": "computed-import-denied",
-      "actionStarted": 1793509438476,
-      "observationEnded": 1793509441586,
+      "actionStarted": 1793521688468,
+      "observationEnded": 1793521691579,
       "result": {
         "first": 1,
-        "local": "blob:http://127.0.0.1:43627/a3c5afdb-e0d6-45a7-b31d-a86bf152389e",
+        "local": "blob:http://127.0.0.1:38775/eb5b2975-78f8-4a4b-aadf-0e1017a55b7d",
         "reads": [
-          "http://127.0.0.1:43627/entry.js",
-          "http://127.0.0.1:43627/dependency.js",
-          "http://127.0.0.1:43627/state.js",
-          "http://127.0.0.1:43627/cycle-a.js",
-          "http://127.0.0.1:43627/cycle-b.js",
-          "http://127.0.0.1:43627/dynamic.js"
+          "http://127.0.0.1:38775/entry.js",
+          "http://127.0.0.1:38775/dependency.js",
+          "http://127.0.0.1:38775/state.js",
+          "http://127.0.0.1:38775/cycle-a.js",
+          "http://127.0.0.1:38775/cycle-b.js",
+          "http://127.0.0.1:38775/dynamic.js"
         ],
         "graph": {
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": [
           {
-            "blockedURI": "http://127.0.0.1:43627/native-target.js",
+            "blockedURI": "http://127.0.0.1:38775/native-target.js",
             "effectiveDirective": "script-src-elem",
             "disposition": "enforce"
           }
         ],
-        "failure": "TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:43627/native-target.js",
+        "failure": "TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:38775/native-target.js",
         "errorName": "TypeError"
       },
       "traffic": []
@@ -358,11 +375,11 @@
       "forcedStaleAgeCheck": false,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/2210b1d9-95d5-4dd6-a178-d0f71e7d8c44"
+        "blob:http://127.0.0.1:38775/ea159a4d-20ce-4e9a-92b6-61be17fa8b93"
       ],
       "mode": "native-graph-control",
-      "actionStarted": 1793509445612,
-      "observationEnded": 1793509448630,
+      "actionStarted": 1793521695576,
+      "observationEnded": 1793521698596,
       "result": {
         "first": 1,
         "value": 1,
@@ -371,35 +388,35 @@
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": []
       },
       "traffic": [
         {
           "path": "/entry.js",
-          "time": 1793509445616
+          "time": 1793521695581
         },
         {
           "path": "/dependency.js",
-          "time": 1793509445621
+          "time": 1793521695585
         },
         {
           "path": "/state.js",
-          "time": 1793509445621
+          "time": 1793521695586
         },
         {
           "path": "/cycle-a.js",
-          "time": 1793509445621
+          "time": 1793521695586
         },
         {
           "path": "/cycle-b.js",
-          "time": 1793509445625
+          "time": 1793521695590
         },
         {
           "path": "/dynamic.js",
-          "time": 1793509445628
+          "time": 1793521695593
         }
       ]
     },
@@ -411,29 +428,29 @@
       "forcedStaleAgeCheck": false,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/7c27edf9-3b61-4710-b350-9de1e6a89334"
+        "blob:http://127.0.0.1:38775/fe338874-6f81-4b31-a12c-16eb1b01825c"
       ],
       "mode": "local-hook",
-      "actionStarted": 1793509451808,
-      "observationEnded": 1793509454818,
+      "actionStarted": 1793521701773,
+      "observationEnded": 1793521704784,
       "result": {
         "first": 1,
         "value": 1,
         "reads": [
-          "http://127.0.0.1:43627/entry.js",
-          "http://127.0.0.1:43627/dependency.js",
-          "http://127.0.0.1:43627/state.js",
-          "http://127.0.0.1:43627/cycle-a.js",
-          "http://127.0.0.1:43627/cycle-b.js",
-          "http://127.0.0.1:43627/dynamic.js"
+          "http://127.0.0.1:38775/entry.js",
+          "http://127.0.0.1:38775/dependency.js",
+          "http://127.0.0.1:38775/state.js",
+          "http://127.0.0.1:38775/cycle-a.js",
+          "http://127.0.0.1:38775/cycle-b.js",
+          "http://127.0.0.1:38775/dynamic.js"
         ],
-        "local": "blob:http://127.0.0.1:43627/d661f2b7-2f19-4ffb-b79d-f4001bbe837c",
+        "local": "blob:http://127.0.0.1:38775/b4cb888c-c3d8-4d19-aa81-e0939fc609e2",
         "graph": {
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": []
       },
@@ -447,36 +464,36 @@
       "forcedStaleAgeCheck": false,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/605046d4-300b-4f41-b58d-5acefb89ae96"
+        "blob:http://127.0.0.1:38775/33ec1eeb-00b4-4d43-ae66-38ac97223093"
       ],
       "mode": "native-control",
-      "actionStarted": 1793509457990,
-      "observationEnded": 1793509461003,
+      "actionStarted": 1793521707961,
+      "observationEnded": 1793521710975,
       "result": {
         "first": 1,
         "value": 2,
         "reads": [
-          "http://127.0.0.1:43627/entry.js",
-          "http://127.0.0.1:43627/dependency.js",
-          "http://127.0.0.1:43627/state.js",
-          "http://127.0.0.1:43627/cycle-a.js",
-          "http://127.0.0.1:43627/cycle-b.js",
-          "http://127.0.0.1:43627/dynamic.js"
+          "http://127.0.0.1:38775/entry.js",
+          "http://127.0.0.1:38775/dependency.js",
+          "http://127.0.0.1:38775/state.js",
+          "http://127.0.0.1:38775/cycle-a.js",
+          "http://127.0.0.1:38775/cycle-b.js",
+          "http://127.0.0.1:38775/dynamic.js"
         ],
-        "local": "blob:http://127.0.0.1:43627/c651b97a-dc8c-4ebe-b21c-1bbc4125ebff",
+        "local": "blob:http://127.0.0.1:38775/691fe8af-c781-49d2-a508-4f84c64fae61",
         "graph": {
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": []
       },
       "traffic": [
         {
           "path": "/native-target.js",
-          "time": 1793509458001
+          "time": 1793521707972
         }
       ]
     },
@@ -488,36 +505,36 @@
       "forcedStaleAgeCheck": false,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/f35178b7-945d-435c-bea6-d6f246e7ed37"
+        "blob:http://127.0.0.1:38775/3ffeebdf-303f-4345-94fa-0a308ba117fe"
       ],
       "mode": "record-change",
-      "actionStarted": 1793509464181,
-      "observationEnded": 1793509467196,
+      "actionStarted": 1793521714167,
+      "observationEnded": 1793521717181,
       "result": {
         "first": 1,
         "value": 2,
         "reads": [
-          "http://127.0.0.1:43627/entry.js",
-          "http://127.0.0.1:43627/dependency.js",
-          "http://127.0.0.1:43627/state.js",
-          "http://127.0.0.1:43627/cycle-a.js",
-          "http://127.0.0.1:43627/cycle-b.js",
-          "http://127.0.0.1:43627/dynamic.js"
+          "http://127.0.0.1:38775/entry.js",
+          "http://127.0.0.1:38775/dependency.js",
+          "http://127.0.0.1:38775/state.js",
+          "http://127.0.0.1:38775/cycle-a.js",
+          "http://127.0.0.1:38775/cycle-b.js",
+          "http://127.0.0.1:38775/dynamic.js"
         ],
-        "local": "blob:http://127.0.0.1:43627/8a8c105c-99e9-4cda-b0a1-3108106892c6",
+        "local": "blob:http://127.0.0.1:38775/6c54e3ab-3034-41d3-9d9d-f7b36ccc58c7",
         "graph": {
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": []
       },
       "traffic": [
         {
           "path": "/native-target.js",
-          "time": 1793509464193
+          "time": 1793521714178
         }
       ]
     },
@@ -529,29 +546,29 @@
       "forcedStaleAgeCheck": false,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/bf438782-cfc2-45b9-b770-8f997c8b483c"
+        "blob:http://127.0.0.1:38775/5ce75044-ed9c-4cd7-9de3-69dffbffc7c8"
       ],
       "mode": "local-only",
-      "actionStarted": 1793509470373,
-      "observationEnded": 1793509473383,
+      "actionStarted": 1793521720358,
+      "observationEnded": 1793521723369,
       "result": {
         "first": 1,
         "value": 1,
         "reads": [
-          "http://127.0.0.1:43627/entry.js",
-          "http://127.0.0.1:43627/dependency.js",
-          "http://127.0.0.1:43627/state.js",
-          "http://127.0.0.1:43627/cycle-a.js",
-          "http://127.0.0.1:43627/cycle-b.js",
-          "http://127.0.0.1:43627/dynamic.js"
+          "http://127.0.0.1:38775/entry.js",
+          "http://127.0.0.1:38775/dependency.js",
+          "http://127.0.0.1:38775/state.js",
+          "http://127.0.0.1:38775/cycle-a.js",
+          "http://127.0.0.1:38775/cycle-b.js",
+          "http://127.0.0.1:38775/dynamic.js"
         ],
-        "local": "blob:http://127.0.0.1:43627/09aff7ac-5259-43a8-aa20-b1473928a6f4",
+        "local": "blob:http://127.0.0.1:38775/b3506132-e89c-41ea-b50f-076b2665b0ec",
         "graph": {
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": []
       },
@@ -565,37 +582,37 @@
       "forcedStaleAgeCheck": false,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/99ba7aad-7b87-4259-a74a-ab7b7be827c6"
+        "blob:http://127.0.0.1:38775/12613a25-4c55-425c-968e-f1eb2a3d4d8b"
       ],
       "mode": "record-change-denied",
-      "actionStarted": 1793509476569,
-      "observationEnded": 1793509479682,
+      "actionStarted": 1793521726606,
+      "observationEnded": 1793521729716,
       "result": {
         "first": 1,
-        "local": "blob:http://127.0.0.1:43627/6c47ea86-d56d-4538-b6a6-9343d355e553",
+        "local": "blob:http://127.0.0.1:38775/cad3f62a-f8cd-432d-95a3-bf9d8c6a7873",
         "reads": [
-          "http://127.0.0.1:43627/entry.js",
-          "http://127.0.0.1:43627/dependency.js",
-          "http://127.0.0.1:43627/state.js",
-          "http://127.0.0.1:43627/cycle-a.js",
-          "http://127.0.0.1:43627/cycle-b.js",
-          "http://127.0.0.1:43627/dynamic.js"
+          "http://127.0.0.1:38775/entry.js",
+          "http://127.0.0.1:38775/dependency.js",
+          "http://127.0.0.1:38775/state.js",
+          "http://127.0.0.1:38775/cycle-a.js",
+          "http://127.0.0.1:38775/cycle-b.js",
+          "http://127.0.0.1:38775/dynamic.js"
         ],
         "graph": {
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": [
           {
-            "blockedURI": "http://127.0.0.1:43627/native-target.js",
+            "blockedURI": "http://127.0.0.1:38775/native-target.js",
             "effectiveDirective": "script-src-elem",
             "disposition": "enforce"
           }
         ],
-        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:43627/native-target.js",
+        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:38775/native-target.js",
         "errorName": "TypeError"
       },
       "traffic": []
@@ -608,37 +625,37 @@
       "forcedStaleAgeCheck": false,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/e4409b33-81ac-4303-9ef7-b2ceb8ec560c"
+        "blob:http://127.0.0.1:38775/999aac68-bcd6-47ec-a898-dd8ab9233e36"
       ],
       "mode": "literal-import-denied",
-      "actionStarted": 1793509482858,
-      "observationEnded": 1793509485970,
+      "actionStarted": 1793521732930,
+      "observationEnded": 1793521736046,
       "result": {
         "first": 1,
-        "local": "blob:http://127.0.0.1:43627/f6f40aca-3f6f-42db-aae3-e38b1594f83a",
+        "local": "blob:http://127.0.0.1:38775/c64f13b9-eeb1-4212-89b7-d3caa6b7fe5f",
         "reads": [
-          "http://127.0.0.1:43627/entry.js",
-          "http://127.0.0.1:43627/dependency.js",
-          "http://127.0.0.1:43627/state.js",
-          "http://127.0.0.1:43627/cycle-a.js",
-          "http://127.0.0.1:43627/cycle-b.js",
-          "http://127.0.0.1:43627/dynamic.js"
+          "http://127.0.0.1:38775/entry.js",
+          "http://127.0.0.1:38775/dependency.js",
+          "http://127.0.0.1:38775/state.js",
+          "http://127.0.0.1:38775/cycle-a.js",
+          "http://127.0.0.1:38775/cycle-b.js",
+          "http://127.0.0.1:38775/dynamic.js"
         ],
         "graph": {
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": [
           {
-            "blockedURI": "http://127.0.0.1:43627/native-target.js",
+            "blockedURI": "http://127.0.0.1:38775/native-target.js",
             "effectiveDirective": "script-src-elem",
             "disposition": "enforce"
           }
         ],
-        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:43627/native-target.js",
+        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:38775/native-target.js",
         "errorName": "TypeError"
       },
       "traffic": []
@@ -651,37 +668,37 @@
       "forcedStaleAgeCheck": false,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/30334f90-36c1-4c81-8322-da97dac92ac7"
+        "blob:http://127.0.0.1:38775/ce6a7223-164b-4678-9327-b8240260a366"
       ],
       "mode": "computed-import-denied",
-      "actionStarted": 1793509489159,
-      "observationEnded": 1793509492270,
+      "actionStarted": 1793521739252,
+      "observationEnded": 1793521742364,
       "result": {
         "first": 1,
-        "local": "blob:http://127.0.0.1:43627/46601aa9-42ff-4f3e-8f7b-42a00daba7bb",
+        "local": "blob:http://127.0.0.1:38775/ba13a8f8-d078-4e4e-a682-bb962a6fe446",
         "reads": [
-          "http://127.0.0.1:43627/entry.js",
-          "http://127.0.0.1:43627/dependency.js",
-          "http://127.0.0.1:43627/state.js",
-          "http://127.0.0.1:43627/cycle-a.js",
-          "http://127.0.0.1:43627/cycle-b.js",
-          "http://127.0.0.1:43627/dynamic.js"
+          "http://127.0.0.1:38775/entry.js",
+          "http://127.0.0.1:38775/dependency.js",
+          "http://127.0.0.1:38775/state.js",
+          "http://127.0.0.1:38775/cycle-a.js",
+          "http://127.0.0.1:38775/cycle-b.js",
+          "http://127.0.0.1:38775/dynamic.js"
         ],
         "graph": {
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": [
           {
-            "blockedURI": "http://127.0.0.1:43627/native-target.js",
+            "blockedURI": "http://127.0.0.1:38775/native-target.js",
             "effectiveDirective": "script-src-elem",
             "disposition": "enforce"
           }
         ],
-        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:43627/native-target.js",
+        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:38775/native-target.js",
         "errorName": "TypeError"
       },
       "traffic": []
@@ -694,11 +711,11 @@
       "forcedStaleAgeCheck": true,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/b62ea225-103b-4aa3-a2df-b9c0843bc2ed"
+        "blob:http://127.0.0.1:38775/0a2a50b2-87b6-4926-a4be-afafbbfa69c1"
       ],
       "mode": "native-graph-control",
-      "actionStarted": 1793509496443,
-      "observationEnded": 1793509499462,
+      "actionStarted": 1793521746629,
+      "observationEnded": 1793521749649,
       "result": {
         "first": 1,
         "value": 1,
@@ -707,39 +724,39 @@
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": []
       },
       "traffic": [
         {
           "path": "/entry.js",
-          "time": 1793509496446
+          "time": 1793521746634
         },
         {
           "path": "/dependency.js",
-          "time": 1793509496451
+          "time": 1793521746638
         },
         {
           "path": "/state.js",
-          "time": 1793509496451
+          "time": 1793521746639
         },
         {
           "path": "/cycle-a.js",
-          "time": 1793509496451
+          "time": 1793521746639
         },
         {
           "path": "/cycle-b.js",
-          "time": 1793509496456
+          "time": 1793521746644
         },
         {
           "path": "/dynamic.js",
-          "time": 1793509496459
+          "time": 1793521746647
         },
         {
           "path": "/sw.js",
-          "time": 1793509497448
+          "time": 1793521747696
         }
       ]
     },
@@ -751,29 +768,29 @@
       "forcedStaleAgeCheck": true,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/ca283301-61bc-4649-b347-416dd868fb8d"
+        "blob:http://127.0.0.1:38775/9819f769-ee7e-43fa-997d-e3e29c49a5a3"
       ],
       "mode": "local-hook",
-      "actionStarted": 1793509502646,
-      "observationEnded": 1793509505657,
+      "actionStarted": 1793521752849,
+      "observationEnded": 1793521755861,
       "result": {
         "first": 1,
         "value": 1,
         "reads": [
-          "http://127.0.0.1:43627/entry.js",
-          "http://127.0.0.1:43627/dependency.js",
-          "http://127.0.0.1:43627/state.js",
-          "http://127.0.0.1:43627/cycle-a.js",
-          "http://127.0.0.1:43627/cycle-b.js",
-          "http://127.0.0.1:43627/dynamic.js"
+          "http://127.0.0.1:38775/entry.js",
+          "http://127.0.0.1:38775/dependency.js",
+          "http://127.0.0.1:38775/state.js",
+          "http://127.0.0.1:38775/cycle-a.js",
+          "http://127.0.0.1:38775/cycle-b.js",
+          "http://127.0.0.1:38775/dynamic.js"
         ],
-        "local": "blob:http://127.0.0.1:43627/651e9625-3ad0-46b8-a041-87df18075368",
+        "local": "blob:http://127.0.0.1:38775/4c198988-2288-4ea1-823a-eda6e10e8086",
         "graph": {
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": []
       },
@@ -787,40 +804,40 @@
       "forcedStaleAgeCheck": true,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/3601fdc6-764d-433c-8adc-24d020940036"
+        "blob:http://127.0.0.1:38775/c4d082d1-aead-4a96-90e3-b522899adae6"
       ],
       "mode": "native-control",
-      "actionStarted": 1793509508836,
-      "observationEnded": 1793509511850,
+      "actionStarted": 1793521759054,
+      "observationEnded": 1793521762068,
       "result": {
         "first": 1,
         "value": 2,
         "reads": [
-          "http://127.0.0.1:43627/entry.js",
-          "http://127.0.0.1:43627/dependency.js",
-          "http://127.0.0.1:43627/state.js",
-          "http://127.0.0.1:43627/cycle-a.js",
-          "http://127.0.0.1:43627/cycle-b.js",
-          "http://127.0.0.1:43627/dynamic.js"
+          "http://127.0.0.1:38775/entry.js",
+          "http://127.0.0.1:38775/dependency.js",
+          "http://127.0.0.1:38775/state.js",
+          "http://127.0.0.1:38775/cycle-a.js",
+          "http://127.0.0.1:38775/cycle-b.js",
+          "http://127.0.0.1:38775/dynamic.js"
         ],
-        "local": "blob:http://127.0.0.1:43627/14a3b22a-fefd-4a44-87f7-6c3a95695b39",
+        "local": "blob:http://127.0.0.1:38775/38f57af9-2034-44fb-86bb-6ac850444a54",
         "graph": {
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": []
       },
       "traffic": [
         {
           "path": "/native-target.js",
-          "time": 1793509508847
+          "time": 1793521759066
         },
         {
           "path": "/sw.js",
-          "time": 1793509509849
+          "time": 1793521760068
         }
       ]
     },
@@ -832,40 +849,40 @@
       "forcedStaleAgeCheck": true,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/73cfee2d-b2da-4c79-a27a-36f4ca4c8f84"
+        "blob:http://127.0.0.1:38775/330d4367-9729-4736-b3f3-076502a48979"
       ],
       "mode": "record-change",
-      "actionStarted": 1793509515029,
-      "observationEnded": 1793509518044,
+      "actionStarted": 1793521765272,
+      "observationEnded": 1793521768288,
       "result": {
         "first": 1,
         "value": 2,
         "reads": [
-          "http://127.0.0.1:43627/entry.js",
-          "http://127.0.0.1:43627/dependency.js",
-          "http://127.0.0.1:43627/state.js",
-          "http://127.0.0.1:43627/cycle-a.js",
-          "http://127.0.0.1:43627/cycle-b.js",
-          "http://127.0.0.1:43627/dynamic.js"
+          "http://127.0.0.1:38775/entry.js",
+          "http://127.0.0.1:38775/dependency.js",
+          "http://127.0.0.1:38775/state.js",
+          "http://127.0.0.1:38775/cycle-a.js",
+          "http://127.0.0.1:38775/cycle-b.js",
+          "http://127.0.0.1:38775/dynamic.js"
         ],
-        "local": "blob:http://127.0.0.1:43627/866eeff0-9a32-49f1-95ce-72b30455a576",
+        "local": "blob:http://127.0.0.1:38775/33f8df74-0b26-427d-81cc-8c03ff7f9774",
         "graph": {
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": []
       },
       "traffic": [
         {
           "path": "/native-target.js",
-          "time": 1793509515040
+          "time": 1793521765283
         },
         {
           "path": "/sw.js",
-          "time": 1793509516046
+          "time": 1793521766290
         }
       ]
     },
@@ -877,29 +894,29 @@
       "forcedStaleAgeCheck": true,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/69cd647e-71b6-402b-a541-057bac17034f"
+        "blob:http://127.0.0.1:38775/0f301967-24fe-4a1d-ad9a-6616d60bff7e"
       ],
       "mode": "local-only",
-      "actionStarted": 1793509521218,
-      "observationEnded": 1793509524229,
+      "actionStarted": 1793521771495,
+      "observationEnded": 1793521774507,
       "result": {
         "first": 1,
         "value": 1,
         "reads": [
-          "http://127.0.0.1:43627/entry.js",
-          "http://127.0.0.1:43627/dependency.js",
-          "http://127.0.0.1:43627/state.js",
-          "http://127.0.0.1:43627/cycle-a.js",
-          "http://127.0.0.1:43627/cycle-b.js",
-          "http://127.0.0.1:43627/dynamic.js"
+          "http://127.0.0.1:38775/entry.js",
+          "http://127.0.0.1:38775/dependency.js",
+          "http://127.0.0.1:38775/state.js",
+          "http://127.0.0.1:38775/cycle-a.js",
+          "http://127.0.0.1:38775/cycle-b.js",
+          "http://127.0.0.1:38775/dynamic.js"
         ],
-        "local": "blob:http://127.0.0.1:43627/d0135e68-ecea-454e-b805-f785f8302089",
+        "local": "blob:http://127.0.0.1:38775/f6764655-830d-437b-ba87-92ee8acd97f2",
         "graph": {
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": []
       },
@@ -913,37 +930,37 @@
       "forcedStaleAgeCheck": true,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/653ee317-e50a-42db-9e30-fdc19ece7830"
+        "blob:http://127.0.0.1:38775/3d688f54-007c-4470-8548-ec6d1c08bf48"
       ],
       "mode": "record-change-denied",
-      "actionStarted": 1793509527417,
-      "observationEnded": 1793509530529,
+      "actionStarted": 1793521777710,
+      "observationEnded": 1793521780823,
       "result": {
         "first": 1,
-        "local": "blob:http://127.0.0.1:43627/a13d766d-2b3e-482e-a873-45dd577a094d",
+        "local": "blob:http://127.0.0.1:38775/23f1a3df-931d-4abf-b35b-a3e13f0a17dc",
         "reads": [
-          "http://127.0.0.1:43627/entry.js",
-          "http://127.0.0.1:43627/dependency.js",
-          "http://127.0.0.1:43627/state.js",
-          "http://127.0.0.1:43627/cycle-a.js",
-          "http://127.0.0.1:43627/cycle-b.js",
-          "http://127.0.0.1:43627/dynamic.js"
+          "http://127.0.0.1:38775/entry.js",
+          "http://127.0.0.1:38775/dependency.js",
+          "http://127.0.0.1:38775/state.js",
+          "http://127.0.0.1:38775/cycle-a.js",
+          "http://127.0.0.1:38775/cycle-b.js",
+          "http://127.0.0.1:38775/dynamic.js"
         ],
         "graph": {
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": [
           {
-            "blockedURI": "http://127.0.0.1:43627/native-target.js",
+            "blockedURI": "http://127.0.0.1:38775/native-target.js",
             "effectiveDirective": "script-src-elem",
             "disposition": "enforce"
           }
         ],
-        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:43627/native-target.js",
+        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:38775/native-target.js",
         "errorName": "TypeError"
       },
       "traffic": []
@@ -956,37 +973,37 @@
       "forcedStaleAgeCheck": true,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/4f32d87b-b0f8-486d-aa4c-75bc002ccc53"
+        "blob:http://127.0.0.1:38775/4c4883cb-27be-4c64-8942-4450e5da328f"
       ],
       "mode": "literal-import-denied",
-      "actionStarted": 1793509533722,
-      "observationEnded": 1793509536832,
+      "actionStarted": 1793521784015,
+      "observationEnded": 1793521787126,
       "result": {
         "first": 1,
-        "local": "blob:http://127.0.0.1:43627/b2405eef-2b82-4809-be7d-fe5b9baa34b7",
+        "local": "blob:http://127.0.0.1:38775/4114b788-363f-4b7a-8c92-d9286da9121d",
         "reads": [
-          "http://127.0.0.1:43627/entry.js",
-          "http://127.0.0.1:43627/dependency.js",
-          "http://127.0.0.1:43627/state.js",
-          "http://127.0.0.1:43627/cycle-a.js",
-          "http://127.0.0.1:43627/cycle-b.js",
-          "http://127.0.0.1:43627/dynamic.js"
+          "http://127.0.0.1:38775/entry.js",
+          "http://127.0.0.1:38775/dependency.js",
+          "http://127.0.0.1:38775/state.js",
+          "http://127.0.0.1:38775/cycle-a.js",
+          "http://127.0.0.1:38775/cycle-b.js",
+          "http://127.0.0.1:38775/dynamic.js"
         ],
         "graph": {
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": [
           {
-            "blockedURI": "http://127.0.0.1:43627/native-target.js",
+            "blockedURI": "http://127.0.0.1:38775/native-target.js",
             "effectiveDirective": "script-src-elem",
             "disposition": "enforce"
           }
         ],
-        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:43627/native-target.js",
+        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:38775/native-target.js",
         "errorName": "TypeError"
       },
       "traffic": []
@@ -999,37 +1016,37 @@
       "forcedStaleAgeCheck": true,
       "rootTransport": "blob",
       "nativeWorkers": [
-        "blob:http://127.0.0.1:43627/efc1a13a-0f86-4832-8d85-a3ce455f61d0"
+        "blob:http://127.0.0.1:38775/4debba05-4d2f-4a6e-bf3c-b950fcff9395"
       ],
       "mode": "computed-import-denied",
-      "actionStarted": 1793509540013,
-      "observationEnded": 1793509543125,
+      "actionStarted": 1793521790318,
+      "observationEnded": 1793521793430,
       "result": {
         "first": 1,
-        "local": "blob:http://127.0.0.1:43627/b0928200-7f3f-40c7-9c2f-ada82c1e3a5f",
+        "local": "blob:http://127.0.0.1:38775/ff7a0036-6928-4f8b-9249-6c31212a31ce",
         "reads": [
-          "http://127.0.0.1:43627/entry.js",
-          "http://127.0.0.1:43627/dependency.js",
-          "http://127.0.0.1:43627/state.js",
-          "http://127.0.0.1:43627/cycle-a.js",
-          "http://127.0.0.1:43627/cycle-b.js",
-          "http://127.0.0.1:43627/dynamic.js"
+          "http://127.0.0.1:38775/entry.js",
+          "http://127.0.0.1:38775/dependency.js",
+          "http://127.0.0.1:38775/state.js",
+          "http://127.0.0.1:38775/cycle-a.js",
+          "http://127.0.0.1:38775/cycle-b.js",
+          "http://127.0.0.1:38775/dynamic.js"
         ],
         "graph": {
           "counter": 2,
           "dynamic": 13,
           "cycle": "AB",
-          "meta": "http://127.0.0.1:43627/entry.js",
-          "resolved": "http://127.0.0.1:43627/dependency.js"
+          "meta": "http://127.0.0.1:38775/entry.js",
+          "resolved": "http://127.0.0.1:38775/dependency.js"
         },
         "violations": [
           {
-            "blockedURI": "http://127.0.0.1:43627/native-target.js",
+            "blockedURI": "http://127.0.0.1:38775/native-target.js",
             "effectiveDirective": "script-src-elem",
             "disposition": "enforce"
           }
         ],
-        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:43627/native-target.js",
+        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:38775/native-target.js",
         "errorName": "TypeError"
       },
       "traffic": []

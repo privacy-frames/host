@@ -7,6 +7,18 @@ script URL admission. The policy-8 candidate also delivers classic worker script
 locally. Policy 9 additionally restricts native spelling controls. Complete
 confinement and deployment remain pending.
 
+The policy-10 candidate adds local worker module graphs and a shared adapter for
+classic and module dynamic imports. Its expanded worker checks pass in both
+browsers, and the prepared-worker native-policy fixture passes 24 cases with
+stable source and build inputs. Production policy still permits runtime-origin
+HTTP; the compatibility loader cannot close that admission gap.
+
+The expanded forced-age comparison collects all 32 samples with working native
+controls. Its confined classic, classic-dynamic and ordinary module groups are
+quiet. Generated native imports still cause two private-bit-dependent requests
+for the fixed runtime service-worker script. The command fails, retaining the
+counterexample that the independent native policy must address.
+
 The target remains [C1–C8](../threat-model.md): confined application activity cannot
 cause a remote request or connection, including to the runtime origin. Whether
 and when a request occurs count as observations. Private state may already exist
@@ -35,6 +47,13 @@ production integration remain open.
 Atomic context binding and owner-scoped closure now use IndexedDB. Private parent
 channels and selected executable state functions have native tests or deductive
 checks. Complete protocol correspondence and browser coverage remain open.
+
+CI at policy-9 revision `0e6c9f6` independently reproduces the four aged-registration
+violations with working native controls. Its fresh comparison observes no confined
+HTTP but lacks Chromium classic and module positive controls. The archived
+[fresh](service-worker-maintenance-ci-policy9.json) and
+[forced-age](service-worker-startup-stale-ci-policy9.json) receipts retain both
+outcomes; the fresh comparison is inconclusive.
 
 Application-triggered HTTP worker startup was a demonstrated policy-6 violation.
 The policy-7 local startup candidate passes 32 fresh-registration classic/module

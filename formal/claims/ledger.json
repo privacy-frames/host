@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
-  "scope": "Claims are review obligations, not a blanket confinement certification. Evidence is specific to its saved revision, browser, state and receiver; source digests detect drift, not proof.",
+  "scope": "Claims are review obligations, not a blanket confinement certification. Evidence is specific to its saved revision, browser, state and receiver; source digests detect drift, not proof. Policy-10 worker delivery changes have selected new component evidence; earlier receipts retain their historical scopes and do not establish complete current C1-C8 coverage.",
   "source_baseline": "0f0d43cda8bdfbeccfc5846cea7af1d4bba69e7b",
   "artifact_sha256": {
-    ".github/workflows/formal.yml": "7df90e1a598ef375043a7c2daca9f29ae8741acb80daa125241455ee158fc6be",
+    ".github/workflows/formal.yml": "ba02f8014b0de8d0f132f11d1932ef5627b7829634c61f2b76aa239e1aa2a259",
     "formal/admission/implementation-results.json": "8484858f6f903ad46049999cf79634027e5f53cd1c6c7a89d7b27cf2606daa4d",
     "formal/admission/model-results.json": "a55c1e6cecd803b18bba88778899e7f57142de3dbd1bb9e87b8330b921e1be63",
     "formal/browser-features.json": "7ed31f047c607772cfdaffed193310c9b14ee4f071dbb37412521ef4af7b443b",
@@ -102,16 +102,16 @@
     "formal/route-review/README.md": "def9f578cf05dbd6ded8f518833ba924d81acfce8a9d43fbd003679987cf77bd",
     "formal/route-review/triage.json": "685b7f8bba8a4bd394ab7c7ecbf3fbf01fe045503ec8b831754e397e11f2630d",
     "formal/runtime-verification/PublicationModel.lean": "73e252a862122b493d8a0e45a1834a0ead1ecdaebf44ceee41cb542b19ac544b",
-    "formal/runtime-verification/README.md": "7c487919b332789a5aba3fbfd3f6d1c7d793f4bb1323f6473bd6c5550c1cb4e0",
+    "formal/runtime-verification/README.md": "0e8f297d7bc33c52c685ff1bd4b2c0c1cebcc44f4c92193f18c37304660efb2a",
     "formal/runtime-verification/RegistrationLifetime.lean": "331eb33dd0d4dc0abd3e2b6b29818b2abee9d97f2267f8ec9d921c449781a2b3",
     "formal/runtime-verification/RegistrationQueue.lean": "4d5d4503935296a4d513984e1441c6a8284a185a553d9b3968a17f8bff38bfd3",
     "formal/runtime-verification/atomic-context-compatibility.json": "731658cca4896ee5c13d5c6ce85cea7924f3af53e8ce2c62fccc0d1186069402",
-    "formal/runtime-verification/authority-predicate-check.ts": "7c04ab8ea5033fbaabe3eb0099d9eaecd205728050c9b04e01266035b978cbe5",
-    "formal/runtime-verification/authority-predicate.json": "fd84f06dbbe438836b865701d725762df89985599f8e235198fefa5fd66d400e",
-    "formal/runtime-verification/authority-predicate.md": "0b04a6886c3a8f4ff82dfd8b8fcc5777572a42e6feeb98754553ced82ea51195",
+    "formal/runtime-verification/authority-predicate-check.ts": "250c481f0e7f09b7325a0133837f6d37a6ca1ed07bbce1fa716a07476adb16a2",
+    "formal/runtime-verification/authority-predicate.json": "976f436316b3ed9e634fd4df1097f7e51ac0499a803ff704ce434f9a235543ea",
+    "formal/runtime-verification/authority-predicate.md": "dbd1984b14b7b97787fb3c2341425fce9efaf726105c4e5c5d07c292cb3c21e6",
     "formal/runtime-verification/blob-worker-identity.json": "a74f50164d2184ac9c077e2fcdd39d0590a9807899886f1f642cd16d813c2bc0",
     "formal/runtime-verification/blob-worker-identity.ts": "2f77260568f723d91ed45c7a08bd374035a8176770151647daf0c19e515fc366",
-    "formal/runtime-verification/boundaries.ts": "2b979e7a0bb388483ea1a763352b0fc8c0e882ff67a173eabdb4e161e7a5c83e",
+    "formal/runtime-verification/boundaries.ts": "52342fd479428cf1c376807a6998dfab4d8da8cb28a2b9d72b253b2eb91040d6",
     "formal/runtime-verification/ci-startup-policy8.json": "92f87107919317b544e8f7324ab8cf90f79bd3aaf3e6b9d7e3500b9d3d2d6fe4",
     "formal/runtime-verification/classic-script-fragments.json": "9ae472beaf4669d1047d530b3530e67e8d5d64c194c8130c201330c007279c75",
     "formal/runtime-verification/document-control-compatibility.json": "9ffd44b02a9bddb946e4e6202e351ce66c62157462ef32957d2ccf3df4d3ec16",
@@ -123,7 +123,7 @@
     "formal/runtime-verification/generation-comparison.ts": "61bc8ca641e2e603b55ce3956e66c4b60e621fd455b09afd54cabf377f566a7a",
     "formal/runtime-verification/gillian-report.test.ts": "a4d5550e24ac238acb9ab35c3bf4e2aa3833979bd42195d9439a9613230c7fd6",
     "formal/runtime-verification/gillian.ts": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
-    "formal/runtime-verification/implementation-inventory.json": "125d4dc88e086a741a53caf75e78c41f7c55b5080b24a44a16338fb16f54f2dc",
+    "formal/runtime-verification/implementation-inventory.json": "968acc37510d8c6791e181137b71765e05d722742fa70eef9f7a9ecfcc7c850e",
     "formal/runtime-verification/inventory.ts": "30a433edc9bc21d25c4790a9540e6eeb271f382c12f4fefeccd1dba1b75a47c2",
     "formal/runtime-verification/local-bootstrap-policy.json": "6bb5c4c8a20a480b1162c1f13f373514dc247fe9e8187023e8362266cc79cf70",
     "formal/runtime-verification/local-bootstrap-policy.ts": "7145f5d8c41d550cf425203ee1b18a5f7bf361e79a5c4dd0dd44f18c1d244535",
@@ -148,15 +148,20 @@
     "formal/runtime-verification/message-resource-broker.md": "345bae8945881bf052e83f23cd209f7da19660a7286e450877f27112a63aae85",
     "formal/runtime-verification/message-resource-broker.ts": "82150dd2908fde943aa2502b26bcfb5e73499212f6927f85fb227bf0a016331a",
     "formal/runtime-verification/method-calibration.json": "be6583d59236632d50bdbd113a20d4ab7b987ab8bfa8949cddce2ad42416f943",
-    "formal/runtime-verification/module-loader-assessment.md": "f1c42e20e76a91e0abe53cfdd1dd84cb23c4bf17f6c6f22783012c50d5f8e981",
+    "formal/runtime-verification/module-loader-assessment.md": "67463203669de9e7367d65ec786a4784a00dec10dbabcd63a55a529556dfb4ac",
     "formal/runtime-verification/module-loader-browser-ci-policy8.json": "679f4c4286798ec11c984a6979781136ce4d3a047707249c60c06d4b608fa396",
     "formal/runtime-verification/module-loader-browser-persistent.json": "3db655c30604631293e0889265b1f861ffd2c82de33e46cfb33dcc42fb102c09",
-    "formal/runtime-verification/module-loader-browser.json": "c3a4cd345c0bf715b3fd305b53668ccb9b043271e9da25ca394a00549e448106",
-    "formal/runtime-verification/module-loader-browser.ts": "41debcb0d6a7338757c3f0e125fcf5002ddd23ff35fa9da644334d9848066de9",
+    "formal/runtime-verification/module-loader-browser.json": "874452e46581125acd42e1aaffa55314982b9e46176c7393ac853ee5259c1f80",
+    "formal/runtime-verification/module-loader-browser.ts": "30cb5f94c260c5a5f2948ec44270457f4eafccb7bf95c753bfd492688be38e59",
+    "formal/runtime-verification/module-loader-guard-browser.json": "c540d06318750fffb4ad5d0579cbc260c4aa4a5ba1f18a11f903cedf3ec64e7e",
     "formal/runtime-verification/module-loader-http-root-initial.json": "c77f73be02b6b9cec166479184813ece461ea2b68621d35972cc8bdab83d324d",
     "formal/runtime-verification/parent-document-broker.json": "346ad693f78fa667cbdcd2c8e04efe300c67fbd8f7a2429b410701b74a741921",
     "formal/runtime-verification/parent-document-compatibility.json": "968ed80bdb719720283c13c2c861a4bbfe3e2081cb6a00dc20aa85b46f918ec6",
-    "formal/runtime-verification/policy9-validation.json": "b8fe0f442bff27b88dd1e9edb62d65d66fdba9fb45636d849713c5ca1e12153e",
+    "formal/runtime-verification/policy10-corpus.log": "d8c5648cc7f39100c1ea9d9b08535ddc8546e523310cde0de6e7a14b7329a21a",
+    "formal/runtime-verification/policy10-full-test.log": "2b22890a1a7800d7bca59c2320eb42243b75b8d7421ff6f046cd7b432e8c79f0",
+    "formal/runtime-verification/policy10-unit-test.log": "a36ee38815c5bbff363ebc469b2116a7b97141be2533b9aff1e86b0c8920b3bf",
+    "formal/runtime-verification/policy10-validation.json": "e2dbadaa5dd5d93e76a4cd9ee37060d47f3235c97dd4671837e60fc2049a3650",
+    "formal/runtime-verification/policy9-validation.json": "b01610f0db1bd66ab2be6b32b64abafc871547221ef8cab9567d2d5dd52c012d",
     "formal/runtime-verification/private-channel-compatibility.json": "f06b56152180f692553814ec86cf548bdc8e2f3195c9bd4aae59ce3d615fedd5",
     "formal/runtime-verification/private-parent-channel.md": "259d59b6ff7e754321f24b04aa21de7308c186e6286ef87da5ca5436c50bf062",
     "formal/runtime-verification/registration-fence.json": "bb83363c29ba1fc3579dfc8a650752e5b4501fc5e7159c84af85cfb9f41474d1",
@@ -178,16 +183,19 @@
     "formal/runtime-verification/script-url-gate.md": "57e46825db49229f8a309a7cc1d14f36a63ef5e3e0c640d005e5df970b850bcf",
     "formal/runtime-verification/script-url-validation.json": "baf573949ac000369db1b8a5c77a2eb9234013c2d5e098ebc49a028a9aa5cfa8",
     "formal/runtime-verification/service-worker-maintenance-ci-policy8.json": "eda13c9ee044651e360017bcebb16fe24c70aab4eed97bdcb6fb7bb3f2fc29b5",
+    "formal/runtime-verification/service-worker-maintenance-ci-policy9.json": "c66a8ef836425178c7b802f76c1a150e3cffd3c1b9be26897a7cdc8cfa94e5e8",
     "formal/runtime-verification/service-worker-maintenance-policy6.json": "80042d68bdfbffbbfbb76a471f2867b0e4f5862e2973004feb098d7ee22f37d3",
     "formal/runtime-verification/service-worker-maintenance-policy7.json": "e671718da78dd7b6876e280b88016468bf64f26386a3284ed9cbc59ae3eb7764",
     "formal/runtime-verification/service-worker-maintenance-policy8-retained-initial.json": "e87717691082e8daac9d0560ab585409bcd3874501354dbedc852ad8f449bfa2",
     "formal/runtime-verification/service-worker-maintenance.json": "c213efb9f01c673f4a7886c74903e4c86134c2de5a39516b291df9677c5d1eed",
     "formal/runtime-verification/service-worker-maintenance.md": "5e0cc9e71c93b5bd07cc3206628bdef8940cc1d9123a04898ee45f340e08b28b",
-    "formal/runtime-verification/service-worker-maintenance.ts": "6b2f484edbbe6f6ed7e69a9e4d20db8e15e74b8478a8b1bc12509c428eb86b6d",
+    "formal/runtime-verification/service-worker-maintenance.ts": "a41bf1b0dce84502b173badb24ef7d035d4a4ac9dd7583aa37f9d4e9f776ae1c",
+    "formal/runtime-verification/service-worker-startup-stale-ci-policy9.json": "6072088f7092acaec712cea4032229f1e640ab8a58628118b8b562a380786cc3",
+    "formal/runtime-verification/service-worker-startup-stale-policy10-generated-initial.json": "daa57f8c0180ed155f0a8c5e19519bf4119a5138f1735537118e47e6bc0c4063",
     "formal/runtime-verification/service-worker-startup-stale-policy7.json": "4d3f162e0361faa6b306a7c9b8daf023177950e3944c261ad3beab4755dcfc26",
     "formal/runtime-verification/service-worker-startup-stale-policy8-fragments.json": "2558c4dd6238cea782b2aca354b91e7e3d8d4361df03b3889ad19e1c8e33b80e",
     "formal/runtime-verification/service-worker-startup-stale-policy8-initial.json": "5b5a2ec16e549fef4d56f3b61a0909b0d9100ab04e6db10dff0dcbce8d06bb6d",
-    "formal/runtime-verification/service-worker-startup-stale.json": "1e59b2c60936e85846c94cc2dc12c116430606a70c7b1d40426bcd2ec23b378f",
+    "formal/runtime-verification/service-worker-startup-stale.json": "c298688ffe8e83fd88da81fc266b48e3b65a676e0b44dbe46ee375506a4ec73e",
     "formal/runtime-verification/spelling-callback-control-initial.json": "5d32a39605a8abec5371672eab402eac395d333e6039e40944ae7a6259239f79",
     "formal/runtime-verification/spelling-coercion-initial.json": "459516ebb5ac301b875704069a329299f308e00d555801310eabe30a238bcff3",
     "formal/runtime-verification/spelling-dom-browser.json": "577660ca61c9ea6b9ec74316fe4f2756f4fb95ec45f2c2e7ebeab7b3b7b9b369",
@@ -231,27 +239,28 @@
     "formal/webtransport/results.json": "b97fb9a79cd59263d75f7e1a0a0d1d9269b92af7a9f4b797a9a00f6efdc227e5",
     "formal/worker-registration-probe.ts": "6bcad99b4fe18781e077fc7f45406b8eb5d3b52c18bc2ab57383d7e2c138cb50",
     "formal/worker-registration.md": "c17ec13229015956a09b7bdfa7feaf9433dd2d7f9f991da89bc8fffd6d605445",
-    "package-lock.json": "4e8c7b0964047f1c9fd3f82956b08d381817fa86fb2f7d47d4a10458dc5e62ed",
-    "results/browser.json": "dd4353ca38a941ff25ab99fbef5a9a1d5ddccd081e3e99617eac4f87903e16f2",
-    "results/contexts/controller-storage.json": "9e537947818b94b98821d9ee678b42f71a2040bc8d7cc9dda2cb9cbdd6448648",
-    "results/contexts/csp-startup.json": "f6d79ac7f59a14889404c4848dc216c17b84c25f241b5d3a22d6686fb818019a",
+    "package-lock.json": "7c6c477f81e1856b73b8a8420d82aa43ea39478ec986d73d3a823c85e03fb547",
+    "package.json": "33e5a2748f50bc67a650feb71860e375ab51778f7f71f9c4e4698d1a76338949",
+    "results/browser.json": "191f19b6ab8ba4fa2e3d5b0d8b7653a680c640194a8d2e7266154cb4fe459fb4",
+    "results/contexts/controller-storage.json": "c599d1ed100021b438642acd9fa954b82f6f2d6b16d27945ec36bd81b00f7c8c",
+    "results/contexts/csp-startup.json": "d3435c74e7f31b0a59e4a37188729a4fecbd9af458ddc4757c3e67987bd874d4",
     "results/contexts/document-consumption-race.json": "6ffa98f5d65e34dcd658ccc7116b65e136aa35493b2c94a3775c16db997e75cd",
-    "results/contexts/document-contexts.json": "2c69caf5ab2f69872f3224db8335c571a55b443d4564c3ade0bd6a948def4ce9",
-    "results/contexts/document-control.json": "e73cd1842e81f6f30121a997a575dd6e3a946c294fe14a34676684f37af26bb1",
-    "results/contexts/document-factory.json": "43d49a286850a3d2cad81a352e810c026c98a7ab22d41e04e928d83e92f4d941",
+    "results/contexts/document-contexts.json": "75d63db2b6d4aa02dd131179b8dde11f266818cbca24a8169ffc146133e802f3",
+    "results/contexts/document-control.json": "407f3d655cfd8ad499a239b305d24416716bfde78beab6bf994c3c955931dd2b",
+    "results/contexts/document-factory.json": "b3853393db367a4491e0603cb4113aa299c6e9ffaac76b8dcaaec7d3043122ad",
     "results/contexts/parent-channel-late-receiver.json": "9fc7b676d78f6c68f1efbf555f84c73597c9ba36256ed375bc4f4769d4f8b0fb",
-    "results/contexts/parent-channel.json": "397c934855b74da5a879d0c14ac145e81098de9258fa3edd4e2ef05764b44bf7",
-    "results/contexts/popup-receivers.json": "55929a8fdd226a022d5febe1985383610e7c0a19a239bf1461aa8b5db6ec47c9",
-    "results/contexts/prototype-confinement.json": "a67c1fc62a01e457ea8f61d19bdf952fa252513059ddf8cafc4c81b31a5d5873",
-    "results/contexts/publishers.json": "06f00a285010753bd597fe4ab2682ef28a7c6cb85a7323ed9fb049f88f3c909f",
+    "results/contexts/parent-channel.json": "532abf707b559a475bdbd325942aa213ec2a6beb44fd46094d20db668733531c",
+    "results/contexts/popup-receivers.json": "f81f3b122519fbbf52e3cadd65073e5b12ddfc6c8400d95e58dacf58f839a3fb",
+    "results/contexts/prototype-confinement.json": "df58a1511a61161ff6609508b15ac11a7b3273fc63eaefb27f2d24cc8c4089ee",
+    "results/contexts/publishers.json": "daa7642157fbcd4454e9e6063c8f0f0cb6cc6fd218cbab100e7cd19f26ba53ba",
     "results/contexts/script-url-gate.json": "37e752e019de6b33935859ea4e10fbb88736f788ced67ab214c32a9fe04ec80c",
-    "results/contexts/shared-workers.json": "b3291aaf308786206d60cf11d732607d28644007802381a2f77338ace3fec541",
-    "results/contexts/workers.json": "2f0b83ef98569c3681c4659957b0bb0ac140cc66b21b19ed53f7a549b11ae0a2",
+    "results/contexts/shared-workers.json": "60384a1cc410858b0bc0624050d4b0404da8fed9491edf44abe2d2c8798dbe2f",
+    "results/contexts/workers.json": "a5d9d8338bbf6dcd92bb4e8f6d1e13d54b806884e56e93afab9e52ce661e496a",
     "results/network-firefox.json": "cdaf952c88cfeb692413fc2075f7dc6786ed0f4e14faaa98067e766a4134ef96",
     "results/network.json": "490e217fafa4601c3bf0afc039129a22c2829666c6279aa10d70a235023afa62",
-    "results/trusted-runtime/compatibility-local.json": "1a27399fbecc399c19d1a45d57f6b852071b6c71f95865e1c0938526292f5078",
+    "results/trusted-runtime/compatibility-local.json": "2894aa283f11748c756f48344c7b0112cd31ec4b2b563e568935b3df5bade453",
     "scripts/build.ts": "200e6aaa891bb3f7837759f9e68e49f298160333afaca2f24f54e59c5b1bdbc8",
-    "scripts/trusted-policy.ts": "70e79090266deef9388bbf19ec8c9b909f0e00de6f68a3aab5a3e84de65e6721",
+    "scripts/trusted-policy.ts": "c3d6558cd78422d52ab971692482bda02c10ff601053471f35f6b5491cfb395d",
     "src/bridge/connect.ts": "bd35b868143935b8cfa4f7ce3227644c516b01f5ef82eea2b196e3183f17833b",
     "src/installation/session.ts": "0381b435c49234134d1cb0f20d4e86503fd64ae4e416a5823e26f61e7aaf3f20",
     "src/manager/services/bootstrap.ts": "17176349ebf2d4f1f2fe9662e0e737b5da3f50a52eef7f84b21102158ab16427",
@@ -286,7 +295,7 @@
     "src/runtime/contexts/worker-factory.ts": "1b9927b508ae6a6675af1e7b96c645318910cf105555b1e58a6ddc4e4e92dff5",
     "src/runtime/contexts/worker-guard.ts": "83955ad28134ef886e4e950fbee4eaa7f51da2a827fa99092512e521764e8171",
     "src/runtime/contexts/worker-protocol.ts": "bc90b8c2d2a0ea5fb1a68555af12cc70f5fa3dc252c4557226417cd88adb40cc",
-    "src/runtime/contexts/worker-realm.ts": "b7bc5607650aa932c9fdf0d180a96ba872d58205f1d7f865a24ed3144b2d4d04",
+    "src/runtime/contexts/worker-realm.ts": "1d4cea980d85a9413024be6cca266e4995e76c74808f34191d6a246dab3ea87f",
     "src/runtime/contexts/worker-resource-protocol.ts": "aa5b444b987d60ce6dcacf74715756a290a2d440b39004a851a1c75f03f3c9fe",
     "src/runtime/contexts/worklet-controller.ts": "268da6b2d90a980e34a5731450e2dd347fa44d68e44d9c142dd5468ac81b4ef3",
     "src/runtime/contexts/worklet-factory.ts": "b6c4347d35b9deae4e1bf111c1e4ae3b46d94662e044293d1436730f0dc0121e",
@@ -304,7 +313,8 @@
     "src/runtime/enforcement/script-urls.ts": "2c43c31ab427d7f7f0ded3a7b41539cc8b1c5981c2a55b974a318d7a7a878d66",
     "src/runtime/enforcement/scripts.ts": "f4395182ce91a96d2fa69e0a5a1eaf388f126a0f322af345c27ce75384f2d0f8",
     "src/runtime/guard.ts": "208c30e160e4f944a027d55ae69d9cd40c1c7e915b92e77b950023dd18b4120b",
-    "src/runtime/modules.ts": "45062e9a74b48da2b74086a7f247f86e0202cd43f166c8084cbaf5fd5377c675",
+    "src/runtime/module-loader.ts": "e081ec951f1d33e7a969ebb66237efedb91525e98cd7a207f8ebbdffe4b13e35",
+    "src/runtime/modules.ts": "156be04a5883b2e36c14615672deb6351bb4f303d0375768689e54e03d1106cf",
     "src/runtime/private-channel.ts": "923c307092870e32dde49079e5174abe694c45b2282edb8451d200dcc2abacae",
     "src/runtime/publisher/client.ts": "3ed993b7a293f570c5d2614955d872e720d882d2ada8d778ddf8e375cf58486b",
     "src/runtime/publisher/controller.ts": "d40a445b3c9a450899a74a74aedbf3befb7ea22a6943d5615b7170158a352325",
@@ -321,7 +331,7 @@
     "src/runtime/trusted/fragment.ts": "a0c25eeff36057f8f44efe1f0d4a215758c1a965efdcecbb107a602256e34bc0",
     "src/runtime/worker.ts": "e99e0f8012582a23fb166c799fe75dff1a6250e97e68d1cb0d165a367e205258",
     "src/shared/application-navigation.ts": "ff1aa86011a7aa5af0ccf8626f77d0b8a86883d4cc4e21cf92f7f1382d9cbdb4",
-    "src/shared/context-policy.ts": "9bb19203360ef125ca42c6064713d8338ba1a6e9205ce4a4c470a7545e536b02",
+    "src/shared/context-policy.ts": "f2ca74b3adc69b3af49539b38f10b2706d5e3a55fbd741e274a57644357ef17f",
     "src/shared/javascript-mime.ts": "f74e62db45c3b21353fbf6e10bedaf39176f7d8708ce401bef1e031ae427fb02",
     "src/shared/native-attributes.ts": "15bddc1c29489aecd61bc0397144ce2be1c88b16150f23943c38685b0a08e991",
     "src/shared/primordials.ts": "422a992a7e863c1b3b09f7d1484f10fa66a0300cdea007dfe485c9bf0c1e980c",
@@ -364,6 +374,7 @@
     "test/response-policy.test.ts": "f5b4e7a34d78d04232ed06cc5509f211f96dce1cacdfb2352d4d92274f955bdc",
     "test/run.ts": "c251a148802bcb633f9de6167f798f892ad7b38e8dda576b2356b641cb581642",
     "test/runtime-admission.test.ts": "075a2f522137e40dee5153492cc5e0c1f7a1fc63a0e056bef51f2ca5a6a7c6a1",
+    "test/runtime-modules.test.ts": "ce3acfa74b3d79e0d525a3552a27e09890d52fca4072dc5f557c377c8dd857d6",
     "test/script-url-gate.ts": "42e16cb76bd97d5cd1a5ce1843f1063e56b369aab2b94f1388edccadce407f93",
     "test/server.ts": "860d8d4362f40bd4eec8c7c1cd876dfdd66df65be1bd3a8a11cc71fa8b36217c",
     "test/shared-connections.ts": "7865484cd0ac7c55cc20a2fe70d9e10b1d42a690388232dcae4dc5149c82a56f",
@@ -373,7 +384,7 @@
     "test/website-installation.ts": "39ceb09d40115851c42f3535e421f091be1d986096bc9cb47381e3139b7cfad2",
     "test/worker-birth.test.ts": "b03a42a011a0fcf0b914bd0932fea3c49a56a51acab9d0d81b26d639c8a6556f",
     "test/worker-closure.ts": "493b7f642c3d16f3b2ae5b928b3ae7afea59e252763355628f91e951f992f199",
-    "test/worker-contexts.ts": "28b0c1acbe0bb93810d94b145bce6b5db3e1b544e8564e5618928557c7d156d5",
+    "test/worker-contexts.ts": "bdde8840cc2fbd75d32226363512b4ef72a6da22bbde0f155cf06f3a5d8f4676",
     "test/worker-control.test.ts": "64be68d6132e19c96c7dcc55be924ea52e830abd4c60cbf22a70a65089e52d91",
     "test/worker-namespaces.test.ts": "9613d3fc5555e5450a856329011961e0de041d5e4618eb0bca12d5fd27b89250",
     "test/worklet-contexts.ts": "4535bc5c707138db48764a1ddbeba086fa1950785a5a11cd0d1cfada24bcdd1e",
@@ -413,9 +424,7 @@
         {
           "kind": "model_fault",
           "description": "NetworkFallback and UnmediatedEffect have abstract TLC counterexamples.",
-          "paths": [
-            "formal/confinement/traces.json"
-          ]
+          "paths": ["formal/confinement/traces.json"]
         }
       ],
       "open_obligations": [
@@ -566,23 +575,17 @@
       "disposition": "reviewed-scoped",
       "preconditions": "The browser supports WebTransport and the target accepts HTTP/3.",
       "enforcement": "Deny the exposed native constructor before application execution.",
-      "source_paths": [
-        "src/runtime/enforcement/effects.ts"
-      ],
+      "source_paths": ["src/runtime/enforcement/effects.ts"],
       "evidence": [
         {
           "kind": "native_control",
           "description": "Both browsers exchanged a datagram and a bidirectional stream with an independent loopback HTTP/3 receiver.",
-          "paths": [
-            "formal/webtransport/results.json"
-          ]
+          "paths": ["formal/webtransport/results.json"]
         },
         {
           "kind": "confined_test",
           "description": "Installed app attempts in both browsers raised SecurityError and the receiver saw no UDP packets in the tested interval.",
-          "paths": [
-            "formal/webtransport/results.json"
-          ]
+          "paths": ["formal/webtransport/results.json"]
         }
       ],
       "open_obligations": [
@@ -601,30 +604,22 @@
       "disposition": "reviewed-scoped",
       "preconditions": "fetchLater is exposed and application causes deferred delivery, including page close.",
       "enforcement": "Deny fetchLater before publisher execution.",
-      "source_paths": [
-        "src/runtime/enforcement/effects.ts"
-      ],
+      "source_paths": ["src/runtime/enforcement/effects.ts"],
       "evidence": [
         {
           "kind": "native_control",
           "description": "Full Chromium delivered immediate and page-close POSTs; a controlled-worker close control bypassed its worker.",
-          "paths": [
-            "formal/evidence/fetch-later.json"
-          ]
+          "paths": ["formal/evidence/fetch-later.json"]
         },
         {
           "kind": "confined_test",
           "description": "Prepared calls and current-descriptor recovery were denied; receiver remained silent through page close and a final native control.",
-          "paths": [
-            "formal/evidence/fetch-later.json"
-          ]
+          "paths": ["formal/evidence/fetch-later.json"]
         },
         {
           "kind": "fault_control",
           "description": "A test-only bundle removes the fetchLater deny-list entry; the prepared page schedules a marker request that reaches the receiver after close.",
-          "paths": [
-            "formal/evidence/fetch-later.json"
-          ]
+          "paths": ["formal/evidence/fetch-later.json"]
         }
       ],
       "open_obligations": [
@@ -701,23 +696,17 @@
         {
           "kind": "native_control",
           "description": "Both tested browsers delivered marker-bearing native CSP reports to an independent receiver.",
-          "paths": [
-            "formal/evidence/reporting.json"
-          ]
+          "paths": ["formal/evidence/reporting.json"]
         },
         {
           "kind": "fault_control",
           "description": "A test-only reporting header produced a marker-bearing report outside the worker in Firefox; Chromium worker intercepted it.",
-          "paths": [
-            "formal/evidence/reporting.json"
-          ]
+          "paths": ["formal/evidence/reporting.json"]
         },
         {
           "kind": "confined_test",
           "description": "Prepared production-header cases saw no marker report; one metadata-injection route was denied.",
-          "paths": [
-            "formal/evidence/reporting.json"
-          ]
+          "paths": ["formal/evidence/reporting.json"]
         }
       ],
       "open_obligations": [
@@ -747,23 +736,17 @@
         {
           "kind": "native_control",
           "description": "Full Chromium delivered a modern CSP report to a separate HTTPS collector.",
-          "paths": [
-            "formal/evidence/modern-reporting.json"
-          ]
+          "paths": ["formal/evidence/modern-reporting.json"]
         },
         {
           "kind": "fault_control",
           "description": "Test-injected trusted reporting headers caused an application-selected marker to reach the collector despite connect-src and Connection Allowlist.",
-          "paths": [
-            "formal/evidence/modern-reporting.json"
-          ]
+          "paths": ["formal/evidence/modern-reporting.json"]
         },
         {
           "kind": "confined_test",
           "description": "Prepared production-header attempts produced no marker at the independent receiver in the tested profile.",
-          "paths": [
-            "formal/evidence/modern-reporting.json"
-          ]
+          "paths": ["formal/evidence/modern-reporting.json"]
         }
       ],
       "open_obligations": [
@@ -784,24 +767,17 @@
       "disposition": "unverified",
       "preconditions": "A browser has an existing NEL policy and a network event can carry application-controlled data.",
       "enforcement": "Ordinary unknown requests must be intercepted and fail locally; unmediated browser requests need their own controls.",
-      "source_paths": [
-        "src/runtime/worker.ts",
-        "src/runtime/response-policy.ts"
-      ],
+      "source_paths": ["src/runtime/worker.ts", "src/runtime/response-policy.ts"],
       "evidence": [
         {
           "kind": "native_control",
           "description": "Full Chromium delivered NEL markers before and after the prepared scenario to a separate collector.",
-          "paths": [
-            "formal/evidence/modern-reporting.json"
-          ]
+          "paths": ["formal/evidence/modern-reporting.json"]
         },
         {
           "kind": "confined_test",
           "description": "Selected prepared GET, POST and image requests produced no marker with the native policy still active.",
-          "paths": [
-            "formal/evidence/modern-reporting.json"
-          ]
+          "paths": ["formal/evidence/modern-reporting.json"]
         }
       ],
       "open_obligations": [
@@ -831,16 +807,12 @@
         {
           "kind": "native_control",
           "description": "Chromium delivered a native background download and sync-handler fetch.",
-          "paths": [
-            "formal/evidence/background-agents.json"
-          ]
+          "paths": ["formal/evidence/background-agents.json"]
         },
         {
           "kind": "confined_test",
           "description": "With a seeded registration, selected Window getter, method, constructor and forged-receiver attempts could not recover it; no marker arrived.",
-          "paths": [
-            "formal/evidence/background-agents.json"
-          ]
+          "paths": ["formal/evidence/background-agents.json"]
         },
         {
           "kind": "confined_test",
@@ -871,23 +843,17 @@
       "disposition": "unverified",
       "preconditions": "The browser exposes the experimental imperative or declarative installation API and receives activation.",
       "enforcement": "Sandbox response policy rejects tested operations before browser-managed manifest fetch.",
-      "source_paths": [
-        "src/runtime/response-policy.ts"
-      ],
+      "source_paths": ["src/runtime/response-policy.ts"],
       "evidence": [
         {
           "kind": "native_control",
           "description": "Flag-enabled full Chromium fetched invalid same-origin manifests via both entry points, with and without blocking worker.",
-          "paths": [
-            "formal/evidence/web-install.json"
-          ]
+          "paths": ["formal/evidence/web-install.json"]
         },
         {
           "kind": "confined_test",
           "description": "Prepared same-origin requests were rejected by sandbox; receiver saw no marker.",
-          "paths": [
-            "formal/evidence/web-install.json"
-          ]
+          "paths": ["formal/evidence/web-install.json"]
         },
         {
           "kind": "fault_control",
@@ -918,10 +884,7 @@
       "disposition": "unverified",
       "preconditions": "A link or area click causes a ping request.",
       "enforcement": "Restrict navigation/default actions and intercept ordinary HTTP where the browser routes ping through its worker.",
-      "source_paths": [
-        "src/runtime/enforcement/navigation.ts",
-        "src/runtime/worker.ts"
-      ],
+      "source_paths": ["src/runtime/enforcement/navigation.ts", "src/runtime/worker.ts"],
       "evidence": [
         {
           "kind": "native_control",
@@ -934,9 +897,7 @@
         {
           "kind": "confined_test",
           "description": "Worker observed and refused selected native auditing requests after actual preparation.",
-          "paths": [
-            "formal/evidence/hyperlink-auditing.json"
-          ]
+          "paths": ["formal/evidence/hyperlink-auditing.json"]
         }
       ],
       "open_obligations": [
@@ -967,23 +928,17 @@
         {
           "kind": "confined_test",
           "description": "Selected HTML/SVG document scenarios and native references were exercised.",
-          "paths": [
-            "formal/evidence/contexts-document-contexts.json"
-          ]
+          "paths": ["formal/evidence/contexts-document-contexts.json"]
         },
         {
           "kind": "model_fault",
           "description": "Early publication and unsafe execution are checked as abstract Lifecycle faults.",
-          "paths": [
-            "formal/confinement/traces.json"
-          ]
+          "paths": ["formal/confinement/traces.json"]
         },
         {
           "kind": "trace_comparison",
           "description": "Test-only paused-guard upgrade scenarios have partial observed-trace completions and explicit inferred steps.",
-          "paths": [
-            "formal/startup/lifecycle-comparison.json"
-          ]
+          "paths": ["formal/startup/lifecycle-comparison.json"]
         }
       ],
       "open_obligations": [
@@ -1054,9 +1009,7 @@
         {
           "kind": "model_fault",
           "description": "Forged installation/management authority is represented as a bounded abstract fault.",
-          "paths": [
-            "formal/confinement/traces.json"
-          ]
+          "paths": ["formal/confinement/traces.json"]
         }
       ],
       "open_obligations": [
@@ -1076,30 +1029,22 @@
       "disposition": "reviewed-scoped",
       "preconditions": "A resource read overlaps or follows replacement of its installation.",
       "enforcement": "Read generation and resource bytes in one transaction and reject a different expected generation.",
-      "source_paths": [
-        "src/runtime/storage.ts"
-      ],
+      "source_paths": ["src/runtime/storage.ts"],
       "evidence": [
         {
           "kind": "confined_test",
           "description": "Chromium and Firefox exercised twelve actual IndexedDB overlap pairs per engine.",
-          "paths": [
-            "formal/evidence/generation-overlaps.json"
-          ]
+          "paths": ["formal/evidence/generation-overlaps.json"]
         },
         {
           "kind": "trace_comparison",
           "description": "Twenty-four observed pairs admit a bounded modeled completion; altered outcomes are refused.",
-          "paths": [
-            "formal/confinement/generation-implementation-traces.json"
-          ]
+          "paths": ["formal/confinement/generation-implementation-traces.json"]
         },
         {
           "kind": "model_fault",
           "description": "Split read, split write and omitted generation check yield model counterexamples.",
-          "paths": [
-            "formal/confinement/generation-read-traces.json"
-          ]
+          "paths": ["formal/confinement/generation-read-traces.json"]
         }
       ],
       "open_obligations": [
@@ -1118,9 +1063,7 @@
       "disposition": "unverified",
       "preconditions": "A browser feature, nested object, browser agent or implementation behavior has not been reviewed.",
       "enforcement": "None established; preserve as an explicit gap.",
-      "source_paths": [
-        "src/runtime/enforcement/effects.ts"
-      ],
+      "source_paths": ["src/runtime/enforcement/effects.ts"],
       "evidence": [
         {
           "kind": "discovery",
@@ -1133,9 +1076,7 @@
         {
           "kind": "discovery",
           "description": "Native Window/Navigator/Document and dedicated-worker snapshot covers property names, not all reachable browser objects.",
-          "paths": [
-            "formal/browser-features.json"
-          ]
+          "paths": ["formal/browser-features.json"]
         },
         {
           "kind": "discovery",
@@ -1248,10 +1189,7 @@
         {
           "kind": "confined_test",
           "description": "Context and connection fixtures test selected startup and native port behavior.",
-          "paths": [
-            "test/shared-worker-contexts.ts",
-            "test/shared-connections.ts"
-          ]
+          "paths": ["test/shared-worker-contexts.ts", "test/shared-connections.ts"]
         }
       ],
       "open_obligations": [
@@ -1346,9 +1284,7 @@
         {
           "kind": "discovery",
           "description": "The bounded Web IDL review includes selected identity and network interfaces, not a complete device or OS inventory.",
-          "paths": [
-            "formal/evidence/idl-surface-report.json"
-          ]
+          "paths": ["formal/evidence/idl-surface-report.json"]
         }
       ],
       "open_obligations": [
@@ -1402,9 +1338,7 @@
       "disposition": "reviewed-scoped",
       "preconditions": "An authenticated installer submits a bundle with supplied paths, URLs, bytes, digests and entry metadata.",
       "enforcement": "Validate selected path, URL, digest and entry conditions before committing installation data.",
-      "source_paths": [
-        "src/runtime/admission.ts"
-      ],
+      "source_paths": ["src/runtime/admission.ts"],
       "evidence": [
         {
           "kind": "trace_comparison",
@@ -1417,9 +1351,7 @@
         {
           "kind": "fault_control",
           "description": "Isolated test-only mutations of digest, path and entry checks admit their relevant invalid fixtures; duplicate URL alone remains rejected by another check.",
-          "paths": [
-            "formal/admission/implementation-results.json"
-          ]
+          "paths": ["formal/admission/implementation-results.json"]
         }
       ],
       "open_obligations": [
@@ -1478,16 +1410,12 @@
       "title": "EventSource and sendBeacon",
       "preconditions": "Application code accesses these APIs or recovers their native implementations.",
       "enforcement": "Deny the EventSource constructor and navigator.sendBeacon in prepared contexts.",
-      "source_paths": [
-        "src/runtime/enforcement/effects.ts"
-      ],
+      "source_paths": ["src/runtime/enforcement/effects.ts"],
       "evidence": [
         {
           "kind": "discovery",
           "description": "The browser-surface inventory identifies the deny paths and explicitly notes missing API-specific active controls.",
-          "paths": [
-            "formal/browser-surface-inventory.md"
-          ]
+          "paths": ["formal/browser-surface-inventory.md"]
         },
         {
           "kind": "native_control",
@@ -1524,16 +1452,12 @@
       "title": "Direct TCP/UDP and WebSocketStream",
       "preconditions": "A supported browser exposes a direct socket or WebSocketStream API to application code.",
       "enforcement": "Deny the named constructors in prepared contexts.",
-      "source_paths": [
-        "src/runtime/enforcement/effects.ts"
-      ],
+      "source_paths": ["src/runtime/enforcement/effects.ts"],
       "evidence": [
         {
           "kind": "discovery",
           "description": "The browser-surface inventory lists the named denial and distinguishes socket-specific controls from the separate WebTransport and WebSocket tests.",
-          "paths": [
-            "formal/browser-surface-inventory.md"
-          ]
+          "paths": ["formal/browser-surface-inventory.md"]
         }
       ],
       "open_obligations": [
@@ -1565,10 +1489,7 @@
         {
           "kind": "discovery",
           "description": "The installation fixture contains checks for virtual registration, update and preload methods; the inventory identifies browser updater behavior as a separate platform obligation.",
-          "paths": [
-            "test/website-installation.ts",
-            "formal/browser-surface-inventory.md"
-          ]
+          "paths": ["test/website-installation.ts", "formal/browser-surface-inventory.md"]
         },
         {
           "kind": "native_control",
@@ -1678,14 +1599,11 @@
         },
         {
           "kind": "discovery",
-          "description": "The policy-8 frozen candidate passes 48 fresh-registration samples but fails the 24-sample forced-age comparison: four classic-dynamic/module operations reach the runtime service-worker script. Archived policy-7 and initial policy-8 failures retain their original inputs. This is a counterexample to complete C4, despite the passing full suite and eight-app comparison.",
+          "description": "Historical policy-8 validation, pinned by the index artifactRevision, records 48 fresh samples and four forbidden effects in 24 forced-age samples. Those raw artifacts must be read at that revision. Current policy-10 maintenance evidence is recorded separately below.",
           "paths": [
-            "formal/runtime-verification/service-worker-maintenance.ts",
-            "formal/runtime-verification/service-worker-maintenance.json",
-            "formal/runtime-verification/service-worker-startup-stale.json",
+            "formal/runtime-verification/local-classic-script-validation.json",
             "formal/runtime-verification/service-worker-startup-stale-policy7.json",
-            "formal/runtime-verification/service-worker-startup-stale-policy8-initial.json",
-            "formal/runtime-verification/local-classic-script-validation.json"
+            "formal/runtime-verification/service-worker-startup-stale-policy8-initial.json"
           ]
         },
         {
@@ -1708,6 +1626,24 @@
             "formal/runtime-verification/local-shared-issuer.md",
             "formal/runtime-verification/local-shared-issuer-port.json"
           ]
+        },
+        {
+          "kind": "discovery",
+          "description": "CI at revision 0e6c9f6 reproduces four private-bit-dependent aged-registration requests with working native controls. Its fresh comparison observes zero confined HTTP but lacks Chromium classic and module positive controls, so that comparison is inconclusive. The initial expanded policy-10 run retains 29 samples before its generated-import case times out; it is not a complete comparison.",
+          "paths": [
+            "formal/runtime-verification/service-worker-maintenance-ci-policy9.json",
+            "formal/runtime-verification/service-worker-startup-stale-ci-policy9.json",
+            "formal/runtime-verification/service-worker-startup-stale-policy10-generated-initial.json"
+          ]
+        },
+        {
+          "kind": "discovery",
+          "description": "Policy 10 completes all 32 forced-age samples with working native controls. Classic, classic-dynamic and ordinary module confined groups are quiet. Generated native imports still cause two private-bit-dependent runtime service-worker requests, with both worker lifetimes; the command correctly fails. Complete C4 remains unestablished.",
+          "paths": [
+            "formal/runtime-verification/service-worker-maintenance.ts",
+            "formal/runtime-verification/service-worker-startup-stale.json",
+            "formal/runtime-verification/policy10-validation.json"
+          ]
         }
       ],
       "open_obligations": [
@@ -1724,7 +1660,7 @@
         "Native HTTP worker and frame bootstraps reach the server after unregistration in both browsers, in addition to the earlier Firefox Blob-worker resource loss. A retained parent controller cannot justify new-context bootstrap interception; production local bootstrap and resource delivery still require implementation and proof.",
         "Policy-6 script URL integration changes a referenced implementation boundary. Earlier receipts retain their recorded scopes and inputs; revalidate this claim under the new native policy and complete its caller/browser correspondence before treating it as established for the current candidate.",
         "Policy-7 local dedicated-worker startup changes referenced integration code. Earlier receipts retain their recorded source/build scopes; caller ownership, current integration and lifecycle correspondence require review.",
-        "The four policy-8 forced-age update observations prevent complete confinement. Integrate and verify a replacement module path and account for remaining contexts, resource types and pending browser maintenance."
+        "Historical policy-8/9 runs contain four aged-registration effects. Policy 10 still emits two effects through generated native imports. Integrate independent native HTTP denial across all contexts and complete the browser lifecycle argument."
       ],
       "disposition": "unverified",
       "control_status": {
@@ -1738,18 +1674,12 @@
       "title": "WebAssembly and imported capabilities",
       "preconditions": "An application executes native WebAssembly and supplies or obtains JavaScript imports with browser authority.",
       "enforcement": "Application Wasm executes in the prepared context; accessible imported browser effects must obey the same boundary as other application code.",
-      "source_paths": [
-        "src/runtime/modules.ts",
-        "src/runtime/contexts/worker-realm.ts"
-      ],
+      "source_paths": ["src/runtime/modules.ts", "src/runtime/contexts/worker-realm.ts"],
       "evidence": [
         {
           "kind": "discovery",
           "description": "The Wasm fixture exercises a module worker, Wasm computation and a separate JavaScript fetch attempt with receiver checks; the fixture source is not a saved current execution receipt.",
-          "paths": [
-            "test/wasm.ts",
-            "formal/browser-surface-inventory.md"
-          ]
+          "paths": ["test/wasm.ts", "formal/browser-surface-inventory.md"]
         },
         {
           "kind": "native_control",
@@ -1831,10 +1761,7 @@
       "disposition": "reviewed-scoped",
       "preconditions": "An installation supplies resource paths resolved against its application address.",
       "enforcement": "Resolve each resource as relative to the application and reject paths escaping the application directory or colliding after URL normalization.",
-      "source_paths": [
-        "src/runtime/admission.ts",
-        "src/shared/runtime-url.ts"
-      ],
+      "source_paths": ["src/runtime/admission.ts", "src/shared/runtime-url.ts"],
       "evidence": [
         {
           "kind": "historical_control",
@@ -1848,10 +1775,7 @@
         {
           "kind": "confined_test",
           "description": "The runtime admission suite checks normal paths, scheme-like names and entries, normalization escapes and collisions in both browsers. The installer fixture checks colon-named and nested resource loading.",
-          "paths": [
-            "test/runtime-admission.test.ts",
-            "test/resource-paths.ts"
-          ]
+          "paths": ["test/runtime-admission.test.ts", "test/resource-paths.ts"]
         },
         {
           "kind": "formal_theorem",
@@ -1927,10 +1851,7 @@
         {
           "kind": "discovery",
           "description": "The standards review identifies static network routes and native worker client navigation as conditional effects. It does not establish application access to those native objects.",
-          "paths": [
-            "formal/route-review/README.md",
-            "formal/route-review/triage.json"
-          ]
+          "paths": ["formal/route-review/README.md", "formal/route-review/triage.json"]
         },
         {
           "kind": "native_control",
@@ -1971,9 +1892,7 @@
         {
           "kind": "discovery",
           "description": "A native Chromium openWindow calibration following a real click was rejected with InvalidAccessError; no native positive or paired confinement result is claimed.",
-          "paths": [
-            "formal/publisher-open-window-limitation.md"
-          ]
+          "paths": ["formal/publisher-open-window-limitation.md"]
         }
       ],
       "open_obligations": [
@@ -2071,9 +1990,7 @@
         {
           "kind": "discovery",
           "description": "The complete eight-app corpus passed native and confined tasks in Chromium and Firefox after moving native cancellation capture before intrinsic/tool preparation. Source and artifact hashes identify the tested uncommitted inputs; this is compatibility evidence, separate from receiver tests and proofs.",
-          "paths": [
-            "formal/implementation-navigation/compatibility-native-capture.json"
-          ]
+          "paths": ["formal/implementation-navigation/compatibility-native-capture.json"]
         },
         {
           "kind": "discovery",
@@ -2102,9 +2019,7 @@
         {
           "kind": "discovery",
           "description": "All eight applications pass their selected native and confined tasks in Chromium and Firefox after introducing the early kernel and deferred root/child module initialization. Build hashes remain stable across the run; compatibility evidence does not prove confinement.",
-          "paths": [
-            "formal/implementation-navigation/compatibility-early-kernel.json"
-          ]
+          "paths": ["formal/implementation-navigation/compatibility-early-kernel.json"]
         },
         {
           "kind": "discovery",
@@ -2232,9 +2147,7 @@
         {
           "kind": "discovery",
           "description": "The unchanged eight-application corpus compares selected native and confined tasks and offline use on the recorded local build. This is compatibility evidence, not proof of broker authority or browser-wide confinement.",
-          "paths": [
-            "formal/runtime-verification/root-content-compatibility.json"
-          ]
+          "paths": ["formal/runtime-verification/root-content-compatibility.json"]
         }
       ],
       "open_obligations": [
@@ -2310,10 +2223,7 @@
         {
           "kind": "discovery",
           "description": "The ordinary host integration test exercises 16 groups in both browsers, including local display of a refused message resource read. Its receipt pins the later diagnostic-logging candidate; the corpus and transport experiments retain their own saved inputs.",
-          "paths": [
-            "test/run.ts",
-            "results/browser.json"
-          ]
+          "paths": ["test/run.ts", "results/browser.json"]
         }
       ],
       "open_obligations": [
@@ -2385,9 +2295,7 @@
         {
           "kind": "discovery",
           "description": "All eight unchanged applications pass native/confined tasks and offline reloads in Chromium and Firefox. Initial/final corpus source and artifact inputs are stable. A later test-only authorization fixture refinement leaves the built production artifacts byte-identical to those recorded by the corpus.",
-          "paths": [
-            "formal/runtime-verification/document-control-compatibility.json"
-          ]
+          "paths": ["formal/runtime-verification/document-control-compatibility.json"]
         }
       ],
       "open_obligations": [
@@ -2542,10 +2450,7 @@
         {
           "kind": "native_control",
           "description": "The actual built controller accepts owning-parent configuration after native binding; sibling and wrong-token requests fail and concurrent parent/child consumption delivers once. Native browser windows and real storage are used with an inert child guard.",
-          "paths": [
-            "test/document-control.ts",
-            "results/contexts/document-control.json"
-          ]
+          "paths": ["test/document-control.ts", "results/contexts/document-control.json"]
         },
         {
           "kind": "confined_test",
@@ -2573,9 +2478,7 @@
         {
           "kind": "discovery",
           "description": "Selected unchanged application tasks and offline reloads run against the changed runtime in both browsers. These are compatibility observations, not a whole-runtime proof.",
-          "paths": [
-            "formal/runtime-verification/parent-document-compatibility.json"
-          ]
+          "paths": ["formal/runtime-verification/parent-document-compatibility.json"]
         }
       ],
       "open_obligations": [
@@ -2686,10 +2589,7 @@
       "disposition": "reviewed-scoped",
       "preconditions": "Current is absent or an owned ordinary record with current policy version 6; expected is an owned ordinary record. Identity fields are strings, parents are null or strings and policy versions are numeric. Separate and aliased records use distinct contracts. Native actor authentication and current-record filtering remain caller obligations.",
       "enforcement": "The actual sameAuthority expression compares context ID, application, installation generation, parent, kind, policy version and URL, and rejects a closed expectation. It preserves the owned record properties and prototypes. The checker extracts the production function, erases types and renames function copies for independently reported contracts; it does not substitute an abstract implementation. The runner checks the registry value import and shared numeric const declaration, recording both source hashes.",
-      "source_paths": [
-        "src/runtime/contexts/model.ts",
-        "src/shared/context-policy.ts"
-      ],
+      "source_paths": ["src/runtime/contexts/model.ts", "src/shared/context-policy.ts"],
       "evidence": [
         {
           "kind": "deductive_verification",
@@ -2990,10 +2890,7 @@
         {
           "kind": "fault_control",
           "description": "The same production helper refuses setup when its CSP enforcement is omitted, the native API is shadowed away, or the private policy name is occupied. No application test exerciser is published in those six cases; these are actual setup-contract controls, not a symbolic omission flag.",
-          "paths": [
-            "test/script-url-gate.ts",
-            "results/contexts/script-url-gate.json"
-          ]
+          "paths": ["test/script-url-gate.ts", "results/contexts/script-url-gate.json"]
         },
         {
           "kind": "confined_test",
@@ -3060,10 +2957,7 @@
         {
           "kind": "native_control",
           "description": "The worker-context fixture retains native operations before guard setup and runs unrestricted fetch/import recovery controls. The owned receiver observes requests and connections in both browsers; these controls are not a creator-ownership proof.",
-          "paths": [
-            "test/worker-contexts.ts",
-            "results/contexts/workers.json"
-          ]
+          "paths": ["test/worker-contexts.ts", "results/contexts/workers.json"]
         },
         {
           "kind": "confined_test",
@@ -3141,7 +3035,7 @@
         },
         {
           "kind": "confined_test",
-          "description": "The policy-9 validation binds 199 unit checks, the complete browser suite, 32 selected native/confined tasks and 16 offline reloads to source cb8dddfd. Its 48 fresh maintenance samples pass; its 24 forced-age samples retain four forbidden requests. Historical policy-8 validation and the partially preserved fragment regression retain their original scopes.",
+          "description": "The policy-9 validation at its artifactRevision records 199 unit checks, the full suite, 32 selected native/confined tasks and 16 offline reloads. Its historical fresh comparison passes locally; forced-age samples retain four effects. Current worker and compatibility receipts have their own source/build scope and do not replace that frozen history.",
           "paths": [
             "formal/runtime-verification/local-classic-script-validation.json",
             "results/trusted-runtime/compatibility-local.json",
@@ -3153,8 +3047,7 @@
       ],
       "open_obligations": [
         "Prove private ownership, caller preconditions, native local-delivery contracts and complete asynchronous lifecycle correspondence.",
-        "Computed relative dynamic imports do not automatically preserve their base after classic scripts move to Blob URLs. Validate a replacement module path without changing publisher applications.",
-        "Classic dynamic import and module workers still produce the four forced-age HTTP observations. This claim does not establish C4 or complete confinement."
+        "Policy 10 routes classic computed imports through a local adapter and compares their base, lexical shadowing, conversion order and global declarations with native execution. Production HTTP denial, generated native imports and complete C4 coverage remain unresolved; historical policy-8/9 receipts retain their pinned revision scopes."
       ],
       "control_status": {
         "native_control": "recorded",
@@ -3168,9 +3061,7 @@
       "disposition": "unverified",
       "preconditions": "An owned native fixture registers a service worker before measurement. The parent installs a local-only CSP before Blob-worker construction. Browser CSP inheritance and enforcement are tested in the recorded versions; production preparation and Trusted Types are not part of this fixture.",
       "enforcement": "The compatibility loader uses a local Response hook. An independent native policy admits Blob scripts and denies HTTP scripts and connections. After the parent removes its policy meta element, the worker still rejects remote imports with native policy-violation events. Mutable loader records do not decide native HTTP admission in this candidate.",
-      "source_paths": [
-        "formal/runtime-verification/module-loader-browser.ts"
-      ],
+      "source_paths": ["formal/runtime-verification/module-loader-browser.ts"],
       "evidence": [
         {
           "kind": "native_control",
@@ -3192,6 +3083,15 @@
             "formal/runtime-verification/module-loader-browser-persistent.json",
             "formal/runtime-verification/module-loader-browser-ci-policy8.json"
           ]
+        },
+        {
+          "kind": "confined_test",
+          "description": "The actual prepared module-worker component completes 24 native-policy fixture cases with stable source, build and runner inputs. Native controls calibrate graph semantics and HTTP imports; restricted cases deny native imports and mutable-registry HTTP selection. Fixture resource authority and verification do not establish production actor authentication or the complete installed-host protocol.",
+          "paths": [
+            "formal/runtime-verification/module-loader-guard-browser.json",
+            "formal/runtime-verification/module-loader-browser.ts",
+            "formal/runtime-verification/module-loader-assessment.md"
+          ]
         }
       ],
       "open_obligations": [
@@ -3201,7 +3101,7 @@
       ],
       "control_status": {
         "native_control": "recorded",
-        "confined_test": "not-recorded",
+        "confined_test": "recorded",
         "fault_control": "not-recorded"
       }
     },
@@ -3279,6 +3179,77 @@
         "native_control": "recorded",
         "confined_test": "recorded",
         "fault_control": "recorded"
+      }
+    },
+    {
+      "id": "local_worker_module_delivery",
+      "title": "Prepared worker local module delivery and dynamic-import compatibility",
+      "disposition": "unverified",
+      "preconditions": "The prepared worker owns its mediated resource reader and captured operations. Native HTTP admission must be enforced independently of the compatibility loader. Production ownership and complete context preparation remain separate proof obligations.",
+      "enforcement": "Policy 10 pins ES Module Shims 2.8.4, initializes it after preparation and base setup, and uses the existing local fetch adapter. Its source hook and classic-script relocation route ordinary dynamic imports through a global-scope adapter. Loader records are application state and do not decide whether native HTTP is permitted.",
+      "source_paths": [
+        "src/runtime/module-loader.ts",
+        "src/runtime/modules.ts",
+        "src/runtime/contexts/worker-realm.ts",
+        "scripts/trusted-policy.ts",
+        "src/shared/context-policy.ts",
+        "package.json",
+        "package-lock.json"
+      ],
+      "evidence": [
+        {
+          "kind": "native_control",
+          "description": "The worker fixture checks ordinary native worker execution, including computed imports with shadowed names, synchronous specifier conversion and options reads, Symbol rejection and classic global declarations in Chromium and Firefox.",
+          "paths": ["test/worker-contexts.ts", "results/contexts/workers.json"]
+        },
+        {
+          "kind": "confined_test",
+          "description": "The same expanded worker checks pass against the installed candidate in both browsers. The separate actual-preparation graph fixture passes 24 component cases with stable inputs. These receipts do not establish whole-runtime confinement.",
+          "paths": [
+            "results/contexts/workers.json",
+            "formal/runtime-verification/module-loader-guard-browser.json",
+            "formal/runtime-verification/module-loader-browser.ts"
+          ]
+        },
+        {
+          "kind": "discovery",
+          "description": "General AST relocation tests exercise nested computed imports, parenthesized arguments, trailing commas, lexical shadowing and preservation of comments, strings and phase imports. The typed review boundary identifies the implementation and the remaining independent native-policy obligation.",
+          "paths": [
+            "test/runtime-modules.test.ts",
+            "formal/runtime-verification/boundaries.ts",
+            "formal/runtime-verification/implementation-inventory.json",
+            "formal/runtime-verification/module-loader-assessment.md"
+          ]
+        },
+        {
+          "kind": "discovery",
+          "description": "The source/build-bound candidate index records 201 unit checks and a successful full regression suite, alongside the failed expanded aged-registration comparison. Raw local test logs retain command output; the component results do not certify C1-C8.",
+          "paths": [
+            "formal/runtime-verification/policy10-validation.json",
+            "formal/runtime-verification/policy10-full-test.log",
+            "formal/runtime-verification/policy10-unit-test.log",
+            "formal/runtime-verification/service-worker-startup-stale.json"
+          ]
+        },
+        {
+          "kind": "confined_test",
+          "description": "All eight unchanged applications pass selected standalone and confined tasks in Chromium and Firefox, with sixteen offline reloads. The source and build inputs remain stable and match the prepared-worker candidate. This is application compatibility evidence, not complete mediation or C1-C8 verification.",
+          "paths": [
+            "results/trusted-runtime/compatibility-local.json",
+            "formal/runtime-verification/policy10-corpus.log",
+            "formal/runtime-verification/policy10-validation.json"
+          ]
+        }
+      ],
+      "open_obligations": [
+        "Production CSP still permits runtime-origin HTTP. Establish local-only native script admission before application execution in every supported context, including generated native imports.",
+        "Complete the native semantic comparison for import attributes, phase imports, module identity and lifetime behavior; preserve unchanged applications.",
+        "Prove caller ownership and model correspondence, and establish browser-effect coverage, retained-state conditions and composition for C1-C8."
+      ],
+      "control_status": {
+        "native_control": "recorded",
+        "confined_test": "recorded",
+        "fault_control": "not-recorded"
       }
     }
   ]

@@ -25,6 +25,7 @@ import { createSharedWorkerFactory } from './shared-worker-factory.ts';
 import { prepareScriptURLs } from '../enforcement/script-urls.ts';
 import type { WorkerBirth } from './worker-birth-protocol.ts';
 import { createClassicScripts } from './classic-scripts.ts';
+import { createModuleLoader } from '../module-loader.ts';
 const worker = self as unknown as DedicatedWorkerGlobalScope;
 const rawAdd = EventTarget.prototype.addEventListener;
 const rawImport = worker.importScripts;
@@ -182,12 +183,15 @@ export function prepareWorkerRealm(
     }),
   );
   resources.install(context.aliases, undefined, context.rootAliases);
+  const modules = createModuleLoader(worker.fetch.bind(worker), (code, url) =>
+    relocateRuntimeModule(code, url, resources, true),
+  );
   const classicScripts = createClassicScripts(
     context.scripts,
     (url) => fetchResource(url),
     (body, url) => {
       const code: string = apply(decode, decoder, [body]);
-      const relocated = relocateRuntimeModule(code, url, resources);
+      const relocated = relocateRuntimeModule(code, url, resources, true);
       return relocated === code ? body : relocated;
     },
   );
@@ -282,18 +286,22 @@ export function prepareWorkerRealm(
         ),
       ),
     );
+  const publicHost = internalRecord({
+    version: 1,
+    application: context.identity.application,
+    mode: 'network-isolated',
+    context: context.identity.kind,
+  });
+  Object.defineProperty(
+    publicHost,
+    'importModule',
+    internalRecord({ value: modules.importModule }),
+  );
   Object.defineProperty(
     worker,
     'privacyHost',
     internalRecord({
-      value: Object.freeze(
-        internalRecord({
-          version: 1,
-          application: context.identity.application,
-          mode: 'network-isolated',
-          context: context.identity.kind,
-        }),
-      ),
+      value: Object.freeze(publicHost),
       writable: false,
       configurable: false,
     }),
@@ -362,11 +370,10 @@ export function prepareWorkerRealm(
             !strings.startsWith(source, 'blob:')
           )
             throw new Error('Invalid worker Blob body');
-          const code = relocateRuntimeModule(
-            new TextDecoder().decode(start.body),
-            source,
-            resources,
-          );
+          const decoded: string = apply(decode, decoder, [start.body]);
+          const code = module
+            ? decoded
+            : relocateRuntimeModule(decoded, source, resources, true);
           blob = apply(rawCreateURL, NativeURL, [
             new NativeBlob([code], internalRecord({ type: 'text/javascript' })),
           ]);
@@ -375,8 +382,11 @@ export function prepareWorkerRealm(
           throw new Error('Worker Blob bytes are missing');
         await control('verify', []);
         applicationListenerReady = notify;
-        if (module) await import(entry);
-        else apply(rawImport, worker, [scriptURL(localClassicScript(entry))]);
+        if (module) await modules.load(entry);
+        else {
+          modules.prepare();
+          apply(rawImport, worker, [scriptURL(localClassicScript(entry))]);
+        }
         notify();
       } catch (error) {
         classicScripts.close();

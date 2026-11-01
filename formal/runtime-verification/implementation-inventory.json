@@ -4,7 +4,7 @@
   "typescriptVersion": "6.0.3",
   "contractSHA256": "57c378112e1d53c1223955a6e0a28b546e0a6ec3e90895f0deec46908ca9017f",
   "generatorSHA256": "30a433edc9bc21d25c4790a9540e6eeb271f382c12f4fefeccd1dba1b75a47c2",
-  "boundaryDefinitionsSHA256": "2b979e7a0bb388483ea1a763352b0fc8c0e882ff67a173eabdb4e161e7a5c83e",
+  "boundaryDefinitionsSHA256": "52342fd479428cf1c376807a6998dfab4d8da8cb28a2b9d72b253b2eb91040d6",
   "boundaries": [
     {
       "id": "script-url-admission",
@@ -112,6 +112,26 @@
         "src/runtime/resource-broker.ts",
         "src/runtime/contexts/worker-guard.ts",
         "src/runtime/contexts/worker-realm.ts"
+      ]
+    },
+    {
+      "id": "local-module-delivery",
+      "obligation": "Deliver admitted JavaScript graphs locally, preserve import semantics, and establish native HTTP denial independently of mutable loader records.",
+      "invariants": [
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "C8"
+      ],
+      "sources": [
+        "src/runtime/module-loader.ts",
+        "src/runtime/modules.ts",
+        "src/runtime/resource-fetch.ts",
+        "src/runtime/contexts/worker-realm.ts",
+        "scripts/trusted-policy.ts",
+        "src/runtime/response-policy.ts",
+        "src/shared/script-url-policy.ts"
       ]
     },
     {
@@ -307,12 +327,13 @@
     },
     {
       "path": "scripts/trusted-policy.ts",
-      "sourceSHA256": "70e79090266deef9388bbf19ec8c9b909f0e00de6f68a3aab5a3e84de65e6721",
+      "sourceSHA256": "c3d6558cd78422d52ab971692482bda02c10ff601053471f35f6b5491cfb395d",
       "boundaries": [
-        "dedicated-worker-publication"
+        "dedicated-worker-publication",
+        "local-module-delivery"
       ],
-      "siteCount": 16,
-      "sitesSHA256": "ec2194affed639df80506671ea780fa7b01061c69bc94d9de1e4ba03956b017e"
+      "siteCount": 26,
+      "sitesSHA256": "6b4d15c89f68abd377344424b45cb2c19666c208275e681d7f30e175dff5835a"
     },
     {
       "path": "src/bridge/connect.ts",
@@ -629,13 +650,14 @@
     },
     {
       "path": "src/runtime/contexts/worker-realm.ts",
-      "sourceSHA256": "b7bc5607650aa932c9fdf0d180a96ba872d58205f1d7f865a24ed3144b2d4d04",
+      "sourceSHA256": "1d4cea980d85a9413024be6cca266e4995e76c74808f34191d6a246dab3ea87f",
       "boundaries": [
         "script-url-admission",
-        "dedicated-worker-publication"
+        "dedicated-worker-publication",
+        "local-module-delivery"
       ],
-      "siteCount": 162,
-      "sitesSHA256": "33e0d33660b015df01d4cb042a1671f08080fcc5800d0fa75cfc6e936f640a12"
+      "siteCount": 167,
+      "sitesSHA256": "d85f93f17a67e1a5a166c511c67d138eb48a9335b12949865f4713cf6e6cbd16"
     },
     {
       "path": "src/runtime/contexts/worker-resource-protocol.ts",
@@ -802,6 +824,24 @@
       "sitesSHA256": "b10762f6d9b872943a4a3b79572094e86133d3c00efcaea9490fa6d37fa9d55c"
     },
     {
+      "path": "src/runtime/module-loader.ts",
+      "sourceSHA256": "e081ec951f1d33e7a969ebb66237efedb91525e98cd7a207f8ebbdffe4b13e35",
+      "boundaries": [
+        "local-module-delivery"
+      ],
+      "siteCount": 47,
+      "sitesSHA256": "3fa6e9698b3622ec1b1bc124a8f36981d437915cf4772066e6bb6e3b65864c6a"
+    },
+    {
+      "path": "src/runtime/modules.ts",
+      "sourceSHA256": "156be04a5883b2e36c14615672deb6351bb4f303d0375768689e54e03d1106cf",
+      "boundaries": [
+        "local-module-delivery"
+      ],
+      "siteCount": 36,
+      "sitesSHA256": "21b64cf479d2a4c7aa8d577c3e8c598a2b3e4ed1485d482f1cd7c80c85c63d5c"
+    },
+    {
       "path": "src/runtime/private-channel.ts",
       "sourceSHA256": "923c307092870e32dde49079e5174abe694c45b2282edb8451d200dcc2abacae",
       "boundaries": [
@@ -889,6 +929,7 @@
       "sourceSHA256": "c900d9b0e5778b2f003e8e3a18a4f3bd17628700fbad8ef060cbba280c5389c9",
       "boundaries": [
         "dedicated-worker-publication",
+        "local-module-delivery",
         "resource-delivery"
       ],
       "siteCount": 139,
@@ -899,6 +940,7 @@
       "sourceSHA256": "71fe2b9224a456a0f5c5065f22330caa33a250d1e250189a48bfd2a08cdf01dc",
       "boundaries": [
         "script-url-admission",
+        "local-module-delivery",
         "resource-delivery"
       ],
       "siteCount": 27,
@@ -953,7 +995,7 @@
     },
     {
       "path": "src/shared/context-policy.ts",
-      "sourceSHA256": "9bb19203360ef125ca42c6064713d8338ba1a6e9205ce4a4c470a7545e536b02",
+      "sourceSHA256": "f2ca74b3adc69b3af49539b38f10b2706d5e3a55fbd741e274a57644357ef17f",
       "boundaries": [
         "shared-worker-publication",
         "publisher-execution",
@@ -1011,7 +1053,8 @@
       "path": "src/shared/script-url-policy.ts",
       "sourceSHA256": "a966941b67bdc73f52f3407de6ee817211df6ebc981eedcd6580792c1255b8d3",
       "boundaries": [
-        "script-url-admission"
+        "script-url-admission",
+        "local-module-delivery"
       ],
       "siteCount": 0,
       "sitesSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
