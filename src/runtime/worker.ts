@@ -37,6 +37,9 @@ import { DocumentIntentStore } from './contexts/document-intents.ts';
 import { createSharedController } from './contexts/shared-controller.ts';
 import { SharedConnectionStore } from './contexts/shared-connections.ts';
 import { createWorkletController } from './contexts/worklet-controller.ts';
+import { WORKLET_REQUEST } from './contexts/worklet-types.ts';
+import { compileWorkletGraph } from './contexts/worklet-graph.ts';
+import { rollup } from 'trusted:worklet-compiler';
 import { createPublisherController } from './publisher/controller.ts';
 const worker = self as unknown as ServiceWorkerGlobalScope;
 const BASE = new URL('./', worker.location.href);
@@ -52,6 +55,7 @@ const trustedFiles = [
   'document-guard.js',
   'shared-worker-guard.js',
   'worklet-guard.js',
+  'worklet-imports.js',
   'publisher-worker-guard.js',
   'connect.html',
   'connect.js',
@@ -116,6 +120,14 @@ const worklets = createWorkletController({
     if (!cached) throw new Error('Trusted worklet guard unavailable');
     return cached.text();
   },
+  importSource: async () => {
+    const cached = await (
+      await caches.open(BOOT)
+    ).match(new URL('worklet-imports.js', BASE).href);
+    if (!cached) throw new Error('Trusted worklet import helper unavailable');
+    return cached.text();
+  },
+  compile: (options) => compileWorkletGraph(rollup, options),
 });
 const publishers = createPublisherController({
   base: BASE,
@@ -225,7 +237,8 @@ worker.addEventListener('message', (event) => {
       packet.type === INSTALLED_RESOURCE_REQUEST ||
       packet.type === DOCUMENT_CONTROL_REQUEST ||
       packet.type === WORKER_CONTROL_REQUEST ||
-      packet.type === WORKER_BIRTH_REQUEST)
+      packet.type === WORKER_BIRTH_REQUEST ||
+      packet.type === WORKLET_REQUEST)
   ) {
     const port = event.ports[0];
     if (!port) return;
@@ -236,6 +249,11 @@ worker.addEventListener('message', (event) => {
             event.source && 'id' in event.source
               ? await worker.clients.get(event.source.id)
               : undefined;
+          if (packet.type === WORKLET_REQUEST) {
+            const value = await worklets.request(client?.id || '', packet);
+            port.postMessage({ ok: true, value });
+            return;
+          }
           if (packet.type === WORKER_CONTROL_REQUEST) {
             const value = await requestWorkerControl(client, packet, contexts);
             port.postMessage({ ok: true, value });
@@ -352,8 +370,6 @@ worker.addEventListener('fetch', (event) => {
       if (documentResponse) return documentResponse;
       const sharedResponse = await sharedWorkers(event);
       if (sharedResponse) return sharedResponse;
-      const workletResponse = await worklets.respond(event);
-      if (workletResponse) return workletResponse;
       const publisherResponse = await publishers.respond(event);
       if (publisherResponse) return publisherResponse;
       if (

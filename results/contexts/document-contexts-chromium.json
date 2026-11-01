@@ -1,9 +1,9 @@
 {
   "provenance": {
-    "capturedAt": "2026-11-01T13:31:35.393Z",
-    "revision": "416cde63bc8d168b321db3dfe07b0461b52000cd",
+    "capturedAt": "2026-11-01T16:34:35.189Z",
+    "revision": "f6f8d242f3da455933eec3e0c18424f2083a961f",
     "dirty": true,
-    "sourceSHA256": "a5ca8154648afe0f789bc7eb70e5195860a26c088ab849df5b355b20cea9ad08",
+    "sourceSHA256": "9223b4da21168b129fc7537c26d29ec9a022e6eb5daa04a18823de323be5e9e7",
     "runner": "test/document-contexts.ts",
     "runnerSHA256": "45b6c97c15df415b4500966a11a26becc2d2b120d8b53fa94f41b8a519c6405d",
     "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
@@ -16,13 +16,13 @@
       "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-manager/sw.js": "bf13e4afa7cc2d645f395aee968e4bcfb01536ffc3ed3cb5e8cac1a31ad0018d",
+      "dist-manager/sw.js": "826563d07adb28e0aee0ca3724c0ae637a153dc3b8689576ef49129c08dcc6f8",
       "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
       "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
       "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
-      "dist-runtime/document-guard.js": "9f60af3ab3709983500f37853e0439541b7b502aa13a75945221b839a7ca1172",
-      "dist-runtime/guard.js": "c4131a5e1e089fe3e8608fda9872f64479488cf97cb8e486869ea1271dac849f",
+      "dist-runtime/document-guard.js": "9431159f1f8583daba413fa71f80d814ec58a5851595bbe866bf5081600d5170",
+      "dist-runtime/guard.js": "236bbb23ea5623f0da406f088e30e3fa75312fb069c3616a0addb338378436ed",
       "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
       "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
       "dist-runtime/publisher-worker-guard.js": "de236fabfdafb743fc133be95222a89dd030e981fba108afe9ae30890bf267e5",
@@ -30,8 +30,9 @@
       "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
       "dist-runtime/shared-worker-guard.js": "b7c15ec06c26966d4b7b87d11403ff6690e4410b42b136ae133943f3467e9cd1",
-      "dist-runtime/sw.js": "cea78bfe4cfaedcd8a2297bd6229014aee2d6d750e746a0d89c124f35c8a0775",
-      "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
+      "dist-runtime/sw.js": "8972b8833600e47696764c902e4909b808f8e525ad21e751631109bf4fd1d9ae",
+      "dist-runtime/worklet-guard.js": "543943f891f6ade0246240051959cc2194f611d040759f66d8482a6668e9c491",
+      "dist-runtime/worklet-imports.js": "1dad731ee7c42b66400d6b8a4224ab0619bf9d2bae6c34c8950410b8241331b5",
       "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
       "dist-installation/index.html": "3ca67c9966dd6eaaddb08a331c4c422a70d79bed1acecddada56764ba4ac8e5f",
@@ -106,6 +107,146 @@
               },
               {
                 "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
                 "documentNull": true,
                 "windowNull": true,
                 "svgDocumentNull": true,
@@ -412,6 +553,146 @@
               },
               {
                 "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
                 "documentNull": true,
                 "windowNull": true,
                 "svgDocumentNull": true,
@@ -727,6 +1008,153 @@
               },
               {
                 "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
                 "documentNull": true,
                 "windowNull": true,
                 "svgDocumentNull": true,
@@ -1249,6 +1677,104 @@
                 "windowNull": true,
                 "svgDocumentNull": true,
                 "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
               }
             ],
             "result": {
@@ -1297,6 +1823,146 @@
               "rootWindowHidden": true
             },
             "pendingStates": [
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
               {
                 "privateRoot": false,
                 "documentNull": true,
@@ -1642,6 +2308,146 @@
               },
               {
                 "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
                 "documentNull": true,
                 "windowNull": true,
                 "svgDocumentNull": true,
@@ -2282,6 +3088,132 @@
                 "windowNull": true,
                 "svgDocumentNull": true,
                 "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
               }
             ],
             "result": {
@@ -2369,6 +3301,160 @@
               },
               {
                 "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
                 "documentNull": true,
                 "windowNull": true,
                 "svgDocumentNull": true,
@@ -2684,6 +3770,7 @@
       "logs": [
         "REQUEST GET http://127.0.0.1:4211/runtime/document-guard.js",
         "RESPONSE 200 http://127.0.0.1:4211/runtime/document-guard.js",
+        "requestfailed http://127.0.0.1:4350/documents/child.js net::ERR_ABORTED",
         "requestfailed http://127.0.0.1:4350/documents/nested-parent.html net::ERR_ABORTED",
         "requestfailed http://127.0.0.1:4350/documents/nested.html net::ERR_ABORTED",
         "requestfailed http://127.0.0.1:4350/documents/main.js net::ERR_ABORTED",
@@ -2691,68 +3778,69 @@
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/97bf2236-036f-4e5a-9a9f-ce9af58a0f40/document.html",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/97bf2236-036f-4e5a-9a9f-ce9af58a0f40/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/7874ec0b-6342-499e-ba3b-2518e016f14b/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/7874ec0b-6342-499e-ba3b-2518e016f14b/document.html",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/f88d1b3c-8e89-4636-b5fe-94201a9cd3d7/document.html",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/f88d1b3c-8e89-4636-b5fe-94201a9cd3d7/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/3a0c4541-8725-4027-9e76-9b6a35b4d0ea/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/3a0c4541-8725-4027-9e76-9b6a35b4d0ea/document.html",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/be3a5010-b247-4be9-9dd4-0063098d352d/document.svg",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/be3a5010-b247-4be9-9dd4-0063098d352d/document.svg",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/bc11a50d-5d09-43ea-8f10-0773b819b15d/document.svg",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/bc11a50d-5d09-43ea-8f10-0773b819b15d/document.svg",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/3a3122f6-b5cc-4ed1-a126-73ea9932bf76/document.html",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/3a3122f6-b5cc-4ed1-a126-73ea9932bf76/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/1693c9ba-c0e1-4952-a6bc-e06bc58e3fdf/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/1693c9ba-c0e1-4952-a6bc-e06bc58e3fdf/document.html",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/c363bfc6-45e2-4817-af6d-f41aaf99b1d8/document.svg",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/c363bfc6-45e2-4817-af6d-f41aaf99b1d8/document.svg",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/c57b2197-81b6-44e2-a4ca-d69b39f2b277/document.svg",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/c57b2197-81b6-44e2-a4ca-d69b39f2b277/document.svg",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/0a65dde4-5838-48ea-b331-1409c7b3984d/document.html",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/0a65dde4-5838-48ea-b331-1409c7b3984d/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/15c51f87-eb33-4af6-8ca4-94f0b6bae800/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/15c51f87-eb33-4af6-8ca4-94f0b6bae800/document.html",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/78dc8c74-3083-41bb-8992-8a5f070df31f/document.html",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/78dc8c74-3083-41bb-8992-8a5f070df31f/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/acd68508-b90d-453f-b6a6-f8cc13940f0c/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/acd68508-b90d-453f-b6a6-f8cc13940f0c/document.html",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/a60c1204-e1ff-456e-a130-f0b7e383f363/document.html",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/a60c1204-e1ff-456e-a130-f0b7e383f363/document.html",
-        "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
-        "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
-        "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/6d99470e-a8d5-4493-9d30-3a95f653b6ac/document.html",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/6d99470e-a8d5-4493-9d30-3a95f653b6ac/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/e3dc3ab4-7b48-4af2-a081-c47a445f6bf7/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/e3dc3ab4-7b48-4af2-a081-c47a445f6bf7/document.html",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/3f855c62-ac2c-4a57-b830-475753746e49/document.html",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/3f855c62-ac2c-4a57-b830-475753746e49/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/76c219e1-f7a0-4b38-80d3-c5f803633c04/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/76c219e1-f7a0-4b38-80d3-c5f803633c04/document.html",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/f02f933f-a5e5-42d9-b4f4-aea8a5bd8860/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/f02f933f-a5e5-42d9-b4f4-aea8a5bd8860/document.html",
+        "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
+        "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
+        "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
+        "requestfailed http://127.0.0.1:4350/static-documents/child.js net::ERR_ABORTED",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/b11493a8-12f0-4df5-a481-b93bbf236e27/document.html",
-        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/d20022fd-75c6-40cc-8562-12dd8185a943/document.svg",
-        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/412cac7c-bc79-49d9-b19c-d539ae82399e/document.html",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/b11493a8-12f0-4df5-a481-b93bbf236e27/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/65320965-0547-459f-9ffb-77a525795e86/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/000ef26e-72b0-4d1d-a1bc-07f6e5f9072c/document.svg",
+        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/80ad6521-d208-44b8-acca-4f430b360bb2/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/65320965-0547-459f-9ffb-77a525795e86/document.html",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/d20022fd-75c6-40cc-8562-12dd8185a943/document.svg",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/412cac7c-bc79-49d9-b19c-d539ae82399e/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/000ef26e-72b0-4d1d-a1bc-07f6e5f9072c/document.svg",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/80ad6521-d208-44b8-acca-4f430b360bb2/document.html",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'bluetooth'.",
         "CONSOLE warning Error with Permissions-Policy header: Unrecognized feature: 'attribution-reporting'.",
         "CONSOLE warning An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.",

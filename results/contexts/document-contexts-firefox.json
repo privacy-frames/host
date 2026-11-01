@@ -1,9 +1,9 @@
 {
   "provenance": {
-    "capturedAt": "2026-11-01T13:31:35.393Z",
-    "revision": "416cde63bc8d168b321db3dfe07b0461b52000cd",
+    "capturedAt": "2026-11-01T16:34:35.189Z",
+    "revision": "f6f8d242f3da455933eec3e0c18424f2083a961f",
     "dirty": true,
-    "sourceSHA256": "a5ca8154648afe0f789bc7eb70e5195860a26c088ab849df5b355b20cea9ad08",
+    "sourceSHA256": "9223b4da21168b129fc7537c26d29ec9a022e6eb5daa04a18823de323be5e9e7",
     "runner": "test/document-contexts.ts",
     "runnerSHA256": "45b6c97c15df415b4500966a11a26becc2d2b120d8b53fa94f41b8a519c6405d",
     "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
@@ -16,13 +16,13 @@
       "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-manager/sw.js": "bf13e4afa7cc2d645f395aee968e4bcfb01536ffc3ed3cb5e8cac1a31ad0018d",
+      "dist-manager/sw.js": "826563d07adb28e0aee0ca3724c0ae637a153dc3b8689576ef49129c08dcc6f8",
       "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
       "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
       "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
-      "dist-runtime/document-guard.js": "9f60af3ab3709983500f37853e0439541b7b502aa13a75945221b839a7ca1172",
-      "dist-runtime/guard.js": "c4131a5e1e089fe3e8608fda9872f64479488cf97cb8e486869ea1271dac849f",
+      "dist-runtime/document-guard.js": "9431159f1f8583daba413fa71f80d814ec58a5851595bbe866bf5081600d5170",
+      "dist-runtime/guard.js": "236bbb23ea5623f0da406f088e30e3fa75312fb069c3616a0addb338378436ed",
       "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
       "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
       "dist-runtime/publisher-worker-guard.js": "de236fabfdafb743fc133be95222a89dd030e981fba108afe9ae30890bf267e5",
@@ -30,8 +30,9 @@
       "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
       "dist-runtime/shared-worker-guard.js": "b7c15ec06c26966d4b7b87d11403ff6690e4410b42b136ae133943f3467e9cd1",
-      "dist-runtime/sw.js": "cea78bfe4cfaedcd8a2297bd6229014aee2d6d750e746a0d89c124f35c8a0775",
-      "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
+      "dist-runtime/sw.js": "8972b8833600e47696764c902e4909b808f8e525ad21e751631109bf4fd1d9ae",
+      "dist-runtime/worklet-guard.js": "543943f891f6ade0246240051959cc2194f611d040759f66d8482a6668e9c491",
+      "dist-runtime/worklet-imports.js": "1dad731ee7c42b66400d6b8a4224ab0619bf9d2bae6c34c8950410b8241331b5",
       "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
       "dist-installation/index.html": "3ca67c9966dd6eaaddb08a331c4c422a70d79bed1acecddada56764ba4ac8e5f",
@@ -99,6 +100,237 @@
               },
               {
                 "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
                 "documentNull": true,
                 "windowNull": true,
                 "svgDocumentNull": true,
@@ -587,6 +819,265 @@
               },
               {
                 "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
                 "documentNull": true,
                 "windowNull": true,
                 "svgDocumentNull": true,
@@ -1097,6 +1588,244 @@
                 "rootWindowHidden": true
               },
               {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
                 "privateRoot": true,
                 "documentNull": true,
                 "windowNull": true,
@@ -1588,6 +2317,125 @@
               },
               {
                 "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
                 "documentNull": true,
                 "windowNull": true,
                 "svgDocumentNull": true,
@@ -2381,6 +3229,237 @@
                 "windowNull": true,
                 "svgDocumentNull": true,
                 "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
               }
             ],
             "result": {
@@ -2475,6 +3554,279 @@
               },
               {
                 "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
                 "documentNull": true,
                 "windowNull": true,
                 "svgDocumentNull": true,
@@ -2991,6 +4343,223 @@
                 "rootWindowHidden": true
               },
               {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
                 "privateRoot": true,
                 "documentNull": true,
                 "windowNull": true,
@@ -3397,6 +4966,272 @@
                 "rootWindowHidden": true
               },
               {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": false,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
+                "privateRoot": true,
+                "documentNull": true,
+                "windowNull": true,
+                "svgDocumentNull": true,
+                "rootWindowHidden": true
+              },
+              {
                 "privateRoot": true,
                 "documentNull": true,
                 "windowNull": true,
@@ -3775,6 +5610,18 @@
           "value": {
             "events": [
               {
+                "id": "static-svg",
+                "host": {
+                  "version": 1,
+                  "application": "static-documents-c0c802e3746c807150ff74a949d6cf00ccdb7520ba1433ad97548088e12cb4df",
+                  "publisher": "http://127.0.0.1:4350",
+                  "mode": "network-isolated"
+                },
+                "shared": "same-app-value",
+                "contentType": "image/svg+xml",
+                "svg": true
+              },
+              {
                 "id": "static-inline",
                 "host": {
                   "version": 1,
@@ -3786,18 +5633,6 @@
                 "contentType": "text/html",
                 "svg": null,
                 "kind": "static-srcdoc"
-              },
-              {
-                "id": "static-svg",
-                "host": {
-                  "version": 1,
-                  "application": "static-documents-c0c802e3746c807150ff74a949d6cf00ccdb7520ba1433ad97548088e12cb4df",
-                  "publisher": "http://127.0.0.1:4350",
-                  "mode": "network-isolated"
-                },
-                "shared": "same-app-value",
-                "contentType": "image/svg+xml",
-                "svg": true
               },
               {
                 "id": "static-installed",
@@ -3823,58 +5658,58 @@
         }
       ],
       "logs": [
-        "CONSOLE error [JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 24648}]",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/05e09e55-ae53-4976-9b66-55bd087d06b6/document.html",
+        "CONSOLE error [JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 35612}]",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/af7e0825-46b2-44e3-a55f-bf35b45bea68/document.html",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/05e09e55-ae53-4976-9b66-55bd087d06b6/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/af7e0825-46b2-44e3-a55f-bf35b45bea68/document.html",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/\" line: 0}]",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/8d440911-9e62-4eff-a3a0-bbe3e182e9ce/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/bbd51cc1-d37d-474c-81f4-95a8c710097c/document.html",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/8d440911-9e62-4eff-a3a0-bbe3e182e9ce/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/bbd51cc1-d37d-474c-81f4-95a8c710097c/document.html",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/\" line: 0}]",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/8cc28dd0-afd3-44cf-990f-2788c64dadf2/document.svg",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/ad139584-3fc2-43e9-a888-82381b7310b3/document.svg",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/8cc28dd0-afd3-44cf-990f-2788c64dadf2/document.svg",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/ad139584-3fc2-43e9-a888-82381b7310b3/document.svg",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/\" line: 0}]",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/db6b552a-c41e-40b6-bc6d-f5fdcb990174/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/4268c1e0-6a1c-4a6a-a54b-c899896dc057/document.html",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/db6b552a-c41e-40b6-bc6d-f5fdcb990174/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/4268c1e0-6a1c-4a6a-a54b-c899896dc057/document.html",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/\" line: 0}]",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/9139c407-5c47-45a4-94fb-64af4dd8f461/document.svg",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/c7755ddb-8532-496c-9798-577f78afa863/document.svg",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/9139c407-5c47-45a4-94fb-64af4dd8f461/document.svg",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/c7755ddb-8532-496c-9798-577f78afa863/document.svg",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/\" line: 0}]",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/d3233741-0ffb-46cd-81f2-2c4e47c5a7de/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/0e0c8a6f-3707-4780-ae3b-2f45d8541819/document.html",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/d3233741-0ffb-46cd-81f2-2c4e47c5a7de/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/0e0c8a6f-3707-4780-ae3b-2f45d8541819/document.html",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/\" line: 0}]",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/e35ef961-b8e8-45e0-af12-e4f96d2d9245/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/2df4a7e0-07bb-451a-9534-7de138fae876/document.html",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/e35ef961-b8e8-45e0-af12-e4f96d2d9245/document.html",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/617493d8-4d0f-42bc-b479-93c8f562a55c/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/2df4a7e0-07bb-451a-9534-7de138fae876/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/02fd8c9c-98d3-4935-96af-d31d5ebb825c/document.html",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/617493d8-4d0f-42bc-b479-93c8f562a55c/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/02fd8c9c-98d3-4935-96af-d31d5ebb825c/document.html",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/\" line: 0}]",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/dbdf29a6-17e9-4c92-a21d-a2e6b5eca0fe/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/13799d9a-ce86-467c-b3df-caefb1d033f1/document.html",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/dbdf29a6-17e9-4c92-a21d-a2e6b5eca0fe/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/13799d9a-ce86-467c-b3df-caefb1d033f1/document.html",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/\" line: 0}]",
-        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/f362b79b-ca69-425e-b0d1-6f9c1683fde8/document.html",
+        "REQUEST GET http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/9e3060d2-479e-4770-89d7-6f2275e1de81/document.html",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/f362b79b-ca69-425e-b0d1-6f9c1683fde8/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/__contexts/9e3060d2-479e-4770-89d7-6f2275e1de81/document.html",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/b7TLoiggpG8/documents/\" line: 0}]",
-        "CONSOLE error [JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 24648}]",
-        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/c0bd73c9-5156-468a-b32e-474b4c4beb6b/document.html",
+        "CONSOLE error [JavaScript Error: \"Failed to load ‘http://127.0.0.1:4211/favicon.ico’. A ServiceWorker passed an Error Response to FetchEvent.respondWith(). This typically means the ServiceWorker performed an invalid fetch() call.\" {file: \"http://127.0.0.1:4211/runtime/sw.js\" line: 35612}]",
+        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/63350f8a-7fa1-4902-98d3-c12e3cfbcedb/document.html",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/c0bd73c9-5156-468a-b32e-474b4c4beb6b/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/63350f8a-7fa1-4902-98d3-c12e3cfbcedb/document.html",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/\" line: 0}]",
-        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/1cf12be4-5ebc-4994-bbc8-1283d8c91bcd/document.svg",
+        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/e7ea4764-be00-4e07-9219-75e6ba851589/document.svg",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/1cf12be4-5ebc-4994-bbc8-1283d8c91bcd/document.svg",
-        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/ea9010b6-2888-40ae-b253-5fe629738766/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/e7ea4764-be00-4e07-9219-75e6ba851589/document.svg",
+        "REQUEST GET http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/ce01e069-f8be-460c-9245-b84dcc3e446a/document.html",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/\" line: 0}]",
         "CONSOLE warning [JavaScript Warning: \"Content-Security-Policy: Ignoring ‘x-frame-options’ because of ‘frame-ancestors’ directive.\"]",
-        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/ea9010b6-2888-40ae-b253-5fe629738766/document.html",
+        "RESPONSE 200 http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/__contexts/ce01e069-f8be-460c-9245-b84dcc3e446a/document.html",
         "CONSOLE warning [JavaScript Warning: \"An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can remove its sandboxing.\" {file: \"http://127.0.0.1:4211/runtime/wMgC43RsgHE/static-documents/\" line: 0}]"
       ],
       "requests": [],

@@ -47,6 +47,7 @@ test('configuration changes invalidate bootstrap and role builds expose only the
       'document-guard.js',
       'shared-worker-guard.js',
       'worklet-guard.js',
+      'worklet-imports.js',
       'publisher-worker-guard.js',
     ])
       await assert.rejects(access(join(output, entry)));
@@ -57,6 +58,7 @@ test('configuration changes invalidate bootstrap and role builds expose only the
       'document-guard.js',
       'shared-worker-guard.js',
       'worklet-guard.js',
+      'worklet-imports.js',
       'publisher-worker-guard.js',
     ])
       await access(join(output, entry));

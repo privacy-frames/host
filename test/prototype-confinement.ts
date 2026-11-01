@@ -72,6 +72,20 @@ define(Array.prototype, '0', { configurable: true, get() { return undefined; }, 
 const frame = document.createElement('iframe');
 // Keep the native initial document alive while its socket controls connect.
 // A srcdoc commit can destroy that document before a constructed socket sends.
+const childStarted = performance.now();
+let childLoadDelay = null;
+const childReady = new Promise((resolve, reject) => {
+  const timer = setTimeout(() => reject(new Error('Prepared child load timed out')), 10000);
+  frame.addEventListener('load', () => {
+    clearTimeout(timer);
+    childLoadDelay = performance.now() - childStarted;
+    resolve();
+  }, { once: true });
+  frame.addEventListener('error', () => {
+    clearTimeout(timer);
+    reject(new Error('Prepared child failed'));
+  }, { once: true });
+});
 document.body.append(frame);
 const pending = frame.contentWindow;
 const indexed = window.frames[0];
@@ -83,6 +97,7 @@ if (!window.privacyHost) {
   positiveControl.push({ frame, placeholder: frame, generation: 0, window: frame.contentWindow });
 }
 setTimeout(async () => {
+  await childReady;
   const frameWindow = frame.contentWindow;
   const childSocket = sameOriginSocket(frameWindow, 'prepared-child');
   let childMode = null;
@@ -96,7 +111,7 @@ setTimeout(async () => {
   // Native-returned arrays deliberately exercise paths outside source-literal protection.
   let cacheNames = null;
   try { cacheNames = await caches.keys(); } catch {}
-  const report = { observedArrays, numericWrites, noOpPreservedDescriptor, differentWriteDenied, thenHookAllowed, jsonHookAllowed, leakedRecord: !!leakedRecord, pendingAccessible: !!pending, indexedAccessible: !!indexed, pendingMode: pending && pending.privacyHost && pending.privacyHost.mode || null, indexedMode: indexed && indexed.privacyHost && indexed.privacyHost.mode || null, childMode, fetchResult, websocket, childFetch, cacheNames, socketMarker, sameOriginSockets:{ main:mainSocket, preparedChild:childSocket, pending:pendingSocket, indexed:indexedSocket, record:recordSocket, recordMicrotask:recordMicrotaskSocket }, extensions: [1].prototypeCompatibilityProbe() === 1 && 'x'.prototypeCompatibilityProbe() === 1, functionDiagnostic: (function () {}).toString() };
+  const report = { childLoadDelay, observedArrays, numericWrites, noOpPreservedDescriptor, differentWriteDenied, thenHookAllowed, jsonHookAllowed, leakedRecord: !!leakedRecord, pendingAccessible: !!pending, indexedAccessible: !!indexed, pendingMode: pending && pending.privacyHost && pending.privacyHost.mode || null, indexedMode: indexed && indexed.privacyHost && indexed.privacyHost.mode || null, childMode, fetchResult, websocket, childFetch, cacheNames, socketMarker, sameOriginSockets:{ main:mainSocket, preparedChild:childSocket, pending:pendingSocket, indexed:indexedSocket, record:recordSocket, recordMicrotask:recordMicrotaskSocket }, extensions: [1].prototypeCompatibilityProbe() === 1 && 'x'.prototypeCompatibilityProbe() === 1, functionDiagnostic: (function () {}).toString() };
   completed = true;
   document.querySelector('#result').textContent = JSON.stringify(report);
 }, 1200);

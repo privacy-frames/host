@@ -1,10 +1,10 @@
 {
   "scope": "Installed shared workers and admission controls. A fixture-only constructor hook retains host-issued bootstrap URL brands to reach the native admission protocol; raw URL refusal is checked separately. The hook is not included in production.",
   "provenance": {
-    "capturedAt": "2026-11-01T13:32:19.646Z",
-    "revision": "416cde63bc8d168b321db3dfe07b0461b52000cd",
+    "capturedAt": "2026-11-01T16:35:42.097Z",
+    "revision": "f6f8d242f3da455933eec3e0c18424f2083a961f",
     "dirty": true,
-    "sourceSHA256": "a5ca8154648afe0f789bc7eb70e5195860a26c088ab849df5b355b20cea9ad08",
+    "sourceSHA256": "9223b4da21168b129fc7537c26d29ec9a022e6eb5daa04a18823de323be5e9e7",
     "runner": "test/shared-worker-contexts.ts",
     "runnerSHA256": "fbcc7ba73dd34d03987e94678c923797e7707b82894391c5a3b9250f6a7a28f2",
     "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
@@ -17,13 +17,13 @@
       "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-manager/sw.js": "bf13e4afa7cc2d645f395aee968e4bcfb01536ffc3ed3cb5e8cac1a31ad0018d",
+      "dist-manager/sw.js": "826563d07adb28e0aee0ca3724c0ae637a153dc3b8689576ef49129c08dcc6f8",
       "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
       "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
       "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
-      "dist-runtime/document-guard.js": "9f60af3ab3709983500f37853e0439541b7b502aa13a75945221b839a7ca1172",
-      "dist-runtime/guard.js": "c4131a5e1e089fe3e8608fda9872f64479488cf97cb8e486869ea1271dac849f",
+      "dist-runtime/document-guard.js": "9431159f1f8583daba413fa71f80d814ec58a5851595bbe866bf5081600d5170",
+      "dist-runtime/guard.js": "236bbb23ea5623f0da406f088e30e3fa75312fb069c3616a0addb338378436ed",
       "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
       "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
       "dist-runtime/publisher-worker-guard.js": "de236fabfdafb743fc133be95222a89dd030e981fba108afe9ae30890bf267e5",
@@ -31,8 +31,9 @@
       "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
       "dist-runtime/shared-worker-guard.js": "b7c15ec06c26966d4b7b87d11403ff6690e4410b42b136ae133943f3467e9cd1",
-      "dist-runtime/sw.js": "cea78bfe4cfaedcd8a2297bd6229014aee2d6d750e746a0d89c124f35c8a0775",
-      "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
+      "dist-runtime/sw.js": "8972b8833600e47696764c902e4909b808f8e525ad21e751631109bf4fd1d9ae",
+      "dist-runtime/worklet-guard.js": "543943f891f6ade0246240051959cc2194f611d040759f66d8482a6668e9c491",
+      "dist-runtime/worklet-imports.js": "1dad731ee7c42b66400d6b8a4224ab0619bf9d2bae6c34c8950410b8241331b5",
       "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
       "dist-installation/index.html": "3ca67c9966dd6eaaddb08a331c4c422a70d79bed1acecddada56764ba4ac8e5f",
@@ -130,8 +131,8 @@
         },
         "rawURLRefused": true,
         "appMessages": 0,
-        "key": "privacy-shared-policy-12:[\"first-1337f91e7ba8a7a25304d6450540f0f9d4404889323debe51e2f90e2062d0959\",\"f9aee703-5777-431b-9dc1-e8bc86021523\",\"http://127.0.0.1:4352/shared.js\",\"classic\",\"state\"]",
-        "generation": "f9aee703-5777-431b-9dc1-e8bc86021523"
+        "key": "privacy-shared-policy-12:[\"first-1337f91e7ba8a7a25304d6450540f0f9d4404889323debe51e2f90e2062d0959\",\"0f4429c7-6c61-4f56-9959-eacc563af5ec\",\"http://127.0.0.1:4352/shared.js\",\"classic\",\"state\"]",
+        "generation": "0f4429c7-6c61-4f56-9959-eacc563af5ec"
       },
       "afterMalformed": {
         "count": 3,
@@ -332,8 +333,8 @@
         }
       },
       "newIdentity": {
-        "key": "privacy-shared-policy-12:[\"first-1337f91e7ba8a7a25304d6450540f0f9d4404889323debe51e2f90e2062d0959\",\"444e02bc-068a-4a02-a02d-91c7ea08708a\",\"http://127.0.0.1:4352/shared.js\",\"classic\",\"state\"]",
-        "generation": "444e02bc-068a-4a02-a02d-91c7ea08708a"
+        "key": "privacy-shared-policy-12:[\"first-1337f91e7ba8a7a25304d6450540f0f9d4404889323debe51e2f90e2062d0959\",\"77ea7606-a230-4115-bbef-01dfead2ac57\",\"http://127.0.0.1:4352/shared.js\",\"classic\",\"state\"]",
+        "generation": "77ea7606-a230-4115-bbef-01dfead2ac57"
       },
       "unaffectedOther": {
         "count": 2,
@@ -443,8 +444,8 @@
         },
         "rawURLRefused": true,
         "appMessages": 0,
-        "key": "privacy-shared-policy-12:[\"first-1337f91e7ba8a7a25304d6450540f0f9d4404889323debe51e2f90e2062d0959\",\"53181f78-1362-41e8-89eb-6c1043ec166d\",\"http://127.0.0.1:4352/shared.js\",\"classic\",\"state\"]",
-        "generation": "53181f78-1362-41e8-89eb-6c1043ec166d"
+        "key": "privacy-shared-policy-12:[\"first-1337f91e7ba8a7a25304d6450540f0f9d4404889323debe51e2f90e2062d0959\",\"a2f4aaa8-877a-4977-bc70-0bde2e39df8b\",\"http://127.0.0.1:4352/shared.js\",\"classic\",\"state\"]",
+        "generation": "a2f4aaa8-877a-4977-bc70-0bde2e39df8b"
       },
       "afterMalformed": {
         "count": 3,
@@ -654,8 +655,8 @@
         }
       },
       "newIdentity": {
-        "key": "privacy-shared-policy-12:[\"first-1337f91e7ba8a7a25304d6450540f0f9d4404889323debe51e2f90e2062d0959\",\"ec7bde2b-312e-4cb7-9880-8d0a055f708c\",\"http://127.0.0.1:4352/shared.js\",\"classic\",\"state\"]",
-        "generation": "ec7bde2b-312e-4cb7-9880-8d0a055f708c"
+        "key": "privacy-shared-policy-12:[\"first-1337f91e7ba8a7a25304d6450540f0f9d4404889323debe51e2f90e2062d0959\",\"c09d85b9-35f8-4ad8-8b56-86db8b0c1ae7\",\"http://127.0.0.1:4352/shared.js\",\"classic\",\"state\"]",
+        "generation": "c09d85b9-35f8-4ad8-8b56-86db8b0c1ae7"
       },
       "unaffectedOther": {
         "count": 2,

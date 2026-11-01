@@ -136,7 +136,7 @@ export function prepareWindowRealm({
   );
   const workletAddModule = createWorkletFactory(
     tools,
-    internalRecord({ applicationURL, resources }),
+    internalRecord({ applicationURL, resources, request: controller.request }),
   );
   const scripts = installScriptPolicy(
     tools,

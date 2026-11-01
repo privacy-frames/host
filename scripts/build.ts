@@ -40,6 +40,7 @@ const entries = {
   'document-guard': 'src/runtime/contexts/document-guard.ts',
   'shared-worker-guard': 'src/runtime/contexts/shared-worker-guard.ts',
   'worklet-guard': 'src/runtime/contexts/worklet-guard.ts',
+  'worklet-imports': 'src/runtime/contexts/worklet-imports.ts',
   'publisher-worker-guard': 'src/runtime/publisher/guard.ts',
 };
 const roles = process.env.HOST_ROLE
@@ -72,7 +73,13 @@ for (const role of roles) {
         'process.env.NODE_ENV': '"production"',
       },
       banner: { js: '"use strict";' },
-      format: ['manager', 'connect', 'installation', 'worklet-guard'].includes(name)
+      format: [
+        'manager',
+        'connect',
+        'installation',
+        'worklet-guard',
+        'worklet-imports',
+      ].includes(name)
         ? 'esm'
         : 'iife',
       target: 'es2022',

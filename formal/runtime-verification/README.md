@@ -1,5 +1,13 @@
 # Runtime confinement verification
 
+The [production worklet candidate](production-worklets.md) now compiles admitted
+module data in the existing trusted runtime controller and delivers local Blob
+graphs through authenticated messages. Installed root and child audio, offline
+execution, cross-Window replay refusal and Chromium paint checks pass. Its
+component preparation-removal controls work in both browsers. Native HTTP denial,
+registration lifetime, implementation correspondence and complete browser
+coverage remain open.
+
 The [policy-12 candidate](native-window-policy.md) delivers admitted application
 scripts locally in root and child Windows through native module maps. Its
 [validation](policy12-validation.json) records 208 unit checks, the full regression

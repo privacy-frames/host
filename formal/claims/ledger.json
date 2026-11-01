@@ -102,7 +102,7 @@
     "formal/route-review/README.md": "def9f578cf05dbd6ded8f518833ba924d81acfce8a9d43fbd003679987cf77bd",
     "formal/route-review/triage.json": "685b7f8bba8a4bd394ab7c7ecbf3fbf01fe045503ec8b831754e397e11f2630d",
     "formal/runtime-verification/PublicationModel.lean": "73e252a862122b493d8a0e45a1834a0ead1ecdaebf44ceee41cb542b19ac544b",
-    "formal/runtime-verification/README.md": "2ebfef486b72ad041d7c3f400b9f3da41ebabb4f9f27ec0874c89121725b64ba",
+    "formal/runtime-verification/README.md": "c5f2d12e659714211cc8e1d39a99c34260b63731a7abe1d341a7424f7351ca60",
     "formal/runtime-verification/RegistrationLifetime.lean": "331eb33dd0d4dc0abd3e2b6b29818b2abee9d97f2267f8ec9d921c449781a2b3",
     "formal/runtime-verification/RegistrationQueue.lean": "4d5d4503935296a4d513984e1441c6a8284a185a553d9b3968a17f8bff38bfd3",
     "formal/runtime-verification/async-poll-calibration.json": "e9de6c91b9ce8e2e0b4ffe428a89d1e43aa8b75b1dba6f60bcd38800937ea83a",
@@ -113,11 +113,13 @@
     "formal/runtime-verification/authority-predicate.md": "c60a1532c6f4fe38c5e21c73ea56bf824c2ff78507dc8ec6fde52c59b4d3f9ce",
     "formal/runtime-verification/blob-worker-identity.json": "a74f50164d2184ac9c077e2fcdd39d0590a9807899886f1f642cd16d813c2bc0",
     "formal/runtime-verification/blob-worker-identity.ts": "2f77260568f723d91ed45c7a08bd374035a8176770151647daf0c19e515fc366",
-    "formal/runtime-verification/boundaries.ts": "c573b7bb722aa8a2e2f233c4258bdb6aebdb7c097510f414812975e44d69c828",
+    "formal/runtime-verification/boundaries.ts": "ead0fea561dc1747f6cf9434e9c275934934ba2bd9378487619653182a6e41e2",
     "formal/runtime-verification/ci-policy10.json": "e5a7bb72bacd86273b9264f428e1472ac608b98a8d23d26d6ea146061b760cf1",
     "formal/runtime-verification/ci-policy11.json": "8556b42b3b02d1da3bd8f1a6965f5e6e2b7fb6de1e059c8041986bf876f28d7e",
     "formal/runtime-verification/ci-policy12.json": "d6d5d13f6499ec318a1d5853bbd287a6b996b3008f2eb373188fab004eef7ace",
     "formal/runtime-verification/ci-startup-policy8.json": "92f87107919317b544e8f7324ab8cf90f79bd3aaf3e6b9d7e3500b9d3d2d6fe4",
+    "formal/runtime-verification/ci-worklet-component-prior.json": "8e096a66152627b1e3f5274196823ea004464080f8fd2d0ca100c3810c4843df",
+    "formal/runtime-verification/ci-worklet-component-prior.log": "324e9e443662728735635653b213326eb0ec3b8d891df4a238238b977ede7f7e",
     "formal/runtime-verification/classic-script-fragments.json": "9ae472beaf4669d1047d530b3530e67e8d5d64c194c8130c201330c007279c75",
     "formal/runtime-verification/document-control-compatibility.json": "9ffd44b02a9bddb946e4e6202e351ce66c62157462ef32957d2ccf3df4d3ec16",
     "formal/runtime-verification/document-control.md": "37ce04a16c4492d98a27564e808f0634574a7ba11c0422970f8fc3cbd1ccaec5",
@@ -128,7 +130,7 @@
     "formal/runtime-verification/generation-comparison.ts": "61bc8ca641e2e603b55ce3956e66c4b60e621fd455b09afd54cabf377f566a7a",
     "formal/runtime-verification/gillian-report.test.ts": "a4d5550e24ac238acb9ab35c3bf4e2aa3833979bd42195d9439a9613230c7fd6",
     "formal/runtime-verification/gillian.ts": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
-    "formal/runtime-verification/implementation-inventory.json": "2dd330ccf27c29b23d96196027eb516e7d067be32ab95b95a7b66d912f0cc4ce",
+    "formal/runtime-verification/implementation-inventory.json": "fa79084769e423ac6ff145dfcc0abd8c7681e1b2cb5d08b87f65886b49324501",
     "formal/runtime-verification/inventory.ts": "30a433edc9bc21d25c4790a9540e6eeb271f382c12f4fefeccd1dba1b75a47c2",
     "formal/runtime-verification/local-bootstrap-policy.json": "6bb5c4c8a20a480b1162c1f13f373514dc247fe9e8187023e8362266cc79cf70",
     "formal/runtime-verification/local-bootstrap-policy.ts": "7145f5d8c41d550cf425203ee1b18a5f7bf361e79a5c4dd0dd44f18c1d244535",
@@ -161,16 +163,13 @@
     "formal/runtime-verification/local-worklet-controls.log": "922ca2d1e222cf71f9e1b2d33a8715782c5624fbd38484551c91fd91bff83a50",
     "formal/runtime-verification/local-worklet-graph-control.ts": "b4d3c6031781dde442c2d1f12da08e8a9128b5685a2a8ea2b0ee06df441b42f1",
     "formal/runtime-verification/local-worklet-graph-normal.log": "573438e99f122d6b30f905fe41bee0f9491f3c9d3c51ae81da8bb04303183fac",
-    "formal/runtime-verification/local-worklet-graph-omitted-preparation-chromium.json": "45cc144871922c960dd4bfe4184133fc29ada0a7e0b2aab9f22ad49e19f55ef2",
-    "formal/runtime-verification/local-worklet-graph-omitted-preparation-chromium.log": "66dfe064e8a3547463c7be2cc6f3768e7d5b8ec0d52b4cf5d123b746c0537387",
-    "formal/runtime-verification/local-worklet-graph-omitted-preparation-firefox.json": "117b8ad32800ab02b5a4c5386b13312fd0a8e2b3b1fe0ddf30fd8b3e80993688",
-    "formal/runtime-verification/local-worklet-graph-omitted-preparation-firefox.log": "daad9283b3c3ceb69697456ee24034587c9df01ad722d0abc5b13dd2fea5aa4d",
-    "formal/runtime-verification/local-worklet-graph.json": "3f37e85ce2a58db4cd39a14e1bd4714a4a7e25422bf0241894cf44675460c19f",
-    "formal/runtime-verification/local-worklet-graph.md": "2cec0cebb59197ee6559a55d07b235b23d105751d010a4d90786d9e382fca0f0",
-    "formal/runtime-verification/local-worklet-graph.ts": "6385e479f1a83cdad95f16042a013125c2d14c4a0d052c7e4f1890c156aaac39",
-    "formal/runtime-verification/local-worklet-regression.log": "06b706a771c904eb347339d9d428c51953de996d05aa3c56492638b44b21c296",
-    "formal/runtime-verification/local-worklet-unit.log": "647cc9b3a21a55ae200a0c0bf0ad7ce5f3a98bb985e4c628084870919dac8c5f",
-    "formal/runtime-verification/local-worklet-validation.json": "0bf65fef25c8b39407013200f990fedbc1616b608bca8bf887e4cb9767664843",
+    "formal/runtime-verification/local-worklet-graph-omitted-preparation-chromium.json": "5285bb68cc43dde4cf7cad7a20541e2fe0eb823e0de703cd03a8ff93263ad32e",
+    "formal/runtime-verification/local-worklet-graph-omitted-preparation-chromium.log": "a4c90425ebc48f82946d41701b4b5f8daaef51de5b3e11af7221369967e171e9",
+    "formal/runtime-verification/local-worklet-graph-omitted-preparation-firefox.json": "aeba3082eefa854872ff70221ea830c090cdc6d72ac6da17e28f0af55bdf7f77",
+    "formal/runtime-verification/local-worklet-graph-omitted-preparation-firefox.log": "4f28fccd7d801b81989278f382b687e44b66a843db2fc80c54a5693dfa27e1c5",
+    "formal/runtime-verification/local-worklet-graph.json": "e33685a0d41912bcfcb0c6c7c1c74c0c110a966e17bdabe7337db799e851a4c5",
+    "formal/runtime-verification/local-worklet-graph.md": "aa0b2626f3e113f132c262bdbf4fc278fc0f5dea8a18a5ce84a972a12b68b8c4",
+    "formal/runtime-verification/local-worklet-graph.ts": "6caead4682a647e6e41815fddf120d20f9dd8f5ee8beefca2ddf33338bb0b207",
     "formal/runtime-verification/maintenance-backends.json": "9dacd2dc53b294581f48f397660fd1fe6b55ae9018065a733c6605fede6d6936",
     "formal/runtime-verification/maintenance-backends.md": "e5731612cea9ab1548cd7ccace71af268b3bb5d735b234e64401af92f289c055",
     "formal/runtime-verification/maintenance-backends.ts": "d5ef74168c84fe44ac7fed7f7a27af8ae7f84fd11a26b1becba26eab11100c96",
@@ -225,6 +224,11 @@
     "formal/runtime-verification/policy9-validation.json": "b01610f0db1bd66ab2be6b32b64abafc871547221ef8cab9567d2d5dd52c012d",
     "formal/runtime-verification/private-channel-compatibility.json": "f06b56152180f692553814ec86cf548bdc8e2f3195c9bd4aae59ce3d615fedd5",
     "formal/runtime-verification/private-parent-channel.md": "259d59b6ff7e754321f24b04aa21de7308c186e6286ef87da5ca5436c50bf062",
+    "formal/runtime-verification/production-worklet-first.json": "3eeba8b73a0920d898c1ef56a91fd8581c858a9d4d3dbdcb5ac3a4c3aa46b5a4",
+    "formal/runtime-verification/production-worklet-prototype-first.json": "33f6d43d369d29988b32c3b638a3eaccc7a404e6445a29727a561c896d4514e2",
+    "formal/runtime-verification/production-worklet-regression-first.log": "874e853fb24add8aba6c09664f74c26764b08ca2c877a0fe29dd1569b9cceaee",
+    "formal/runtime-verification/production-worklet-validation.json": "93f4a8fa8a5e54df9293b8a956dce46a9d6d2da9c423b1992e994d8bac836f7d",
+    "formal/runtime-verification/production-worklets.md": "60dfdf824e0fa692a0aa04ecbbbcf86c30f21c81acc80821767820b2f861c747",
     "formal/runtime-verification/registration-fence.json": "bb83363c29ba1fc3579dfc8a650752e5b4501fc5e7159c84af85cfb9f41474d1",
     "formal/runtime-verification/registration-fence.md": "9ebc2e76ad0f94f489b1f03a7a1dd95e51a596fddcf6b721f6104e807cb7df3d",
     "formal/runtime-verification/registration-fence.ts": "cd933b873dead7104b07717d633912616ce18aa89ad0d9196b0d9378c96126ad",
@@ -312,26 +316,26 @@
     "formal/worker-registration.md": "c17ec13229015956a09b7bdfa7feaf9433dd2d7f9f991da89bc8fffd6d605445",
     "package-lock.json": "29beded524ea35ec8aa5ce822cdcfa447caba753eb88fecd9a1209bd98a1eea1",
     "package.json": "d9265cd5b2eec5b321ea428f8fdf2fb5c4b2c6c8dc67282e41cf7049bf6911ad",
-    "results/browser.json": "cb0bfa9d8b20739ed2e6e9561624a7b71a3773be01e777f89c5cc9295b5c60a3",
-    "results/contexts/controller-storage.json": "3bde34b0ccb3a4eb75f592374b3c00b7b8f5a1c5c6095588bbaca2f99283e06d",
-    "results/contexts/csp-startup.json": "ed972f79c658b0930e052666e349dbe0d0b9afe10a8b918c3e6b4c06ac661366",
+    "results/browser.json": "4a7f2280d536b07f472864cf939a31fc804b12cad564428e3f5c53900b10e0e3",
+    "results/contexts/controller-storage.json": "ade5ea7a3fb35977034edbe8c7bf8dbf45ac4bede72a918b56ba96dce8012dc8",
+    "results/contexts/csp-startup.json": "4918a0fe9d6898e8d55e27dae6a6c518495bdc803614ca6ec497b6fe37ffbf86",
     "results/contexts/document-consumption-race.json": "6ffa98f5d65e34dcd658ccc7116b65e136aa35493b2c94a3775c16db997e75cd",
-    "results/contexts/document-contexts.json": "0c7f2605af300643683624c6179842fb869c49fb014d910f46c7b7c3659f2967",
-    "results/contexts/document-control.json": "f9bb1742a9d0e788253c4f2737f17b91fef2b332e8a300170040ee475e660d95",
-    "results/contexts/document-factory.json": "34e262cbba35f447128dd1a3587b24eac550c9e3ed75906d8c206c3fc25aef28",
-    "results/contexts/document-renderer.json": "729396a61d83f7fed973b2a06d4187f9574acc4001d0263424601b7b69920c90",
-    "results/contexts/dynamic-scripts.json": "e897b11b39ad79175a4e7e077d1f1167820039e8a23f9867cdf4d8a02745a041",
+    "results/contexts/document-contexts.json": "4441ecc1fb80aef999ca6a646420406603d278f3279d3a09906e45798bff4318",
+    "results/contexts/document-control.json": "4c9cdc32a13de632953a712179a5dd00b47f48e3f13f5871d31c04f4da69978a",
+    "results/contexts/document-factory.json": "cb3c6ef994d0f16d8137aba42a0595ffdf33f9e372c6ce61f1c88fb29eec9c41",
+    "results/contexts/document-renderer.json": "b8aa7945afd66a29eba81ce46f0e822d288c179a6675e219caab1d550fb4e2dc",
+    "results/contexts/dynamic-scripts.json": "9123251a1c625ce5fa75cd1b6180cc891fac52bcb15d1f40f4c4852de03e73e7",
     "results/contexts/parent-channel-late-receiver.json": "9fc7b676d78f6c68f1efbf555f84c73597c9ba36256ed375bc4f4769d4f8b0fb",
-    "results/contexts/parent-channel.json": "81621c5ce6d14b7cf9eecc7347a0b7e5e9114dfa612d9c174c9d552068fc0caa",
-    "results/contexts/popup-receivers.json": "246fb0da75860d8525ee05b557640929bee146f6995f54441acf31cee99a2d29",
-    "results/contexts/prototype-confinement.json": "ceaa6a6daf360fc11744bce52f8bb30db0d7f79f88c13d45ece83366b2d2dbc1",
-    "results/contexts/publishers.json": "1dfd94b479dc186f75f7eab245d3d051b7062224bbca4433ae30c4a634c555c9",
+    "results/contexts/parent-channel.json": "18469695ef3ca669031d84cfc9d7ffef9c4146ed6c130f05df533b369e7bd0b5",
+    "results/contexts/popup-receivers.json": "783da7ea0c28234528ce9b0269b0fedaccd25c190d3c2cdcd3c1f44b2405be54",
+    "results/contexts/prototype-confinement.json": "22936d85a42a5a91c20a7913a5f87bf0bc20134ab06fb6a3362aaeb0d7ba9f57",
+    "results/contexts/publishers.json": "825edb4d5316e7de3eb57153c71f3206fce7485fb3bcc8848d8612ff7b42f805",
     "results/contexts/script-url-gate.json": "37e752e019de6b33935859ea4e10fbb88736f788ced67ab214c32a9fe04ec80c",
-    "results/contexts/shared-workers.json": "64d7a40224ed2fd75065c49ac21581daa1ab03701b561c35f359ab6d7feb794c",
-    "results/contexts/workers.json": "3cb25c5838dcf4ce4505c3d238063ebe8b2ad9f71089c69e308d012c7e44b937",
-    "results/contexts/worklet-guard.json": "071f5772e1dd6c8c53bf57f31ac69113672aecb46a5eae6417114a740a39490a",
-    "results/contexts/worklet-platform.json": "eef13ccf4f357b4e9daa6556be921c891d91664c84e0fc87273ad884203d811a",
-    "results/contexts/worklets.json": "297f58196da343a1a73164f7a3408b564299aef5d23f2c43cc68cbee507a989c",
+    "results/contexts/shared-workers.json": "37ba7b75fb80c101f6ab47d30fee5d68efb89217cbe6a439343d4444a196d7b4",
+    "results/contexts/workers.json": "b16dff0d2cf01faff3b3f6e1b95ad04e01264c8906a9708d3c1841de1e83add4",
+    "results/contexts/worklet-guard.json": "b9b33eaf80437b3255ef613f9e04f985e918176fb395e3e72e66b00373efbc9e",
+    "results/contexts/worklet-platform.json": "8b3927775b1bf9211df3c81994a1b851a50f5717fe15b5f4052ad48036121242",
+    "results/contexts/worklets.json": "5e5ae51acac4acd182fa1bebc2fe6d8626b755709120c1a0097ab760fbaaa6aa",
     "results/network-firefox.json": "cdaf952c88cfeb692413fc2075f7dc6786ed0f4e14faaa98067e766a4134ef96",
     "results/network.json": "490e217fafa4601c3bf0afc039129a22c2829666c6279aa10d70a235023afa62",
     "results/trusted-runtime/compatibility-local.json": "7c5545ebf932497e78db73e4569f304c5f53b51c14d1bbea7272c9cde8d870c6",
@@ -339,7 +343,7 @@
     "results/trusted-runtime/policy12-cyberchef.json": "b7ee349ef393cc3090e26fbfd76155697a6becc6c8166587ceb6687fc87d5e71",
     "results/trusted-runtime/policy12-stackedit-firefox.json": "5c358762197689245159b4786443e7a9fd52472adac150fad245a84146dc4e10",
     "results/wasm.json": "28008acd10a46da8269617ed41f2bea6e68d3d785435a870632fef25aef5e8f2",
-    "scripts/build.ts": "bb15e3a22777995d642c0a92b41fb39d4a5f91606c85258a2b9c22a82ca44e77",
+    "scripts/build.ts": "5f485d3cd69a0270297651f7bcbc4a2c2552a2a85b5322afde51f5efe58dd9d5",
     "scripts/trusted-policy.ts": "c3d6558cd78422d52ab971692482bda02c10ff601053471f35f6b5491cfb395d",
     "scripts/worklet-compiler.ts": "9ec50de9ebb0ff4fb86a61bc22f0c50dc6133e70c5a6b3ae87878aafaea4d3cc",
     "src/bridge/connect.ts": "bd35b868143935b8cfa4f7ce3227644c516b01f5ef82eea2b196e3183f17833b",
@@ -370,7 +374,7 @@
     "src/runtime/contexts/shared-worker-factory.ts": "f797ec88f49b85f9c3276239c34975684582e3abe10cf15af89defd87dd952bd",
     "src/runtime/contexts/shared-worker-guard.ts": "0df5664f0da22b185dcf3931dff59cab7980fe88fa4fd56489b49765f7dea9b0",
     "src/runtime/contexts/storage.ts": "35dba5f75e80958cb3f4e965e7fb4a69125bc13cfc61b7753a7a795f0b3fb23a",
-    "src/runtime/contexts/window-realm.ts": "092e52e5e560358e35210c8e6b37110bf0774a0971f05a557830c923d9545c0c",
+    "src/runtime/contexts/window-realm.ts": "c898e14761e02c25df0952742aa65a611656f8baed8d0c9426eee0159270eeb5",
     "src/runtime/contexts/window-scripts.ts": "d3fd2a9ab050c9e1bc087a19ace0b2a7f579ff4032f187cdf8ceb7aad8749d74",
     "src/runtime/contexts/worker-aliases.ts": "b98e035e7f0bdd2f93e9e89978fa9e861451eadfb7d9882157413a606f810589",
     "src/runtime/contexts/worker-birth-protocol.ts": "9f51d3451dae467301d5197b4735601190cb41fa786fdb5b4a569524cf80a011",
@@ -383,11 +387,15 @@
     "src/runtime/contexts/worker-realm.ts": "6b7b1fc504ac1c6d2cf6a59c4e10cb8881a8cd701fea78e61cad6fc39b74572d",
     "src/runtime/contexts/worker-resource-protocol.ts": "aa5b444b987d60ce6dcacf74715756a290a2d440b39004a851a1c75f03f3c9fe",
     "src/runtime/contexts/worklet-chunks.ts": "93769ee6ad26251020c389e98de6cdb8df7f51ff2c1d88a4e15893954b2334c6",
-    "src/runtime/contexts/worklet-controller.ts": "268da6b2d90a980e34a5731450e2dd347fa44d68e44d9c142dd5468ac81b4ef3",
-    "src/runtime/contexts/worklet-factory.ts": "b6c4347d35b9deae4e1bf111c1e4ae3b46d94662e044293d1436730f0dc0121e",
+    "src/runtime/contexts/worklet-controller.ts": "cba77205307e9aa3d3c90b1a04b4ccbaff1d0db7c50a9eabd45c4d94aa7940a5",
+    "src/runtime/contexts/worklet-factory.ts": "173f250212e4210b4f8b7559c601d23204a87dc60b8fe48672f0035d07c113fe",
     "src/runtime/contexts/worklet-graph-schema.ts": "700a967bbf6d0a34bf43caa1f93a1c5f2819fa93ff12a2b5d729c9ae0c9fc333",
-    "src/runtime/contexts/worklet-graph.ts": "0f4f5ef9eece2162b6d48fb40b91c3e421dd04564d127ab6a828ff0487c3b515",
-    "src/runtime/contexts/worklet-guard.ts": "a26c494bba38ab190640551b59bff4c946edc3e6ebc03bba6167f0de4d48e9fb",
+    "src/runtime/contexts/worklet-graph.ts": "14a7f49d2138b0e111d9edf7de4ac26b4eb0f32f3043e020964f978adb2a6255",
+    "src/runtime/contexts/worklet-guard.ts": "0b67f2e38604fb59ad9256ee6bdc19e915b29cb466a3d0797674d1687641f174",
+    "src/runtime/contexts/worklet-imports.ts": "f7bce3ae1673dbf193c216577c6a283406c184668414e934fdfa1547bd01690d",
+    "src/runtime/contexts/worklet-source.ts": "011c0a57852bff560e6a2c489d61fdcc0e35abda3b971b267d4c4de566098f77",
+    "src/runtime/contexts/worklet-store.ts": "47636c01c29861439c0d177da0d545d3e3dc2e6e25cdee5b1731f22ef761a248",
+    "src/runtime/contexts/worklet-types.ts": "e33458a3da45f593c77c22e92029d52871c06f697741bd68eed88070a11010e4",
     "src/runtime/controller-client.ts": "a420699a6ebeaf45c0bdc4a87b9a6f1f0d8e102fae165864f601846c6df9ce33",
     "src/runtime/document.ts": "afac1c6bbe5bf312afc450cd13bd54d3bdd80eecdeefb9b9c1bd8dce379d18f5",
     "src/runtime/enforcement/application-policies.ts": "c53410e22098aa518bebc9ebaa57110ab0405674df50f9cfea2369bb2cfe326a",
@@ -421,7 +429,7 @@
     "src/runtime/trusted/context.ts": "a616feff34124caef20171ab5db21377c866781d94c6eae15d2c4fc43c59f922",
     "src/runtime/trusted/fragment.ts": "a0c25eeff36057f8f44efe1f0d4a215758c1a965efdcecbb107a602256e34bc0",
     "src/runtime/trusted/source.d.ts": "3ef183fc805f1071dc2f94584d924540ddb067af2e31bd2f5bc7e12b265f3fe1",
-    "src/runtime/worker.ts": "80902f271e066d384107bf9405520fe1c889993cb8f37c1f292dd401211ac464",
+    "src/runtime/worker.ts": "ad76dba35d0293067dc0848bfd650fa05a6114a40fbe0d0465b383c36d6f5d2b",
     "src/shared/application-navigation.ts": "ff1aa86011a7aa5af0ccf8626f77d0b8a86883d4cc4e21cf92f7f1382d9cbdb4",
     "src/shared/context-policy.ts": "6bc7a5ca6c733e3d869e200382dc3896347ea22ea9a8448cbe4b505ecc39df9c",
     "src/shared/javascript-mime.ts": "f74e62db45c3b21353fbf6e10bedaf39176f7d8708ce401bef1e031ae427fb02",
@@ -463,7 +471,7 @@
     "test/poll.test.ts": "528f362623b1e5d770c1cc3d4d2bc3a4cbdfd273c1f832726695ef06f69ac534",
     "test/popup-receivers.ts": "b6ef0f2cb610f3c61e13a1480b3c93cbaf60a43d861db0c2c85a561e13703e8b",
     "test/private-channel.test.ts": "c9eab26b6454803c7650a4f7790ecd6373a431c9772af3f0ac05dfa5c94e5fe8",
-    "test/prototype-confinement.ts": "c67de905336cad05930150533413114d087ae5669119c5d532fbeeff5cb62af0",
+    "test/prototype-confinement.ts": "cc1cee2fe6fcd618de19c9881920c5ae050bb8b92d0ca92d9ff032c42e8bf58f",
     "test/publisher-contexts.ts": "114d06c8cdbd0c193d72881e4083ac4f264c8c7ba84611d1a31d0ea96f10a92e",
     "test/publisher-events.test.ts": "f6235008bcdce5550b875f3293926037182b604c9c177abe6a7b0cf435981bce",
     "test/publisher-store.ts": "e7a7e7220d56a9a2cf083f8ea5212e6701f7fdd69e4609740284705b1b8481b6",
@@ -488,10 +496,11 @@
     "test/worker-contexts.ts": "bdde8840cc2fbd75d32226363512b4ef72a6da22bbde0f155cf06f3a5d8f4676",
     "test/worker-control.test.ts": "64be68d6132e19c96c7dcc55be924ea52e830abd4c60cbf22a70a65089e52d91",
     "test/worker-namespaces.test.ts": "9613d3fc5555e5450a856329011961e0de041d5e4618eb0bca12d5fd27b89250",
-    "test/worklet-contexts.ts": "4535bc5c707138db48764a1ddbeba086fa1950785a5a11cd0d1cfada24bcdd1e",
+    "test/worklet-contexts.ts": "8376d0eaa7f0d56760eaf29fb645d2dbd4dad75c7177bcb7b3c1efc3affe12a4",
     "test/worklet-graph.test.ts": "60b80a8fa8231f257151e209d4d9d641567111f820628668e5c35747da729c83",
-    "test/worklet-guard.ts": "6e66d8e41f3a2a8d34ecff988f932a36b598c9f1e7ca144cd0149c1bd1e8fb0c",
-    "test/worklet-platform.ts": "1872fe7f40011ec8ce0ef26ef7de59f27720a175de4983755205d608d6c8b7da"
+    "test/worklet-guard.ts": "7f4b617d1b3de65630a6c1d18620b8b9529dad7419da139a771432d83d6279b5",
+    "test/worklet-platform.ts": "1872fe7f40011ec8ce0ef26ef7de59f27720a175de4983755205d608d6c8b7da",
+    "test/worklet.test.ts": "cf269225663b3e901951e74f7cf7081a3d1b0924865ad0e1d246b837d479cdd3"
   },
   "claims": [
     {
@@ -1383,30 +1392,76 @@
       "id": "worklets",
       "title": "Audio and paint worklets",
       "disposition": "reviewed-scoped",
-      "preconditions": "An application requests worklet module loading in a browser that supports that worklet.",
-      "enforcement": "Serve a prepared admitted module graph and deny known external capabilities in its global.",
+      "preconditions": "Trusted Window setup captures the native Worklet methods and controller transport before application execution. The existing runtime service worker owns compilation, admitted bytes and actual browser actor lookup. Firefox paint absence is an unavailable API, not a containment result.",
+      "enforcement": "Native-actor-bound requests select an installed JavaScript or same-origin Blob source. The controller revalidates owner and installation generation after compilation. A private compiler with embedded WASM returns graph data; validated Blob chunks and a separate first host-guard dependency replace the removed HTTP intent and graph routes. Cached facades preserve selected repeated-entry behavior. Independent production native HTTP denial remains pending.",
       "source_paths": [
         "src/runtime/contexts/worklet-factory.ts",
         "src/runtime/contexts/worklet-guard.ts",
-        "src/runtime/contexts/worklet-controller.ts"
+        "src/runtime/contexts/worklet-controller.ts",
+        "src/runtime/contexts/worklet-imports.ts",
+        "src/runtime/contexts/worklet-source.ts",
+        "src/runtime/contexts/worklet-types.ts",
+        "src/runtime/contexts/worklet-store.ts",
+        "src/runtime/worker.ts"
       ],
       "evidence": [
         {
-          "kind": "confined_test",
-          "description": "Platform, guard and context fixtures exercise selected audio/paint worklet execution.",
+          "kind": "native_control",
+          "description": "Native AudioWorklet processor/port/render controls work in Chromium and Firefox; Chromium has a working native paint control. The actual built guard comparison also retains expected audio and paint behavior.",
           "paths": [
             "test/worklet-platform.ts",
+            "results/contexts/worklet-platform.json",
             "test/worklet-guard.ts",
-            "test/worklet-contexts.ts"
+            "results/contexts/worklet-guard.json"
+          ]
+        },
+        {
+          "kind": "confined_test",
+          "description": "The installed runtime passes resource and Blob audio graphs, repeated entries, child-document execution, offline processing, foreign-Window identity replay refusal and removed HTTP-route denial. Captured native module calls use Blob URLs. Chromium paints the expected pixel; Firefox lacks paint. Publisher and receiver observations cover only the recorded intervals. Unit tests use a compiler double for controller authority and generation races; actual compilation is covered separately.",
+          "paths": [
+            "test/worklet-contexts.ts",
+            "test/worklet.test.ts",
+            "results/contexts/worklets.json",
+            "formal/runtime-verification/production-worklets.md",
+            "formal/runtime-verification/production-worklet-validation.json"
+          ]
+        },
+        {
+          "kind": "discovery",
+          "description": "The first migrated production comparison failed on preparation equality because persistence decoding reordered metadata fields. The retained receipt records that failure. Explicit field serialization and a reordered-record unit fixture address it; subsequent installed native comparisons pass.",
+          "paths": [
+            "formal/runtime-verification/production-worklet-first.json",
+            "src/runtime/contexts/worklet-controller.ts",
+            "test/worklet.test.ts"
+          ]
+        },
+        {
+          "kind": "discovery",
+          "description": "The first full regression stopped because the prototype fixture sampled its prepared child after a fixed 1.2-second delay. Explicit load readiness records child preparation later than that in both browsers and retains all immediate pending-child, prototype and receiver assertions. The initial failure and full-run log are archived separately; subsequent full validation is identified by the production index.",
+          "paths": [
+            "test/prototype-confinement.ts",
+            "results/contexts/prototype-confinement.json",
+            "formal/runtime-verification/production-worklet-prototype-first.json",
+            "formal/runtime-verification/production-worklet-regression-first.log",
+            "formal/runtime-verification/production-worklet-validation.json"
+          ]
+        },
+        {
+          "kind": "historical_control",
+          "description": "Remote CI for f6f8d24, before this migration, passes the module-delivery component job but fails maintenance and two other fixtures. The installed-navigation fixture still requires an HTTP guard response that local kernel delivery removed. This historical workflow does not verify current production Worklet integration.",
+          "paths": [
+            "formal/runtime-verification/ci-worklet-component-prior.json",
+            "formal/runtime-verification/ci-worklet-component-prior.log"
           ]
         }
       ],
       "open_obligations": [
-        "Different worklet kinds and future globals are not completely inventoried.",
-        "Firefox paint absence is not a containment result; the named files need individual receiver/control review."
+        "Integrate independent native HTTP denial and close the aged-registration maintenance counterexample. Dependency fetching can precede rejected guard evaluation.",
+        "Prove concrete caller ownership, prepared-facade closure, asynchronous publication and retained native lifetime correspondence for C1-C8.",
+        "Establish language/compiler behavior beyond selected graphs and catalogue additional worklet kinds and future globals."
       ],
       "control_status": {
-        "native_control": "not-recorded",
+        "native_control": "recorded",
         "confined_test": "recorded",
         "fault_control": "not-recorded"
       }
@@ -2463,7 +2518,7 @@
       "open_obligations": [
         "Prove private-handle and metadata ownership, native-operation capture, and implementation correspondence for asynchronous reads, cancellation, generation checks and in-flight delivery.",
         "C8 needs a precise distinction between immutable installation inputs and locally derived publisher responses. The current generation checks do not form one transaction across registry and resource stores.",
-        "Worker fetches, native resource loads and worker/worklet control protocols still use HTTP. Document and popup control operations now use messages; their native bootstrap requests remain. Publisher handling can start an HTTP-backed executor or cause worker fetches; the resource no-HTTP experiment does not cover those paths.",
+        "Remaining HTTP-backed context/resource paths and their effects on registration maintenance require separate review. Worklet preparation now uses authenticated controller messages and local Blob module URLs; its installed comparison does not cover publisher-executor startup or every native resource load.",
         "The separate worker-update counterexample and covering-scope document trigger remain. This integration does not establish C4 for the whole runtime.",
         "Constructor-response header mutability, cross-realm metadata behavior, resource timing and buffering are not complete native Fetch equivalence.",
         "Policy-6 script URL integration changes a referenced implementation boundary. Earlier receipts retain their recorded scopes and inputs; revalidate this claim under the new native policy and complete its caller/browser correspondence before treating it as established for the current candidate.",
@@ -3868,8 +3923,8 @@
       "id": "local_worklet_graph_preparation",
       "title": "Private Worklet compilation, local graph linking and independent host preparation",
       "disposition": "unverified",
-      "preconditions": "The component fixture supplies fixed immutable source reads and owner metadata. The actual built guard and compiler/parser bytes are trusted host inputs. The production native-actor transport, child ownership and generation correspondence are not integrated.",
-      "enforcement": "The compiler snapshots admitted module data in a private service worker with embedded WASM and no network reader. Strict facades preserve prepared shared-module identity across entries. The Window validates unknown graph data and creates local Blob chunks with captured operations. A separate wrapper imports host preparation before the application graph; native HTTP policy independently gates fetching. The production factory still uses its prior HTTP routes.",
+      "preconditions": "The component fixture supplies fixed immutable source reads and owner metadata. The production migration uses actual native sending Window identity and current installation generations. Built guard and compiler/parser bytes are trusted host inputs. Complete caller ownership and lifecycle correspondence remain open.",
+      "enforcement": "The compiler snapshots admitted module data in a private service worker with embedded WASM and no network reader. Strict facades retain selected shared-module identity across entries. The Window validates graph data and creates local Blob chunks with captured operations. A separate wrapper imports mandatory host preparation before the guest graph. Production compilation now uses the existing runtime service worker and private messages; independent HTTP denial remains a component result pending production integration.",
       "source_paths": [
         "src/runtime/contexts/worklet-graph.ts",
         "src/runtime/contexts/worklet-graph-schema.ts",
@@ -3878,7 +3933,10 @@
         "scripts/build.ts",
         "src/runtime/trusted/source.d.ts",
         "package.json",
-        "package-lock.json"
+        "package-lock.json",
+        "src/runtime/contexts/worklet-controller.ts",
+        "src/runtime/contexts/worklet-factory.ts",
+        "src/runtime/contexts/worklet-imports.ts"
       ],
       "evidence": [
         {
@@ -3893,16 +3951,14 @@
         },
         {
           "kind": "confined_test",
-          "description": "Restricted component groups compile in a native private service worker with embedded parser bytes and HTTP-denying script/connect policy, record no compiler fetch attempts, and observe no HTTP during the operations plus 300 ms. An independent raw native module control demonstrates that dependency fetch precedes a rejected guard under permissive policy; the restricted policy prevents that fetch. Wire-data controls and the existing production Worklet regression pass; the index binds their scoped source/build inputs.",
+          "description": "Restricted component groups compile in a native private service worker with embedded parser bytes and HTTP-denying script/connect policy, record no compiler fetch attempts, and observe no HTTP during the operations plus 300 ms. A raw native control demonstrates dependency fetching before a rejected guard under permissive policy; restricted policy prevents that fetch. Current graph-wire and production checks retain separate scopes in the production index.",
           "paths": [
-            "formal/runtime-verification/local-worklet-validation.json",
-            "formal/runtime-verification/local-worklet-unit.log",
-            "formal/runtime-verification/local-worklet-regression.log",
             "test/worklet-graph.test.ts",
             "results/contexts/worklet-platform.json",
             "results/contexts/worklet-guard.json",
             "results/contexts/worklets.json",
-            ".github/workflows/formal.yml"
+            ".github/workflows/formal.yml",
+            "formal/runtime-verification/production-worklet-validation.json"
           ]
         },
         {
@@ -3916,13 +3972,22 @@
             "formal/runtime-verification/local-worklet-graph-omitted-preparation-firefox.log",
             "formal/runtime-verification/local-worklet-controls.log"
           ]
+        },
+        {
+          "kind": "confined_test",
+          "description": "The production migration removes HTTP preparation and module graph routes and passes installed root/child audio, offline behavior, replay refusal and Chromium paint. The old component validation index is pinned to its artifact revision; the production index identifies new source/build receipts.",
+          "paths": [
+            "formal/runtime-verification/production-worklet-validation.json",
+            "formal/runtime-verification/production-worklets.md",
+            "test/worklet.test.ts",
+            "test/worklet-contexts.ts"
+          ]
         }
       ],
       "open_obligations": [
-        "Replace the production HTTP factory/controller paths with native-actor-bound private requests, preserving root and child ownership and generation freshness.",
-        "Separate the guest-side dynamic-import rejection helper from the side-effectful mandatory host guard; keep the latter outside the application compiler graph.",
-        "Establish compiler/language compatibility beyond the selected graphs, PaintWorklet integration, guard-byte authentication, concrete caller ownership and lifecycle correspondence.",
-        "Integrate independent native HTTP denial across all contexts and resolve fresh/aged registration and retained-operation counterexamples. Complete C1-C8 composition and browser-effect coverage."
+        "Prove root/child caller ownership, prepared-facade dependency closure, generation/lifecycle correspondence and retained native operation behavior.",
+        "Establish compiler/language compatibility beyond selected graphs and complete all supported Worklet surface contracts.",
+        "Integrate independent native HTTP denial across supported contexts and resolve fresh/aged registration and retained-operation counterexamples. Complete C1-C8 composition and browser-effect coverage."
       ],
       "control_status": {
         "native_control": "recorded",

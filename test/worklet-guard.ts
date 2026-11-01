@@ -7,6 +7,7 @@ import { chromium, firefox } from 'playwright';
 import { launch } from './browser-profile.ts';
 import { testProvenance } from './provenance.ts';
 import { prepareWorkletModule } from '../src/runtime/contexts/worklet-source.ts';
+import { WORKLET_POLICY_VERSION } from '../src/runtime/contexts/worklet-types.ts';
 import { response } from '../src/runtime/response-policy.ts';
 
 const bundled = await build({
@@ -18,6 +19,14 @@ const bundled = await build({
   define: { 'process.env.NODE_ENV': '"production"' },
 });
 const guard = bundled.outputFiles[0].text;
+const importsBundle = await build({
+  entryPoints: ['src/runtime/contexts/worklet-imports.ts'],
+  bundle: true,
+  write: false,
+  format: 'esm',
+  target: 'es2022',
+});
+const imports = importsBundle.outputFiles[0].text;
 const bindingFixture = await build({
   entryPoints: ['test/fixtures/global-bindings/worklet.ts'],
   bundle: true,
@@ -38,7 +47,7 @@ const server = http.createServer(async (request, target) => {
     result = response(
       'const __privacyWorkletMetadata=' +
         JSON.stringify({
-          version: 1,
+          version: WORKLET_POLICY_VERSION,
           id: 'b4e56663-dca9-4058-ac11-10a8d738677d',
           application: 'fixture',
           generation: 'fixture-generation',
@@ -49,6 +58,7 @@ const server = http.createServer(async (request, target) => {
         guard,
       'text/javascript',
     );
+  else if (path.endsWith('/imports.js')) result = response(imports, 'text/javascript');
   else if (path.endsWith('/dependency.js'))
     result = response(
       prepareWorkletModule(
@@ -57,7 +67,7 @@ const server = http.createServer(async (request, target) => {
         {
           baseURL: origin + '/source/' + kind + '/dependency.js',
           logicalURL: 'https://publisher.test/' + kind + '/dependency.js',
-          guardURL: origin + '/guarded/' + kind + '/guard.js',
+          importsURL: origin + '/guarded/' + kind + '/imports.js',
           aliases: [],
         },
       ),
@@ -67,17 +77,20 @@ const server = http.createServer(async (request, target) => {
     const audio = `import './dependency.js';registerProcessor('guarded-probe',class extends AudioWorkletProcessor{constructor(){super();this.port.postMessage({type:'prepared',prepared:globalThis.dependencyPrototypeProtected===true,dependencyPrepared:globalThis.dependencyPrepared===true,bindingsSealed:globalThis.dependencyBindingsSealed===true,network:typeof fetch,storage:typeof indexedDB});import('/not-installed.js').then(()=>this.port.postMessage({type:'dynamic',outcome:'unexpected'})).catch(error=>this.port.postMessage({type:'dynamic',name:error.name,outcome:'rejected'}));}process(inputs,outputs){for(const output of outputs)for(const channel of output)channel.fill(0.25);return false;}});`;
     const paint = `import './dependency.js';registerPaint('guarded-probe',class{paint(ctx){ctx.fillStyle=globalThis.dependencyPrototypeProtected===true&&globalThis.dependencyPrepared===true&&globalThis.dependencyBindingsSealed===true?'#00ff00':'#ff0000';ctx.fillRect(0,0,8,8);}});`;
     result = response(
-      prepareWorkletModule(kind === 'audio' ? audio : paint, {
-        baseURL: origin + '/source/' + kind + '/entry.js',
-        logicalURL: 'https://publisher.test/' + kind + '/entry.js',
-        guardURL: origin + '/guarded/' + kind + '/guard.js',
-        aliases: [
-          [
-            origin + '/source/' + kind + '/dependency.js',
-            origin + '/guarded/' + kind + '/dependency.js',
+      'import ' +
+        JSON.stringify(origin + '/guarded/' + kind + '/guard.js') +
+        ';\n' +
+        prepareWorkletModule(kind === 'audio' ? audio : paint, {
+          baseURL: origin + '/source/' + kind + '/entry.js',
+          logicalURL: 'https://publisher.test/' + kind + '/entry.js',
+          importsURL: origin + '/guarded/' + kind + '/imports.js',
+          aliases: [
+            [
+              origin + '/source/' + kind + '/dependency.js',
+              origin + '/guarded/' + kind + '/dependency.js',
+            ],
           ],
-        ],
-      }),
+        }),
       'text/javascript',
     );
   } else

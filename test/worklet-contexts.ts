@@ -95,7 +95,7 @@ const server = await servers({ receiver: false });
 const evidence = {
   provenance: await testProvenance(import.meta.url),
   scope:
-    'Actual installed runtime AudioWorklet/paint adapter, owner bindings, per-module guard, graph denials and offline processor behavior',
+    'Actual installed runtime AudioWorklet/paint adapter, owner bindings, local Blob graph preparation, graph denials and offline processor behavior',
   browsers: [] as unknown[],
 };
 try {
@@ -114,27 +114,44 @@ try {
             'audioWorklet',
           )!.get!,
           apply = Reflect.apply;
-        const rawFetch = fetch,
-          clone = Response.prototype.clone,
-          json = Response.prototype.json;
-        const registrations: { id: string; kind: string; url: string }[] = [];
+        const post = ServiceWorker.prototype.postMessage;
+        const registrations: { id: string; kind: string; entry: string }[] = [];
+        const moduleURLs: string[] = [];
+        Object.defineProperty(window, '__workletModuleURLs', { value: moduleURLs });
         Object.defineProperty(window, '__workletRegistrationCapture', {
           value: registrations,
         });
-        // Deliberate test-only authority, captured before host setup, lets both
-        // engines exercise server gates with a real scoped graph URL.
-        window.fetch = async function (input, init) {
-          const result = await rawFetch(input, init);
+        // Test-only native captures observe issued identities on subsequent
+        // requests and allow replay from a different actual browser actor.
+        ServiceWorker.prototype.postMessage = function (message, transfer) {
           if (
-            typeof input === 'string' &&
-            input.endsWith('/__worklet-intents') &&
-            result.ok
+            message?.type === 'privacy-worklet-prepare' &&
+            typeof message.id === 'string'
           ) {
-            const value = await apply(json, apply(clone, result, []), []);
-            registrations.push(value);
+            registrations.push({
+              id: message.id,
+              kind: message.kind,
+              entry: message.source.url,
+            });
           }
-          return result;
+          return apply(post, this, [message, transfer]);
         };
+        Worklet.prototype.addModule = function (url, options) {
+          moduleURLs.push(String(url));
+          return apply(add, this, [url, options]);
+        };
+        const controller = navigator.serviceWorker.controller;
+        Object.defineProperty(window, '__workletRequestControl', {
+          value: (packet: unknown) =>
+            new Promise((resolve) => {
+              const channel = new MessageChannel();
+              channel.port1.onmessage = (event) => {
+                channel.port1.close();
+                resolve(event.data);
+              };
+              apply(post, controller, [packet, [channel.port2]]);
+            }),
+        });
         Object.defineProperty(window, '__nativeWorkletControl', {
           value: async (url: string, render = false) => {
             const context = new NativeContext(1, 256, 44100);
@@ -190,7 +207,7 @@ try {
       await manager.locator('#app-url').fill(publisherOrigin + '/worklet-lab/');
       await provideResourceList(
         manager,
-        ['processor.js', 'second.js', 'dependency.js', 'paint.js'].map(
+        ['processor.js', 'second.js', 'dependency.js', 'paint.js', 'child.html'].map(
           (file) => publisherOrigin + '/worklet-lab/' + file,
         ),
       );
@@ -252,13 +269,15 @@ try {
         ownedRoot,
       ).href;
       const rawGraph = await app.evaluate(
-        (url) => Reflect.get(window, '__nativeWorkletControl')(url, true),
+        (url) => Reflect.get(window, '__nativeWorkletControl')(url),
         graph,
       );
-      assert.equal(rawGraph.outcome, 'loaded');
-      assert.equal(rawGraph.sample, 0.25);
-      assert.equal(rawGraph.feature.prepared, true);
-      assert.equal(rawGraph.feature.dependencyPrepared, true);
+      assert.equal(rawGraph.outcome, 'rejected', 'Removed HTTP worklet route must fail');
+      const moduleURLs = await app.evaluate(() =>
+        Reflect.get(window, '__workletModuleURLs'),
+      );
+      assert(moduleURLs.length >= 3);
+      assert(moduleURLs.every((url: string) => url.startsWith('blob:')));
       const second = context.waitForEvent('page');
       await manager.locator('[data-app="worklet-lab"]').click();
       const peer = await second;
@@ -266,11 +285,47 @@ try {
         () => Reflect.get(globalThis, 'workletFixtureReady') === true,
       );
       const foreignOwner = await peer.evaluate(
-        (url) => Reflect.get(window, '__nativeWorkletControl')(url),
-        graph,
+        (packet) => Reflect.get(window, '__workletRequestControl')(packet),
+        {
+          type: 'privacy-worklet-prepare',
+          kind: 'audio',
+          id: identity.id,
+          source: { kind: 'resource', url: identity.entry },
+          modules: [],
+        },
       );
-      assert.equal(foreignOwner.outcome, 'rejected');
+      assert.equal(foreignOwner.ok, false);
       await peer.close();
+      const childAudio = await app.evaluate(async () => {
+        const child = document.createElement('iframe');
+        child.id = 'worklet-child';
+        child.src = './child.html';
+        const loaded = new Promise<void>((resolve, reject) => {
+          const timer = setTimeout(
+            () => reject(new Error('Worklet child load timeout')),
+            20000,
+          );
+          child.onload = () => {
+            clearTimeout(timer);
+            resolve();
+          };
+          child.onerror = () => {
+            clearTimeout(timer);
+            reject(new Error('Worklet child failed'));
+          };
+        });
+        document.body.append(child);
+        await loaded;
+        const result = await Reflect.get(child.contentWindow!, 'runAudio')();
+        child.remove();
+        return result;
+      });
+      assert.equal(childAudio.sample, 0.25);
+      assert.equal(
+        childAudio.messages.find((item: { type: string }) => item.type === 'features')
+          .prepared,
+        true,
+      );
       await context.setOffline(true);
       const offline = await app.evaluate(() => Reflect.get(globalThis, 'runAudio')());
       assert.equal(offline.sample, 0.25);
@@ -309,7 +364,9 @@ try {
         denied,
         rawBlocked,
         rawGraph,
+        moduleURLs,
         foreignOwner,
+        childAudio,
         offline,
         paint,
         logs,

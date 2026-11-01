@@ -83,6 +83,14 @@ dependency without changing production source or artifacts. The production
 factory and its native HTTP policy still need integration; these component
 results do not close the maintenance counterexample.
 
+The [production worklet candidate](production-worklets.md) replaces its HTTP intent
+and graph routes with native-controller messages. Actual sender ownership and
+installation generation select admitted reads; the controller revalidates both
+after preparation. Compilation stays in the existing trusted service worker,
+and the Window passes local Blob wrappers to native worklets. Root, child,
+offline, cross-Window replay and Chromium paint checks pass. Independent native
+HTTP denial and the complete lifecycle argument remain pending.
+
 The next candidate's complete eight-app command fails after 32 successful tasks:
 Firefox StackEdit's screenshot times out waiting for fallback fonts, preventing
 its offline check. A focused unchanged run reproduces the screenshot failure.

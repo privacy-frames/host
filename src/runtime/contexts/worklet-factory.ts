@@ -1,11 +1,14 @@
 import type { PolicyTools } from '../enforcement/native.ts';
-import { strings, internalRecord, internalMap } from '../../shared/primordials.ts';
+import { internalArray, internalRecord, internalMap } from '../../shared/primordials.ts';
 import type { ResourceAliases } from '../resource-aliases.ts';
 import type {
   WorkletKind,
   WorkletModuleSource,
   WorkletRegistration,
 } from './worklet-types.ts';
+import { WORKLET_REQUEST } from './worklet-types.ts';
+import { createWorkletBootstrap, createWorkletChunks } from './worklet-chunks.ts';
+import { readWorkletGraph } from './worklet-graph-schema.ts';
 
 // Control-plane requests retain the pre-adapter native operation.
 const nativeFetch = fetch;
@@ -13,12 +16,17 @@ const nativeFetch = fetch;
 interface WorkletFactoryOptions {
   applicationURL: string;
   resources: Pick<ResourceAliases, 'mapURL' | 'isInstalledURL'>;
+  request(packet: unknown): Promise<unknown>;
 }
 interface WorkletState {
   kind: WorkletKind;
   id?: string;
   registration: Promise<void>;
   modules: Map<string, Promise<void>>;
+  facades: Map<string, string>;
+  bootstrap?: ReturnType<typeof createWorkletBootstrap>;
+  guard?: string;
+  chunks: ReturnType<typeof createWorkletChunks>[];
 }
 
 /** Keep native Worklet objects, addModule promises and processor ports. */
@@ -37,16 +45,9 @@ export function createWorkletFactory(
   const protocol = descriptor(NativeURL.prototype, 'protocol')!.get!;
   const responseOK = descriptor(Response.prototype, 'ok')!.get!;
   const responseHeaders = descriptor(Response.prototype, 'headers')!.get!;
-  const responseJSON = Response.prototype.json,
-    responseText = Response.prototype.text;
+  const responseText = Response.prototype.text;
   const headerGet = Headers.prototype.get;
-  const stringify = JSON.stringify;
   const runtimeOrigin: string = apply(origin, new NativeURL(options.applicationURL), []);
-  const endpoint: string = apply(
-    href,
-    new NativeURL('__worklet-intents', options.applicationURL),
-    [],
-  );
   const states = new WeakMap<object, WorkletState>();
   function register(worklet: object, kind: WorkletKind) {
     if (!states.has(worklet))
@@ -56,6 +57,8 @@ export function createWorkletFactory(
           kind,
           registration: NativePromise.resolve(),
           modules: internalMap(),
+          facades: internalMap(),
+          chunks: internalArray(),
         }),
       );
     return worklet;
@@ -97,27 +100,21 @@ export function createWorkletFactory(
       return property?.value;
     };
     const id = field('id'),
-      url = field('url');
+      entry = field('entry'),
+      guard = field('guard');
     if (
       typeof id !== 'string' ||
       !/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/.test(id) ||
       field('kind') !== kind ||
-      typeof url !== 'string'
+      typeof entry !== 'string' ||
+      typeof guard !== 'string' ||
+      !guard
     )
       fail('Invalid worklet registration identity');
-    const expected = apply(
-      href,
-      new NativeURL(`__contexts/${id}/worklet/entry/`, options.applicationURL),
-      [],
-    );
-    if (
-      !strings.startsWith(url, expected) ||
-      !/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}\.js$/.test(
-        strings.slice(url, expected.length),
-      )
-    )
-      fail('Invalid worklet module route');
-    return internalRecord({ id, kind, url });
+    const raw = field('graph');
+    const graph = raw === null ? null : readWorkletGraph(raw);
+    if (graph && graph.entry !== entry) fail('Worklet entry identity changed');
+    return internalRecord({ id, kind, entry, guard, graph });
   }
   async function source(url: URL, address: string): Promise<WorkletModuleSource> {
     if (apply(protocol, url, []) !== 'blob:') {
@@ -167,32 +164,53 @@ export function createWorkletFactory(
           const prepared = await inputSource;
           if ('error' in prepared) throw prepared.error;
           const moduleSource = prepared.source;
-          const reply = await nativeFetch(
-            endpoint,
-            internalRecord<RequestInit>({
-              method: 'POST',
-              credentials: 'omit',
-              headers: internalRecord({ 'Content-Type': 'application/json' }),
-              body: stringify(
-                internalRecord({
-                  kind: state.kind,
-                  ...(state.id ? internalRecord({ id: state.id }) : internalRecord({})),
-                  source: moduleSource,
-                }),
-              ),
-            }),
+          const modules = internalArray<[string, string]>();
+          for (const pair of state.facades) modules.push(pair);
+          const value = registration(
+            await options.request(
+              internalRecord({
+                type: WORKLET_REQUEST,
+                kind: state.kind,
+                source: moduleSource,
+                modules,
+                ...(state.id ? internalRecord({ id: state.id }) : internalRecord({})),
+              }),
+            ),
+            state.kind,
           );
-          if (!apply(responseOK, reply, [])) fail('Worklet registration was refused');
-          const value = registration(await apply(responseJSON, reply, []), state.kind);
           if (state.id && state.id !== value.id) fail('Worklet identity changed');
-          state.id = value.id;
-          return value;
+          if (options.resources.mapURL(value.entry) !== address)
+            fail('Worklet source changed');
+          if (state.guard && state.guard !== value.guard)
+            fail('Worklet preparation changed');
+          const bootstrap = state.bootstrap || createWorkletBootstrap(value.guard);
+          let linked: ReturnType<typeof createWorkletChunks> | undefined;
+          try {
+            linked = value.graph ? createWorkletChunks(value.graph) : undefined;
+            const entry =
+              linked?.entry ||
+              state.facades.get(value.entry) ||
+              fail('Prepared worklet module is missing');
+            const url = bootstrap.entry(entry);
+            if (linked) {
+              for (const [id, local] of linked.facades) state.facades.set(id, local);
+              state.chunks.push(linked);
+            }
+            state.bootstrap = bootstrap;
+            state.guard = value.guard;
+            state.id = value.id;
+            return url;
+          } catch (error) {
+            linked?.close();
+            if (!state.bootstrap) bootstrap.close();
+            throw error;
+          }
         },
-      ]) as Promise<WorkletRegistration>;
+      ]);
       state.registration = apply(promiseThen, issued, [() => undefined, () => undefined]);
       const loading: Promise<void> = apply(promiseThen, issued, [
-        (value: WorkletRegistration) =>
-          apply(nativeAdd, this, [value.url, internalRecord({ credentials: 'omit' })]),
+        (url: string) =>
+          apply(nativeAdd, this, [url, internalRecord({ credentials: 'omit' })]),
       ]);
       state.modules.set(address, loading);
       void apply(promiseThen, loading, [

@@ -7,8 +7,10 @@ import {
   type WorkletStorage,
 } from '../src/runtime/contexts/worklet-store.ts';
 import { createWorkletController } from '../src/runtime/contexts/worklet-controller.ts';
-import { applicationURL, resourceURL } from '../src/shared/runtime-url.ts';
+import { resourceURL } from '../src/shared/runtime-url.ts';
 import type { StoredInstallation } from '../src/runtime/storage.ts';
+import { WORKLET_IMPORTS } from '../src/runtime/contexts/worklet-types.ts';
+import type { WorkletGraphOptions } from '../src/runtime/contexts/worklet-graph.ts';
 import { createPolicyTools } from '../src/runtime/enforcement/native.ts';
 
 const base = new URL('https://runtime.test/');
@@ -46,7 +48,20 @@ function memory() {
   const records = new Map<string, StoredWorklet>();
   const storage: WorkletStorage = {
     async get(id) {
-      return records.get(id);
+      const record = records.get(id);
+      // Persistence decoding need not retain the writer's property order.
+      return record
+        ? {
+            entries: record.entries,
+            parentClient: record.parentClient,
+            generation: record.generation,
+            application: record.application,
+            kind: record.kind,
+            state: record.state,
+            id: record.id,
+            version: record.version,
+          }
+        : undefined;
     },
     async put(value) {
       records.set(value.id, structuredClone(value));
@@ -58,6 +73,9 @@ function fixture() {
   let app = initial;
   const { storage, records } = memory();
   let reads = 0;
+  let compilations = 0;
+  let preparation: WorkletGraphOptions | undefined;
+  let duringCompile: (() => void) | undefined;
   const controller = createWorkletController({
     base,
     storage,
@@ -76,60 +94,64 @@ function fixture() {
       ).buffer;
     },
     async guardSource() {
-      return 'export function rejectDynamicImport(){throw new Error("fixture")}';
+      return 'globalThis.hostPreparation=true;';
+    },
+    async importSource() {
+      return 'export function rejectDynamicImport(){}';
+    },
+    // This double exercises controller authorization and immutable reads only.
+    // Actual compilation and native execution have separate browser comparisons.
+    async compile(options) {
+      compilations++;
+      preparation = options;
+      const code = await options.readModule(options.entry);
+      duringCompile?.();
+      return {
+        entry: options.entry,
+        chunks: [{ name: 'fixture.js', code, imports: [] }],
+        facades: [{ module: options.entry, chunk: 'fixture.js' }],
+      };
     },
   });
-  const request = (
-    url: string,
-    destination: RequestDestination = '',
-    clientId = 'native-window',
-    resultingClientId = '',
-    method = 'GET',
-    body?: unknown,
-  ) => {
-    const value = new Request(url, {
-      method,
-      ...(body === undefined ? {} : { body: JSON.stringify(body) }),
-    });
-    Object.defineProperty(value, 'destination', { value: destination });
-    return controller.respond({ request: value, clientId, resultingClientId });
-  };
   const issue = (
     source: unknown = { kind: 'resource', url: initial.resources[0].url },
     kind = 'audio',
     id?: string,
+    modules: unknown = [],
+    clientId = 'native-window',
   ) =>
-    request(
-      new URL('__worklet-intents', applicationURL(app, base)).href,
-      '',
-      'native-window',
-      '',
-      'POST',
-      {
-        kind,
-        source,
-        ...(id ? { id } : {}),
-        application: 'ignored-claim',
-        generation: 'ignored-claim',
-        parentClient: 'ignored-claim',
-      },
-    );
+    controller.request(clientId, {
+      kind,
+      source,
+      modules,
+      ...(id ? { id } : {}),
+      application: 'ignored-claim',
+      generation: 'ignored-claim',
+      parentClient: 'native-window',
+    });
   return {
-    request,
     issue,
     records,
     reads: () => reads,
+    compilations: () => compilations,
+    preparation: () => {
+      assert(preparation);
+      return preparation;
+    },
+    duringCompile(callback: () => void) {
+      duringCompile = callback;
+    },
     replace() {
       app = { ...app, generation: 'generation-two' };
     },
   };
 }
 
-test('module rewriting guards every graph node, relocates imports and rejects computed loading', () => {
+test('module rewriting relocates imports and adds the dynamic-loading rejection helper', () => {
   const options = {
     baseURL: 'https://runtime.test/app/main.js',
     logicalURL: 'https://publisher.test/main.js',
-    guardURL: 'https://runtime.test/context/guard.js',
+    importsURL: WORKLET_IMPORTS,
     aliases: [
       [
         'https://runtime.test/app/dependency.js',
@@ -203,75 +225,93 @@ test('worklet registry persists actual owner/generation independently of browser
   );
 });
 
-test('controller authenticates actual Window and serves only guarded JavaScript graph routes', async () => {
+test('controller binds local preparation to the actual Window and generation', async () => {
   const f = fixture();
   const issued = await f.issue();
-  assert.equal(issued?.status, 200);
-  const registration = (await issued!.json()) as { id: string; url: string };
-  const entry = await f.request(registration.url, 'audioworklet');
-  assert(entry?.ok);
-  assert((await entry.text()).startsWith('import "'));
-  const directory = new URL('../', registration.url);
-  const graphURL = new URL('resources/entry.js', directory).href;
-  const graph = await f.request(graphURL, 'audioworklet');
-  assert(graph?.ok);
-  assert((await graph.text()).startsWith('import { rejectDynamicImport'));
-  assert.equal(
-    (await f.request(graphURL, 'audioworklet', 'other-window'))?.type,
-    'error',
-  );
-  assert.equal((await f.request(graphURL, 'audioworklet', ''))?.type, 'error');
-  assert.equal(
-    (await f.request(graphURL, 'audioworklet', 'native-window', 'reserved-child'))?.type,
-    'error',
-  );
-  assert.equal((await f.request(graphURL, 'worker'))?.type, 'error');
-  assert.equal((await f.request(graphURL, 'paintworklet'))?.type, 'error');
-  assert.equal((await f.request(graphURL + '?query=1', 'audioworklet'))?.type, 'error');
-  assert.equal(
-    (
-      await f.request(
-        graphURL.replace('/resources/entry.js', '/resources/index.html'),
-        'audioworklet',
-      )
-    )?.type,
-    'error',
-  );
+  assert.equal(issued.kind, 'audio');
+  assert.equal(issued.entry, resourceURL(initial, 'entry.js', base).href);
+  assert(issued.guard.includes('hostPreparation=true'));
+  assert(issued.graph?.chunks[0].code.startsWith('import { rejectDynamicImport'));
   assert.equal(f.reads(), 1);
+  assert.equal(f.compilations(), 1);
+  const prepared = f.preparation();
+  assert.equal(
+    await prepared.readModule(WORKLET_IMPORTS),
+    'export function rejectDynamicImport(){}',
+  );
+  await assert.rejects(prepared.readModule(initial.source), /not installed JavaScript/);
+  await assert.rejects(
+    prepared.readModule('https://outside.test/code.js'),
+    /not installed JavaScript/,
+  );
+  await assert.rejects(
+    f.issue(undefined, 'audio', issued.id, [], 'other-window'),
+    /not owned/,
+  );
+  await assert.rejects(
+    f.issue(undefined, 'audio', undefined, [], ''),
+    /owner is unavailable/,
+  );
   f.replace();
-  assert.equal((await f.request(graphURL, 'audioworklet'))?.type, 'error');
-  assert.equal(f.reads(), 1);
+  await assert.rejects(f.issue(undefined, 'audio', issued.id), /not owned/);
 });
 
-test('resource and runtime Blob entries are local sources; unknown HTTP/foreign Blob never enter native loading', async () => {
+test('owner replacement during compilation prevents publication', async () => {
   const f = fixture();
-  assert.equal(
-    (await f.issue({ kind: 'resource', url: 'https://outside.test/not-installed.js' }))
-      ?.type,
-    'error',
+  f.duringCompile(() => f.replace());
+  await assert.rejects(f.issue(), /owner changed during preparation/);
+  assert.equal(f.compilations(), 1);
+});
+
+test('prepared facades avoid compilation but still require current owner authority', async () => {
+  const f = fixture();
+  const issued = await f.issue();
+  const modules = [[issued.entry, 'blob:https://runtime.test/local-entry']];
+  const reused = await f.issue(undefined, 'audio', issued.id, modules);
+  assert.equal(reused.graph, null);
+  assert.equal(reused.guard, issued.guard);
+  assert.equal(f.compilations(), 1);
+  await assert.rejects(
+    f.issue(undefined, 'audio', issued.id, modules, 'other-window'),
+    /not owned/,
   );
-  assert.equal((await f.issue({ kind: 'resource', url: initial.source }))?.type, 'error');
-  assert.equal(
-    (
-      await f.issue({
-        kind: 'blob',
-        url: 'blob:https://outside.test/module',
-        text: 'bad()',
-        contentType: 'text/javascript',
-      })
-    )?.type,
-    'error',
+  for (const invalid of [
+    [[issued.entry, 'https://runtime.test/code.js']],
+    [[issued.entry, 'blob:https://foreign.test/code']],
+    [['https://outside.test/code.js', 'blob:https://runtime.test/local']],
+    [modules[0], modules[0]],
+    new Array(1),
+  ])
+    await assert.rejects(f.issue(undefined, 'audio', issued.id, invalid));
+  assert.equal(f.compilations(), 1);
+});
+
+test('resource and runtime Blob entries reject unknown HTTP, foreign origins and invalid MIME', async () => {
+  const f = fixture();
+  await assert.rejects(
+    f.issue({ kind: 'resource', url: 'https://outside.test/not-installed.js' }),
+    /not installed JavaScript/,
   );
-  assert.equal(
-    (
-      await f.issue({
-        kind: 'blob',
-        url: 'blob:https://runtime.test/module',
-        text: 'bad()',
-        contentType: 'text/html',
-      })
-    )?.type,
-    'error',
+  await assert.rejects(
+    f.issue({ kind: 'resource', url: initial.source }),
+    /not installed JavaScript/,
+  );
+  await assert.rejects(
+    f.issue({
+      kind: 'blob',
+      url: 'blob:https://outside.test/module',
+      text: 'bad()',
+      contentType: 'text/javascript',
+    }),
+    /another origin/,
+  );
+  await assert.rejects(
+    f.issue({
+      kind: 'blob',
+      url: 'blob:https://runtime.test/module',
+      text: 'bad()',
+      contentType: 'text/html',
+    }),
   );
   const issued = await f.issue({
     kind: 'blob',
@@ -279,11 +319,8 @@ test('resource and runtime Blob entries are local sources; unknown HTTP/foreign 
     text: 'registerProcessor("local", class {});',
     contentType: 'text/javascript',
   });
-  assert.equal(issued?.status, 200);
-  const registration = (await issued!.json()) as { url: string };
-  const module = await f.request(registration.url, 'audioworklet');
-  assert(module?.ok);
-  assert((await module.text()).startsWith('import { rejectDynamicImport'));
+  assert.equal(issued.entry, 'blob:https://runtime.test/module');
+  assert(issued.graph?.chunks[0].code.includes('registerProcessor'));
   assert.equal(f.reads(), 0);
   assert.equal(f.records.size, 1);
 });

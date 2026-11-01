@@ -1,3 +1,4 @@
+import { WORKLET_POLICY_VERSION } from '../../src/runtime/contexts/worklet-types.ts';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile, writeFile } from 'node:fs/promises';
@@ -81,7 +82,7 @@ export const guardRuns=runs;`,
 };
 const hostGuard = await readFile('dist-runtime/worklet-guard.js', 'utf8');
 const metadata = {
-  version: 1,
+  version: WORKLET_POLICY_VERSION,
   id: '11111111-1111-4111-8111-111111111111',
   kind: 'audio',
   application: 'fixture',

@@ -1,0 +1,110 @@
+{
+  "scope": "Installed production worklet migration, the full regression suite with corrected prototype readiness, and component preparation-removal controls. No new eight-app corpus or complete confinement pass is claimed.",
+  "recordedAt": "2026-11-01T16:39:34.636007+00:00",
+  "wholeConfinementEstablished": false,
+  "releaseReady": false,
+  "provenance": {
+    "capturedAt": "2026-11-01T16:37:19.266Z",
+    "revision": "f6f8d242f3da455933eec3e0c18424f2083a961f",
+    "dirty": true,
+    "sourceSHA256": "9223b4da21168b129fc7537c26d29ec9a022e6eb5daa04a18823de323be5e9e7",
+    "runner": "formal/runtime-verification/production-worklets.md",
+    "runnerSHA256": "60dfdf824e0fa692a0aa04ecbbbcf86c30f21c81acc80821767820b2f861c747",
+    "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
+    "artifacts": {
+      "dist-manager/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-manager/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-manager/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-manager/index.html": "0ea2b29b0ef6946140c54c2dc2147bffe4de82b9ed13eb4fdcae97a81cfd56f7",
+      "dist-manager/manager.js": "e361950a8774ca901a2b669e55041e15931e079bcdf5cd66e2b95d3986ce0730",
+      "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-manager/sw.js": "826563d07adb28e0aee0ca3724c0ae637a153dc3b8689576ef49129c08dcc6f8",
+      "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
+      "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
+      "dist-runtime/document-guard.js": "9431159f1f8583daba413fa71f80d814ec58a5851595bbe866bf5081600d5170",
+      "dist-runtime/guard.js": "236bbb23ea5623f0da406f088e30e3fa75312fb069c3616a0addb338378436ed",
+      "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
+      "dist-runtime/publisher-worker-guard.js": "de236fabfdafb743fc133be95222a89dd030e981fba108afe9ae30890bf267e5",
+      "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-runtime/shared-worker-guard.js": "b7c15ec06c26966d4b7b87d11403ff6690e4410b42b136ae133943f3467e9cd1",
+      "dist-runtime/sw.js": "8972b8833600e47696764c902e4909b808f8e525ad21e751631109bf4fd1d9ae",
+      "dist-runtime/worklet-guard.js": "543943f891f6ade0246240051959cc2194f611d040759f66d8482a6668e9c491",
+      "dist-runtime/worklet-imports.js": "1dad731ee7c42b66400d6b8a4224ab0619bf9d2bae6c34c8950410b8241331b5",
+      "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-installation/index.html": "3ca67c9966dd6eaaddb08a331c4c422a70d79bed1acecddada56764ba4ac8e5f",
+      "dist-installation/installation.js": "98a032cdac2918eb53155971cecc3124fc1c6bd8c6515d8a6c4f904cad3fcae3"
+    }
+  },
+  "checks": {
+    "typecheck": 0,
+    "formatCheck": 0,
+    "fullRegression": 0,
+    "unitTests": 220,
+    "workletPreparationRemovalControls": 0,
+    "inventoryDrift": 0
+  },
+  "browsers": [
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "rootAudio": true,
+      "childAudio": true,
+      "blobAudio": true,
+      "offlineAudio": true,
+      "foreignWindowReplayRejected": true,
+      "removedHTTPGraphRejected": true,
+      "paintAvailable": true
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "rootAudio": true,
+      "childAudio": true,
+      "blobAudio": true,
+      "offlineAudio": true,
+      "foreignWindowReplayRejected": true,
+      "removedHTTPGraphRejected": true,
+      "paintAvailable": false
+    }
+  ],
+  "reviewedSharedBoundaries": [
+    "The worker message branch resolves actual browser client identity before requesting Worklet preparation; packet identity fields grant no role.",
+    "Removing Worklet HTTP routes leaves the existing denied-destination/catchall paths in place.",
+    "Window realm changes pass only the captured private controller request into the Worklet factory.",
+    "Guard serialization fixes metadata field order; registry version 2 does not admit the prior cache profile.",
+    "The prototype fixture now awaits child load without changing immediate pending-child observations or confinement assertions."
+  ],
+  "openObligations": [
+    "Production independent native HTTP denial and the aged-registration maintenance counterexample.",
+    "Concrete caller ownership, lifecycle correspondence, prepared-facade closure and complete browser communication coverage.",
+    "Prior CI failures are historical; current remote CI has not yet run.",
+    "The prior eight-app corpus font/screenshot failure remains unresolved; this checkpoint does not rerun that corpus."
+  ],
+  "artifactSHA256": {
+    "results/contexts/worklet-platform.json": "8b3927775b1bf9211df3c81994a1b851a50f5717fe15b5f4052ad48036121242",
+    "results/contexts/worklet-guard.json": "b9b33eaf80437b3255ef613f9e04f985e918176fb395e3e72e66b00373efbc9e",
+    "results/contexts/worklets.json": "5e5ae51acac4acd182fa1bebc2fe6d8626b755709120c1a0097ab760fbaaa6aa",
+    "results/contexts/prototype-confinement.json": "22936d85a42a5a91c20a7913a5f87bf0bc20134ab06fb6a3362aaeb0d7ba9f57",
+    "formal/runtime-verification/local-worklet-graph.json": "e33685a0d41912bcfcb0c6c7c1c74c0c110a966e17bdabe7337db799e851a4c5",
+    "formal/runtime-verification/local-worklet-graph-normal.log": "573438e99f122d6b30f905fe41bee0f9491f3c9d3c51ae81da8bb04303183fac",
+    "formal/runtime-verification/local-worklet-graph-omitted-preparation-chromium.json": "5285bb68cc43dde4cf7cad7a20541e2fe0eb823e0de703cd03a8ff93263ad32e",
+    "formal/runtime-verification/local-worklet-graph-omitted-preparation-firefox.json": "aeba3082eefa854872ff70221ea830c090cdc6d72ac6da17e28f0af55bdf7f77",
+    "formal/runtime-verification/production-worklet-regression.log": "a05e187942fe6e6c3e725fc47ac282202163b1df70945e4eb8f47ee19a6c817b",
+    "formal/runtime-verification/production-worklet-controls.log": "922ca2d1e222cf71f9e1b2d33a8715782c5624fbd38484551c91fd91bff83a50",
+    "formal/runtime-verification/production-worklet-types.log": "8fa1cf5506304e8abac55868e7f1a136c9b1dde57a3981a382da4c21ea129a6f",
+    "formal/runtime-verification/production-worklet-format.log": "668cf14b3cfb9a567d3f11fce3789ded3041a51c48b2a9860b1f23153f9eb8e7",
+    "formal/runtime-verification/implementation-inventory.json": "fa79084769e423ac6ff145dfcc0abd8c7681e1b2cb5d08b87f65886b49324501",
+    "formal/runtime-verification/production-worklet-first.json": "3eeba8b73a0920d898c1ef56a91fd8581c858a9d4d3dbdcb5ac3a4c3aa46b5a4",
+    "formal/runtime-verification/production-worklet-prototype-first.json": "33f6d43d369d29988b32c3b638a3eaccc7a404e6445a29727a561c896d4514e2",
+    "formal/runtime-verification/production-worklet-regression-first.log": "874e853fb24add8aba6c09664f74c26764b08ca2c877a0fe29dd1569b9cceaee",
+    "formal/runtime-verification/ci-worklet-component-prior.json": "8e096a66152627b1e3f5274196823ea004464080f8fd2d0ca100c3810c4843df"
+  }
+}

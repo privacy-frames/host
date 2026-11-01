@@ -142,6 +142,7 @@ export const boundaries: readonly Boundary[] = [
       'src/runtime/contexts/worklet-controller.ts',
       'src/runtime/contexts/worklet-guard.ts',
       'src/runtime/contexts/worklet-source.ts',
+      'src/runtime/contexts/worklet-imports.ts',
       'src/runtime/contexts/worklet-store.ts',
       'src/runtime/contexts/worklet-graph.ts',
       'src/runtime/contexts/worklet-graph-schema.ts',

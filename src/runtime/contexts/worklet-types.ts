@@ -1,4 +1,8 @@
-export const WORKLET_POLICY_VERSION = 1;
+import type { WorkletGraph } from './worklet-graph.ts';
+
+export const WORKLET_POLICY_VERSION = 2;
+export const WORKLET_REQUEST = 'privacy-worklet-prepare';
+export const WORKLET_IMPORTS = 'privacy-frames:worklet-imports';
 export type WorkletKind = 'audio' | 'paint';
 export interface WorkletIdentity {
   version: number;
@@ -14,5 +18,7 @@ export type WorkletModuleSource =
 export interface WorkletRegistration {
   id: string;
   kind: WorkletKind;
-  url: string;
+  entry: string;
+  guard: string;
+  graph: WorkletGraph | null;
 }

@@ -12,7 +12,7 @@ import { children, node, type SyntaxNode } from '../../shared/module-source.ts';
 interface WorkletModuleOptions {
   baseURL: string;
   logicalURL: string;
-  guardURL: string;
+  importsURL: string;
   aliases: readonly (readonly [string, string])[];
 }
 interface Edit {
@@ -22,7 +22,7 @@ interface Edit {
   argument?: SyntaxNode;
   options?: SyntaxNode;
 }
-/** The guard is the first dependency of every served module, including roots. */
+/** Relocate guest imports; host preparation is an independent entry dependency. */
 export function prepareWorkletModule(
   code: string,
   options: WorkletModuleOptions,
@@ -112,7 +112,7 @@ export function prepareWorkletModule(
     'import { rejectDynamicImport as ' +
     binding +
     ' } from ' +
-    JSON.stringify(options.guardURL) +
+    JSON.stringify(options.importsURL) +
     ';\n';
   if (strings.startsWith(prepared, '#!')) {
     const newline = strings.indexOf(prepared, '\n');

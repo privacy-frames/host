@@ -1,0 +1,1710 @@
+{
+  "conclusion": "failure",
+  "headSha": "f6f8d242f3da455933eec3e0c18424f2083a961f",
+  "jobs": [
+    {
+      "completedAt": "2026-11-01T16:01:22Z",
+      "conclusion": "success",
+      "databaseId": 124899249218,
+      "name": "registration-overlap",
+      "startedAt": "2026-11-01T15:56:43Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-01T15:56:45Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-01T15:56:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:48Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v6",
+          "number": 2,
+          "startedAt": "2026-11-01T15:56:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:49Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v6",
+          "number": 3,
+          "startedAt": "2026-11-01T15:56:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:51Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 4,
+          "startedAt": "2026-11-01T15:56:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:19Z",
+          "conclusion": "success",
+          "name": "Run npx playwright install --with-deps chromium firefox",
+          "number": 5,
+          "startedAt": "2026-11-01T15:56:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:20Z",
+          "conclusion": "success",
+          "name": "Type-check registration overlap experiment",
+          "number": 6,
+          "startedAt": "2026-11-01T15:57:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:01:18Z",
+          "conclusion": "success",
+          "name": "Run node formal/runtime-verification/registration-overlap.ts",
+          "number": 7,
+          "startedAt": "2026-11-01T15:57:20Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:01:19Z",
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@v4",
+          "number": 8,
+          "startedAt": "2026-11-01T16:01:18Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:01:19Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@v6",
+          "number": 15,
+          "startedAt": "2026-11-01T16:01:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:01:20Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v6",
+          "number": 16,
+          "startedAt": "2026-11-01T16:01:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:01:20Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 17,
+          "startedAt": "2026-11-01T16:01:20Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/privacy-frames/host/actions/runs/41323751266/job/124899249218"
+    },
+    {
+      "completedAt": "2026-11-01T15:59:06Z",
+      "conclusion": "success",
+      "databaseId": 124899249403,
+      "name": "fedcm",
+      "startedAt": "2026-11-01T15:56:43Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-01T15:56:45Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-01T15:56:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:47Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v6",
+          "number": 2,
+          "startedAt": "2026-11-01T15:56:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:48Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v6",
+          "number": 3,
+          "startedAt": "2026-11-01T15:56:47Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:50Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 4,
+          "startedAt": "2026-11-01T15:56:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:15Z",
+          "conclusion": "success",
+          "name": "Run npx playwright install --with-deps chromium firefox",
+          "number": 5,
+          "startedAt": "2026-11-01T15:56:50Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:18Z",
+          "conclusion": "success",
+          "name": "Run node formal/context-inventory.ts",
+          "number": 6,
+          "startedAt": "2026-11-01T15:57:15Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:18Z",
+          "conclusion": "success",
+          "name": "Run python3 formal/context-join.py",
+          "number": 7,
+          "startedAt": "2026-11-01T15:57:18Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:40Z",
+          "conclusion": "success",
+          "name": "Run node formal/fedcm-conditional-probe.ts",
+          "number": 8,
+          "startedAt": "2026-11-01T15:57:18Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:53Z",
+          "conclusion": "success",
+          "name": "Run node formal/hyperlink-auditing-probe.ts",
+          "number": 9,
+          "startedAt": "2026-11-01T15:57:40Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:02Z",
+          "conclusion": "success",
+          "name": "Run node formal/eventsource-beacon-probe.ts",
+          "number": 10,
+          "startedAt": "2026-11-01T15:57:53Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:08Z",
+          "conclusion": "success",
+          "name": "Run node formal/reporting-probe.ts",
+          "number": 11,
+          "startedAt": "2026-11-01T15:58:02Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:14Z",
+          "conclusion": "success",
+          "name": "Run node formal/modern-reporting-probe.ts",
+          "number": 12,
+          "startedAt": "2026-11-01T15:58:08Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:23Z",
+          "conclusion": "success",
+          "name": "Run node formal/background-agents-probe.ts",
+          "number": 13,
+          "startedAt": "2026-11-01T15:58:14Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:32Z",
+          "conclusion": "success",
+          "name": "Run node formal/fetch-later-probe.ts",
+          "number": 14,
+          "startedAt": "2026-11-01T15:58:23Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:39Z",
+          "conclusion": "success",
+          "name": "Run node formal/websocket-fault-probe.ts",
+          "number": 15,
+          "startedAt": "2026-11-01T15:58:32Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:49Z",
+          "conclusion": "success",
+          "name": "Run node formal/web-install-probe.ts",
+          "number": 16,
+          "startedAt": "2026-11-01T15:58:39Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:59:04Z",
+          "conclusion": "success",
+          "name": "Run node formal/web-install-sandbox-fault.ts",
+          "number": 17,
+          "startedAt": "2026-11-01T15:58:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:59:05Z",
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@v4",
+          "number": 18,
+          "startedAt": "2026-11-01T15:59:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:59:05Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@v6",
+          "number": 35,
+          "startedAt": "2026-11-01T15:59:05Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:59:05Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v6",
+          "number": 36,
+          "startedAt": "2026-11-01T15:59:05Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:59:05Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 37,
+          "startedAt": "2026-11-01T15:59:05Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/privacy-frames/host/actions/runs/41323751266/job/124899249403"
+    },
+    {
+      "completedAt": "2026-11-01T16:05:55Z",
+      "conclusion": "success",
+      "databaseId": 124899249421,
+      "name": "local-documents",
+      "startedAt": "2026-11-01T15:56:44Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-01T15:56:45Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-01T15:56:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:48Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v6",
+          "number": 2,
+          "startedAt": "2026-11-01T15:56:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:49Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v6",
+          "number": 3,
+          "startedAt": "2026-11-01T15:56:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:51Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 4,
+          "startedAt": "2026-11-01T15:56:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:55Z",
+          "conclusion": "success",
+          "name": "Run npm run build",
+          "number": 5,
+          "startedAt": "2026-11-01T15:56:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:24Z",
+          "conclusion": "success",
+          "name": "Run npx playwright install --with-deps chromium firefox",
+          "number": 6,
+          "startedAt": "2026-11-01T15:56:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:37Z",
+          "conclusion": "success",
+          "name": "Check native parent authentication and pending closure",
+          "number": 7,
+          "startedAt": "2026-11-01T15:57:24Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:47Z",
+          "conclusion": "success",
+          "name": "Detect late receiver exposure and forged replies",
+          "number": 8,
+          "startedAt": "2026-11-01T15:57:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:03:49Z",
+          "conclusion": "success",
+          "name": "Characterize local document controller delivery after unregistration",
+          "number": 9,
+          "startedAt": "2026-11-01T15:57:47Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:05:51Z",
+          "conclusion": "success",
+          "name": "Check parent-mediated local document delivery",
+          "number": 10,
+          "startedAt": "2026-11-01T16:03:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:05:52Z",
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@v4",
+          "number": 11,
+          "startedAt": "2026-11-01T16:05:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:05:52Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@v6",
+          "number": 21,
+          "startedAt": "2026-11-01T16:05:52Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:05:53Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v6",
+          "number": 22,
+          "startedAt": "2026-11-01T16:05:52Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:05:53Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 23,
+          "startedAt": "2026-11-01T16:05:53Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/privacy-frames/host/actions/runs/41323751266/job/124899249421"
+    },
+    {
+      "completedAt": "2026-11-01T15:58:41Z",
+      "conclusion": "success",
+      "databaseId": 124899249449,
+      "name": "model",
+      "startedAt": "2026-11-01T15:56:44Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-01T15:56:45Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-01T15:56:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:48Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v6",
+          "number": 2,
+          "startedAt": "2026-11-01T15:56:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:51Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v6",
+          "number": 3,
+          "startedAt": "2026-11-01T15:56:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:54Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 4,
+          "startedAt": "2026-11-01T15:56:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:22Z",
+          "conclusion": "success",
+          "name": "Install browsers for the admission contract fixture",
+          "number": 5,
+          "startedAt": "2026-11-01T15:56:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:35Z",
+          "conclusion": "success",
+          "name": "Check runtime types and unit contracts",
+          "number": 6,
+          "startedAt": "2026-11-01T15:57:22Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:35Z",
+          "conclusion": "success",
+          "name": "Run python3 formal/claims/check.py",
+          "number": 7,
+          "startedAt": "2026-11-01T15:57:35Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:36Z",
+          "conclusion": "success",
+          "name": "Challenge evidence and route checks",
+          "number": 8,
+          "startedAt": "2026-11-01T15:57:35Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:38Z",
+          "conclusion": "success",
+          "name": "Check the runtime implementation review inventory",
+          "number": 9,
+          "startedAt": "2026-11-01T15:57:36Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:40Z",
+          "conclusion": "success",
+          "name": "Check pinned WebSpec coverage assessment",
+          "number": 10,
+          "startedAt": "2026-11-01T15:57:38Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:41Z",
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@v4",
+          "number": 11,
+          "startedAt": "2026-11-01T15:57:40Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:43Z",
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@v4",
+          "number": 12,
+          "startedAt": "2026-11-01T15:57:41Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:43Z",
+          "conclusion": "success",
+          "name": "Download the pinned TLC release",
+          "number": 13,
+          "startedAt": "2026-11-01T15:57:43Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:12Z",
+          "conclusion": "success",
+          "name": "Run formal/confinement/check.sh",
+          "number": 14,
+          "startedAt": "2026-11-01T15:57:43Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:19Z",
+          "conclusion": "success",
+          "name": "Run python3 formal/confinement/check-generation-reads.py",
+          "number": 15,
+          "startedAt": "2026-11-01T15:58:12Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:22Z",
+          "conclusion": "success",
+          "name": "Check the pinned browser-surface inventory",
+          "number": 16,
+          "startedAt": "2026-11-01T15:58:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:25Z",
+          "conclusion": "success",
+          "name": "Type-check and compare registry traces",
+          "number": 17,
+          "startedAt": "2026-11-01T15:58:22Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:36Z",
+          "conclusion": "success",
+          "name": "Check native context storage and missing-constraint controls",
+          "number": 18,
+          "startedAt": "2026-11-01T15:58:25Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:37Z",
+          "conclusion": "success",
+          "name": "Check that a wrong-owner mutation is detected",
+          "number": 19,
+          "startedAt": "2026-11-01T15:58:36Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:38Z",
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@v4",
+          "number": 20,
+          "startedAt": "2026-11-01T15:58:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:38Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@v6",
+          "number": 39,
+          "startedAt": "2026-11-01T15:58:38Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:39Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v6",
+          "number": 40,
+          "startedAt": "2026-11-01T15:58:38Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:39Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 41,
+          "startedAt": "2026-11-01T15:58:39Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/privacy-frames/host/actions/runs/41323751266/job/124899249449"
+    },
+    {
+      "completedAt": "2026-11-01T15:57:56Z",
+      "conclusion": "success",
+      "databaseId": 124899249452,
+      "name": "registration-fence",
+      "startedAt": "2026-11-01T15:56:43Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-01T15:56:45Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-01T15:56:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:48Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v6",
+          "number": 2,
+          "startedAt": "2026-11-01T15:56:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:49Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v6",
+          "number": 3,
+          "startedAt": "2026-11-01T15:56:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:51Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 4,
+          "startedAt": "2026-11-01T15:56:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:17Z",
+          "conclusion": "success",
+          "name": "Run npx playwright install --with-deps chromium firefox",
+          "number": 5,
+          "startedAt": "2026-11-01T15:56:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:52Z",
+          "conclusion": "success",
+          "name": "Observe same-scope update and unregister ordering",
+          "number": 6,
+          "startedAt": "2026-11-01T15:57:17Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:53Z",
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@v4",
+          "number": 7,
+          "startedAt": "2026-11-01T15:57:52Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:54Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@v6",
+          "number": 13,
+          "startedAt": "2026-11-01T15:57:53Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:55Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v6",
+          "number": 14,
+          "startedAt": "2026-11-01T15:57:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:55Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 15,
+          "startedAt": "2026-11-01T15:57:55Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/privacy-frames/host/actions/runs/41323751266/job/124899249452"
+    },
+    {
+      "completedAt": "2026-11-01T16:06:40Z",
+      "conclusion": "success",
+      "databaseId": 124899249462,
+      "name": "module-delivery-policy",
+      "startedAt": "2026-11-01T15:56:43Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-01T15:56:45Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-01T15:56:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:48Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v6",
+          "number": 2,
+          "startedAt": "2026-11-01T15:56:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:48Z",
+          "conclusion": "success",
+          "name": "Remove the historical module-policy receipt from the checkout",
+          "number": 3,
+          "startedAt": "2026-11-01T15:56:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:48Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v6",
+          "number": 4,
+          "startedAt": "2026-11-01T15:56:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:50Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 5,
+          "startedAt": "2026-11-01T15:56:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:22Z",
+          "conclusion": "success",
+          "name": "Run npx playwright install --with-deps chromium firefox",
+          "number": 6,
+          "startedAt": "2026-11-01T15:56:50Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:00:00Z",
+          "conclusion": "success",
+          "name": "Check the independent native script policy candidate",
+          "number": 7,
+          "startedAt": "2026-11-01T15:57:22Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:02:58Z",
+          "conclusion": "success",
+          "name": "Check the module policy in temporary persistent full-browser profiles",
+          "number": 8,
+          "startedAt": "2026-11-01T16:00:00Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:05:39Z",
+          "conclusion": "success",
+          "name": "Check module delivery through the prepared runtime worker",
+          "number": 9,
+          "startedAt": "2026-11-01T16:02:58Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:06:01Z",
+          "conclusion": "success",
+          "name": "Check Window module loading under the independent script policy",
+          "number": 10,
+          "startedAt": "2026-11-01T16:05:39Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:06:05Z",
+          "conclusion": "success",
+          "name": "Check native worklet graph delivery and HTTP policy controls",
+          "number": 11,
+          "startedAt": "2026-11-01T16:06:01Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:06:09Z",
+          "conclusion": "success",
+          "name": "Compare cyclic lexical initialization through worklet compilers",
+          "number": 12,
+          "startedAt": "2026-11-01T16:06:05Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:06:20Z",
+          "conclusion": "success",
+          "name": "Check private worklet graphs and preparation omission controls",
+          "number": 13,
+          "startedAt": "2026-11-01T16:06:09Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:06:37Z",
+          "conclusion": "success",
+          "name": "Check private-port shared-worker issuing prerequisites",
+          "number": 14,
+          "startedAt": "2026-11-01T16:06:20Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:06:38Z",
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@v4",
+          "number": 15,
+          "startedAt": "2026-11-01T16:06:37Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:06:38Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@v6",
+          "number": 29,
+          "startedAt": "2026-11-01T16:06:38Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:06:38Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v6",
+          "number": 30,
+          "startedAt": "2026-11-01T16:06:38Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:06:39Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 31,
+          "startedAt": "2026-11-01T16:06:38Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/privacy-frames/host/actions/runs/41323751266/job/124899249462"
+    },
+    {
+      "completedAt": "2026-11-01T16:13:08Z",
+      "conclusion": "failure",
+      "databaseId": 124899249485,
+      "name": "worker-startup-maintenance",
+      "startedAt": "2026-11-01T15:56:44Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-01T15:56:46Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-01T15:56:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:49Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v6",
+          "number": 2,
+          "startedAt": "2026-11-01T15:56:46Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:49Z",
+          "conclusion": "success",
+          "name": "Remove historical startup receipts from the checkout",
+          "number": 3,
+          "startedAt": "2026-11-01T15:56:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:50Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v6",
+          "number": 4,
+          "startedAt": "2026-11-01T15:56:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:52Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 5,
+          "startedAt": "2026-11-01T15:56:50Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:56Z",
+          "conclusion": "success",
+          "name": "Run npm run build",
+          "number": 6,
+          "startedAt": "2026-11-01T15:56:52Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:25Z",
+          "conclusion": "success",
+          "name": "Run npx playwright install --with-deps chromium firefox",
+          "number": 7,
+          "startedAt": "2026-11-01T15:56:56Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:07:56Z",
+          "conclusion": "failure",
+          "name": "Compare worker script loading with native update controls",
+          "number": 8,
+          "startedAt": "2026-11-01T15:57:25Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:13:04Z",
+          "conclusion": "failure",
+          "name": "Check startup under the forced-stale Firefox age contract",
+          "number": 9,
+          "startedAt": "2026-11-01T16:07:56Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:13:06Z",
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@v4",
+          "number": 10,
+          "startedAt": "2026-11-01T16:13:04Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:13:06Z",
+          "conclusion": "skipped",
+          "name": "Post Run actions/setup-node@v6",
+          "number": 19,
+          "startedAt": "2026-11-01T16:13:06Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:13:06Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v6",
+          "number": 20,
+          "startedAt": "2026-11-01T16:13:06Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:13:06Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 21,
+          "startedAt": "2026-11-01T16:13:06Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/privacy-frames/host/actions/runs/41323751266/job/124899249485"
+    },
+    {
+      "completedAt": "2026-11-01T15:57:59Z",
+      "conclusion": "success",
+      "databaseId": 124899249496,
+      "name": "browser-spelling",
+      "startedAt": "2026-11-01T15:56:43Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-01T15:56:45Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-01T15:56:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:48Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v6",
+          "number": 2,
+          "startedAt": "2026-11-01T15:56:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:48Z",
+          "conclusion": "success",
+          "name": "Remove historical spelling receipt before setup",
+          "number": 3,
+          "startedAt": "2026-11-01T15:56:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:49Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v6",
+          "number": 4,
+          "startedAt": "2026-11-01T15:56:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:50Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 5,
+          "startedAt": "2026-11-01T15:56:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:53Z",
+          "conclusion": "success",
+          "name": "Run npm run build",
+          "number": 6,
+          "startedAt": "2026-11-01T15:56:50Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:17Z",
+          "conclusion": "success",
+          "name": "Run npx playwright install --with-deps chromium firefox",
+          "number": 7,
+          "startedAt": "2026-11-01T15:56:53Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:51Z",
+          "conclusion": "success",
+          "name": "Check normal-profile spelling and actual setter omission",
+          "number": 8,
+          "startedAt": "2026-11-01T15:57:17Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:55Z",
+          "conclusion": "success",
+          "name": "Compare native HTML attribute and parser routes in both engines",
+          "number": 9,
+          "startedAt": "2026-11-01T15:57:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:56Z",
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@v4",
+          "number": 10,
+          "startedAt": "2026-11-01T15:57:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:56Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@v6",
+          "number": 19,
+          "startedAt": "2026-11-01T15:57:56Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:57Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v6",
+          "number": 20,
+          "startedAt": "2026-11-01T15:57:56Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:57Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 21,
+          "startedAt": "2026-11-01T15:57:57Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/privacy-frames/host/actions/runs/41323751266/job/124899249496"
+    },
+    {
+      "completedAt": "2026-11-01T15:58:26Z",
+      "conclusion": "success",
+      "databaseId": 124899249506,
+      "name": "worker-closure",
+      "startedAt": "2026-11-01T15:56:43Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-01T15:56:45Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-01T15:56:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:47Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v6",
+          "number": 2,
+          "startedAt": "2026-11-01T15:56:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:51Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v6",
+          "number": 3,
+          "startedAt": "2026-11-01T15:56:47Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:53Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 4,
+          "startedAt": "2026-11-01T15:56:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:56Z",
+          "conclusion": "success",
+          "name": "Run npm run build",
+          "number": 5,
+          "startedAt": "2026-11-01T15:56:53Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:17Z",
+          "conclusion": "success",
+          "name": "Run npx playwright install --with-deps chromium firefox",
+          "number": 6,
+          "startedAt": "2026-11-01T15:56:56Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:15Z",
+          "conclusion": "success",
+          "name": "Check worker parent brokers and authorization controls",
+          "number": 7,
+          "startedAt": "2026-11-01T15:57:17Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:22Z",
+          "conclusion": "success",
+          "name": "Check native worker policy partitions and omission controls",
+          "number": 8,
+          "startedAt": "2026-11-01T15:58:15Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:23Z",
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@v4",
+          "number": 9,
+          "startedAt": "2026-11-01T15:58:22Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:24Z",
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@v4",
+          "number": 10,
+          "startedAt": "2026-11-01T15:58:23Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:24Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@v6",
+          "number": 19,
+          "startedAt": "2026-11-01T15:58:24Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:24Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v6",
+          "number": 20,
+          "startedAt": "2026-11-01T15:58:24Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:25Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 21,
+          "startedAt": "2026-11-01T15:58:24Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/privacy-frames/host/actions/runs/41323751266/job/124899249506"
+    },
+    {
+      "completedAt": "2026-11-01T15:58:33Z",
+      "conclusion": "failure",
+      "databaseId": 124899249517,
+      "name": "webtransport",
+      "startedAt": "2026-11-01T15:56:43Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-01T15:56:45Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-01T15:56:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:48Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v6",
+          "number": 2,
+          "startedAt": "2026-11-01T15:56:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:48Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v6",
+          "number": 3,
+          "startedAt": "2026-11-01T15:56:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:48Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-python@v6",
+          "number": 4,
+          "startedAt": "2026-11-01T15:56:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:51Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 5,
+          "startedAt": "2026-11-01T15:56:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:55Z",
+          "conclusion": "success",
+          "name": "Run python -m pip install -r formal/webtransport/requirements.lock",
+          "number": 6,
+          "startedAt": "2026-11-01T15:56:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:23Z",
+          "conclusion": "success",
+          "name": "Run npx playwright install --with-deps chromium firefox",
+          "number": 7,
+          "startedAt": "2026-11-01T15:56:55Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:26Z",
+          "conclusion": "success",
+          "name": "Run npm run build",
+          "number": 8,
+          "startedAt": "2026-11-01T15:57:23Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:29Z",
+          "conclusion": "success",
+          "name": "Run node --test test/runtime-admission.test.ts",
+          "number": 9,
+          "startedAt": "2026-11-01T15:57:26Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:34Z",
+          "conclusion": "success",
+          "name": "Run node test/resource-paths.ts",
+          "number": 10,
+          "startedAt": "2026-11-01T15:57:29Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:42Z",
+          "conclusion": "success",
+          "name": "Run node formal/cache-publisher-probe.ts",
+          "number": 11,
+          "startedAt": "2026-11-01T15:57:34Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:51Z",
+          "conclusion": "success",
+          "name": "Run node formal/publisher-routes-probe.ts",
+          "number": 12,
+          "startedAt": "2026-11-01T15:57:42Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:01Z",
+          "conclusion": "success",
+          "name": "Run node formal/publisher-navigate-probe.ts",
+          "number": 13,
+          "startedAt": "2026-11-01T15:57:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:10Z",
+          "conclusion": "success",
+          "name": "Run node formal/worker-registration-probe.ts",
+          "number": 14,
+          "startedAt": "2026-11-01T15:58:01Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:19Z",
+          "conclusion": "success",
+          "name": "Run node formal/navigation-preload-probe.ts",
+          "number": 15,
+          "startedAt": "2026-11-01T15:58:10Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:27Z",
+          "conclusion": "success",
+          "name": "Run node formal/navigation-preload-fault.ts",
+          "number": 16,
+          "startedAt": "2026-11-01T15:58:19Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:31Z",
+          "conclusion": "failure",
+          "name": "Check installed-app navigation and actual guarded bundle",
+          "number": 17,
+          "startedAt": "2026-11-01T15:58:27Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:31Z",
+          "conclusion": "skipped",
+          "name": "Check navigation cancellation during module initialization",
+          "number": 18,
+          "startedAt": "2026-11-01T15:58:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:31Z",
+          "conclusion": "skipped",
+          "name": "Run node test/document-consumption-race.ts",
+          "number": 19,
+          "startedAt": "2026-11-01T15:58:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:31Z",
+          "conclusion": "skipped",
+          "name": "Run node test/document-control.ts",
+          "number": 20,
+          "startedAt": "2026-11-01T15:58:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:31Z",
+          "conclusion": "skipped",
+          "name": "Run node formal/document-consumption-fault.ts",
+          "number": 21,
+          "startedAt": "2026-11-01T15:58:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:31Z",
+          "conclusion": "skipped",
+          "name": "Run node test/context-generation.ts",
+          "number": 22,
+          "startedAt": "2026-11-01T15:58:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:31Z",
+          "conclusion": "skipped",
+          "name": "Run cp results/contexts/generation.json formal/evidence/generation-overlaps.json",
+          "number": 23,
+          "startedAt": "2026-11-01T15:58:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:31Z",
+          "conclusion": "skipped",
+          "name": "Run node formal/webtransport/run.ts",
+          "number": 24,
+          "startedAt": "2026-11-01T15:58:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:31Z",
+          "conclusion": "skipped",
+          "name": "Run node formal/startup/local-run.ts",
+          "number": 25,
+          "startedAt": "2026-11-01T15:58:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:31Z",
+          "conclusion": "skipped",
+          "name": "Compare observed startup events with the lifecycle model",
+          "number": 26,
+          "startedAt": "2026-11-01T15:58:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:31Z",
+          "conclusion": "skipped",
+          "name": "Run actions/upload-artifact@v4",
+          "number": 27,
+          "startedAt": "2026-11-01T15:58:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:31Z",
+          "conclusion": "skipped",
+          "name": "Post Run actions/setup-python@v6",
+          "number": 52,
+          "startedAt": "2026-11-01T15:58:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:31Z",
+          "conclusion": "skipped",
+          "name": "Post Run actions/setup-node@v6",
+          "number": 53,
+          "startedAt": "2026-11-01T15:58:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:32Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v6",
+          "number": 54,
+          "startedAt": "2026-11-01T15:58:31Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:58:32Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 55,
+          "startedAt": "2026-11-01T15:58:32Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/privacy-frames/host/actions/runs/41323751266/job/124899249517"
+    },
+    {
+      "completedAt": "2026-11-01T16:05:50Z",
+      "conclusion": "success",
+      "databaseId": 124899249518,
+      "name": "maintenance",
+      "startedAt": "2026-11-01T15:56:43Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-01T15:56:44Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-01T15:56:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:47Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v6",
+          "number": 2,
+          "startedAt": "2026-11-01T15:56:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:48Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v6",
+          "number": 3,
+          "startedAt": "2026-11-01T15:56:47Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:49Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 4,
+          "startedAt": "2026-11-01T15:56:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:13Z",
+          "conclusion": "success",
+          "name": "Run npx playwright install --with-deps chromium firefox",
+          "number": 5,
+          "startedAt": "2026-11-01T15:56:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:14Z",
+          "conclusion": "success",
+          "name": "Type-check native maintenance comparisons",
+          "number": 6,
+          "startedAt": "2026-11-01T15:57:13Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:00:48Z",
+          "conclusion": "success",
+          "name": "Compare local bootstraps, cached resources and messages",
+          "number": 7,
+          "startedAt": "2026-11-01T15:57:14Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:03:38Z",
+          "conclusion": "success",
+          "name": "Check retained delivery and new contexts after unregistration",
+          "number": 8,
+          "startedAt": "2026-11-01T16:00:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:04:42Z",
+          "conclusion": "success",
+          "name": "Check message resource delivery and confirmed Chromium restart",
+          "number": 9,
+          "startedAt": "2026-11-01T16:03:38Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:05:46Z",
+          "conclusion": "success",
+          "name": "Check the relaxed-policy receiver control",
+          "number": 10,
+          "startedAt": "2026-11-01T16:04:42Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:05:48Z",
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@v4",
+          "number": 11,
+          "startedAt": "2026-11-01T16:05:46Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:05:48Z",
+          "conclusion": "success",
+          "name": "Post Run actions/setup-node@v6",
+          "number": 21,
+          "startedAt": "2026-11-01T16:05:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:05:48Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v6",
+          "number": 22,
+          "startedAt": "2026-11-01T16:05:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T16:05:48Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 23,
+          "startedAt": "2026-11-01T16:05:48Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/privacy-frames/host/actions/runs/41323751266/job/124899249518"
+    },
+    {
+      "completedAt": "2026-11-01T15:57:47Z",
+      "conclusion": "failure",
+      "databaseId": 124899249539,
+      "name": "resource-fetch",
+      "startedAt": "2026-11-01T15:56:43Z",
+      "status": "completed",
+      "steps": [
+        {
+          "completedAt": "2026-11-01T15:56:45Z",
+          "conclusion": "success",
+          "name": "Set up job",
+          "number": 1,
+          "startedAt": "2026-11-01T15:56:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:48Z",
+          "conclusion": "success",
+          "name": "Run actions/checkout@v6",
+          "number": 2,
+          "startedAt": "2026-11-01T15:56:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:49Z",
+          "conclusion": "success",
+          "name": "Run actions/setup-node@v6",
+          "number": 3,
+          "startedAt": "2026-11-01T15:56:48Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:51Z",
+          "conclusion": "success",
+          "name": "Run npm ci",
+          "number": 4,
+          "startedAt": "2026-11-01T15:56:49Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:56:54Z",
+          "conclusion": "success",
+          "name": "Run npm run build",
+          "number": 5,
+          "startedAt": "2026-11-01T15:56:51Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:21Z",
+          "conclusion": "success",
+          "name": "Run npx playwright install --with-deps chromium firefox",
+          "number": 6,
+          "startedAt": "2026-11-01T15:56:54Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:44Z",
+          "conclusion": "failure",
+          "name": "Check installed message resource reads and actual transport bypass",
+          "number": 7,
+          "startedAt": "2026-11-01T15:57:21Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:44Z",
+          "conclusion": "skipped",
+          "name": "Check dedicated worker reads, restart and transport bypass",
+          "number": 8,
+          "startedAt": "2026-11-01T15:57:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:44Z",
+          "conclusion": "skipped",
+          "name": "Check local worker identity and native source-policy prerequisites",
+          "number": 9,
+          "startedAt": "2026-11-01T15:57:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:44Z",
+          "conclusion": "skipped",
+          "name": "Check production script URL gate and missing-enforcement controls",
+          "number": 10,
+          "startedAt": "2026-11-01T15:57:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:44Z",
+          "conclusion": "skipped",
+          "name": "Compare trusted Worker callers and strict-mode omission",
+          "number": 11,
+          "startedAt": "2026-11-01T15:57:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:45Z",
+          "conclusion": "success",
+          "name": "Run actions/upload-artifact@v4",
+          "number": 12,
+          "startedAt": "2026-11-01T15:57:44Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:45Z",
+          "conclusion": "skipped",
+          "name": "Post Run actions/setup-node@v6",
+          "number": 23,
+          "startedAt": "2026-11-01T15:57:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:46Z",
+          "conclusion": "success",
+          "name": "Post Run actions/checkout@v6",
+          "number": 24,
+          "startedAt": "2026-11-01T15:57:45Z",
+          "status": "completed"
+        },
+        {
+          "completedAt": "2026-11-01T15:57:46Z",
+          "conclusion": "success",
+          "name": "Complete job",
+          "number": 25,
+          "startedAt": "2026-11-01T15:57:46Z",
+          "status": "completed"
+        }
+      ],
+      "url": "https://github.com/privacy-frames/host/actions/runs/41323751266/job/124899249539"
+    }
+  ],
+  "status": "completed",
+  "url": "https://github.com/privacy-frames/host/actions/runs/41323751266",
+  "scope": "Historical remote validation of f6f8d24 before the production worklet migration. This is not verification of the current uncommitted candidate.",
+  "wholeConfinementEstablished": false
+}

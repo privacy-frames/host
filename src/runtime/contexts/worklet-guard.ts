@@ -6,12 +6,7 @@ import { installEffectPolicy } from '../enforcement/effects.ts';
 import { WORKLET_POLICY_VERSION, type WorkletIdentity } from './worklet-types.ts';
 
 declare const __privacyWorkletMetadata: unknown;
-const NativePromise = Promise;
-const reject = Promise.reject;
-const NativeTypeError = TypeError;
-const NativeString = String;
 const descriptor = ownDescriptor;
-const apply = Reflect.apply;
 function field(value: unknown, key: string): unknown {
   if (!value || typeof value !== 'object' || Array.isArray(value))
     throw new Error('Missing worklet identity');
@@ -63,18 +58,3 @@ for (const name of [
 prepareRuntimeIntrinsics();
 installEffectPolicy(createPolicyTools(), () => null, internalRecord({}), globalThis);
 sealRuntimeBindings();
-
-/** Both supported engines reject native import() in worklets. Keep that profile
- * explicit so computed Blob/data/HTTP imports cannot bypass the installed graph. */
-export function rejectDynamicImport(input: unknown, _options?: unknown): Promise<never> {
-  try {
-    NativeString(input);
-  } catch (error) {
-    return apply(reject, NativePromise, [error]);
-  }
-  return apply(reject, NativePromise, [
-    new NativeTypeError(
-      'Dynamic import is not supported in the confined worklet profile',
-    ),
-  ]);
-}

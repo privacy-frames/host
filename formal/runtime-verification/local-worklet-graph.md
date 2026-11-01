@@ -60,18 +60,13 @@ remain unchanged by the omission.
 
 The [normal receipt](local-worklet-graph.json), per-browser omission receipts and
 logs record these component observations. Fixture metadata and source reads are
-fixed trusted inputs. PaintWorklet integration, authenticated production replies,
-replacement and closure, aged registrations and complete C1–C8 remain open.
-The production factory still uses its HTTP controller routes. Integration must
-replace those routes with the existing private controller transport, preserve
-child-Window ownership through the parent broker, revalidate generation around
-compilation, and apply independent native HTTP denial across supported contexts.
-The intended compiler owner is the existing runtime controller; the fixture's
-separate registration is not an additional production service. Its HTTP
-bootstrap occurs during controlled setup before the measured operations.
-Before integration, separate `rejectDynamicImport` from the side-effectful
-security guard. A rejection helper may be compiled with application modules;
-host preparation must remain first outside that graph.
+fixed trusted inputs. The [production migration](production-worklets.md) now uses
+the existing runtime service worker for compilation and native-actor-bound private
+requests. Root and child Windows prepare local worklet graphs; the rejection
+helper is separate from the mandatory guard. Production native HTTP denial,
+complete lifecycle correspondence and C1–C8 remain open. The component fixture's
+separate service-worker registration is controlled setup, not an additional
+production service.
 
 Run after building:
 

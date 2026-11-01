@@ -98,12 +98,12 @@ export function workletStorage(base: URL): WorkletStorage {
     new URL('__host-worklet/' + workletIdentifier(id), base).href;
   return internalRecord({
     async get(id) {
-      const value = await (await caches.open('pf-worklet-contexts-v1')).match(key(id));
+      const value = await (await caches.open('pf-worklet-contexts-v2')).match(key(id));
       return value ? parse(await value.json()) : undefined;
     },
     async put(value) {
       await (
-        await caches.open('pf-worklet-contexts-v1')
+        await caches.open('pf-worklet-contexts-v2')
       ).put(
         key(value.id),
         new Response(

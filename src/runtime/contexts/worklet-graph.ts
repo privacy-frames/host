@@ -17,7 +17,7 @@ export interface WorkletGraph {
   chunks: WorkletChunk[];
   facades: { module: string; chunk: string }[];
 }
-interface GraphOptions {
+export interface WorkletGraphOptions {
   entry: string;
   readModule(id: string): Promise<string>;
   /** Previously prepared modules in this worklet's static dependency closure. */
@@ -30,7 +30,7 @@ interface GraphOptions {
  */
 export async function compileWorkletGraph(
   compiler: typeof rollup,
-  options: GraphOptions,
+  options: WorkletGraphOptions,
 ): Promise<WorkletGraph> {
   const external = new Map(options.external);
   for (const url of external.values())
