@@ -1,3 +1,4 @@
+export const SHARED_WORKER_REQUEST = 'privacy-shared-worker-control';
 import { CONTEXT_POLICY_VERSION } from './context-policy.ts';
 import { strings, internalRecord, internalData } from './primordials.ts';
 export type SharedWorkerType = 'classic' | 'module';

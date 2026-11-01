@@ -1,0 +1,10 @@
+
+> test:worklets
+> node test/worklet-platform.ts && node test/worklet-guard.ts && node test/worklet-contexts.ts
+
+chromium: AudioWorklet native processor/port/render passed; paint native paint passed
+firefox: AudioWorklet native processor/port/render passed; paint unavailable
+chromium: production Worklet guard + native audio passed; paint passed
+firefox: production Worklet guard + native audio passed; paint unavailable
+chromium: installed/Blob/native-graph/offline AudioWorklet passed; paint passed
+firefox: installed/Blob/native-graph/offline AudioWorklet passed; paint unavailable

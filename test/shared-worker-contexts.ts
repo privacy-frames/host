@@ -181,10 +181,42 @@ try {
           writable: true,
           value: observed,
         });
+        const container = Object.getOwnPropertyDescriptor(
+          Navigator.prototype,
+          'serviceWorker',
+        )!.get!;
+        const controller = Object.getOwnPropertyDescriptor(
+          ServiceWorkerContainer.prototype,
+          'controller',
+        )!.get!;
+        const controllerPost = ServiceWorker.prototype.postMessage;
+        const NativeChannel = MessageChannel;
         Object.defineProperty(globalThis, '__rawShared', {
           value: {
-            // Trusted fixture setup uses the native control protocol directly.
-            // Application fetch is restricted to the admitted resource graph.
+            // Trusted fixture setup retains native controller access; application
+            // identity assertions never substitute for its actual browser actor.
+            request: (packet: unknown) =>
+              new Promise((resolve, reject) => {
+                const channel = new NativeChannel();
+                const timer = setTimeout(
+                  () => reject(new Error('Shared controller timeout')),
+                  10000,
+                );
+                channel.port1.onmessage = (event) => {
+                  clearTimeout(timer);
+                  channel.port1.close();
+                  if (event.data.ok) resolve(event.data.value);
+                  else reject(new Error(event.data.error));
+                };
+                apply(
+                  controllerPost,
+                  apply(controller, apply(container, navigator, []), []),
+                  [
+                    { type: 'privacy-shared-worker-control', ...Object(packet) },
+                    [channel.port2],
+                  ],
+                );
+              }),
             fetch: (input: RequestInfo | URL, init?: RequestInit) =>
               apply(nativeFetch, globalThis, [input, init]),
             create: (url: string, name: string) => {
@@ -261,21 +293,100 @@ try {
       assert.equal(isolated.value.count, 1);
       assert.notEqual(isolated.value.host.application, a.value.host.application);
       assert.equal(isolated.value.location, a.value.location);
+      const childConnection = await first.evaluate(async (source) => {
+        const child = document.createElement('iframe');
+        child.srcdoc =
+          '<script>globalThis.childShared=new SharedWorker(' +
+          JSON.stringify(source) +
+          ',{name:"child-control"});globalThis.childResult=new Promise(resolve=>{childShared.port.onmessage=event=>resolve(event.data);childShared.port.postMessage({})});</script>';
+        const loaded = new Promise<void>((resolve, reject) => {
+          const timer = setTimeout(
+            () => reject(new Error('Shared child load timeout')),
+            15000,
+          );
+          child.onload = () => {
+            clearTimeout(timer);
+            resolve();
+          };
+          child.onerror = () => {
+            clearTimeout(timer);
+            reject(new Error('Shared child failed'));
+          };
+        });
+        document.body.append(child);
+        await loaded;
+        const value = await Reflect.get(child.contentWindow!, 'childResult');
+        const parent = new SharedWorker(source, { name: 'child-control' });
+        const reply = () =>
+          new Promise((resolve) => {
+            parent.port.onmessage = (event) => resolve(event.data);
+            parent.port.postMessage({});
+          });
+        const shared = await reply();
+        Reflect.get(child.contentWindow!, 'childShared').port.close();
+        child.remove();
+        const retained = await reply();
+        parent.port.close();
+        return { value, shared, retained };
+      }, publisher + '/shared.js');
+      assert.equal(childConnection.value.host.application, a.value.host.application);
+      assert.equal(childConnection.value.count, 1);
+      assert.equal(childConnection.shared.count, 2);
+      assert.equal(childConnection.retained.count, 3);
+      const ownedTicket = await first.evaluate(
+        (source) =>
+          Reflect.get(globalThis, '__rawShared').request({
+            operation: 'connect',
+            source,
+            workerType: 'classic',
+            name: 'owner-control',
+          }),
+        publisher + '/shared.js',
+      );
+      const peerDisconnect = await second.evaluate(
+        (ticket) =>
+          Reflect.get(globalThis, '__rawShared').request({
+            operation: 'disconnect',
+            ticket,
+            client: 'forged-owner',
+          }),
+        ownedTicket.ticket,
+      );
+      assert.deepEqual(peerDisconnect, { closed: false });
+      const ownerDisconnect = await first.evaluate(
+        (ticket) =>
+          Reflect.get(globalThis, '__rawShared').request({
+            operation: 'disconnect',
+            ticket,
+          }),
+        ownedTicket.ticket,
+      );
+      assert.deepEqual(ownerDisconnect, { closed: true });
+      const removedControlRoutes = await first.evaluate(async () => {
+        const raw = Reflect.get(globalThis, '__rawShared');
+        const rejected = [];
+        for (const operation of ['connect', 'disconnect']) {
+          try {
+            await raw.fetch(new URL('__contexts/shared/' + operation, location.href), {
+              method: 'POST',
+              body: '{}',
+            });
+          } catch {
+            rejected.push(operation);
+          }
+        }
+        return rejected;
+      });
+      assert.deepEqual(removedControlRoutes, ['connect', 'disconnect']);
       const malformed = await first.evaluate(async (source) => {
         const raw = Reflect.get(globalThis, '__rawShared');
-        const address = new URL('__contexts/shared/connect', location.href);
-        const ticket = await (
-          await raw.fetch(address, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ source, type: 'classic', name: 'state' }),
-          })
-        ).json();
-        await raw.fetch(new URL('__contexts/shared/disconnect', location.href), {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ticket: ticket.ticket }),
+        const ticket = await raw.request({
+          operation: 'connect',
+          source,
+          workerType: 'classic',
+          name: 'state',
         });
+        await raw.request({ operation: 'disconnect', ticket: ticket.ticket });
         let rawURLRefused = false;
         try {
           raw.createRaw(ticket.bootstrapURL, ticket.key);
@@ -494,18 +605,13 @@ try {
       assert.equal(regenerated.value.host.application, a.value.host.application);
       const newIdentity = await replacement.evaluate(async (source) => {
         const raw = Reflect.get(globalThis, '__rawShared');
-        const response = await (
-          await raw.fetch(new URL('__contexts/shared/connect', location.href), {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ source, type: 'classic', name: 'state' }),
-          })
-        ).json();
-        await raw.fetch(new URL('__contexts/shared/disconnect', location.href), {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ticket: response.ticket }),
+        const response = await raw.request({
+          operation: 'connect',
+          source,
+          workerType: 'classic',
+          name: 'state',
         });
+        await raw.request({ operation: 'disconnect', ticket: response.ticket });
         return { key: response.key, generation: response.installationGeneration };
       }, publisher + '/shared.js');
       assert.equal(typeof malformed.generation, 'string');
@@ -523,6 +629,10 @@ try {
         b,
         isolated,
         malformed,
+        childConnection,
+        peerDisconnect,
+        ownerDisconnect,
+        removedControlRoutes,
         afterMalformed,
         transferredPort,
         nested,

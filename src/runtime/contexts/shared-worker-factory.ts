@@ -3,9 +3,9 @@ import type { ScriptURLGate } from '../enforcement/script-urls.ts';
 import type { PolicyTools } from '../enforcement/native.ts';
 import type { ResourceAliases } from '../resource-aliases.ts';
 import {
+  SHARED_WORKER_REQUEST,
   sharedWorkerKey,
   type SharedWorkerIdentity,
-  type SharedWorkerTicket,
   type SharedWorkerType,
 } from '../../shared/shared-worker.ts';
 
@@ -15,7 +15,6 @@ const nativeFetch = fetch;
 const construct = Reflect.construct;
 const apply = Reflect.apply;
 const get = Reflect.get;
-const stringify = JSON.stringify;
 const nativeGlobal = globalThis;
 const NativeURL = URL;
 const href = ownDescriptor(URL.prototype, 'href')!.get!;
@@ -28,7 +27,6 @@ const portStart = MessagePort.prototype.start;
 const portClose = MessagePort.prototype.close;
 const messageData = ownDescriptor(MessageEvent.prototype, 'data')!.get!;
 const responseOK = ownDescriptor(Response.prototype, 'ok')!.get!;
-const responseJSON = Response.prototype.json;
 const responseBody = Response.prototype.arrayBuffer;
 const nativeDispatch = EventTarget.prototype.dispatchEvent;
 const NativeErrorEvent = ErrorEvent;
@@ -38,6 +36,7 @@ const clearTimer = clearTimeout;
 
 export interface SharedWorkerFactoryContext {
   scriptURL: ScriptURLGate;
+  request(packet: object): Promise<unknown>;
   applicationURL: string;
   baseURL: () => string;
   resources: ResourceAliases;
@@ -65,30 +64,19 @@ export function createSharedWorkerFactory(
   const appPorts = new WeakMap<MessagePort, Connection>();
   const active = internalSet<Connection>();
   const runtimeOrigin: string = apply(origin, new NativeURL(context.applicationURL), []);
-  const connectURL: string = apply(
-    href,
-    new NativeURL('__contexts/shared/connect', context.applicationURL),
-    [],
-  );
-  const disconnectURL: string = apply(
-    href,
-    new NativeURL('__contexts/shared/disconnect', context.applicationURL),
-    [],
-  );
   function disconnect(record: Connection) {
     if (!record.ticket) return;
     const ticket = record.ticket;
     record.ticket = undefined;
-    const closing: Promise<Response> = apply(nativeFetch, nativeGlobal, [
-      disconnectURL,
-      internalRecord({
-        method: 'POST',
-        credentials: 'omit',
-        headers: internalRecord({ 'Content-Type': 'application/json' }),
-        body: stringify(internalRecord({ ticket })),
-      }),
-    ]);
-    closing.catch(() => {});
+    void context
+      .request(
+        internalRecord({
+          type: SHARED_WORKER_REQUEST,
+          operation: 'disconnect',
+          ticket,
+        }),
+      )
+      .catch(() => {});
   }
   function close(record: Connection, notify = true) {
     if (record.closed) return;
@@ -231,18 +219,15 @@ export function createSharedWorkerFactory(
         ]);
         void (async () => {
           try {
-            const response: Response = await apply(nativeFetch, nativeGlobal, [
-              connectURL,
+            const value: unknown = await context.request(
               internalRecord({
-                method: 'POST',
-                credentials: 'omit',
-                headers: internalRecord({ 'Content-Type': 'application/json' }),
-                body: stringify(internalRecord({ source: original, type, name })),
+                type: SHARED_WORKER_REQUEST,
+                operation: 'connect',
+                source: original,
+                workerType: type,
+                name,
               }),
-            ]);
-            if (!apply(responseOK, response, []))
-              throw new Error('Shared worker connection was refused');
-            const value: unknown = await apply(responseJSON, response, []);
+            );
             if (
               !value ||
               typeof value !== 'object' ||
@@ -259,7 +244,7 @@ export function createSharedWorkerFactory(
               value.bootstrapURL !== bootstrapURL
             )
               throw new Error('Invalid shared worker connection ticket');
-            record.ticket = (value as SharedWorkerTicket).ticket;
+            record.ticket = value.ticket;
             if (record.closed) {
               disconnect(record);
               return;

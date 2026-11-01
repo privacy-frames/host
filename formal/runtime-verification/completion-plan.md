@@ -91,6 +91,14 @@ and the Window passes local Blob wrappers to native worklets. Root, child,
 offline, cross-Window replay and Chromium paint checks pass. Independent native
 HTTP denial and the complete lifecycle argument remain pending.
 
+The [shared-worker command candidate](shared-control-messages.md) moves Window
+connection and disconnection requests to the native controller transport. Native
+sender identity selects the owner; generation changes during issuance revoke the
+unreturned ticket. Root/child sharing, retained parent connections, replay refusal
+and removed-route denials pass in both browsers. Shared-worker startup, worker-side
+ticket redemption, control and resource reads remain HTTP-backed prerequisites
+for independent native denial and the complete lifetime argument.
+
 The next candidate's complete eight-app command fails after 32 successful tasks:
 Firefox StackEdit's screenshot times out waiting for fallback fonts, preventing
 its offline check. A focused unchanged run reproduces the screenshot failure.

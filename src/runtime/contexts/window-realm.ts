@@ -132,6 +132,7 @@ export function prepareWindowRealm({
       resources,
       identity: () => sharedIdentity,
       scriptURL,
+      request: controller.request,
     }),
   );
   const workletAddModule = createWorkletFactory(

@@ -21,7 +21,6 @@ import { scopeContextStorage } from './storage.ts';
 import { relocateRuntimeModule } from '../modules.ts';
 import type { WorkerControl } from './worker-protocol.ts';
 import { createWorkerFactory } from './worker-factory.ts';
-import { createSharedWorkerFactory } from './shared-worker-factory.ts';
 import { prepareScriptURLs } from '../enforcement/script-urls.ts';
 import type { WorkerBirth } from './worker-birth-protocol.ts';
 import { createClassicScripts } from './classic-scripts.ts';
@@ -209,26 +208,7 @@ export function prepareWorkerRealm(
       scriptURL,
     }),
   );
-  const sharedFactory = createSharedWorkerFactory(
-    tools,
-    internalRecord({
-      applicationURL: context.applicationURL,
-      baseURL: () => scriptBase,
-      resources,
-      scriptURL,
-      identity: () =>
-        internalRecord({
-          application: context.identity.application,
-          installationGeneration: context.identity.installationGeneration,
-        }),
-    }),
-  );
-  installEffectPolicy(
-    tools,
-    () => null,
-    internalRecord({ Worker: factory, SharedWorker: sharedFactory }),
-    worker,
-  );
+  installEffectPolicy(tools, () => null, internalRecord({ Worker: factory }), worker);
   scopeContextStorage(context.identity.application, tools, worker);
   const NativeURL = URL;
   const readProtocol = descriptor(NativeURL.prototype, 'protocol')!.get!;

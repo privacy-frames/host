@@ -37,6 +37,7 @@ import { DocumentIntentStore } from './contexts/document-intents.ts';
 import { createSharedController } from './contexts/shared-controller.ts';
 import { SharedConnectionStore } from './contexts/shared-connections.ts';
 import { createWorkletController } from './contexts/worklet-controller.ts';
+import { SHARED_WORKER_REQUEST } from '../shared/shared-worker.ts';
 import { WORKLET_REQUEST } from './contexts/worklet-types.ts';
 import { compileWorkletGraph } from './contexts/worklet-graph.ts';
 import { rollup } from 'trusted:worklet-compiler';
@@ -91,6 +92,7 @@ const sharedWorkers = createSharedController({
   base: BASE,
   contexts,
   store: new SharedConnectionStore(),
+  installation: getApp,
   client: (id) => worker.clients.get(id),
   application: runtimeIdentity,
   bootstrap: async () =>
@@ -238,7 +240,8 @@ worker.addEventListener('message', (event) => {
       packet.type === DOCUMENT_CONTROL_REQUEST ||
       packet.type === WORKER_CONTROL_REQUEST ||
       packet.type === WORKER_BIRTH_REQUEST ||
-      packet.type === WORKLET_REQUEST)
+      packet.type === WORKLET_REQUEST ||
+      packet.type === SHARED_WORKER_REQUEST)
   ) {
     const port = event.ports[0];
     if (!port) return;
@@ -249,6 +252,11 @@ worker.addEventListener('message', (event) => {
             event.source && 'id' in event.source
               ? await worker.clients.get(event.source.id)
               : undefined;
+          if (packet.type === SHARED_WORKER_REQUEST) {
+            const value = await sharedWorkers.request(client?.id || '', packet);
+            port.postMessage({ ok: true, value });
+            return;
+          }
           if (packet.type === WORKLET_REQUEST) {
             const value = await worklets.request(client?.id || '', packet);
             port.postMessage({ ok: true, value });
@@ -368,7 +376,7 @@ worker.addEventListener('fetch', (event) => {
       const url = new URL(req.url);
       const documentResponse = await documents.respond(event);
       if (documentResponse) return documentResponse;
-      const sharedResponse = await sharedWorkers(event);
+      const sharedResponse = await sharedWorkers.respond(event);
       if (sharedResponse) return sharedResponse;
       const publisherResponse = await publishers.respond(event);
       if (publisherResponse) return publisherResponse;
