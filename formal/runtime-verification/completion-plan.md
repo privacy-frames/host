@@ -2,9 +2,9 @@
 
 This execution plan follows the eight stages in [the verification programme](README.md).
 Implementation stays on the separate `runtime-confinement-proof` worktree and
-branch. The current policy-7 candidate adds local dedicated-worker bootstrap on
-top of private native script URL admission. Complete confinement and deployment
-remain pending.
+branch. Policy 7 added local dedicated-worker bootstrap on top of private native
+script URL admission. The policy-8 candidate also delivers classic worker scripts
+locally. Complete confinement and deployment remain pending.
 
 The target remains [C1–C8](../threat-model.md): confined application activity cannot
 cause a remote request or connection, including to the runtime origin. Whether
@@ -21,16 +21,34 @@ checks. Complete protocol correspondence and browser coverage remain open.
 
 Application-triggered HTTP worker startup was a demonstrated policy-6 violation.
 The policy-7 local startup candidate passes 32 fresh-registration classic/module
-samples with working native update controls. Aged registrations and complete C4
-coverage remain open.
+samples with working native update controls. A subsequent Firefox experiment
+forcing the aged-registration update branch reproduces a classic startup request.
+Local classic entry and importScripts delivery removes that request in the
+selected policy-8 samples. Module startup still produces an update request in
+that experiment; complete C4 coverage remains open. The
+[maintenance notes](service-worker-maintenance.md) preserve both counterexamples.
+
+Policy-8 validation now records 48 fresh-registration samples without HTTP and
+24 forced-age samples with four violations across classic dynamic import and
+module workers. The full test suite and all eight unchanged applications pass
+against one stable source/build candidate. These results do not close C4.
+
+The [module-policy candidate](module-loader-assessment.md) independently combines
+Blob roots, local module delivery and native CSP. Its 21 native fixture cases
+include working HTTP controls and zero HTTP in all 12 restricted cases. Integrate
+local script delivery and that policy across the runtime's contexts, then
+revalidate module semantics and confinement. Keep the loader outside the security
+argument for HTTP admission; its custom fetch hook alone is insufficient.
+
 The local registration-fence experiment adds nine native observations:
 same-scope unregistration waited for a held update, and a later update failed
 without a second request. It covers an unchanged script and selected schedules;
 it establishes neither a production launch barrier nor a whole-browser drain.
 
-Model workflow `41238247367` lacks a Chromium maintenance positive control:
-neither sample produced the expected update. Diagnose the intermittent missing
-observation before using this fixture as evidence for a repair.
+An earlier model workflow lacked a Chromium maintenance positive control. The
+policy-7 local validation and later model workflow `41267918060` pass the fresh
+regression with working controls. Those results do not cover the aged-registration
+counterexample or certify policy-8 source changes.
 
 ## 1. State the theorem and its premises
 
@@ -70,7 +88,7 @@ in CI. Establish their correspondence to the
 [Service Workers job algorithms](https://w3c.github.io/ServiceWorker/#schedule-job).
 Review changed scripts, install/activate work, overlapping registrations,
 controller retention, restart and work already queued at launch. Native
-shared/publisher names now include host policy version 7. The
+shared/publisher names include the host policy version. The
 [namespace experiment](worker-policy-overlap.md) checks fresh globals across
 policy versions, sharing within one version, and policy-omission faults in both
 browsers. Complete admission and mixed-policy lifetime correspondence remain open.

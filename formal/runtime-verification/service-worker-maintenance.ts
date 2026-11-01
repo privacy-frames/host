@@ -14,6 +14,8 @@ const workerScripts: Record<string, string> = {
   '/worker.js':
     'importScripts("classic-dependency.js");postMessage(globalThis.classicReady);',
   '/classic-dependency.js': 'globalThis.classicReady="ready";',
+  '/dynamic-worker.js':
+    'import("./module-dependency.js").then(({ready})=>postMessage(ready));',
   '/module-worker.js': 'import {ready} from "./module-dependency.js";postMessage(ready);',
   '/module-dependency.js': 'export const ready="ready";',
 };
@@ -24,7 +26,9 @@ document.querySelector('#run').onclick = () => {
     return;
   }
   const type = document.querySelector('#worker-type').value;
-  const worker = new Worker(type === 'module' ? './module-worker.js' : './worker.js', {type});
+  const source = type === 'module' ? './module-worker.js'
+    : type === 'classic-dynamic' ? './dynamic-worker.js' : './worker.js';
+  const worker = new Worker(source, {type:type === 'module' ? 'module' : 'classic'});
   worker.onmessage = event => {
     document.querySelector('#result').textContent = event.data;
     worker.terminate();
@@ -34,7 +38,7 @@ globalThis.maintenanceProbeReady = true;`;
 const html = `<!doctype html><title>Maintenance probe</title>
 <link rel="icon" href="data:,">
 <input id="private" aria-label="Private bit"><button id="run">Run</button>
-<select id="worker-type"><option value="classic">Classic</option><option value="module">Module</option></select>
+<select id="worker-type"><option value="classic">Classic</option><option value="classic-dynamic">Classic dynamic import</option><option value="module">Module</option></select>
 <output id="result"></output><script src="./main.js"></script>`;
 const nativeServiceWorker = `
 self.addEventListener('install', event => event.waitUntil(self.skipWaiting()));
@@ -75,8 +79,15 @@ const origin = `http://127.0.0.1:${address.port}`;
 const host = await servers({ receiver: false });
 const samples: object[] = [];
 const groups: object[] = [];
+const violations: object[] = [];
 const provenance = await testProvenance(import.meta.url);
-const receipt = new URL('./service-worker-maintenance.json', import.meta.url);
+const forcedStaleAgeCheck = process.env.PF_STARTUP_STALE === '1';
+const receipt = new URL(
+  forcedStaleAgeCheck
+    ? './service-worker-startup-stale.json'
+    : './service-worker-maintenance.json',
+  import.meta.url,
+);
 await rm(receipt, { force: true });
 let completedAt: string | null = null;
 let failure: string | undefined;
@@ -99,10 +110,17 @@ async function quiet(page: Page) {
 }
 
 try {
-  for (const engine of [chromium, firefox]) {
-    const browser = await launch(engine);
+  for (const engine of forcedStaleAgeCheck ? [firefox] : [chromium, firefox]) {
+    const browser = await launch(
+      engine,
+      forcedStaleAgeCheck
+        ? {
+            firefoxUserPrefs: { 'dom.serviceWorkers.testUpdateOverOneDay': true },
+          }
+        : {},
+    );
     try {
-      for (const workerType of ['classic', 'module']) {
+      for (const workerType of ['classic', 'classic-dynamic', 'module']) {
         for (const confined of [false, true]) {
           let positiveSamples = 0;
           // Reverse the order in a second round, using a fresh browser context for
@@ -187,6 +205,7 @@ try {
                 actionStarted,
                 observationEnded: Date.now(),
                 confined,
+                forcedStaleAgeCheck,
                 workerType,
                 bit,
                 idleRuntime,
@@ -204,18 +223,15 @@ try {
               );
               if (bit === '0') assert.equal(updateRequests.length, 0);
               else if (updateRequests.length > 0) positiveSamples++;
-              if (confined) {
-                assert.deepEqual(
+              if (confined && (runtime.length > 0 || publisherTraffic.length > 0))
+                violations.push({
+                  browser: engine.name(),
+                  workerType,
+                  sample,
+                  bit,
                   runtime,
-                  [],
-                  'Confined worker startup emitted runtime HTTP',
-                );
-                assert.deepEqual(
                   publisherTraffic,
-                  [],
-                  'Confined worker startup reached publisher',
-                );
-              }
+                });
             } finally {
               await context.close();
             }
@@ -225,13 +241,13 @@ try {
           groups.push({
             browser: engine.name(),
             confined,
+            forcedStaleAgeCheck,
             workerType,
             positiveSamples,
             workerSamples: 2,
             noWorkerSamples: 2,
           });
-          if (confined) assert.equal(positiveSamples, 0);
-          else
+          if (!confined)
             assert(
               positiveSamples > 0,
               'No native worker-triggered update observed in this group',
@@ -246,6 +262,7 @@ try {
   assert.deepEqual(after.artifacts, provenance.artifacts);
   assert.equal(after.sourceSHA256, provenance.sourceSHA256);
   assert.equal(after.runnerSHA256, provenance.runnerSHA256);
+  assert.deepEqual(violations, [], 'Confined worker execution emitted HTTP');
   completedAt = new Date().toISOString();
 } catch (error) {
   failure = String(error);
@@ -257,10 +274,12 @@ try {
       JSON.stringify(
         {
           scope:
-            'Classic/module worker startup with dependencies, chosen by a private input bit. Native groups must demonstrate worker-triggered maintenance; every confined sample must produce zero HTTP requests. No-worker and idle controls use separate fresh contexts. These bounded observations do not establish exhaustive browser behavior or complete confinement.',
+            'Classic importScripts, classic dynamic import and module-worker startup with dependencies, chosen by a private input bit. Native groups must demonstrate worker-triggered maintenance; every confined sample must produce zero HTTP requests. No-worker and idle controls use separate fresh contexts. All completed samples are retained before the zero-HTTP assertion. These bounded observations do not establish exhaustive browser behavior or complete confinement.',
           provenance,
+          forcedStaleAgeCheck,
           samples,
           groups,
+          violations,
           observationMilliseconds: 3000,
           completed: completedAt !== null,
           completedAt,

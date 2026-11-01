@@ -25,6 +25,7 @@ export interface WorkerBootstrapMetadata {
   aliases: [string, string][];
   rootAliases: [string, string][];
   module: boolean;
+  scripts: string[];
 }
 
 export interface ContextStorage {

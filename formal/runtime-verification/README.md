@@ -7,8 +7,9 @@ argument. The baseline is host revision
 source checks and browser receipts retain their documented scopes.
 
 The [policy-7 candidate](local-worker-startup.md) replaces dedicated HTTP bootstrap
-with a local guard and private native-client binding. Shared/publisher roots and
-HTTP dependency delivery remain separate work. Complete confinement is unestablished.
+with a local guard and private native-client binding. Policy 8 also supplies
+classic worker scripts locally. Shared/publisher roots, module delivery and
+complete lifecycle correspondence remain open. Complete confinement is unestablished.
 
 The target is the contract in [the threat model](../threat-model.md). Applications
 remain ordinary JavaScript, including asynchronous execution and prototype
@@ -94,6 +95,13 @@ dedicated guards and private native-client binding. The fresh-registration
 startup regression is quiet in both browsers with working native update controls.
 Registration lifetime, complete ownership proofs and browser coverage remain open.
 
+The policy-8 candidate adds local classic entry and `importScripts` delivery.
+The [forced-age comparison](service-worker-maintenance.md#forced-aged-registration-comparison)
+exposes an update request from the remaining module-worker path. The
+[module-loader experiment](module-loader-assessment.md) also demonstrates why a
+custom fetch hook in an unmodified compatibility loader cannot serve as the
+confinement boundary by itself.
+
 - Stage 1: contract being specified and reviewed against current behavior.
 - Stage 2: entry-point review started; complete authority mapping remains open.
 - Stage 3: document generation invalidation now uses private object identities;
@@ -152,7 +160,7 @@ Registration lifetime, complete ownership proofs and browser coverage remain ope
   native bindings. Shared/publisher roots retain an explicit worker-only HTTP
   adapter. Native parent-selection and delegation faults are detected; complete
   protocol refinement and complete local resource delivery remain open.
-  Shared/publisher native names now include context policy version 7. The
+  Shared/publisher native names include the context policy version. The
   [namespace experiment](worker-policy-overlap.md) checks fresh globals across
   policy constants, same-policy sharing and eight policy-omission faults. Retained
   old globals and complete mixed-policy lifetimes remain open.

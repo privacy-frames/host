@@ -18,6 +18,7 @@ self.onmessage=async e=>{
   const op=e.data?.op;
   if(op==='port'){const port=e.data.port;port.onmessage=message=>port.postMessage('pong:'+message.data);port.start();port.postMessage('ready');return}
   if(op==='nested'){const nested=new Worker('nested.js');nested.onerror=event=>{event.preventDefault();postMessage({nestedError:event.message})};nested.onmessage=event=>{postMessage({nested:event.data,host:typeof privacyHost==='object'?privacyHost:null});nested.terminate()};nested.postMessage({value:71,depth:2,target:e.data.target});return}
+  if(op==='dynamic-module'){const result=await import('./helper-module.js');postMessage({dynamicModule:result.value});return}
   if(op==='storage'){const response=await caches.match('https://cache.invalid/shared');postMessage({value:await readValue(),cached:response?await response.text():null,names:await caches.keys(),databaseNames:await indexedDB.databases()});return}
   if(op==='network'){let fetchRefused=false,importsRefused=false;try{await fetch(e.data.target+'/worker-private-marker')}catch{fetchRefused=true}try{importScripts(e.data.target+'/import-private-marker')}catch{importsRefused=true}postMessage({fetchRefused,importsRefused});return}
   postMessage({bytes:Array.from(new Uint8Array(e.data.buffer||new ArrayBuffer(0))),location:location.href,host:typeof privacyHost==='object'?privacyHost:null,imported:globalThis.importedValue||0});
@@ -103,6 +104,22 @@ await new Promise<void>((resolve) => publisher.listen(4344, '127.0.0.1', resolve
 await new Promise<void>((resolve) => receiver.listen(4345, '127.0.0.1', resolve));
 const server = await servers({ receiver: false });
 const results = [];
+
+async function dynamicModule(page: Page) {
+  return page.evaluate(async () => {
+    const worker = new Worker('worker.js');
+    try {
+      return await new Promise((resolve, reject) => {
+        worker.onmessage = (event) => resolve(event.data);
+        worker.onerror = (event) => reject(new Error(event.message));
+        setTimeout(() => reject(new Error('Classic dynamic module timed out')), 8000);
+        worker.postMessage({ op: 'dynamic-module' });
+      });
+    } finally {
+      worker.terminate();
+    }
+  });
+}
 
 async function roundTrip(page: Page, kind: string, optionsMode = 'array') {
   return page.evaluate(
@@ -386,6 +403,7 @@ try {
       } finally {
         await context.setOffline(false);
       }
+      assert.deepEqual(await dynamicModule(app), { dynamicModule: 13 });
       const nullConstructorOptions = await roundTrip(app, 'classic', 'constructor-null');
       assert.equal(nullConstructorOptions.value.host.context, 'dedicated-worker');
       const nullOptions = await roundTrip(app, 'classic', 'null');
@@ -643,6 +661,7 @@ try {
       assert.equal(connections.length, connectionsBefore);
       const control = await context.newPage();
       await control.goto(publisherURL + '/workers/');
+      assert.deepEqual(await dynamicModule(control), { dynamicModule: 13 });
       const nativeOptions = {
         missing: await control.evaluate(() => {
           const worker = new Worker('worker.js');
@@ -715,6 +734,7 @@ try {
       assert(nativeBootstrapURLs.every((url) => new URL(url).protocol === 'blob:'));
       results.push({
         nativeBootstrapURLs,
+        classicDynamicModulePassed: true,
         closure,
         provenance,
         name,

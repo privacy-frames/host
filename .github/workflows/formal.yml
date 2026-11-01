@@ -143,7 +143,7 @@ jobs:
             formal/runtime-verification/message-resource-broker-relaxed.json
   worker-startup-maintenance:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -154,15 +154,40 @@ jobs:
       - run: npm run build
       - run: npx playwright install --with-deps chromium firefox
         timeout-minutes: 5
-      - name: Compare confined classic/module startup with native update controls
+      - name: Compare worker script loading with native update controls
         run: |
           npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/runtime-verification/service-worker-maintenance.ts
           node formal/runtime-verification/service-worker-maintenance.ts
+      - name: Check startup under the forced-stale Firefox age contract
+        run: PF_STARTUP_STALE=1 node formal/runtime-verification/service-worker-maintenance.ts
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: worker-startup-maintenance
-          path: formal/runtime-verification/service-worker-maintenance.json
+          path: |
+            formal/runtime-verification/service-worker-maintenance.json
+            formal/runtime-verification/service-worker-startup-stale.json
+  module-delivery-policy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium firefox
+        timeout-minutes: 5
+      - name: Check the independent native script policy candidate
+        run: |
+          npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/runtime-verification/module-loader-browser.ts
+          node formal/runtime-verification/module-loader-browser.ts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: module-delivery-native-policy
+          path: formal/runtime-verification/module-loader-browser.json
   worker-closure:
     runs-on: ubuntu-latest
     timeout-minutes: 12
@@ -364,17 +389,6 @@ jobs:
       - run: node formal/worker-registration-probe.ts
       - run: node formal/navigation-preload-probe.ts
       - run: node formal/navigation-preload-fault.ts
-      - name: Reproduce the known worker-maintenance confinement counterexample
-        id: worker_maintenance
-        run: |
-          rm -f formal/runtime-verification/service-worker-maintenance.json
-          npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --types node --target ES2022 --module NodeNext --moduleResolution NodeNext --allowImportingTsExtensions --lib ES2022,DOM --skipLibCheck formal/runtime-verification/service-worker-maintenance.ts
-          node formal/runtime-verification/service-worker-maintenance.ts
-      - uses: actions/upload-artifact@v4
-        if: always() && (steps.worker_maintenance.outcome == 'success' || steps.worker_maintenance.outcome == 'failure')
-        with:
-          name: worker-maintenance-observation
-          path: formal/runtime-verification/service-worker-maintenance.json
       - name: Check installed-app navigation and actual guarded bundle
         run: |
           npx tsc --ignoreConfig --noEmit --strict --types node --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --lib ES2023,DOM,DOM.Iterable,WebWorker formal/implementation-navigation/installed-run.ts
@@ -420,6 +434,5 @@ jobs:
             formal/evidence/worker-registration.json
             formal/evidence/navigation-preload.json
             formal/evidence/navigation-preload-fault.json
-            formal/runtime-verification/service-worker-maintenance.json
             formal/admission/model-results.json
             formal/admission/implementation-results.json

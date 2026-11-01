@@ -1,12 +1,12 @@
 {
-  "scope": "Classic/module worker startup with dependencies, chosen by a private input bit. Native groups must demonstrate worker-triggered maintenance; every confined sample must produce zero HTTP requests. No-worker and idle controls use separate fresh contexts. These bounded observations do not establish exhaustive browser behavior or complete confinement.",
+  "scope": "Classic importScripts, classic dynamic import and module-worker startup with dependencies, chosen by a private input bit. Native groups must demonstrate worker-triggered maintenance; every confined sample must produce zero HTTP requests. No-worker and idle controls use separate fresh contexts. All completed samples are retained before the zero-HTTP assertion. These bounded observations do not establish exhaustive browser behavior or complete confinement.",
   "provenance": {
-    "capturedAt": "2026-11-01T02:52:19.597Z",
-    "revision": "d545180d1b5cf5d28427796d23aef17ee612291c",
+    "capturedAt": "2026-11-01T03:54:38.037Z",
+    "revision": "56a6405f094ef76e5c0ef15ac799c3ff35d5bbbe",
     "dirty": true,
-    "sourceSHA256": "45922e8504cd0869f82394bf92f061ab3ecb8efb8fdc60dbcaa2dd1aaa2e7368",
+    "sourceSHA256": "19309d035e3fde8bf61bfd99ec59b4a5d4590ffb983fcd386b4676f37c4ec4d8",
     "runner": "formal/runtime-verification/service-worker-maintenance.ts",
-    "runnerSHA256": "6af55176af225bfa1a0eeaeda088d30c58e982fa4b36730024662c8558da8273",
+    "runnerSHA256": "ef53686b35f50626b883ff306733d98708425b3eee7b8caae1e004b1e20afdf3",
     "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
     "artifacts": {
       "dist-manager/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -17,21 +17,21 @@
       "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-manager/sw.js": "4add49c37143a885fd8e8a97873efae6c10cb01e1133fd0eccc3dd3c81647544",
+      "dist-manager/sw.js": "a081e715ac60ebb776f1b1ec02ccab6fa2c248c39911dbb6e3301c01d76876ec",
       "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
       "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
       "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
-      "dist-runtime/document-guard.js": "eb15fd591a44c3d9f95ea9ef40d43394fadf5c318fec608a136d5605eb622514",
-      "dist-runtime/guard.js": "910e17fe9e123cbf3df2d45768e70e48d582211d7a2cf94e1254c59400cfd837",
+      "dist-runtime/document-guard.js": "cff8ea27352d7562344dff21ddf2e7f0c55bd92d8715ac9aad07a2cb3f3a9ea7",
+      "dist-runtime/guard.js": "f04e9f42ccfbb154a32e9d7ad556c4209f49ba4cc0d892216b5fe64eda521deb",
       "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
       "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
-      "dist-runtime/publisher-worker-guard.js": "193727ed4d7750bc7070b1129507a330e1679917dc1e6470619daaae6ab9079d",
+      "dist-runtime/publisher-worker-guard.js": "527e6fc2ac86ceee1711bf855b729c84f1f2024553af003d61888122e94dcf7e",
       "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-runtime/shared-worker-guard.js": "f477be4cdc677c730f58a9e24339ee7be9b540a7f23af109de48ae65ecd49417",
-      "dist-runtime/sw.js": "25ed1cd199aa465960646dbc23fd19a907787baf6f8bcfdff9360c0b841f4231",
+      "dist-runtime/shared-worker-guard.js": "315e139a52aceac31abbf8b603d6877e2ef2bbfe5a151e4447bec50a09b7c84e",
+      "dist-runtime/sw.js": "3f3e8e30ef207288ab5c9505452c1ffd58acf6486ac9d73b052051dee52fdb6e",
       "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
       "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
@@ -39,14 +39,16 @@
       "dist-installation/installation.js": "6cd0a3f3f4494dee2db059f3b1a5feb62017a39399a22e2d3774d0319fa1e3f3"
     }
   },
+  "forcedStaleAgeCheck": false,
   "samples": [
     {
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 0,
-      "actionStarted": 1793501544363,
-      "observationEnded": 1793501547394,
+      "actionStarted": 1793505282805,
+      "observationEnded": 1793505285845,
       "confined": false,
+      "forcedStaleAgeCheck": false,
       "workerType": "classic",
       "bit": "0",
       "idleRuntime": [],
@@ -59,9 +61,10 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 1,
-      "actionStarted": 1793501551969,
-      "observationEnded": 1793501555031,
+      "actionStarted": 1793505290422,
+      "observationEnded": 1793505293481,
       "confined": false,
+      "forcedStaleAgeCheck": false,
       "workerType": "classic",
       "bit": "1",
       "idleRuntime": [],
@@ -70,13 +73,13 @@
       "publisherTraffic": [
         {
           "path": "/sw.js",
-          "time": 1793501553019
+          "time": 1793505291470
         }
       ],
       "updateRequests": [
         {
           "path": "/sw.js",
-          "time": 1793501553019
+          "time": 1793505291470
         }
       ]
     },
@@ -84,9 +87,10 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 2,
-      "actionStarted": 1793501559607,
-      "observationEnded": 1793501562664,
+      "actionStarted": 1793505298058,
+      "observationEnded": 1793505301113,
       "confined": false,
+      "forcedStaleAgeCheck": false,
       "workerType": "classic",
       "bit": "1",
       "idleRuntime": [],
@@ -95,13 +99,13 @@
       "publisherTraffic": [
         {
           "path": "/sw.js",
-          "time": 1793501560653
+          "time": 1793505299103
         }
       ],
       "updateRequests": [
         {
           "path": "/sw.js",
-          "time": 1793501560653
+          "time": 1793505299103
         }
       ]
     },
@@ -109,9 +113,10 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 3,
-      "actionStarted": 1793501567238,
-      "observationEnded": 1793501570273,
+      "actionStarted": 1793505305687,
+      "observationEnded": 1793505308723,
       "confined": false,
+      "forcedStaleAgeCheck": false,
       "workerType": "classic",
       "bit": "0",
       "idleRuntime": [],
@@ -124,9 +129,10 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 0,
-      "actionStarted": 1793501578211,
-      "observationEnded": 1793501581240,
+      "actionStarted": 1793505316652,
+      "observationEnded": 1793505319690,
       "confined": true,
+      "forcedStaleAgeCheck": false,
       "workerType": "classic",
       "bit": "0",
       "idleRuntime": [],
@@ -139,9 +145,10 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 1,
-      "actionStarted": 1793501589183,
-      "observationEnded": 1793501592505,
+      "actionStarted": 1793505327636,
+      "observationEnded": 1793505330956,
       "confined": true,
+      "forcedStaleAgeCheck": false,
       "workerType": "classic",
       "bit": "1",
       "idleRuntime": [],
@@ -154,9 +161,10 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 2,
-      "actionStarted": 1793501600438,
-      "observationEnded": 1793501603753,
+      "actionStarted": 1793505338889,
+      "observationEnded": 1793505342203,
       "confined": true,
+      "forcedStaleAgeCheck": false,
       "workerType": "classic",
       "bit": "1",
       "idleRuntime": [],
@@ -169,9 +177,10 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 3,
-      "actionStarted": 1793501611700,
-      "observationEnded": 1793501614738,
+      "actionStarted": 1793505350138,
+      "observationEnded": 1793505353172,
       "confined": true,
+      "forcedStaleAgeCheck": false,
       "workerType": "classic",
       "bit": "0",
       "idleRuntime": [],
@@ -184,9 +193,158 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 0,
-      "actionStarted": 1793501619313,
-      "observationEnded": 1793501622356,
+      "actionStarted": 1793505357748,
+      "observationEnded": 1793505360790,
       "confined": false,
+      "forcedStaleAgeCheck": false,
+      "workerType": "classic-dynamic",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "sample": 1,
+      "actionStarted": 1793505365361,
+      "observationEnded": 1793505368409,
+      "confined": false,
+      "forcedStaleAgeCheck": false,
+      "workerType": "classic-dynamic",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [
+        {
+          "path": "/sw.js",
+          "time": 1793505366400
+        }
+      ],
+      "updateRequests": [
+        {
+          "path": "/sw.js",
+          "time": 1793505366400
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "sample": 2,
+      "actionStarted": 1793505372987,
+      "observationEnded": 1793505376044,
+      "confined": false,
+      "forcedStaleAgeCheck": false,
+      "workerType": "classic-dynamic",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [
+        {
+          "path": "/sw.js",
+          "time": 1793505374033
+        }
+      ],
+      "updateRequests": [
+        {
+          "path": "/sw.js",
+          "time": 1793505374033
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "sample": 3,
+      "actionStarted": 1793505380613,
+      "observationEnded": 1793505383656,
+      "confined": false,
+      "forcedStaleAgeCheck": false,
+      "workerType": "classic-dynamic",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "sample": 0,
+      "actionStarted": 1793505391608,
+      "observationEnded": 1793505394638,
+      "confined": true,
+      "forcedStaleAgeCheck": false,
+      "workerType": "classic-dynamic",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "sample": 1,
+      "actionStarted": 1793505402630,
+      "observationEnded": 1793505405952,
+      "confined": true,
+      "forcedStaleAgeCheck": false,
+      "workerType": "classic-dynamic",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "sample": 2,
+      "actionStarted": 1793505413912,
+      "observationEnded": 1793505417233,
+      "confined": true,
+      "forcedStaleAgeCheck": false,
+      "workerType": "classic-dynamic",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "sample": 3,
+      "actionStarted": 1793505425179,
+      "observationEnded": 1793505428219,
+      "confined": true,
+      "forcedStaleAgeCheck": false,
+      "workerType": "classic-dynamic",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "sample": 0,
+      "actionStarted": 1793505432793,
+      "observationEnded": 1793505435821,
+      "confined": false,
+      "forcedStaleAgeCheck": false,
       "workerType": "module",
       "bit": "0",
       "idleRuntime": [],
@@ -199,9 +357,10 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 1,
-      "actionStarted": 1793501626927,
-      "observationEnded": 1793501629976,
+      "actionStarted": 1793505440393,
+      "observationEnded": 1793505443442,
       "confined": false,
+      "forcedStaleAgeCheck": false,
       "workerType": "module",
       "bit": "1",
       "idleRuntime": [],
@@ -210,13 +369,13 @@
       "publisherTraffic": [
         {
           "path": "/sw.js",
-          "time": 1793501627966
+          "time": 1793505441431
         }
       ],
       "updateRequests": [
         {
           "path": "/sw.js",
-          "time": 1793501627966
+          "time": 1793505441431
         }
       ]
     },
@@ -224,9 +383,10 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 2,
-      "actionStarted": 1793501634546,
-      "observationEnded": 1793501637610,
+      "actionStarted": 1793505448011,
+      "observationEnded": 1793505451073,
       "confined": false,
+      "forcedStaleAgeCheck": false,
       "workerType": "module",
       "bit": "1",
       "idleRuntime": [],
@@ -235,13 +395,13 @@
       "publisherTraffic": [
         {
           "path": "/sw.js",
-          "time": 1793501635599
+          "time": 1793505449064
         }
       ],
       "updateRequests": [
         {
           "path": "/sw.js",
-          "time": 1793501635599
+          "time": 1793505449064
         }
       ]
     },
@@ -249,9 +409,10 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 3,
-      "actionStarted": 1793501642182,
-      "observationEnded": 1793501645221,
+      "actionStarted": 1793505455642,
+      "observationEnded": 1793505458668,
       "confined": false,
+      "forcedStaleAgeCheck": false,
       "workerType": "module",
       "bit": "0",
       "idleRuntime": [],
@@ -264,9 +425,10 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 0,
-      "actionStarted": 1793501653178,
-      "observationEnded": 1793501656220,
+      "actionStarted": 1793505466599,
+      "observationEnded": 1793505469635,
       "confined": true,
+      "forcedStaleAgeCheck": false,
       "workerType": "module",
       "bit": "0",
       "idleRuntime": [],
@@ -279,9 +441,10 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 1,
-      "actionStarted": 1793501664164,
-      "observationEnded": 1793501667484,
+      "actionStarted": 1793505477563,
+      "observationEnded": 1793505480882,
       "confined": true,
+      "forcedStaleAgeCheck": false,
       "workerType": "module",
       "bit": "1",
       "idleRuntime": [],
@@ -294,9 +457,10 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 2,
-      "actionStarted": 1793501675437,
-      "observationEnded": 1793501678751,
+      "actionStarted": 1793505488817,
+      "observationEnded": 1793505492129,
       "confined": true,
+      "forcedStaleAgeCheck": false,
       "workerType": "module",
       "bit": "1",
       "idleRuntime": [],
@@ -309,9 +473,10 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 3,
-      "actionStarted": 1793501686677,
-      "observationEnded": 1793501689719,
+      "actionStarted": 1793505500062,
+      "observationEnded": 1793505503098,
       "confined": true,
+      "forcedStaleAgeCheck": false,
       "workerType": "module",
       "bit": "0",
       "idleRuntime": [],
@@ -324,9 +489,10 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 0,
-      "actionStarted": 1793501695285,
-      "observationEnded": 1793501698344,
+      "actionStarted": 1793505508656,
+      "observationEnded": 1793505511714,
       "confined": false,
+      "forcedStaleAgeCheck": false,
       "workerType": "classic",
       "bit": "0",
       "idleRuntime": [],
@@ -339,9 +505,10 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 1,
-      "actionStarted": 1793501703077,
-      "observationEnded": 1793501706141,
+      "actionStarted": 1793505516433,
+      "observationEnded": 1793505519515,
       "confined": false,
+      "forcedStaleAgeCheck": false,
       "workerType": "classic",
       "bit": "1",
       "idleRuntime": [],
@@ -350,13 +517,13 @@
       "publisherTraffic": [
         {
           "path": "/sw.js",
-          "time": 1793501704123
+          "time": 1793505517496
         }
       ],
       "updateRequests": [
         {
           "path": "/sw.js",
-          "time": 1793501704123
+          "time": 1793505517496
         }
       ]
     },
@@ -364,9 +531,10 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 2,
-      "actionStarted": 1793501710864,
-      "observationEnded": 1793501713951,
+      "actionStarted": 1793505524237,
+      "observationEnded": 1793505527316,
       "confined": false,
+      "forcedStaleAgeCheck": false,
       "workerType": "classic",
       "bit": "1",
       "idleRuntime": [],
@@ -375,13 +543,13 @@
       "publisherTraffic": [
         {
           "path": "/sw.js",
-          "time": 1793501711934
+          "time": 1793505525299
         }
       ],
       "updateRequests": [
         {
           "path": "/sw.js",
-          "time": 1793501711934
+          "time": 1793505525299
         }
       ]
     },
@@ -389,9 +557,10 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 3,
-      "actionStarted": 1793501718665,
-      "observationEnded": 1793501721733,
+      "actionStarted": 1793505532028,
+      "observationEnded": 1793505535084,
       "confined": false,
+      "forcedStaleAgeCheck": false,
       "workerType": "classic",
       "bit": "0",
       "idleRuntime": [],
@@ -404,9 +573,10 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 0,
-      "actionStarted": 1793501728740,
-      "observationEnded": 1793501731795,
+      "actionStarted": 1793505542084,
+      "observationEnded": 1793505545141,
       "confined": true,
+      "forcedStaleAgeCheck": false,
       "workerType": "classic",
       "bit": "0",
       "idleRuntime": [],
@@ -419,9 +589,10 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 1,
-      "actionStarted": 1793501738809,
-      "observationEnded": 1793501742045,
+      "actionStarted": 1793505552145,
+      "observationEnded": 1793505555383,
       "confined": true,
+      "forcedStaleAgeCheck": false,
       "workerType": "classic",
       "bit": "1",
       "idleRuntime": [],
@@ -434,9 +605,10 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 2,
-      "actionStarted": 1793501749042,
-      "observationEnded": 1793501752281,
+      "actionStarted": 1793505562425,
+      "observationEnded": 1793505565766,
       "confined": true,
+      "forcedStaleAgeCheck": false,
       "workerType": "classic",
       "bit": "1",
       "idleRuntime": [],
@@ -449,9 +621,10 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 3,
-      "actionStarted": 1793501759297,
-      "observationEnded": 1793501762358,
+      "actionStarted": 1793505572782,
+      "observationEnded": 1793505575842,
       "confined": true,
+      "forcedStaleAgeCheck": false,
       "workerType": "classic",
       "bit": "0",
       "idleRuntime": [],
@@ -464,9 +637,158 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 0,
-      "actionStarted": 1793501767098,
-      "observationEnded": 1793501770156,
+      "actionStarted": 1793505580576,
+      "observationEnded": 1793505583634,
       "confined": false,
+      "forcedStaleAgeCheck": false,
+      "workerType": "classic-dynamic",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 1,
+      "actionStarted": 1793505588353,
+      "observationEnded": 1793505591417,
+      "confined": false,
+      "forcedStaleAgeCheck": false,
+      "workerType": "classic-dynamic",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [
+        {
+          "path": "/sw.js",
+          "time": 1793505589399
+        }
+      ],
+      "updateRequests": [
+        {
+          "path": "/sw.js",
+          "time": 1793505589399
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 2,
+      "actionStarted": 1793505596417,
+      "observationEnded": 1793505599487,
+      "confined": false,
+      "forcedStaleAgeCheck": false,
+      "workerType": "classic-dynamic",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [
+        {
+          "path": "/sw.js",
+          "time": 1793505597466
+        }
+      ],
+      "updateRequests": [
+        {
+          "path": "/sw.js",
+          "time": 1793505597466
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 3,
+      "actionStarted": 1793505604221,
+      "observationEnded": 1793505607279,
+      "confined": false,
+      "forcedStaleAgeCheck": false,
+      "workerType": "classic-dynamic",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 0,
+      "actionStarted": 1793505614278,
+      "observationEnded": 1793505617335,
+      "confined": true,
+      "forcedStaleAgeCheck": false,
+      "workerType": "classic-dynamic",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 1,
+      "actionStarted": 1793505624341,
+      "observationEnded": 1793505627681,
+      "confined": true,
+      "forcedStaleAgeCheck": false,
+      "workerType": "classic-dynamic",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 2,
+      "actionStarted": 1793505634695,
+      "observationEnded": 1793505638032,
+      "confined": true,
+      "forcedStaleAgeCheck": false,
+      "workerType": "classic-dynamic",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 3,
+      "actionStarted": 1793505645047,
+      "observationEnded": 1793505648107,
+      "confined": true,
+      "forcedStaleAgeCheck": false,
+      "workerType": "classic-dynamic",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 0,
+      "actionStarted": 1793505652838,
+      "observationEnded": 1793505655897,
+      "confined": false,
+      "forcedStaleAgeCheck": false,
       "workerType": "module",
       "bit": "0",
       "idleRuntime": [],
@@ -479,9 +801,10 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 1,
-      "actionStarted": 1793501774873,
-      "observationEnded": 1793501777937,
+      "actionStarted": 1793505660608,
+      "observationEnded": 1793505663688,
       "confined": false,
+      "forcedStaleAgeCheck": false,
       "workerType": "module",
       "bit": "1",
       "idleRuntime": [],
@@ -490,13 +813,13 @@
       "publisherTraffic": [
         {
           "path": "/sw.js",
-          "time": 1793501775984
+          "time": 1793505661671
         }
       ],
       "updateRequests": [
         {
           "path": "/sw.js",
-          "time": 1793501775984
+          "time": 1793505661671
         }
       ]
     },
@@ -504,9 +827,10 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 2,
-      "actionStarted": 1793501782944,
-      "observationEnded": 1793501786024,
+      "actionStarted": 1793505668410,
+      "observationEnded": 1793505671477,
       "confined": false,
+      "forcedStaleAgeCheck": false,
       "workerType": "module",
       "bit": "1",
       "idleRuntime": [],
@@ -515,13 +839,13 @@
       "publisherTraffic": [
         {
           "path": "/sw.js",
-          "time": 1793501784007
+          "time": 1793505669458
         }
       ],
       "updateRequests": [
         {
           "path": "/sw.js",
-          "time": 1793501784007
+          "time": 1793505669458
         }
       ]
     },
@@ -529,9 +853,10 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 3,
-      "actionStarted": 1793501790748,
-      "observationEnded": 1793501793806,
+      "actionStarted": 1793505676206,
+      "observationEnded": 1793505679263,
       "confined": false,
+      "forcedStaleAgeCheck": false,
       "workerType": "module",
       "bit": "0",
       "idleRuntime": [],
@@ -544,9 +869,10 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 0,
-      "actionStarted": 1793501800817,
-      "observationEnded": 1793501803879,
+      "actionStarted": 1793505686490,
+      "observationEnded": 1793505689544,
       "confined": true,
+      "forcedStaleAgeCheck": false,
       "workerType": "module",
       "bit": "0",
       "idleRuntime": [],
@@ -559,9 +885,10 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 1,
-      "actionStarted": 1793501810882,
-      "observationEnded": 1793501814121,
+      "actionStarted": 1793505696543,
+      "observationEnded": 1793505699782,
       "confined": true,
+      "forcedStaleAgeCheck": false,
       "workerType": "module",
       "bit": "1",
       "idleRuntime": [],
@@ -574,9 +901,10 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 2,
-      "actionStarted": 1793501821125,
-      "observationEnded": 1793501824363,
+      "actionStarted": 1793505706793,
+      "observationEnded": 1793505710032,
       "confined": true,
+      "forcedStaleAgeCheck": false,
       "workerType": "module",
       "bit": "1",
       "idleRuntime": [],
@@ -589,9 +917,10 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 3,
-      "actionStarted": 1793501831381,
-      "observationEnded": 1793501834442,
+      "actionStarted": 1793505717032,
+      "observationEnded": 1793505720092,
       "confined": true,
+      "forcedStaleAgeCheck": false,
       "workerType": "module",
       "bit": "0",
       "idleRuntime": [],
@@ -605,6 +934,7 @@
     {
       "browser": "chromium",
       "confined": false,
+      "forcedStaleAgeCheck": false,
       "workerType": "classic",
       "positiveSamples": 2,
       "workerSamples": 2,
@@ -613,6 +943,7 @@
     {
       "browser": "chromium",
       "confined": true,
+      "forcedStaleAgeCheck": false,
       "workerType": "classic",
       "positiveSamples": 0,
       "workerSamples": 2,
@@ -621,6 +952,25 @@
     {
       "browser": "chromium",
       "confined": false,
+      "forcedStaleAgeCheck": false,
+      "workerType": "classic-dynamic",
+      "positiveSamples": 2,
+      "workerSamples": 2,
+      "noWorkerSamples": 2
+    },
+    {
+      "browser": "chromium",
+      "confined": true,
+      "forcedStaleAgeCheck": false,
+      "workerType": "classic-dynamic",
+      "positiveSamples": 0,
+      "workerSamples": 2,
+      "noWorkerSamples": 2
+    },
+    {
+      "browser": "chromium",
+      "confined": false,
+      "forcedStaleAgeCheck": false,
       "workerType": "module",
       "positiveSamples": 2,
       "workerSamples": 2,
@@ -629,6 +979,7 @@
     {
       "browser": "chromium",
       "confined": true,
+      "forcedStaleAgeCheck": false,
       "workerType": "module",
       "positiveSamples": 0,
       "workerSamples": 2,
@@ -637,6 +988,7 @@
     {
       "browser": "firefox",
       "confined": false,
+      "forcedStaleAgeCheck": false,
       "workerType": "classic",
       "positiveSamples": 2,
       "workerSamples": 2,
@@ -645,6 +997,7 @@
     {
       "browser": "firefox",
       "confined": true,
+      "forcedStaleAgeCheck": false,
       "workerType": "classic",
       "positiveSamples": 0,
       "workerSamples": 2,
@@ -653,6 +1006,25 @@
     {
       "browser": "firefox",
       "confined": false,
+      "forcedStaleAgeCheck": false,
+      "workerType": "classic-dynamic",
+      "positiveSamples": 2,
+      "workerSamples": 2,
+      "noWorkerSamples": 2
+    },
+    {
+      "browser": "firefox",
+      "confined": true,
+      "forcedStaleAgeCheck": false,
+      "workerType": "classic-dynamic",
+      "positiveSamples": 0,
+      "workerSamples": 2,
+      "noWorkerSamples": 2
+    },
+    {
+      "browser": "firefox",
+      "confined": false,
+      "forcedStaleAgeCheck": false,
       "workerType": "module",
       "positiveSamples": 2,
       "workerSamples": 2,
@@ -661,13 +1033,15 @@
     {
       "browser": "firefox",
       "confined": true,
+      "forcedStaleAgeCheck": false,
       "workerType": "module",
       "positiveSamples": 0,
       "workerSamples": 2,
       "noWorkerSamples": 2
     }
   ],
+  "violations": [],
   "observationMilliseconds": 3000,
   "completed": true,
-  "completedAt": "2026-11-01T02:57:14.564Z"
+  "completedAt": "2026-11-01T04:02:00.206Z"
 }

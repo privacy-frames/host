@@ -1,0 +1,115 @@
+{
+  "completed": false,
+  "started": "2026-11-01T04:05:13.935Z",
+  "finished": "2026-11-01T04:05:38.861Z",
+  "scope": "Dependency boundary experiment only; not runtime integration or a confinement proof.",
+  "packageURL": "https://registry.npmjs.org/es-module-shims/-/es-module-shims-2.8.4.tgz",
+  "version": "2.8.4",
+  "integrity": "sha512-ea5srn5L89PWVad6Qle6r2kg+HvvLiL/GHqgNx06eFrkERHkrTFWaqo1w8Sd+XI3Xr0iAG5x3ZQ7mQ/hnQzNpA==",
+  "loaderSHA256": "47dff4ba191ca594760a67b574c7207c7820c305735147b7ef05877f7cfd64cd",
+  "runnerSHA256": "e17b309238166ae5aeda1f1721da641f0f13e690dcd02a96653440a2ff94d29c",
+  "launcherSHA256": "c161489dfce9c3124474d1416440c9876b0a8fce329d2f09fa16f99af744e3a0",
+  "packageLockSHA256": "4e8c7b0964047f1c9fd3f82956b08d381817fa86fb2f7d47d4a10458dc5e62ed",
+  "rows": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStaleAgeCheck": false,
+      "mode": "local-hook",
+      "actionStarted": 1793505917657,
+      "observationEnded": 1793505920663,
+      "result": {
+        "first": 1,
+        "value": 1,
+        "reads": [
+          "http://127.0.0.1:38129/entry.js"
+        ],
+        "local": "blob:http://127.0.0.1:38129/e23a2a54-17a3-4f31-b726-1cfa6fc0242c",
+        "violations": []
+      },
+      "traffic": [
+        {
+          "path": "/sw.js",
+          "time": 1793505918664
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStaleAgeCheck": false,
+      "mode": "native-control",
+      "actionStarted": 1793505923719,
+      "observationEnded": 1793505926729,
+      "result": {
+        "first": 1,
+        "value": 2,
+        "reads": [
+          "http://127.0.0.1:38129/entry.js"
+        ],
+        "local": "blob:http://127.0.0.1:38129/fa77b3c8-f2a4-4ac8-8791-8fbdc9aa6818",
+        "violations": []
+      },
+      "traffic": [
+        {
+          "path": "/native-target.js",
+          "time": 1793505923724
+        },
+        {
+          "path": "/sw.js",
+          "time": 1793505924727
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStaleAgeCheck": false,
+      "mode": "record-change",
+      "actionStarted": 1793505929775,
+      "observationEnded": 1793505932783,
+      "result": {
+        "first": 1,
+        "value": 2,
+        "reads": [
+          "http://127.0.0.1:38129/entry.js"
+        ],
+        "local": "blob:http://127.0.0.1:38129/1fc04835-9043-422e-96bb-5d1ee01dfeff",
+        "violations": []
+      },
+      "traffic": [
+        {
+          "path": "/native-target.js",
+          "time": 1793505929780
+        },
+        {
+          "path": "/sw.js",
+          "time": 1793505930783
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStaleAgeCheck": false,
+      "mode": "local-only",
+      "actionStarted": 1793505935834,
+      "observationEnded": 1793505938839,
+      "result": {
+        "first": 1,
+        "value": 1,
+        "reads": [
+          "http://127.0.0.1:38129/entry.js"
+        ],
+        "local": "blob:http://127.0.0.1:38129/2b7dcc19-8562-480c-a505-24fe8c574b1c",
+        "violations": []
+      },
+      "traffic": [
+        {
+          "path": "/sw.js",
+          "time": 1793505936840
+        }
+      ]
+    }
+  ]
+}

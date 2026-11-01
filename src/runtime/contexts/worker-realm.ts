@@ -24,12 +24,15 @@ import { createWorkerFactory } from './worker-factory.ts';
 import { createSharedWorkerFactory } from './shared-worker-factory.ts';
 import { prepareScriptURLs } from '../enforcement/script-urls.ts';
 import type { WorkerBirth } from './worker-birth-protocol.ts';
+import { createClassicScripts } from './classic-scripts.ts';
 const worker = self as unknown as DedicatedWorkerGlobalScope;
 const rawAdd = EventTarget.prototype.addEventListener;
 const rawImport = worker.importScripts;
 const rawCreateURL = URL.createObjectURL;
 const rawRevokeURL = URL.revokeObjectURL;
 const NativeBlob = Blob;
+const decoder = new TextDecoder();
+const decode = TextDecoder.prototype.decode;
 export function parseWorkerMetadata(
   value: unknown,
   kind: 'dedicated-worker' | 'shared-worker',
@@ -73,7 +76,9 @@ export function parseWorkerMetadata(
     !('module' in value) ||
     typeof value.module !== 'boolean' ||
     !Array.isArray(value.aliases) ||
-    !Array.isArray(value.rootAliases)
+    !Array.isArray(value.rootAliases) ||
+    !('scripts' in value) ||
+    !Array.isArray(value.scripts)
   )
     throw new Error('Invalid context resources');
   const runtime = new URL(value.runtime);
@@ -109,6 +114,14 @@ export function parseWorkerMetadata(
   });
   const rootAliases = internalArray<[string, string]>();
   const destinations = internalSet(aliases.map((pair) => pair[1]));
+  const scripts = internalArray<string>();
+  const scriptSet = internalSet<string>();
+  for (const url of value.scripts) {
+    if (typeof url !== 'string' || !destinations.has(url) || scriptSet.has(url))
+      throw new Error('Invalid classic script resource');
+    scriptSet.add(url);
+    scripts.push(url);
+  }
   for (const pair of value.rootAliases) {
     if (
       !Array.isArray(pair) ||
@@ -133,6 +146,7 @@ export function parseWorkerMetadata(
     aliases,
     rootAliases,
     module: value.module,
+    scripts,
   });
 }
 export function readWorkerMetadata(kind: 'dedicated-worker' | 'shared-worker') {
@@ -168,6 +182,15 @@ export function prepareWorkerRealm(
     }),
   );
   resources.install(context.aliases, undefined, context.rootAliases);
+  const classicScripts = createClassicScripts(
+    context.scripts,
+    (url) => fetchResource(url),
+    (body, url) => {
+      const code: string = apply(decode, decoder, [body]);
+      const relocated = relocateRuntimeModule(code, url, resources);
+      return relocated === code ? body : relocated;
+    },
+  );
   const factory = createWorkerFactory(
     tools,
     internalRecord({
@@ -245,12 +268,18 @@ export function prepareWorkerRealm(
     return apply(readHref, target, []);
   }
   const importsOwner = propertyOwner(worker, 'importScripts');
+  function localClassicScript(input: unknown): string {
+    const url = installedScript(input);
+    return strings.startsWith(url, 'blob:') ? url : classicScripts.resolve(url);
+  }
   if (importsOwner)
     method(importsOwner, 'importScripts', (...inputs: unknown[]) =>
       apply(
         rawImport,
         worker,
-        inputs.map((input) => scriptURL(installedScript(input))),
+        inputs.map((input) =>
+          scriptURL(context.module ? installedScript(input) : localClassicScript(input)),
+        ),
       ),
     );
   Object.defineProperty(
@@ -324,6 +353,7 @@ export function prepareWorkerRealm(
         for (const [name, get] of locationGetters)
           locationValues.set(name, apply(get, sourceLocation, []));
         const module = context.module;
+        if (!module) await classicScripts.prepare();
         let entry = source;
         if ('body' in start && start.body !== undefined) {
           if (
@@ -346,8 +376,11 @@ export function prepareWorkerRealm(
         await control('verify', []);
         applicationListenerReady = notify;
         if (module) await import(entry);
-        else apply(rawImport, worker, [scriptURL(entry)]);
+        else apply(rawImport, worker, [scriptURL(localClassicScript(entry))]);
         notify();
+      } catch (error) {
+        classicScripts.close();
+        throw error;
       } finally {
         applicationListenerReady = undefined;
         if (blob) apply(rawRevokeURL, NativeURL, [blob]);

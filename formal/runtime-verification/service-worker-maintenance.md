@@ -9,7 +9,7 @@ The [historical runner](https://github.com/privacy-frames/host/blob/d545180d1b5c
 matches the runner hash in that receipt.
 
 The policy-7 [local startup candidate](local-worker-startup.md) removes the HTTP
-bootstrap. The new [receipt](service-worker-maintenance.json) records 32 samples:
+bootstrap. Its [archived receipt](service-worker-maintenance-policy7.json) records 32 samples:
 classic and module workers with dependencies, native and confined execution,
 Chromium and Firefox, and two worker/no-worker pairs per group. Every confined
 sample produced zero HTTP requests at either receiver. Each native group produced
@@ -23,8 +23,9 @@ owned loopback HTTP servers and the built manager, installer and runtime. It doe
 not recover native constructors or execute publisher code during installation.
 
 The application has a private-bit input, worker-type selector and button. Clicking
-the button creates a worker only for bit `1`. The classic worker imports a script;
-the module worker imports an ES module. Both report readiness. Installation uses
+the button creates a worker only for bit `1`. The current fixture covers classic
+`importScripts`, dynamic import from a classic worker, and static import from a
+module worker. Each reports readiness. Installation uses
 an explicit resource list. Native controls use the same application and a native
 service worker that supplies all worker scripts and dependencies locally.
 
@@ -37,7 +38,8 @@ three subsequent seconds. The input order reverses in the second pair.
 Every confined sample must have zero runtime and publisher requests. Native
 scheduling can suppress an individual update, so each native group must contain
 at least one positive update observation. A missing native control fails the
-check. Samples, completed groups and the failure reason survive partial runs;
+check. Forbidden HTTP observations are collected across the completed samples
+before the final zero-HTTP assertion. Samples, groups and the failure reason survive partial runs;
 `completed: false` cannot establish a successful regression.
 
 The receipt records browser versions, source/build hashes, idle controls and
@@ -59,6 +61,32 @@ The new factory supplies a local Blob guard through its private native URL gate.
 Native-client binding and metadata arrive through the private parent channel.
 Application preparation still precedes entry loading. The separately published
 dedicated guard and its HTTP bootstrap handler are removed.
+
+## Forced aged-registration comparison
+
+Run the same fixture with `PF_STARTUP_STALE=1` to exercise Firefox's
+`dom.serviceWorkers.testUpdateOverOneDay` preference. This selects the browser's
+aged-registration update check; it does not reproduce a naturally aged profile.
+The output is `service-worker-startup-stale.json`, separate from the fresh run.
+Native positive controls and the zero-HTTP confined expectation remain enabled.
+
+The archived
+[policy-7 receipt](service-worker-startup-stale-policy7.json) records a confined
+classic startup update. The policy-8 local classic entry/importScripts candidate
+then passes its selected classic cases, but module startup still reaches the
+runtime service-worker script. The
+[initial policy-8 receipt](service-worker-startup-stale-policy8-initial.json)
+preserves that failure with its exact source and artifact hashes. The current
+[forced-age output](service-worker-startup-stale.json) also tests dynamic import
+from a classic worker. A run with forbidden HTTP cannot pass the release gate.
+
+The frozen policy-8 candidate records 48 fresh-registration samples without HTTP.
+Each of its six native groups demonstrates two worker-triggered updates. The
+forced-age comparison retains all 24 samples and fails on four confined
+operations: both classic-dynamic worker samples and both module-worker samples
+reach `/runtime/sw.js`. The classic `importScripts` cases remain quiet. The
+[candidate validation](local-classic-script-validation.json) binds those results,
+the full suite and the eight-app comparison to stable source and build hashes.
 
 ## Remaining scope
 

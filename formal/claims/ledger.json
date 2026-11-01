@@ -3,11 +3,11 @@
   "scope": "Claims are review obligations, not a blanket confinement certification. Evidence is specific to its saved revision, browser, state and receiver; source digests detect drift, not proof.",
   "source_baseline": "0f0d43cda8bdfbeccfc5846cea7af1d4bba69e7b",
   "artifact_sha256": {
-    ".github/workflows/formal.yml": "d020fe7a92ec03b854b80297317bbec9e102a39dce7897a491ae81a1f8fb69e5",
+    ".github/workflows/formal.yml": "4e861421d559c5403572fbb8cb831cd0347e941396430b7b628a405abb0e49ef",
     "formal/admission/implementation-results.json": "8484858f6f903ad46049999cf79634027e5f53cd1c6c7a89d7b27cf2606daa4d",
     "formal/admission/model-results.json": "a55c1e6cecd803b18bba88778899e7f57142de3dbd1bb9e87b8330b921e1be63",
     "formal/browser-features.json": "7ed31f047c607772cfdaffed193310c9b14ee4f071dbb37412521ef4af7b443b",
-    "formal/browser-surface-inventory.md": "fb21718dd5eb7065e8e45285d902a46f271d95261f9b73b4d861957bcbd09650",
+    "formal/browser-surface-inventory.md": "b3aa44a46d3ee2f9c21d3bffdabd7367986421c26f9453a0ca5dbe7e9a6e7382",
     "formal/cache-publisher-probe.ts": "d9e62ba13a689710995fad436edb67b8478db385779e693e9803dd4c3e71107e",
     "formal/cache-publisher.md": "40806e691be0d844c497dc0238ff07ef3b2bb2282cfe3df22b2c11a1db730f77",
     "formal/confinement/README.md": "aaf0a212ee1230a3c3ae9bec23676fa58cc56573fe42f0d07a437f1dc92cd3d1",
@@ -15,7 +15,7 @@
     "formal/confinement/RegistrySafe.cfg": "b57ee34f56fb880aef4df07b8d4c552ab6fd166b1c9bbb9e445960c77a7eb9ae",
     "formal/confinement/generate-registry.py": "6b3cea8c098221bb3c6126dde753d2bf1720c610c75dee101c5b0a1170e9c22f",
     "formal/confinement/generation-implementation-traces.json": "2a247110329dc6b5c809ef36874f32e565bbd6ab3192b788f00a3f8a706ed618",
-    "formal/confinement/generation-read-traces.json": "c551089cffbdd25dbefad7307213ff45c15586c6f2a59fbffeceb86b76eefa0a",
+    "formal/confinement/generation-read-traces.json": "e325373c990aca38114049bb4cf52c55e146778854d33cf51c3df123b3aef5bc",
     "formal/confinement/registry-concurrency-test.ts": "8fc22683ee8ac0a8bb632959a7621f15425881237dc8885119f29255a2a559b2",
     "formal/confinement/registry-graph.json": "000a8e7afb6bca62faadb4363b177dd537f56f03f98915452ace97715070289b",
     "formal/confinement/registry-implementation-traces.json": "1720a334927bca809a851ae331e58d0fb07668bd533bb39c8c0de615c4feb06a",
@@ -102,35 +102,36 @@
     "formal/route-review/README.md": "def9f578cf05dbd6ded8f518833ba924d81acfce8a9d43fbd003679987cf77bd",
     "formal/route-review/triage.json": "685b7f8bba8a4bd394ab7c7ecbf3fbf01fe045503ec8b831754e397e11f2630d",
     "formal/runtime-verification/PublicationModel.lean": "73e252a862122b493d8a0e45a1834a0ead1ecdaebf44ceee41cb542b19ac544b",
-    "formal/runtime-verification/README.md": "43537a6ddfdd039484bbeb059ec6bed837b1da8c5c2944af9abd7f8ec551e593",
+    "formal/runtime-verification/README.md": "309d5fe2e8991168c8dc74b40ca87bd5254c1c88d512af0ca88ab268bc304824",
     "formal/runtime-verification/RegistrationLifetime.lean": "331eb33dd0d4dc0abd3e2b6b29818b2abee9d97f2267f8ec9d921c449781a2b3",
     "formal/runtime-verification/RegistrationQueue.lean": "4d5d4503935296a4d513984e1441c6a8284a185a553d9b3968a17f8bff38bfd3",
     "formal/runtime-verification/atomic-context-compatibility.json": "731658cca4896ee5c13d5c6ce85cea7924f3af53e8ce2c62fccc0d1186069402",
-    "formal/runtime-verification/authority-predicate-check.ts": "4a5b02248aaa377c664998618b1e19f7392bf9a89440a30cbf04975e2d4b4bee",
-    "formal/runtime-verification/authority-predicate.json": "101cceabafe2bdb6adc590262f04a090cefd99ede011ff0de47ee091a8a7d095",
-    "formal/runtime-verification/authority-predicate.md": "9fa3a8d42b68c4c354e4da3372ebcfa0bee71226021e2b93bd30c228f800c1d4",
+    "formal/runtime-verification/authority-predicate-check.ts": "b449ae106dd3ebb831211af27cb22fb6879422e58b5456253dc34943dae0df7f",
+    "formal/runtime-verification/authority-predicate.json": "06c079b1c382ce89f98db2eb72913790f1ba261433b6c470ba9360f1f304fdbd",
+    "formal/runtime-verification/authority-predicate.md": "05e968f6224c373d5c83f19207a25badb0b4c292c21314322cc08c57d4d5fe37",
     "formal/runtime-verification/blob-worker-identity.json": "a74f50164d2184ac9c077e2fcdd39d0590a9807899886f1f642cd16d813c2bc0",
     "formal/runtime-verification/blob-worker-identity.ts": "2f77260568f723d91ed45c7a08bd374035a8176770151647daf0c19e515fc366",
-    "formal/runtime-verification/boundaries.ts": "fbf43162a21bae89c3f1f2d4b699bb239e8e1aba69fc5d80d09141f72896c00a",
+    "formal/runtime-verification/boundaries.ts": "06d3ef1198bcfca028c62ac7198a94a5ad4fb48607b7c9c8a3916f99f8310ae5",
     "formal/runtime-verification/document-control-compatibility.json": "9ffd44b02a9bddb946e4e6202e351ce66c62157462ef32957d2ccf3df4d3ec16",
     "formal/runtime-verification/document-control.md": "37ce04a16c4492d98a27564e808f0634574a7ba11c0422970f8fc3cbd1ccaec5",
     "formal/runtime-verification/document-publication-check.ts": "53860e7c9687d3c59499d9effbd30afc9b569144c174a786600af2935e65ef7f",
     "formal/runtime-verification/document-publication-compatibility.json": "1088389b2b01cb451f58858438a5b06127813c31733b91a93b35450fb67fe90c",
-    "formal/runtime-verification/document-publication-result.json": "53d60db8b0fd747e4c76aa43b4ac05b7ebca11ba3aaf1d17a6df71ad812dce41",
+    "formal/runtime-verification/document-publication-result.json": "fa12259355d100f5f3d8d16a4671b30e88bbb77f2b680391614972b4ea7eb0ac",
     "formal/runtime-verification/generation-comparison.json": "bb66bb1bbcbaa88d97f37af309b081eb11d490df5c18330da804513d1508721a",
     "formal/runtime-verification/generation-comparison.ts": "61bc8ca641e2e603b55ce3956e66c4b60e621fd455b09afd54cabf377f566a7a",
     "formal/runtime-verification/gillian-report.test.ts": "a4d5550e24ac238acb9ab35c3bf4e2aa3833979bd42195d9439a9613230c7fd6",
     "formal/runtime-verification/gillian.ts": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
-    "formal/runtime-verification/implementation-inventory.json": "b93f98f016fdd607888cb74a9fbef9bb30a1a623732e99d351df41f26b470db8",
+    "formal/runtime-verification/implementation-inventory.json": "915b76cffc202b79e1aafaa010440eb9bbc9a9bae5ae6e890a98cf4ae39d9042",
     "formal/runtime-verification/inventory.ts": "30a433edc9bc21d25c4790a9540e6eeb271f382c12f4fefeccd1dba1b75a47c2",
     "formal/runtime-verification/local-bootstrap-policy.json": "6bb5c4c8a20a480b1162c1f13f373514dc247fe9e8187023e8362266cc79cf70",
     "formal/runtime-verification/local-bootstrap-policy.ts": "7145f5d8c41d550cf425203ee1b18a5f7bf361e79a5c4dd0dd44f18c1d244535",
+    "formal/runtime-verification/local-classic-script-validation.json": "c74764506d705b9092f2fc6dde1d10e634fa504f2973a583cc6e3548ebdca3e1",
     "formal/runtime-verification/local-document-controller.json": "294cfb623d83530bdc1d11b8a3155205c91fecf24d7585ad86d39c1799a97f86",
     "formal/runtime-verification/local-document-controller.md": "2b6ebc6ea8c39fbb99fb577aee41785f8191b62a3852b86abd552e338f164046",
     "formal/runtime-verification/local-document-controller.ts": "ea811f7a42758ab2187e05d0f6a8ad79db04dc1f4b411a8df8ab41d8d7eac084",
     "formal/runtime-verification/local-worker-bootstrap.md": "79267c5b33f39c97876b88af0bc5f2585266e005e9aeb595b13d129e5981b088",
     "formal/runtime-verification/local-worker-startup-validation.json": "d472de86a27036b324d1ae124d4e267569ad358f3dcb0d70076b48e14438a575",
-    "formal/runtime-verification/local-worker-startup.md": "10c2bdadc5d1905105a9317d3092d01aea4fe00e29b6d489ba4800ee00f1af98",
+    "formal/runtime-verification/local-worker-startup.md": "d786dac1765fdb5827a8cef93d00d6e58cbd2f65504ab9965eca4a09cba2b6ec",
     "formal/runtime-verification/maintenance-backends.json": "9dacd2dc53b294581f48f397660fd1fe6b55ae9018065a733c6605fede6d6936",
     "formal/runtime-verification/maintenance-backends.md": "e5731612cea9ab1548cd7ccace71af268b3bb5d735b234e64401af92f289c055",
     "formal/runtime-verification/maintenance-backends.ts": "d5ef74168c84fe44ac7fed7f7a27af8ae7f84fd11a26b1becba26eab11100c96",
@@ -140,6 +141,10 @@
     "formal/runtime-verification/message-resource-broker.md": "345bae8945881bf052e83f23cd209f7da19660a7286e450877f27112a63aae85",
     "formal/runtime-verification/message-resource-broker.ts": "82150dd2908fde943aa2502b26bcfb5e73499212f6927f85fb227bf0a016331a",
     "formal/runtime-verification/method-calibration.json": "be6583d59236632d50bdbd113a20d4ab7b987ab8bfa8949cddce2ad42416f943",
+    "formal/runtime-verification/module-loader-assessment.md": "1ab0e4663f1b04def16a3577742754c8c788feb0c048c1007526edf9cccee461",
+    "formal/runtime-verification/module-loader-browser.json": "f70a02ce72e39bf74de0b02d80745d84161ee090bcc1688b7be78ae7aa394bad",
+    "formal/runtime-verification/module-loader-browser.ts": "af9c372812f03ed69049c13cfcb4554ee0b7b28e3a8e342a8e14d2912efc2c3b",
+    "formal/runtime-verification/module-loader-http-root-initial.json": "c77f73be02b6b9cec166479184813ece461ea2b68621d35972cc8bdab83d324d",
     "formal/runtime-verification/parent-document-broker.json": "346ad693f78fa667cbdcd2c8e04efe300c67fbd8f7a2429b410701b74a741921",
     "formal/runtime-verification/parent-document-compatibility.json": "968ed80bdb719720283c13c2c861a4bbfe3e2081cb6a00dc20aa85b46f918ec6",
     "formal/runtime-verification/private-channel-compatibility.json": "f06b56152180f692553814ec86cf548bdc8e2f3195c9bd4aae59ce3d615fedd5",
@@ -148,11 +153,11 @@
     "formal/runtime-verification/registration-fence.md": "9ebc2e76ad0f94f489b1f03a7a1dd95e51a596fddcf6b721f6104e807cb7df3d",
     "formal/runtime-verification/registration-fence.ts": "cd933b873dead7104b07717d633912616ce18aa89ad0d9196b0d9378c96126ad",
     "formal/runtime-verification/registration-lifetime-check.ts": "2053d82633b4b016bcb177827c0640152d35a7d091d937f9314ec647452c7d31",
-    "formal/runtime-verification/registration-lifetime.json": "312da0da4ce7b511c759a95aeb16aeb49812360b30ca4556887ce3e0f2d18d6b",
+    "formal/runtime-verification/registration-lifetime.json": "89295fc3e19c04ad5c3812dc822769bab5d7111c28fbddc4c1237ecb290d2673",
     "formal/runtime-verification/registration-overlap.json": "7069acdfc3df48645721c881e9d3457e02fb92f8f1aa8757776437f4682e5b09",
     "formal/runtime-verification/registration-overlap.md": "bc94f026455b7fe646d5596ae5061489ee449f014056ea32b9a234b0b47ff7d0",
     "formal/runtime-verification/registration-overlap.ts": "d05906f8b74054d9b35b7e4867590282eb0b66fe424b37a49a79e54619e43861",
-    "formal/runtime-verification/registration-queue.json": "c9e837e99b16c4ab838f59f6e0bd9ee547eb56596427553a6bfbf87bcd30e071",
+    "formal/runtime-verification/registration-queue.json": "7b7ca46953f556ea13a129772cf1ad8cb601e3d44219553f710c2c1de527b545",
     "formal/runtime-verification/resource-fetch-browser.json": "46d58a9e93ddcdc8a5a387f2c27f4cd7f6e98a03a504944b5b7ea54eb063ada1",
     "formal/runtime-verification/resource-fetch-browser.ts": "c16f5ba2ae202dff37d5f8b4e670a508470828db38c2a6b6646f227392cf669d",
     "formal/runtime-verification/resource-fetch-compatibility.json": "cb1d21cddc3558076b789e422c070fa98ea055b86998124b9f0d4dbcebc90e5f",
@@ -163,9 +168,13 @@
     "formal/runtime-verification/script-url-gate.md": "57e46825db49229f8a309a7cc1d14f36a63ef5e3e0c640d005e5df970b850bcf",
     "formal/runtime-verification/script-url-validation.json": "baf573949ac000369db1b8a5c77a2eb9234013c2d5e098ebc49a028a9aa5cfa8",
     "formal/runtime-verification/service-worker-maintenance-policy6.json": "80042d68bdfbffbbfbb76a471f2867b0e4f5862e2973004feb098d7ee22f37d3",
-    "formal/runtime-verification/service-worker-maintenance.json": "e671718da78dd7b6876e280b88016468bf64f26386a3284ed9cbc59ae3eb7764",
-    "formal/runtime-verification/service-worker-maintenance.md": "61ee46e8d7c008d2adee6dcf330c1210ff6a56a2ebac80cfd464650bc2c9a4f4",
-    "formal/runtime-verification/service-worker-maintenance.ts": "6af55176af225bfa1a0eeaeda088d30c58e982fa4b36730024662c8558da8273",
+    "formal/runtime-verification/service-worker-maintenance-policy7.json": "e671718da78dd7b6876e280b88016468bf64f26386a3284ed9cbc59ae3eb7764",
+    "formal/runtime-verification/service-worker-maintenance.json": "93284bfa3884a97a1d66597e3682f8a5c0c2ebcae003ffb6aee89797037c84f8",
+    "formal/runtime-verification/service-worker-maintenance.md": "84f3da90b5284b61c9223c0c0ef897d3a1fbdeae1013f06058237a7e23df83ac",
+    "formal/runtime-verification/service-worker-maintenance.ts": "ef53686b35f50626b883ff306733d98708425b3eee7b8caae1e004b1e20afdf3",
+    "formal/runtime-verification/service-worker-startup-stale-policy7.json": "4d3f162e0361faa6b306a7c9b8daf023177950e3944c261ad3beab4755dcfc26",
+    "formal/runtime-verification/service-worker-startup-stale-policy8-initial.json": "5b5a2ec16e549fef4d56f3b61a0909b0d9100ab04e6db10dff0dcbce8d06bb6d",
+    "formal/runtime-verification/service-worker-startup-stale.json": "25a2e312124db954f430a7fead8b3723287260c287d6faf83d6afecc686a1230",
     "formal/runtime-verification/webspec-assessment.json": "2afb6343fc9523bfcaaf2ce409ee16401dfc65ab9172e0d83549212491fd3ed8",
     "formal/runtime-verification/webspec-assessment.md": "dec1fc859e4ab1eececb53a4d4e0250e1d641f4d155fe4bcc7380cd2d1118553",
     "formal/runtime-verification/webspec-assessment.ts": "a1b1730235d0a1730e8eb6ca646dd4573f6550c3fec6cf92c375e29bcd9a509d",
@@ -200,24 +209,24 @@
     "formal/worker-registration-probe.ts": "6bcad99b4fe18781e077fc7f45406b8eb5d3b52c18bc2ab57383d7e2c138cb50",
     "formal/worker-registration.md": "c17ec13229015956a09b7bdfa7feaf9433dd2d7f9f991da89bc8fffd6d605445",
     "package-lock.json": "4e8c7b0964047f1c9fd3f82956b08d381817fa86fb2f7d47d4a10458dc5e62ed",
-    "results/browser.json": "801f0fb94d08e20a87f173aff13ef249e212bdbb359a704ecc36ab18fe33cc61",
-    "results/contexts/controller-storage.json": "1ff75aa828132bc0b0ca39490f7351132b91f72490e6b9de8323779de35a4541",
-    "results/contexts/csp-startup.json": "3dfe5fee5685598a54e29b6fb24ed5c5f661f9c799164824257e0c92376bea80",
+    "results/browser.json": "592b22b2faf40589c340109d560fc73a6ded2a0a1ca40c8e37a36df712f91381",
+    "results/contexts/controller-storage.json": "2b835413f236582ce52a8706488b0615faff036bde80e9085ebe1b065e1045fd",
+    "results/contexts/csp-startup.json": "f2136d3189576c7d250d830cd2f2c394533152c28de49f53fcdec7568c7674f9",
     "results/contexts/document-consumption-race.json": "6ffa98f5d65e34dcd658ccc7116b65e136aa35493b2c94a3775c16db997e75cd",
-    "results/contexts/document-contexts.json": "0d0c6e7fdb58b95d445198ec56e7e45ea8e7618d046c1146e2d42a821674c327",
-    "results/contexts/document-control.json": "d0b91113ea0209d20716c90557a20e816b855363aee90e4e549e1adb64997d4b",
-    "results/contexts/document-factory.json": "2f896b579cd8fd37157ff83362ca84252470095456e1befb0eebd0e040394487",
+    "results/contexts/document-contexts.json": "74b217fd91bd6260f4a22a0c50db8d150cdec1a45739363c2ddad8b3f983acbe",
+    "results/contexts/document-control.json": "e9ab34a7a71cf887eeacf20d8af0abb6a422d1db40b080daadf8aabadd8725f1",
+    "results/contexts/document-factory.json": "53ef1437f6d2c0be4c795410141e028f10e1d044e3f4d55a764071fd0f3d13f3",
     "results/contexts/parent-channel-late-receiver.json": "9fc7b676d78f6c68f1efbf555f84c73597c9ba36256ed375bc4f4769d4f8b0fb",
-    "results/contexts/parent-channel.json": "b557881614e901af3adf896b8e1304e56ce7140cb8c6fd7d9f0cd533237b7c1f",
-    "results/contexts/popup-receivers.json": "ffa510866f896f6c56289f964b853f17d7f451e8c66bbbb651f233fe90899ec2",
-    "results/contexts/prototype-confinement.json": "aee1617512ae5d30d107df0994ea4ac1ba5f26b475f348b7aa138e49456b7aa2",
-    "results/contexts/publishers.json": "f704e81bc8da8e2f886d9fabbde08ce62bbc60d5a4e521e52f1b05528198328c",
+    "results/contexts/parent-channel.json": "f72c9a312237259b88e2c2713698a28366209075aa3716fe1b80608545c4db1f",
+    "results/contexts/popup-receivers.json": "b2c90c4bf3739e39d4177cabfb09509698f9a441558734abff533af088e190a2",
+    "results/contexts/prototype-confinement.json": "d68afe4af05ba5c0d88b794ad7dab617a79fc342354ea79d4b9f66fc863e361b",
+    "results/contexts/publishers.json": "7aad8d43ad5aeb1ca29fbb3b50e34ca5f5be55bedbf2aa38d4d66a4f3471ed09",
     "results/contexts/script-url-gate.json": "37e752e019de6b33935859ea4e10fbb88736f788ced67ab214c32a9fe04ec80c",
-    "results/contexts/shared-workers.json": "e8cf278a8abb8a1069f9fe2462dddcc2b183dcb8eb6f799fc720f13549886a46",
-    "results/contexts/workers.json": "19830ce773fe57edc1632c675a8432c94dc0f8f2a3b87424bca2433d83145f24",
+    "results/contexts/shared-workers.json": "668cb6ab22296666d8594347ae6ed5c0585c1c473c2e3deb3e1cfc427d90b805",
+    "results/contexts/workers.json": "31b4f2b911ed1dcebc23fd5f7029d7af3b1ef020308f8f1ac2d87844355ebe3f",
     "results/network-firefox.json": "cdaf952c88cfeb692413fc2075f7dc6786ed0f4e14faaa98067e766a4134ef96",
     "results/network.json": "490e217fafa4601c3bf0afc039129a22c2829666c6279aa10d70a235023afa62",
-    "results/trusted-runtime/compatibility-local.json": "d323e3ef2454f51a67ed36cbc55ab27737363e7bab8c16529590a33cbf6b2840",
+    "results/trusted-runtime/compatibility-local.json": "c30a8ac79f4fae93f1e404206bfea94e198fedeea678c6288bb006cb4c84ff4b",
     "scripts/build.ts": "200e6aaa891bb3f7837759f9e68e49f298160333afaca2f24f54e59c5b1bdbc8",
     "scripts/trusted-policy.ts": "70e79090266deef9388bbf19ec8c9b909f0e00de6f68a3aab5a3e84de65e6721",
     "src/bridge/connect.ts": "bd35b868143935b8cfa4f7ce3227644c516b01f5ef82eea2b196e3183f17833b",
@@ -225,6 +234,7 @@
     "src/manager/services/bootstrap.ts": "17176349ebf2d4f1f2fe9662e0e737b5da3f50a52eef7f84b21102158ab16427",
     "src/runtime/admission.ts": "91adf341c8cb8da8341c13d3718f11fb60f431000186c74635a8f7f5d910f124",
     "src/runtime/content-broker.ts": "496b6fdbf93fbb9424369154ed148e4bab5c0a1feea4068adec3bb0958ec327d",
+    "src/runtime/contexts/classic-scripts.ts": "82129f39bfcc098e9eccf879dece023e7fa85e1e190c27122c810003f9d4d0c1",
     "src/runtime/contexts/controller-store.ts": "b1d4f8856badf811bc223e0aafb1e5d5a8f33357a5342029342f6d8d2f15d628",
     "src/runtime/contexts/document-client.ts": "8388dd26efd1e7de23cb659859cdf5455e635236d3b75e0b2c522ce5165133da",
     "src/runtime/contexts/document-content.ts": "f606b94f249c44ad2e09880a56bb87d4556d571108799b2ac4647d5496031034",
@@ -235,7 +245,7 @@
     "src/runtime/contexts/document-parent.ts": "989319b3ce3b2391dfab85e0afc2f3290613ac9afe3760cdcd6146ba0f8ec7d5",
     "src/runtime/contexts/document-publication.ts": "bbcd7e92f84434270b5a6b6b6ba6ea67dd48f1f530848f9d4a3a811d8595079b",
     "src/runtime/contexts/document-request.ts": "5bc7fd8f8c80dafe01e1c48edb7e6f0bec4dde6e026cc838aee8257347d3d5e7",
-    "src/runtime/contexts/model.ts": "007a8e55be48b663bbb42f9d9492422d2f63c0f543f75f06b6c26039ecde4c28",
+    "src/runtime/contexts/model.ts": "5c3051cca5248fe8226954cdb6fd141419cd9e1f8513b4efe5c469721baf7a1e",
     "src/runtime/contexts/parent-channel.ts": "a08adb57841df2dc7b77f4da4a0a47c219d7573967fdf3ddcea1bc0c4e14a2d0",
     "src/runtime/contexts/popup-factory.ts": "b256c8af6095be8b981bd86b3235fdfbd5117abf719edbbd72091bb42498eaf1",
     "src/runtime/contexts/resources.ts": "169d344222e35d886b82d79c51ef08b2671e4557503d2eb79e5065e76bffee7f",
@@ -245,6 +255,7 @@
     "src/runtime/contexts/shared-worker-guard.ts": "0df5664f0da22b185dcf3931dff59cab7980fe88fa4fd56489b49765f7dea9b0",
     "src/runtime/contexts/storage.ts": "35dba5f75e80958cb3f4e965e7fb4a69125bc13cfc61b7753a7a795f0b3fb23a",
     "src/runtime/contexts/window-realm.ts": "26a3b090168f52070f6960bd360ef4e9438525c816eb5fb7013c7bcc2c0e3cb5",
+    "src/runtime/contexts/worker-aliases.ts": "0c6535707570b25a76e33f5c02adaa647e08370dd1699b5a403c1fff3a3d773d",
     "src/runtime/contexts/worker-birth-protocol.ts": "9f51d3451dae467301d5197b4735601190cb41fa786fdb5b4a569524cf80a011",
     "src/runtime/contexts/worker-birth.ts": "d0f6970ac2209a77e8f0f1c0f6699bab54fcb851c797b26b0a32c9a994f86ac8",
     "src/runtime/contexts/worker-client.ts": "582aca97b6660027ab96c3908720bd4d86c371e26e3b47f1bf3ce201a4828e9d",
@@ -252,7 +263,7 @@
     "src/runtime/contexts/worker-factory.ts": "1b9927b508ae6a6675af1e7b96c645318910cf105555b1e58a6ddc4e4e92dff5",
     "src/runtime/contexts/worker-guard.ts": "83955ad28134ef886e4e950fbee4eaa7f51da2a827fa99092512e521764e8171",
     "src/runtime/contexts/worker-protocol.ts": "bc90b8c2d2a0ea5fb1a68555af12cc70f5fa3dc252c4557226417cd88adb40cc",
-    "src/runtime/contexts/worker-realm.ts": "3226b2057c6a2812f44793dc84b1d9e4c48217ae27667952e752db9d0c927e3a",
+    "src/runtime/contexts/worker-realm.ts": "b7bc5607650aa932c9fdf0d180a96ba872d58205f1d7f865a24ed3144b2d4d04",
     "src/runtime/contexts/worker-resource-protocol.ts": "aa5b444b987d60ce6dcacf74715756a290a2d440b39004a851a1c75f03f3c9fe",
     "src/runtime/contexts/worklet-controller.ts": "268da6b2d90a980e34a5731450e2dd347fa44d68e44d9c142dd5468ac81b4ef3",
     "src/runtime/contexts/worklet-factory.ts": "b6c4347d35b9deae4e1bf111c1e4ae3b46d94662e044293d1436730f0dc0121e",
@@ -285,7 +296,8 @@
     "src/runtime/trusted/context.ts": "a616feff34124caef20171ab5db21377c866781d94c6eae15d2c4fc43c59f922",
     "src/runtime/worker.ts": "e99e0f8012582a23fb166c799fe75dff1a6250e97e68d1cb0d165a367e205258",
     "src/shared/application-navigation.ts": "ff1aa86011a7aa5af0ccf8626f77d0b8a86883d4cc4e21cf92f7f1382d9cbdb4",
-    "src/shared/context-policy.ts": "f51db1e29f146905460c590ba62163aa5033405919f771dc33fcc4ace76037bc",
+    "src/shared/context-policy.ts": "5447c7f7b848a0ca0341e374d76a4f605028dfca18fc5e67a1ca101ce83cc8d5",
+    "src/shared/javascript-mime.ts": "f74e62db45c3b21353fbf6e10bedaf39176f7d8708ce401bef1e031ae427fb02",
     "src/shared/primordials.ts": "422a992a7e863c1b3b09f7d1484f10fa66a0300cdea007dfe485c9bf0c1e980c",
     "src/shared/runtime-url.ts": "26503f8994b0307030dddb9f843f6bd438573869b7ab01226565c865c9e3c24f",
     "src/shared/script-url-policy.ts": "a966941b67bdc73f52f3407de6ee817211df6ebc981eedcd6580792c1255b8d3",
@@ -293,6 +305,7 @@
     "src/shared/types.ts": "a5bcde2440d1042f9f98fe4da2920e7a8749266eec6de2d05672d7cddecac4f6",
     "test/application-history.ts": "dfae471d1b2116a0a555fdcc2a1e1e6edbdef452325ecae8dffea8e2a0ffa34d",
     "test/browser-profile.ts": "c161489dfce9c3124474d1416440c9876b0a8fce329d2f09fa16f99af744e3a0",
+    "test/classic-scripts.test.ts": "b0266dbc9ee9b953afd5b5a51f29d033e7deb60f090640ae3e836e271764f4ee",
     "test/content-broker.test.ts": "790555b13fa71f965a0b72ae0962dbf68af461d318e1cda62cfa1d2bcac5360c",
     "test/context-csp.ts": "fd7693e53097d48d4930a144a1039cd2dc6c6c0762e81a158d3cae5131eb49de",
     "test/context-model.test.ts": "dfbe67fd21318e1d19bad112eb77747231facc2fe967008a8dc38ad736c4db93",
@@ -332,7 +345,7 @@
     "test/website-installation.ts": "39ceb09d40115851c42f3535e421f091be1d986096bc9cb47381e3139b7cfad2",
     "test/worker-birth.test.ts": "b03a42a011a0fcf0b914bd0932fea3c49a56a51acab9d0d81b26d639c8a6556f",
     "test/worker-closure.ts": "493b7f642c3d16f3b2ae5b928b3ae7afea59e252763355628f91e951f992f199",
-    "test/worker-contexts.ts": "c49d8a73c823a4464ff108d3a967e0cfd58b2722dadd1bb2136fb6ae0c724d14",
+    "test/worker-contexts.ts": "37e11f9b1dfb173f2179ee59133a4bebbd27207d943f8464c0d790fcc673bddf",
     "test/worker-control.test.ts": "64be68d6132e19c96c7dcc55be924ea52e830abd4c60cbf22a70a65089e52d91",
     "test/worker-namespaces.test.ts": "9613d3fc5555e5450a856329011961e0de041d5e4618eb0bca12d5fd27b89250",
     "test/worklet-contexts.ts": "4535bc5c707138db48764a1ddbeba086fa1950785a5a11cd0d1cfada24bcdd1e",
@@ -467,7 +480,8 @@
         "WebSocketStream and every constructor-recovery route lack independent native calibration.",
         "The new mutation is limited to prepared windows; installed-app lifecycle and worker variants remain separate obligations.",
         "Policy-6 script URL integration changes a referenced implementation boundary. Earlier receipts retain their recorded scopes and inputs; revalidate this claim under the new native policy and complete its caller/browser correspondence before treating it as established for the current candidate.",
-        "Policy-7 local dedicated-worker startup changes referenced integration code. Earlier receipts retain their recorded source/build scopes; caller ownership, current integration and lifecycle correspondence require review."
+        "Policy-7 local dedicated-worker startup changes referenced integration code. Earlier receipts retain their recorded source/build scopes; caller ownership, current integration and lifecycle correspondence require review.",
+        "Policy-8 metadata and local classic-script delivery change referenced integration code. Current suite and corpus observations retain their recorded scopes; complete caller ownership, context correspondence and browser-effect coverage remain open."
       ],
       "control_status": {
         "native_control": "recorded",
@@ -775,7 +789,8 @@
         "Periodic sync permission control failed; Firefox lacked the native background APIs; other worker recovery paths and registration lifecycle cases remain unverified.",
         "No runtime-defense mutation is recorded.",
         "Policy-6 script URL integration changes a referenced implementation boundary. Earlier receipts retain their recorded scopes and inputs; revalidate this claim under the new native policy and complete its caller/browser correspondence before treating it as established for the current candidate.",
-        "Policy-7 local dedicated-worker startup changes referenced integration code. Earlier receipts retain their recorded source/build scopes; caller ownership, current integration and lifecycle correspondence require review."
+        "Policy-7 local dedicated-worker startup changes referenced integration code. Earlier receipts retain their recorded source/build scopes; caller ownership, current integration and lifecycle correspondence require review.",
+        "Policy-8 metadata and local classic-script delivery change referenced integration code. Current suite and corpus observations retain their recorded scopes; complete caller ownership, context correspondence and browser-effect coverage remain open."
       ],
       "control_status": {
         "native_control": "recorded",
@@ -1542,6 +1557,18 @@
             "formal/runtime-verification/registration-queue.json",
             "formal/runtime-verification/registration-fence.md"
           ]
+        },
+        {
+          "kind": "discovery",
+          "description": "The policy-8 frozen candidate passes 48 fresh-registration samples but fails the 24-sample forced-age comparison: four classic-dynamic/module operations reach the runtime service-worker script. Archived policy-7 and initial policy-8 failures retain their original inputs. This is a counterexample to complete C4, despite the passing full suite and eight-app comparison.",
+          "paths": [
+            "formal/runtime-verification/service-worker-maintenance.ts",
+            "formal/runtime-verification/service-worker-maintenance.json",
+            "formal/runtime-verification/service-worker-startup-stale.json",
+            "formal/runtime-verification/service-worker-startup-stale-policy7.json",
+            "formal/runtime-verification/service-worker-startup-stale-policy8-initial.json",
+            "formal/runtime-verification/local-classic-script-validation.json"
+          ]
         }
       ],
       "open_obligations": [
@@ -1557,7 +1584,8 @@
         "Connect the same-scope queue fence to actual soft-update scheduling and production launch; account for changed-script installation/activation, extended events, other queues and later covering registrations. The prefix model counterexample permits schedules not established for native same-scope API jobs; neither model proves cancellation of prior transmitted requests.",
         "Native HTTP worker and frame bootstraps reach the server after unregistration in both browsers, in addition to the earlier Firefox Blob-worker resource loss. A retained parent controller cannot justify new-context bootstrap interception; production local bootstrap and resource delivery still require implementation and proof.",
         "Policy-6 script URL integration changes a referenced implementation boundary. Earlier receipts retain their recorded scopes and inputs; revalidate this claim under the new native policy and complete its caller/browser correspondence before treating it as established for the current candidate.",
-        "Policy-7 local dedicated-worker startup changes referenced integration code. Earlier receipts retain their recorded source/build scopes; caller ownership, current integration and lifecycle correspondence require review."
+        "Policy-7 local dedicated-worker startup changes referenced integration code. Earlier receipts retain their recorded source/build scopes; caller ownership, current integration and lifecycle correspondence require review.",
+        "The four policy-8 forced-age update observations prevent complete confinement. Integrate and verify a replacement module path and account for remaining contexts, resource types and pending browser maintenance."
       ],
       "disposition": "unverified",
       "control_status": {
@@ -1602,7 +1630,8 @@
         "The one imported fetch does not establish mediation of every browser capability supplied to Wasm.",
         "Browser and Wasm engine correctness remain assumptions.",
         "Policy-6 script URL integration changes a referenced implementation boundary. Earlier receipts retain their recorded scopes and inputs; revalidate this claim under the new native policy and complete its caller/browser correspondence before treating it as established for the current candidate.",
-        "Policy-7 local dedicated-worker startup changes referenced integration code. Earlier receipts retain their recorded source/build scopes; caller ownership, current integration and lifecycle correspondence require review."
+        "Policy-7 local dedicated-worker startup changes referenced integration code. Earlier receipts retain their recorded source/build scopes; caller ownership, current integration and lifecycle correspondence require review.",
+        "Policy-8 metadata and local classic-script delivery change referenced integration code. Current suite and corpus observations retain their recorded scopes; complete caller ownership, context correspondence and browser-effect coverage remain open."
       ],
       "disposition": "unverified",
       "control_status": {
@@ -2470,7 +2499,8 @@
         "Protect enforcement storage from every app-accessible native authority path; application storage namespacing is not itself a confidentiality boundary. Authenticate all producers using actual browser actors.",
         "Browser-maintenance requests and remaining HTTP bootstraps remain unresolved. This storage repair does not establish C4 or browser coverage.",
         "Policy-6 script URL integration changes a referenced implementation boundary. Earlier receipts retain their recorded scopes and inputs; revalidate this claim under the new native policy and complete its caller/browser correspondence before treating it as established for the current candidate.",
-        "Policy-7 local dedicated-worker startup changes referenced integration code. Earlier receipts retain their recorded source/build scopes; caller ownership, current integration and lifecycle correspondence require review."
+        "Policy-7 local dedicated-worker startup changes referenced integration code. Earlier receipts retain their recorded source/build scopes; caller ownership, current integration and lifecycle correspondence require review.",
+        "Policy-8 metadata and local classic-script delivery change referenced integration code. Current suite and corpus observations retain their recorded scopes; complete caller ownership, context correspondence and browser-effect coverage remain open."
       ],
       "control_status": {
         "native_control": "recorded",
@@ -2621,7 +2651,8 @@
         "The native faults detect authorization failures. Establish pending-effect behavior and complete browser contracts beyond the bounded receiver observations.",
         "Native namespace partitioning now creates fresh globals across policy constants and retains sharing within a policy. Complete mixed-policy admission correspondence, retained old globals, tickets, queued work and policy-version release discipline remain open; names do not revoke old contexts or close C4.",
         "Policy-6 script URL integration changes a referenced implementation boundary. Earlier receipts retain their recorded scopes and inputs; revalidate this claim under the new native policy and complete its caller/browser correspondence before treating it as established for the current candidate.",
-        "Policy-7 local dedicated-worker startup changes referenced integration code. Earlier receipts retain their recorded source/build scopes; caller ownership, current integration and lifecycle correspondence require review."
+        "Policy-7 local dedicated-worker startup changes referenced integration code. Earlier receipts retain their recorded source/build scopes; caller ownership, current integration and lifecycle correspondence require review.",
+        "Policy-8 metadata and local classic-script delivery change referenced integration code. Current suite and corpus observations retain their recorded scopes; complete caller ownership, context correspondence and browser-effect coverage remain open."
       ],
       "disposition": "unverified",
       "control_status": {
@@ -2694,7 +2725,8 @@
         "The shared Response adapter buffers bodies, exposes mutable response headers and does not establish full Fetch API equivalence. Context-resource bytes and publisher-produced responses need distinct immutability/admission arguments.",
         "Warm-worker receiver intervals are bounded. Initial HTTP preparation is excluded from those intervals; no arbitrary-trace or exhaustive browser-coverage result follows.",
         "Policy-6 script URL integration changes a referenced implementation boundary. Earlier receipts retain their recorded scopes and inputs; revalidate this claim under the new native policy and complete its caller/browser correspondence before treating it as established for the current candidate.",
-        "Policy-7 local dedicated-worker startup changes referenced integration code. Earlier receipts retain their recorded source/build scopes; caller ownership, current integration and lifecycle correspondence require review."
+        "Policy-7 local dedicated-worker startup changes referenced integration code. Earlier receipts retain their recorded source/build scopes; caller ownership, current integration and lifecycle correspondence require review.",
+        "Policy-8 metadata and local classic-script delivery change referenced integration code. Current suite and corpus observations retain their recorded scopes; complete caller ownership, context correspondence and browser-effect coverage remain open."
       ],
       "disposition": "unverified",
       "control_status": {
@@ -2806,7 +2838,8 @@
         "Keep native-client ownership, late-binding cancellation, local script/dependency delivery and registration lifetime as separate obligations before allowing Blob worker startup. HTTP maintenance remains an unresolved counterexample to whole confinement.",
         "Tie compatibility and release checks to the actual candidate. Toolchain and native browser semantics remain trusted; these observations are not implementation-refinement proofs or independently checked certificates.",
         "Specify and verify the application policy facade contract, callback/reentrancy behavior and attenuation to public HTML/Script authority. These are compatibility facades rather than native policy objects; unsupported URL/parser-option creation remains explicit.",
-        "Policy-7 local dedicated-worker startup changes referenced integration code. Earlier receipts retain their recorded source/build scopes; caller ownership, current integration and lifecycle correspondence require review."
+        "Policy-7 local dedicated-worker startup changes referenced integration code. Earlier receipts retain their recorded source/build scopes; caller ownership, current integration and lifecycle correspondence require review.",
+        "Policy-8 metadata and local classic-script delivery change referenced integration code. Current suite and corpus observations retain their recorded scopes; complete caller ownership, context correspondence and browser-effect coverage remain open."
       ],
       "disposition": "unverified",
       "control_status": {
@@ -2872,8 +2905,7 @@
           "kind": "confined_test",
           "description": "The policy-7 startup regression records 32 samples across classic/module workers with dependencies, native/confined execution, Chromium/Firefox and reversed private-bit order. All sixteen confined observations have zero runtime/publisher HTTP; each of four native groups records two update requests in its two worker samples. These are fresh registrations and bounded observations, not aged-state or exhaustive C4 evidence.",
           "paths": [
-            "formal/runtime-verification/service-worker-maintenance.ts",
-            "formal/runtime-verification/service-worker-maintenance.json",
+            "formal/runtime-verification/service-worker-maintenance-policy7.json",
             "formal/runtime-verification/service-worker-maintenance.md"
           ]
         }
@@ -2882,12 +2914,104 @@
         "Prove private factory/source/channel ownership and non-exposure of reusable native URL brands for every reachable global; native URL matching is not creator authentication.",
         "Connect concrete binding, queued message release, errors, cancellation and revocation to the lifecycle model, including asynchronous ancestry changes.",
         "Revalidate the exact source/build and unchanged-app corpus; keep superseded observations separate.",
-        "Deliver classic/module dependencies locally or establish registration-lifetime independence; local bootstrap does not establish C4 or complete confinement."
+        "Deliver classic/module dependencies locally or establish registration-lifetime independence; local bootstrap does not establish C4 or complete confinement.",
+        "Classic entry and importScripts delivery are now local, but classic dynamic import and module-worker loading produce the recorded forced-age update requests. Complete registration lifetime and C4 coverage remain open."
       ],
       "control_status": {
         "native_control": "recorded",
         "confined_test": "recorded",
         "fault_control": "recorded"
+      }
+    },
+    {
+      "id": "classic_worker_script_delivery",
+      "title": "Local classic worker entry and synchronous importScripts delivery",
+      "disposition": "unverified",
+      "preconditions": "The prepared worker owns its authenticated resource broker. Controller metadata supplies admitted JavaScript URLs and aliases. Captured Response, Blob and object-URL operations follow their native contracts. These prerequisites require the broader ownership and context argument.",
+      "enforcement": "Before classic application execution, the worker preloads admitted script bytes through its resource broker, checks native response status, JavaScript MIME type and cumulative bytes, and publishes the set only after all reads succeed. Entry and importScripts consumers synchronously obtain locally created Blob URLs. Relocation and URL creation occur on first use. Closure revokes created URLs and rejects late publication; failures never introduce HTTP fallback.",
+      "source_paths": [
+        "src/runtime/contexts/classic-scripts.ts",
+        "src/runtime/contexts/worker-aliases.ts",
+        "src/shared/javascript-mime.ts",
+        "src/runtime/contexts/worker-realm.ts",
+        "src/runtime/contexts/model.ts",
+        "src/shared/context-policy.ts"
+      ],
+      "evidence": [
+        {
+          "kind": "discovery",
+          "description": "Six helper tests cover immutable local bytes, failure rollback, synchronous reuse without later reads, lazy relocation, reentrant closure, awaited closure and MIME-based indexing. Unit assertions are not a native confinement proof.",
+          "paths": ["test/classic-scripts.test.ts"]
+        },
+        {
+          "kind": "native_control",
+          "description": "The native worker fixture calibrates actual worker behavior and independent receivers; the maintenance runner requires native update controls for every loading type and browser.",
+          "paths": [
+            "test/worker-contexts.ts",
+            "results/contexts/workers.json",
+            "formal/runtime-verification/service-worker-maintenance.ts",
+            "formal/runtime-verification/service-worker-maintenance.json",
+            "formal/runtime-verification/service-worker-startup-stale.json"
+          ]
+        },
+        {
+          "kind": "confined_test",
+          "description": "The exact policy-8 source/build passes the full suite and eight unchanged applications: 32 selected native/confined tasks and 16 offline reloads. Worker tasks include literal dynamic import from classic scripts. All fresh maintenance samples are quiet, but the forced-age comparison records four violations outside the local importScripts path.",
+          "paths": [
+            "formal/runtime-verification/local-classic-script-validation.json",
+            "results/trusted-runtime/compatibility-local.json",
+            "results/contexts/workers.json",
+            "formal/runtime-verification/local-worker-startup.md"
+          ]
+        }
+      ],
+      "open_obligations": [
+        "Prove private ownership, caller preconditions, native local-delivery contracts and complete asynchronous lifecycle correspondence.",
+        "Computed relative dynamic imports do not automatically preserve their base after classic scripts move to Blob URLs. Validate a replacement module path without changing publisher applications.",
+        "Classic dynamic import and module workers still produce the four forced-age HTTP observations. This claim does not establish C4 or complete confinement."
+      ],
+      "control_status": {
+        "native_control": "recorded",
+        "confined_test": "recorded",
+        "fault_control": "not-recorded"
+      }
+    },
+    {
+      "id": "module_script_policy_candidate",
+      "title": "Independent native script policy with an unmodified module loader",
+      "disposition": "unverified",
+      "preconditions": "An owned native fixture registers a service worker before measurement. The parent installs a local-only CSP before Blob-worker construction. Browser CSP inheritance and enforcement are tested in the recorded versions; production preparation and Trusted Types are not part of this fixture.",
+      "enforcement": "The compatibility loader uses a local Response hook. An independent native policy admits Blob scripts and denies HTTP scripts and connections. After the parent removes its policy meta element, the worker still rejects remote imports with native policy-violation events. Mutable loader records do not decide native HTTP admission in this candidate.",
+      "source_paths": ["formal/runtime-verification/module-loader-browser.ts"],
+      "evidence": [
+        {
+          "kind": "native_control",
+          "description": "In Chromium, Firefox and forced-age Firefox, unrestricted native import and changed loader records each reach the independent HTTP receiver. Forced-age controls also produce service-worker updates.",
+          "paths": [
+            "formal/runtime-verification/module-loader-browser.ts",
+            "formal/runtime-verification/module-loader-browser.json"
+          ]
+        },
+        {
+          "kind": "discovery",
+          "description": "Twenty-one Blob-root native cases complete; all twelve local-only cases produce zero HTTP during the measured action and three subsequent seconds. A local module runs, while record changes, literal imports and computed imports receive enforced policy violations. An earlier four-row HTTP-root comparison retains its update observations. This is a candidate experiment, not production confinement.",
+          "paths": [
+            "formal/runtime-verification/module-loader-browser.json",
+            "formal/runtime-verification/module-loader-assessment.md",
+            "formal/runtime-verification/module-loader-http-root-initial.json",
+            ".github/workflows/formal.yml"
+          ]
+        }
+      ],
+      "open_obligations": [
+        "Integrate local script delivery and native policy before application execution, including every descendant context and publication boundary.",
+        "Compare module identity, cycles, live bindings, import attributes, import.meta, top-level await and classic/eval-generated imports against native behavior.",
+        "Establish production Trusted Types integration, protocol ownership, browser coverage and composition. Other communication mechanisms and deferred effects remain outside this experiment."
+      ],
+      "control_status": {
+        "native_control": "recorded",
+        "confined_test": "not-recorded",
+        "fault_control": "not-recorded"
       }
     }
   ]

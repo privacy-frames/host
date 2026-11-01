@@ -1,0 +1,579 @@
+{
+  "completed": true,
+  "started": "2026-11-01T04:07:42.820Z",
+  "finished": "2026-11-01T04:09:55.626Z",
+  "scope": "Dependency boundary experiment only; not runtime integration or a confinement proof.",
+  "rootTransport": "blob",
+  "packageURL": "https://registry.npmjs.org/es-module-shims/-/es-module-shims-2.8.4.tgz",
+  "version": "2.8.4",
+  "integrity": "sha512-ea5srn5L89PWVad6Qle6r2kg+HvvLiL/GHqgNx06eFrkERHkrTFWaqo1w8Sd+XI3Xr0iAG5x3ZQ7mQ/hnQzNpA==",
+  "loaderSHA256": "47dff4ba191ca594760a67b574c7207c7820c305735147b7ef05877f7cfd64cd",
+  "runnerSHA256": "af9c372812f03ed69049c13cfcb4554ee0b7b28e3a8e342a8e14d2912efc2c3b",
+  "launcherSHA256": "c161489dfce9c3124474d1416440c9876b0a8fce329d2f09fa16f99af744e3a0",
+  "packageLockSHA256": "4e8c7b0964047f1c9fd3f82956b08d381817fa86fb2f7d47d4a10458dc5e62ed",
+  "rows": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:44371/a2a2860a-b5f5-4e4d-b130-c4f02a10bfff"
+      ],
+      "mode": "local-hook",
+      "actionStarted": 1793506066484,
+      "observationEnded": 1793506069490,
+      "result": {
+        "first": 1,
+        "value": 1,
+        "reads": [
+          "http://127.0.0.1:44371/entry.js"
+        ],
+        "local": "blob:http://127.0.0.1:44371/2e53dc6a-4453-45e5-8ace-5f1b6c8a4685",
+        "violations": []
+      },
+      "traffic": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:44371/03280b13-3a8b-4251-9995-bea21aed05ce"
+      ],
+      "mode": "native-control",
+      "actionStarted": 1793506072550,
+      "observationEnded": 1793506075559,
+      "result": {
+        "first": 1,
+        "value": 2,
+        "reads": [
+          "http://127.0.0.1:44371/entry.js"
+        ],
+        "local": "blob:http://127.0.0.1:44371/ddf61fdd-969d-4eaf-8a68-25c5d0dc196f",
+        "violations": []
+      },
+      "traffic": [
+        {
+          "path": "/native-target.js",
+          "time": 1793506072556
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:44371/bda2af8e-9995-49ce-8d29-509d47f41b85"
+      ],
+      "mode": "record-change",
+      "actionStarted": 1793506078621,
+      "observationEnded": 1793506081630,
+      "result": {
+        "first": 1,
+        "value": 2,
+        "reads": [
+          "http://127.0.0.1:44371/entry.js"
+        ],
+        "local": "blob:http://127.0.0.1:44371/9a26b7a0-a233-4e98-a1e7-ddb4986bdf84",
+        "violations": []
+      },
+      "traffic": [
+        {
+          "path": "/native-target.js",
+          "time": 1793506078627
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:44371/c0dc3e9e-cbf9-43c7-892d-ce742150d92f"
+      ],
+      "mode": "local-only",
+      "actionStarted": 1793506084685,
+      "observationEnded": 1793506087691,
+      "result": {
+        "first": 1,
+        "value": 1,
+        "reads": [
+          "http://127.0.0.1:44371/entry.js"
+        ],
+        "local": "blob:http://127.0.0.1:44371/ca762506-52b1-4afa-a266-6629932c39c8",
+        "violations": []
+      },
+      "traffic": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:44371/7c87500a-bf81-4f34-9313-d5f81ebc39bc"
+      ],
+      "mode": "record-change-denied",
+      "actionStarted": 1793506090745,
+      "observationEnded": 1793506093851,
+      "result": {
+        "first": 1,
+        "local": "blob:http://127.0.0.1:44371/e6bf2b6a-b179-4f16-bdf1-e06ca514e5db",
+        "reads": [
+          "http://127.0.0.1:44371/entry.js"
+        ],
+        "violations": [
+          {
+            "blockedURI": "http://127.0.0.1:44371/native-target.js",
+            "effectiveDirective": "script-src-elem",
+            "disposition": "enforce"
+          }
+        ],
+        "failure": "TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:44371/native-target.js",
+        "errorName": "TypeError"
+      },
+      "traffic": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:44371/b6724d7d-b63f-44ae-9cb4-3014bc5730d4"
+      ],
+      "mode": "literal-import-denied",
+      "actionStarted": 1793506096908,
+      "observationEnded": 1793506100014,
+      "result": {
+        "first": 1,
+        "local": "blob:http://127.0.0.1:44371/62347291-a8a8-43e0-8a14-6fc924c5ca62",
+        "reads": [
+          "http://127.0.0.1:44371/entry.js"
+        ],
+        "violations": [
+          {
+            "blockedURI": "http://127.0.0.1:44371/native-target.js",
+            "effectiveDirective": "script-src-elem",
+            "disposition": "enforce"
+          }
+        ],
+        "failure": "TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:44371/native-target.js",
+        "errorName": "TypeError"
+      },
+      "traffic": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:44371/0b1428f1-af2f-4238-984d-cb8b74d1ac1c"
+      ],
+      "mode": "computed-import-denied",
+      "actionStarted": 1793506103075,
+      "observationEnded": 1793506106181,
+      "result": {
+        "first": 1,
+        "local": "blob:http://127.0.0.1:44371/6b9ec2ef-400f-47d5-b013-f28fbe4f6dd1",
+        "reads": [
+          "http://127.0.0.1:44371/entry.js"
+        ],
+        "violations": [
+          {
+            "blockedURI": "http://127.0.0.1:44371/native-target.js",
+            "effectiveDirective": "script-src-elem",
+            "disposition": "enforce"
+          }
+        ],
+        "failure": "TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:44371/native-target.js",
+        "errorName": "TypeError"
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:44371/199f5ece-0adc-4671-a28e-bb7d699cdfa2"
+      ],
+      "mode": "local-hook",
+      "actionStarted": 1793506110189,
+      "observationEnded": 1793506113195,
+      "result": {
+        "first": 1,
+        "value": 1,
+        "reads": [
+          "http://127.0.0.1:44371/entry.js"
+        ],
+        "local": "blob:http://127.0.0.1:44371/c3f15357-d007-40f6-9856-17b0caef4c26",
+        "violations": []
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:44371/b66ddb0c-970c-4057-b709-feebef65cec9"
+      ],
+      "mode": "native-control",
+      "actionStarted": 1793506116399,
+      "observationEnded": 1793506119409,
+      "result": {
+        "first": 1,
+        "value": 2,
+        "reads": [
+          "http://127.0.0.1:44371/entry.js"
+        ],
+        "local": "blob:http://127.0.0.1:44371/04bcfc52-7fda-4e61-8efa-70a0f2069177",
+        "violations": []
+      },
+      "traffic": [
+        {
+          "path": "/native-target.js",
+          "time": 1793506116406
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:44371/cc3a3c4a-37e6-401f-8d54-35325069826f"
+      ],
+      "mode": "record-change",
+      "actionStarted": 1793506122608,
+      "observationEnded": 1793506125618,
+      "result": {
+        "first": 1,
+        "value": 2,
+        "reads": [
+          "http://127.0.0.1:44371/entry.js"
+        ],
+        "local": "blob:http://127.0.0.1:44371/25613685-26e7-46ab-a6b3-26d21ae0a213",
+        "violations": []
+      },
+      "traffic": [
+        {
+          "path": "/native-target.js",
+          "time": 1793506122615
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:44371/1dbe5314-0d0c-44c0-bfd8-431399adc1ae"
+      ],
+      "mode": "local-only",
+      "actionStarted": 1793506128807,
+      "observationEnded": 1793506131813,
+      "result": {
+        "first": 1,
+        "value": 1,
+        "reads": [
+          "http://127.0.0.1:44371/entry.js"
+        ],
+        "local": "blob:http://127.0.0.1:44371/9d181cd7-6a0c-4978-b006-93b31d93d155",
+        "violations": []
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:44371/b0211c28-8007-4e35-9fb3-b063c9de7a4c"
+      ],
+      "mode": "record-change-denied",
+      "actionStarted": 1793506135011,
+      "observationEnded": 1793506138117,
+      "result": {
+        "first": 1,
+        "local": "blob:http://127.0.0.1:44371/435b7b4d-ff2e-469e-8db4-351bb41aa24d",
+        "reads": [
+          "http://127.0.0.1:44371/entry.js"
+        ],
+        "violations": [
+          {
+            "blockedURI": "http://127.0.0.1:44371/native-target.js",
+            "effectiveDirective": "script-src-elem",
+            "disposition": "enforce"
+          }
+        ],
+        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:44371/native-target.js",
+        "errorName": "TypeError"
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:44371/770af5ab-638c-41a3-8977-1eaa3f0b5ce7"
+      ],
+      "mode": "literal-import-denied",
+      "actionStarted": 1793506141333,
+      "observationEnded": 1793506144439,
+      "result": {
+        "first": 1,
+        "local": "blob:http://127.0.0.1:44371/d5fe9174-62fd-4083-9d94-cc29d94f1ac6",
+        "reads": [
+          "http://127.0.0.1:44371/entry.js"
+        ],
+        "violations": [
+          {
+            "blockedURI": "http://127.0.0.1:44371/native-target.js",
+            "effectiveDirective": "script-src-elem",
+            "disposition": "enforce"
+          }
+        ],
+        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:44371/native-target.js",
+        "errorName": "TypeError"
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:44371/de17692c-4aad-4c5e-a37a-342bd93bc528"
+      ],
+      "mode": "computed-import-denied",
+      "actionStarted": 1793506147632,
+      "observationEnded": 1793506150739,
+      "result": {
+        "first": 1,
+        "local": "blob:http://127.0.0.1:44371/c477bfb3-a3e9-4c80-9530-7c419fcc9429",
+        "reads": [
+          "http://127.0.0.1:44371/entry.js"
+        ],
+        "violations": [
+          {
+            "blockedURI": "http://127.0.0.1:44371/native-target.js",
+            "effectiveDirective": "script-src-elem",
+            "disposition": "enforce"
+          }
+        ],
+        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:44371/native-target.js",
+        "errorName": "TypeError"
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleAgeCheck": true,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:44371/7401914b-763d-4b09-aff2-ccc2c46d052a"
+      ],
+      "mode": "local-hook",
+      "actionStarted": 1793506154900,
+      "observationEnded": 1793506157905,
+      "result": {
+        "first": 1,
+        "value": 1,
+        "reads": [
+          "http://127.0.0.1:44371/entry.js"
+        ],
+        "local": "blob:http://127.0.0.1:44371/9d339727-7019-4e24-9415-e0000039ca8a",
+        "violations": []
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleAgeCheck": true,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:44371/e7e230fa-b19e-442e-96db-35ac5ce0942c"
+      ],
+      "mode": "native-control",
+      "actionStarted": 1793506161102,
+      "observationEnded": 1793506164115,
+      "result": {
+        "first": 1,
+        "value": 2,
+        "reads": [
+          "http://127.0.0.1:44371/entry.js"
+        ],
+        "local": "blob:http://127.0.0.1:44371/48a42aa5-8d7c-445c-aff0-1367e50308f1",
+        "violations": []
+      },
+      "traffic": [
+        {
+          "path": "/native-target.js",
+          "time": 1793506161112
+        },
+        {
+          "path": "/sw.js",
+          "time": 1793506162115
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleAgeCheck": true,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:44371/19d9bdcc-f2ef-4321-9259-3d0606993e90"
+      ],
+      "mode": "record-change",
+      "actionStarted": 1793506167309,
+      "observationEnded": 1793506170320,
+      "result": {
+        "first": 1,
+        "value": 2,
+        "reads": [
+          "http://127.0.0.1:44371/entry.js"
+        ],
+        "local": "blob:http://127.0.0.1:44371/ab29a5d5-6ae0-44c2-ad68-d5c775ce8b83",
+        "violations": []
+      },
+      "traffic": [
+        {
+          "path": "/native-target.js",
+          "time": 1793506167316
+        },
+        {
+          "path": "/sw.js",
+          "time": 1793506168319
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleAgeCheck": true,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:44371/0f207d15-baea-403e-b2b5-0e07f0f4b093"
+      ],
+      "mode": "local-only",
+      "actionStarted": 1793506173534,
+      "observationEnded": 1793506176540,
+      "result": {
+        "first": 1,
+        "value": 1,
+        "reads": [
+          "http://127.0.0.1:44371/entry.js"
+        ],
+        "local": "blob:http://127.0.0.1:44371/e2352445-39f2-4c94-941e-1e482d25f0cc",
+        "violations": []
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleAgeCheck": true,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:44371/8802bd9a-8e15-49da-b7ce-3e465352f5b8"
+      ],
+      "mode": "record-change-denied",
+      "actionStarted": 1793506179736,
+      "observationEnded": 1793506182842,
+      "result": {
+        "first": 1,
+        "local": "blob:http://127.0.0.1:44371/60773fe4-1fbd-4d6a-b218-06a6981ce802",
+        "reads": [
+          "http://127.0.0.1:44371/entry.js"
+        ],
+        "violations": [
+          {
+            "blockedURI": "http://127.0.0.1:44371/native-target.js",
+            "effectiveDirective": "script-src-elem",
+            "disposition": "enforce"
+          }
+        ],
+        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:44371/native-target.js",
+        "errorName": "TypeError"
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleAgeCheck": true,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:44371/8c8fe3a5-d44c-4362-9d08-47374ef4ac3a"
+      ],
+      "mode": "literal-import-denied",
+      "actionStarted": 1793506186031,
+      "observationEnded": 1793506189137,
+      "result": {
+        "first": 1,
+        "local": "blob:http://127.0.0.1:44371/a33b01d3-3d5d-4d89-94d9-4344557edb17",
+        "reads": [
+          "http://127.0.0.1:44371/entry.js"
+        ],
+        "violations": [
+          {
+            "blockedURI": "http://127.0.0.1:44371/native-target.js",
+            "effectiveDirective": "script-src-elem",
+            "disposition": "enforce"
+          }
+        ],
+        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:44371/native-target.js",
+        "errorName": "TypeError"
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedStaleAgeCheck": true,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:44371/7ee0a875-2ab0-4e6e-985d-c8440ac3124a"
+      ],
+      "mode": "computed-import-denied",
+      "actionStarted": 1793506192318,
+      "observationEnded": 1793506195425,
+      "result": {
+        "first": 1,
+        "local": "blob:http://127.0.0.1:44371/c6c5d884-0d12-4b2a-81f9-7716edfcc809",
+        "reads": [
+          "http://127.0.0.1:44371/entry.js"
+        ],
+        "violations": [
+          {
+            "blockedURI": "http://127.0.0.1:44371/native-target.js",
+            "effectiveDirective": "script-src-elem",
+            "disposition": "enforce"
+          }
+        ],
+        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:44371/native-target.js",
+        "errorName": "TypeError"
+      },
+      "traffic": []
+    }
+  ]
+}

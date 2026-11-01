@@ -19,6 +19,7 @@ prepareWorkerRealm(
     rootAliases: [],
     aliases: [],
     module: false,
+    scripts: [],
   },
   'message',
   async () => {

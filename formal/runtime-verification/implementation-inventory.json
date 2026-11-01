@@ -4,7 +4,7 @@
   "typescriptVersion": "6.0.3",
   "contractSHA256": "57c378112e1d53c1223955a6e0a28b546e0a6ec3e90895f0deec46908ca9017f",
   "generatorSHA256": "30a433edc9bc21d25c4790a9540e6eeb271f382c12f4fefeccd1dba1b75a47c2",
-  "boundaryDefinitionsSHA256": "fbf43162a21bae89c3f1f2d4b699bb239e8e1aba69fc5d80d09141f72896c00a",
+  "boundaryDefinitionsSHA256": "06d3ef1198bcfca028c62ac7198a94a5ad4fb48607b7c9c8a3916f99f8310ae5",
   "boundaries": [
     {
       "id": "script-url-admission",
@@ -105,6 +105,9 @@
         "src/runtime/contexts/worker-birth.ts",
         "src/runtime/contexts/worker-birth-protocol.ts",
         "src/runtime/contexts/worker-resource-protocol.ts",
+        "src/runtime/contexts/classic-scripts.ts",
+        "src/runtime/contexts/worker-aliases.ts",
+        "src/shared/javascript-mime.ts",
         "src/runtime/resource-fetch.ts",
         "src/runtime/resource-broker.ts",
         "src/runtime/contexts/worker-guard.ts",
@@ -358,6 +361,15 @@
       "sitesSHA256": "94324620d369a6c8c29c6c514da8a0e7d354def512ec85f837248011c4771faa"
     },
     {
+      "path": "src/runtime/contexts/classic-scripts.ts",
+      "sourceSHA256": "82129f39bfcc098e9eccf879dece023e7fa85e1e190c27122c810003f9d4d0c1",
+      "boundaries": [
+        "dedicated-worker-publication"
+      ],
+      "siteCount": 48,
+      "sitesSHA256": "336b6bc0e5545ab5eaf2ff288c3f1b5d28bc176960e87d86bf474e6ee1db9a0e"
+    },
+    {
       "path": "src/runtime/contexts/controller-store.ts",
       "sourceSHA256": "b1d4f8856badf811bc223e0aafb1e5d5a8f33357a5342029342f6d8d2f15d628",
       "boundaries": [
@@ -460,12 +472,12 @@
     },
     {
       "path": "src/runtime/contexts/model.ts",
-      "sourceSHA256": "007a8e55be48b663bbb42f9d9492422d2f63c0f543f75f06b6c26039ecde4c28",
+      "sourceSHA256": "5c3051cca5248fe8226954cdb6fd141419cd9e1f8513b4efe5c469721baf7a1e",
       "boundaries": [
         "context-authority"
       ],
       "siteCount": 53,
-      "sitesSHA256": "d1f4787b12b2910869605722cd3274fa332e96d06a5c420edb3d6df91da46a70"
+      "sitesSHA256": "89b867dbee75fdaf1c1955ce1597e4f570db2d2c581584b9223cfb3200acf912"
     },
     {
       "path": "src/runtime/contexts/parent-channel.ts",
@@ -542,6 +554,15 @@
       "sitesSHA256": "0657fa8c24307ddcd78a08e6e3451d41c463714f5047845e9340f3dc8a72f758"
     },
     {
+      "path": "src/runtime/contexts/worker-aliases.ts",
+      "sourceSHA256": "0c6535707570b25a76e33f5c02adaa647e08370dd1699b5a403c1fff3a3d773d",
+      "boundaries": [
+        "dedicated-worker-publication"
+      ],
+      "siteCount": 13,
+      "sitesSHA256": "9263f482bcb47570623db8ce930598d6dd2e73be2d126a8f94a47dc7c9aba7dd"
+    },
+    {
       "path": "src/runtime/contexts/worker-birth-protocol.ts",
       "sourceSHA256": "9f51d3451dae467301d5197b4735601190cb41fa786fdb5b4a569524cf80a011",
       "boundaries": [
@@ -607,13 +628,13 @@
     },
     {
       "path": "src/runtime/contexts/worker-realm.ts",
-      "sourceSHA256": "3226b2057c6a2812f44793dc84b1d9e4c48217ae27667952e752db9d0c927e3a",
+      "sourceSHA256": "b7bc5607650aa932c9fdf0d180a96ba872d58205f1d7f865a24ed3144b2d4d04",
       "boundaries": [
         "script-url-admission",
         "dedicated-worker-publication"
       ],
-      "siteCount": 138,
-      "sitesSHA256": "21ce37cd563c61958bb64b1e471048421d2de996abbf887b366c0a2d7c27ae24"
+      "siteCount": 162,
+      "sitesSHA256": "33e0d33660b015df01d4cb042a1671f08080fcc5800d0fa75cfc6e936f640a12"
     },
     {
       "path": "src/runtime/contexts/worker-resource-protocol.ts",
@@ -931,7 +952,7 @@
     },
     {
       "path": "src/shared/context-policy.ts",
-      "sourceSHA256": "f51db1e29f146905460c590ba62163aa5033405919f771dc33fcc4ace76037bc",
+      "sourceSHA256": "5447c7f7b848a0ca0341e374d76a4f605028dfca18fc5e67a1ca101ce83cc8d5",
       "boundaries": [
         "shared-worker-publication",
         "publisher-execution",
@@ -939,6 +960,15 @@
       ],
       "siteCount": 0,
       "sitesSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    {
+      "path": "src/shared/javascript-mime.ts",
+      "sourceSHA256": "f74e62db45c3b21353fbf6e10bedaf39176f7d8708ce401bef1e031ae427fb02",
+      "boundaries": [
+        "dedicated-worker-publication"
+      ],
+      "siteCount": 6,
+      "sitesSHA256": "ccda3a4883f69c8a6027a27d54fbc29248e38971a69a0ab84fe1f1936b3add16"
     },
     {
       "path": "src/shared/policy.ts",
