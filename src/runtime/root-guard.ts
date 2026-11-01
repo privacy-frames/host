@@ -80,12 +80,14 @@ export function startRootGuard(bootstrapScript: Element | null) {
         appURL.href,
       );
       realm.admitContent(data);
+      await realm.prepareScripts();
       const compiled = realm.policy.compile(data.document);
       renderer.prepare(compiled);
       await renderer.render(compiled);
       realm.documents?.settle();
     };
     void start().catch((error: unknown) => {
+      realm.closeScripts();
       failure('Application could not start', 'Reload or reinstall this application.');
       logError(error);
     });

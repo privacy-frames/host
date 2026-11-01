@@ -1,3 +1,4 @@
+import { waitUntil } from './helpers/poll.ts';
 import http from 'node:http';
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
@@ -280,10 +281,14 @@ try {
           }),
         );
       });
-      await app.waitForFunction(async () => {
-        const state = await Reflect.get(window, 'messagePublisher')('pending-style');
-        return state.seen.some((path: string) => path.endsWith('/style.css'));
-      });
+      await waitUntil(
+        () =>
+          app.evaluate(async () => {
+            const state = await Reflect.get(window, 'messagePublisher')('pending-style');
+            return state.seen.some((path: string) => path.endsWith('/style.css'));
+          }),
+        'Publisher did not observe the pending stylesheet',
+      );
       const second = await context.newPage();
       await second.goto(app.url(), { waitUntil: 'commit' });
       await second.waitForFunction(() => Reflect.get(window, 'publisherReady') === true);

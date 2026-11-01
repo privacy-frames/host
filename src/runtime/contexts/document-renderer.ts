@@ -511,7 +511,7 @@ export function createDocumentRenderer(options: DocumentRendererOptions) {
         scripts.attribute(script, 'src', source),
       ]);
     else if (descriptor.source.kind === 'inline')
-      apply(text, script, [descriptor.source.code]);
+      scripts.text(script, descriptor.source.code);
     try {
       await done;
     } finally {
@@ -609,6 +609,7 @@ export function createDocumentRenderer(options: DocumentRendererOptions) {
                 relocateImportMeta(script.source.code, script.source.baseURL),
                 script.source.baseURL,
                 resources,
+                true,
               ),
             );
           }

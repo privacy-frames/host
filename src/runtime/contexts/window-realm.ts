@@ -27,6 +27,7 @@ import { scopeWebStorage } from '../enforcement/web-storage.ts';
 import { createDocumentFactory } from './document-factory.ts';
 import { createTrustedPolicy } from '../trusted/client.ts';
 import { prepareScriptURLs } from '../enforcement/script-urls.ts';
+import { createWindowScripts } from './window-scripts.ts';
 
 export interface WindowContentMetadata {
   installationGeneration: string;
@@ -100,6 +101,16 @@ export function prepareWindowRealm({
       scriptURL,
     }),
   );
+  const localScripts = createWindowScripts(
+    resources,
+    (input, options) => {
+      if (typeof input !== 'string')
+        throw new TypeError('Script source must be a URL string');
+      return fetchResource(resources.mapURL(input), options);
+    },
+    scriptNonce,
+  );
+  let scriptInventory: readonly string[] | undefined;
   applicationWorker = publisher.container;
   const createWorker = createWorkerFactory(
     tools,
@@ -136,6 +147,7 @@ export function prepareWindowRealm({
       isInstalledURL: resources.isInstalledURL,
       baseURL: () => resourceBase,
       unavailableURL: new URL('__contexts/unavailable-script', applicationURL).href,
+      localURL: localScripts.resolve,
     }),
   );
   const documents = enableDocumentContexts
@@ -194,25 +206,43 @@ export function prepareWindowRealm({
     );
     resourceBase = data.documentBase || data.source;
     resources.install(data.aliases, data.source);
+    scriptInventory = data.scripts;
     sourceURL = data.source;
     void publisher.initialize().catch(() => {});
+    const publicHost = internalRecord({
+      version: 1,
+      application,
+      publisher: new NativeURL(data.source).origin,
+      mode: 'network-isolated',
+    });
+    define(
+      publicHost,
+      'importModule',
+      internalRecord({ value: localScripts.importModule }),
+    );
     define(
       window,
       'privacyHost',
       internalRecord({
-        value: Object.freeze(
-          internalRecord({
-            version: 1,
-            application,
-            publisher: new NativeURL(data.source).origin,
-            mode: 'network-isolated',
-          }),
-        ),
+        value: Object.freeze(publicHost),
         writable: false,
         configurable: false,
       }),
     );
   }
 
-  return internalRecord({ tools, resources, scripts, documents, admitContent, policy });
+  async function prepareScripts() {
+    if (!scriptInventory) throw new Error('Window script inventory is unavailable');
+    await localScripts.prepare(scriptInventory);
+  }
+  return internalRecord({
+    tools,
+    resources,
+    scripts,
+    documents,
+    admitContent,
+    policy,
+    prepareScripts,
+    closeScripts: localScripts.close,
+  });
 }

@@ -2,6 +2,27 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { runInNewContext } from 'node:vm';
 import { relocateRuntimeModule } from '../src/runtime/modules.ts';
+import { hasModuleReferences } from '../src/shared/module-references.ts';
+
+test('module reference fast path distinguishes syntax from literal bundle text', () => {
+  for (const source of [
+    `const text = 'import("./secret.js")'; // import.meta.url`,
+    'const pattern = /import\\(.*\\)/; const text = `export * from "x"`;',
+    'function ordinary() { return {import: "value", export: "value"}; }',
+    'export let counter = 0;',
+  ])
+    assert.equal(hasModuleReferences(source), false, source);
+  for (const source of [
+    'import value from "./dependency.js";',
+    'export * from "./dependency.js";',
+    'const result = import(name, options);',
+    'const source = import.meta.url;',
+    'import defer * as dependency from "./dependency.js";',
+    'const result = import.source(name);',
+    'import {',
+  ])
+    assert.equal(hasModuleReferences(source), true, source);
+});
 
 const original = 'https://publisher.test/app/module.js';
 const target = 'https://runtime.test/source/app/module.js';

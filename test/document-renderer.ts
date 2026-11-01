@@ -49,6 +49,15 @@ function tlaMarkup(mode: string, native = false) {
   const external = mode.includes('external');
   return `<!doctype html><html><head></head><body><script>window.events=[];document.addEventListener('DOMContentLoaded',()=>events.push('DOMContentLoaded'));window.addEventListener('load',()=>events.push('window-load'));</script><script type="module" onload="window.events.push('module-load')" ${external ? 'src="' + (native ? '/installed/' : '') + mode + '.js"' : ''}>${external ? '' : tlaSource(mode)}</script></body></html>`;
 }
+const scriptBodies: Record<string, string> = {
+  '/installed/classic.js': `window.externalGlobal=sharedGlobal();window.events.push('external');`,
+  '/installed/defer.js': `window.events.push('defer');`,
+  '/installed/async.js': `window.events.push('async');`,
+  '/installed/helper.js': `export default 13;`,
+  ...Object.fromEntries(
+    tlaModes.map((mode) => ['/installed/' + mode + '.js', tlaSource(mode)]),
+  ),
+};
 let origin = '';
 let unavailableRequests = 0;
 const unavailableMarkup = `<!doctype html><script>window.events=[];</script><script src="/unavailable.js" onerror="events.push('classic-error')" onload="events.push('unexpected-load')"></script><script>events.push('after-classic');</script><script async src="/unavailable.js" onerror="events.push('async-error')"></script><script defer src="/unavailable.js" onerror="events.push('defer-error')"></script><script type="module" src="/unavailable.js" onerror="events.push('module-error')"></script><script nomodule src="/unavailable.js" onerror="events.push('unexpected-nomodule')"></script><script>document.addEventListener('DOMContentLoaded',()=>events.push('DOMContentLoaded'));</script>`;
@@ -70,7 +79,17 @@ const server = http.createServer((req, res) => {
   if (url.pathname === '/service-worker.js') {
     res.setHeader('Content-Type', 'text/javascript');
     res.end(
-      "addEventListener('install',e=>e.waitUntil(skipWaiting()));addEventListener('activate',e=>e.waitUntil(clients.claim()));addEventListener('fetch',e=>e.respondWith(fetch(e.request)));",
+      `const sources=${JSON.stringify(scriptBodies)};
+addEventListener('install',e=>e.waitUntil(skipWaiting()));
+addEventListener('activate',e=>e.waitUntil(clients.claim()));
+addEventListener('fetch',e=>e.respondWith(fetch(e.request)));
+addEventListener('message',e=>{
+  if(e.data?.type!=='privacy-installed-resource'||!e.ports[0])return;
+  const source=sources[new URL(e.data.url).pathname];
+  if(typeof source!=='string'){e.ports[0].postMessage({ok:false,error:'No fixture resource'});return;}
+  const body=new TextEncoder().encode(source).buffer;
+  e.ports[0].postMessage({ok:true,value:{url:e.data.url,status:200,statusText:'OK',headers:[['Content-Type','text/javascript']],body}},[body]);
+});`,
     );
     return;
   }
@@ -91,19 +110,13 @@ const server = http.createServer((req, res) => {
   }
   if (url.pathname.startsWith('/installed/')) {
     res.setHeader('Content-Type', 'text/javascript');
-    const sources: Record<string, string> = {
-      '/installed/classic.js': `window.externalGlobal=sharedGlobal();window.events.push('external');`,
-      '/installed/defer.js': `window.events.push('defer');`,
-      '/installed/async.js': `window.events.push('async');`,
-      '/installed/helper.js': `export default 13;`,
-    };
     if (tlaModes.some((mode) => url.pathname === '/installed/' + mode + '.js')) {
       res.end(tlaSource(url.pathname.split('/').at(-1)!.slice(0, -3)));
       return;
     }
     if (url.pathname.endsWith('async.js'))
-      setTimeout(() => res.end(sources[url.pathname]), 100);
-    else res.end(sources[url.pathname] || '');
+      setTimeout(() => res.end(scriptBodies[url.pathname]), 100);
+    else res.end(scriptBodies[url.pathname] || '');
     return;
   }
   if (url.pathname === '/native-ticket.html') {
@@ -250,7 +263,7 @@ function tamperAfterPublication() {
   return ()=>{object.defineProperty(Document.prototype,'documentElement',rootProperty);object.defineProperty(URL.prototype,'protocol',protocol);reflect.set(window,'Array',originalArray);};
 }
 Object.defineProperty(window,'__activateTemplate',{value:(template,root)=>renderer.activateTemplate(template,root)});
-committed.then(async()=>{if(${JSON.stringify(mode)}==='svg-publication'){const published=new NativePromise(resolve=>apply(nativeAdd,window,['message',event=>{if(event.source===nativeParent&&event.data==='published')resolve()}]));apply(nativePost,nativeParent,[{type:'renderer-guarded'},${JSON.stringify(origin)}]);await published;}const restore=tamperAfterPublication();try{await renderer.render(rendered);restore();window.__renderResult={done:true,callbackCount,sameDocument:document===initialDocument,sameWindow:window===initialWindow,sameAddress:location.href===initialAddress,sameController:apply(readController,container,[])===initialController,controlled:initialController!==null,captureChecks,manifestRetained:!retainedManifest||(retainedManifest.isConnected&&retainedManifest.parentNode===document.head),manifestRemovals};if(${JSON.stringify(mode)}==='svg-publication')apply(nativePost,nativeParent,[{type:'renderer-loaded'},${JSON.stringify(origin)}]);}catch(error){restore();window.__renderResult={done:false,error:error.message,callbackCount};}});
+committed.then(async()=>{await realm.prepareScripts();if(${JSON.stringify(mode)}==='svg-publication'){const published=new NativePromise(resolve=>apply(nativeAdd,window,['message',event=>{if(event.source===nativeParent&&event.data==='published')resolve()}]));apply(nativePost,nativeParent,[{type:'renderer-guarded'},${JSON.stringify(origin)}]);await published;}const restore=tamperAfterPublication();try{await renderer.render(rendered);restore();window.__renderResult={done:true,callbackCount,sameDocument:document===initialDocument,sameWindow:window===initialWindow,sameAddress:location.href===initialAddress,sameController:apply(readController,container,[])===initialController,controlled:initialController!==null,captureChecks,manifestRetained:!retainedManifest||(retainedManifest.isConnected&&retainedManifest.parentNode===document.head),manifestRemovals};if(${JSON.stringify(mode)}==='svg-publication')apply(nativePost,nativeParent,[{type:'renderer-loaded'},${JSON.stringify(origin)}]);}catch(error){restore();window.__renderResult={done:false,error:error.message,callbackCount};}});
 `,
       resolveDir: new URL('../', import.meta.url).pathname,
     },
@@ -576,7 +589,12 @@ try {
         module: Reflect.get(window, 'moduleValue'),
         bodyThis: Reflect.get(window, 'bodyLoadThis'),
       }));
-      assert.deepEqual(initial.events, nativeHTML.events);
+      // Async execution depends on fetch completion. Confined bytes are already
+      // local, while the HTTP control deliberately delays its async response.
+      assert.deepEqual(
+        initial.events.filter((event: string) => event !== 'async'),
+        nativeHTML.events.filter((event: string) => event !== 'async'),
+      );
       assert.equal(nativeHTML.global, 42);
       assert.equal(nativeHTML.module, 13);
       assert.equal(nativeHTML.bodyThis, true);

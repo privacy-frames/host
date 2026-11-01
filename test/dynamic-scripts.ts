@@ -1,31 +1,10 @@
-import { SCRIPT_URL_CSP } from '../src/shared/script-url-policy.ts';
 import assert from 'node:assert/strict';
 import http from 'node:http';
 import { mkdir, writeFile } from 'node:fs/promises';
 import { chromium, firefox, type Page } from 'playwright';
 import { launch } from './browser-profile.ts';
 import { servers } from './server.ts';
-import { build } from './build.ts';
 import { testProvenance } from './provenance.ts';
-
-const policyOnly = process.env.DYNAMIC_SCRIPT_POLICY_ONLY === '1';
-const nonce = 'dynamic-script-test-nonce';
-let policyCode = '';
-if (policyOnly) {
-  const built = await build({
-    stdin: {
-      contents: `import 'ses';import {prepareScriptURLs} from './src/runtime/enforcement/script-urls.ts';const scriptURL=prepareScriptURLs();import {createPolicyTools} from './src/runtime/enforcement/native.ts';import {createTrustedPolicy} from './src/runtime/trusted/client.ts';import {installDOMPolicy,installResourceAttributePolicy} from './src/runtime/enforcement/dom.ts';import {installScriptPolicy} from './src/runtime/enforcement/scripts.ts';const policy=createTrustedPolicy(location.href);lockdown({evalTaming:'unsafe-eval',errorTaming:'safe',consoleTaming:'safe',overrideTaming:'severe'});const tools=createPolicyTools();const rawGet=Element.prototype.getAttribute;const admitted=new Set(['a.js','b.js','module.js'].map(name=>'http://127.0.0.1:4340/dynamic-scripts/'+name));const mapURL=input=>new URL(String(input),document.baseURI).href;const scripts=installScriptPolicy(tools,{nonce:'${nonce}',scriptURL,mapURL,isInstalledURL:input=>admitted.has(String(input))});installDOMPolicy(tools,rawGet,policy,scripts);installResourceAttributePolicy(tools,mapURL,scripts);document.documentElement.dataset.policyReady='true';`,
-      resolveDir: new URL('../', import.meta.url).pathname,
-    },
-    banner: { js: '"use strict";' },
-    bundle: true,
-    write: false,
-    format: 'iife',
-    platform: 'browser',
-    target: 'es2022',
-  });
-  policyCode = built.outputFiles[0].text;
-}
 
 const publisher = 'http://127.0.0.1:4340/dynamic-scripts/';
 const receiver = 'http://127.0.0.1:4341/';
@@ -34,31 +13,23 @@ const receiverConnections: number[] = [];
 const documents: Record<string, [string, string]> = {
   '/dynamic-scripts/': [
     'text/html',
-    '<!doctype html><title>Dynamic scripts</title><link rel="preload" as="script" href="a.js"><link rel="preload" as="script" href="b.js"><link rel="modulepreload" href="module.js"><script src="main.js"></script><p id="ready">Dynamic script fixture</p>',
+    '<!doctype html><title>Dynamic scripts</title><link rel="preload" as="script" href="a.js"><link rel="preload" as="script" href="b.js"><link rel="modulepreload" href="module.js"><link rel="modulepreload" href="graph-a.js"><link rel="modulepreload" href="graph-b.js"><script src="main.js"></script><p id="ready">Dynamic script fixture</p>',
   ],
   '/dynamic-scripts/main.js': ['text/javascript', 'globalThis.dynamicFixtureReady=true;'],
   '/dynamic-scripts/a.js': ['text/javascript', 'globalThis.__dynamic.order.push("A");'],
   '/dynamic-scripts/b.js': ['text/javascript', 'globalThis.__dynamic.order.push("B");'],
   '/dynamic-scripts/module.js': ['text/javascript', 'export default 47;'],
+  '/dynamic-scripts/graph-a.js': [
+    'text/javascript',
+    'import {readA} from "./graph-b.js"; export let value=1; export function bump(){value++;} export function cyclic(){return readA();} await Promise.resolve();',
+  ],
+  '/dynamic-scripts/graph-b.js': [
+    'text/javascript',
+    'import {value} from "./graph-a.js"; export function readA(){return value;}',
+  ],
 };
 const publisherServer = http.createServer((request, response) => {
   response.setHeader('Access-Control-Allow-Origin', '*');
-  if (request.url === '/policy.js') {
-    response.setHeader('Content-Type', 'text/javascript');
-    response.end(policyCode);
-    return;
-  }
-  if (request.url === '/isolated/') {
-    response.setHeader('Content-Type', 'text/html');
-    response.setHeader(
-      'Content-Security-Policy',
-      `default-src 'none';script-src 'self' blob: 'nonce-${nonce}';connect-src 'self';object-src 'none';frame-src 'none'; ${SCRIPT_URL_CSP}`,
-    );
-    response.end(
-      '<!doctype html><script src="/policy.js"></script><p id="ready">Isolated script policy fixture</p>',
-    );
-    return;
-  }
   const item = documents[new URL(request.url || '/', publisher).pathname];
   if (!item) {
     response.writeHead(404).end('Not found');
@@ -79,10 +50,10 @@ for (const [server, port] of [
   [receiverServer, 4341],
 ] as const)
   await new Promise<void>((resolve) => server.listen(port, '127.0.0.1', resolve));
-const host = policyOnly ? { close: async () => {} } : await servers({ receiver: false });
+const host = await servers({ receiver: false });
 const results = {
   provenance: await testProvenance(import.meta.url),
-  mode: policyOnly ? 'isolated script/DOM policy fixture' : 'full runtime installation',
+  mode: 'full runtime installation',
   date: new Date().toISOString(),
   browsers: [] as object[],
 };
@@ -136,6 +107,29 @@ async function exercise(page: Page) {
       script.onerror = () => reject(new Error('Inline module failed'));
       document.head.appendChild(script);
     });
+    const graph = await new Promise<unknown>((resolve, reject) => {
+      Reflect.set(state, 'completeGraph', resolve);
+      const script = document.createElement('script');
+      const timeout = setTimeout(() => reject(new Error('Module graph timeout')), 5000);
+      script.type = 'module';
+      script.textContent =
+        'import * as graph from ' +
+        JSON.stringify(base + 'graph-a.js') +
+        ';' +
+        'import * as canonical from ' +
+        JSON.stringify(new URL('graph-a.js', location.href).href) +
+        ';' +
+        'graph.bump(); const again=await import(' +
+        JSON.stringify(base + 'graph-a.js') +
+        ');' +
+        'globalThis.__dynamic.completeGraph({value:graph.value,cyclic:graph.cyclic(),identity:graph===canonical&&graph===again});';
+      script.onload = () => clearTimeout(timeout);
+      script.onerror = () => {
+        clearTimeout(timeout);
+        reject(new Error('Module graph failed'));
+      };
+      document.head.appendChild(script);
+    });
     const blob = URL.createObjectURL(
       new Blob(['globalThis.__dynamic.blob=3;'], { type: 'text/javascript' }),
     );
@@ -158,6 +152,7 @@ async function exercise(page: Page) {
       order: state.order,
       loaded,
       module: state.module,
+      graph,
       blob: state.blob,
     };
   }, publisher);
@@ -169,26 +164,16 @@ try {
     try {
       const context = await browser.newContext();
       context.setDefaultTimeout(20000);
-      let app: Page;
-      if (policyOnly) {
-        app = await context.newPage();
-        app.on('pageerror', (error) => console.error('policy fixture:', error.message));
-        await app.goto('http://127.0.0.1:4340/isolated/');
-        await app.waitForFunction(
-          () => document.documentElement.dataset.policyReady === 'true',
-        );
-      } else {
-        const manager = await context.newPage();
-        await manager.goto('http://127.0.0.1:4210/privacy-frames/');
-        await manager.getByText('Ready to install.', { exact: true }).waitFor();
-        await manager.locator('#app-url').fill(publisher);
-        await manager.locator('#install button').click();
-        const link = manager.locator('[data-app="dynamic-scripts"]');
-        await link.waitFor();
-        const opened = context.waitForEvent('page');
-        await link.click();
-        app = await opened;
-      }
+      const manager = await context.newPage();
+      await manager.goto('http://127.0.0.1:4210/privacy-frames/');
+      await manager.getByText('Ready to install.', { exact: true }).waitFor();
+      await manager.locator('#app-url').fill(publisher);
+      await manager.locator('#install button').click();
+      const link = manager.locator('[data-app="dynamic-scripts"]');
+      await link.waitFor();
+      const opened = context.waitForEvent('page');
+      await link.click();
+      const app = await opened;
       await app.locator('#ready').waitFor();
       const isolated = await exercise(app);
       assert.deepEqual(isolated.synchronous, ['before', 'inline', 'after']);
@@ -197,6 +182,7 @@ try {
       assert.equal(isolated.textSynchronous, true);
       assert.equal(isolated.literal, '<iframe>');
       assert.equal(isolated.module, 47);
+      assert.deepEqual(isolated.graph, { value: 2, cyclic: 2, identity: true });
       assert.equal(isolated.blob, 3);
       const start = receiverRequests.length;
       const connections = receiverConnections.length;
@@ -244,9 +230,7 @@ try {
         const localPlaceholder =
           physical !== null &&
           new URL(physical, location.href).origin === location.origin &&
-          new URL(physical, location.href).pathname.endsWith(
-            '/__contexts/unavailable-script',
-          );
+          new URL(physical, location.href).protocol === 'blob:';
         const inline = document.createElement('script');
         inline.text =
           'globalThis.__dynamic.transport=fetch(' +
@@ -265,14 +249,9 @@ try {
           inlineFetchBlocked: await Reflect.get(globalThis, '__dynamic').transport,
         };
       }, receiver);
-      if (policyOnly) {
-        assert.equal(blocked.sourceDenied, true);
-        assert.equal(blocked.sourceOutcome, 'denied');
-      } else {
-        assert.equal(blocked.sourceDenied, false);
-        assert.equal(blocked.sourceOutcome, 'error');
-        assert.equal(blocked.localPlaceholder, true);
-      }
+      assert.equal(blocked.sourceDenied, false);
+      assert.equal(blocked.sourceOutcome, 'error');
+      assert.equal(blocked.localPlaceholder, true);
       assert.equal(blocked.externalScriptExecuted, false);
       assert.equal(blocked.type, true);
       assert.equal(blocked.coercions, 1);
@@ -326,11 +305,7 @@ try {
   }
   await mkdir(new URL('../results/contexts/', import.meta.url), { recursive: true });
   await writeFile(
-    new URL(
-      '../results/contexts/' +
-        (policyOnly ? 'dynamic-scripts-policy.json' : 'dynamic-scripts.json'),
-      import.meta.url,
-    ),
+    new URL('../results/contexts/dynamic-scripts.json', import.meta.url),
     JSON.stringify(results, null, 2) + '\n',
   );
 }

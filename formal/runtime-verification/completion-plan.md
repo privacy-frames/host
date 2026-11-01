@@ -34,6 +34,24 @@ comparison pass with sixteen offline reloads and stable source/build inputs.
 This is the protocol input for local Window delivery; that delivery and the
 independent native policy still need implementation before publication.
 
+Policy 12 now prepares root and child Window scripts through the private resource
+reader before publication. Native import maps link local Blob modules; the worker
+shim remains limited to workers. The installed-runtime graph comparison preserves
+cycles, live bindings, top-level await and alias identity in both browsers. The
+[initial-policy fixture](native-window-policy.md) passes sixteen HTML/SVG cases,
+including native HTTP controls and denials. Its SVG bootstrap uses a self-contained
+data URL after Firefox rejected inline SVG under Trusted Types. Production native
+HTTP denial and the complete registration-lifetime argument remain pending.
+
+The [policy-12 candidate index](policy12-validation.json) now binds 208 unit checks,
+the full regression suite, 32 unchanged native/confined application tasks and
+sixteen offline reloads to stable source and build inputs. An asynchronous
+readiness calibration also replaces two test waits that accepted promises before
+their Boolean conditions held. The aged-registration comparison collects all
+32 samples with working native controls and retains two generated-import requests
+for the runtime service-worker script. Production native HTTP denial remains the
+next security change; complete C1–C8 and deployment remain pending.
+
 The target remains [C1–C8](../threat-model.md): confined application activity cannot
 cause a remote request or connection, including to the runtime origin. Whether
 and when a request occurs count as observations. Private state may already exist
@@ -114,8 +132,8 @@ The stages below describe the complete argument. Execute the remaining work in
 the following order, retaining a checkpoint after each accepted change. Planning
 does not authorize treating any outstanding obligation as satisfied.
 
-1. **Reconcile the evidence.** Preserve remote revision `23ca1b1` and the current
-   uncommitted candidate separately. Record which source, build, browser settings
+1. **Reconcile the evidence.** Preserve remote revision `bff311f` and the policy-12
+   candidate separately. Record which source, build, browser settings
    and runner produced each receipt. Keep failed and inconclusive comparisons.
    Update the claim ledger only after reviewing the evidence it references.
    Acceptance requires a reproducible baseline with no historical result presented

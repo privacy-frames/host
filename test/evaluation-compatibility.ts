@@ -1,3 +1,4 @@
+import { waitUntil } from './helpers/poll.ts';
 import assert from 'node:assert/strict';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { basename } from 'node:path';
@@ -244,10 +245,64 @@ async function task(page: Page, id: string) {
       .locator('.cl-preview-section h1')
       .getByText('Synthetic evaluation', { exact: true })
       .waitFor();
-    return 'Markdown edited; preview heading rendered';
+    // Preview rendering precedes StackEdit's asynchronous autosave. Check a
+    // committed application record before the runner attempts an offline reload.
+    await waitUntil(
+      () =>
+        page.evaluate(async () => {
+          const database = await new Promise<IDBDatabase>((resolve, reject) => {
+            const request = indexedDB.open('stackedit-db');
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+          });
+          try {
+            const values = await new Promise<unknown[]>((resolve, reject) => {
+              const request = database
+                .transaction('objects')
+                .objectStore('objects')
+                .getAll();
+              request.onsuccess = () => resolve(request.result);
+              request.onerror = () => reject(request.error);
+            });
+            return values.some(
+              (value) =>
+                !!value &&
+                typeof value === 'object' &&
+                'type' in value &&
+                value.type === 'content' &&
+                'text' in value &&
+                typeof value.text === 'string' &&
+                value.text.includes('# Synthetic evaluation') &&
+                value.text.includes('**Private** local note'),
+            );
+          } finally {
+            database.close();
+          }
+        }),
+      'StackEdit did not commit the edited note',
+    );
+    return 'Markdown edited; preview heading rendered and note saved';
   }
   if (id === 'cyberchef') {
-    await page.locator('[contenteditable=true]').first().fill('Privacy Frames');
+    // The editor exists before input workers finish restoring the initial tab.
+    // An earlier write can be overwritten by that asynchronous initialization.
+    await page.waitForFunction(() => {
+      const app: unknown = Reflect.get(window, 'app');
+      return (
+        !!app &&
+        typeof app === 'object' &&
+        'appLoaded' in app &&
+        app.appLoaded === true &&
+        'waitersLoaded' in app &&
+        app.waitersLoaded === true &&
+        'workerLoaded' in app &&
+        app.workerLoaded === true
+      );
+    });
+    await page
+      .locator('[contenteditable=true]:not([aria-readonly=true])')
+      .first()
+      .fill('Privacy Frames');
     await page.locator('#search').fill('To Base64');
     await page.getByText('To Base64', { exact: true }).first().dblclick();
     await page.waitForFunction(() =>

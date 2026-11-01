@@ -15,12 +15,13 @@ without invoking it.
 The controller constructs the list from installed resources; parsing establishes
 its shape and membership. Resource ownership, immutable bytes and delivery still
 require their existing controller and reader contracts. The new metadata is the
-input needed to prepare local Window scripts before publication. Local initial
-and dynamic delivery and independent native HTTP denial remain the next work.
+input used by [policy-12 local Window delivery](native-window-policy.md) before
+publication. Independent native HTTP denial remains pending in production.
 
 The protocol unit cases include malformed inventories and a root-document
 inventory produced by the real installation path. The full regression suite,
-native worker and document comparisons pass with policy 11. Twenty-seven
+native worker and document comparisons pass with policy 11 at the revision pinned
+by [its evidence index](policy11-validation.json). Twenty-seven
 authority-predicate contracts and their omission, false-rejection and vacuous
 annotation controls also pass with the updated policy value. The
 [policy-10 evidence](policy10-validation.json) retains its earlier source/build

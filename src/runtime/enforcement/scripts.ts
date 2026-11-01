@@ -18,6 +18,7 @@ interface ScriptResources {
   isInstalledURL(input: unknown): boolean;
   baseURL?(): string;
   unavailableURL?: string;
+  localURL(url: string, module: boolean): string;
 }
 
 const stringProperties = internalSet<string>([
@@ -60,7 +61,9 @@ export function installScriptPolicy(
   const baseURI = descriptor(Node.prototype, 'baseURI')!.get!;
   const prototype = HTMLScriptElement.prototype;
   const nativeSrc = descriptor(prototype, 'src')!.get!;
+  const setSrc = descriptor(prototype, 'src')!.set!;
   const logicalSources = new WeakMap<HTMLScriptElement, string>();
+  const canonicalSources = new WeakMap<HTMLScriptElement, string>();
   const local = descriptor(Element.prototype, 'localName')!.get!;
   const namespace = descriptor(Element.prototype, 'namespaceURI')!.get!;
   const getAttribute = Element.prototype.getAttribute;
@@ -111,7 +114,12 @@ export function installScriptPolicy(
       apply(setAttribute, node, ['nonce', nonce]);
       return;
     }
-    if (source !== null) sourceURL(source);
+    if (source !== null) {
+      const canonical = canonicalSources.get(node) || sourceURL(source);
+      const physical = resources.localURL(canonical, type === 'module');
+      canonicalSources.set(node, canonical);
+      if (physical !== source) apply(setSrc, node, [resources.scriptURL(physical)]);
+    }
     // The nonce permits synchronous native inline execution in this already
     // confined realm. Script type and context creation remain separately gated.
     apply(setAttribute, node, ['nonce', nonce]);
@@ -119,7 +127,12 @@ export function installScriptPolicy(
 
   function scriptText(node: HTMLScriptElement, text: string): string {
     if (isDataScript(scriptType(apply(getAttribute, node, ['type']) || ''))) return text;
-    return relocateRuntimeModule(text, apply(baseURI, document, []), resources);
+    return relocateRuntimeModule(
+      text,
+      resources.baseURL?.() || apply(baseURI, document, []),
+      resources,
+      true,
+    );
   }
 
   function attribute(node: HTMLScriptElement, name: string, input: unknown): unknown {
@@ -142,7 +155,8 @@ export function installScriptPolicy(
       prepare(node);
       const mapped = sourceURL(value);
       logicalSources.set(node, logical);
-      return resources.scriptURL(mapped);
+      canonicalSources.set(node, mapped);
+      return resources.scriptURL(resources.localURL(mapped, type === 'module'));
     }
     prepare(node);
     return key === 'nonce' ? nonce : value;
@@ -172,8 +186,9 @@ export function installScriptPolicy(
             const type = scriptType(text);
             if (isDataScript(type) && apply(getAttribute, this, ['src']) !== null)
               fail('Data scripts must be inline');
+            const result = apply(setter, this, [text]);
             prepare(this);
-            return apply(setter, this, [text]);
+            return result;
           }
           if (['text', 'textContent', 'innerText'].includes(key)) {
             prepare(this);

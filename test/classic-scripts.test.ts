@@ -92,6 +92,35 @@ test('script fragments reuse admitted bytes while queries retain their identity'
   await assert.rejects(fetch(source + '#entry'));
 });
 
+test('classic and module sources share admitted bytes and revoke both variants', async () => {
+  let reads = 0;
+  const scripts = createClassicScripts(
+    [first],
+    async () => {
+      reads++;
+      return response('const value=17;');
+    },
+    (body, _url, module) =>
+      new TextDecoder().decode(body) +
+      (module ? 'export {value};' : 'globalThis.value=value;'),
+  );
+  await scripts.prepare();
+  const classic = scripts.resolve(first);
+  const module = scripts.resolve(first, true);
+  assert.notEqual(classic, module);
+  assert.equal(scripts.resolve(first), classic);
+  assert.equal(scripts.resolve(first, true), module);
+  assert.equal(reads, 1);
+  assert.equal(
+    await (await fetch(classic)).text(),
+    'const value=17;globalThis.value=value;',
+  );
+  assert.equal(await (await fetch(module)).text(), 'const value=17;export {value};');
+  scripts.close();
+  await assert.rejects(fetch(classic));
+  await assert.rejects(fetch(module));
+});
+
 test('closing during relocation prevents local URL publication', async () => {
   const scripts = createClassicScripts(
     [first],

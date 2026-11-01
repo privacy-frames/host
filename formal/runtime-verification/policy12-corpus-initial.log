@@ -1,0 +1,57 @@
+chromium photocraft standalone TASK PASS
+chromium photocraft confined TASK PASS
+chromium pitch standalone TASK PASS
+chromium pitch confined TASK PASS
+chromium wikipedia standalone TASK PASS
+chromium wikipedia confined TASK PASS
+chromium squoosh standalone TASK PASS
+chromium squoosh confined TASK PASS
+chromium excalidraw standalone TASK PASS
+chromium excalidraw confined Installation refused: https://privacy-frames.github.io/apps/excalidraw/fonts/Xiaolai/Xiaolai-Regular-761d05e3cd968cf574166867998ef06a.woff2: network
+chromium drawio standalone TASK PASS
+chromium drawio confined TASK PASS
+chromium stackedit standalone TASK PASS
+chromium stackedit confined TASK PASS
+chromium cyberchef standalone TASK PASS
+chromium cyberchef confined locator.fill: Timeout 12000ms exceeded.
+Call log:
+[2m  - waiting for locator('[contenteditable=true]').first()[22m
+
+firefox photocraft standalone TASK PASS
+firefox photocraft confined TASK PASS
+firefox pitch standalone TASK PASS
+firefox pitch confined TASK PASS
+firefox wikipedia standalone TASK PASS
+firefox wikipedia confined TASK PASS
+firefox squoosh standalone TASK PASS
+firefox squoosh confined TASK PASS
+firefox excalidraw standalone TASK PASS
+firefox excalidraw confined TASK PASS
+firefox drawio standalone TASK PASS
+firefox drawio confined TASK PASS
+firefox stackedit standalone TASK PASS
+firefox stackedit confined TASK PASS
+firefox cyberchef standalone TASK PASS
+firefox cyberchef confined locator.fill: Timeout 12000ms exceeded.
+Call log:
+[2m  - waiting for locator('[contenteditable=true]').first()[22m
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Eight-app native/confined task and offline comparison failed
+
+1 !== 0
+
+    at file:///home/damen/Projects/privacy-frames-runtime-proof/test/local-corpus.ts:35:10
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 1,
+  expected: 0,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v26.2.0

@@ -1,11 +1,17 @@
 # Runtime confinement verification
 
-The [policy-11 candidate](window-script-inventory.md) supplies validated JavaScript
-inventories for root and child Windows using the worker MIME classifier. Its
-[validation](policy11-validation.json) records 202 unit checks, the full regression
-suite, all eight unchanged application comparisons and sixteen offline reloads
-against stable source and build inputs. Local Window delivery and production
-native HTTP denial remain pending.
+The [policy-12 candidate](native-window-policy.md) delivers admitted application
+scripts locally in root and child Windows through native module maps. Its
+[validation](policy12-validation.json) records 208 unit checks, the full regression
+suite, 32 native/confined application tasks and sixteen offline reloads against
+stable source and build inputs. Sixteen component cases exercise an independent
+native HTTP-denying policy in HTML and SVG. Production policy still permits HTTP;
+the 32-sample aged-registration comparison retains two generated-import requests
+with working native controls. Complete confinement and deployment remain pending.
+
+Policy 11 introduced the validated installed-script inventory consumed by this
+path. Its [historical validation](policy11-validation.json) pins the earlier
+source revision and results.
 
 This work implements the eight-stage plan for a compositional confinement
 argument. The baseline is host revision
@@ -415,3 +421,18 @@ retains the JavaScript verifier and adds the model, instruction semantics and
 emitter. It removes no trusted boundary in this experiment. The generated
 candidate stays a comparison artifact rather than a second runtime path. Caller
 ownership, native context behavior and browser coverage remain separate work.
+
+## Asynchronous readiness calibration
+
+Run `node formal/runtime-verification/async-poll-calibration.ts` after building.
+In the pinned Playwright library, an asynchronous false predicate resolves a
+`waitForFunction` handle containing false; it does not keep polling. A synchronous
+false predicate times out. The owned-page comparison records both native controls
+in Chromium and Firefox, then checks that the Node helper rejects asynchronous
+false results and observes three attempts before its positive producer is ready.
+Its receipt records the actual library, source, build and runner digests.
+
+The same helper now waits for StackEdit's committed note and the publisher
+executor's pending stylesheet observation. It replaces two asynchronous predicate
+calls found in the repository. Caller and browser-effect proofs remain separate
+from this calibration of the test method.

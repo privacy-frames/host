@@ -125,6 +125,7 @@ async function start(script: Element | null) {
     }),
   );
   realm.admitContent(config.content);
+  await realm.prepareScripts();
   const renderer = createDocumentRenderer(
     internalRecord({
       nonce: config.nonce,

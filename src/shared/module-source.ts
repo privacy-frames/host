@@ -1,5 +1,6 @@
 import { strings, internalRecord, internalArray, internalSet } from './primordials.ts';
 import { parse } from 'acorn';
+import { hasModuleReferences } from './module-references.ts';
 
 const isArray = Array.isArray;
 const objectValues = Object.values;
@@ -139,6 +140,7 @@ export function mutableModuleMetadata(program: SyntaxNode): boolean {
 
 /** Keep asset URL construction tied to the publisher module after resource relocation. */
 export function relocateImportMeta(code: string, moduleURL: string): string {
+  if (!hasModuleReferences(code)) return code;
   let program: SyntaxNode;
   try {
     program = parseProgram(code);

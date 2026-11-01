@@ -82,9 +82,7 @@ export async function checkBoundaryProbes(page: Page) {
         } else if (name === 'Existing script property mutation') {
           const script = document.querySelector('script')!;
           const physical = new URL(script.getAttribute('src')!, location.href);
-          safe =
-            physical.origin === location.origin &&
-            physical.pathname.endsWith('/__contexts/unavailable-script');
+          safe = physical.origin === location.origin && physical.protocol === 'blob:';
           // A previously executed script does not fetch again when src changes.
           // Insert a fresh element too, so this checks an actual load attempt.
           const fresh = document.createElement('script');
@@ -105,7 +103,7 @@ export async function checkBoundaryProbes(page: Page) {
           safe &&=
             outcome === 'error' &&
             freshPhysical.origin === location.origin &&
-            freshPhysical.pathname.endsWith('/__contexts/unavailable-script') &&
+            freshPhysical.protocol === 'blob:' &&
             Reflect.get(window, '__boundaryExternalScriptExecuted') !== true;
           fresh.remove();
           detail =

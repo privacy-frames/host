@@ -183,8 +183,10 @@ export function prepareWorkerRealm(
     }),
   );
   resources.install(context.aliases, undefined, context.rootAliases);
-  const modules = createModuleLoader(worker.fetch.bind(worker), (code, url) =>
-    relocateRuntimeModule(code, url, resources, true),
+  const modules = createModuleLoader(
+    worker.fetch.bind(worker),
+    (code, url) => relocateRuntimeModule(code, url, resources, true),
+    resources.mapURL,
   );
   const classicScripts = createClassicScripts(
     context.scripts,

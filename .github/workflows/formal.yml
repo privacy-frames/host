@@ -181,7 +181,8 @@ jobs:
             formal/runtime-verification/module-loader-browser.json \
             formal/runtime-verification/module-loader-browser-persistent.json \
             formal/runtime-verification/module-loader-guard-browser.json \
-            formal/runtime-verification/window-module-policy.json \
+            formal/runtime-verification/native-window-policy.json \
+            formal/runtime-verification/async-poll-calibration.json \
             formal/runtime-verification/local-shared-issuer-port.json
       - uses: actions/setup-node@v6
         with:
@@ -205,8 +206,9 @@ jobs:
       - name: Check Window module loading under the independent script policy
         if: ${{ !cancelled() }}
         run: |
-          npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/runtime-verification/window-module-policy.ts
-          node formal/runtime-verification/window-module-policy.ts
+          npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/runtime-verification/native-window-policy.ts formal/runtime-verification/async-poll-calibration.ts
+          node formal/runtime-verification/native-window-policy.ts
+          node formal/runtime-verification/async-poll-calibration.ts
       - name: Check private-port shared-worker issuing prerequisites
         if: ${{ !cancelled() }}
         run: |
@@ -220,7 +222,8 @@ jobs:
             formal/runtime-verification/module-loader-browser.json
             formal/runtime-verification/module-loader-browser-persistent.json
             formal/runtime-verification/module-loader-guard-browser.json
-            formal/runtime-verification/window-module-policy.json
+            formal/runtime-verification/native-window-policy.json
+            formal/runtime-verification/async-poll-calibration.json
             formal/runtime-verification/local-shared-issuer-port.json
   worker-closure:
     runs-on: ubuntu-latest

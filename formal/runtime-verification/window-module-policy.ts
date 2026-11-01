@@ -63,7 +63,7 @@ const modules=createModuleLoader(async input=>{
   });
   Object.defineProperty(response,'url',{value:input});
   return response;
-},(code,url)=>relocateRuntimeModule(code,url,resources,true));
+},(code,url)=>relocateRuntimeModule(code,url,resources,true),resources.mapURL);
 Object.defineProperty(window,'privacyHost',{
   value:Object.freeze({importModule:modules.importModule})
 });

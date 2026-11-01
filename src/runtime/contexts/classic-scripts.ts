@@ -21,16 +21,17 @@ const bytes = Response.prototype.arrayBuffer;
 const byteLength = ownDescriptor(ArrayBuffer.prototype, 'byteLength')!.get!;
 
 interface ClassicScript {
-  body: ArrayBuffer | undefined;
+  body: ArrayBuffer;
   type: string;
-  source?: string;
+  sources: Map<boolean, string>;
 }
 
 /** Preload the admitted script set so importScripts stays synchronous and local. */
 export function createClassicScripts(
   urls: readonly string[],
   load: (url: string) => Promise<Response>,
-  relocate: (body: ArrayBuffer, url: string) => BlobPart = (body) => body,
+  relocate: (body: ArrayBuffer, url: string, module: boolean) => BlobPart = (body) =>
+    body,
 ) {
   const local = internalMap<string, ClassicScript>();
   let pending: Promise<void> | undefined;
@@ -40,7 +41,7 @@ export function createClassicScripts(
     closed = true;
     ready = false;
     for (const script of local.values())
-      if (script.source) apply(revokeURL, NativeURL, [script.source]);
+      for (const source of script.sources.values()) apply(revokeURL, NativeURL, [source]);
     local.clear();
   }
   async function collect() {
@@ -70,7 +71,10 @@ export function createClassicScripts(
             'Classic script set exceeds the installation limit',
             'QuotaExceededError',
           );
-        local.set(url, internalRecord({ body, type }));
+        local.set(
+          url,
+          internalRecord({ body, type, sources: internalMap<boolean, string>() }),
+        );
       }
       if (closed) throw new NativeException('Script preparation closed', 'AbortError');
       ready = true;
@@ -83,7 +87,7 @@ export function createClassicScripts(
     prepare() {
       return (pending ??= collect());
     },
-    resolve(url: string): string {
+    resolve(url: string, module = false): string {
       const separator = strings.indexOf(url, '#');
       const key = separator < 0 ? url : strings.slice(url, 0, separator);
       const fragment = separator < 0 ? '' : strings.slice(url, separator);
@@ -93,16 +97,15 @@ export function createClassicScripts(
           'Classic script is not locally prepared',
           'NetworkError',
         );
-      if (script.source) return script.source + fragment;
-      if (!script.body)
-        throw new NativeException('Classic script bytes are unavailable', 'NetworkError');
-      const body = relocate(script.body, key);
+      const existing = script.sources.get(module);
+      if (existing) return existing + fragment;
+      const body = relocate(script.body, key, module);
       if (closed) throw new NativeException('Script preparation closed', 'AbortError');
-      script.source = apply(createURL, NativeURL, [
+      const source: string = apply(createURL, NativeURL, [
         new NativeBlob(internalArray([body]), internalRecord({ type: script.type })),
       ]);
-      script.body = undefined;
-      return script.source + fragment;
+      script.sources.set(module, source);
+      return source + fragment;
     },
     close,
   });

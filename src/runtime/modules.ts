@@ -14,6 +14,7 @@ import {
 } from '../shared/module-source.ts';
 import { Parser } from 'acorn';
 import importPhases from 'acorn-import-phases';
+import { hasModuleReferences } from '../shared/module-references.ts';
 
 interface ModuleResources {
   mapURL(input: unknown): string;
@@ -42,6 +43,7 @@ export function relocateRuntimeModule(
   resources: ModuleResources,
   localDynamicImports = false,
 ): string {
+  if (!hasModuleReferences(code)) return code;
   try {
     const edits = internalArray<{ start: number; end: number; text: string }>();
     const visit = (current: SyntaxNode): void => {

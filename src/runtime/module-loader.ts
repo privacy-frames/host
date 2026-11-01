@@ -16,8 +16,16 @@ const entries = Object.entries;
 export function createModuleLoader(
   fetchResource: typeof fetch,
   transform: (code: string, url: string) => string,
+  mapURL: (url: string) => string,
 ) {
   let importer: Function | undefined;
+  function resolveModule(value: unknown, parent: unknown, resolve: unknown): string {
+    if (typeof value !== 'string' || typeof resolve !== 'function')
+      throw new NativeTypeError('Invalid module resolution');
+    const resolved: unknown = apply(resolve, undefined, [value, parent]);
+    if (typeof resolved !== 'string') throw new NativeTypeError('Invalid module URL');
+    return mapURL(resolved);
+  }
   async function sourceHook(
     url: unknown,
     options: unknown,
@@ -57,6 +65,8 @@ export function createModuleLoader(
             nativePassthrough: false,
             fetch: fetchResource,
             source: sourceHook,
+            resolve: resolveModule,
+            noLoadEventRetriggers: true,
           }),
           writable: true,
           configurable: true,
