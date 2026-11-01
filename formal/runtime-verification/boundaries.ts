@@ -71,13 +71,17 @@ export const boundaries: readonly Boundary[] = [
   {
     id: 'dedicated-worker-publication',
     obligation:
-      'Return a mediated worker, authenticate bootstrap, and release queued messages only after preparation.',
-    invariants: ['C1', 'C2', 'C3', 'C5', 'C7'],
+      'Issue the local guard source privately, bind its native client to an authenticated parent, and release application messages only after preparation.',
+    invariants: ['C1', 'C2', 'C3', 'C5', 'C6', 'C7'],
     sources: [
+      'scripts/trusted-policy.ts',
+      'scripts/build.ts',
       'src/runtime/contexts/worker-factory.ts',
       'src/runtime/contexts/worker-control.ts',
       'src/runtime/contexts/worker-client.ts',
       'src/runtime/contexts/worker-protocol.ts',
+      'src/runtime/contexts/worker-birth.ts',
+      'src/runtime/contexts/worker-birth-protocol.ts',
       'src/runtime/contexts/worker-resource-protocol.ts',
       'src/runtime/resource-fetch.ts',
       'src/runtime/resource-broker.ts',

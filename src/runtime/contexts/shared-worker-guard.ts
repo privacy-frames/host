@@ -1,6 +1,7 @@
 import {
   createHTTPWorkerControl,
   createHTTPWorkerResourceRead,
+  createHTTPWorkerBirth,
 } from './worker-client.ts';
 import {
   strings,
@@ -37,6 +38,7 @@ const realm = prepareWorkerRealm(
   'connect',
   createHTTPWorkerControl(context),
   createHTTPWorkerResourceRead(context),
+  createHTTPWorkerBirth(context),
 );
 const { apply, method, accessor, propertyOwner } = realm.tools;
 const namespace = parseSharedWorkerKey(nativeName);

@@ -1,8 +1,10 @@
 # Private native script URL admission
 
-Context policy 6 adds native Trusted Types enforcement while retaining the
-existing HTTP worker bootstrap directory. Blob worker startup is still refused
-by production CSP. The service-worker maintenance counterexample remains open.
+This records the policy-6 native Trusted Types integration and its validation
+receipts. That candidate retained HTTP worker bootstrap and refused Blob workers
+in CSP. The subsequent [policy-7 candidate](local-worker-startup.md) uses the gate
+for local dedicated-worker startup; the policy-6 receipts retain their original
+source and build scope.
 
 ## Implementation
 

@@ -4,8 +4,12 @@ import {
   internalRecord,
 } from '../../shared/primordials.ts';
 import { createPortClient, type PrivateClient } from '../private-channel.ts';
-import { createWorkerControl, createWorkerResourceRead } from './worker-client.ts';
-import { readWorkerMetadata, prepareWorkerRealm } from './worker-realm.ts';
+import {
+  createWorkerControl,
+  createWorkerResourceRead,
+  createWorkerBirth,
+} from './worker-client.ts';
+import { parseWorkerMetadata, prepareWorkerRealm } from './worker-realm.ts';
 const worker = self as unknown as DedicatedWorkerGlobalScope;
 const rawAdd = EventTarget.prototype.addEventListener;
 const rawStop = Event.prototype.stopImmediatePropagation;
@@ -14,21 +18,7 @@ const rawMessagePorts = ownDescriptor(MessageEvent.prototype, 'ports')!.get!;
 const rawPortPost = MessagePort.prototype.postMessage;
 const rawPortStart = MessagePort.prototype.start;
 const rawPortClose = MessagePort.prototype.close;
-const context = readWorkerMetadata('dedicated-worker');
-let broker: PrivateClient | undefined;
-const realm = prepareWorkerRealm(
-  context,
-  'message',
-  createWorkerControl((packet) => {
-    if (!broker) throw new Error('Worker parent broker unavailable');
-    return broker.request(packet);
-  }),
-  createWorkerResourceRead((packet) => {
-    if (!broker) throw new Error('Worker parent broker unavailable');
-    return broker.request(packet);
-  }),
-);
-const { apply } = realm.tools;
+const apply = Reflect.apply;
 apply(rawAdd, worker, [
   'message',
   (event: MessageEvent<unknown>) => {
@@ -46,7 +36,7 @@ apply(rawAdd, worker, [
     )
       throw new Error('Invalid context bootstrap channel');
     const port = ports[0];
-    broker = createPortClient(ports[1]);
+    const broker: PrivateClient = createPortClient(ports[1]);
     apply(rawAdd, port, [
       'message',
       async (message: MessageEvent<unknown>) => {
@@ -63,13 +53,22 @@ apply(rawAdd, worker, [
             !start ||
             typeof start !== 'object' ||
             !('type' in start) ||
-            start.type !== 'pf-context-start'
+            start.type !== 'pf-context-start' ||
+            !('context' in start)
           )
             throw new Error('Invalid worker source');
+          const context = parseWorkerMetadata(start.context, 'dedicated-worker');
+          const realm = prepareWorkerRealm(
+            context,
+            'message',
+            createWorkerControl(broker.request),
+            createWorkerResourceRead(broker.request),
+            createWorkerBirth(broker.request),
+          );
           await realm.load(start, notify);
           apply(rawPortPost, port, [internalRecord({ type: 'pf-context-started' })]);
         } catch (error) {
-          broker?.close();
+          broker.close();
           apply(rawPortPost, port, [internalRecord({ type: 'pf-context-failed' })]);
           console.error(
             'Worker startup failed:',
@@ -82,6 +81,7 @@ apply(rawAdd, worker, [
       internalRecord({ once: true }),
     ]);
     apply(rawPortStart, port, []);
+    apply(rawPortPost, port, [internalRecord({ type: 'pf-context-bootstrap-ready' })]);
   },
   internalRecord({ once: true }),
 ]);

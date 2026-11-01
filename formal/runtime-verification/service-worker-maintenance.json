@@ -1,12 +1,12 @@
 {
-  "scope": "Native and actual confined worker creation, chosen by a private input bit, compared with no-worker and idle controls. Fixed-URL service-worker maintenance is observed at independent HTTP servers. Bounded observations do not establish exhaustive browser behavior or channel capacity.",
+  "scope": "Classic/module worker startup with dependencies, chosen by a private input bit. Native groups must demonstrate worker-triggered maintenance; every confined sample must produce zero HTTP requests. No-worker and idle controls use separate fresh contexts. These bounded observations do not establish exhaustive browser behavior or complete confinement.",
   "provenance": {
-    "capturedAt": "2026-11-01T01:19:57.603Z",
-    "revision": "8dc3e9a8eef98906f9daf6057fbe291ff72f5cb6",
+    "capturedAt": "2026-11-01T02:52:19.597Z",
+    "revision": "d545180d1b5cf5d28427796d23aef17ee612291c",
     "dirty": true,
-    "sourceSHA256": "6306dcd312854b38593a6d359067cad23014c24c04d8bfd95e3f658187c3cf64",
+    "sourceSHA256": "45922e8504cd0869f82394bf92f061ab3ecb8efb8fdc60dbcaa2dd1aaa2e7368",
     "runner": "formal/runtime-verification/service-worker-maintenance.ts",
-    "runnerSHA256": "ebefda0405a24606196232f0435d34f9e501ef1c2f361b3321274389717ef552",
+    "runnerSHA256": "6af55176af225bfa1a0eeaeda088d30c58e982fa4b36730024662c8558da8273",
     "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
     "artifacts": {
       "dist-manager/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -17,22 +17,21 @@
       "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-manager/sw.js": "daa6b88d333b34abe2aad5e4476ee36b837c906c032e4afba8eb4ee409beb634",
+      "dist-manager/sw.js": "4add49c37143a885fd8e8a97873efae6c10cb01e1133fd0eccc3dd3c81647544",
       "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
       "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
       "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
-      "dist-runtime/document-guard.js": "6f7f9c97701bd765e4d75a3cfed55a2c238cf36012baf92fb8e4db6df9c55618",
-      "dist-runtime/guard.js": "15721b03c443de070883b76a415a2d4b7d57cdc2db7f53bf231b0f1014e1f202",
+      "dist-runtime/document-guard.js": "eb15fd591a44c3d9f95ea9ef40d43394fadf5c318fec608a136d5605eb622514",
+      "dist-runtime/guard.js": "910e17fe9e123cbf3df2d45768e70e48d582211d7a2cf94e1254c59400cfd837",
       "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
       "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
-      "dist-runtime/publisher-worker-guard.js": "7241d5302be22333d07fdc076b4f14e19ff3ac44272e9e3155e5c2f234dc3fa3",
+      "dist-runtime/publisher-worker-guard.js": "193727ed4d7750bc7070b1129507a330e1679917dc1e6470619daaae6ab9079d",
       "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
       "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
       "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
-      "dist-runtime/shared-worker-guard.js": "aada1b670235e1981b72ef45cfb3768420f71e3da3ec55fb11002fe8f32c0abe",
-      "dist-runtime/sw.js": "e2660c324c0341c4c5467dfaab05154bba26f71182ee6a4ad256695dd6c808c0",
-      "dist-runtime/worker-guard.js": "4573d308365d2bc9720451f752974c2a9b3e3cf6d76440faddbaeb14d11ec6a0",
+      "dist-runtime/shared-worker-guard.js": "f477be4cdc677c730f58a9e24339ee7be9b540a7f23af109de48ae65ecd49417",
+      "dist-runtime/sw.js": "25ed1cd199aa465960646dbc23fd19a907787baf6f8bcfdff9360c0b841f4231",
       "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
       "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
       "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
@@ -45,9 +44,10 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 0,
-      "actionStarted": 1793496002370,
-      "observationEnded": 1793496005399,
+      "actionStarted": 1793501544363,
+      "observationEnded": 1793501547394,
       "confined": false,
+      "workerType": "classic",
       "bit": "0",
       "idleRuntime": [],
       "idlePublisher": [],
@@ -59,9 +59,10 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 1,
-      "actionStarted": 1793496009963,
-      "observationEnded": 1793496013018,
+      "actionStarted": 1793501551969,
+      "observationEnded": 1793501555031,
       "confined": false,
+      "workerType": "classic",
       "bit": "1",
       "idleRuntime": [],
       "idlePublisher": [],
@@ -69,13 +70,13 @@
       "publisherTraffic": [
         {
           "path": "/sw.js",
-          "time": 1793496011008
+          "time": 1793501553019
         }
       ],
       "updateRequests": [
         {
           "path": "/sw.js",
-          "time": 1793496011008
+          "time": 1793501553019
         }
       ]
     },
@@ -83,9 +84,10 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 2,
-      "actionStarted": 1793496017578,
-      "observationEnded": 1793496020637,
+      "actionStarted": 1793501559607,
+      "observationEnded": 1793501562664,
       "confined": false,
+      "workerType": "classic",
       "bit": "1",
       "idleRuntime": [],
       "idlePublisher": [],
@@ -93,13 +95,13 @@
       "publisherTraffic": [
         {
           "path": "/sw.js",
-          "time": 1793496018625
+          "time": 1793501560653
         }
       ],
       "updateRequests": [
         {
           "path": "/sw.js",
-          "time": 1793496018625
+          "time": 1793501560653
         }
       ]
     },
@@ -107,9 +109,10 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 3,
-      "actionStarted": 1793496025198,
-      "observationEnded": 1793496028230,
+      "actionStarted": 1793501567238,
+      "observationEnded": 1793501570273,
       "confined": false,
+      "workerType": "classic",
       "bit": "0",
       "idleRuntime": [],
       "idlePublisher": [],
@@ -121,9 +124,10 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 0,
-      "actionStarted": 1793496037174,
-      "observationEnded": 1793496040213,
+      "actionStarted": 1793501578211,
+      "observationEnded": 1793501581240,
       "confined": true,
+      "workerType": "classic",
       "bit": "0",
       "idleRuntime": [],
       "idlePublisher": [],
@@ -135,25 +139,84 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 1,
-      "actionStarted": 1793496049142,
-      "observationEnded": 1793496052451,
+      "actionStarted": 1793501589183,
+      "observationEnded": 1793501592505,
       "confined": true,
+      "workerType": "classic",
       "bit": "1",
       "idleRuntime": [],
       "idlePublisher": [],
-      "runtime": [
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "sample": 2,
+      "actionStarted": 1793501600438,
+      "observationEnded": 1793501603753,
+      "confined": true,
+      "workerType": "classic",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "sample": 3,
+      "actionStarted": 1793501611700,
+      "observationEnded": 1793501614738,
+      "confined": true,
+      "workerType": "classic",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "sample": 0,
+      "actionStarted": 1793501619313,
+      "observationEnded": 1793501622356,
+      "confined": false,
+      "workerType": "module",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "sample": 1,
+      "actionStarted": 1793501626927,
+      "observationEnded": 1793501629976,
+      "confined": false,
+      "workerType": "module",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [
         {
-          "port": 4211,
-          "path": "/runtime/sw.js",
-          "method": "GET"
+          "path": "/sw.js",
+          "time": 1793501627966
         }
       ],
-      "publisherTraffic": [],
       "updateRequests": [
         {
-          "port": 4211,
-          "path": "/runtime/sw.js",
-          "method": "GET"
+          "path": "/sw.js",
+          "time": 1793501627966
         }
       ]
     },
@@ -161,25 +224,24 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 2,
-      "actionStarted": 1793496061391,
-      "observationEnded": 1793496064702,
-      "confined": true,
+      "actionStarted": 1793501634546,
+      "observationEnded": 1793501637610,
+      "confined": false,
+      "workerType": "module",
       "bit": "1",
       "idleRuntime": [],
       "idlePublisher": [],
-      "runtime": [
+      "runtime": [],
+      "publisherTraffic": [
         {
-          "port": 4211,
-          "path": "/runtime/sw.js",
-          "method": "GET"
+          "path": "/sw.js",
+          "time": 1793501635599
         }
       ],
-      "publisherTraffic": [],
       "updateRequests": [
         {
-          "port": 4211,
-          "path": "/runtime/sw.js",
-          "method": "GET"
+          "path": "/sw.js",
+          "time": 1793501635599
         }
       ]
     },
@@ -187,9 +249,70 @@
       "browser": "chromium",
       "version": "153.0.8010.12",
       "sample": 3,
-      "actionStarted": 1793496073623,
-      "observationEnded": 1793496076659,
+      "actionStarted": 1793501642182,
+      "observationEnded": 1793501645221,
+      "confined": false,
+      "workerType": "module",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "sample": 0,
+      "actionStarted": 1793501653178,
+      "observationEnded": 1793501656220,
       "confined": true,
+      "workerType": "module",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "sample": 1,
+      "actionStarted": 1793501664164,
+      "observationEnded": 1793501667484,
+      "confined": true,
+      "workerType": "module",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "sample": 2,
+      "actionStarted": 1793501675437,
+      "observationEnded": 1793501678751,
+      "confined": true,
+      "workerType": "module",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "sample": 3,
+      "actionStarted": 1793501686677,
+      "observationEnded": 1793501689719,
+      "confined": true,
+      "workerType": "module",
       "bit": "0",
       "idleRuntime": [],
       "idlePublisher": [],
@@ -201,9 +324,10 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 0,
-      "actionStarted": 1793496082186,
-      "observationEnded": 1793496085244,
+      "actionStarted": 1793501695285,
+      "observationEnded": 1793501698344,
       "confined": false,
+      "workerType": "classic",
       "bit": "0",
       "idleRuntime": [],
       "idlePublisher": [],
@@ -215,9 +339,10 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 1,
-      "actionStarted": 1793496089946,
-      "observationEnded": 1793496093026,
+      "actionStarted": 1793501703077,
+      "observationEnded": 1793501706141,
       "confined": false,
+      "workerType": "classic",
       "bit": "1",
       "idleRuntime": [],
       "idlePublisher": [],
@@ -225,13 +350,13 @@
       "publisherTraffic": [
         {
           "path": "/sw.js",
-          "time": 1793496091008
+          "time": 1793501704123
         }
       ],
       "updateRequests": [
         {
           "path": "/sw.js",
-          "time": 1793496091008
+          "time": 1793501704123
         }
       ]
     },
@@ -239,9 +364,10 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 2,
-      "actionStarted": 1793496097735,
-      "observationEnded": 1793496100814,
+      "actionStarted": 1793501710864,
+      "observationEnded": 1793501713951,
       "confined": false,
+      "workerType": "classic",
       "bit": "1",
       "idleRuntime": [],
       "idlePublisher": [],
@@ -249,13 +375,13 @@
       "publisherTraffic": [
         {
           "path": "/sw.js",
-          "time": 1793496098797
+          "time": 1793501711934
         }
       ],
       "updateRequests": [
         {
           "path": "/sw.js",
-          "time": 1793496098797
+          "time": 1793501711934
         }
       ]
     },
@@ -263,9 +389,10 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 3,
-      "actionStarted": 1793496105506,
-      "observationEnded": 1793496108565,
+      "actionStarted": 1793501718665,
+      "observationEnded": 1793501721733,
       "confined": false,
+      "workerType": "classic",
       "bit": "0",
       "idleRuntime": [],
       "idlePublisher": [],
@@ -277,9 +404,10 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 0,
-      "actionStarted": 1793496115500,
-      "observationEnded": 1793496118562,
+      "actionStarted": 1793501728740,
+      "observationEnded": 1793501731795,
       "confined": true,
+      "workerType": "classic",
       "bit": "0",
       "idleRuntime": [],
       "idlePublisher": [],
@@ -291,25 +419,84 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 1,
-      "actionStarted": 1793496125551,
-      "observationEnded": 1793496128786,
+      "actionStarted": 1793501738809,
+      "observationEnded": 1793501742045,
       "confined": true,
+      "workerType": "classic",
       "bit": "1",
       "idleRuntime": [],
       "idlePublisher": [],
-      "runtime": [
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 2,
+      "actionStarted": 1793501749042,
+      "observationEnded": 1793501752281,
+      "confined": true,
+      "workerType": "classic",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 3,
+      "actionStarted": 1793501759297,
+      "observationEnded": 1793501762358,
+      "confined": true,
+      "workerType": "classic",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 0,
+      "actionStarted": 1793501767098,
+      "observationEnded": 1793501770156,
+      "confined": false,
+      "workerType": "module",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 1,
+      "actionStarted": 1793501774873,
+      "observationEnded": 1793501777937,
+      "confined": false,
+      "workerType": "module",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [
         {
-          "port": 4211,
-          "path": "/runtime/sw.js",
-          "method": "GET"
+          "path": "/sw.js",
+          "time": 1793501775984
         }
       ],
-      "publisherTraffic": [],
       "updateRequests": [
         {
-          "port": 4211,
-          "path": "/runtime/sw.js",
-          "method": "GET"
+          "path": "/sw.js",
+          "time": 1793501775984
         }
       ]
     },
@@ -317,25 +504,24 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 2,
-      "actionStarted": 1793496135768,
-      "observationEnded": 1793496139005,
-      "confined": true,
+      "actionStarted": 1793501782944,
+      "observationEnded": 1793501786024,
+      "confined": false,
+      "workerType": "module",
       "bit": "1",
       "idleRuntime": [],
       "idlePublisher": [],
-      "runtime": [
+      "runtime": [],
+      "publisherTraffic": [
         {
-          "port": 4211,
-          "path": "/runtime/sw.js",
-          "method": "GET"
+          "path": "/sw.js",
+          "time": 1793501784007
         }
       ],
-      "publisherTraffic": [],
       "updateRequests": [
         {
-          "port": 4211,
-          "path": "/runtime/sw.js",
-          "method": "GET"
+          "path": "/sw.js",
+          "time": 1793501784007
         }
       ]
     },
@@ -343,9 +529,70 @@
       "browser": "firefox",
       "version": "155.0",
       "sample": 3,
-      "actionStarted": 1793496146000,
-      "observationEnded": 1793496149060,
+      "actionStarted": 1793501790748,
+      "observationEnded": 1793501793806,
+      "confined": false,
+      "workerType": "module",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 0,
+      "actionStarted": 1793501800817,
+      "observationEnded": 1793501803879,
       "confined": true,
+      "workerType": "module",
+      "bit": "0",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 1,
+      "actionStarted": 1793501810882,
+      "observationEnded": 1793501814121,
+      "confined": true,
+      "workerType": "module",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 2,
+      "actionStarted": 1793501821125,
+      "observationEnded": 1793501824363,
+      "confined": true,
+      "workerType": "module",
+      "bit": "1",
+      "idleRuntime": [],
+      "idlePublisher": [],
+      "runtime": [],
+      "publisherTraffic": [],
+      "updateRequests": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "sample": 3,
+      "actionStarted": 1793501831381,
+      "observationEnded": 1793501834442,
+      "confined": true,
+      "workerType": "module",
       "bit": "0",
       "idleRuntime": [],
       "idlePublisher": [],
@@ -358,6 +605,7 @@
     {
       "browser": "chromium",
       "confined": false,
+      "workerType": "classic",
       "positiveSamples": 2,
       "workerSamples": 2,
       "noWorkerSamples": 2
@@ -365,13 +613,31 @@
     {
       "browser": "chromium",
       "confined": true,
+      "workerType": "classic",
+      "positiveSamples": 0,
+      "workerSamples": 2,
+      "noWorkerSamples": 2
+    },
+    {
+      "browser": "chromium",
+      "confined": false,
+      "workerType": "module",
       "positiveSamples": 2,
+      "workerSamples": 2,
+      "noWorkerSamples": 2
+    },
+    {
+      "browser": "chromium",
+      "confined": true,
+      "workerType": "module",
+      "positiveSamples": 0,
       "workerSamples": 2,
       "noWorkerSamples": 2
     },
     {
       "browser": "firefox",
       "confined": false,
+      "workerType": "classic",
       "positiveSamples": 2,
       "workerSamples": 2,
       "noWorkerSamples": 2
@@ -379,12 +645,29 @@
     {
       "browser": "firefox",
       "confined": true,
+      "workerType": "classic",
+      "positiveSamples": 0,
+      "workerSamples": 2,
+      "noWorkerSamples": 2
+    },
+    {
+      "browser": "firefox",
+      "confined": false,
+      "workerType": "module",
       "positiveSamples": 2,
+      "workerSamples": 2,
+      "noWorkerSamples": 2
+    },
+    {
+      "browser": "firefox",
+      "confined": true,
+      "workerType": "module",
+      "positiveSamples": 0,
       "workerSamples": 2,
       "noWorkerSamples": 2
     }
   ],
   "observationMilliseconds": 3000,
   "completed": true,
-  "completedAt": "2026-11-01T01:22:29.301Z"
+  "completedAt": "2026-11-01T02:57:14.564Z"
 }

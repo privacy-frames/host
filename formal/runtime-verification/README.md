@@ -6,6 +6,10 @@ argument. The baseline is host revision
 `runtime-confinement-proof` branch in a separate worktree. The baseline's models,
 source checks and browser receipts retain their documented scopes.
 
+The [policy-7 candidate](local-worker-startup.md) replaces dedicated HTTP bootstrap
+with a local guard and private native-client binding. Shared/publisher roots and
+HTTP dependency delivery remain separate work. Complete confinement is unestablished.
+
 The target is the contract in [the threat model](../threat-model.md). Applications
 remain ordinary JavaScript, including asynchronous execution and prototype
 modification. The host remains a static web application. Publisher-specific
@@ -82,11 +86,13 @@ arguments even where the abstract publication contract is shared.
 
 ## Progress
 
-Context policy 6 adds a [private native script URL gate](script-url-gate.md).
+Context policy 6 added a [private native script URL gate](script-url-gate.md).
 Preparation checks actual enforcement before application execution; native
-Worker and script URL consumers receive private branded values. The existing
-worker-source restriction remains in place. Local bootstrap, registration
-lifetime, complete ownership proofs and browser coverage remain open.
+Worker and script URL consumers receive private branded values. The
+policy-7 [startup candidate](local-worker-startup.md) uses that gate for local
+dedicated guards and private native-client binding. The fresh-registration
+startup regression is quiet in both browsers with working native update controls.
+Registration lifetime, complete ownership proofs and browser coverage remain open.
 
 - Stage 1: contract being specified and reviewed against current behavior.
 - Stage 2: entry-point review started; complete authority mapping remains open.
@@ -103,12 +109,13 @@ lifetime, complete ownership proofs and browser coverage remain open.
   checked heap contracts, eight actual comparison-removal controls and a
   zero-contract rejection. Caller filtering and asynchronous freshness are still
   separate obligations.
-- Stage 6: a worker-creation experiment reproduces application-dependent update
-  requests in both browsers. See the [maintenance finding](service-worker-maintenance.md).
+- Stage 6: the [maintenance comparison](service-worker-maintenance.md) preserves
+  the policy-6 counterexample and records 32 policy-7 classic/module samples.
+  Confined startup is quiet; every native control group demonstrates updates.
   The [backend comparison](maintenance-backends.md) also finds limitations of
   Blob bootstraps and unregistration. After unregistration, native HTTP worker
   and frame bootstraps also reach the server in both browsers. Browser coverage
-  and a repair remain open.
+  beyond the selected startup paths remains open.
   A [pinned WebSpec source assessment](webspec-assessment.md) identifies the
   missing registration/update lifecycle for this obligation.
   A [message resource prototype](message-resource-broker.md) passes selected worker
@@ -144,14 +151,15 @@ lifetime, complete ownership proofs and browser coverage remain open.
   child hop, and the controller validates the complete supplied ancestry against
   native bindings. Shared/publisher roots retain an explicit worker-only HTTP
   adapter. Native parent-selection and delegation faults are detected; complete
-  protocol refinement and local bootstrap/resource delivery remain open.
-  Shared/publisher native names now include context policy version 6. The
+  protocol refinement and complete local resource delivery remain open.
+  Shared/publisher native names now include context policy version 7. The
   [namespace experiment](worker-policy-overlap.md) checks fresh globals across
   policy constants, same-policy sharing and eight policy-omission faults. Retained
   old globals and complete mixed-policy lifetimes remain open.
   [Local bootstrap prerequisites](local-worker-bootstrap.md) now record native
   Blob-worker identity lookup and CSP/Trusted Types policy experiments. Neither
-  changes production source admission or discharges C1–C8.
+  by itself discharges C1–C8. The local startup candidate separately integrates
+  native-client lookup, private source admission and pending closure.
   [Dedicated-worker resource reads](worker-resource-broker.md) now relay over the
   private parent channel. Reads reuse context-scoped resource admission, buffer
   before final revalidation, and deny replies after local closure. Native warm-read
@@ -176,11 +184,10 @@ retain the current remote baseline until a candidate passes release validation.
 
 ### 1. Close the observed maintenance channel
 
-Replace the root document's HTTP content read with a private message request to
-the controller. Authenticate the actual browser client, derive its installation
-from trusted bindings, and recheck the generation after asynchronous reads. Reuse
-the existing private controller transport where possible and remove the replaced
-HTTP route. Missing content must fail locally.
+Root content and selected dedicated-worker reads now use private controller
+messages, native bindings and generation revalidation. Missing content fails
+locally. Verify their ownership and refinement contracts alongside the remaining
+delivery paths.
 
 Then extend local delivery to the context and resource paths that still provoke
 HTTP or registration updates. Evaluate Blob bootstraps, message delivery and

@@ -10,29 +10,40 @@ import { provideResourceList } from '../../test/resource-list-input.ts';
 // This receiver records all HTTP requests, including fixed trusted script URLs.
 // The application never chooses a destination or transmits a marker payload.
 const received: Array<{ path: string; time: number }> = [];
-const worker = 'postMessage("ready");';
+const workerScripts: Record<string, string> = {
+  '/worker.js':
+    'importScripts("classic-dependency.js");postMessage(globalThis.classicReady);',
+  '/classic-dependency.js': 'globalThis.classicReady="ready";',
+  '/module-worker.js': 'import {ready} from "./module-dependency.js";postMessage(ready);',
+  '/module-dependency.js': 'export const ready="ready";',
+};
 const main = `
 document.querySelector('#run').onclick = () => {
   if (document.querySelector('#private').value !== '1') {
     document.querySelector('#result').textContent = 'skipped';
     return;
   }
-  const worker = new Worker('./worker.js');
+  const type = document.querySelector('#worker-type').value;
+  const worker = new Worker(type === 'module' ? './module-worker.js' : './worker.js', {type});
   worker.onmessage = event => {
     document.querySelector('#result').textContent = event.data;
     worker.terminate();
   };
-};`;
+};
+globalThis.maintenanceProbeReady = true;`;
 const html = `<!doctype html><title>Maintenance probe</title>
 <link rel="icon" href="data:,">
 <input id="private" aria-label="Private bit"><button id="run">Run</button>
+<select id="worker-type"><option value="classic">Classic</option><option value="module">Module</option></select>
 <output id="result"></output><script src="./main.js"></script>`;
 const nativeServiceWorker = `
 self.addEventListener('install', event => event.waitUntil(self.skipWaiting()));
 self.addEventListener('activate', event => event.waitUntil(self.clients.claim()));
+const scripts = ${JSON.stringify(workerScripts)};
 self.addEventListener('fetch', event => {
-  if (new URL(event.request.url).pathname === '/worker.js')
-    event.respondWith(new Response(${JSON.stringify(worker)}, {
+  const script = scripts[new URL(event.request.url).pathname];
+  if (script)
+    event.respondWith(new Response(script, {
       headers: {'Content-Type': 'text/javascript'}
     }));
 });`;
@@ -41,10 +52,14 @@ const publisher = http.createServer((request, response) => {
   received.push({ path, time: Date.now() });
   response.setHeader('Cache-Control', 'no-store');
   response.setHeader('Access-Control-Allow-Origin', '*');
-  if (path === '/main.js' || path === '/worker.js' || path === '/sw.js') {
+  if (path === '/main.js' || path in workerScripts || path === '/sw.js') {
     response.setHeader('Content-Type', 'text/javascript');
     response.end(
-      path === '/main.js' ? main : path === '/worker.js' ? worker : nativeServiceWorker,
+      path === '/main.js'
+        ? main
+        : path === '/sw.js'
+          ? nativeServiceWorker
+          : workerScripts[path],
     );
   } else if (path === '/') {
     response.setHeader('Content-Type', 'text/html');
@@ -87,118 +102,150 @@ try {
   for (const engine of [chromium, firefox]) {
     const browser = await launch(engine);
     try {
-      for (const confined of [false, true]) {
-        let positiveSamples = 0;
-        // Reverse the order in a second round, using a fresh browser context for
-        // every sample so registration state is never shared across bit cases.
-        for (const [sample, bit] of ['0', '1', '1', '0'].entries()) {
-          const context = await browser.newContext();
-          context.setDefaultTimeout(15_000);
-          try {
-            let page: Page;
-            if (confined) {
-              const manager = await context.newPage();
-              await manager.goto('http://127.0.0.1:4210/privacy-frames/');
-              await manager.getByText('Ready to install.', { exact: true }).waitFor();
-              await manager.locator('#app-url').fill(origin + '/');
-              await provideResourceList(manager, [origin + '/worker.js']);
-              await manager.locator('#install button').click();
-              const installed = manager.locator('[data-app]').first();
-              await installed.waitFor();
-              const opened = context.waitForEvent('page');
-              await installed.click();
-              page = await opened;
-              await page.locator('#run').waitFor();
-            } else {
-              page = await context.newPage();
-              await page.goto(origin);
-              await page.evaluate(async () => {
-                await navigator.serviceWorker.register('/sw.js', {
-                  updateViaCache: 'none',
+      for (const workerType of ['classic', 'module']) {
+        for (const confined of [false, true]) {
+          let positiveSamples = 0;
+          // Reverse the order in a second round, using a fresh browser context for
+          // every sample so registration state is never shared across bit cases.
+          for (const [sample, bit] of ['0', '1', '1', '0'].entries()) {
+            const context = await browser.newContext();
+            context.setDefaultTimeout(15_000);
+            try {
+              let page: Page;
+              if (confined) {
+                const manager = await context.newPage();
+                await manager.goto('http://127.0.0.1:4210/privacy-frames/');
+                await manager.getByText('Ready to install.', { exact: true }).waitFor();
+                await manager.locator('#app-url').fill(origin + '/');
+                await provideResourceList(
+                  manager,
+                  Object.keys(workerScripts).map((path) => origin + path),
+                );
+                await manager.locator('#install button').click();
+                const installed = manager.locator('[data-app]').first();
+                await installed.waitFor();
+                const opened = context.waitForEvent('page');
+                await installed.click();
+                page = await opened;
+                await page.locator('#run').waitFor();
+              } else {
+                page = await context.newPage();
+                await page.goto(origin);
+                await page.evaluate(async () => {
+                  await navigator.serviceWorker.register('/sw.js', {
+                    updateViaCache: 'none',
+                  });
+                  await navigator.serviceWorker.ready;
+                  if (!navigator.serviceWorker.controller)
+                    await new Promise<void>((resolve) =>
+                      navigator.serviceWorker.addEventListener(
+                        'controllerchange',
+                        () => resolve(),
+                        { once: true },
+                      ),
+                    );
                 });
-                await navigator.serviceWorker.ready;
-                if (!navigator.serviceWorker.controller)
-                  await new Promise<void>((resolve) =>
-                    navigator.serviceWorker.addEventListener(
-                      'controllerchange',
-                      () => resolve(),
-                      { once: true },
-                    ),
-                  );
-              });
+              }
+              await page.waitForFunction(
+                () => Reflect.get(window, 'maintenanceProbeReady') === true,
+              );
+              await page.locator('#worker-type').selectOption(workerType);
+              await quiet(page);
+              const baseline = host.traffic.length;
+              const publisherBaseline = received.length;
+              await page.waitForTimeout(1500);
+              const idleRuntime = host.traffic.slice(baseline);
+              const idlePublisher = received.slice(publisherBaseline);
+              assert.equal(idleRuntime.length, 0, 'Runtime idle control was not quiet');
+              assert.equal(
+                idlePublisher.length,
+                0,
+                'Publisher idle control was not quiet',
+              );
+              await page.locator('#private').fill(bit);
+              const start = host.traffic.length;
+              const publisherStart = received.length;
+              const actionStarted = Date.now();
+              await page.locator('#run').click();
+              await page
+                .locator('#result')
+                .filter({ hasText: bit === '1' ? 'ready' : 'skipped' })
+                .waitFor();
+              await page.waitForTimeout(3000);
+              const runtime = host.traffic.slice(start);
+              const publisherTraffic = received.slice(publisherStart);
+              const updateRequests = confined
+                ? runtime.filter(
+                    (request) =>
+                      request.port === 4211 && request.path === '/runtime/sw.js',
+                  )
+                : publisherTraffic.filter((request) => request.path === '/sw.js');
+              const row = {
+                browser: engine.name(),
+                version: browser.version(),
+                sample,
+                actionStarted,
+                observationEnded: Date.now(),
+                confined,
+                workerType,
+                bit,
+                idleRuntime,
+                idlePublisher,
+                runtime,
+                publisherTraffic,
+                updateRequests,
+              };
+              samples.push(row);
+              console.log(
+                engine.name(),
+                confined ? 'confined' : 'native',
+                bit,
+                JSON.stringify(row),
+              );
+              if (bit === '0') assert.equal(updateRequests.length, 0);
+              else if (updateRequests.length > 0) positiveSamples++;
+              if (confined) {
+                assert.deepEqual(
+                  runtime,
+                  [],
+                  'Confined worker startup emitted runtime HTTP',
+                );
+                assert.deepEqual(
+                  publisherTraffic,
+                  [],
+                  'Confined worker startup reached publisher',
+                );
+              }
+            } finally {
+              await context.close();
             }
-            await quiet(page);
-            const baseline = host.traffic.length;
-            const publisherBaseline = received.length;
-            await page.waitForTimeout(1500);
-            const idleRuntime = host.traffic.slice(baseline);
-            const idlePublisher = received.slice(publisherBaseline);
-            assert.equal(idleRuntime.length, 0, 'Runtime idle control was not quiet');
-            assert.equal(idlePublisher.length, 0, 'Publisher idle control was not quiet');
-            await page.locator('#private').fill(bit);
-            const start = host.traffic.length;
-            const publisherStart = received.length;
-            const actionStarted = Date.now();
-            await page.locator('#run').click();
-            await page
-              .locator('#result')
-              .filter({ hasText: bit === '1' ? 'ready' : 'skipped' })
-              .waitFor();
-            await page.waitForTimeout(3000);
-            const runtime = host.traffic.slice(start);
-            const publisherTraffic = received.slice(publisherStart);
-            const updateRequests = confined
-              ? runtime.filter(
-                  (request) => request.port === 4211 && request.path === '/runtime/sw.js',
-                )
-              : publisherTraffic.filter((request) => request.path === '/sw.js');
-            const row = {
-              browser: engine.name(),
-              version: browser.version(),
-              sample,
-              actionStarted,
-              observationEnded: Date.now(),
-              confined,
-              bit,
-              idleRuntime,
-              idlePublisher,
-              runtime,
-              publisherTraffic,
-              updateRequests,
-            };
-            samples.push(row);
-            console.log(
-              engine.name(),
-              confined ? 'confined' : 'native',
-              bit,
-              JSON.stringify(row),
-            );
-            if (bit === '0') assert.equal(updateRequests.length, 0);
-            else if (updateRequests.length > 0) positiveSamples++;
-            if (confined) assert.equal(publisherTraffic.length, 0);
-          } finally {
-            await context.close();
           }
+          // Native scheduling may suppress one update. Require a working control
+          // for each worker type, while every confined observation must stay quiet.
+          groups.push({
+            browser: engine.name(),
+            confined,
+            workerType,
+            positiveSamples,
+            workerSamples: 2,
+            noWorkerSamples: 2,
+          });
+          if (confined) assert.equal(positiveSamples, 0);
+          else
+            assert(
+              positiveSamples > 0,
+              'No native worker-triggered update observed in this group',
+            );
         }
-        // Scheduling/coalescing can suppress an individual update check. A
-        // counterexample requires an observed effect, not delivery on every run.
-        groups.push({
-          browser: engine.name(),
-          confined,
-          positiveSamples,
-          workerSamples: 2,
-          noWorkerSamples: 2,
-        });
-        assert(positiveSamples > 0, 'No worker-triggered update observed in this group');
       }
     } finally {
       await browser.close();
     }
   }
-  assert.deepEqual(
-    (await testProvenance(import.meta.url)).artifacts,
-    provenance.artifacts,
-  );
+  const after = await testProvenance(import.meta.url);
+  assert.deepEqual(after.artifacts, provenance.artifacts);
+  assert.equal(after.sourceSHA256, provenance.sourceSHA256);
+  assert.equal(after.runnerSHA256, provenance.runnerSHA256);
   completedAt = new Date().toISOString();
 } catch (error) {
   failure = String(error);
@@ -210,7 +257,7 @@ try {
       JSON.stringify(
         {
           scope:
-            'Native and actual confined worker creation, chosen by a private input bit, compared with no-worker and idle controls. Fixed-URL service-worker maintenance is observed at independent HTTP servers. Bounded observations do not establish exhaustive browser behavior or channel capacity.',
+            'Classic/module worker startup with dependencies, chosen by a private input bit. Native groups must demonstrate worker-triggered maintenance; every confined sample must produce zero HTTP requests. No-worker and idle controls use separate fresh contexts. These bounded observations do not establish exhaustive browser behavior or complete confinement.',
           provenance,
           samples,
           groups,

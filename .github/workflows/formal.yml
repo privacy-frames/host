@@ -141,6 +141,28 @@ jobs:
             formal/runtime-verification/maintenance-unregistered.json
             formal/runtime-verification/message-resource-broker.json
             formal/runtime-verification/message-resource-broker-relaxed.json
+  worker-startup-maintenance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium firefox
+        timeout-minutes: 5
+      - name: Compare confined classic/module startup with native update controls
+        run: |
+          npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/runtime-verification/service-worker-maintenance.ts
+          node formal/runtime-verification/service-worker-maintenance.ts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: worker-startup-maintenance
+          path: formal/runtime-verification/service-worker-maintenance.json
   worker-closure:
     runs-on: ubuntu-latest
     timeout-minutes: 12
@@ -204,6 +226,10 @@ jobs:
         run: |
           npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker test/script-url-gate.ts
           node test/script-url-gate.ts
+      - name: Compare trusted Worker callers and strict-mode omission
+        run: |
+          npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/runtime-verification/worker-caller-browser.ts
+          node formal/runtime-verification/worker-caller-browser.ts
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -214,6 +240,7 @@ jobs:
             formal/runtime-verification/blob-worker-identity.json
             formal/runtime-verification/local-bootstrap-policy.json
             results/contexts/script-url-gate.json
+            formal/runtime-verification/worker-caller-browser.json
   local-documents:
     runs-on: ubuntu-latest
     timeout-minutes: 12

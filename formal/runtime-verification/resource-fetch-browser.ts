@@ -15,7 +15,7 @@ const workerContext = process.env.PF_RESOURCE_CONTEXT === 'worker';
 const sourcePath = workerContext
   ? 'src/runtime/contexts/worker-realm.ts'
   : 'src/runtime/contexts/window-realm.ts';
-const guardFile = workerContext ? 'worker-guard.js' : 'guard.js';
+const guardFile = 'guard.js';
 const source = await readFile(sourcePath, 'utf8');
 const needle = '\n      fetchResource,\n';
 assert.equal(source.split(needle).length, 2);
@@ -23,34 +23,33 @@ const hash = (value: Uint8Array | string) =>
   createHash('sha256').update(value).digest('hex');
 async function guard(altered: boolean) {
   let changes = 0;
+  const faultPlugins = altered
+    ? [
+        {
+          name: 'test-only-native-fetch-instead-of-resource-message',
+          setup(builder: PluginBuild) {
+            builder.onLoad(
+              { filter: /[/\\]contexts[/\\](window|worker)-realm\.ts$/ },
+              async ({ path }) => {
+                assert.equal(await readFile(path, 'utf8'), source);
+                changes++;
+                return { contents: source.replace(needle, '\n'), loader: 'ts' };
+              },
+            );
+          },
+        },
+      ]
+    : [];
   const result = await build({
-    entryPoints: [
-      workerContext ? 'src/runtime/contexts/worker-guard.ts' : 'src/runtime/guard.ts',
-    ],
+    entryPoints: ['src/runtime/guard.ts'],
     bundle: true,
     write: false,
     format: 'iife',
     target: 'es2022',
     banner: { js: '"use strict";' },
     plugins: [
-      await trustedPolicyPlugin(process.cwd()),
-      ...(altered
-        ? [
-            {
-              name: 'test-only-native-fetch-instead-of-resource-message',
-              setup(builder: PluginBuild) {
-                builder.onLoad(
-                  { filter: /[/\\]contexts[/\\](window|worker)-realm\.ts$/ },
-                  async ({ path }) => {
-                    assert.equal(await readFile(path, 'utf8'), source);
-                    changes++;
-                    return { contents: source.replace(needle, '\n'), loader: 'ts' };
-                  },
-                );
-              },
-            },
-          ]
-        : []),
+      await trustedPolicyPlugin(process.cwd(), workerContext ? faultPlugins : []),
+      ...(!workerContext ? faultPlugins : []),
     ],
   });
   assert.equal(changes, altered ? 1 : 0);
@@ -216,21 +215,13 @@ try {
             const guardErrors: string[] = [];
             const guardHashes: string[] = [];
             context.on('response', (response) => {
-              const selected = workerContext
-                ? /\/__contexts\/[a-f0-9-]{36}\/classic\.js$/.test(response.url())
-                : response.url() === 'http://127.0.0.1:4211/runtime/guard.js';
+              const selected =
+                response.url() === 'http://127.0.0.1:4211/runtime/guard.js';
               if (selected && response.fromServiceWorker()) {
                 void response
                   .body()
                   .then((body) => {
-                    if (workerContext) {
-                      const expected = mode === 'altered' ? altered : normal;
-                      assert(
-                        Buffer.from(body).includes(Buffer.from(expected)),
-                        'Bootstrap guard differs',
-                      );
-                      guardHashes.push(hash(expected));
-                    } else guardHashes.push(hash(body));
+                    guardHashes.push(hash(body));
                   })
                   .catch((error: unknown) => {
                     guardErrors.push(String(error));
@@ -274,6 +265,9 @@ try {
               page = await opened;
             }
             await page.locator('#run').waitFor();
+            await page.waitForFunction(
+              () => typeof Reflect.get(window, 'resourceFixtureWarm') === 'function',
+            );
             await page.evaluate(() => Reflect.get(window, 'resourceFixtureWarm')());
             await quiet(page);
             assert.deepEqual(guardErrors, []);

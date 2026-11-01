@@ -541,6 +541,7 @@ export function createPublisherController(options: Options) {
           identity,
           runtime: base.href,
           applicationURL: entry.href,
+          module: live.registration.type === 'module',
           ...workerResourceAliases(live.app, resources, base),
         });
         return response(

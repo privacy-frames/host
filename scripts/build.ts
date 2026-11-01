@@ -35,7 +35,6 @@ const entries = {
   guard: 'src/runtime/guard.ts',
   connect: 'src/bridge/connect.ts',
   installation: 'src/installation/controller.ts',
-  'worker-guard': 'src/runtime/contexts/worker-guard.ts',
   'document-guard': 'src/runtime/contexts/document-guard.ts',
   'shared-worker-guard': 'src/runtime/contexts/shared-worker-guard.ts',
   'worklet-guard': 'src/runtime/contexts/worklet-guard.ts',

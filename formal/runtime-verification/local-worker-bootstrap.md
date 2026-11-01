@@ -2,8 +2,9 @@
 
 Two native experiments address the remaining HTTP worker bootstrap. Their
 fixtures isolate browser behavior from production admission. The subsequent
-[runtime gate integration](script-url-gate.md) retains HTTP worker bootstrap
-and the existing CSP source restrictions.
+[policy-6 gate integration](script-url-gate.md) retained HTTP bootstrap. The
+[policy-7 startup candidate](local-worker-startup.md) now uses local dedicated
+guards and private parent-channel binding.
 
 ## Native identity without a bootstrap fetch
 

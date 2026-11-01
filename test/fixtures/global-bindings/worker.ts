@@ -18,6 +18,7 @@ prepareWorkerRealm(
     applicationURL: location.origin + '/app/',
     rootAliases: [],
     aliases: [],
+    module: false,
   },
   'message',
   async () => {
@@ -25,6 +26,9 @@ prepareWorkerRealm(
   },
   async () => {
     throw new Error('This binding fixture does not read resources');
+  },
+  async () => {
+    throw new Error('This binding fixture does not create workers');
   },
 );
 (async () => {

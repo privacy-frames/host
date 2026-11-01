@@ -97,6 +97,7 @@ export function createSharedController(options: SharedControllerOptions) {
         identity,
         runtime: base.href,
         applicationURL: entry.href,
+        module: bootstrap[1] === 'module',
         ...workerResourceAliases(parent.app, resources, base),
       });
       return response(

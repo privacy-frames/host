@@ -13,6 +13,7 @@ declare global {
       id?: unknown,
     ): Promise<{ ok: boolean; value?: { closed?: boolean; verified?: boolean } }>;
     workerStateFixture(id: string): Promise<string | undefined>;
+    workerIDFixture(url: string): Promise<string | undefined>;
   }
 }
 
@@ -32,6 +33,7 @@ export async function installWorkerClosureProbe(context: BrowserContext) {
     const objectStore = IDBTransaction.prototype.objectStore;
     const index = IDBObjectStore.prototype.index;
     const read = IDBIndex.prototype.get;
+    const readAll = IDBObjectStore.prototype.getAll;
     const closeDatabase = IDBDatabase.prototype.close;
     window.workerControlFixture = (operation, path, id) =>
       new Promise((resolve, reject) => {
@@ -58,8 +60,8 @@ export async function installWorkerClosureProbe(context: BrowserContext) {
         ]);
       });
     window.workerCloseFixture = (id) => window.workerControlFixture('close', [], id);
-    window.workerStateFixture = (id) =>
-      new Promise((resolve, reject) => {
+    const readBinding = (id: string, byURL: boolean) =>
+      new Promise<string | undefined>((resolve, reject) => {
         const request: IDBOpenDBRequest = apply(openDatabase, databaseFactory, [
           'privacy-frames-browser-contexts-v1:http://127.0.0.1:4211/runtime/',
           1,
@@ -73,25 +75,38 @@ export async function installWorkerClosureProbe(context: BrowserContext) {
           ]);
           const records: IDBObjectStore = apply(objectStore, tx, ['contexts']);
           const contextIndex: IDBIndex = apply(index, records, ['context']);
-          const result: IDBRequest<unknown> = apply(read, contextIndex, [id]);
+          const result = byURL
+            ? apply(readAll, records, [])
+            : apply(read, contextIndex, [id]);
           result.onerror = () => reject(result.error);
           result.onsuccess = () => {
-            const value = result.result;
+            let value: unknown = result.result;
             apply(closeDatabase, database, []);
+            if (byURL) {
+              if (!Array.isArray(value)) return reject(new Error('Invalid binding list'));
+              const matches = value.filter((item) => item?.identity?.url === id);
+              if (matches.length !== 1)
+                return reject(new Error('Worker URL is not unique'));
+              value = matches[0];
+            }
             if (
               !value ||
               typeof value !== 'object' ||
               !('identity' in value) ||
               !value.identity ||
               typeof value.identity !== 'object' ||
-              !('state' in value.identity) ||
-              typeof value.identity.state !== 'string'
+              !(byURL ? 'id' in value.identity : 'state' in value.identity)
             )
               return reject(new Error('Native worker binding unavailable'));
-            resolve(value.identity.state);
+            const field: unknown = Reflect.get(value.identity, byURL ? 'id' : 'state');
+            if (typeof field !== 'string')
+              return reject(new Error('Invalid binding field'));
+            resolve(field);
           };
         };
       });
+    window.workerStateFixture = (id) => readBinding(id, false);
+    window.workerIDFixture = (url) => readBinding(url, true);
   });
 }
 
@@ -115,9 +130,11 @@ export async function checkWorkerClosure(
     });
   });
   const closingWorker = await workerCreated;
-  const closingID = new URL(closingWorker.url()).pathname.match(
-    /__contexts\/([a-f0-9-]{36})\//,
-  )?.[1];
+  assert.equal(new URL(closingWorker.url()).protocol, 'blob:');
+  const closingID = await app.evaluate(
+    (url) => window.workerIDFixture(url),
+    closingWorker.url(),
+  );
   assert(closingID);
   assert.equal(
     await app.evaluate((id) => window.workerStateFixture(id), closingID),

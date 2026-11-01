@@ -1,4 +1,8 @@
-import { createWorkerControl, createWorkerResourceRead } from './worker-client.ts';
+import {
+  createWorkerControl,
+  createWorkerResourceRead,
+  createWorkerBirth,
+} from './worker-client.ts';
 import { createDocumentControl } from './document-client.ts';
 import { createControllerClient } from '../controller-client.ts';
 import { createResourceFetch } from '../resource-fetch.ts';
@@ -104,6 +108,7 @@ export function prepareWindowRealm({
       resources,
       control: createWorkerControl(controller.request),
       read: createWorkerResourceRead(controller.request),
+      birth: createWorkerBirth(controller.request),
       scriptURL,
     }),
   );

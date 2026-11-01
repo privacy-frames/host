@@ -18,7 +18,7 @@ test('confined responses deny browser-mediated identity requests', () => {
   );
 });
 
-test('worker startup defaults to refusal and accepts only an explicit HTTP bootstrap directory', () => {
+test('worker startup defaults to refusal; prepared contexts admit local Blob guards', () => {
   assert.match(
     response('default').headers.get('Content-Security-Policy')!,
     /(?:^|; )worker-src 'none'(?:;|$)/,
@@ -30,7 +30,7 @@ test('worker startup defaults to refusal and accepts only an explicit HTTP boots
     const policy = response('bootstrap', 'text/javascript', 200, {
       workerSource,
     }).headers.get('Content-Security-Policy')!;
-    assert(policy.includes(`; worker-src ${workerSource};`));
+    assert(policy.includes(`; worker-src ${workerSource} blob:;`));
     assert(!policy.includes("worker-src 'self'"));
     assert(!policy.includes('worker-src blob:'));
   }
@@ -66,7 +66,7 @@ test('worker policy can name its controlling script without allowing its directo
     workerSource,
     controllerSource,
   }).headers.get('Content-Security-Policy')!;
-  assert(policy.includes(`; worker-src ${workerSource} ${controllerSource};`));
+  assert(policy.includes(`; worker-src ${workerSource} ${controllerSource} blob:;`));
   for (const invalid of [
     'https://other.test/sw.js',
     'https://runtime.test/',
@@ -95,6 +95,7 @@ test('embedded documents admit only their own guarded contexts and retain sandbo
   });
   const policy = result.headers.get('Content-Security-Policy')!;
   assert(policy.includes(`; frame-src ${workerSource} ${controllerSource};`));
+  assert(!policy.includes(`; frame-src ${workerSource} ${controllerSource} blob:`));
   assert(policy.includes("frame-ancestors 'self'"));
   assert(policy.includes('sandbox allow-scripts allow-same-origin allow-forms'));
   assert(policy.includes("object-src 'none'"));

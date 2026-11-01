@@ -2,8 +2,9 @@
 
 This execution plan follows the eight stages in [the verification programme](README.md).
 Implementation stays on the separate `runtime-confinement-proof` worktree and
-branch. The current policy-6 candidate adds private native script URL admission;
-complete confinement and deployment remain pending.
+branch. The current policy-7 candidate adds local dedicated-worker bootstrap on
+top of private native script URL admission. Complete confinement and deployment
+remain pending.
 
 The target remains [C1–C8](../threat-model.md): confined application activity cannot
 cause a remote request or connection, including to the runtime origin. Whether
@@ -18,7 +19,10 @@ Atomic context binding and owner-scoped closure now use IndexedDB. Private paren
 channels and selected executable state functions have native tests or deductive
 checks. Complete protocol correspondence and browser coverage remain open.
 
-Application-triggered service-worker updates remain a demonstrated violation.
+Application-triggered HTTP worker startup was a demonstrated policy-6 violation.
+The policy-7 local startup candidate passes 32 fresh-registration classic/module
+samples with working native update controls. Aged registrations and complete C4
+coverage remain open.
 The local registration-fence experiment adds nine native observations:
 same-scope unregistration waited for a held update, and a later update failed
 without a second request. It covers an unchanged script and selected schedules;
@@ -66,7 +70,7 @@ in CI. Establish their correspondence to the
 [Service Workers job algorithms](https://w3c.github.io/ServiceWorker/#schedule-job).
 Review changed scripts, install/activate work, overlapping registrations,
 controller retention, restart and work already queued at launch. Native
-shared/publisher names now include host policy version 6. The
+shared/publisher names now include host policy version 7. The
 [namespace experiment](worker-policy-overlap.md) checks fresh globals across
 policy versions, sharing within one version, and policy-omission faults in both
 browsers. Complete admission and mixed-policy lifetime correspondence remain open.
@@ -83,8 +87,10 @@ native Blob-worker discovery in twelve browser cases. Fourteen source-policy cas
 identify a private TrustedScriptURL gate while exposing the fresh-realm and
 inherited-policy obligations. The [private script URL gate](script-url-gate.md)
 now connects named policies to native runtime sinks and refuses missing
-enforcement. Production worker sources still exclude Blob URLs; bootstrap and
-registration-lifetime integration remain open.
+enforcement. The [local startup candidate](local-worker-startup.md) now creates
+dedicated Blob guards, binds native clients through the private parent broker and
+removes the dedicated HTTP bootstrap route. Factory/channel ownership, complete
+preparation coverage and registration lifetime remain open.
 
 Then evaluate production bootstrap and delivery. Private root-content and selected
 parent-channel reads already exist. HTTP shells, workers, modules, worklets,

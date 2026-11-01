@@ -1,6 +1,7 @@
 import {
   createHTTPWorkerControl,
   createHTTPWorkerResourceRead,
+  createHTTPWorkerBirth,
 } from '../contexts/worker-client.ts';
 import {
   internalArray,
@@ -48,6 +49,7 @@ const realm = prepareWorkerRealm(
   'connect',
   createHTTPWorkerControl(context),
   createHTTPWorkerResourceRead(context),
+  createHTTPWorkerBirth(context),
 );
 const { apply, define } = realm.tools;
 const nameOwner = realm.tools.propertyOwner(worker, 'name');

@@ -9,6 +9,8 @@ import type { WorkerControl } from './worker-protocol.ts';
 import type { PolicyTools } from '../enforcement/native.ts';
 import type { ResourceAliases } from '../resource-aliases.ts';
 import type { ScriptURLGate } from '../enforcement/script-urls.ts';
+import bootstrapSource from 'trusted:worker-source';
+import type { WorkerBirth } from './worker-birth-protocol.ts';
 
 // Blob source reads retain the pre-adapter native operation.
 const nativeFetch = fetch;
@@ -20,6 +22,7 @@ export interface WorkerFactoryContext {
   control: WorkerControl;
   read: WorkerResourceRead;
   scriptURL: ScriptURLGate;
+  birth: WorkerBirth;
 }
 
 interface QueuedMessage {
@@ -35,6 +38,8 @@ interface WorkerLifecycle {
   broker?: { close(): void };
   id: string;
   closeRequested: boolean;
+  bootstrap: string | null;
+  bootstrapLoaded: boolean;
 }
 
 /** Native handles retain native events; startup messages wait for trusted setup. */
@@ -70,11 +75,17 @@ export function createWorkerFactory(
   const responseBody = Response.prototype.arrayBuffer;
   const responseOK = ownDescriptor(Response.prototype, 'ok')!.get!;
   const NativeURL = URL;
+  const NativeBlob = Blob;
+  const createURL = URL.createObjectURL;
+  const revokeURL = URL.revokeObjectURL;
+  const stringify = JSON.stringify;
   const href = ownDescriptor(NativeURL.prototype, 'href')!.get!;
   const protocol = ownDescriptor(NativeURL.prototype, 'protocol')!.get!;
   const origin = ownDescriptor(NativeURL.prototype, 'origin')!.get!;
   const runtimeOrigin: string = apply(origin, new NativeURL(context.applicationURL), []);
   const workers = new WeakMap<Worker, WorkerLifecycle>();
+  const weakGet = WeakMap.prototype.get;
+  const weakSet = WeakMap.prototype.set;
 
   function checkedURL(value: unknown): { value: string; blob: boolean } {
     const mapped = context.resources.mapURL(str(value));
@@ -130,6 +141,11 @@ export function createWorkerFactory(
     lifecycle.port = null;
   }
 
+  function releaseBootstrap(lifecycle: WorkerLifecycle) {
+    if (lifecycle.bootstrap) apply(revokeURL, NativeURL, [lifecycle.bootstrap]);
+    lifecycle.bootstrap = null;
+  }
+
   function revoke(lifecycle: WorkerLifecycle) {
     if (lifecycle.closeRequested) return;
     lifecycle.closeRequested = true;
@@ -142,6 +158,7 @@ export function createWorkerFactory(
     lifecycle.queue.length = 0;
     closePort(lifecycle);
     lifecycle.broker?.close();
+    releaseBootstrap(lifecycle);
     revoke(lifecycle);
     apply(nativeTerminate, worker, []);
     apply(nativeDispatch, worker, [
@@ -154,7 +171,7 @@ export function createWorkerFactory(
     'postMessage',
     function (this: Worker, data: unknown, options?: unknown) {
       if (!arguments.length) throw new TypeError('Message data is required');
-      const lifecycle = workers.get(this);
+      const lifecycle: WorkerLifecycle | undefined = apply(weakGet, workers, [this]);
       if (!lifecycle) return fail('Unmanaged worker handle');
       if (lifecycle.ready || lifecycle.closed)
         return apply(nativePost, this, options === undefined ? [data] : [data, options]);
@@ -162,12 +179,13 @@ export function createWorkerFactory(
     },
   );
   method(NativeWorker.prototype, 'terminate', function (this: Worker) {
-    const lifecycle = workers.get(this);
+    const lifecycle: WorkerLifecycle | undefined = apply(weakGet, workers, [this]);
     if (!lifecycle) return fail('Unmanaged worker handle');
     lifecycle.closed = true;
     lifecycle.queue.length = 0;
     closePort(lifecycle);
     lifecycle.broker?.close();
+    releaseBootstrap(lifecycle);
     revoke(lifecycle);
     return apply(nativeTerminate, this, []);
   });
@@ -186,18 +204,28 @@ export function createWorkerFactory(
           throw new TypeError('Unsupported worker type');
         const name = options ? str(get(options, 'name') ?? '') : '';
         const id: string = apply(randomUUID, nativeCrypto, []);
-        const bootstrap = new NativeURL(
-          `__contexts/${id}/${type}.js`,
-          context.applicationURL,
-        );
-        const worker: Worker = construct(
-          NativeWorker,
-          [
-            context.scriptURL(apply(href, bootstrap, [])),
-            internalRecord({ type, name, credentials: 'omit' }),
-          ],
-          newTarget === factory ? NativeWorker : newTarget,
-        );
+        const bootstrap: string = apply(createURL, NativeURL, [
+          new NativeBlob(
+            internalArray([
+              `"use strict";\n(() => { const __privacyWorkerBootstrapSource = ${stringify(bootstrapSource)};\n${bootstrapSource}\n})();`,
+            ]),
+            internalRecord({ type: 'text/javascript' }),
+          ),
+        ]);
+        let worker: Worker;
+        try {
+          worker = construct(
+            NativeWorker,
+            [
+              context.scriptURL(bootstrap),
+              internalRecord({ type, name, credentials: 'omit' }),
+            ],
+            newTarget === factory ? NativeWorker : newTarget,
+          );
+        } catch (error) {
+          apply(revokeURL, NativeURL, [bootstrap]);
+          throw error;
+        }
         const lifecycle: WorkerLifecycle = internalRecord({
           ready: false,
           started: false,
@@ -206,8 +234,10 @@ export function createWorkerFactory(
           port: null,
           id,
           closeRequested: false,
+          bootstrap,
+          bootstrapLoaded: false,
         });
-        workers.set(worker, lifecycle);
+        apply(weakSet, workers, [worker, lifecycle]);
         const channel = new NativeChannel();
         const port1: MessagePort = apply(getPort1, channel, []);
         const port2: MessagePort = apply(getPort2, channel, []);
@@ -220,6 +250,7 @@ export function createWorkerFactory(
               lifecycle.queue.length = 0;
               closePort(lifecycle);
               lifecycle.broker?.close();
+              releaseBootstrap(lifecycle);
               revoke(lifecycle);
             }
           },
@@ -233,6 +264,7 @@ export function createWorkerFactory(
           context.control,
           () => !lifecycle.closed,
           context.read,
+          context.birth,
         );
         // This first native message precedes every message from the returned handle.
         apply(nativePost, worker, [
@@ -250,7 +282,38 @@ export function createWorkerFactory(
               !('type' in data)
             )
               return;
-            if (data.type === 'pf-context-ready') {
+            if (data.type === 'pf-context-bootstrap-ready') {
+              if (lifecycle.bootstrapLoaded) return;
+              lifecycle.bootstrapLoaded = true;
+              void (async () => {
+                try {
+                  const metadata = await context.birth(
+                    [],
+                    id,
+                    bootstrap,
+                    type === 'module',
+                  );
+                  const body = await sourceBody;
+                  if (lifecycle.closed) return;
+                  apply(portPost, port1, [
+                    internalRecord({
+                      type: 'pf-context-start',
+                      context: metadata,
+                      source: context.resources.sourceURL(source.value) || source.value,
+                      base: context.resources.sourceURL(source.value) || source.value,
+                      body,
+                    }),
+                    body ? internalArray([body]) : internalArray(),
+                  ]);
+                } catch {
+                  failed(
+                    worker,
+                    lifecycle,
+                    'Worker preparation or source loading failed',
+                  );
+                }
+              })();
+            } else if (data.type === 'pf-context-ready') {
               lifecycle.ready = true;
               try {
                 for (const entry of lifecycle.queue.splice(0))
@@ -261,6 +324,7 @@ export function createWorkerFactory(
             } else if (data.type === 'pf-context-started') {
               lifecycle.started = true;
               closePort(lifecycle);
+              releaseBootstrap(lifecycle);
             } else if (data.type === 'pf-context-failed') {
               failed(worker, lifecycle, 'Worker confinement or script startup failed');
             }
@@ -277,23 +341,9 @@ export function createWorkerFactory(
               return body;
             })
           : apply(resolvePromise, NativePromise, [undefined]);
-        sourceBody
-          .then((body) => {
-            if (lifecycle.closed) return;
-            apply(portPost, port1, [
-              internalRecord({
-                type: 'pf-context-start',
-                source: context.resources.sourceURL(source.value) || source.value,
-                base: context.resources.sourceURL(source.value) || source.value,
-                body,
-                module: type === 'module',
-              }),
-              body ? [body] : [],
-            ]);
-          })
-          .catch(() => {
-            failed(worker, lifecycle, 'Worker source could not load');
-          });
+        void sourceBody.catch(() => {
+          failed(worker, lifecycle, 'Worker source could not load');
+        });
         return worker;
       },
     }),

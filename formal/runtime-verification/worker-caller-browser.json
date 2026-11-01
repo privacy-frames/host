@@ -1,0 +1,94 @@
+{
+  "scope": "Direct sloppy callback controls and actual nested Worker argument conversion. An omission with no observed caller is not a successful mitigation fault control. This does not establish complete closure ownership or confinement.",
+  "completed": true,
+  "provenance": {
+    "capturedAt": "2026-11-01T02:52:10.243Z",
+    "revision": "d545180d1b5cf5d28427796d23aef17ee612291c",
+    "dirty": true,
+    "sourceSHA256": "45922e8504cd0869f82394bf92f061ab3ecb8efb8fdc60dbcaa2dd1aaa2e7368",
+    "runner": "formal/runtime-verification/worker-caller-browser.ts",
+    "runnerSHA256": "95792580bb52698c434df1063ecebc00d2d26fdabd75634e1018381dba9a2979",
+    "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
+    "artifacts": {
+      "dist-manager/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-manager/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-manager/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-manager/index.html": "0ea2b29b0ef6946140c54c2dc2147bffe4de82b9ed13eb4fdcae97a81cfd56f7",
+      "dist-manager/manager.js": "e361950a8774ca901a2b669e55041e15931e079bcdf5cd66e2b95d3986ce0730",
+      "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-manager/sw.js": "4add49c37143a885fd8e8a97873efae6c10cb01e1133fd0eccc3dd3c81647544",
+      "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
+      "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
+      "dist-runtime/document-guard.js": "eb15fd591a44c3d9f95ea9ef40d43394fadf5c318fec608a136d5605eb622514",
+      "dist-runtime/guard.js": "910e17fe9e123cbf3df2d45768e70e48d582211d7a2cf94e1254c59400cfd837",
+      "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
+      "dist-runtime/publisher-worker-guard.js": "193727ed4d7750bc7070b1129507a330e1679917dc1e6470619daaae6ab9079d",
+      "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-runtime/shared-worker-guard.js": "f477be4cdc677c730f58a9e24339ee7be9b540a7f23af109de48ae65ecd49417",
+      "dist-runtime/sw.js": "25ed1cd199aa465960646dbc23fd19a907787baf6f8bcfdff9360c0b841f4231",
+      "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
+      "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-installation/index.html": "3ca67c9966dd6eaaddb08a331c4c422a70d79bed1acecddada56764ba4ac8e5f",
+      "dist-installation/installation.js": "6cd0a3f3f4494dee2db059f3b1a5feb62017a39399a22e2d3774d0319fa1e3f3"
+    }
+  },
+  "factorySHA256": "1b9927b508ae6a6675af1e7b96c645318910cf105555b1e58a6ddc4e4e92dff5",
+  "rows": [
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "fault": false,
+      "result": {
+        "coercionControl": true,
+        "getterControl": true,
+        "coercionCaller": false,
+        "getterCaller": false
+      },
+      "guardSHA256": "910e17fe9e123cbf3df2d45768e70e48d582211d7a2cf94e1254c59400cfd837"
+    },
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "fault": true,
+      "result": {
+        "coercionControl": true,
+        "getterControl": true,
+        "coercionCaller": false,
+        "getterCaller": false
+      },
+      "guardSHA256": "2c0ab7c468e92f0f5e9f4a80156bc6f8a531b1bc62dfc0906404ad0c9b41c1ac"
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "fault": false,
+      "result": {
+        "coercionControl": true,
+        "getterControl": true,
+        "coercionCaller": false,
+        "getterCaller": false
+      },
+      "guardSHA256": "910e17fe9e123cbf3df2d45768e70e48d582211d7a2cf94e1254c59400cfd837"
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "fault": true,
+      "result": {
+        "coercionControl": true,
+        "getterControl": true,
+        "coercionCaller": true,
+        "getterCaller": true
+      },
+      "guardSHA256": "2c0ab7c468e92f0f5e9f4a80156bc6f8a531b1bc62dfc0906404ad0c9b41c1ac"
+    }
+  ]
+}

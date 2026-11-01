@@ -15,6 +15,7 @@ import {
   INSTALLED_RESOURCE_REQUEST,
   DOCUMENT_CONTROL_REQUEST,
   WORKER_CONTROL_REQUEST,
+  WORKER_BIRTH_REQUEST,
 } from '../shared/types.ts';
 import {
   parseResourceRequest,
@@ -24,11 +25,10 @@ import {
 } from './resource-broker.ts';
 import { admitInstallation } from './admission.ts';
 import { CONTEXT_POLICY_VERSION, ContextRegistry } from './contexts/model.ts';
-import type { WorkerBootstrapMetadata } from './contexts/model.ts';
+import { bindWorkerBirth } from './contexts/worker-birth.ts';
 import { parseWorkerResource } from './contexts/worker-resource-protocol.ts';
 import { requestWorkerControl, withWorkerAuthority } from './contexts/worker-control.ts';
 import { readDocumentRequest } from './contexts/document-request.ts';
-import { workerResourceAliases } from './contexts/worker-aliases.ts';
 import { controllerContextStorage } from './contexts/controller-store.ts';
 import { contextResourceResponse } from './contexts/resources.ts';
 import { createDocumentController } from './contexts/document-controller.ts';
@@ -48,7 +48,6 @@ const trustedFiles = [
   'pwa-192.png',
   'pwa-512.png',
   'guard.js',
-  'worker-guard.js',
   'document-guard.js',
   'shared-worker-guard.js',
   'worklet-guard.js',
@@ -70,6 +69,10 @@ function isManagerURL(input: string | undefined) {
   }
 }
 const BOOT = 'pf-trusted-bootstrap-' + __BUILD_ID__;
+const nativeWorkers = {
+  list: () => worker.clients.matchAll({ type: 'worker', includeUncontrolled: true }),
+  get: (id: string) => worker.clients.get(id),
+};
 const documents = createDocumentController({
   base: BASE,
   contexts,
@@ -220,7 +223,8 @@ worker.addEventListener('message', (event) => {
     (packet.type === INSTALLED_CONTENT_REQUEST ||
       packet.type === INSTALLED_RESOURCE_REQUEST ||
       packet.type === DOCUMENT_CONTROL_REQUEST ||
-      packet.type === WORKER_CONTROL_REQUEST)
+      packet.type === WORKER_CONTROL_REQUEST ||
+      packet.type === WORKER_BIRTH_REQUEST)
   ) {
     const port = event.ports[0];
     if (!port) return;
@@ -233,6 +237,17 @@ worker.addEventListener('message', (event) => {
               : undefined;
           if (packet.type === WORKER_CONTROL_REQUEST) {
             const value = await requestWorkerControl(client, packet, contexts);
+            port.postMessage({ ok: true, value });
+            return;
+          }
+          if (packet.type === WORKER_BIRTH_REQUEST) {
+            const value = await bindWorkerBirth(
+              client,
+              packet,
+              contexts,
+              BASE,
+              nativeWorkers,
+            );
             port.postMessage({ ok: true, value });
             return;
           }
@@ -392,6 +407,21 @@ worker.addEventListener('fetch', (event) => {
             packet &&
             typeof packet === 'object' &&
             'type' in packet &&
+            packet.type === WORKER_BIRTH_REQUEST
+          ) {
+            const value = await bindWorkerBirth(
+              client,
+              packet,
+              contexts,
+              BASE,
+              nativeWorkers,
+            );
+            return response(JSON.stringify(value), 'application/json');
+          }
+          if (
+            packet &&
+            typeof packet === 'object' &&
+            'type' in packet &&
             packet.type === INSTALLED_RESOURCE_REQUEST
           ) {
             const value = await readWorkerResource(client, packet);
@@ -532,52 +562,6 @@ worker.addEventListener('fetch', (event) => {
       const entry = applicationURL(app, BASE);
       const contextPrefix = new URL('__contexts/', entry).pathname;
       if (url.origin === BASE.origin && url.pathname.startsWith(contextPrefix)) {
-        const child = url.pathname
-          .slice(contextPrefix.length)
-          .match(/^([a-f0-9-]{36})\/(classic|module)\.js$/);
-        if (
-          child &&
-          req.method === 'GET' &&
-          !url.search &&
-          req.destination === 'worker' &&
-          client &&
-          event.resultingClientId
-        ) {
-          const identity = {
-            policyVersion: CONTEXT_POLICY_VERSION,
-            id: child[1],
-            application: app.id,
-            installationGeneration: app.generation,
-            parent: client.id,
-            kind: 'dedicated-worker' as const,
-            state: 'preparing' as const,
-            url: url.href,
-          };
-          await contexts.bind(event.resultingClientId, identity);
-          const bootstrap = await (
-            await caches.open(BOOT)
-          ).match(new URL('worker-guard.js', BASE).href);
-          if (!bootstrap) return Response.error();
-          const metadata: WorkerBootstrapMetadata = {
-            identity,
-            runtime: BASE.href,
-            applicationURL: entry.href,
-            ...workerResourceAliases(
-              app,
-              new URL('resources/', new URL('./', identity.url)),
-              BASE,
-            ),
-          };
-          return response(
-            `"use strict";\nglobalThis.__privacyContext=${JSON.stringify(metadata)};\n${await bootstrap.text()}`,
-            'text/javascript',
-            200,
-            {
-              workerSource: new URL('__contexts/', entry).href,
-              controllerSource: new URL('sw.js', BASE).href,
-            },
-          );
-        }
         return Response.error();
       }
       if (req.mode === 'navigate') {

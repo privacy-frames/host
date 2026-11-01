@@ -23,13 +23,14 @@ import type { WorkerControl } from './worker-protocol.ts';
 import { createWorkerFactory } from './worker-factory.ts';
 import { createSharedWorkerFactory } from './shared-worker-factory.ts';
 import { prepareScriptURLs } from '../enforcement/script-urls.ts';
+import type { WorkerBirth } from './worker-birth-protocol.ts';
 const worker = self as unknown as DedicatedWorkerGlobalScope;
 const rawAdd = EventTarget.prototype.addEventListener;
 const rawImport = worker.importScripts;
 const rawCreateURL = URL.createObjectURL;
 const rawRevokeURL = URL.revokeObjectURL;
 const NativeBlob = Blob;
-function metadata(
+export function parseWorkerMetadata(
   value: unknown,
   kind: 'dedicated-worker' | 'shared-worker',
 ): WorkerBootstrapMetadata {
@@ -69,6 +70,8 @@ function metadata(
   if (
     typeof value.runtime !== 'string' ||
     typeof value.applicationURL !== 'string' ||
+    !('module' in value) ||
+    typeof value.module !== 'boolean' ||
     !Array.isArray(value.aliases) ||
     !Array.isArray(value.rootAliases)
   )
@@ -129,18 +132,20 @@ function metadata(
     applicationURL: application.href,
     aliases,
     rootAliases,
+    module: value.module,
   });
 }
 export function readWorkerMetadata(kind: 'dedicated-worker' | 'shared-worker') {
   const raw: unknown = Reflect.get(globalThis, '__privacyContext');
   Reflect.deleteProperty(globalThis, '__privacyContext');
-  return metadata(raw, kind);
+  return parseWorkerMetadata(raw, kind);
 }
 export function prepareWorkerRealm(
   context: WorkerBootstrapMetadata,
   listenerType: 'message' | 'connect',
   control: WorkerControl,
   read: WorkerResourceRead,
+  birth: WorkerBirth,
 ) {
   prepareRuntimeIntrinsics();
   const tools = createPolicyTools();
@@ -171,6 +176,7 @@ export function prepareWorkerRealm(
       resources,
       control,
       read,
+      birth,
       scriptURL,
     }),
   );
@@ -317,10 +323,7 @@ export function prepareWorkerRealm(
         const sourceLocation = new NativeURL(scriptBase);
         for (const [name, get] of locationGetters)
           locationValues.set(name, apply(get, sourceLocation, []));
-        const module = strings.endsWith(
-          new NativeURL(context.identity.url).pathname,
-          '/module.js',
-        );
+        const module = context.module;
         let entry = source;
         if ('body' in start && start.body !== undefined) {
           if (

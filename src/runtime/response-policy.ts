@@ -62,7 +62,7 @@ function policy(
     "media-src 'self' blob: data:",
     "object-src 'none'",
     'frame-src ' + (options.frameSource ? workerSource : "'none'"),
-    `worker-src ${workerSource}`,
+    `worker-src ${workerSource}${workerSource === "'none'" ? '' : ' blob:'}`,
     "form-action 'none'",
     "base-uri 'none'",
     SCRIPT_URL_CSP,

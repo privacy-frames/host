@@ -1,25 +1,25 @@
 {
   "scope": "Native SharedWorker policy partition using bundled production namespace helpers at current and preceding policy constants, plus a test-only partition-removal fault. Changed server script represents a later bootstrap deployment. Checks instance sharing and fresh script fetches; does not exercise complete production admission, revoke old globals, or establish no remote effects.",
-  "policyVersion": 6,
+  "policyVersion": 7,
   "bundles": [
+    {
+      "mode": "production",
+      "version": 7,
+      "sha256": "ae91fffcdc5489433e2798889a15c51ea8d97b6e696608598e8f05ae6f46a901"
+    },
     {
       "mode": "production",
       "version": 6,
       "sha256": "50b88e9f4868aba7738be0e1da22f2c910d8edc52200b4f8ab6c44634c9f8a87"
     },
     {
-      "mode": "production",
-      "version": 5,
-      "sha256": "163a49059407196a1067f3595352b1508878ff44e9d7c4a9f8d0739b5d94ad26"
-    },
-    {
       "mode": "omitted-policy",
-      "version": 5,
+      "version": 6,
       "sha256": "1d48bd2eea40a6871dc6cd9585588d08c2f7f54da308ae7b80d89fe2c6f398c1"
     },
     {
       "mode": "omitted-policy",
-      "version": 6,
+      "version": 7,
       "sha256": "1d48bd2eea40a6871dc6cd9585588d08c2f7f54da308ae7b80d89fe2c6f398c1"
     }
   ],
@@ -27,7 +27,7 @@
   "sourceSHA256": {
     "formal/runtime-verification/worker-policy-overlap.ts": "650d8112e8f764d57d3fd96812d04c0f300ea0cc4b5899a46f3bd908329a24e1",
     "src/shared/shared-worker.ts": "6d8363312e8c33b53343b5a841951691abdbdaf4879501f03c0d29fec24d4956",
-    "src/shared/context-policy.ts": "9b239eb1bf4085e1140e0e7c67ccf402217b2991cc65814bfe8456e619fc2c43",
+    "src/shared/context-policy.ts": "f51db1e29f146905460c590ba62163aa5033405919f771dc33fcc4ace76037bc",
     "src/shared/primordials.ts": "422a992a7e863c1b3b09f7d1484f10fa66a0300cdea007dfe485c9bf0c1e980c",
     "src/runtime/publisher/protocol.ts": "f5f110c8006cacae1c675a45850ca540e9598d80e84b12d51b639c04893b42ee",
     "test/browser-profile.ts": "c161489dfce9c3124474d1416440c9876b0a8fce329d2f09fa16f99af744e3a0",
@@ -42,15 +42,15 @@
       "type": "classic",
       "original": {
         "revision": 1,
-        "instance": "59e779e2-535b-4cf5-9827-80d025d9c98d"
+        "instance": "f0740a97-c3d6-4fcc-ad53-53ab8b511109"
       },
       "reused": {
         "revision": 1,
-        "instance": "59e779e2-535b-4cf5-9827-80d025d9c98d"
+        "instance": "f0740a97-c3d6-4fcc-ad53-53ab8b511109"
       },
       "partitioned": {
         "revision": 2,
-        "instance": "41c4bcb7-dd61-4f48-965c-ec5641b8c8f3"
+        "instance": "209fa55d-bbb1-49ae-a3d3-02c0a3509807"
       },
       "fetches": {
         "initial": 1,
@@ -66,15 +66,15 @@
       "type": "module",
       "original": {
         "revision": 1,
-        "instance": "12769299-8700-46c9-ab22-524cfab40c3a"
+        "instance": "a7f73f4d-5aa5-4867-af14-7bbd716a568a"
       },
       "reused": {
         "revision": 1,
-        "instance": "12769299-8700-46c9-ab22-524cfab40c3a"
+        "instance": "a7f73f4d-5aa5-4867-af14-7bbd716a568a"
       },
       "partitioned": {
         "revision": 2,
-        "instance": "a1fd54ca-d200-4c46-a68e-43c02545c5b9"
+        "instance": "d59a3592-eceb-40b1-8e28-085a985f6913"
       },
       "fetches": {
         "initial": 1,
@@ -90,15 +90,15 @@
       "type": "classic",
       "original": {
         "revision": 1,
-        "instance": "25691183-de69-4fdb-9968-74bf9f03f152"
+        "instance": "739a1572-6852-4b95-9dc1-35d28cb96e6a"
       },
       "reused": {
         "revision": 1,
-        "instance": "25691183-de69-4fdb-9968-74bf9f03f152"
+        "instance": "739a1572-6852-4b95-9dc1-35d28cb96e6a"
       },
       "partitioned": {
         "revision": 2,
-        "instance": "13171fda-8678-4046-8fea-57f1251950d7"
+        "instance": "034fa5ad-d640-4295-acf5-7ed60a783a72"
       },
       "fetches": {
         "initial": 1,
@@ -114,15 +114,15 @@
       "type": "module",
       "original": {
         "revision": 1,
-        "instance": "bb1b514c-fd93-4eef-b4c3-84d643066160"
+        "instance": "c760d7b8-2526-4b9d-b76d-6246cc46a4d4"
       },
       "reused": {
         "revision": 1,
-        "instance": "bb1b514c-fd93-4eef-b4c3-84d643066160"
+        "instance": "c760d7b8-2526-4b9d-b76d-6246cc46a4d4"
       },
       "partitioned": {
         "revision": 2,
-        "instance": "d2f4aedd-5aef-4355-b7cf-394aaff61646"
+        "instance": "d6b73f7d-9b0a-4ae4-bea8-e52df0c24001"
       },
       "fetches": {
         "initial": 1,
@@ -138,15 +138,15 @@
       "type": "classic",
       "original": {
         "revision": 1,
-        "instance": "a93716da-4be1-46fc-850f-ba71c0e01317"
+        "instance": "21b9c11d-c42d-42d6-8059-330c613b59a7"
       },
       "reused": {
         "revision": 1,
-        "instance": "a93716da-4be1-46fc-850f-ba71c0e01317"
+        "instance": "21b9c11d-c42d-42d6-8059-330c613b59a7"
       },
       "partitioned": {
         "revision": 1,
-        "instance": "a93716da-4be1-46fc-850f-ba71c0e01317"
+        "instance": "21b9c11d-c42d-42d6-8059-330c613b59a7"
       },
       "fetches": {
         "initial": 1,
@@ -162,15 +162,15 @@
       "type": "module",
       "original": {
         "revision": 1,
-        "instance": "468b0e5f-5aae-41fe-acc2-82ab82f6ec1f"
+        "instance": "4106a317-25c1-4de6-88be-b2f76d7261e4"
       },
       "reused": {
         "revision": 1,
-        "instance": "468b0e5f-5aae-41fe-acc2-82ab82f6ec1f"
+        "instance": "4106a317-25c1-4de6-88be-b2f76d7261e4"
       },
       "partitioned": {
         "revision": 1,
-        "instance": "468b0e5f-5aae-41fe-acc2-82ab82f6ec1f"
+        "instance": "4106a317-25c1-4de6-88be-b2f76d7261e4"
       },
       "fetches": {
         "initial": 1,
@@ -186,15 +186,15 @@
       "type": "classic",
       "original": {
         "revision": 1,
-        "instance": "48db7c3d-ad8f-4ce4-a97c-363e15b09553"
+        "instance": "d2f2e184-9191-4f9a-9f1e-9232a4e1a57a"
       },
       "reused": {
         "revision": 1,
-        "instance": "48db7c3d-ad8f-4ce4-a97c-363e15b09553"
+        "instance": "d2f2e184-9191-4f9a-9f1e-9232a4e1a57a"
       },
       "partitioned": {
         "revision": 1,
-        "instance": "48db7c3d-ad8f-4ce4-a97c-363e15b09553"
+        "instance": "d2f2e184-9191-4f9a-9f1e-9232a4e1a57a"
       },
       "fetches": {
         "initial": 1,
@@ -210,15 +210,15 @@
       "type": "module",
       "original": {
         "revision": 1,
-        "instance": "47046d0d-c7ab-41e9-a28b-36d1a76229a3"
+        "instance": "2d8a9861-76f9-489f-b743-116089be1c6b"
       },
       "reused": {
         "revision": 1,
-        "instance": "47046d0d-c7ab-41e9-a28b-36d1a76229a3"
+        "instance": "2d8a9861-76f9-489f-b743-116089be1c6b"
       },
       "partitioned": {
         "revision": 1,
-        "instance": "47046d0d-c7ab-41e9-a28b-36d1a76229a3"
+        "instance": "2d8a9861-76f9-489f-b743-116089be1c6b"
       },
       "fetches": {
         "initial": 1,
@@ -234,15 +234,15 @@
       "type": "classic",
       "original": {
         "revision": 1,
-        "instance": "dbd48467-b35b-44db-8670-0dde658f24c1"
+        "instance": "f58ce67c-4cd7-4684-af9c-a470179f332b"
       },
       "reused": {
         "revision": 1,
-        "instance": "dbd48467-b35b-44db-8670-0dde658f24c1"
+        "instance": "f58ce67c-4cd7-4684-af9c-a470179f332b"
       },
       "partitioned": {
         "revision": 2,
-        "instance": "7c4326fc-2d92-4cb7-b6c1-a872c1c7ecd6"
+        "instance": "572e8528-c74d-4ce0-9057-f7273c11ab4d"
       },
       "fetches": {
         "initial": 1,
@@ -258,15 +258,15 @@
       "type": "module",
       "original": {
         "revision": 1,
-        "instance": "0a6486d8-0468-4c24-bdc2-5f4fabfdfa4c"
+        "instance": "ab6e44fe-5f96-45e7-924f-d9c6838595a6"
       },
       "reused": {
         "revision": 1,
-        "instance": "0a6486d8-0468-4c24-bdc2-5f4fabfdfa4c"
+        "instance": "ab6e44fe-5f96-45e7-924f-d9c6838595a6"
       },
       "partitioned": {
         "revision": 2,
-        "instance": "1f2bafb4-42b0-45ec-b343-235b34902e14"
+        "instance": "90c3b0d1-fdd0-4a87-9b1b-82a499ab5081"
       },
       "fetches": {
         "initial": 1,
@@ -282,15 +282,15 @@
       "type": "classic",
       "original": {
         "revision": 1,
-        "instance": "98109326-d431-4d20-9ff7-9d30864608b5"
+        "instance": "aabfcbc1-2629-4767-a330-d615b23da06a"
       },
       "reused": {
         "revision": 1,
-        "instance": "98109326-d431-4d20-9ff7-9d30864608b5"
+        "instance": "aabfcbc1-2629-4767-a330-d615b23da06a"
       },
       "partitioned": {
         "revision": 2,
-        "instance": "7eadfb33-9002-4d45-b021-d0e9c95ef627"
+        "instance": "7eba877d-8fe2-4cfa-9c9b-83bdb21523ab"
       },
       "fetches": {
         "initial": 1,
@@ -306,15 +306,15 @@
       "type": "module",
       "original": {
         "revision": 1,
-        "instance": "43606a5d-aff1-40f2-b206-b06d9d7c0420"
+        "instance": "be7f1ace-1355-4613-bb67-ec66961e4a42"
       },
       "reused": {
         "revision": 1,
-        "instance": "43606a5d-aff1-40f2-b206-b06d9d7c0420"
+        "instance": "be7f1ace-1355-4613-bb67-ec66961e4a42"
       },
       "partitioned": {
         "revision": 2,
-        "instance": "92239b05-8b9f-401e-be85-c3d78220e0df"
+        "instance": "efe182d7-054b-42a1-95a4-400ff90bfb0c"
       },
       "fetches": {
         "initial": 1,
@@ -330,15 +330,15 @@
       "type": "classic",
       "original": {
         "revision": 1,
-        "instance": "a1d66af3-84b4-447b-bda9-38d36a4d9137"
+        "instance": "7fcd3d08-5201-4be6-beb3-d4a8adbea969"
       },
       "reused": {
         "revision": 1,
-        "instance": "a1d66af3-84b4-447b-bda9-38d36a4d9137"
+        "instance": "7fcd3d08-5201-4be6-beb3-d4a8adbea969"
       },
       "partitioned": {
         "revision": 1,
-        "instance": "a1d66af3-84b4-447b-bda9-38d36a4d9137"
+        "instance": "7fcd3d08-5201-4be6-beb3-d4a8adbea969"
       },
       "fetches": {
         "initial": 1,
@@ -354,15 +354,15 @@
       "type": "module",
       "original": {
         "revision": 1,
-        "instance": "be330a86-e09f-468f-837d-bc75bf27bff5"
+        "instance": "083763bf-16a2-41ee-9156-e7093ee82289"
       },
       "reused": {
         "revision": 1,
-        "instance": "be330a86-e09f-468f-837d-bc75bf27bff5"
+        "instance": "083763bf-16a2-41ee-9156-e7093ee82289"
       },
       "partitioned": {
         "revision": 1,
-        "instance": "be330a86-e09f-468f-837d-bc75bf27bff5"
+        "instance": "083763bf-16a2-41ee-9156-e7093ee82289"
       },
       "fetches": {
         "initial": 1,
@@ -378,15 +378,15 @@
       "type": "classic",
       "original": {
         "revision": 1,
-        "instance": "dae88416-4433-4ddc-a4a5-256343d1fabb"
+        "instance": "ff03d3a3-07b3-45d3-8309-4829ec050a87"
       },
       "reused": {
         "revision": 1,
-        "instance": "dae88416-4433-4ddc-a4a5-256343d1fabb"
+        "instance": "ff03d3a3-07b3-45d3-8309-4829ec050a87"
       },
       "partitioned": {
         "revision": 1,
-        "instance": "dae88416-4433-4ddc-a4a5-256343d1fabb"
+        "instance": "ff03d3a3-07b3-45d3-8309-4829ec050a87"
       },
       "fetches": {
         "initial": 1,
@@ -402,15 +402,15 @@
       "type": "module",
       "original": {
         "revision": 1,
-        "instance": "5f2ebb71-cfef-451d-a822-4b1fd19d5dab"
+        "instance": "e874f6be-2b18-4c74-a4e5-e0b3c496774c"
       },
       "reused": {
         "revision": 1,
-        "instance": "5f2ebb71-cfef-451d-a822-4b1fd19d5dab"
+        "instance": "e874f6be-2b18-4c74-a4e5-e0b3c496774c"
       },
       "partitioned": {
         "revision": 1,
-        "instance": "5f2ebb71-cfef-451d-a822-4b1fd19d5dab"
+        "instance": "e874f6be-2b18-4c74-a4e5-e0b3c496774c"
       },
       "fetches": {
         "initial": 1,

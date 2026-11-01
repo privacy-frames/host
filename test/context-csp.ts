@@ -101,7 +101,8 @@ try {
         Reflect.get(window, 'runContextCSPProbe')(),
       );
       assert.equal(confined.approved.outcome, 'message');
-      for (const key of ['ordinary', 'other', 'blob']) {
+      assert.equal(confined.blob.outcome, 'message');
+      for (const key of ['ordinary', 'other']) {
         assert(['error', 'throw'].includes(confined[key].outcome), key);
       }
       const received = requests.slice(start);

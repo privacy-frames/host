@@ -206,6 +206,7 @@ try {
       const manager = await context.newPage();
       await manager.goto('http://127.0.0.1:4210/privacy-frames/');
       await manager.getByText('Ready to install.', { exact: true }).waitFor();
+      const nativeBootstrapURLs: string[] = [];
       async function install(path: string, label: string) {
         await manager.locator('#app-url').fill(publisherURL + path);
         await provideResourceList(
@@ -227,6 +228,7 @@ try {
         const opened = context.waitForEvent('page');
         await manager.locator(`[data-app="${label}"]`).click();
         const app = await opened;
+        app.on('worker', (worker) => nativeBootstrapURLs.push(worker.url()));
         app.on('console', (message) => {
           if (process.env.WORKER_CONTEXT_DEBUG && message.type() === 'error')
             console.log(name, 'worker console', message.text());
@@ -709,7 +711,10 @@ try {
       assert.equal(nativeRecovery.importsRefused, false);
       assert(requests.length > before);
       assert(connections.length > connectionsBefore);
+      assert(nativeBootstrapURLs.length > 0);
+      assert(nativeBootstrapURLs.every((url) => new URL(url).protocol === 'blob:'));
       results.push({
+        nativeBootstrapURLs,
         closure,
         provenance,
         name,

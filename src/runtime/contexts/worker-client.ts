@@ -7,6 +7,7 @@ import {
 import {
   INSTALLED_RESOURCE_REQUEST,
   WORKER_CONTROL_REQUEST,
+  WORKER_BIRTH_REQUEST,
 } from '../../shared/types.ts';
 import { servePrivatePort } from '../private-channel.ts';
 import type { PrivateRequest } from '../private-channel.ts';
@@ -16,6 +17,7 @@ import {
   type WorkerResourceRead,
 } from './worker-resource-protocol.ts';
 import type { WorkerBootstrapMetadata } from './model.ts';
+import { parseWorkerBirth, type WorkerBirth } from './worker-birth-protocol.ts';
 
 const apply = Reflect.apply;
 const nativeFetch = fetch;
@@ -32,6 +34,33 @@ const status = ownDescriptor(Response.prototype, 'status')!.get!;
 const statusText = ownDescriptor(Response.prototype, 'statusText')!.get!;
 const responseHeaders = ownDescriptor(Response.prototype, 'headers')!.get!;
 const forEachHeader = Headers.prototype.forEach;
+
+export function createWorkerBirth(request: PrivateRequest): WorkerBirth {
+  return (path, id, url, module) =>
+    request(
+      internalRecord({
+        type: WORKER_BIRTH_REQUEST,
+        ...parseWorkerBirth(internalRecord({ path, id, url, module })),
+      }),
+    );
+}
+
+export function createHTTPWorkerBirth(context: WorkerBootstrapMetadata): WorkerBirth {
+  const url = new NativeURL('__contexts/control', context.applicationURL).href;
+  return createWorkerBirth(async (packet) => {
+    const response: Response = await apply(nativeFetch, nativeGlobal, [
+      url,
+      internalRecord({
+        method: 'POST',
+        credentials: 'omit',
+        headers: internalRecord({ 'Content-Type': 'application/json' }),
+        body: stringify(packet),
+      }),
+    ]);
+    if (!apply(ok, response, [])) throw new NativeError('Worker birth refused');
+    return apply(json, response, []);
+  });
+}
 
 export function createWorkerResourceRead(request: PrivateRequest): WorkerResourceRead {
   return (path, url, headers) => {
@@ -125,6 +154,7 @@ export function serveWorkerParent(
   control: WorkerControl,
   current: () => boolean,
   read: WorkerResourceRead,
+  birth: WorkerBirth,
 ) {
   return servePrivatePort(port, async (packet, ports) => {
     for (let index = 0; index < ports.length; index++) apply(closePort, ports[index], []);
@@ -134,18 +164,26 @@ export function serveWorkerParent(
       !packet ||
       typeof packet !== 'object' ||
       (ownDescriptor(packet, 'type')?.value !== WORKER_CONTROL_REQUEST &&
-        ownDescriptor(packet, 'type')?.value !== INSTALLED_RESOURCE_REQUEST)
+        ownDescriptor(packet, 'type')?.value !== INSTALLED_RESOURCE_REQUEST &&
+        ownDescriptor(packet, 'type')?.value !== WORKER_BIRTH_REQUEST)
     )
       throw new NativeError('Worker parent request refused');
     const resource = ownDescriptor(packet, 'type')?.value === INSTALLED_RESOURCE_REQUEST;
-    const input = resource ? parseWorkerResource(packet) : parseWorkerControl(packet);
+    const isBirth = ownDescriptor(packet, 'type')?.value === WORKER_BIRTH_REQUEST;
+    const input = isBirth
+      ? parseWorkerBirth(packet)
+      : resource
+        ? parseWorkerResource(packet)
+        : parseWorkerControl(packet);
     const path = internalArray<string>([id]);
     for (let index = 0; index < input.path.length; index++)
       path[index + 1] = input.path[index];
     const result =
-      'url' in input
-        ? await read(path, input.url, input.headers)
-        : await control(input.operation, path, input.id);
+      'module' in input
+        ? await birth(path, input.id, input.url, input.module)
+        : 'url' in input
+          ? await read(path, input.url, input.headers)
+          : await control(input.operation, path, input.id);
     if (!current()) throw new NativeError('Worker parent channel closed');
     return result;
   });

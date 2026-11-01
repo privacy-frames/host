@@ -182,6 +182,9 @@ test('worker parent resource relays fix ancestry and suppress replies after loca
       }
       return { body: new Uint8Array([0, 128, 255]).buffer };
     },
+    async () => {
+      throw new Error('Resource read must not become a worker birth');
+    },
   );
   const client = createPortClient(channel.port1, 1000);
   const read = createWorkerResourceRead(client.request);
