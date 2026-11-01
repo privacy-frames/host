@@ -14,10 +14,15 @@ and launcher hashes, browser versions, native worker URLs and server requests.
 ## Controls and local policy
 
 Each sample starts in a fresh browser context with a registered service worker.
-The fixture embeds the loader in a Blob worker. Its fetch hook accepts one entry
-URL and returns the module bytes in a local Response. Shim mode is enabled and
-native passthrough is disabled. The entry returns `1`, and its loading record
-contains a Blob URL. Repeating the load returns `1` without HTTP.
+The fixture embeds the loader in a Blob worker. Its fetch hook accepts six module
+URLs and returns local Responses with their logical source URLs. Shim mode is
+enabled and native passthrough is disabled. The entry returns `1`, and its loading
+record contains a Blob URL. Repeating the load returns `1` without HTTP.
+
+A native graph control loads identical source through HTTP. Both implementations
+pass checks for one two-module function cycle, live re-exports, shared state-module
+identity, computed dynamic import, import.meta URL/resolution and top-level await.
+The native control requests all six source files; the shim uses the local hook.
 
 Two unrestricted controls import a receiver module that returns `2`. One uses
 native import directly; the other changes the loader record's Blob URL to the
@@ -33,12 +38,17 @@ enforced. Local loading succeeds. A record change, literal HTTP import and
 computed HTTP import each reject with a native policy-violation event and no
 request at the server.
 
-All seven cases pass in Chromium, Firefox and Firefox with
-`dom.serviceWorkers.testUpdateOverOneDay` enabled: 21 observations. All 12
+All eight cases pass in Chromium, Firefox and Firefox with
+`dom.serviceWorkers.testUpdateOverOneDay` enabled: 24 observations. All 12
 restricted cases produce zero HTTP requests during the operation and three
 subsequent seconds. The preference forces the registration age check; these are
 not naturally aged profiles. The experiment does not prepare a production realm,
 exercise its Trusted Types gate or establish complete confinement.
+
+The [CI receipt](module-loader-browser-ci-policy8.json) separately records all 21
+cases in the earlier fixture at revision `23ca1b1`, before the graph comparison was
+added. Its twelve restricted cases also have zero HTTP. Its runner hash identifies
+that earlier source; it does not certify the expanded fixture.
 
 ## Why the bootstrap matters
 
@@ -53,6 +63,16 @@ Run `node formal/runtime-verification/module-loader-browser.ts` for the Blob-roo
 comparison. `PF_MODULE_LOADER_HTTP_ROOT=1` selects HTTP roots for comparison; that
 mode records maintenance traffic and does not assert zero HTTP. The runner uses
 ephemeral loopback ports and downloads the pinned package before browser testing.
+
+`PF_MODULE_POLICY_PERSISTENT=1` uses a new temporary persistent profile for each
+sample and writes `module-loader-browser-persistent.json`. Both modes explicitly
+select the bundled full browser executable. Playwright background-service defaults
+remain in effect; remote spelling and other browser services need their own
+controls. Each temporary profile is removed after its context closes.
+
+The [persistent-profile receipt](module-loader-browser-persistent.json) also
+completes all 24 cases, with zero HTTP in its twelve restricted cases. Together
+the two profile modes provide 48 observations of this candidate mechanism.
 
 ## Implementation implications
 

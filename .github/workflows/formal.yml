@@ -146,6 +146,8 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v6
+      - name: Remove historical startup receipts from the checkout
+        run: rm -f formal/runtime-verification/service-worker-maintenance.json formal/runtime-verification/service-worker-startup-stale.json
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
@@ -159,6 +161,7 @@ jobs:
           npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/runtime-verification/service-worker-maintenance.ts
           node formal/runtime-verification/service-worker-maintenance.ts
       - name: Check startup under the forced-stale Firefox age contract
+        if: ${{ !cancelled() }}
         run: PF_STARTUP_STALE=1 node formal/runtime-verification/service-worker-maintenance.ts
       - uses: actions/upload-artifact@v4
         if: always()
@@ -169,9 +172,11 @@ jobs:
             formal/runtime-verification/service-worker-startup-stale.json
   module-delivery-policy:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 18
     steps:
       - uses: actions/checkout@v6
+      - name: Remove the historical module-policy receipt from the checkout
+        run: rm -f formal/runtime-verification/module-loader-browser.json formal/runtime-verification/module-loader-browser-persistent.json formal/runtime-verification/local-shared-issuer-port.json
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
@@ -183,11 +188,22 @@ jobs:
         run: |
           npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/runtime-verification/module-loader-browser.ts
           node formal/runtime-verification/module-loader-browser.ts
+      - name: Check the module policy in temporary persistent full-browser profiles
+        if: ${{ !cancelled() }}
+        run: PF_MODULE_POLICY_PERSISTENT=1 node formal/runtime-verification/module-loader-browser.ts
+      - name: Check private-port shared-worker issuing prerequisites
+        if: ${{ !cancelled() }}
+        run: |
+          npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/runtime-verification/local-shared-issuer.ts
+          PF_SHARED_ISSUER_TRANSPORT=port node formal/runtime-verification/local-shared-issuer.ts
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: module-delivery-native-policy
-          path: formal/runtime-verification/module-loader-browser.json
+          path: |
+            formal/runtime-verification/module-loader-browser.json
+            formal/runtime-verification/module-loader-browser-persistent.json
+            formal/runtime-verification/local-shared-issuer-port.json
   worker-closure:
     runs-on: ubuntu-latest
     timeout-minutes: 12
@@ -223,6 +239,37 @@ jobs:
         with:
           name: worker-closure-contract
           path: formal/runtime-verification/worker-closure-browser.json
+  browser-spelling:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v6
+      - name: Remove historical spelling receipt before setup
+        run: rm -f formal/runtime-verification/ua-spelling-browser.json formal/runtime-verification/spelling-dom-browser.json
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium firefox
+        timeout-minutes: 5
+      - name: Check normal-profile spelling and actual setter omission
+        run: |
+          npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/runtime-verification/ua-spelling-browser.ts
+          node formal/runtime-verification/ua-spelling-browser.ts
+      - name: Compare native HTML attribute and parser routes in both engines
+        if: ${{ !cancelled() }}
+        run: |
+          npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/runtime-verification/spelling-dom-browser.ts
+          node formal/runtime-verification/spelling-dom-browser.ts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-spelling-contract
+          path: |
+            formal/runtime-verification/ua-spelling-browser.json
+            formal/runtime-verification/spelling-dom-browser.json
   resource-fetch:
     runs-on: ubuntu-latest
     timeout-minutes: 18

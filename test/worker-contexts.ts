@@ -48,7 +48,10 @@ globalThis.fixtureWorkers = {
 globalThis.workerFixtureReady = true;
 `,
   ],
-  '/workers/worker.js': ['text/javascript', `importScripts('helper.js');${workerCode}`],
+  '/workers/worker.js': [
+    'text/javascript',
+    `importScripts('helper.js#classic-dependency');${workerCode}`,
+  ],
   '/workers/directory/entry.js': [
     'text/javascript',
     `importScripts('./helper.js');${workerCode}`,
@@ -107,7 +110,7 @@ const results = [];
 
 async function dynamicModule(page: Page) {
   return page.evaluate(async () => {
-    const worker = new Worker('worker.js');
+    const worker = new Worker('worker.js#classic-entry');
     try {
       return await new Promise((resolve, reject) => {
         worker.onmessage = (event) => resolve(event.data);

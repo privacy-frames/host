@@ -7,65 +7,65 @@
   "source": "src/runtime/contexts/model.ts",
   "sourceSHA256": "5c3051cca5248fe8226954cdb6fd141419cd9e1f8513b4efe5c469721baf7a1e",
   "policySource": "src/shared/context-policy.ts",
-  "policySourceSHA256": "5447c7f7b848a0ca0341e374d76a4f605028dfca18fc5e67a1ca101ce83cc8d5",
+  "policySourceSHA256": "9bb19203360ef125ca42c6064713d8338ba1a6e9205ce4a4c470a7545e536b02",
   "functionSHA256": "7a95b51f20959b5baae047a758258397bd5d1eb606742ea8030013e6f3937002",
-  "runnerSHA256": "b449ae106dd3ebb831211af27cb22fb6879422e58b5456253dc34943dae0df7f",
+  "runnerSHA256": "7c04ab8ea5033fbaabe3eb0099d9eaecd205728050c9b04e01266035b978cbe5",
   "preconditions": [
     "Records are ordinary objects with owned writable data properties and arbitrary prototypes. Separate-record contracts require disjoint ownership; aliased contracts own one record.",
-    "Identity, application, generation, kind, URL and state fields are strings. Parent is null for a root or a string for a child. Current policy version is 8; expected policy versions may be arbitrary numbers in refusal contracts. A selected mismatch is sufficient even when other fields differ.",
+    "Identity, application, generation, kind, URL and state fields are strings. Parent is null for a root or a string for a child. Current policy version is 9; expected policy versions may be arbitrary numbers in refusal contracts. A selected mismatch is sufficient even when other fields differ.",
     "This function alone does not reject a closed current record: resolve/resolveWorker must filter it before calling. Proving that caller contract and preservation through async operations remains open.",
     "Extraction, TypeScript erasure, Gillian semantics, verifier, solver and native/caller contracts remain trusted. No proof of the complete registry follows from these contracts."
   ],
   "contracts": [
     {
       "name": "rootMatch",
-      "precondition": "(current == #c) * (expected == #e) * Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 8, #curl, #cphase, #cproto) * Authorityroot(#e, #cid, #capplication, #cgeneration, #ckind, 8, #curl, #ephase, #eproto) * (! (#ephase == \"closed\"))",
-      "postcondition": "Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 8, #curl, #cphase, #cproto) * Authorityroot(#e, #cid, #capplication, #cgeneration, #ckind, 8, #curl, #ephase, #eproto) * (ret == true)"
+      "precondition": "(current == #c) * (expected == #e) * Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 9, #curl, #cphase, #cproto) * Authorityroot(#e, #cid, #capplication, #cgeneration, #ckind, 9, #curl, #ephase, #eproto) * (! (#ephase == \"closed\"))",
+      "postcondition": "Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 9, #curl, #cphase, #cproto) * Authorityroot(#e, #cid, #capplication, #cgeneration, #ckind, 9, #curl, #ephase, #eproto) * (ret == true)"
     },
     {
       "name": "rootMismatchid",
-      "precondition": "(current == #c) * (expected == #e) * Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 8, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (#cid == #eid))",
-      "postcondition": "Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 8, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
+      "precondition": "(current == #c) * (expected == #e) * Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 9, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (#cid == #eid))",
+      "postcondition": "Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 9, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
     },
     {
       "name": "rootMismatchapplication",
-      "precondition": "(current == #c) * (expected == #e) * Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 8, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (#capplication == #eapplication))",
-      "postcondition": "Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 8, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
+      "precondition": "(current == #c) * (expected == #e) * Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 9, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (#capplication == #eapplication))",
+      "postcondition": "Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 9, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
     },
     {
       "name": "rootMismatchinstallationGeneration",
-      "precondition": "(current == #c) * (expected == #e) * Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 8, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (#cgeneration == #egeneration))",
-      "postcondition": "Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 8, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
+      "precondition": "(current == #c) * (expected == #e) * Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 9, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (#cgeneration == #egeneration))",
+      "postcondition": "Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 9, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
     },
     {
       "name": "rootMismatchkind",
-      "precondition": "(current == #c) * (expected == #e) * Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 8, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (#ckind == #ekind))",
-      "postcondition": "Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 8, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
+      "precondition": "(current == #c) * (expected == #e) * Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 9, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (#ckind == #ekind))",
+      "postcondition": "Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 9, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
     },
     {
       "name": "rootMismatchpolicyVersion",
-      "precondition": "(current == #c) * (expected == #e) * Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 8, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (8 == #epolicy))",
-      "postcondition": "Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 8, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
+      "precondition": "(current == #c) * (expected == #e) * Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 9, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (9 == #epolicy))",
+      "postcondition": "Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 9, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
     },
     {
       "name": "rootMismatchurl",
-      "precondition": "(current == #c) * (expected == #e) * Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 8, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (#curl == #eurl))",
-      "postcondition": "Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 8, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
+      "precondition": "(current == #c) * (expected == #e) * Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 9, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (#curl == #eurl))",
+      "postcondition": "Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 9, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
     },
     {
       "name": "rootClosedExpected",
-      "precondition": "(current == #c) * (expected == #e) * Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 8, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, \"closed\", #eproto)",
-      "postcondition": "Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 8, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, \"closed\", #eproto) * (ret == false)"
+      "precondition": "(current == #c) * (expected == #e) * Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 9, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, \"closed\", #eproto)",
+      "postcondition": "Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 9, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, \"closed\", #eproto) * (ret == false)"
     },
     {
       "name": "rootAliasedOpen",
-      "precondition": "(current == #c) * (expected == #c) * Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 8, #curl, #phase, #cproto) * (! (#phase == \"closed\"))",
-      "postcondition": "Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 8, #curl, #phase, #cproto) * (ret == true)"
+      "precondition": "(current == #c) * (expected == #c) * Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 9, #curl, #phase, #cproto) * (! (#phase == \"closed\"))",
+      "postcondition": "Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 9, #curl, #phase, #cproto) * (ret == true)"
     },
     {
       "name": "rootAliasedClosed",
-      "precondition": "(current == #c) * (expected == #c) * Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 8, #curl, \"closed\", #cproto)",
-      "postcondition": "Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 8, #curl, \"closed\", #cproto) * (ret == false)"
+      "precondition": "(current == #c) * (expected == #c) * Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 9, #curl, \"closed\", #cproto)",
+      "postcondition": "Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 9, #curl, \"closed\", #cproto) * (ret == false)"
     },
     {
       "name": "rootMissingundefined",
@@ -79,63 +79,63 @@
     },
     {
       "name": "rootParentTypeMismatch",
-      "precondition": "(current == #c) * (expected == #e) * Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 8, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto)",
-      "postcondition": "Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 8, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
+      "precondition": "(current == #c) * (expected == #e) * Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 9, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto)",
+      "postcondition": "Authorityroot(#c, #cid, #capplication, #cgeneration, #ckind, 9, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
     },
     {
       "name": "childMatch",
-      "precondition": "(current == #c) * (expected == #e) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #cphase, #cproto) * Authoritychild(#e, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #ephase, #eproto) * (! (#ephase == \"closed\"))",
-      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #cphase, #cproto) * Authoritychild(#e, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #ephase, #eproto) * (ret == true)"
+      "precondition": "(current == #c) * (expected == #e) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #cphase, #cproto) * Authoritychild(#e, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #ephase, #eproto) * (! (#ephase == \"closed\"))",
+      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #cphase, #cproto) * Authoritychild(#e, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #ephase, #eproto) * (ret == true)"
     },
     {
       "name": "childMismatchid",
-      "precondition": "(current == #c) * (expected == #e) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (#cid == #eid))",
-      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
+      "precondition": "(current == #c) * (expected == #e) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (#cid == #eid))",
+      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
     },
     {
       "name": "childMismatchapplication",
-      "precondition": "(current == #c) * (expected == #e) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (#capplication == #eapplication))",
-      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
+      "precondition": "(current == #c) * (expected == #e) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (#capplication == #eapplication))",
+      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
     },
     {
       "name": "childMismatchinstallationGeneration",
-      "precondition": "(current == #c) * (expected == #e) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (#cgeneration == #egeneration))",
-      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
+      "precondition": "(current == #c) * (expected == #e) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (#cgeneration == #egeneration))",
+      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
     },
     {
       "name": "childMismatchparent",
-      "precondition": "(current == #c) * (expected == #e) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (#cparent == #eparent))",
-      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
+      "precondition": "(current == #c) * (expected == #e) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (#cparent == #eparent))",
+      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
     },
     {
       "name": "childMismatchkind",
-      "precondition": "(current == #c) * (expected == #e) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (#ckind == #ekind))",
-      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
+      "precondition": "(current == #c) * (expected == #e) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (#ckind == #ekind))",
+      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
     },
     {
       "name": "childMismatchpolicyVersion",
-      "precondition": "(current == #c) * (expected == #e) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (8 == #epolicy))",
-      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
+      "precondition": "(current == #c) * (expected == #e) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (9 == #epolicy))",
+      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
     },
     {
       "name": "childMismatchurl",
-      "precondition": "(current == #c) * (expected == #e) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (#curl == #eurl))",
-      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
+      "precondition": "(current == #c) * (expected == #e) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (! (#curl == #eurl))",
+      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
     },
     {
       "name": "childClosedExpected",
-      "precondition": "(current == #c) * (expected == #e) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, \"closed\", #eproto)",
-      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, \"closed\", #eproto) * (ret == false)"
+      "precondition": "(current == #c) * (expected == #e) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, \"closed\", #eproto)",
+      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #cphase, #cproto) * Authoritychild(#e, #eid, #eapplication, #egeneration, #eparent, #ekind, #epolicy, #eurl, \"closed\", #eproto) * (ret == false)"
     },
     {
       "name": "childAliasedOpen",
-      "precondition": "(current == #c) * (expected == #c) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #phase, #cproto) * (! (#phase == \"closed\"))",
-      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #phase, #cproto) * (ret == true)"
+      "precondition": "(current == #c) * (expected == #c) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #phase, #cproto) * (! (#phase == \"closed\"))",
+      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #phase, #cproto) * (ret == true)"
     },
     {
       "name": "childAliasedClosed",
-      "precondition": "(current == #c) * (expected == #c) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, \"closed\", #cproto)",
-      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, \"closed\", #cproto) * (ret == false)"
+      "precondition": "(current == #c) * (expected == #c) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, \"closed\", #cproto)",
+      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, \"closed\", #cproto) * (ret == false)"
     },
     {
       "name": "childMissingundefined",
@@ -149,8 +149,8 @@
     },
     {
       "name": "childParentTypeMismatch",
-      "precondition": "(current == #c) * (expected == #e) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto)",
-      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 8, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
+      "precondition": "(current == #c) * (expected == #e) * Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto)",
+      "postcondition": "Authoritychild(#c, #cid, #capplication, #cgeneration, #cparent, #ckind, 9, #curl, #cphase, #cproto) * Authorityroot(#e, #eid, #eapplication, #egeneration, #ekind, #epolicy, #eurl, #ephase, #eproto) * (ret == false)"
     }
   ],
   "results": [
@@ -295,10 +295,10 @@
         }
       ],
       "exitCode": 0,
-      "inputSHA256": "ed1b07e8ecc385b7ae943d854424eb1b593e504ff1f46df5c14edcc88d7dca8e",
+      "inputSHA256": "ec305340a04e8002414073b317a3d507afb30d7f3c9bf1066a0a743df82f2685",
       "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
-      "outputSHA256": "a2d6cf2f721b6ffbbd81f6cfbc91887c5b623dd52f6eb3a4ed670a9f77a3450f",
-      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 27 symbolic tests in total\nRunning symbolic tests: 0.228111\nVerifying one spec of procedure sameAuthority_rootClosedExpected... s Success\nVerifying one spec of procedure sameAuthority_rootAliasedOpen... s Success\nVerifying one spec of procedure sameAuthority_childMatch... s Success\nVerifying one spec of procedure sameAuthority_childAliasedOpen... s Success\nVerifying one spec of procedure sameAuthority_childMismatchkind... s s s s s s Success\nVerifying one spec of procedure sameAuthority_rootMatch... s Success\nVerifying one spec of procedure sameAuthority_childMismatchapplication... s s s Success\nVerifying one spec of procedure sameAuthority_rootParentTypeMismatch... s s s s s Success\nVerifying one spec of procedure sameAuthority_rootMismatchapplication... s s s Success\nVerifying one spec of procedure sameAuthority_childMismatchurl... s s s s s s s s Success\nVerifying one spec of procedure sameAuthority_rootAliasedClosed... s Success\nVerifying one spec of procedure sameAuthority_rootMissingnull... s Success\nVerifying one spec of procedure sameAuthority_rootMismatchpolicyVersion... s s s s s s Success\nVerifying one spec of procedure sameAuthority_childMismatchpolicyVersion... s s s s s s s Success\nVerifying one spec of procedure sameAuthority_childMissingundefined... s Success\nVerifying one spec of procedure sameAuthority_rootMismatchinstallationGeneration... s s s s Success\nVerifying one spec of procedure sameAuthority_rootMismatchkind... s s s s s Success\nVerifying one spec of procedure sameAuthority_childMismatchinstallationGeneration... s s s s Success\nVerifying one spec of procedure sameAuthority_childClosedExpected... s Success\nVerifying one spec of procedure sameAuthority_childMismatchparent... s s s s s Success\nVerifying one spec of procedure sameAuthority_childMissingnull... s Success\nVerifying one spec of procedure sameAuthority_childParentTypeMismatch... s s s s s Success\nVerifying one spec of procedure sameAuthority_rootMissingundefined... s Success\nVerifying one spec of procedure sameAuthority_rootMismatchid... s s Success\nVerifying one spec of procedure sameAuthority_childMismatchid... s s Success\nVerifying one spec of procedure sameAuthority_rootMismatchurl... s s s s s s s Success\nVerifying one spec of procedure sameAuthority_childAliasedClosed... s Success\nAll specs succeeded: 6.543083"
+      "outputSHA256": "7d1968100fd507e0962be3e5931cb8587e92d833a01a522ecdbb92c00707b630",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 27 symbolic tests in total\nRunning symbolic tests: 0.194369\nVerifying one spec of procedure sameAuthority_rootClosedExpected... s Success\nVerifying one spec of procedure sameAuthority_rootAliasedOpen... s Success\nVerifying one spec of procedure sameAuthority_childMatch... s Success\nVerifying one spec of procedure sameAuthority_childAliasedOpen... s Success\nVerifying one spec of procedure sameAuthority_childMismatchkind... s s s s s s Success\nVerifying one spec of procedure sameAuthority_rootMatch... s Success\nVerifying one spec of procedure sameAuthority_childMismatchapplication... s s s Success\nVerifying one spec of procedure sameAuthority_rootParentTypeMismatch... s s s s s Success\nVerifying one spec of procedure sameAuthority_rootMismatchapplication... s s s Success\nVerifying one spec of procedure sameAuthority_childMismatchurl... s s s s s s s s Success\nVerifying one spec of procedure sameAuthority_rootAliasedClosed... s Success\nVerifying one spec of procedure sameAuthority_rootMissingnull... s Success\nVerifying one spec of procedure sameAuthority_rootMismatchpolicyVersion... s s s s s s Success\nVerifying one spec of procedure sameAuthority_childMismatchpolicyVersion... s s s s s s s Success\nVerifying one spec of procedure sameAuthority_childMissingundefined... s Success\nVerifying one spec of procedure sameAuthority_rootMismatchinstallationGeneration... s s s s Success\nVerifying one spec of procedure sameAuthority_rootMismatchkind... s s s s s Success\nVerifying one spec of procedure sameAuthority_childMismatchinstallationGeneration... s s s s Success\nVerifying one spec of procedure sameAuthority_childClosedExpected... s Success\nVerifying one spec of procedure sameAuthority_childMismatchparent... s s s s s Success\nVerifying one spec of procedure sameAuthority_childMissingnull... s Success\nVerifying one spec of procedure sameAuthority_childParentTypeMismatch... s s s s s Success\nVerifying one spec of procedure sameAuthority_rootMissingundefined... s Success\nVerifying one spec of procedure sameAuthority_rootMismatchid... s s Success\nVerifying one spec of procedure sameAuthority_childMismatchid... s s Success\nVerifying one spec of procedure sameAuthority_rootMismatchurl... s s s s s s s Success\nVerifying one spec of procedure sameAuthority_childAliasedClosed... s Success\nAll specs succeeded: 6.536030"
     },
     {
       "name": "omits-id",
@@ -311,10 +311,10 @@
         }
       ],
       "exitCode": 1,
-      "inputSHA256": "bd36bca1655e128236b9bbc06a4f927a9489cc6a101aa3fedd549b702f9a2ce0",
+      "inputSHA256": "40cba59abff846f8319df34533299b160d9f5de96b6990cb857fdbed5c4b3aef",
       "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
-      "outputSHA256": "5f3807cbfc9f2a3622a372a436d141c926d6aa09db7f6c3ff66af24cbe217021",
-      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.064810\nVerifying one spec of procedure sameAuthority_childMismatchid... s s s s s s f Failure\nThere were failures: 0.686177\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+      "outputSHA256": "0bd611022c91dc34be0c0c7d91c29205888e2b2c9dce6d52a4fffcbc5205291d",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.051493\nVerifying one spec of procedure sameAuthority_childMismatchid... s s s s s s f Failure\nThere were failures: 0.544865\nAnalysis failures!\n1. Couldn't satisfy postcondition"
     },
     {
       "name": "omits-application",
@@ -327,10 +327,10 @@
         }
       ],
       "exitCode": 1,
-      "inputSHA256": "0f5e977e3bc5c8444929c0d80a62dba230f23c52f014f4847e792ea451e40272",
+      "inputSHA256": "032f84cab95ec4b5ac76d7ef5ed63014bc3b60195a0cc9a445b30f3f28597ffc",
       "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
-      "outputSHA256": "bb5bc40715d4904f0e4a0c80370741fac82182f9ffe80f566825bca8d152fb82",
-      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.069007\nVerifying one spec of procedure sameAuthority_childMismatchapplication... s s s s s s f Failure\nThere were failures: 0.690026\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+      "outputSHA256": "94190423afb044c5dcb46eeda304f2db8e69d93218f0931470857943139338c3",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.053800\nVerifying one spec of procedure sameAuthority_childMismatchapplication... s s s s s s f Failure\nThere were failures: 0.559172\nAnalysis failures!\n1. Couldn't satisfy postcondition"
     },
     {
       "name": "omits-installationgeneration",
@@ -343,10 +343,10 @@
         }
       ],
       "exitCode": 1,
-      "inputSHA256": "a543146fe3a23424006452bd4863f02d23e381713ab0f7b76baef1b9ab4041b6",
+      "inputSHA256": "8445ff2a33f73f4a34b82220a1315f684353de1afa6ab94c4a7414389a409a18",
       "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
-      "outputSHA256": "c6bfc9d81f4120e2e5182ecef61c6d46f9ee35ef1708cfa95f8bd07e019e2b9f",
-      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.052917\nVerifying one spec of procedure sameAuthority_childMismatchinstallationGeneration... s s s s s s f Failure\nThere were failures: 0.614886\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+      "outputSHA256": "595421881db0df85e1188e5e88d43f9ad4ba3878150c48a3dd2807f50b1afa07",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.052187\nVerifying one spec of procedure sameAuthority_childMismatchinstallationGeneration... s s s s s s f Failure\nThere were failures: 0.562748\nAnalysis failures!\n1. Couldn't satisfy postcondition"
     },
     {
       "name": "omits-parent",
@@ -359,10 +359,10 @@
         }
       ],
       "exitCode": 1,
-      "inputSHA256": "273e4ae2a7ccef52931277cea158b7689a261f8d11f3dc698540954ba5032304",
+      "inputSHA256": "6c553eaf83c5b4f64d11c88ca45a5534c469fbec2f071fb7cb84a8629675f530",
       "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
-      "outputSHA256": "367fea944175f8e2cac5476b738155ca6019c0ae71a2344a8235e32205d8106a",
-      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.053922\nVerifying one spec of procedure sameAuthority_childMismatchparent... s s s s s s f Failure\nThere were failures: 0.576789\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+      "outputSHA256": "30c09f9ce4c142fc4f54bbd1e0dd27742ace6488d48d3ddc9ac492a633b03422",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.052351\nVerifying one spec of procedure sameAuthority_childMismatchparent... s s s s s s f Failure\nThere were failures: 0.582708\nAnalysis failures!\n1. Couldn't satisfy postcondition"
     },
     {
       "name": "omits-kind",
@@ -375,10 +375,10 @@
         }
       ],
       "exitCode": 1,
-      "inputSHA256": "9d6084291454ebb4a1b7743c43065a3be97764bc48ed5326252f10e8a7913eb3",
+      "inputSHA256": "a01ec9977b5d1e8b9a9d69dc2cc4f5ae9ef1ead30486167f0525ebf93dc18516",
       "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
-      "outputSHA256": "b118f2ac005a1ac43b48e19bd6a8c12d34295cb385cb9710964e0e5276e91c6e",
-      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.054594\nVerifying one spec of procedure sameAuthority_childMismatchkind... s s s s s s f Failure\nThere were failures: 0.604126\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+      "outputSHA256": "944ab5441593786214b82a5ba3addeaed4b8be91148fcd37d49608f04ce2f1f0",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.051841\nVerifying one spec of procedure sameAuthority_childMismatchkind... s s s s s s f Failure\nThere were failures: 0.555901\nAnalysis failures!\n1. Couldn't satisfy postcondition"
     },
     {
       "name": "omits-policyversion",
@@ -391,10 +391,10 @@
         }
       ],
       "exitCode": 1,
-      "inputSHA256": "3beaeb218c95f023093da563b44fb44eef1f7fbe2c39b067b9f5c4d0c214a449",
+      "inputSHA256": "df3608b46e6dbd681966458dd655f47d14e51d23d1e36742c579a74ce3464145",
       "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
-      "outputSHA256": "ea2a9477b3c2d1faba398ddcc9a6b7234399485dbe6dc47483852c8b41cfe78d",
-      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.057664\nVerifying one spec of procedure sameAuthority_childMismatchpolicyVersion... s s s s s s f Failure\nThere were failures: 0.627393\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+      "outputSHA256": "a00c3aee6d8baf49807af8ab7cc1a0249bcc92e6044b67a76d89e8721a1ba949",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.052080\nVerifying one spec of procedure sameAuthority_childMismatchpolicyVersion... s s s s s s f Failure\nThere were failures: 0.561668\nAnalysis failures!\n1. Couldn't satisfy postcondition"
     },
     {
       "name": "omits-url",
@@ -407,10 +407,10 @@
         }
       ],
       "exitCode": 1,
-      "inputSHA256": "e6c3c8ae3a1f676c03a9e9819292e8097c1941f692d1474ae43d42eb9d303ad0",
+      "inputSHA256": "5368700abb521b4308c0e17a940fb31b20674ac6958708ef1281e1e91afe42d4",
       "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
-      "outputSHA256": "61ef859b5070a102a3bfdca7f833f52b7dc29fb06d0e0f68c7620fe6ae9a47e3",
-      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.058679\nVerifying one spec of procedure sameAuthority_childMismatchurl... s s s s s s s f Failure\nThere were failures: 0.659915\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+      "outputSHA256": "6f78772e325b60d150d08598e9fa470b43d5e9d3a54bda9b7d3cb04769e6aff4",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.053007\nVerifying one spec of procedure sameAuthority_childMismatchurl... s s s s s s s f Failure\nThere were failures: 0.583038\nAnalysis failures!\n1. Couldn't satisfy postcondition"
     },
     {
       "name": "accepts-closed",
@@ -423,10 +423,10 @@
         }
       ],
       "exitCode": 1,
-      "inputSHA256": "e99194183b8406afa7bcb9495b020adcd08b8a53a3891d973136219d3b258f6a",
+      "inputSHA256": "486cae4f2eb242bf629351de6e8d4b4a41c5384b454f4f9d1e8c6fc22e3dada7",
       "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
-      "outputSHA256": "de2ffeebacfb2371e50eb139ceb170f84f4bdc9de41018dae1e705d34cb3a33a",
-      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.055098\nVerifying one spec of procedure sameAuthority_childAliasedClosed... f Failure\nThere were failures: 0.256212\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+      "outputSHA256": "9fc75ea098b2ab5fee6eaea7cb565cdff4463ac3cfae90733c9f0358f035013c",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.051376\nVerifying one spec of procedure sameAuthority_childAliasedClosed... f Failure\nThere were failures: 0.250662\nAnalysis failures!\n1. Couldn't satisfy postcondition"
     },
     {
       "name": "rejects-root-match",
@@ -439,10 +439,10 @@
         }
       ],
       "exitCode": 1,
-      "inputSHA256": "157da4b889bb5c8489e847d3daca12b25427fb09a076cd1dd63a7a6da63afc74",
+      "inputSHA256": "4deebf24c039a99a166eb55fde50932c64f13707918ced4f3dfc3e29f348d80c",
       "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
-      "outputSHA256": "bb0f1294ed5222d09a1fbd5e1b5e22fbef09a725e6fffd827d7a8c659cc71404",
-      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.051228\nVerifying one spec of procedure sameAuthority_rootMatch... f Failure\nThere were failures: 0.087065\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+      "outputSHA256": "f3620b160424bdbfc058f22aecb8b5a4f93ea5a656ac397a38b010639c24d677",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.052318\nVerifying one spec of procedure sameAuthority_rootMatch... f Failure\nThere were failures: 0.089588\nAnalysis failures!\n1. Couldn't satisfy postcondition"
     },
     {
       "name": "rejects-child-match",
@@ -455,17 +455,17 @@
         }
       ],
       "exitCode": 1,
-      "inputSHA256": "d3835bceb2c0d71a71381a42708bdedafcd0f79633766bb469679652f5df7bd6",
+      "inputSHA256": "209355181c55762720d793d645425fbf7923d3b168d481537e7d35ce7612e601",
       "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
-      "outputSHA256": "018b0cbd2a48d4d98c4ec8d1e6a2a17a42f7a7ea88f976cf98d93a111feb3060",
-      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.053395\nVerifying one spec of procedure sameAuthority_childMatch... f Failure\nThere were failures: 0.089117\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+      "outputSHA256": "fc47ebd12023726026c1c2a5c2ca3db26fc1ba966195b85e663bc1d2bf0911dc",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.051046\nVerifying one spec of procedure sameAuthority_childMatch... f Failure\nThere were failures: 0.088911\nAnalysis failures!\n1. Couldn't satisfy postcondition"
     }
   ],
   "vacuousAnnotationControl": {
     "disposition": "rejected-by-runner",
-    "inputSHA256": "9b491ddc2c55736bfd906efca9063209d35a0dbc7bfcb163c1e2b84df220818c",
-    "outputSHA256": "6ca89d34351eedefc22bb23b23e2aaff54400be6664961b399c98adca08376b8",
+    "inputSHA256": "5439eada629b7b69b87c1f0e00835acfced4f82f153fc2e9085811e6e4878b40",
+    "outputSHA256": "5dbf4902cbdd7da3eb78a9542fe37f06286c0626b03fe4549da7ca9961692a0c",
     "observedProcedureCount": 0
   },
-  "completedAt": "2026-11-01T03:49:29.650Z"
+  "completedAt": "2026-11-01T06:22:04.003Z"
 }

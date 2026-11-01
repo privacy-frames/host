@@ -4,7 +4,7 @@
   "typescriptVersion": "6.0.3",
   "contractSHA256": "57c378112e1d53c1223955a6e0a28b546e0a6ec3e90895f0deec46908ca9017f",
   "generatorSHA256": "30a433edc9bc21d25c4790a9540e6eeb271f382c12f4fefeccd1dba1b75a47c2",
-  "boundaryDefinitionsSHA256": "06d3ef1198bcfca028c62ac7198a94a5ad4fb48607b7c9c8a3916f99f8310ae5",
+  "boundaryDefinitionsSHA256": "2b979e7a0bb388483ea1a763352b0fc8c0e882ff67a173eabdb4e161e7a5c83e",
   "boundaries": [
     {
       "id": "script-url-admission",
@@ -239,7 +239,8 @@
       "sources": [
         "src/runtime/enforcement/effects.ts",
         "src/runtime/enforcement/navigation.ts",
-        "src/runtime/enforcement/navigation-targets.ts",
+        "src/runtime/enforcement/native-attributes.ts",
+        "src/shared/native-attributes.ts",
         "src/runtime/enforcement/dom.ts",
         "src/runtime/enforcement/scripts.ts"
       ]
@@ -362,12 +363,12 @@
     },
     {
       "path": "src/runtime/contexts/classic-scripts.ts",
-      "sourceSHA256": "82129f39bfcc098e9eccf879dece023e7fa85e1e190c27122c810003f9d4d0c1",
+      "sourceSHA256": "6b75bb6f429fe467fd59f79844317e78b29862a9b24e117ed9308097efea36e0",
       "boundaries": [
         "dedicated-worker-publication"
       ],
-      "siteCount": 48,
-      "sitesSHA256": "336b6bc0e5545ab5eaf2ff288c3f1b5d28bc176960e87d86bf474e6ee1db9a0e"
+      "siteCount": 51,
+      "sitesSHA256": "2f1a94ef1bbfb5aca0eb2044e05c702f9ba007bd9eac44d8ebd2d9e494702310"
     },
     {
       "path": "src/runtime/contexts/controller-store.ts",
@@ -720,12 +721,12 @@
     },
     {
       "path": "src/runtime/enforcement/dom.ts",
-      "sourceSHA256": "722a0e7523f959c77ccafa2fc6ea14c1d49e5e3aa5ef651a07c77affa2515f1e",
+      "sourceSHA256": "fca3db5dc4d68800fc2f227da1705a0dfc9174f66d8ed90a45e315b0bf1a44cf",
       "boundaries": [
         "native-effects"
       ],
-      "siteCount": 378,
-      "sitesSHA256": "3b6261527a32a67152e8be510d9b62e68461d82d344ff224a4fb57705a666a95"
+      "siteCount": 400,
+      "sitesSHA256": "e10ebad65ff795a459be96023a52f2911ccda1f2dd9aab45d4fc8ea24d960999"
     },
     {
       "path": "src/runtime/enforcement/effects.ts",
@@ -737,6 +738,15 @@
       "sitesSHA256": "5c4640b0b983a5001d925ce079fc74f2d2af9df105de662d7b3230654c5b6eb3"
     },
     {
+      "path": "src/runtime/enforcement/native-attributes.ts",
+      "sourceSHA256": "aa564ddc38e58c5d40d7aea085a932b71f64f01f8adc4aa723b887d4595f3783",
+      "boundaries": [
+        "native-effects"
+      ],
+      "siteCount": 79,
+      "sitesSHA256": "cff96fc27214652f41581817bb28c1ed5215ef4b7158691a19375412e172a9d3"
+    },
+    {
       "path": "src/runtime/enforcement/native.ts",
       "sourceSHA256": "e67d8b858933334efaa44b8823fd1176ba428c9e0613e72ed28c41af302803ac",
       "boundaries": [
@@ -744,15 +754,6 @@
       ],
       "siteCount": 52,
       "sitesSHA256": "55862da901bb7d15eae6cd1a70709b6b8d536e43845b1be9153a5b8b7d77214c"
-    },
-    {
-      "path": "src/runtime/enforcement/navigation-targets.ts",
-      "sourceSHA256": "f7b5265d3d971c39d888abb99f837204e94d727d5df493ba38d54cc5bb6efd0b",
-      "boundaries": [
-        "native-effects"
-      ],
-      "siteCount": 67,
-      "sitesSHA256": "fdb89260e28a08e8e266cf72a528e32124948866854d9554e6d22af3db3357ad"
     },
     {
       "path": "src/runtime/enforcement/navigation.ts",
@@ -952,7 +953,7 @@
     },
     {
       "path": "src/shared/context-policy.ts",
-      "sourceSHA256": "5447c7f7b848a0ca0341e374d76a4f605028dfca18fc5e67a1ca101ce83cc8d5",
+      "sourceSHA256": "9bb19203360ef125ca42c6064713d8338ba1a6e9205ce4a4c470a7545e536b02",
       "boundaries": [
         "shared-worker-publication",
         "publisher-execution",
@@ -969,6 +970,15 @@
       ],
       "siteCount": 6,
       "sitesSHA256": "ccda3a4883f69c8a6027a27d54fbc29248e38971a69a0ab84fe1f1936b3add16"
+    },
+    {
+      "path": "src/shared/native-attributes.ts",
+      "sourceSHA256": "15bddc1c29489aecd61bc0397144ce2be1c88b16150f23943c38685b0a08e991",
+      "boundaries": [
+        "native-effects"
+      ],
+      "siteCount": 16,
+      "sitesSHA256": "69026a5123645eafa25ea0706e073444f0ac78969b33288d691bfee04f0fc425"
     },
     {
       "path": "src/shared/policy.ts",

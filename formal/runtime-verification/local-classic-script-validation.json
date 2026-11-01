@@ -1,5 +1,5 @@
 {
-  "scope": "Policy-8 local classic-script candidate. Full confinement is unestablished; the forced-age check fails for classic dynamic imports and module workers.",
+  "scope": "Frozen policy-8 source 19309d035e3fde8bf61bfd99ec59b4a5d4590ffb983fcd386b4676f37c4ec4d8. Read the referenced artifacts at artifactRevision; this index does not certify subsequent source changes. Full confinement is unestablished; the forced-age check fails for classic dynamic imports and module workers.",
   "policyVersion": 8,
   "wholeConfinementEstablished": false,
   "releaseReady": false,
@@ -167,5 +167,6 @@
     "Validate module graphs, classic dynamic import, eval-generated code, module identity, cycles, live bindings, attributes, import.meta and top-level await.",
     "Complete C1-C8 ownership, lifecycle refinement, browser coverage and composition; the passing component checks do not discharge them.",
     "Run release checks on the resulting source/build and validate public artifacts after a qualified deployment."
-  ]
+  ],
+  "artifactRevision": "23ca1b17d330730209bc4c990f19aadd9c81753a"
 }

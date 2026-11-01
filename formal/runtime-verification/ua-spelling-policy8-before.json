@@ -1,0 +1,295 @@
+{
+  "completed": true,
+  "started": "2026-11-01T05:40:00.677Z",
+  "finished": "2026-11-01T05:40:19.315Z",
+  "scope": "Owned browser-service comparison with synthetic text and a local TLS receiver. Runtime mode expects reproduction of the unmitigated route; completion is not a confinement pass.",
+  "wholeConfinementEstablished": false,
+  "receiver": "Loopback only; unknown proxy targets rejected; no service request forwarded upstream.",
+  "runnerSHA256": "0e4d819d8460bdfa07c4dddfff84407caded7fc6de3cb22bfe15285faadeab3a",
+  "runnerStable": true,
+  "headful": false,
+  "rows": [
+    {
+      "mode": "native-control",
+      "version": "153.0.8010.12",
+      "reflection": {
+        "spellcheck": true,
+        "focused": true
+      },
+      "requests": [
+        {
+          "path": "/spelling/v2/spelling/check",
+          "bytes": 85,
+          "containsMarker": true
+        }
+      ],
+      "connects": [
+        {
+          "host": "www.google.com",
+          "accepted": false
+        },
+        {
+          "host": "content-autofill.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "content-autofill.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "content-autofill.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "www.googleapis.com",
+          "accepted": true
+        },
+        {
+          "host": "redirector.gvt1.com",
+          "accepted": false
+        }
+      ],
+      "markerRequests": 1
+    },
+    {
+      "mode": "strict-csp",
+      "version": "153.0.8010.12",
+      "reflection": {
+        "spellcheck": true,
+        "focused": true
+      },
+      "requests": [
+        {
+          "path": "/spelling/v2/spelling/check",
+          "bytes": 85,
+          "containsMarker": true
+        }
+      ],
+      "connects": [
+        {
+          "host": "update.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "www.google.com",
+          "accepted": false
+        },
+        {
+          "host": "www.google.com",
+          "accepted": false
+        },
+        {
+          "host": "content-autofill.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "content-autofill.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "content-autofill.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "www.googleapis.com",
+          "accepted": true
+        }
+      ],
+      "markerRequests": 1
+    },
+    {
+      "mode": "runtime",
+      "version": "153.0.8010.12",
+      "reflection": {
+        "spellcheck": true,
+        "focused": true
+      },
+      "requests": [
+        {
+          "path": "/spelling/v2/spelling/check",
+          "bytes": 85,
+          "containsMarker": true
+        }
+      ],
+      "connects": [
+        {
+          "host": "update.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "www.google.com",
+          "accepted": false
+        },
+        {
+          "host": "www.google.com",
+          "accepted": false
+        },
+        {
+          "host": "www.google.com",
+          "accepted": false
+        },
+        {
+          "host": "content-autofill.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "www.google.com",
+          "accepted": false
+        },
+        {
+          "host": "accounts.google.com",
+          "accepted": false
+        },
+        {
+          "host": "www.google.com",
+          "accepted": false
+        },
+        {
+          "host": "content-autofill.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "www.google.com",
+          "accepted": false
+        },
+        {
+          "host": "www.google.com",
+          "accepted": false
+        },
+        {
+          "host": "www.google.com",
+          "accepted": false
+        },
+        {
+          "host": "content-autofill.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "www.googleapis.com",
+          "accepted": true
+        },
+        {
+          "host": "redirector.gvt1.com",
+          "accepted": false
+        }
+      ],
+      "markerRequests": 1
+    },
+    {
+      "mode": "attribute-disabled",
+      "version": "153.0.8010.12",
+      "reflection": {
+        "spellcheck": false,
+        "focused": true
+      },
+      "requests": [],
+      "connects": [
+        {
+          "host": "update.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "www.google.com",
+          "accepted": false
+        },
+        {
+          "host": "www.google.com",
+          "accepted": false
+        },
+        {
+          "host": "content-autofill.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "content-autofill.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "accounts.google.com",
+          "accepted": false
+        },
+        {
+          "host": "content-autofill.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "content-autofill.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "android.clients.google.com",
+          "accepted": false
+        },
+        {
+          "host": "accounts.google.com",
+          "accepted": false
+        },
+        {
+          "host": "content-autofill.googleapis.com",
+          "accepted": false
+        }
+      ],
+      "markerRequests": 0
+    },
+    {
+      "mode": "incognito",
+      "version": "153.0.8010.12",
+      "reflection": {
+        "spellcheck": true,
+        "focused": true
+      },
+      "requests": [],
+      "connects": [
+        {
+          "host": "www.google.com",
+          "accepted": false
+        },
+        {
+          "host": "content-autofill.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "content-autofill.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "www.google.com",
+          "accepted": false
+        },
+        {
+          "host": "content-autofill.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "redirector.gvt1.com",
+          "accepted": false
+        },
+        {
+          "host": "accounts.google.com",
+          "accepted": false
+        },
+        {
+          "host": "content-autofill.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "android.clients.google.com",
+          "accepted": false
+        },
+        {
+          "host": "accounts.google.com",
+          "accepted": false
+        },
+        {
+          "host": "content-autofill.googleapis.com",
+          "accepted": false
+        },
+        {
+          "host": "content-autofill.googleapis.com",
+          "accepted": false
+        }
+      ],
+      "markerRequests": 0
+    }
+  ]
+}

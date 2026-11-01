@@ -29,15 +29,17 @@ document.querySelector('#run').onclick = () => {
   const source = type === 'module' ? './module-worker.js'
     : type === 'classic-dynamic' ? './dynamic-worker.js' : './worker.js';
   const worker = new Worker(source, {type:type === 'module' ? 'module' : 'classic'});
+  globalThis.maintenanceWorker = worker;
   worker.onmessage = event => {
     document.querySelector('#result').textContent = event.data;
-    worker.terminate();
+    if (!document.querySelector('#keep-worker').checked) worker.terminate();
   };
 };
 globalThis.maintenanceProbeReady = true;`;
 const html = `<!doctype html><title>Maintenance probe</title>
 <link rel="icon" href="data:,">
 <input id="private" aria-label="Private bit"><button id="run">Run</button>
+<input id="keep-worker" type="checkbox" aria-label="Keep worker alive">
 <select id="worker-type"><option value="classic">Classic</option><option value="classic-dynamic">Classic dynamic import</option><option value="module">Module</option></select>
 <output id="result"></output><script src="./main.js"></script>`;
 const nativeServiceWorker = `
@@ -80,6 +82,7 @@ const host = await servers({ receiver: false });
 const samples: object[] = [];
 const groups: object[] = [];
 const violations: object[] = [];
+const missingNativeControls: object[] = [];
 const provenance = await testProvenance(import.meta.url);
 const forcedStaleAgeCheck = process.env.PF_STARTUP_STALE === '1';
 const receipt = new URL(
@@ -168,6 +171,8 @@ try {
                 () => Reflect.get(window, 'maintenanceProbeReady') === true,
               );
               await page.locator('#worker-type').selectOption(workerType);
+              const retained = sample === 2;
+              await page.locator('#keep-worker').setChecked(retained);
               await quiet(page);
               const baseline = host.traffic.length;
               const publisherBaseline = received.length;
@@ -206,6 +211,12 @@ try {
                 observationEnded: Date.now(),
                 confined,
                 forcedStaleAgeCheck,
+                workerLifetime:
+                  bit === '0'
+                    ? 'not-created'
+                    : retained
+                      ? 'retained-through-observation'
+                      : 'terminated-after-ready',
                 workerType,
                 bit,
                 idleRuntime,
@@ -247,11 +258,8 @@ try {
             workerSamples: 2,
             noWorkerSamples: 2,
           });
-          if (!confined)
-            assert(
-              positiveSamples > 0,
-              'No native worker-triggered update observed in this group',
-            );
+          if (!confined && positiveSamples === 0)
+            missingNativeControls.push({ browser: engine.name(), workerType });
         }
       }
     } finally {
@@ -262,7 +270,11 @@ try {
   assert.deepEqual(after.artifacts, provenance.artifacts);
   assert.equal(after.sourceSHA256, provenance.sourceSHA256);
   assert.equal(after.runnerSHA256, provenance.runnerSHA256);
-  assert.deepEqual(violations, [], 'Confined worker execution emitted HTTP');
+  assert.deepEqual(
+    { missingNativeControls, violations },
+    { missingNativeControls: [], violations: [] },
+    'Worker maintenance comparison failed',
+  );
   completedAt = new Date().toISOString();
 } catch (error) {
   failure = String(error);
@@ -280,6 +292,7 @@ try {
           samples,
           groups,
           violations,
+          missingNativeControls,
           observationMilliseconds: 3000,
           completed: completedAt !== null,
           completedAt,

@@ -4,7 +4,8 @@ This execution plan follows the eight stages in [the verification programme](REA
 Implementation stays on the separate `runtime-confinement-proof` worktree and
 branch. Policy 7 added local dedicated-worker bootstrap on top of private native
 script URL admission. The policy-8 candidate also delivers classic worker scripts
-locally. Complete confinement and deployment remain pending.
+locally. Policy 9 additionally restricts native spelling controls. Complete
+confinement and deployment remain pending.
 
 The target remains [C1–C8](../threat-model.md): confined application activity cannot
 cause a remote request or connection, including to the runtime origin. Whether
@@ -14,6 +15,22 @@ unchanged applications and static hosting remain requirements. Storage namespace
 are a compatibility feature; enforcement-state integrity remains necessary.
 
 ## Starting position
+
+The [spelling-service comparison](ua-spelling.md) reproduces a browser-owned
+private-text transmission that ordinary private-mode tests missed. In its
+selected normal Chromium profile, the policy-9 candidate suppresses transmission
+and retains disabled spelling through twenty DOM checks. Restoring
+the actual native IDL setter in a temporary guard restores transmission. This
+closes the selected reproduction, while user-preference overrides, other browser
+services and complete C4 coverage remain open.
+
+The [policy-9 validation](policy9-validation.json) binds 199 unit checks, the full
+browser suite, 32 selected unchanged application tasks and 16 offline reloads to
+one stable source/build. Its 48 fresh maintenance samples pass with native
+controls, while its 24 forced-age samples retain four violations. The separate
+[shared-issuer comparison](local-shared-issuer.md) finds a private bootstrap-port
+transport that works in both tested engines; authentication, lifetime and
+production integration remain open.
 
 Atomic context binding and owner-scoped closure now use IndexedDB. Private parent
 channels and selected executable state functions have native tests or deductive
@@ -34,11 +51,18 @@ module workers. The full test suite and all eight unchanged applications pass
 against one stable source/build candidate. These results do not close C4.
 
 The [module-policy candidate](module-loader-assessment.md) independently combines
-Blob roots, local module delivery and native CSP. Its 21 native fixture cases
+Blob roots, local module delivery and native CSP. Its 24 native fixture cases
 include working HTTP controls and zero HTTP in all 12 restricted cases. Integrate
 local script delivery and that policy across the runtime's contexts, then
 revalidate module semantics and confinement. Keep the loader outside the security
 argument for HTTP admission; its custom fetch hook alone is insufficient.
+
+The later CI startup comparison lacks a Chromium classic-dynamic positive
+control; a local retained-worker comparison also lacks its first native control.
+Those runs remain inconclusive comparisons. The current runner collects all
+groups and both worker lifetimes before checking missing controls and forbidden
+effects. The independent module-policy candidate also has 21 passing CI cases
+at revision `23ca1b1`, before its module-graph comparison was added.
 
 The local registration-fence experiment adds nine native observations:
 same-scope unregistration waited for a held update, and a later update failed
@@ -49,6 +73,78 @@ An earlier model workflow lacked a Chromium maintenance positive control. The
 policy-7 local validation and later model workflow `41267918060` pass the fresh
 regression with working controls. Those results do not cover the aged-registration
 counterexample or certify policy-8 source changes.
+
+## Immediate execution order
+
+The stages below describe the complete argument. Execute the remaining work in
+the following order, retaining a checkpoint after each accepted change. Planning
+does not authorize treating any outstanding obligation as satisfied.
+
+1. **Reconcile the evidence.** Preserve remote revision `23ca1b1` and the current
+   uncommitted candidate separately. Record which source, build, browser settings
+   and runner produced each receipt. Keep failed and inconclusive comparisons.
+   Update the claim ledger only after reviewing the evidence it references.
+   Acceptance requires a reproducible baseline with no historical result presented
+   as verification of changed code.
+
+2. **Resolve the reproduced browser-service channel.** The owned spelling fixture
+   records synthetic private text reaching a local substitute for the remote
+   spelling service from the installed runtime. The unrestricted and strict-CSP
+   cases also transmit; the attribute-disabled and incognito cases do not. The
+   fixture deliberately expects this reproduction, so its completion is not a
+   confinement pass. Evaluate enforcement before initial markup, subsequent DOM
+   insertion and attribute/property changes can enable checking. Test ordinary
+   persistent profiles with the service enabled, including attempts to restore it
+   and removal of the actual mitigation in a temporary build. Establish the limits
+   of the browser's treatment of `spellcheck=false`: the
+   [HTML standard](https://html.spec.whatwg.org/multipage/interaction.html#spelling-and-grammar-checking)
+   permits user preferences to override that attribute. If the host cannot enforce
+   a necessary browser condition, record a platform obstruction. Do not infer a
+   universal guarantee from the attribute-disabled observation.
+
+3. **Close the reproduced script-loading channel.** Integrate the local module
+   delivery and native-policy candidate incrementally. Its independent fixture
+   passes 24 cases in each of two profile modes; runtime integration remains open.
+   Cover root documents, dedicated and shared workers, publisher executors and
+   other admitted contexts. Recheck cycles, live bindings, dynamic imports,
+   logical URLs, asynchronous execution and offline relaunch. Require working
+   update controls and zero forbidden effects with fresh and aged registrations,
+   retained controllers and restarts. Delete superseded delivery paths once the
+   replacement meets these checks. A compatibility loader's mutable state must
+   not be the authority deciding whether an HTTP request is allowed.
+
+4. **Reduce and verify the trusted boundary.** Follow stages 2–4 below: trace
+   authority, move decisions into private components where useful, and verify the
+   executable callers as well as their state helpers. Cover management identity,
+   resource admission, context publication and closure. Connect concrete state
+   changes to the lifecycle model. Keep ordinary application prototypes mutable;
+   prove the ownership and captured-operation requirements used by trusted code.
+   Prefer removing an authority-producing path to adding another overlapping
+   wrapper when unchanged application tests support the simplification.
+
+5. **Review browser coverage and challenge each mitigation.** Follow stages 5–6
+   below, including browser-owned services and retained profile state. Use normal
+   profiles as well as isolated test contexts. For each effect mechanism, record
+   the initiating algorithm, prerequisites, pending work, mitigation and evidence.
+   Pair attempts with working controls and independent receivers. Require selected
+   tests to detect removal of the actual mitigation. An unknown mechanism stays
+   unresolved; an inventory count is not a completeness proof.
+
+6. **Compose the proof and evaluate the release.** Follow stages 7–8 below. Bind
+   the implementation contracts, lifecycle correspondence and browser premises to
+   one frozen candidate. Re-run the unchanged application corpus and relevant
+   proofs and native tests. Publish either the conditional confinement argument
+   with its premises established for the declared environment, or the component
+   results and concrete obstruction that prevent it. Keep production deployment
+   separate from research checkpoints; a known violation prevents describing a
+   candidate as satisfying the complete confinement contract.
+
+The deliverables are a concise security claim, an authority map, executable
+contracts and lifecycle correspondence, a browser-effect catalogue, reproducible
+tests and an evidence ledger. Each open item must identify the missing evidence
+or platform control and the experiment or proof that would resolve it. New work
+should discharge an identified obligation; it should not add a second architecture
+or a publisher-specific exception merely to increase the passing test count.
 
 ## 1. State the theorem and its premises
 

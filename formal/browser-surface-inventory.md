@@ -35,6 +35,29 @@ shows why configuring a compatibility loader's fetch hook is insufficient by
 itself. Neither native constructor URL admission nor an API-name inventory closes
 this obligation.
 
+## Browser text services and profile state
+
+Google documents that
+[Enhanced Spell Check](https://support.google.com/chrome/a/answer/13616585?hl=en)
+sends text from browser text boxes to Google. The
+[pinned source assessment](runtime-verification/ua-spelling-assessment.json)
+finds a browser-process URL-loader factory and a check that disables the service
+off the record. It does not establish correspondence to our tested binaries or
+the complete upstream page-policy path. The
+[owned receiver comparison](runtime-verification/ua-spelling.md) now reproduces
+private-text transmission from the installed runtime before the policy-9 change.
+The candidate suppresses that transmission in the selected profile; restoring
+its native IDL setter in a temporary build restores the transmission.
+
+[HTML's checking algorithm](https://html.spec.whatwg.org/multipage/interaction.html#spelling-and-grammar-checking)
+permits user preferences to override the `spellcheck` attribute. Setting that
+attribute to false alone does not establish suppression under every preference.
+The [Playwright contexts](https://playwright.dev/docs/api/class-browsercontext)
+used by most fixtures are incognito-like; silence there cannot calibrate a
+service disabled off the record. Persistent full-browser tests and browser-service
+controls are separate coverage obligations. Universal suppression under user
+overrides, other text services and complete browser coverage remain **U**.
+
 ## Evidence labels and provenance
 
 - **R:** a named fixture includes an independent receiver and an unrestricted
@@ -128,7 +151,7 @@ See [the measured scope](../evaluation/connection-allowlist.md).
 
 | Surface / current disposition                                                                                                          | Code                                                                                                                                                                                                                                             | Checks and assumptions                                                                                                                                                                                                                                                                                                                                                                           |
 | -------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Location changes, links, forms and cross-document exits: cancel/refuse; root history remains in installation scope                     | [navigation.ts](../src/runtime/enforcement/navigation.ts), [navigation-targets.ts](../src/runtime/enforcement/navigation-targets.ts), [shared/application-navigation.ts](../src/shared/application-navigation.ts), CSP `form-action`             | **R/L:** [context-navigation.ts](../test/context-navigation.ts), [navigation-targets.ts](../test/navigation-targets.ts), [application-history.ts](../test/application-history.ts), [launch-query.ts](../test/launch-query.ts). Startup requires Navigation API support; cancellation before forbidden effects is a browser obligation.                                                           |
+| Location changes, links, forms and cross-document exits: cancel/refuse; root history remains in installation scope                     | [navigation.ts](../src/runtime/enforcement/navigation.ts), [native-attributes.ts](../src/runtime/enforcement/native-attributes.ts), [shared/application-navigation.ts](../src/shared/application-navigation.ts), CSP `form-action`             | **R/L:** [context-navigation.ts](../test/context-navigation.ts), [navigation-targets.ts](../test/navigation-targets.ts), [application-history.ts](../test/application-history.ts), [launch-query.ts](../test/launch-query.ts). Startup requires Navigation API support; cancellation before forbidden effects is a browser obligation.                                                           |
 | Native back/forward/go/traverse and document.write/open/writeln: denied                                                                | [navigation.ts](../src/runtime/enforcement/navigation.ts)                                                                                                                                                                                        | **L:** boundary/history tests. User browser UI traversals, external context-menu actions and full BFCache behavior are separate; do not infer coverage from a JavaScript denial.                                                                                                                                                                                                                 |
 | Modifier/auxiliary clicks, context menu, rich HTML paste/drop: native default actions suppressed                                       | Capturing listeners in [navigation.ts](../src/runtime/enforcement/navigation.ts)                                                                                                                                                                 | **S/L:** targeted navigation and markup fixtures. OS/browser UI actions outside document dispatch are not controlled by those listeners.                                                                                                                                                                                                                                                         |
 | Markup, Range, shadow roots, templates and HTML/XML/SVG construction: validated before live insertion                                  | [enforcement/native-markup.ts](../src/runtime/enforcement/native-markup.ts), [inert-documents.ts](../src/runtime/enforcement/inert-documents.ts), [trusted/fragment.ts](../src/runtime/trusted/fragment.ts)                                      | **R/L:** [native-markup.ts](../test/native-markup.ts), [inert-documents.ts](../test/inert-documents.ts), renderer/document fixtures. Viewless construction is not a new executable realm. Namespace, default-action and parser correspondence remain browser obligations.                                                                                                                        |

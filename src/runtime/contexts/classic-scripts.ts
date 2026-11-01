@@ -3,6 +3,7 @@ import {
   internalMap,
   internalRecord,
   ownDescriptor,
+  strings,
 } from '../../shared/primordials.ts';
 import { LIMITS } from '../../shared/policy.ts';
 import { isJavaScriptMIME } from '../../shared/javascript-mime.ts';
@@ -83,22 +84,25 @@ export function createClassicScripts(
       return (pending ??= collect());
     },
     resolve(url: string): string {
-      const script = ready ? local.get(url) : undefined;
+      const separator = strings.indexOf(url, '#');
+      const key = separator < 0 ? url : strings.slice(url, 0, separator);
+      const fragment = separator < 0 ? '' : strings.slice(url, separator);
+      const script = ready ? local.get(key) : undefined;
       if (!script)
         throw new NativeException(
           'Classic script is not locally prepared',
           'NetworkError',
         );
-      if (script.source) return script.source;
+      if (script.source) return script.source + fragment;
       if (!script.body)
         throw new NativeException('Classic script bytes are unavailable', 'NetworkError');
-      const body = relocate(script.body, url);
+      const body = relocate(script.body, key);
       if (closed) throw new NativeException('Script preparation closed', 'AbortError');
       script.source = apply(createURL, NativeURL, [
         new NativeBlob(internalArray([body]), internalRecord({ type: script.type })),
       ]);
       script.body = undefined;
-      return script.source;
+      return script.source + fragment;
     },
     close,
   });

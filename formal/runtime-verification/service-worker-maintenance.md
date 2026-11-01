@@ -34,12 +34,14 @@ fixture requires three seconds without observed traffic, followed by another
 idle interval. It then enters the bit, clicks the button and waits for readiness
 or the no-worker response. It records every HTTP request during the action and
 three subsequent seconds. The input order reverses in the second pair.
+One worker sample terminates after readiness; the other retains its worker
+through observation. Each sample records that lifetime explicitly.
 
 Every confined sample must have zero runtime and publisher requests. Native
 scheduling can suppress an individual update, so each native group must contain
 at least one positive update observation. A missing native control fails the
-check. Forbidden HTTP observations are collected across the completed samples
-before the final zero-HTTP assertion. Samples, groups and the failure reason survive partial runs;
+check. Missing native controls and forbidden HTTP observations are collected
+across the completed groups before the final assertion. Samples, groups and the failure reason survive partial runs;
 `completed: false` cannot establish a successful regression.
 
 The receipt records browser versions, source/build hashes, idle controls and
@@ -87,6 +89,21 @@ operations: both classic-dynamic worker samples and both module-worker samples
 reach `/runtime/sw.js`. The classic `importScripts` cases remain quiet. The
 [candidate validation](local-classic-script-validation.json) binds those results,
 the full suite and the eight-app comparison to stable source and build hashes.
+
+## Missing controls in later runs
+
+The [CI comparison at revision 23ca1b1](ci-startup-policy8.json) stopped after twelve
+samples because neither Chromium classic-dynamic native sample produced an update.
+Its forced-age step was skipped. The uploaded forced-age JSON was an older
+checked-in receipt, not a result of that CI job. The current workflow removes
+historical receipts before setup and runs the forced-age step independently.
+
+A [local retained-worker comparison](service-worker-maintenance-policy8-retained-initial.json)
+also missed both Chromium classic native updates and stopped after four samples.
+Retaining workers did not establish a reliable control. The current comparison
+records both lifetimes and collects all groups; a missing native control still
+fails the check. The [later forced-age receipt](service-worker-startup-stale-policy8-fragments.json)
+retains all 24 observations and four HTTP violations for the fragment-patch source.
 
 ## Remaining scope
 

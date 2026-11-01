@@ -6,6 +6,7 @@ import {
   type DocumentContentInput,
 } from '../src/runtime/contexts/document-content-types.ts';
 import { validateMarkup } from '../src/shared/markup.ts';
+import { prepareFragment } from '../src/runtime/trusted/fragment.ts';
 
 const aliases = [
   ['https://publisher.test/assets/main.js', 'https://runtime.test/app/main.js'],
@@ -30,6 +31,31 @@ function svg(text: string) {
     aliases,
   });
 }
+
+test('editable HTML and template content disable native spelling before publication', () => {
+  const content =
+    '<textarea spellcheck="true"></textarea><div contenteditable spellcheck="">' +
+    'Private text</div><template><input spellcheck="true"></template>';
+  const result = html(content);
+  if (result.kind !== 'html') throw new Error('Wrong kind');
+  assert.equal((result.html.body.match(/spellcheck="false"/g) || []).length, 4);
+  assert(!result.html.body.includes('spellcheck="true"'));
+  const fragment = prepareFragment({
+    text: content,
+    namespace: 'http://www.w3.org/1999/xhtml',
+    localName: 'div',
+    markerPrefix: 'fixture',
+  });
+  assert.equal((fragment.html.match(/spellcheck="false"/g) || []).length, 4);
+  assert.throws(
+    () => html('<svg><set attributeName="spellcheck" to="true"/></svg>'),
+    /effect-control/,
+  );
+  assert.throws(
+    () => validateMarkup('<svg><set attributeName="spellcheck" to="true"/></svg>'),
+    /browsing targets/,
+  );
+});
 
 test('fragment markup preserves the document identity and explicit base query semantics', () => {
   const sourceURL = 'https://publisher.test/page.html?revision=one';

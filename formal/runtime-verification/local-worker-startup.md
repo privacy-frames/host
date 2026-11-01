@@ -24,6 +24,11 @@ the set revokes its created URLs and prevents late publication. Native worker
 termination also ends that worker's lifetime; the complete lifecycle argument
 remains open.
 
+URL fragments select the same admitted script bytes while remaining on the local
+Blob URL. Unknown queries retain their separate identity and fail locally. The
+[fragment regression](classic-script-fragments.json) records the initial lookup
+failure, the unit checks and native entry/importScripts cases in both browsers.
+
 The existing literal-import relocation preserves the original base for supported
 import forms. Computed relative dynamic imports still need a module-delivery
 solution: moving a classic script to a Blob URL does not preserve their native

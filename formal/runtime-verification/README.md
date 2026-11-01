@@ -11,6 +11,12 @@ with a local guard and private native-client binding. Policy 8 also supplies
 classic worker scripts locally. Shared/publisher roots, module delivery and
 complete lifecycle correspondence remain open. Complete confinement is unestablished.
 
+Policy 9 also restricts native spelling controls. A
+[normal-profile browser comparison](ua-spelling.md) reproduces private-text
+transmission before that restriction, suppresses it in the selected candidate
+and restores it when a temporary guard omits the actual IDL-setter mitigation.
+User-preference overrides and other browser-service effects remain open.
+
 The target is the contract in [the threat model](../threat-model.md). Applications
 remain ordinary JavaScript, including asynchronous execution and prototype
 modification. The host remains a static web application. Publisher-specific

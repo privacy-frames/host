@@ -1,0 +1,121 @@
+{
+  "completed": true,
+  "observationsComplete": true,
+  "transport": "port",
+  "executableSelection": "Explicit bundled full executable; isolated browser contexts and Playwright background-service defaults.",
+  "failures": [],
+  "scope": "Native shared-worker client and Blob issuer prerequisite only. No production authentication, ownership, restart, stable reuse across windows or complete confinement is established.",
+  "runnerSHA256": "2d19cacba71051db222497a956d4532bb33555aa8561e0a766062ff5603669a7",
+  "runnerStable": true,
+  "kernelSHA256": "aeb686bc4926f5d5fdddf09769f16b299ee6e2f616eb41d4d5a765dea0f8f17c",
+  "serviceWorkerSHA256": "3a514114a58a5b25309289851468ec6874c6f68a10b4df05a6eac65411aa189d",
+  "rows": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedAge": false,
+      "capabilities": {
+        "ready": true,
+        "serviceWorkerContainer": "undefined",
+        "binding": {
+          "bound": true,
+          "sourceType": "window"
+        }
+      },
+      "controlTraffic": [
+        "/native-child.js"
+      ],
+      "actionStarted": 1793516512418,
+      "observationEnded": 1793516515426,
+      "result": {
+        "issued": {
+          "url": "blob:http://127.0.0.1:39547/b1b90773-9da2-4225-89b6-7e98c28b9ffe",
+          "trusted": true,
+          "sourceURL": null,
+          "sourceBrand": "[object Null]"
+        },
+        "actor": {
+          "id": "7d8e7f12-6d45-400e-9941-29dbca707628",
+          "type": "sharedworker",
+          "url": "http://127.0.0.1:39547/kernel.js"
+        },
+        "value": {
+          "connections": 1
+        }
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedAge": false,
+      "capabilities": {
+        "ready": true,
+        "serviceWorkerContainer": "object",
+        "binding": {
+          "bound": true,
+          "sourceType": "window"
+        }
+      },
+      "controlTraffic": [
+        "/native-child.js",
+        "/sw.js"
+      ],
+      "actionStarted": 1793516517445,
+      "observationEnded": 1793516520454,
+      "result": {
+        "issued": {
+          "url": "blob:http://127.0.0.1:39547/db58bb39-1a3d-4aef-9e24-a31dee1ad7de",
+          "trusted": true,
+          "sourceURL": null,
+          "sourceBrand": "[object Null]"
+        },
+        "actor": {
+          "id": "86a526e2-eff0-48f6-9eee-397a2e5820b8",
+          "type": "sharedworker",
+          "url": "http://127.0.0.1:39547/kernel.js"
+        },
+        "value": {
+          "connections": 1
+        }
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedAge": true,
+      "capabilities": {
+        "ready": true,
+        "serviceWorkerContainer": "object",
+        "binding": {
+          "bound": true,
+          "sourceType": "window"
+        }
+      },
+      "controlTraffic": [
+        "/native-child.js",
+        "/sw.js"
+      ],
+      "actionStarted": 1793516522665,
+      "observationEnded": 1793516525674,
+      "result": {
+        "issued": {
+          "url": "blob:http://127.0.0.1:39547/c5a792b9-7f99-452a-8a88-7457b5f71141",
+          "trusted": true,
+          "sourceURL": null,
+          "sourceBrand": "[object Null]"
+        },
+        "actor": {
+          "id": "2d69f734-7277-4689-9b0f-1a419b723af6",
+          "type": "sharedworker",
+          "url": "http://127.0.0.1:39547/kernel.js"
+        },
+        "value": {
+          "connections": 1
+        }
+      },
+      "traffic": []
+    }
+  ]
+}

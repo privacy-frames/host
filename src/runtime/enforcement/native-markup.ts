@@ -1,4 +1,5 @@
 import { strings, ownDescriptor, internalRecord } from '../../shared/primordials.ts';
+import { isUnsafeNativeAttributeMutation } from '../../shared/native-attributes.ts';
 
 interface MarkupOptions {
   /** Compiled initial content may retain inert data scripts and presentation resources. */
@@ -15,6 +16,7 @@ export function createNativeMarkupValidator(fail: (message: string) => never) {
   const createXMLDocument = DOMImplementation.prototype.createDocument;
   const createElement = Document.prototype.createElementNS;
   const parseFragment = descriptor(Element.prototype, 'innerHTML')!.set!;
+  const serializeFragment = descriptor(Element.prototype, 'innerHTML')!.get!;
   const nodeType = descriptor(Node.prototype, 'nodeType')!.get!;
   const ownerDocument = descriptor(Node.prototype, 'ownerDocument')!.get!;
   const parentNode = descriptor(Node.prototype, 'parentNode')!.get!;
@@ -34,6 +36,7 @@ export function createNativeMarkupValidator(fail: (message: string) => never) {
   const getAttribute = Element.prototype.getAttribute;
   const getAttributeNS = Element.prototype.getAttributeNS;
   const setAttributeNS = Element.prototype.setAttributeNS;
+  const setAttribute = Element.prototype.setAttribute;
   const templateContent = descriptor(HTMLTemplateElement.prototype, 'content')!.get!;
   const shadowHost = descriptor(ShadowRoot.prototype, 'host')!.get!;
   const NativeURL = URL;
@@ -63,6 +66,8 @@ export function createNativeMarkupValidator(fail: (message: string) => never) {
 
   function checkAttribute(name: string, value: string): void {
     const local = localAttribute(name);
+    if (isUnsafeNativeAttributeMutation(local, value))
+      fail('Declarative native effect-control mutation is not admitted');
     if (
       strings.startsWith(local, 'on') ||
       local === 'srcdoc' ||
@@ -109,6 +114,11 @@ export function createNativeMarkupValidator(fail: (message: string) => never) {
     const type: number = apply(nodeType, value, []);
     if (type === 7) fail('Processing instructions are not admitted');
     if (type === 1) {
+      if (
+        apply(namespace, value, []) === html &&
+        apply(getAttribute, value, ['spellcheck']) !== 'false'
+      )
+        apply(setAttribute, value, ['spellcheck', 'false']);
       const name: string = strings.toLowerCase(apply(localName, value, []));
       if (strings.includes(name, ':')) fail('Qualified element names are not admitted');
       switch (name) {
@@ -180,7 +190,7 @@ export function createNativeMarkupValidator(fail: (message: string) => never) {
 
   return internalRecord({
     inspect,
-    fragment(source: string, context: Element | ShadowRoot): void {
+    fragment(source: string, context: Element | ShadowRoot): string {
       const element: Element =
         apply(nodeType, context, []) === 1 ? context : apply(shadowHost, context, []);
       const name: string = apply(localName, element, []);
@@ -224,6 +234,7 @@ export function createNativeMarkupValidator(fail: (message: string) => never) {
           child = apply(nextSibling, child, [])
         )
           inspect(child);
+      return apply(serializeFragment, container, []);
     },
   });
 }

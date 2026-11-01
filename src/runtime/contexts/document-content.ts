@@ -1,4 +1,4 @@
-import { normalizeNavigationAttributes } from '../../shared/navigation-targets.ts';
+import { normalizeNativeAttributes } from '../../shared/native-attributes.ts';
 import {
   parse,
   parseFragment,
@@ -250,7 +250,7 @@ export function compileDocumentContent(
     )
       throw new Error('Unsupported document context element');
     if (tag === 'base') return undefined;
-    normalizeNavigationAttributes(tag, node.attrs);
+    normalizeNativeAttributes(tag, node.namespaceURI, node.attrs);
     if (tag === 'meta' && attribute(node, 'http-equiv') !== undefined)
       throw new Error('Response policy cannot be supplied by content');
     const xmlBase =

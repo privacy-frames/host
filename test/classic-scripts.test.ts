@@ -73,6 +73,25 @@ test('only requested scripts are relocated and their local URL is reused', async
   assert.deepEqual(relocated, [first]);
 });
 
+test('script fragments reuse admitted bytes while queries retain their identity', async () => {
+  const reads: string[] = [];
+  const scripts = createClassicScripts([first], async (url) => {
+    reads.push(url);
+    return response('first');
+  });
+  await scripts.prepare();
+  const source = scripts.resolve(first);
+  assert.equal(scripts.resolve(first + '#entry'), source + '#entry');
+  assert.equal(scripts.resolve(first + '#other'), source + '#other');
+  assert.equal(await (await fetch(source + '#entry')).text(), 'first');
+  assert.throws(() => scripts.resolve(first + '?unknown#entry'), {
+    name: 'NetworkError',
+  });
+  assert.deepEqual(reads, [first]);
+  scripts.close();
+  await assert.rejects(fetch(source + '#entry'));
+});
+
 test('closing during relocation prevents local URL publication', async () => {
   const scripts = createClassicScripts(
     [first],

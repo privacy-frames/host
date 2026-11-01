@@ -1,0 +1,60 @@
+{
+  "status": "reproduced-route-with-scoped-runtime-mitigation",
+  "reviewedAt": "2026-11-01T05:05:44.269806+00:00",
+  "source": {
+    "url": "https://chromium.googlesource.com/chromium/src/+/b665032e57f93631b50459d07c16ffdc3c2578c8/components/spellcheck/browser/spelling_service_client.cc",
+    "revision": "b665032e57f93631b50459d07c16ffdc3c2578c8",
+    "sha256": "4621dcb86bce22d0f6e3cf54d6d35298f93ff10511510e9d3c5123f554fe8276",
+    "observedOperations": [
+      "GetURLLoaderFactoryForBrowserProcess",
+      "AttachStringForUpload",
+      "IsOffTheRecord",
+      "kSpellCheckUseSpellingService"
+    ]
+  },
+  "documentation": [
+    {
+      "url": "https://support.google.com/chrome/a/answer/13616585?hl=en",
+      "supports": "Enhanced spell check sends editable text to Google when enabled."
+    },
+    {
+      "url": "https://html.spec.whatwg.org/multipage/interaction.html#spelling-and-grammar-checking",
+      "supports": "User preferences may override the spellcheck content attribute; its reflected property is not the complete effective checking state."
+    },
+    {
+      "url": "https://playwright.dev/docs/api/class-browsercontext",
+      "supports": "browser.newContext creates isolated non-persistent, incognito-like contexts."
+    }
+  ],
+  "sourceFindings": [
+    "The reviewed client uploads a request body through a browser-process URL-loader factory.",
+    "Availability requires enabled spelling preferences and rejects off-the-record contexts.",
+    "This function takes a BrowserContext and text; this review has not established the complete upstream page-policy path."
+  ],
+  "compiledBrowserCorrespondence": "not-established",
+  "nativeSuccessControl": {
+    "receipt": "formal/runtime-verification/ua-spelling-browser.json",
+    "modes": [
+      "native-control",
+      "strict-csp"
+    ],
+    "result": "Synthetic marker received by owned local substitute for remote service."
+  },
+  "runtimeMitigation": {
+    "receipt": "formal/runtime-verification/ua-spelling-browser.json",
+    "policyVersion": 9,
+    "result": "Selected persistent profile: twenty DOM checks preserve disabled spelling and ordinary XML data, no marker in six seconds; restoring the actual native IDL setter transmits the marker.",
+    "unresolved": [
+      "User-preference overrides permitted by HTML",
+      "Other browser services and configurations",
+      "Complete DOM and descendant-context coverage",
+      "Proof of caller ownership and native correspondence"
+    ]
+  },
+  "implications": [
+    "Ordinary editable text is a browser-service effect boundary; script/resource mediation is insufficient evidence for it.",
+    "Incognito-like contexts cannot calibrate a service explicitly disabled off the record.",
+    "An HTML spellcheck=false attribute is not an unconditional browser-security boundary under the standard user-preference override.",
+    "Persistent full-browser tests reduce one environment gap; they do not establish remote-service behavior or disable user-enabled services."
+  ]
+}

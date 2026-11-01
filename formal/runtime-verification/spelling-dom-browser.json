@@ -1,0 +1,590 @@
+{
+  "completed": true,
+  "scope": "Native attribute/parser component comparison only. No remote spelling service or complete runtime confinement is established by DOM reflection.",
+  "provenance": {
+    "capturedAt": "2026-11-01T06:49:05.013Z",
+    "revision": "23ca1b17d330730209bc4c990f19aadd9c81753a",
+    "dirty": true,
+    "sourceSHA256": "cb8dddfd611b8e04e0ab1517e1e137df68f3697c2b09bce1a254f5a2e45626f3",
+    "runner": "formal/runtime-verification/spelling-dom-browser.ts",
+    "runnerSHA256": "1c66cc63009bce57fdd14f3b46cd4ee43b134af555268247bd6a5e61852cff60",
+    "publisherRevision": "b8637f0dc5b5e56ae0b6397fdae8501598b7d39e",
+    "artifacts": {
+      "dist-manager/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-manager/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-manager/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-manager/index.html": "0ea2b29b0ef6946140c54c2dc2147bffe4de82b9ed13eb4fdcae97a81cfd56f7",
+      "dist-manager/manager.js": "e361950a8774ca901a2b669e55041e15931e079bcdf5cd66e2b95d3986ce0730",
+      "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-manager/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-manager/sw.js": "6f2273e0e5cd348829e0216462e1d3dde3a663425e9b9033f6eb8cd62805deaf",
+      "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-runtime/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
+      "dist-runtime/connect.js": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce",
+      "dist-runtime/document-guard.js": "32490d89aa1d6d4a6a61a317c22f856a4a5353a3d3dc91e8dd86d9ae22e9a0bb",
+      "dist-runtime/guard.js": "073eac121321a5ccff8a6107e559e104c2f3fd8001557d298f287378835c4898",
+      "dist-runtime/host.css": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92",
+      "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
+      "dist-runtime/publisher-worker-guard.js": "8a8d950e2fdaa8e77be40e51b31722cdb9984bfbcab94ef1b5755f39426c26d0",
+      "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-runtime/report.html": "c29159674dc34f4d54fc44705635a0639c0cfc645a8e35d60d2fc2bb8e66ffba",
+      "dist-runtime/shared-worker-guard.js": "314a095747e9a928392418837bea6e6ecaea198d8f0bc96a6e5b4216efd936b3",
+      "dist-runtime/sw.js": "85a966780fabb89d20ceb99f22df8192e8f8cd5c5d8b191f873e7c144ce1f505",
+      "dist-runtime/worklet-guard.js": "5573b79a90976ed5ffac02121e676d69c7f37bfd62b85512f8e38ced9c8461e6",
+      "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-installation/config.json": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9",
+      "dist-installation/index.html": "3ca67c9966dd6eaaddb08a331c4c422a70d79bed1acecddada56764ba4ac8e5f",
+      "dist-installation/installation.js": "3f6fc6dc876e1ac2aa1430f003f602ec980cf437fc9132734e136269df63ca3d"
+    }
+  },
+  "sourceStable": true,
+  "artifactsStable": true,
+  "runnerStable": true,
+  "fixtureSHA256": {
+    "native": "6633ff8ce877411eb2c1ea717e323bbaa038f025bc07a1da127f60cef8a79419",
+    "guarded": "3626ec5859413896551aa36a645acb7a4403e48bf13c4ad7bec4fdd241e51ba9"
+  },
+  "rows": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "native",
+      "coercion": [
+        {
+          "route": "remove-name",
+          "calls": 1,
+          "value": "false",
+          "expected": "false"
+        },
+        {
+          "route": "remove-namespace",
+          "calls": 1,
+          "value": "false",
+          "expected": "false"
+        },
+        {
+          "route": "animation-value",
+          "calls": 1,
+          "value": "width",
+          "expected": "width"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "native",
+      "callbacks": {
+        "observations": [
+          {
+            "value": "false",
+            "enabled": false
+          },
+          {
+            "value": null,
+            "enabled": true
+          }
+        ],
+        "detachedOriginal": true
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "native",
+      "attempts": [
+        {
+          "route": "initial-markup",
+          "enabled": true
+        },
+        {
+          "route": "IDL-property",
+          "enabled": true
+        },
+        {
+          "route": "attribute",
+          "enabled": true
+        },
+        {
+          "route": "attribute-namespace",
+          "enabled": true
+        },
+        {
+          "route": "attribute-toggle",
+          "enabled": true
+        },
+        {
+          "route": "Attr.value",
+          "enabled": true,
+          "error": "Error: Missing native spelling control"
+        },
+        {
+          "route": "Attr.nodeValue",
+          "enabled": true,
+          "error": "Error: Missing native spelling control"
+        },
+        {
+          "route": "Attr.textContent",
+          "enabled": true,
+          "error": "Error: Missing native spelling control"
+        },
+        {
+          "route": "setAttributeNode",
+          "enabled": true
+        },
+        {
+          "route": "setAttributeNodeNS",
+          "enabled": true
+        },
+        {
+          "route": "removeAttribute",
+          "enabled": true
+        },
+        {
+          "route": "removeAttributeNS",
+          "enabled": true
+        },
+        {
+          "route": "removeAttributeNode",
+          "enabled": true,
+          "error": "TypeError: Failed to execute 'removeAttributeNode' on 'Element': parameter 1 is not of type 'Attr'."
+        },
+        {
+          "route": "innerHTML",
+          "enabled": true
+        },
+        {
+          "route": "insertAdjacentHTML",
+          "enabled": true
+        },
+        {
+          "route": "shadow-innerHTML",
+          "enabled": true
+        },
+        {
+          "route": "parsed-import",
+          "enabled": true
+        },
+        {
+          "route": "template-clone",
+          "enabled": true
+        },
+        {
+          "route": "custom-element-callback",
+          "enabled": true,
+          "error": "Error: Custom element observed enabled spelling"
+        },
+        {
+          "route": "XML-data",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "guarded",
+      "coercion": [
+        {
+          "route": "remove-name",
+          "calls": 1,
+          "value": "false",
+          "expected": "false"
+        },
+        {
+          "route": "remove-namespace",
+          "calls": 1,
+          "value": "false",
+          "expected": "false"
+        },
+        {
+          "route": "animation-value",
+          "calls": 1,
+          "value": "width",
+          "expected": "width"
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "guarded",
+      "callbacks": {
+        "observations": [
+          {
+            "value": "false",
+            "enabled": false
+          },
+          {
+            "value": "false",
+            "enabled": false
+          },
+          {
+            "value": "false",
+            "enabled": false
+          }
+        ],
+        "detachedOriginal": true
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "guarded",
+      "attempts": [
+        {
+          "route": "initial-markup",
+          "enabled": false
+        },
+        {
+          "route": "IDL-property",
+          "enabled": false
+        },
+        {
+          "route": "attribute",
+          "enabled": false
+        },
+        {
+          "route": "attribute-namespace",
+          "enabled": false
+        },
+        {
+          "route": "attribute-toggle",
+          "enabled": false
+        },
+        {
+          "route": "Attr.value",
+          "enabled": false
+        },
+        {
+          "route": "Attr.nodeValue",
+          "enabled": false
+        },
+        {
+          "route": "Attr.textContent",
+          "enabled": false
+        },
+        {
+          "route": "setAttributeNode",
+          "enabled": false
+        },
+        {
+          "route": "setAttributeNodeNS",
+          "enabled": false
+        },
+        {
+          "route": "removeAttribute",
+          "enabled": false
+        },
+        {
+          "route": "removeAttributeNS",
+          "enabled": false
+        },
+        {
+          "route": "removeAttributeNode",
+          "enabled": false
+        },
+        {
+          "route": "innerHTML",
+          "enabled": false
+        },
+        {
+          "route": "insertAdjacentHTML",
+          "enabled": false
+        },
+        {
+          "route": "shadow-innerHTML",
+          "enabled": false
+        },
+        {
+          "route": "parsed-import",
+          "enabled": false
+        },
+        {
+          "route": "template-clone",
+          "enabled": false
+        },
+        {
+          "route": "custom-element-callback",
+          "enabled": false
+        },
+        {
+          "route": "XML-data",
+          "enabled": false
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "native",
+      "coercion": [
+        {
+          "route": "remove-name",
+          "calls": 1,
+          "value": "false",
+          "expected": "false"
+        },
+        {
+          "route": "remove-namespace",
+          "calls": 1,
+          "value": "false",
+          "expected": "false"
+        },
+        {
+          "route": "animation-value",
+          "calls": 1,
+          "value": "width",
+          "expected": "width"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "native",
+      "callbacks": {
+        "observations": [
+          {
+            "value": "false",
+            "enabled": false
+          },
+          {
+            "value": null,
+            "enabled": false
+          }
+        ],
+        "detachedOriginal": true
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "native",
+      "attempts": [
+        {
+          "route": "initial-markup",
+          "enabled": true
+        },
+        {
+          "route": "IDL-property",
+          "enabled": true
+        },
+        {
+          "route": "attribute",
+          "enabled": true
+        },
+        {
+          "route": "attribute-namespace",
+          "enabled": true
+        },
+        {
+          "route": "attribute-toggle",
+          "enabled": true
+        },
+        {
+          "route": "Attr.value",
+          "enabled": true,
+          "error": "Error: Missing native spelling control"
+        },
+        {
+          "route": "Attr.nodeValue",
+          "enabled": true,
+          "error": "Error: Missing native spelling control"
+        },
+        {
+          "route": "Attr.textContent",
+          "enabled": true,
+          "error": "Error: Missing native spelling control"
+        },
+        {
+          "route": "setAttributeNode",
+          "enabled": true
+        },
+        {
+          "route": "setAttributeNodeNS",
+          "enabled": true
+        },
+        {
+          "route": "removeAttribute",
+          "enabled": true
+        },
+        {
+          "route": "removeAttributeNS",
+          "enabled": true
+        },
+        {
+          "route": "removeAttributeNode",
+          "enabled": true,
+          "error": "TypeError: Element.removeAttributeNode: Argument 1 is not an object."
+        },
+        {
+          "route": "innerHTML",
+          "enabled": true
+        },
+        {
+          "route": "insertAdjacentHTML",
+          "enabled": true
+        },
+        {
+          "route": "shadow-innerHTML",
+          "enabled": true
+        },
+        {
+          "route": "parsed-import",
+          "enabled": true
+        },
+        {
+          "route": "template-clone",
+          "enabled": true
+        },
+        {
+          "route": "custom-element-callback",
+          "enabled": true,
+          "error": "Error: Custom element observed enabled spelling"
+        },
+        {
+          "route": "XML-data",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "guarded",
+      "coercion": [
+        {
+          "route": "remove-name",
+          "calls": 1,
+          "value": "false",
+          "expected": "false"
+        },
+        {
+          "route": "remove-namespace",
+          "calls": 1,
+          "value": "false",
+          "expected": "false"
+        },
+        {
+          "route": "animation-value",
+          "calls": 1,
+          "value": "width",
+          "expected": "width"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "guarded",
+      "callbacks": {
+        "observations": [
+          {
+            "value": "false",
+            "enabled": false
+          },
+          {
+            "value": "false",
+            "enabled": false
+          },
+          {
+            "value": "false",
+            "enabled": false
+          }
+        ],
+        "detachedOriginal": true
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "guarded",
+      "attempts": [
+        {
+          "route": "initial-markup",
+          "enabled": false
+        },
+        {
+          "route": "IDL-property",
+          "enabled": false
+        },
+        {
+          "route": "attribute",
+          "enabled": false
+        },
+        {
+          "route": "attribute-namespace",
+          "enabled": false
+        },
+        {
+          "route": "attribute-toggle",
+          "enabled": false
+        },
+        {
+          "route": "Attr.value",
+          "enabled": false
+        },
+        {
+          "route": "Attr.nodeValue",
+          "enabled": false
+        },
+        {
+          "route": "Attr.textContent",
+          "enabled": false
+        },
+        {
+          "route": "setAttributeNode",
+          "enabled": false
+        },
+        {
+          "route": "setAttributeNodeNS",
+          "enabled": false
+        },
+        {
+          "route": "removeAttribute",
+          "enabled": false
+        },
+        {
+          "route": "removeAttributeNS",
+          "enabled": false
+        },
+        {
+          "route": "removeAttributeNode",
+          "enabled": false
+        },
+        {
+          "route": "innerHTML",
+          "enabled": false
+        },
+        {
+          "route": "insertAdjacentHTML",
+          "enabled": false
+        },
+        {
+          "route": "shadow-innerHTML",
+          "enabled": false
+        },
+        {
+          "route": "parsed-import",
+          "enabled": false
+        },
+        {
+          "route": "template-clone",
+          "enabled": false
+        },
+        {
+          "route": "custom-element-callback",
+          "enabled": false
+        },
+        {
+          "route": "XML-data",
+          "enabled": false
+        }
+      ]
+    }
+  ]
+}

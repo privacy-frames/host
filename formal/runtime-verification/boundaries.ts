@@ -181,7 +181,8 @@ export const boundaries: readonly Boundary[] = [
     sources: [
       'src/runtime/enforcement/effects.ts',
       'src/runtime/enforcement/navigation.ts',
-      'src/runtime/enforcement/navigation-targets.ts',
+      'src/runtime/enforcement/native-attributes.ts',
+      'src/shared/native-attributes.ts',
       'src/runtime/enforcement/dom.ts',
       'src/runtime/enforcement/scripts.ts',
     ],

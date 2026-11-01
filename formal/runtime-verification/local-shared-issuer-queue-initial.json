@@ -1,0 +1,85 @@
+{
+  "completed": false,
+  "observationsComplete": true,
+  "failures": [
+    "chromium/false: Kernel issue timeout",
+    "firefox/false: Kernel issue timeout",
+    "firefox/true: Kernel issue timeout"
+  ],
+  "scope": "Native shared-worker client and Blob issuer prerequisite only. No production authentication, ownership, restart, stable reuse across windows or complete confinement is established.",
+  "runnerSHA256": "cfd1e856a5212408337e7b4ec132ed2054668ecc779b698a187a336f38c8efcb",
+  "runnerStable": true,
+  "kernelSHA256": "2f49dc9f03b4380287a0a452f2b3ea980d12b1f6b28ee44cf314a2f5a10b6fb2",
+  "serviceWorkerSHA256": "c8c93f2c89f06ba16792db44a65b647ade0bdea0926d09ebb9d65c6a8b517532",
+  "rows": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "forcedAge": false,
+      "capabilities": {
+        "ready": true,
+        "serviceWorkerContainer": "undefined"
+      },
+      "result": {
+        "error": "Kernel issue timeout",
+        "progress": [
+          {
+            "progress": "client-found",
+            "actor": {
+              "id": "e522836b-67fc-4e6a-8346-78dca0e4e956",
+              "type": "sharedworker",
+              "url": "http://127.0.0.1:39519/kernel.js"
+            }
+          }
+        ]
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedAge": false,
+      "capabilities": {
+        "ready": true,
+        "serviceWorkerContainer": "object"
+      },
+      "result": {
+        "error": "Kernel issue timeout",
+        "progress": [
+          {
+            "progress": "client-found",
+            "actor": {
+              "id": "06d367aa-3a09-4762-93c5-667f003f890a",
+              "type": "sharedworker",
+              "url": "http://127.0.0.1:39519/kernel.js"
+            }
+          }
+        ]
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "forcedAge": true,
+      "capabilities": {
+        "ready": true,
+        "serviceWorkerContainer": "object"
+      },
+      "result": {
+        "error": "Kernel issue timeout",
+        "progress": [
+          {
+            "progress": "client-found",
+            "actor": {
+              "id": "c6a762ce-4212-4854-9764-178606599441",
+              "type": "sharedworker",
+              "url": "http://127.0.0.1:39519/kernel.js"
+            }
+          }
+        ]
+      },
+      "traffic": []
+    }
+  ]
+}

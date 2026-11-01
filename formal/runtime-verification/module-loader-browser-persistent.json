@@ -1,0 +1,1038 @@
+{
+  "completed": true,
+  "started": "2026-11-01T05:05:43.579Z",
+  "finished": "2026-11-01T05:08:36.515Z",
+  "scope": "Dependency boundary experiment only; not runtime integration or a confinement proof.",
+  "rootTransport": "blob",
+  "contextMode": "persistent-default",
+  "executableSelection": "Explicit bundled full browser executable; Playwright background-service defaults remain in effect.",
+  "packageURL": "https://registry.npmjs.org/es-module-shims/-/es-module-shims-2.8.4.tgz",
+  "version": "2.8.4",
+  "integrity": "sha512-ea5srn5L89PWVad6Qle6r2kg+HvvLiL/GHqgNx06eFrkERHkrTFWaqo1w8Sd+XI3Xr0iAG5x3ZQ7mQ/hnQzNpA==",
+  "loaderSHA256": "47dff4ba191ca594760a67b574c7207c7820c305735147b7ef05877f7cfd64cd",
+  "runnerSHA256": "41debcb0d6a7338757c3f0e125fcf5002ddd23ff35fa9da644334d9848066de9",
+  "launcherSHA256": "c161489dfce9c3124474d1416440c9876b0a8fce329d2f09fa16f99af744e3a0",
+  "packageLockSHA256": "4e8c7b0964047f1c9fd3f82956b08d381817fa86fb2f7d47d4a10458dc5e62ed",
+  "rows": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/e7cc9cdb-386a-48a6-8bc3-b610baf6d603"
+      ],
+      "mode": "native-graph-control",
+      "actionStarted": 1793509547433,
+      "observationEnded": 1793509550446,
+      "result": {
+        "first": 1,
+        "value": 1,
+        "reads": [],
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": []
+      },
+      "traffic": [
+        {
+          "path": "/entry.js",
+          "time": 1793509547436
+        },
+        {
+          "path": "/dependency.js",
+          "time": 1793509547438
+        },
+        {
+          "path": "/state.js",
+          "time": 1793509547438
+        },
+        {
+          "path": "/cycle-a.js",
+          "time": 1793509547439
+        },
+        {
+          "path": "/cycle-b.js",
+          "time": 1793509547441
+        },
+        {
+          "path": "/dynamic.js",
+          "time": 1793509547442
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/9729ad67-561a-4500-856d-348e33eed226"
+      ],
+      "mode": "local-hook",
+      "actionStarted": 1793509553713,
+      "observationEnded": 1793509556723,
+      "result": {
+        "first": 1,
+        "value": 1,
+        "reads": [
+          "http://127.0.0.1:36979/entry.js",
+          "http://127.0.0.1:36979/dependency.js",
+          "http://127.0.0.1:36979/state.js",
+          "http://127.0.0.1:36979/cycle-a.js",
+          "http://127.0.0.1:36979/cycle-b.js",
+          "http://127.0.0.1:36979/dynamic.js"
+        ],
+        "local": "blob:http://127.0.0.1:36979/3defd6e6-2565-4677-9dc7-79ac2e4cf3ab",
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": []
+      },
+      "traffic": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/0569fba7-cfa3-45da-b244-5ec876056037"
+      ],
+      "mode": "native-control",
+      "actionStarted": 1793509559977,
+      "observationEnded": 1793509562989,
+      "result": {
+        "first": 1,
+        "value": 2,
+        "reads": [
+          "http://127.0.0.1:36979/entry.js",
+          "http://127.0.0.1:36979/dependency.js",
+          "http://127.0.0.1:36979/state.js",
+          "http://127.0.0.1:36979/cycle-a.js",
+          "http://127.0.0.1:36979/cycle-b.js",
+          "http://127.0.0.1:36979/dynamic.js"
+        ],
+        "local": "blob:http://127.0.0.1:36979/d01e590e-ba93-4e0e-a50e-2cb2af59d009",
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": []
+      },
+      "traffic": [
+        {
+          "path": "/native-target.js",
+          "time": 1793509559987
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/273a7143-822b-4b5e-8683-e4480138e735"
+      ],
+      "mode": "record-change",
+      "actionStarted": 1793509566252,
+      "observationEnded": 1793509569267,
+      "result": {
+        "first": 1,
+        "value": 2,
+        "reads": [
+          "http://127.0.0.1:36979/entry.js",
+          "http://127.0.0.1:36979/dependency.js",
+          "http://127.0.0.1:36979/state.js",
+          "http://127.0.0.1:36979/cycle-a.js",
+          "http://127.0.0.1:36979/cycle-b.js",
+          "http://127.0.0.1:36979/dynamic.js"
+        ],
+        "local": "blob:http://127.0.0.1:36979/f34bfce6-304a-44b3-94ed-4f490cc7385f",
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": []
+      },
+      "traffic": [
+        {
+          "path": "/native-target.js",
+          "time": 1793509566262
+        }
+      ]
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/a27ddd54-aa15-425b-ba3f-9e049ec2b7e4"
+      ],
+      "mode": "local-only",
+      "actionStarted": 1793509572523,
+      "observationEnded": 1793509575533,
+      "result": {
+        "first": 1,
+        "value": 1,
+        "reads": [
+          "http://127.0.0.1:36979/entry.js",
+          "http://127.0.0.1:36979/dependency.js",
+          "http://127.0.0.1:36979/state.js",
+          "http://127.0.0.1:36979/cycle-a.js",
+          "http://127.0.0.1:36979/cycle-b.js",
+          "http://127.0.0.1:36979/dynamic.js"
+        ],
+        "local": "blob:http://127.0.0.1:36979/95cd0cb1-c612-49d4-b1a0-01a7b2ece11f",
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": []
+      },
+      "traffic": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/93bd973a-194b-4969-896b-02f6cf3b2802"
+      ],
+      "mode": "record-change-denied",
+      "actionStarted": 1793509578808,
+      "observationEnded": 1793509581918,
+      "result": {
+        "first": 1,
+        "local": "blob:http://127.0.0.1:36979/74101047-a2ff-4c53-b99c-8c48538d8239",
+        "reads": [
+          "http://127.0.0.1:36979/entry.js",
+          "http://127.0.0.1:36979/dependency.js",
+          "http://127.0.0.1:36979/state.js",
+          "http://127.0.0.1:36979/cycle-a.js",
+          "http://127.0.0.1:36979/cycle-b.js",
+          "http://127.0.0.1:36979/dynamic.js"
+        ],
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": [
+          {
+            "blockedURI": "http://127.0.0.1:36979/native-target.js",
+            "effectiveDirective": "script-src-elem",
+            "disposition": "enforce"
+          }
+        ],
+        "failure": "TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:36979/native-target.js",
+        "errorName": "TypeError"
+      },
+      "traffic": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/d7833549-27ee-4a2f-b308-7f92aa2f39a3"
+      ],
+      "mode": "literal-import-denied",
+      "actionStarted": 1793509585181,
+      "observationEnded": 1793509588292,
+      "result": {
+        "first": 1,
+        "local": "blob:http://127.0.0.1:36979/e2017791-9c5b-4a64-9485-347abcf7a417",
+        "reads": [
+          "http://127.0.0.1:36979/entry.js",
+          "http://127.0.0.1:36979/dependency.js",
+          "http://127.0.0.1:36979/state.js",
+          "http://127.0.0.1:36979/cycle-a.js",
+          "http://127.0.0.1:36979/cycle-b.js",
+          "http://127.0.0.1:36979/dynamic.js"
+        ],
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": [
+          {
+            "blockedURI": "http://127.0.0.1:36979/native-target.js",
+            "effectiveDirective": "script-src-elem",
+            "disposition": "enforce"
+          }
+        ],
+        "failure": "TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:36979/native-target.js",
+        "errorName": "TypeError"
+      },
+      "traffic": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/0d39c87a-4bed-4244-92c5-8bdb78b61eb9"
+      ],
+      "mode": "computed-import-denied",
+      "actionStarted": 1793509591565,
+      "observationEnded": 1793509594675,
+      "result": {
+        "first": 1,
+        "local": "blob:http://127.0.0.1:36979/ef803fe3-9d47-49ac-854b-fe45603581f0",
+        "reads": [
+          "http://127.0.0.1:36979/entry.js",
+          "http://127.0.0.1:36979/dependency.js",
+          "http://127.0.0.1:36979/state.js",
+          "http://127.0.0.1:36979/cycle-a.js",
+          "http://127.0.0.1:36979/cycle-b.js",
+          "http://127.0.0.1:36979/dynamic.js"
+        ],
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": [
+          {
+            "blockedURI": "http://127.0.0.1:36979/native-target.js",
+            "effectiveDirective": "script-src-elem",
+            "disposition": "enforce"
+          }
+        ],
+        "failure": "TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:36979/native-target.js",
+        "errorName": "TypeError"
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/615dd16f-42ee-45cb-ba35-374d623c9eab"
+      ],
+      "mode": "native-graph-control",
+      "actionStarted": 1793509599049,
+      "observationEnded": 1793509602067,
+      "result": {
+        "first": 1,
+        "value": 1,
+        "reads": [],
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": []
+      },
+      "traffic": [
+        {
+          "path": "/entry.js",
+          "time": 1793509599052
+        },
+        {
+          "path": "/dependency.js",
+          "time": 1793509599058
+        },
+        {
+          "path": "/state.js",
+          "time": 1793509599058
+        },
+        {
+          "path": "/cycle-a.js",
+          "time": 1793509599058
+        },
+        {
+          "path": "/cycle-b.js",
+          "time": 1793509599062
+        },
+        {
+          "path": "/dynamic.js",
+          "time": 1793509599065
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/5b6b635d-9c0b-4f19-8cb6-63d8ee01906c"
+      ],
+      "mode": "local-hook",
+      "actionStarted": 1793509606625,
+      "observationEnded": 1793509609635,
+      "result": {
+        "first": 1,
+        "value": 1,
+        "reads": [
+          "http://127.0.0.1:36979/entry.js",
+          "http://127.0.0.1:36979/dependency.js",
+          "http://127.0.0.1:36979/state.js",
+          "http://127.0.0.1:36979/cycle-a.js",
+          "http://127.0.0.1:36979/cycle-b.js",
+          "http://127.0.0.1:36979/dynamic.js"
+        ],
+        "local": "blob:http://127.0.0.1:36979/f6794159-72c2-4ac6-80cf-8cf060c511d4",
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": []
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/68e430a0-7aff-487e-a5af-a22b5100999a"
+      ],
+      "mode": "native-control",
+      "actionStarted": 1793509614192,
+      "observationEnded": 1793509617205,
+      "result": {
+        "first": 1,
+        "value": 2,
+        "reads": [
+          "http://127.0.0.1:36979/entry.js",
+          "http://127.0.0.1:36979/dependency.js",
+          "http://127.0.0.1:36979/state.js",
+          "http://127.0.0.1:36979/cycle-a.js",
+          "http://127.0.0.1:36979/cycle-b.js",
+          "http://127.0.0.1:36979/dynamic.js"
+        ],
+        "local": "blob:http://127.0.0.1:36979/cd29e969-eb79-4ada-b655-be04df5a0499",
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": []
+      },
+      "traffic": [
+        {
+          "path": "/native-target.js",
+          "time": 1793509614203
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/157c18b6-6f29-4df9-ac04-c0abea73eace"
+      ],
+      "mode": "record-change",
+      "actionStarted": 1793509621769,
+      "observationEnded": 1793509624782,
+      "result": {
+        "first": 1,
+        "value": 2,
+        "reads": [
+          "http://127.0.0.1:36979/entry.js",
+          "http://127.0.0.1:36979/dependency.js",
+          "http://127.0.0.1:36979/state.js",
+          "http://127.0.0.1:36979/cycle-a.js",
+          "http://127.0.0.1:36979/cycle-b.js",
+          "http://127.0.0.1:36979/dynamic.js"
+        ],
+        "local": "blob:http://127.0.0.1:36979/35d6ce39-890f-453b-bd58-6f7b71ce4666",
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": []
+      },
+      "traffic": [
+        {
+          "path": "/native-target.js",
+          "time": 1793509621779
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/88b920f2-97a7-4d11-9351-c30666b0d67a"
+      ],
+      "mode": "local-only",
+      "actionStarted": 1793509629374,
+      "observationEnded": 1793509632384,
+      "result": {
+        "first": 1,
+        "value": 1,
+        "reads": [
+          "http://127.0.0.1:36979/entry.js",
+          "http://127.0.0.1:36979/dependency.js",
+          "http://127.0.0.1:36979/state.js",
+          "http://127.0.0.1:36979/cycle-a.js",
+          "http://127.0.0.1:36979/cycle-b.js",
+          "http://127.0.0.1:36979/dynamic.js"
+        ],
+        "local": "blob:http://127.0.0.1:36979/ada5ed34-c3ec-44fd-8abe-b64304e35851",
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": []
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/5a2989c4-fe0c-4a35-a5c6-6d5d4fe19862"
+      ],
+      "mode": "record-change-denied",
+      "actionStarted": 1793509636936,
+      "observationEnded": 1793509640048,
+      "result": {
+        "first": 1,
+        "local": "blob:http://127.0.0.1:36979/ce7e3f46-23be-4404-a912-16fd59b5405d",
+        "reads": [
+          "http://127.0.0.1:36979/entry.js",
+          "http://127.0.0.1:36979/dependency.js",
+          "http://127.0.0.1:36979/state.js",
+          "http://127.0.0.1:36979/cycle-a.js",
+          "http://127.0.0.1:36979/cycle-b.js",
+          "http://127.0.0.1:36979/dynamic.js"
+        ],
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": [
+          {
+            "blockedURI": "http://127.0.0.1:36979/native-target.js",
+            "effectiveDirective": "script-src-elem",
+            "disposition": "enforce"
+          }
+        ],
+        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:36979/native-target.js",
+        "errorName": "TypeError"
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/697a7eea-4725-4eae-b08f-ea8e54199f95"
+      ],
+      "mode": "literal-import-denied",
+      "actionStarted": 1793509644601,
+      "observationEnded": 1793509647712,
+      "result": {
+        "first": 1,
+        "local": "blob:http://127.0.0.1:36979/f47195ac-2aec-4049-83ec-21485b0e22fa",
+        "reads": [
+          "http://127.0.0.1:36979/entry.js",
+          "http://127.0.0.1:36979/dependency.js",
+          "http://127.0.0.1:36979/state.js",
+          "http://127.0.0.1:36979/cycle-a.js",
+          "http://127.0.0.1:36979/cycle-b.js",
+          "http://127.0.0.1:36979/dynamic.js"
+        ],
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": [
+          {
+            "blockedURI": "http://127.0.0.1:36979/native-target.js",
+            "effectiveDirective": "script-src-elem",
+            "disposition": "enforce"
+          }
+        ],
+        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:36979/native-target.js",
+        "errorName": "TypeError"
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
+      "forcedStaleAgeCheck": false,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/9d2de311-9092-44c6-8e36-456036f9ac58"
+      ],
+      "mode": "computed-import-denied",
+      "actionStarted": 1793509652268,
+      "observationEnded": 1793509655379,
+      "result": {
+        "first": 1,
+        "local": "blob:http://127.0.0.1:36979/269905ec-bd76-49b4-8a84-6dccb69a842a",
+        "reads": [
+          "http://127.0.0.1:36979/entry.js",
+          "http://127.0.0.1:36979/dependency.js",
+          "http://127.0.0.1:36979/state.js",
+          "http://127.0.0.1:36979/cycle-a.js",
+          "http://127.0.0.1:36979/cycle-b.js",
+          "http://127.0.0.1:36979/dynamic.js"
+        ],
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": [
+          {
+            "blockedURI": "http://127.0.0.1:36979/native-target.js",
+            "effectiveDirective": "script-src-elem",
+            "disposition": "enforce"
+          }
+        ],
+        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:36979/native-target.js",
+        "errorName": "TypeError"
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
+      "forcedStaleAgeCheck": true,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/2fbb1004-a255-4135-a74e-7f82cca5dfef"
+      ],
+      "mode": "native-graph-control",
+      "actionStarted": 1793509659957,
+      "observationEnded": 1793509662975,
+      "result": {
+        "first": 1,
+        "value": 1,
+        "reads": [],
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": []
+      },
+      "traffic": [
+        {
+          "path": "/entry.js",
+          "time": 1793509659961
+        },
+        {
+          "path": "/dependency.js",
+          "time": 1793509659965
+        },
+        {
+          "path": "/cycle-a.js",
+          "time": 1793509659966
+        },
+        {
+          "path": "/state.js",
+          "time": 1793509659966
+        },
+        {
+          "path": "/cycle-b.js",
+          "time": 1793509659970
+        },
+        {
+          "path": "/dynamic.js",
+          "time": 1793509659972
+        },
+        {
+          "path": "/sw.js",
+          "time": 1793509661059
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
+      "forcedStaleAgeCheck": true,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/4b1d026f-3759-4ddf-861a-ad19d29e01ab"
+      ],
+      "mode": "local-hook",
+      "actionStarted": 1793509667517,
+      "observationEnded": 1793509670528,
+      "result": {
+        "first": 1,
+        "value": 1,
+        "reads": [
+          "http://127.0.0.1:36979/entry.js",
+          "http://127.0.0.1:36979/dependency.js",
+          "http://127.0.0.1:36979/state.js",
+          "http://127.0.0.1:36979/cycle-a.js",
+          "http://127.0.0.1:36979/cycle-b.js",
+          "http://127.0.0.1:36979/dynamic.js"
+        ],
+        "local": "blob:http://127.0.0.1:36979/2c3d4ad5-22d9-43fe-a74f-b66fc59e5329",
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": []
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
+      "forcedStaleAgeCheck": true,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/8a6a7028-b78e-491e-aa9d-785840f9e735"
+      ],
+      "mode": "native-control",
+      "actionStarted": 1793509675089,
+      "observationEnded": 1793509678103,
+      "result": {
+        "first": 1,
+        "value": 2,
+        "reads": [
+          "http://127.0.0.1:36979/entry.js",
+          "http://127.0.0.1:36979/dependency.js",
+          "http://127.0.0.1:36979/state.js",
+          "http://127.0.0.1:36979/cycle-a.js",
+          "http://127.0.0.1:36979/cycle-b.js",
+          "http://127.0.0.1:36979/dynamic.js"
+        ],
+        "local": "blob:http://127.0.0.1:36979/cf88c64d-4ed7-4eed-9d72-82804ced6ee3",
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": []
+      },
+      "traffic": [
+        {
+          "path": "/native-target.js",
+          "time": 1793509675100
+        },
+        {
+          "path": "/sw.js",
+          "time": 1793509676209
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
+      "forcedStaleAgeCheck": true,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/90b413cc-6327-4aa9-9961-8a1ca58b8b18"
+      ],
+      "mode": "record-change",
+      "actionStarted": 1793509682671,
+      "observationEnded": 1793509685685,
+      "result": {
+        "first": 1,
+        "value": 2,
+        "reads": [
+          "http://127.0.0.1:36979/entry.js",
+          "http://127.0.0.1:36979/dependency.js",
+          "http://127.0.0.1:36979/state.js",
+          "http://127.0.0.1:36979/cycle-a.js",
+          "http://127.0.0.1:36979/cycle-b.js",
+          "http://127.0.0.1:36979/dynamic.js"
+        ],
+        "local": "blob:http://127.0.0.1:36979/57f823f9-b11d-42f4-8531-213c3e5552e5",
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": []
+      },
+      "traffic": [
+        {
+          "path": "/native-target.js",
+          "time": 1793509682682
+        },
+        {
+          "path": "/sw.js",
+          "time": 1793509683720
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
+      "forcedStaleAgeCheck": true,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/a0af4824-404c-423b-8854-059afa2d5fb2"
+      ],
+      "mode": "local-only",
+      "actionStarted": 1793509690245,
+      "observationEnded": 1793509693256,
+      "result": {
+        "first": 1,
+        "value": 1,
+        "reads": [
+          "http://127.0.0.1:36979/entry.js",
+          "http://127.0.0.1:36979/dependency.js",
+          "http://127.0.0.1:36979/state.js",
+          "http://127.0.0.1:36979/cycle-a.js",
+          "http://127.0.0.1:36979/cycle-b.js",
+          "http://127.0.0.1:36979/dynamic.js"
+        ],
+        "local": "blob:http://127.0.0.1:36979/a30cc67b-2cc1-4304-aec6-2bdfc28cb1fc",
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": []
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
+      "forcedStaleAgeCheck": true,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/9b732fd1-5bd3-4bae-a5b6-790afa895dd4"
+      ],
+      "mode": "record-change-denied",
+      "actionStarted": 1793509697811,
+      "observationEnded": 1793509700922,
+      "result": {
+        "first": 1,
+        "local": "blob:http://127.0.0.1:36979/839bb516-830a-4941-ace0-9845be438276",
+        "reads": [
+          "http://127.0.0.1:36979/entry.js",
+          "http://127.0.0.1:36979/dependency.js",
+          "http://127.0.0.1:36979/state.js",
+          "http://127.0.0.1:36979/cycle-a.js",
+          "http://127.0.0.1:36979/cycle-b.js",
+          "http://127.0.0.1:36979/dynamic.js"
+        ],
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": [
+          {
+            "blockedURI": "http://127.0.0.1:36979/native-target.js",
+            "effectiveDirective": "script-src-elem",
+            "disposition": "enforce"
+          }
+        ],
+        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:36979/native-target.js",
+        "errorName": "TypeError"
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
+      "forcedStaleAgeCheck": true,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/720a6cdb-6c53-4c08-bb6b-7d7ba410375d"
+      ],
+      "mode": "literal-import-denied",
+      "actionStarted": 1793509705495,
+      "observationEnded": 1793509708606,
+      "result": {
+        "first": 1,
+        "local": "blob:http://127.0.0.1:36979/0cbc8821-c88c-4271-854a-576fb1ec0c43",
+        "reads": [
+          "http://127.0.0.1:36979/entry.js",
+          "http://127.0.0.1:36979/dependency.js",
+          "http://127.0.0.1:36979/state.js",
+          "http://127.0.0.1:36979/cycle-a.js",
+          "http://127.0.0.1:36979/cycle-b.js",
+          "http://127.0.0.1:36979/dynamic.js"
+        ],
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": [
+          {
+            "blockedURI": "http://127.0.0.1:36979/native-target.js",
+            "effectiveDirective": "script-src-elem",
+            "disposition": "enforce"
+          }
+        ],
+        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:36979/native-target.js",
+        "errorName": "TypeError"
+      },
+      "traffic": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "contextMode": "persistent-default",
+      "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
+      "forcedStaleAgeCheck": true,
+      "rootTransport": "blob",
+      "nativeWorkers": [
+        "blob:http://127.0.0.1:36979/c7d8a1e8-657c-493c-b478-9c23457e67ff"
+      ],
+      "mode": "computed-import-denied",
+      "actionStarted": 1793509713161,
+      "observationEnded": 1793509716272,
+      "result": {
+        "first": 1,
+        "local": "blob:http://127.0.0.1:36979/765d4ea7-f540-43a1-9e29-7081f0200f5e",
+        "reads": [
+          "http://127.0.0.1:36979/entry.js",
+          "http://127.0.0.1:36979/dependency.js",
+          "http://127.0.0.1:36979/state.js",
+          "http://127.0.0.1:36979/cycle-a.js",
+          "http://127.0.0.1:36979/cycle-b.js",
+          "http://127.0.0.1:36979/dynamic.js"
+        ],
+        "graph": {
+          "counter": 2,
+          "dynamic": 13,
+          "cycle": "AB",
+          "meta": "http://127.0.0.1:36979/entry.js",
+          "resolved": "http://127.0.0.1:36979/dependency.js"
+        },
+        "violations": [
+          {
+            "blockedURI": "http://127.0.0.1:36979/native-target.js",
+            "effectiveDirective": "script-src-elem",
+            "disposition": "enforce"
+          }
+        ],
+        "failure": "TypeError: error loading dynamically imported module: http://127.0.0.1:36979/native-target.js",
+        "errorName": "TypeError"
+      },
+      "traffic": []
+    }
+  ]
+}

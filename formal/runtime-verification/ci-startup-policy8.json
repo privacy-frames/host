@@ -1,0 +1,22 @@
+{
+  "run": "https://github.com/privacy-frames/host/actions/runs/41272516745",
+  "job": 124748022114,
+  "revision": "23ca1b17d330730209bc4c990f19aadd9c81753a",
+  "freshCheck": "inconclusive: both Chromium classic-dynamic native worker samples omitted update requests",
+  "freshReceipt": {
+    "path": "formal/runtime-verification/service-worker-maintenance-ci-policy8.json",
+    "sha256": "eda13c9ee044651e360017bcebb16fe24c70aab4eed97bdcb6fb7bb3f2fc29b5"
+  },
+  "forcedAgeStepExecuted": false,
+  "uploadedForcedAgeReceipt": {
+    "status": "Historical checked-in receipt; not executed by this job",
+    "capturedAt": "2026-11-01T04:02:00.501Z",
+    "revision": "56a6405f094ef76e5c0ef15ac799c3ff35d5bbbe",
+    "sourceSHA256": "19309d035e3fde8bf61bfd99ec59b4a5d4590ffb983fcd386b4676f37c4ec4d8",
+    "sha256": "25a2e312124db954f430a7fead8b3723287260c287d6faf83d6afecc686a1230"
+  },
+  "nextChecks": [
+    "Retain fixture workers through observation to investigate termination as a scheduling variable.",
+    "Remove checked-in receipts before the CI job can fail, and run forced-age checks independently."
+  ]
+}

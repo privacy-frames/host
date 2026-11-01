@@ -1,10 +1,10 @@
 import { strings, internalArray, internalRecord } from '../../shared/primordials.ts';
-import { installNavigationTargets } from './navigation-targets.ts';
+import { installNativeAttributes } from './native-attributes.ts';
 import { createResourceElementPolicy } from './resource-elements.ts';
 import {
-  isNavigationTarget,
-  isUnsafeTargetMutation,
-} from '../../shared/navigation-targets.ts';
+  fixedNativeAttribute,
+  isUnsafeNativeAttributeMutation,
+} from '../../shared/native-attributes.ts';
 import { elementAllowed } from '../../shared/policy.ts';
 import type { TrustedPolicy } from '../trusted/client.ts';
 import type { PolicyTools } from './native.ts';
@@ -24,8 +24,11 @@ export function installDOMPolicy(
 ) {
   const { apply, descriptor, method, accessor, deny, fail, str } = tools;
   const nativeSetAttribute = Element.prototype.setAttribute;
+  const nativeSetAttributeNode = Element.prototype.setAttributeNode;
+  const nativeClone = Node.prototype.cloneNode;
+  const nativeNamespace = descriptor(Element.prototype, 'namespaceURI')!.get!;
   const nativeMarkup = createNativeMarkupValidator(fail);
-  const targets = installNavigationTargets(tools);
+  const nativeAttributes = installNativeAttributes(tools);
   const inert = installInertDocuments(tools, policy);
   const resourceElements = createResourceElementPolicy(tools, mapResourceURL);
   // The read-only relList view must never call publisher-replaceable methods
@@ -46,8 +49,7 @@ export function installDOMPolicy(
     const text =
       documents && !inert.owns(context) ? documents.markup(source, context) : source;
     policy.validateMarkup(text);
-    nativeMarkup.fragment(text, context);
-    return text;
+    return nativeMarkup.fragment(text, context);
   };
   for (const proto of [Element.prototype, ShadowRoot.prototype]) {
     for (const key of ['innerHTML', 'outerHTML']) {
@@ -155,7 +157,7 @@ export function installDOMPolicy(
       )
         fail('Dynamic policy/resource elements are not admitted');
       const node: Element = apply(create, this, [tag]);
-      targets.prepare(node);
+      nativeAttributes.prepare(node);
       inert.track(node);
       if (!inert.owns(this)) documents?.created(node);
       return node;
@@ -200,7 +202,7 @@ export function installDOMPolicy(
       )
         fail('Dynamic policy/resource elements are not admitted');
       const node: Element = apply(createNS, this, [ns, tag]);
-      targets.prepare(node);
+      nativeAttributes.prepare(node);
       inert.track(node);
       if (!inert.owns(this)) documents?.created(node);
       return node;
@@ -223,7 +225,7 @@ export function installDOMPolicy(
     if (type === 7) fail('Processing instructions are not admitted');
     if (type === 1) {
       const tag = apply(local, node, []);
-      targets.prepare(node as Element);
+      nativeAttributes.prepare(node as Element);
       if (!documents?.isContextElement(node)) elementAllowed(tag);
       if (strings.toLowerCase(tag) === 'script') {
         if (scripts && scripts.isScript(node)) scripts.prepare(node);
@@ -349,7 +351,7 @@ export function installDOMPolicy(
       const result: Node = apply(clone, this, [deep]);
       if (inert.owns(this)) inert.track(result);
       documents?.cloned(this, result);
-      if (!inert.owns(result)) targets.tree(result);
+      if (!inert.owns(result)) nativeAttributes.tree(result);
       return result;
     });
     for (const key of ['importNode', 'adoptNode'] as const) {
@@ -368,7 +370,7 @@ export function installDOMPolicy(
             key === 'importNode' ? [node, deep] : [node],
           );
           if (passive) inert.track(result);
-          if (!passive) targets.tree(result);
+          if (!passive) nativeAttributes.tree(result);
           if (key === 'importNode') documents?.cloned(node, result);
           documents?.settle();
           return result;
@@ -535,6 +537,8 @@ export function installDOMPolicy(
   const ownerElement = descriptor(Attr.prototype, 'ownerElement')!.get!;
   const attrName = descriptor(Attr.prototype, 'name')!.get!;
   const attrValue = descriptor(Attr.prototype, 'value')!.get!;
+  const setAttrValue = descriptor(Attr.prototype, 'value')!.set!;
+  const attrNamespace = descriptor(Attr.prototype, 'namespaceURI')!.get!;
   const sensitive = (node: unknown) => {
     const tag = strings.toLowerCase(apply(local, node, []));
     if (['link', 'meta', 'script'].includes(tag)) fail('Policy element is immutable');
@@ -568,7 +572,11 @@ export function installDOMPolicy(
                 return;
               if (owner) {
                 sensitive(owner);
-                value = targets.attribute(apply(attrName, this, []), value ?? '');
+                value = nativeAttributes.attribute(
+                  apply(attrName, this, []),
+                  value ?? '',
+                  owner,
+                );
               }
             }
             return apply(d.set!, this, [value]);
@@ -584,7 +592,7 @@ export function installDOMPolicy(
       const name = strings.toLowerCase(str(apply(attrName, attr, [])));
       if (documents?.attribute(this, name, apply(attrValue, attr, []))) return null;
       sensitive(this);
-      const checked = targets.attribute(name, apply(attrValue, attr, []));
+      const checked = nativeAttributes.attribute(name, apply(attrValue, attr, []), this);
       const nativeValue = descriptor(Attr.prototype, 'value')!.set!;
       apply(nativeValue, attr, [checked]);
       if (['srcdoc', 'is'].includes(name) || strings.startsWith(name, 'on'))
@@ -601,11 +609,30 @@ export function installDOMPolicy(
     const fn = Reflect.get(Element.prototype, key);
     method(Element.prototype, key, function (this: Element, ...args: unknown[]) {
       args = internalArray(args);
+      if (key === 'removeAttributeNS') args[0] = args[0] == null ? null : str(args[0]);
       const name =
         key === 'removeAttributeNode'
           ? apply(attrName, args[0], [])
           : str(args[key === 'removeAttributeNS' ? 1 : 0]);
-      if (isNavigationTarget(name)) {
+      if (key !== 'removeAttributeNode') args[key === 'removeAttributeNS' ? 1 : 0] = name;
+      const fixed = fixedNativeAttribute(name, apply(nativeNamespace, this, []));
+      if (fixed === 'false') {
+        if (
+          (key === 'removeAttributeNS' && args[0] != null && str(args[0]) !== '') ||
+          (key === 'removeAttributeNode' && apply(attrNamespace, args[0], []) !== null)
+        )
+          return apply(fn, this, args);
+        if (key === 'removeAttributeNode') {
+          if (apply(ownerElement, args[0], []) !== this) return apply(fn, this, args);
+          // Replace atomically so callbacks never observe an enabled control.
+          const replacement = apply(nativeClone, args[0], [false]);
+          apply(setAttrValue, replacement, ['false']);
+          return apply(nativeSetAttributeNode, this, [replacement]);
+        }
+        // Ordinary removal leaves the physical control disabled, like toggle.
+        return;
+      }
+      if (fixed !== undefined) {
         // The physical target remains explicit even after removal (SVG xlink:show).
         const result = apply(fn, this, args);
         apply(nativeSetAttribute, this, [name, '_self']);
@@ -639,10 +666,15 @@ export function installResourceAttributePolicy(
       const tag = strings.toLowerCase(apply(local, this, []));
       if (tag === 'meta' || (tag === 'script' && !scripts))
         fail('Policy element is immutable');
+      if (name === 'setAttributeNS') args[0] = args[0] == null ? null : str(args[0]);
       const nameIndex = name === 'setAttributeNS' ? 1 : 0;
       const attributeName = str(args[nameIndex]);
       args[nameIndex] = attributeName;
       const key = strings.toLowerCase(attributeName);
+      if (name !== 'toggleAttribute') {
+        const valueIndex = name === 'setAttributeNS' ? 2 : 1;
+        args[valueIndex] = str(args[valueIndex]);
+      }
       if (tag === 'link') {
         if (name === 'setAttributeNS' && args[0] != null && str(args[0]) !== '')
           fail('Namespaced resource attributes are not admitted');
@@ -655,20 +687,21 @@ export function installResourceAttributePolicy(
         if (checked === undefined) fail('Dynamic resource element is not admitted');
         if (name !== 'toggleAttribute') args[valueIndex] = checked;
       }
-      if (isNavigationTarget(key)) {
+      const fixed = fixedNativeAttribute(key, apply(namespace, this, []));
+      if (fixed !== undefined) {
         if (name === 'toggleAttribute') {
-          // toggle cannot remove the explicit safe native target.
-          apply(nativeSetAttribute, this, [attributeName, '_self']);
+          // Native controls remain explicit even when toggled off by the caller.
+          apply(nativeSetAttribute, this, [attributeName, fixed]);
           return true;
         }
         const index = name === 'setAttributeNS' ? 2 : 1;
         str(args[index]);
-        args[index] = '_self';
+        args[index] = fixed;
       } else if (
         name !== 'toggleAttribute' &&
-        isUnsafeTargetMutation(key, str(args[name === 'setAttributeNS' ? 2 : 1]))
+        isUnsafeNativeAttributeMutation(key, str(args[name === 'setAttributeNS' ? 2 : 1]))
       ) {
-        fail('Declarative browsing-target mutation is not admitted');
+        fail('Declarative native effect-control mutation is not admitted');
       }
       if (documents && name === 'toggleAttribute') {
         const current = documents.readAttribute(this, key);

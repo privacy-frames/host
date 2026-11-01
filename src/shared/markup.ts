@@ -1,6 +1,7 @@
 import { parse, parseFragment, type DefaultTreeAdapterTypes } from 'parse5';
 import { strings, internalRecord, internalSet } from './primordials.ts';
-import { isNavigationTarget, isUnsafeTargetMutation } from './navigation-targets.ts';
+import { isNavigationTarget } from './navigation-targets.ts';
+import { isUnsafeNativeAttributeMutation } from './native-attributes.ts';
 import { elementAllowed, isDataScript } from './policy.ts';
 
 const presentationMetadata = internalSet(['viewport', 'color-scheme', 'theme-color']);
@@ -71,7 +72,7 @@ export function validateMarkup(
         if (
           (isNavigationTarget(attribute.name) &&
             strings.toLowerCase(attribute.value) !== '_self') ||
-          isUnsafeTargetMutation(attribute.name, attribute.value)
+          isUnsafeNativeAttributeMutation(attribute.name, attribute.value)
         )
           throw new Error('Native browsing targets must remain in the prepared context');
         if (

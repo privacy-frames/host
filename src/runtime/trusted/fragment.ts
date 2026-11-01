@@ -5,7 +5,7 @@ import {
   html,
   type DefaultTreeAdapterTypes as Tree,
 } from 'parse5';
-import { normalizeNavigationAttributes } from '../../shared/navigation-targets.ts';
+import { normalizeNativeAttributes } from '../../shared/native-attributes.ts';
 
 export const CONTEXT_MARKER = 'data-privacy-document';
 
@@ -41,7 +41,7 @@ export function prepareFragment(input: FragmentInput): PreparedFragment {
   function visit(parent: Tree.ParentNode): void {
     parent.childNodes = parent.childNodes.map((child) => {
       if (!('tagName' in child)) return child;
-      normalizeNavigationAttributes(child.tagName, child.attrs);
+      normalizeNativeAttributes(child.tagName, child.namespaceURI, child.attrs);
       if (child.attrs.some((item) => item.name === CONTEXT_MARKER))
         throw new Error('Reserved context marker');
       if (
