@@ -24,6 +24,8 @@ jobs:
           npm run typecheck
           npm run test:unit
       - run: python3 formal/claims/check.py
+      - name: Challenge evidence and route checks
+        run: python3 -m unittest discover -s formal/claims -p '*_test.py' -v
       - name: Check the runtime implementation review inventory
         run: |
           npx tsc --ignoreConfig --noEmit --strict --noUnusedLocals --noUnusedParameters --target ES2022 --module ESNext --moduleResolution Bundler --allowImportingTsExtensions --skipLibCheck --types node --lib ES2023,DOM,DOM.Iterable,WebWorker formal/runtime-verification/inventory.ts formal/runtime-verification/boundaries.ts
