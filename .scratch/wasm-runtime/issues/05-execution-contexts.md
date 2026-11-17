@@ -42,3 +42,7 @@ document before application scripts execute. Native HTML/CSS rendering and
 frame behavior remain the browser's responsibility. Synchronous parent/child
 DOM access and callbacks need qualification across guest engines; this decision
 does not establish that those bindings already work.
+
+Damen agreed to investigate worklets before engine selection, starting with
+AudioWorklet. See [Qualify guest engines inside AudioWorklet](15-audio-worklet-feasibility.md).
+The research must inform the remaining worklet architecture decision.
