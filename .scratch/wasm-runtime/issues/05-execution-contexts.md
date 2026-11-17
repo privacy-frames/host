@@ -17,3 +17,15 @@ Application service-worker execution is excluded by
 The host service worker and manifest/offline behavior remain in scope. Investigate
 existing applications' dependency on registration before deciding the guest API
 surface; do not silently retain the former publisher executor.
+
+## Decisions recorded
+
+Damen agreed that application-created dedicated workers run in real browser
+Workers, each containing its own Wasm JavaScript engine. The host prepares the
+worker environment before executing guest code. Worker bindings preserve
+parallel computation, messaging and termination under the same confinement
+policy as the main application context.
+
+The browser executes the trusted worker bootstrap and engine. Application
+JavaScript executes inside that engine. Shared workers, worklets and child
+documents remain open parts of this decision.
