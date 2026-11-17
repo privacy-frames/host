@@ -56,6 +56,9 @@ that is very similar or identical to the current interface.
 
 - [Check existing applications without application service-worker execution](issues/10-app-service-worker-dependencies.md): source checks distinguish optional registration from dependent features and identify a conflicting test fixture.
 
+- [Choose where the main application engine runs](issues/11-main-engine-placement.md): run it on the app context's main thread; synchronous native-event cancellation is required.
+- [Find reusable browser bindings for a Wasm JavaScript engine](issues/12-browser-binding-reuse.md): reusable marshalling and interface generators exist; callback, identity and buffer behavior still need qualification.
+
 ## Not yet specified
 
 Application-specific incompatibilities may emerge when candidate bindings meet

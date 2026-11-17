@@ -2,8 +2,8 @@
 
 Type: grilling
 Label: wayfinder:grilling
-Status: open
-Assignee: unassigned
+Status: claimed
+Assignee: DamenH
 Blocked by: 01-quickjs-capabilities.md, 02-boa-capabilities.md, 03-current-demo-contract.md, 11-main-engine-placement.md
 
 ## Question

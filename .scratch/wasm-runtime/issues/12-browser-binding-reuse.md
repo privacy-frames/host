@@ -2,7 +2,7 @@
 
 Type: research
 Label: wayfinder:research
-Status: claimed
+Status: resolved
 Assignee: DamenH
 Blocked by: 01-quickjs-capabilities.md, 02-boa-capabilities.md, 04-dom-binding-boundary.md
 
@@ -21,3 +21,20 @@ application source downleveling as an unexamined substitute.
 Branch: research/wasm-browser-bindings
 Worktree: /home/damen/Projects/privacy-frames-research-browser-bindings
 Findings: docs/research/wasm-runtime/browser-binding-reuse.md
+
+## Answer
+
+[Browser-binding reuse research](https://github.com/privacy-frames/host/blob/da55971/docs/research/wasm-runtime/browser-binding-reuse.md)
+is recorded on research/wasm-browser-bindings at commit da55971. The branch is
+an evidence artifact and is not merged.
+
+quickjs-emscripten-sync supplies identity/callback/marshalling helpers, but not
+a transparent DOM implementation or confinement. webidl2js can generate guest
+interface semantics; native forwarding still needs adapters. Boa interop and
+web-sys reduce different sides of the bridge rather than automatically joining
+them. Selected mutable callback paths reject recursive borrowing. Buffer copies
+do not establish live native Wasm memory aliases.
+
+This resolves the library-source investigation. No runtime probes were run,
+no library or engine was selected, and synchronous reentry, lifetime, object
+identity, buffers and authority still require contracts and execution evidence.
