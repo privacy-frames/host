@@ -2,8 +2,8 @@
 
 Type: research
 Label: wayfinder:research
-Status: open
-Assignee: unassigned
+Status: claimed
+Assignee: DamenH
 Blocked by: 01-quickjs-capabilities.md, 02-boa-capabilities.md, 03-current-demo-contract.md, 11-main-engine-placement.md, 12-browser-binding-reuse.md
 
 ## Question
@@ -16,3 +16,6 @@ synchronous callback reentry and worker transfer semantics. Use primary sources
 and distinguish existing implementation support from speculative integration.
 Identify the bounded probes required for the existing image/codec applications;
 do not assume byte copying alone satisfies their memory contracts.
+
+Research branch: research/wasm-guest-webassembly
+Findings: docs/research/wasm-runtime/guest-webassembly-architecture.md
