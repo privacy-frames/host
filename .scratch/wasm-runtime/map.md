@@ -1,0 +1,63 @@
+# Build the Privacy Frames host around a WebAssembly JavaScript engine
+
+Label: wayfinder:map
+
+## Destination
+
+Deliver a complete greenfield hard fork of Privacy Frames using a JavaScript
+engine implemented in WebAssembly, preserving the current demonstration's
+supported applications, required browser behavior and a manager at pf.damenh.com
+that is very similar or identical to the current interface.
+
+## Notes
+
+- User direction, 2026-11-17: this is new work with a new approach. Existing code
+  may be reused where useful; there is no requirement to preserve the existing
+  runtime architecture or maintain backward compatibility.
+- This map charts the decisions leading to the full host. A disposable probe may
+  settle a question, but a small prototype is not the destination. Implementation
+  follows the architectural decisions; no engine has been selected.
+- QuickJS and Boa are initial engine candidates. Prioritize JavaScript and web
+  feature compatibility; performance is secondary but important.
+- Prefer original application JavaScript without polyfills, transpilation or
+  downleveling. Those techniques are open alternatives requiring an explicit
+  trade-off rather than silent compatibility assumptions.
+- IFC is out of scope for this work. JSFlow may inform research; its
+  implementation must not be used.
+- Preserve the current host's confinement requirements. Existing counterexamples
+  and unproved claims are research inputs, not satisfied requirements.
+- Starting source: host commit e92eb2566b0aebc7f13416ec6af7b6737ba840eb.
+  The public compatibility release has its own source pin and scoped evidence.
+- Working branch: wasm-runtime-wayfinding; worktree:
+  /home/damen/Projects/privacy-frames-wasm-wayfinding.
+- Use the wayfinder, grilling, domain-modeling and research skills from
+  mattpocock/skills. Consult the repository AGENTS.md and Damen's AI Voice registry
+  when editing end-product prose.
+- Tracker: local Markdown under .scratch/wasm-runtime, following wayfinder's
+  default when no tracker configuration is provided. Child questions live in
+  issues/*.md. Status is open, claimed or resolved. Blocked-by entries refer to
+  filenames; a ticket is available only after every blocker is resolved.
+- Research findings live on their own research/* branches and are not merged.
+  Resolutions link the findings and their exact commits. Human decisions require
+  conversation with Damen; the agent must not resolve them on his behalf.
+
+## Decisions so far
+
+No decision tickets have been resolved. The scope above records the user's
+instructions, including the correction from migration to greenfield hard fork.
+
+## Not yet specified
+
+The detailed host API surface, execution scheduling, DOM object identity and
+lifetime, browser-origin layout and installation/deployment reuse will become
+clearer from the compatibility baseline and engine research. Expected browser
+features are a target; a passing historical task does not establish full support
+for every feature an application contains.
+
+## Out of scope
+
+- Information-flow control, label propagation or declassification.
+- Using the JSFlow implementation.
+- Backward compatibility with the old runtime's internal protocols or formats.
+- Patching applications or adding engine-specific publisher conventions as an
+  unexamined substitute for required compatibility.
