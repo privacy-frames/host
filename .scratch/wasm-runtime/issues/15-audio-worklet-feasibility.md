@@ -2,7 +2,7 @@
 
 Type: research
 Label: wayfinder:research
-Status: claimed
+Status: resolved
 Assignee: DamenH
 Blocked by: 01-quickjs-capabilities.md, 02-boa-capabilities.md, 03-current-demo-contract.md
 
@@ -25,3 +25,23 @@ authorized by this research ticket.
 
 Research branch: research/wasm-audio-worklet
 Findings: docs/research/wasm-runtime/audio-worklet-feasibility.md
+
+## Resolution
+
+Research and limited browser controls completed on branch
+`research/wasm-audio-worklet`, commit
+`b23d81e0f33155d6787d3fe7396bf1966a59c465`.
+[Findings](https://github.com/privacy-frames/host/blob/b23d81e0f33155d6787d3fe7396bf1966a59c465/docs/research/wasm-runtime/audio-worklet-feasibility.md).
+
+Native Wasm AudioWorklet controls passed Chromium and Firefox, both compiling
+inside the worklet and receiving a precompiled module. quickjs-emscripten 0.32.0
+initialization failed in both because TextDecoder was unavailable. Guest code
+and buffer processing were not reached. This qualifies a loader limitation,
+not failure of all QuickJS worklet builds. Boa execution was not tested.
+
+The inspected corpus contains a registration diagnostic and native DSP test
+fixtures; no custom application DSP dependency was found in the inspected
+bundles. PhotoCraft and optional assets remain gaps. Neither candidate has
+established unchanged application AudioWorklet support. Startup, registration,
+buffer/callback semantics and live deadlines require the report's bounded probes.
+The worklet architecture decision remains open.

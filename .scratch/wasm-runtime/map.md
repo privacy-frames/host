@@ -59,6 +59,9 @@ that is very similar or identical to the current interface.
 - [Choose where the main application engine runs](issues/11-main-engine-placement.md): run it on the app context's main thread; synchronous native-event cancellation is required.
 - [Find reusable browser bindings for a Wasm JavaScript engine](issues/12-browser-binding-reuse.md): reusable marshalling and interface generators exist; callback, identity and buffer behavior still need qualification.
 
+- [Find a viable application WebAssembly integration](issues/14-guest-wasm-architecture.md): live memory is the main bridge constraint; txiki.js supplies a concrete embedded-runtime example requiring browser qualification.
+- [Qualify guest engines inside AudioWorklet](issues/15-audio-worklet-feasibility.md): native Wasm controls pass; the packaged QuickJS loader fails before guest execution, and Boa remains untested.
+
 ## Not yet specified
 
 Application-specific incompatibilities may emerge when candidate bindings meet
