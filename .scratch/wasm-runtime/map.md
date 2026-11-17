@@ -51,6 +51,8 @@ that is very similar or identical to the current interface.
 - [QuickJS language, WebAssembly embedding and host feature support](issues/01-quickjs-capabilities.md): pinned upstream/wrapper research separates language support from browser bindings and guest Wasm.
 - [Boa language, WebAssembly embedding and host feature support](issues/02-boa-capabilities.md): release-source research distinguishes engine, optional runtime APIs and the application embedding still required.
 
+- [Exclude application service-worker execution from the first fork release](issues/09-application-service-worker-scope.md): retain the host worker and manifest/offline handling; application worker execution is deferred.
+
 ## Not yet specified
 
 Application-specific incompatibilities may emerge when candidate bindings meet
@@ -60,6 +62,7 @@ already have tickets; their details live there.
 
 ## Out of scope
 
+- Application service-worker registration/execution/lifecycle/fetch interception for the first release; see [the scope decision](issues/09-application-service-worker-scope.md).
 - Information-flow control, label propagation or declassification.
 - Using the JSFlow implementation.
 - Backward compatibility with the old runtime's internal protocols or formats.

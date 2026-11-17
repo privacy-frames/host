@@ -17,3 +17,7 @@ policy.
 **Compatibility contract**:
 The application workflows and browser behavior the greenfield host must
 preserve, together with the conditions and evidence used to judge that support.
+
+**Guest web APIs**:
+The browser-facing interfaces available to installed application code, separate
+from the JavaScript language built-ins supplied by its engine.
