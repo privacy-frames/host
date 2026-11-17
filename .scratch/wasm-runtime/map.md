@@ -54,6 +54,8 @@ that is very similar or identical to the current interface.
 
 - [Choose the DOM and browser binding boundary](issues/04-dom-binding-boundary.md): use the browser's real DOM/layout/rendering, represented through guest bindings.
 
+- [Check existing applications without application service-worker execution](issues/10-app-service-worker-dependencies.md): source checks distinguish optional registration from dependent features and identify a conflicting test fixture.
+
 ## Not yet specified
 
 Application-specific incompatibilities may emerge when candidate bindings meet
