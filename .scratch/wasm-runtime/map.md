@@ -6,8 +6,9 @@ Label: wayfinder:map
 
 Deliver a complete greenfield hard fork of Privacy Frames using a JavaScript
 engine implemented in WebAssembly, preserving the current demonstration's
-supported applications, required browser behavior and a manager at pf.damenh.com
-that is very similar or identical to the current interface.
+application workflows subject to the recorded scope decisions, required browser
+behavior and a manager at pf.damenh.com that is very similar or identical to the
+current interface.
 
 ## Notes
 
@@ -70,6 +71,8 @@ yet be specified. Language, binding, context, security and build-route decisions
 already have tickets; their details live there.
 
 ## Out of scope
+
+- Application WebAssembly execution for the first release, including PhotoCraft and Squoosh as compatibility targets; see [Defer application WebAssembly support](issues/16-defer-application-wasm.md). The engine still runs in Wasm; application Wasm remains a later requirement.
 
 - Application service-worker registration/execution/lifecycle/fetch interception for the first release; see [the scope decision](issues/09-application-service-worker-scope.md).
 - Reimplementing HTML/CSS layout or rendering the HTML interface through canvas; see [the DOM decision](issues/04-dom-binding-boundary.md).

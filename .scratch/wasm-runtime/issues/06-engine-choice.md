@@ -4,8 +4,13 @@ Type: grilling
 Label: wayfinder:grilling
 Status: open
 Assignee: unassigned
-Blocked by: 01-quickjs-capabilities.md, 02-boa-capabilities.md, 03-current-demo-contract.md, 04-dom-binding-boundary.md, 05-execution-contexts.md, 11-main-engine-placement.md, 12-browser-binding-reuse.md, 13-synchronous-event-reentry.md, 14-guest-wasm-architecture.md, 15-audio-worklet-feasibility.md
+Blocked by: 01-quickjs-capabilities.md, 02-boa-capabilities.md, 03-current-demo-contract.md, 04-dom-binding-boundary.md, 05-execution-contexts.md, 11-main-engine-placement.md, 12-browser-binding-reuse.md, 13-synchronous-event-reentry.md, 15-audio-worklet-feasibility.md
 
 ## Question
 
 Which engine and embedding best meet the actual compatibility contract and chosen browser/context boundary? Compare QuickJS and Boa using evidence, with feature support before performance. Any polyfill, transpilation or downleveling requirement must be explicit. Decide which remaining uncertainty requires a bounded probe before committing to the engine.
+
+Application Wasm integration is deferred by
+[Defer application WebAssembly support](16-defer-application-wasm.md) and no
+longer gates this choice. Compare candidates against the amended compatibility
+contract; retain the guest-Wasm research as evidence for later expansion.

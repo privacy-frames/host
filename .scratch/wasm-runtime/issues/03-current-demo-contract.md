@@ -35,3 +35,10 @@ threaded guest Wasm and complete per-app API coverage remain unresolved.
 This resolves the initial source/receipt investigation, not the human decisions
 about bindings, context execution or additional qualification workflows. Those
 remain on the map's open tickets.
+
+## Subsequent scope decision
+
+[Defer application WebAssembly support](16-defer-application-wasm.md) amends the
+first-release compatibility target. The historical research remains unchanged;
+PhotoCraft and Squoosh are later targets, and other Wasm-dependent features
+require explicit qualification before being advertised as supported.
