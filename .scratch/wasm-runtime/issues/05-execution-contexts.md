@@ -27,7 +27,7 @@ parallel computation, messaging and termination under the same confinement
 policy as the main application context.
 
 The browser executes the trusted worker bootstrap and engine. Application
-JavaScript executes inside that engine. Worklets and child documents remain open parts of this decision.
+JavaScript executes inside that engine. Worklets remain an open part of this decision.
 
 Damen also agreed that application-created shared workers use real browser
 SharedWorkers, each running a guest engine. Multiple windows of an installed
@@ -35,3 +35,10 @@ application can connect to the same shared worker. The host controls creation
 and connection routing; the bindings must preserve shared lifetime and message
 port behavior. This records the intended architecture; engine startup and
 browser support still need qualification during implementation planning.
+
+Damen agreed that application-created iframes use real browser documents, with
+application JavaScript executing inside guest engines. The host prepares each
+document before application scripts execute. Native HTML/CSS rendering and
+frame behavior remain the browser's responsibility. Synchronous parent/child
+DOM access and callbacks need qualification across guest engines; this decision
+does not establish that those bindings already work.
