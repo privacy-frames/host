@@ -48,6 +48,9 @@ that is very similar or identical to the current interface.
 
 - [Current demonstration behavior and application compatibility contract](issues/03-current-demo-contract.md): the source/receipt audit identifies the application, browser and installation baseline, with unqualified surfaces kept explicit.
 
+- [QuickJS language, WebAssembly embedding and host feature support](issues/01-quickjs-capabilities.md): pinned upstream/wrapper research separates language support from browser bindings and guest Wasm.
+- [Boa language, WebAssembly embedding and host feature support](issues/02-boa-capabilities.md): release-source research distinguishes engine, optional runtime APIs and the application embedding still required.
+
 ## Not yet specified
 
 Application-specific incompatibilities may emerge when candidate bindings meet

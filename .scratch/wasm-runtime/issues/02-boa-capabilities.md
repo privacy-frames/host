@@ -2,7 +2,7 @@
 
 Type: research
 Label: wayfinder:research
-Status: claimed
+Status: resolved
 Assignee: DamenH
 Blocked by: none
 
@@ -15,3 +15,17 @@ What does current Boa support directly, what does a browser/Wasm embedding suppl
 Branch: research/wasm-boa
 Worktree: /home/damen/Projects/privacy-frames-research-boa
 Findings: docs/research/wasm-runtime/boa-capabilities.md
+
+## Answer
+
+Boa v0.22 supplies language execution and host module/job hooks. Its optional
+runtime implements selected APIs, but several similarly named WinterTC modules
+are placeholders. DOM, Worker/ServiceWorker/worklet environments and guest
+WebAssembly are absent. The provided browser Wasm evaluator creates a fresh
+context per call, so a full application host needs a custom persistent embedding.
+Source pins, declared gaps and unknowns are recorded; no app or engine runtime
+tests were performed and no engine was selected.
+
+[Research findings](https://github.com/privacy-frames/host/blob/4f2988fbfc116fa8d51953f532dede0bb715052d/docs/research/wasm-runtime/boa-capabilities.md).
+Branch: research/wasm-boa; commit: 4f2988fbfc116fa8d51953f532dede0bb715052d.
+The research branch is an evidence artifact and is not merged.

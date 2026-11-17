@@ -2,7 +2,7 @@
 
 Type: research
 Label: wayfinder:research
-Status: claimed
+Status: resolved
 Assignee: DamenH
 Blocked by: none
 
@@ -15,3 +15,17 @@ What does current upstream QuickJS support directly, what does its browser/Wasm 
 Branch: research/wasm-quickjs
 Worktree: /home/damen/Projects/privacy-frames-research-quickjs
 Findings: docs/research/wasm-runtime/quickjs-capabilities.md
+
+## Answer
+
+QuickJS supplies ECMAScript execution, modules and promise jobs. Browser DOM,
+workers, service workers, worklets, storage and guest WebAssembly require host
+facilities. Stable upstream, development head, QuickJS-NG and packaged Wasm
+wrappers have different revisions and capabilities. Emscripten Atomics defaults,
+experimental Intl/Temporal, wrapper age, scheduling and buffer-copy semantics
+are documented with primary-source pins. No app or engine runtime tests were
+performed for this research; engine selection remains a human decision.
+
+[Research findings](https://github.com/privacy-frames/host/blob/fb922b0c5617f8250ce6a3ec8b617fc6ba8ccfae/docs/research/wasm-runtime/quickjs-capabilities.md).
+Branch: research/wasm-quickjs; commit: fb922b0c5617f8250ce6a3ec8b617fc6ba8ccfae.
+The research branch is an evidence artifact and is not merged.
