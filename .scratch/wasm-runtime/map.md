@@ -32,7 +32,10 @@ that is very similar or identical to the current interface.
   /home/damen/Projects/privacy-frames-wasm-wayfinding.
 - Use the wayfinder, grilling, domain-modeling and research skills from
   mattpocock/skills. Consult the repository AGENTS.md and Damen's AI Voice registry
-  when editing end-product prose.
+  when editing end-product prose. Damen's replacement instructions from
+  2026-11-17 apply; consult /home/damen/.agents/code-preferences/README.md for
+  substantial architecture/style choices. Private preference evidence stays out
+  of published artifacts.
 - Tracker: local Markdown under .scratch/wasm-runtime, following wayfinder's
   default when no tracker configuration is provided. Child questions live in
   issues/*.md. Status is open, claimed or resolved. Blocked-by entries refer to
@@ -43,16 +46,14 @@ that is very similar or identical to the current interface.
 
 ## Decisions so far
 
-No decision tickets have been resolved. The scope above records the user's
-instructions, including the correction from migration to greenfield hard fork.
+- [Current demonstration behavior and application compatibility contract](issues/03-current-demo-contract.md): the source/receipt audit identifies the application, browser and installation baseline, with unqualified surfaces kept explicit.
 
 ## Not yet specified
 
-The detailed host API surface, execution scheduling, DOM object identity and
-lifetime, browser-origin layout and installation/deployment reuse will become
-clearer from the compatibility baseline and engine research. Expected browser
-features are a target; a passing historical task does not establish full support
-for every feature an application contains.
+Application-specific incompatibilities may emerge when candidate bindings meet
+actual application code. Their mechanisms and required qualification work cannot
+yet be specified. Language, binding, context, security and build-route decisions
+already have tickets; their details live there.
 
 ## Out of scope
 
