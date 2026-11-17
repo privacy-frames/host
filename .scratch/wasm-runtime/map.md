@@ -52,6 +52,8 @@ that is very similar or identical to the current interface.
 - [Boa language, WebAssembly embedding and host feature support](issues/02-boa-capabilities.md): release-source research distinguishes engine, optional runtime APIs and the application embedding still required.
 
 
+- [Choose the DOM and browser binding boundary](issues/04-dom-binding-boundary.md): use the browser's real DOM/layout/rendering, represented through guest bindings.
+
 ## Not yet specified
 
 Application-specific incompatibilities may emerge when candidate bindings meet
@@ -62,6 +64,7 @@ already have tickets; their details live there.
 ## Out of scope
 
 - Application service-worker registration/execution/lifecycle/fetch interception for the first release; see [the scope decision](issues/09-application-service-worker-scope.md).
+- Reimplementing HTML/CSS layout or rendering the HTML interface through canvas; see [the DOM decision](issues/04-dom-binding-boundary.md).
 - Information-flow control, label propagation or declassification.
 - Using the JSFlow implementation.
 - Backward compatibility with the old runtime's internal protocols or formats.
