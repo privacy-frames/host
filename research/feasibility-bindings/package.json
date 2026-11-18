@@ -1,0 +1,19 @@
+{
+  "name": "privacy-frames-binding-feasibility",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "probe": "node --experimental-strip-types probe.ts",
+    "typecheck": "tsc --project tsconfig.json"
+  },
+  "dependencies": {
+    "esbuild": "0.28.2",
+    "quickjs-emscripten": "0.32.0",
+    "webidl2js": "21.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.5",
+    "playwright": "1.63.0",
+    "typescript": "6.0.3"
+  }
+}
