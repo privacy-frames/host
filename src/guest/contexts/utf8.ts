@@ -63,7 +63,8 @@ export function decodeEngineUTF8(input: Uint8Array): string {
 
 /** The engine glue uses only this complete-buffer decode operation. */
 export class EngineTextDecoder {
-  private readonly native = typeof TextDecoder === 'function' ? new TextDecoder() : undefined;
+  private readonly native =
+    typeof TextDecoder === 'function' ? new TextDecoder() : undefined;
 
   decode(input: Uint8Array): string {
     return this.native ? this.native.decode(input) : decodeEngineUTF8(input);

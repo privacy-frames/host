@@ -11,6 +11,7 @@ export interface GuestDocumentFactoryOptions {
   prepare(
     frame: HTMLIFrameElement,
     source: GuestDocumentSource,
+    signal: AbortSignal,
   ): Promise<GuestDocumentSession>;
   report(error: unknown): void;
 }
@@ -23,6 +24,7 @@ interface DocumentState {
   ready: boolean;
   nativeLoad?: { resolve(): void; reject(error: Error): void };
   nativeURL?: string;
+  preparation?: AbortController;
 }
 
 /** Application frame URLs select admitted content, never a native navigation. */
@@ -80,6 +82,10 @@ export function createGuestDocuments(options: GuestDocumentFactoryOptions) {
 
   function close(current: DocumentState): void {
     current.generation++;
+    current.preparation?.abort(
+      new DOMException('Document preparation changed', 'AbortError'),
+    );
+    current.preparation = undefined;
     current.ready = false;
     current.nativeLoad?.reject(
       new DOMException('Document preparation changed', 'AbortError'),
@@ -99,8 +105,10 @@ export function createGuestDocuments(options: GuestDocumentFactoryOptions) {
     if (!frame.isConnected || current.ready) return Promise.resolve();
     if (current.pending) return current.pending;
     const generation = current.generation;
+    const controller = new AbortController();
+    current.preparation = controller;
     const pending = (async () => {
-      const prepared = await options.prepare(frame, current.source);
+      const prepared = await options.prepare(frame, current.source, controller.signal);
       if (generation !== current.generation || !frame.isConnected) {
         prepared.close();
         return;
@@ -111,12 +119,17 @@ export function createGuestDocuments(options: GuestDocumentFactoryOptions) {
       nativeDispatch.call(frame, new Event('load'));
     })()
       .catch((error: unknown) => {
-        if (generation === current.generation) {
+        if (
+          generation === current.generation &&
+          frame.isConnected &&
+          !(error instanceof DOMException && error.name === 'AbortError')
+        ) {
           options.report(error);
           nativeDispatch.call(frame, new Event('error'));
         }
       })
       .finally(() => {
+        if (current.preparation === controller) current.preparation = undefined;
         if (current.pending === pending) current.pending = undefined;
       });
     current.pending = pending;

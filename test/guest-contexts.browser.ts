@@ -12,7 +12,7 @@ declare global {
 
 const workerSource = `importScripts('./dependency.js');
 let count = 0;
-onmessage = event => {
+onmessage = async event => {
  const value = event.data;
  if (value.kind === 'nested') {
    const worker = new Worker('./nested.js');
@@ -22,8 +22,9 @@ onmessage = event => {
  const buffer = value.buffer;
  const bytes = new Uint8Array(buffer);
  bytes[1] += dependency;
+ let denied=false;try{await fetch('https://remote.invalid/not-admitted')}catch{denied=true}
  postMessage({ count: ++count, same: value.alias === buffer && value.view.buffer === buffer,
-   bytes: Array.from(bytes), denied: typeof fetch, buffer }, [buffer]);
+   bytes: Array.from(bytes), denied, buffer }, [buffer]);
 };`;
 const sharedSource = `let count=0;
 onconnect = event => { const port=event.ports[0];

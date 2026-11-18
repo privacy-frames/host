@@ -1,6 +1,6 @@
 import type { GuestResources } from '../resources.ts';
 import type { GuestContextCatalog, GuestContextResource } from './types.ts';
-import { isMessagePort } from './brands.ts';
+import { isHTMLIFrameElement, isMessagePort } from './brands.ts';
 import {
   createGuestDocuments,
   type GuestDocumentSource,
@@ -24,6 +24,7 @@ export interface GuestWindowContextsOptions {
 interface FrameSource {
   src: string | null;
   srcdoc: string | null;
+  window?: Window;
 }
 
 interface PreparedDocument {
@@ -170,9 +171,12 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
 
   const documents = createGuestDocuments({
     baseURL: catalog.documentBase,
-    async prepare(frame, source) {
+    async prepare(frame, source, signal) {
       const prepared = await prepareSource(source);
+      signal.throwIfAborted();
+      if (!frame.isConnected) throw new DOMException('Frame was removed', 'AbortError');
       await documents.navigate(frame, bootstrap);
+      signal.throwIfAborted();
       const child = frame.contentWindow;
       if (!child) throw new Error('Child document window is unavailable');
       known.add(child);
@@ -180,6 +184,26 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
     },
     report: options.report,
   });
+  const removals = new MutationObserver((records) => {
+    const inspect = (node: Node) => {
+      if (isHTMLIFrameElement(node)) {
+        const current = frames.get(node);
+        if (
+          current &&
+          (!node.isConnected ||
+            node.ownerDocument !== nativeWindow.document ||
+            node.contentWindow !== current.window)
+        ) {
+          if (current.window) known.delete(current.window);
+          current.window = undefined;
+          documents.disconnected(node);
+        }
+      }
+      for (const child of Array.from(node.childNodes)) inspect(child);
+    };
+    for (const record of records) for (const node of record.removedNodes) inspect(node);
+  });
+  removals.observe(nativeWindow.document, { childList: true, subtree: true });
 
   function record(frame: HTMLIFrameElement): FrameSource {
     const existing = frames.get(frame);
@@ -211,21 +235,29 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
     state.session = undefined;
     const prepared = await prepareSource(documentSource);
     if (disposed || popup.closed || state.generation !== generation) return;
-    if (popup.location.href !== bootstrap || popup.document.readyState !== 'complete') {
-      await new Promise<void>((resolve, reject) => {
-        popup.addEventListener('load', () => resolve(), { once: true });
-        popup.addEventListener(
-          'error',
-          () => reject(new Error('Popup bootstrap failed')),
-          { once: true },
-        );
-        if (popup.location.href !== bootstrap) popup.location.href = bootstrap;
-      });
+    // Initial about:blank listeners disappear when navigation replaces that
+    // global. Guest-dispatched load events must not establish host readiness.
+    while (
+      popup.location.href !== bootstrap ||
+      popup.document.readyState !== 'complete'
+    ) {
+      if (disposed || popup.closed || state.generation !== generation) return;
+      await new Promise<void>((resolve) => nativeWindow.setTimeout(resolve, 5));
     }
     if (disposed || popup.closed || state.generation !== generation) return;
     const session = await options.createSession(prepared.catalog, popup, prepared.html);
     if (disposed || popup.closed || state.generation !== generation) session.close();
-    else state.session = session;
+    else {
+      state.session = session;
+      popup.addEventListener(
+        'pagehide',
+        () => {
+          session.close();
+          if (state.session === session) state.session = undefined;
+        },
+        { once: true },
+      );
+    }
   }
 
   return {
@@ -233,11 +265,19 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
       record(frame);
     },
     connected(frame: HTMLIFrameElement): Promise<void> {
-      record(frame);
-      if (frame.contentWindow) known.add(frame.contentWindow);
+      const current = record(frame);
+      if (current.window && current.window !== frame.contentWindow) {
+        known.delete(current.window);
+        documents.disconnected(frame);
+      }
+      current.window = frame.contentWindow || undefined;
+      if (current.window) known.add(current.window);
       return documents.connected(frame);
     },
     disconnected(frame: HTMLIFrameElement): void {
+      const current = frames.get(frame);
+      if (current?.window) known.delete(current.window);
+      if (current) current.window = undefined;
       documents.disconnected(frame);
     },
     /** True means consumed; the caller must not mutate the native attribute. */
@@ -340,6 +380,7 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
     },
     dispose(): void {
       disposed = true;
+      removals.disconnect();
       documents.dispose();
       for (const [popup, state] of popups) {
         state.generation++;

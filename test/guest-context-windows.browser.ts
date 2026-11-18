@@ -24,6 +24,12 @@ const child = `<button id="child" onclick="globalThis.attributeFlag=1;event.prev
 <script>
 globalThis.childValue=parent.parentCallback(3)+1;
 globalThis.childCallback=value=>parent.parentCallback(value)+childValue;
+addEventListener('message',event=>{
+ if(event.data.kind!=='probe')return;
+ const buffer=event.data.buffer;new Uint8Array(buffer)[0]+=1;
+ const port=event.ports[0];port.postMessage({same:event.data.port===port});port.close();
+ event.source.postMessage({kind:'reply',buffer},event.origin,[buffer]);
+});
 const script=document.createElement('script');script.textContent='globalThis.dynamicFlag=1';
 document.body.appendChild(script);
 </script>`;
@@ -46,7 +52,16 @@ async function run() {
     applicationURL: new URL('/app/', location.href).href,
     runtimeURL: new URL('/', location.href).href,
     engineWasm,
-    resources: [],
+    resources: [
+      {
+        url: 'https://fixture.invalid/popup.html',
+        path: 'popup.html',
+        contentType: 'text/html',
+        bytes: new TextEncoder().encode(
+          '<p id="popup">popup</p><script>globalThis.popupMarker=opener.parentCallback(2)</script>',
+        ).buffer,
+      },
+    ],
   };
   const escaped = child.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
   const html = `<iframe id="embedded" srcdoc="${escaped}"></iframe><script>
@@ -67,8 +82,36 @@ globalThis.finished=new Promise(resolve=>{
 });
 </script>`;
   const session = await createGuestWindow(catalog, window);
+  const nativeTrust: boolean[] = [];
+  const observeTrust = (event: MessageEvent) => nativeTrust.push(event.isTrusted);
+  addEventListener('message', observeTrust);
   session.render(html);
   const finished = await session.engine.get('finished');
+  const messages = await session.engine.evaluate(`(()=>{
+    const child=document.getElementById('embedded').contentWindow;
+    const buffer=new Uint8Array([9,7]).buffer;
+    const channel=new MessageChannel();
+    const portReady=new Promise(resolve=>channel.port1.onmessage=event=>{
+      channel.port1.close();resolve(event.data.same);
+    });
+    const reply=new Promise(resolve=>{
+      const receive=event=>{
+        if(event.data.kind!=='reply')return;
+        removeEventListener('message',receive);
+        resolve({bytes:Array.from(new Uint8Array(event.data.buffer)),source:event.source===child,
+          origin:event.origin===location.origin,trusted:event.isTrusted});
+      };
+      addEventListener('message',receive);
+    });
+    child.postMessage({kind:'probe',buffer,port:channel.port2},'*',[buffer,channel.port2]);
+    const detached=buffer.byteLength===0;
+    return Promise.all([reply,portReady]).then(([reply,port])=>({reply,port,detached}));
+  })()`);
+  const pendingWindow = session.engine.evaluate(`(()=>{
+    const frame=document.createElement('iframe');document.body.appendChild(frame);
+    const hidden=typeof frame.contentWindow.eval==='undefined'&&typeof frame.contentWindow.fetch==='undefined';
+    frame.remove();return hidden;
+  })()`);
   const frame = document.querySelector<HTMLIFrameElement>('#embedded');
   if (!frame?.contentWindow || !frame.contentDocument)
     throw new Error('Child window was not created');
@@ -119,11 +162,50 @@ globalThis.finished=new Promise(resolve=>{
     attribute: Reflect.get(frame.contentWindow, 'attributeFlag') === undefined,
     eval: Reflect.get(frame.contentWindow, 'evalFlag') === undefined,
   };
+  session.engine.evaluate(
+    "globalThis.popup = open('https://fixture.invalid/popup.html','fixture-popup')",
+  );
+  const opened = session.engine.get('popup');
+  if (!isWindow(opened)) throw new Error('Application popup was blocked');
+  for (
+    let attempt = 0;
+    attempt < 200 && session.engine.evaluate('typeof popup.popupMarker') !== 'number';
+    attempt++
+  )
+    await new Promise<void>((resolve) => setTimeout(resolve, 5));
+  const popup = {
+    guest: session.engine.evaluate('popup.popupMarker'),
+    native: Reflect.get(opened, 'popupMarker') === undefined,
+    trustedURL: opened.location.pathname === '/app/__guest_document__.html',
+    nativeContent: opened.document.getElementById('popup')?.textContent,
+  };
   foreignChannel.port1.close();
   foreignChannel.port2.close();
   await frame.contentWindow.caches.delete('guest-window-brand-fixture');
+  session.engine.set('removedWindow', frame.contentWindow);
+  session.engine.evaluate(
+    "globalThis.savedCallback = document.getElementById('embedded').contentWindow.childCallback",
+  );
+  frame.remove();
+  await new Promise<void>((resolve) => setTimeout(resolve, 0));
+  const removed = {
+    hidden: session.engine.evaluate('typeof removedWindow.childCallback') === 'undefined',
+    callbackClosed: session.engine.evaluate(
+      '(()=>{try{savedCallback(1);return false}catch{return true}})()',
+    ),
+  };
+  removeEventListener('message', observeTrust);
   session.close();
-  return { finished, brands, nativeMarkers };
+  return {
+    finished,
+    messages,
+    nativeTrust,
+    pendingWindow,
+    brands,
+    nativeMarkers,
+    popup,
+    removed,
+  };
 }
 run()
   .then((result) => (globalThis.guestWindowResults = { result }))

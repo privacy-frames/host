@@ -71,7 +71,10 @@ try {
   ] as const) {
     const browser = await browserType.launch({ headless: true });
     try {
-      const page = await browser.newPage();
+      const context = await browser.newContext();
+      const requestURLs: string[] = [];
+      context.on('request', (request) => requestURLs.push(request.url()));
+      const page = await context.newPage();
       page.on('pageerror', (error) => console.error(name, error));
       await page.goto(`http://127.0.0.1:${address.port}/`);
       await page.waitForFunction(
@@ -80,7 +83,12 @@ try {
         { timeout: 60000 },
       );
       const observation = await page.evaluate(() => globalThis.guestContextResults);
-      receipts.push({ browser: name, version: browser.version(), observation });
+      receipts.push({
+        browser: name,
+        version: browser.version(),
+        observation,
+        requestURLs,
+      });
       console.log(JSON.stringify(receipts.at(-1)));
       assert(observation && !observation.error, JSON.stringify(observation));
       const result = observation.result!;
@@ -88,7 +96,7 @@ try {
         count: 1,
         same: true,
         bytes: [1, 7, 3, 4],
-        denied: 'undefined',
+        denied: true,
         buffer: {},
         detached: true,
         persistentCount: 2,
@@ -108,6 +116,7 @@ try {
       assert.equal(result.closed, 1);
       assert.equal(result.stripped, true);
       assert.equal(result.childText, 'prepared child');
+      assert(requestURLs.every((url) => new URL(url).hostname === '127.0.0.1'));
     } finally {
       await browser.close();
     }

@@ -78,6 +78,14 @@ try {
         evalFlag: 1,
         srcdoc: true,
       });
+      assert.deepEqual(result.messages, {
+        reply: { bytes: [10, 7], source: true, origin: true, trusted: true },
+        port: true,
+        detached: true,
+      });
+      assert.equal(result.pendingWindow, true);
+      assert.deepEqual(result.nativeTrust, [false]);
+      assert.deepEqual(result.removed, { hidden: true, callbackClosed: true });
       assert.deepEqual(result.brands, {
         node: true,
         element: true,
@@ -97,6 +105,12 @@ try {
         dynamic: true,
         attribute: true,
         eval: true,
+      });
+      assert.deepEqual(result.popup, {
+        guest: 7,
+        native: true,
+        trustedURL: true,
+        nativeContent: 'popup',
       });
       assert(requests.every((url) => new URL(url).hostname === '127.0.0.1'));
     } finally {
