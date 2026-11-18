@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFile, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
+import { createHash } from 'node:crypto';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { chromium, firefox } from 'playwright';
@@ -103,7 +104,29 @@ try {
 }
 await writeFile(
   root + 'results.json',
-  JSON.stringify({ date: new Date().toISOString(), observations }, null, 2) + '\n',
+  JSON.stringify(
+    {
+      date: new Date().toISOString(),
+      versions: {
+        quickjsEmscripten: '0.32.0',
+        webidl2js: '21.2.0',
+        playwright: '1.63.0',
+        esbuild: '0.28.2',
+      },
+      resources: Object.fromEntries(
+        [...sources].map(([path, { bytes }]) => [
+          path,
+          {
+            bytes: bytes.length,
+            sha256: createHash('sha256').update(bytes).digest('hex'),
+          },
+        ]),
+      ),
+      observations,
+    },
+    null,
+    2,
+  ) + '\n',
 );
 for (const { result, errors, restricted } of observations) {
   assert.deepEqual(errors, []);

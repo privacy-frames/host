@@ -1,5 +1,29 @@
 {
-  "date": "2026-11-18T00:09:25.647Z",
+  "date": "2026-11-18T00:16:27.452Z",
+  "versions": {
+    "quickjsEmscripten": "0.32.0",
+    "webidl2js": "21.2.0",
+    "playwright": "1.63.0",
+    "esbuild": "0.28.2"
+  },
+  "resources": {
+    "/": {
+      "bytes": 90,
+      "sha256": "0ae49d06c3f5bade5ccc0ef30e59e8bd8f2f125cb05ab36a968f74b41e2dd9a4"
+    },
+    "/browser.js": {
+      "bytes": 90576,
+      "sha256": "873a77b728ccd42ef31fd1c8ccdd2aa8d2056ce6f99a4e78b49b37fbc9e150ad"
+    },
+    "/guest.js": {
+      "bytes": 44431,
+      "sha256": "e1bb4593ad12e041c6fcfd481af961a083dbb78bbb94193d93be829385c037dc"
+    },
+    "/engine.wasm": {
+      "bytes": 503134,
+      "sha256": "105c3bed22d457e43e3d1c3c1c6959fda62a8fe06f0fc8a985303c3a2be72232"
+    }
+  },
   "observations": [
     {
       "browser": "chromium",
@@ -22,8 +46,8 @@
         "nativeMutation": "native mutation",
         "nativeText": "native mutation",
         "nodeCount": 1,
-        "engineStartupMs": 10.399999976158142,
-        "totalMs": 34.5,
+        "engineStartupMs": 9.5,
+        "totalMs": 36.19999998807907,
         "nativeScriptExecuted": true
       },
       "errors": [],
@@ -50,8 +74,8 @@
         "nativeMutation": "native mutation",
         "nativeText": "native mutation",
         "nodeCount": 1,
-        "engineStartupMs": 9.100000023841858,
-        "totalMs": 42.90000003576279,
+        "engineStartupMs": 9.199999988079071,
+        "totalMs": 38.89999997615814,
         "nativeScriptExecuted": false
       },
       "errors": [],
@@ -79,7 +103,7 @@
         "nativeText": "native mutation",
         "nodeCount": 1,
         "engineStartupMs": 27,
-        "totalMs": 96,
+        "totalMs": 97,
         "nativeScriptExecuted": true
       },
       "errors": [],
@@ -106,8 +130,8 @@
         "nativeMutation": "native mutation",
         "nativeText": "native mutation",
         "nodeCount": 1,
-        "engineStartupMs": 31,
-        "totalMs": 41,
+        "engineStartupMs": 29,
+        "totalMs": 42,
         "nativeScriptExecuted": false
       },
       "errors": [],
