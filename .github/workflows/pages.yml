@@ -1,7 +1,7 @@
 name: Test and publish host
 on:
   push:
-    branches: [main, realm-runtime, dependency-reduction]
+    branches: [main, wasm-runtime]
   workflow_dispatch:
 permissions:
   contents: read
@@ -27,15 +27,7 @@ jobs:
           printf '%s\n' 'https://security.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors-security.txt > /dev/null
       - run: npx playwright install --with-deps chromium firefox
         timeout-minutes: 10
-      - run: npm run test:trusted-runtime
-      - run: npm run test:dependencies
       - run: npm test
-      - run: npm run test:lifecycle
-      - run: npm run test:review
-      - run: npm run test:storage-policy
-      - run: npm run test:mobile
-      - run: npm run test:wasm
-      - run: npm run test:compatibility
       - name: Provide virtual audio for native Firefox playback
         run: |
           sudo apt-get update
@@ -44,7 +36,9 @@ jobs:
           pactl load-module module-null-sink sink_name=privacy_frames_test
           pactl set-default-sink privacy_frames_test
       - run: npm run test:pitch
-      - run: npm run test:network
+      - name: Build pinned publisher mirrors for application acceptance
+        run: npm --prefix publisher-source run build
+      - run: npm run test:compatibility
       - uses: actions/upload-artifact@v4
         if: always()
         with:

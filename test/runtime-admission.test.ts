@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import http from 'node:http';
-import { build } from './build.ts';
+import { build } from 'esbuild';
 import { chromium, firefox } from 'playwright';
 import { launch } from './browser-profile.ts';
 

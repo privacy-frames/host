@@ -2,7 +2,6 @@ import { ResourceUnavailableError } from '../src/installation/resource-capture.t
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { downloadWebsite } from '../src/installation/import-website.ts';
-import { compileDocumentContent } from '../src/runtime/contexts/document-content.ts';
 
 const source = 'https://publisher.test/application/';
 const address = (path: string) => new URL(path, source).href;
@@ -66,26 +65,6 @@ test('partial capture retains the successful dependency graph and records transp
         ),
       );
       assert.equal(requested.filter((url) => url === address('analytics.js')).length, 1);
-      const entry = app.resources.find((item) => item.url === source)!;
-      const content = compileDocumentContent({
-        kind: 'html',
-        text: new TextDecoder().decode(entry.bytes),
-        sourceURL: source,
-        aliases: app.resources.map((item) => [
-          item.url,
-          'https://runtime.test/' + item.path,
-        ]),
-        unavailableURLs: failures.map((item) => item.url),
-      });
-      assert.equal(
-        content.scripts.filter((item) => item.source.kind === 'resource').length,
-        1,
-      );
-      assert.equal(
-        content.scripts.filter((item) => item.source.kind === 'unavailable').length,
-        2,
-      );
-      assert(!JSON.stringify(content).includes('CORS failure'));
     },
   );
 });

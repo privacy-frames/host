@@ -55,11 +55,11 @@ test('configuration changes invalidate bootstrap and role builds expose only the
     assert.notEqual(second, runtime);
     for (const entry of [
       'guard.js',
-      'document-guard.js',
-      'shared-worker-guard.js',
-      'worklet-guard.js',
-      'worklet-imports.js',
-      'publisher-worker-guard.js',
+      'guest-worker.js',
+      'guest-shared-worker.js',
+      'guest-worklet.js',
+      '__guest_worker_registry__.js',
+      'engine.wasm',
     ])
       await access(join(output, entry));
     await assert.rejects(access(join(output, 'worker-guard.js')));
