@@ -116,7 +116,8 @@ export function createGuestDocuments(options: GuestDocumentFactoryOptions) {
       current.session = prepared;
       sessions.add(prepared);
       current.ready = true;
-      nativeDispatch.call(frame, new Event('load'));
+      const EventConstructor = frame.ownerDocument.defaultView?.Event || Event;
+      nativeDispatch.call(frame, new EventConstructor('load'));
     })()
       .catch((error: unknown) => {
         if (
@@ -125,7 +126,8 @@ export function createGuestDocuments(options: GuestDocumentFactoryOptions) {
           !(error instanceof DOMException && error.name === 'AbortError')
         ) {
           options.report(error);
-          nativeDispatch.call(frame, new Event('error'));
+          const EventConstructor = frame.ownerDocument.defaultView?.Event || Event;
+          nativeDispatch.call(frame, new EventConstructor('error'));
         }
       })
       .finally(() => {

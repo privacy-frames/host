@@ -22,6 +22,8 @@ declare global {
 const child = `<button id="child" onclick="globalThis.attributeFlag=1;event.preventDefault()">child</button>
 <img src="https://remote.invalid/not-admitted.png">
 <script>
+globalThis.childEventRealms={};
+document.addEventListener('DOMContentLoaded',event=>childEventRealms.dom=event instanceof Event);
 globalThis.childValue=parent.parentCallback(3)+1;
 globalThis.childCallback=value=>parent.parentCallback(value)+childValue;
 addEventListener('message',event=>{
@@ -31,6 +33,7 @@ addEventListener('message',event=>{
  event.source.postMessage({kind:'reply',buffer},event.origin,[buffer]);
 });
 const script=document.createElement('script');script.textContent='globalThis.dynamicFlag=1';
+script.addEventListener('load',event=>childEventRealms.script=event instanceof Event);
 document.body.appendChild(script);
 </script>`;
 
@@ -83,7 +86,7 @@ globalThis.finished=new Promise(resolve=>{
    frame.contentWindow.eval('globalThis.evalFlag=1');
    resolve({value,returned,cancelled:event.defaultPrevented,
     dynamicFlag:frame.contentWindow.dynamicFlag,attributeFlag:frame.contentWindow.attributeFlag,
-    evalFlag:frame.contentWindow.evalFlag,srcdoc:frame.srcdoc.includes('childCallback')});
+    evalFlag:frame.contentWindow.evalFlag,eventRealms:frame.contentWindow.childEventRealms,srcdoc:frame.srcdoc.includes('childCallback')});
   }catch(error){resolve({error:String(error)})}
  });
 });

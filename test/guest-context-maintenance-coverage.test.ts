@@ -60,3 +60,14 @@ test('missing private-bit comparison fails despite active controls', () => {
     false,
   );
 });
+
+test('one profile cannot borrow another profile physical HTTP sensor', () => {
+  const result = maintenanceCoverage([
+    ...paired('inactive', false),
+    ...paired('active', true),
+  ]);
+  assert.equal(result.passed, false);
+  assert(
+    result.errors.some((message) => message.startsWith('inactive: physical HTTP sensor')),
+  );
+});

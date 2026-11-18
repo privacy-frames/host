@@ -82,6 +82,7 @@ try {
         dynamicFlag: 1,
         attributeFlag: 1,
         evalFlag: 1,
+        eventRealms: { script: true, dom: true },
         srcdoc: true,
       });
       assert.deepEqual(result.messages, {

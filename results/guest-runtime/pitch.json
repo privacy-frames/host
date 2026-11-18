@@ -1,0 +1,72 @@
+[
+  {
+    "browser": "chromium",
+    "version": "153.0.8010.12",
+    "sourceURL": "https://damenh.github.io/pitch-training/",
+    "listURL": "https://privacy-frames.github.io/apps/resource-lists/pitch-training.uris",
+    "hashes": [
+      {
+        "url": "https://damenh.github.io/pitch-training/assets/index-jS8dkhmw.js",
+        "sha256": "5bf9a6fd27798274c5a5c03473a66ee96ecc6bfe8bd4c04c78ac1c93d55ca5ff"
+      }
+    ],
+    "omittedResources": [
+      {
+        "url": "https://damenh.github.io/pitch-training/assets/index-BvkNtD_8.js",
+        "status": 404
+      },
+      {
+        "url": "https://damenh.github.io/pitch-training/assets/index-DqXB1q9b.css",
+        "status": 404
+      }
+    ],
+    "elapsedMs": 35489,
+    "checks": [
+      "Installed unchanged public release using an explicit resource URL list",
+      "Guest JavaScript renders the application against the native DOM",
+      "Admitted piano samples decode and produce nonzero native audio in a running context",
+      "Native microphone input reaches pitch analysis (220 Hz) and all capture tracks stop",
+      "Denied native microphone permission is handled without creating another capture stream",
+      "Hash routes, settings, history and the IndexedDB score survive an offline reload",
+      "No application request reached the runtime HTTP server after confinement"
+    ],
+    "errors": [],
+    "consoleErrors": []
+  },
+  {
+    "browser": "firefox",
+    "version": "155.0",
+    "sourceURL": "https://damenh.github.io/pitch-training/",
+    "listURL": "https://privacy-frames.github.io/apps/resource-lists/pitch-training.uris",
+    "hashes": [
+      {
+        "url": "https://damenh.github.io/pitch-training/assets/index-jS8dkhmw.js",
+        "sha256": "5bf9a6fd27798274c5a5c03473a66ee96ecc6bfe8bd4c04c78ac1c93d55ca5ff"
+      }
+    ],
+    "omittedResources": [
+      {
+        "url": "https://damenh.github.io/pitch-training/assets/index-BvkNtD_8.js",
+        "status": 404
+      },
+      {
+        "url": "https://damenh.github.io/pitch-training/assets/index-DqXB1q9b.css",
+        "status": 404
+      }
+    ],
+    "elapsedMs": 27698,
+    "checks": [
+      "Installed unchanged public release using an explicit resource URL list",
+      "Guest JavaScript renders the application against the native DOM",
+      "Admitted piano samples decode and produce nonzero native audio in a running context",
+      "Native microphone input reaches pitch analysis (1000 Hz) and all capture tracks stop",
+      "Hash routes, settings, history and the IndexedDB score survive an offline reload",
+      "No application request reached the runtime HTTP server after confinement"
+    ],
+    "errors": [],
+    "consoleErrors": [
+      "resource:///modules/FaviconLoader.sys.mjs: [JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4211/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]",
+      "resource:///modules/FaviconLoader.sys.mjs: [JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4211/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]"
+    ]
+  }
+]
