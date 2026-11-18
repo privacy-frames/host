@@ -30,6 +30,8 @@ native Wasm controls.
 | -------------------------------------------------------------------- | --------------------------------------------------------------- | -------------- |
 | Dedicated native worker, one persistent guest context                | Count 1 then 2                                                  | Count 1 then 2 |
 | Buffer transferred into worker; guest changes first float            | Sender detached; `[3,4]` becomes `[4,4]`                        | Same           |
+| Guest transfer intrinsic and retained sender views                   | Original detached; returned bytes intact                        | Same           |
+| Known destination buffer/view graph                                  | Buffer aliases and offsets retained                             | Same           |
 | Two SharedWorker connections, one guest context                      | Port counts 1 then 2                                            | Same           |
 | Child guest → parent callback → nested child guest                   | Synchronous result 22                                           | Same           |
 | Repeated cached guest Window token                                   | Same object; prototype extension visible                        | Same           |
@@ -73,17 +75,56 @@ identity, event routing and lifetime cycles were not tested here. The separate
 QuickJS study covers richer main-document bindings. Native child rendering
 remains browser rendering; no HTML/CSS renderer was introduced.
 
-The buffer path uses `newArrayBuffer` to copy native bytes into the guest, runs
-guest typed-array code, then copies its bytes into a fresh native buffer. That
-native buffer can be transferred over an actual MessagePort. The sender native
-buffer is detached immediately, and typed-array values arrive intact. **Guest
-ArrayBuffer detachment is not implemented or demonstrated.** Guest aliases,
-offsets, typed-array identity and retained views do not become native aliases
-through these copies. A complete guest `structuredClone`/transfer bridge still
-needs a graph serializer and guest-side detach/lifetime behavior, or an engine
-API exposing those operations. QuickJS's wrapper byte APIs and the HTML transfer
-algorithm are separate contracts. [Wrapper context API][context] ·
+The initial worker and worklet buffer paths use `newArrayBuffer` to copy native
+bytes into the guest, run guest typed-array code, then copy its bytes into a fresh
+native buffer. That native buffer can be transferred over an actual MessagePort.
+Those copying paths alone detach only native senders. The bounded follow-up
+below separately establishes guest detachment through the engine's existing
+JavaScript intrinsic. QuickJS's wrapper byte APIs and the HTML transfer algorithm
+remain separate contracts. [Wrapper context API][context] ·
 [HTML structured data][clone]
+
+### Guest transfer intrinsic and known view graph
+
+**Executed follow-up.** In both browsers, this exact engine build exposes
+`ArrayBuffer.prototype.transfer` and `transferToFixedLength` as functions, while
+guest `structuredClone` is undefined. [The transfer fixture](contexts/transfer.ts)
+captures the original `transfer` function in a host-owned guest handle, replaces
+the guest-visible prototype method with a throwing function, then calls the
+captured intrinsic with the guest buffer as receiver. This verifies that the
+adapter does not depend on an application-mutable method lookup.
+
+The sender starts with bytes `[11,22,33,44]`, a full Uint8Array, its subarray over
+bytes 1–2 and a DataView over those same bytes. Calling the intrinsic returns a
+guest ArrayBuffer containing the original four bytes. The original buffer,
+Uint8Array and subarray report lengths zero; reading the retained DataView's
+byteLength throws TypeError. A copy-only negative control leaves the original
+buffer length 4, full view length 4, subarray length 2 and DataView length 2.
+These are guest observations, not deductions from native sender detachment.
+The vendored engine source implements the transfer intrinsic and detaches the
+old buffer; ECMAScript specifies its transfer behavior. [Vendored QuickJS][guest-transfer-source] ·
+[ECMAScript ArrayBuffer transfer][guest-transfer-spec]
+
+The adapter then copies the returned guest buffer into a native buffer and
+transfers it to the existing native worker, which contains a separate guest
+engine. The native sender is detached. In the receiving guest, a deliberately
+fixed reconstruction recipe creates one buffer, a repeated buffer alias, a full
+Uint8Array, a subarray and a DataView. All four views/aliases reference that one
+buffer; offsets remain 1, the subarray contains `[22,33]`, and the DataView reads
+22 at its first byte. This demonstrates destination alias reconstruction for
+one known shape; it is not an arbitrary object-graph serializer or native
+backing-store sharing between guest heaps.
+
+**Integration inference.** This tested build does not need a new C detachment
+export for ordinary guest ArrayBuffer detachment: a captured guest intrinsic is
+already sufficient. A complete guest `postMessage`/`structuredClone` integration
+still needs graph traversal, object identity bookkeeping, transfer-list
+validation, ordering and failure behavior, other transferable types and view
+reconstruction. Resizable buffers, detach keys, getters/proxies, duplicate or
+invalid transfer entries and transfer failures after serialization were not
+qualified. The fixture detaches before transport and makes no transactional
+failure guarantee. Full guest transfer support therefore remains unqualified,
+although the previously missing guest-detachment mechanism is now demonstrated.
 
 [The ordinary audio fixture](contexts/main.ts) writes floats in the guest,
 copies them to `AudioBuffer.copyToChannel`, starts a native buffer source through
@@ -196,3 +237,5 @@ production project's static type check.
 [variant]: https://github.com/justjake/quickjs-emscripten/blob/7b7af98e4e69757c64c27aac46a74e1e07229545/packages/quickjs-emscripten-core/src/from-variant.ts
 [prior-audio]: https://github.com/privacy-frames/host/blob/b23d81e0f33155d6787d3fe7396bf1966a59c465/docs/research/wasm-runtime/audio-worklet-feasibility.md
 [prior-binding]: https://github.com/privacy-frames/host/blob/da55971a802cd0efe9ca8db62e6a2ecbf4fe4663/docs/research/wasm-runtime/browser-binding-reuse.md
+[guest-transfer-source]: https://github.com/justjake/quickjs-emscripten/blob/df4efb9ef2cb25c417ecb57986da462d11b244ed/vendor/quickjs/quickjs.c
+[guest-transfer-spec]: https://tc39.es/ecma262/multipage/structured-data.html#sec-arraybuffer.prototype.transfer

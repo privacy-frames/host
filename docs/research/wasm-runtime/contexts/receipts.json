@@ -8,7 +8,7 @@
   },
   "loaderSha256": "3b8e916b3248062be4bbd3281c8d2832f074e6850596fc9951e93b846139ddea",
   "wasmSha256": "105c3bed22d457e43e3d1c3c1c6959fda62a8fe06f0fc8a985303c3a2be72232",
-  "date": "2026-11-18T00:08:56.234Z",
+  "date": "2026-11-18T00:15:40.513Z",
   "engine": "quickjs-emscripten@0.32.0",
   "wasmBytes": 503134,
   "browsers": [
@@ -68,6 +68,42 @@
         "guestToAudioSample": 0.125,
         "analyserToGuestBins": 16
       },
+      "guestTransfer": {
+        "features": {
+          "transfer": "function",
+          "transferToFixedLength": "function",
+          "structuredClone": "undefined"
+        },
+        "copyControl": {
+          "sender": {
+            "bufferLength": 4,
+            "fullLength": 4,
+            "subarrayLength": 2,
+            "dataLength": 2
+          },
+          "copied": [11, 22, 33, 44]
+        },
+        "capturedIntrinsic": true,
+        "sender": {
+          "bufferLength": 0,
+          "fullLength": 0,
+          "subarrayLength": 0,
+          "dataLength": "TypeError"
+        },
+        "returned": [11, 22, 33, 44],
+        "nativeSenderDetached": true,
+        "target": {
+          "count": 1,
+          "graph": {
+            "sameBuffer": true,
+            "bytes": [11, 22, 33, 44],
+            "subarray": [22, 33],
+            "dataByte": 22,
+            "subarrayOffset": 1,
+            "dataOffset": 1
+          }
+        }
+      },
       "cloneControl": {
         "typedArray": true,
         "cycle": true,
@@ -89,7 +125,7 @@
           "adapted": true,
           "startup": {
             "ready": true,
-            "startupMs": 4,
+            "startupMs": 2,
             "native": {
               "TextDecoder": "undefined",
               "fetch": "undefined",
@@ -158,6 +194,42 @@
       "guestAudio": {
         "guestToAudioSample": 0.125,
         "analyserToGuestBins": 16
+      },
+      "guestTransfer": {
+        "features": {
+          "transfer": "function",
+          "transferToFixedLength": "function",
+          "structuredClone": "undefined"
+        },
+        "copyControl": {
+          "sender": {
+            "bufferLength": 4,
+            "fullLength": 4,
+            "subarrayLength": 2,
+            "dataLength": 2
+          },
+          "copied": [11, 22, 33, 44]
+        },
+        "capturedIntrinsic": true,
+        "sender": {
+          "bufferLength": 0,
+          "fullLength": 0,
+          "subarrayLength": 0,
+          "dataLength": "TypeError"
+        },
+        "returned": [11, 22, 33, 44],
+        "nativeSenderDetached": true,
+        "target": {
+          "count": 1,
+          "graph": {
+            "sameBuffer": true,
+            "bytes": [11, 22, 33, 44],
+            "subarray": [22, 33],
+            "dataByte": 22,
+            "subarrayOffset": 1,
+            "dataOffset": 1
+          }
+        }
       },
       "cloneControl": {
         "typedArray": true,

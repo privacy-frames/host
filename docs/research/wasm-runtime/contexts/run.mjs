@@ -15,7 +15,14 @@ await mkdir(output, { recursive: true });
 const loader = `${dependencies}/@jitl/quickjs-wasmfile-release-sync/dist/emscripten-module.browser.mjs`;
 // This is a scoped trusted-glue UTF-8 substitute, explicitly not a no-polyfill result.
 const substitute = `{decode(bytes){return decodeURIComponent(Array.from(bytes, byte => '%' + byte.toString(16).padStart(2, '0')).join(''))}}`;
-for (const entry of ['worker', 'child', 'main', 'worklet', 'native-worklet']) {
+for (const entry of [
+  'worker',
+  'child',
+  'main',
+  'worklet',
+  'native-worklet',
+  'transfer',
+]) {
   for (const adapted of entry === 'worklet' ? [false, true] : [false]) {
     await build({
       entryPoints: [`${directory}${entry}.ts`],
@@ -238,6 +245,7 @@ try {
         } catch (error) {
           functionError = error.name;
         }
+        result.guestTransfer = await (await import('/transfer.js')).probeGuestTransfer();
         result.cloneControl = {
           typedArray: cloned.original instanceof Float32Array,
           cycle: cloned.self === cloned,
@@ -295,6 +303,17 @@ try {
         }
         return result;
       });
+      assert.equal(result.guestTransfer.copyControl.sender.bufferLength, 4);
+      if (!result.guestTransfer.unavailable) {
+        assert.equal(result.guestTransfer.sender.bufferLength, 0);
+        assert.equal(result.guestTransfer.sender.fullLength, 0);
+        assert.equal(result.guestTransfer.sender.subarrayLength, 0);
+        assert.equal(result.guestTransfer.sender.dataLength, 'TypeError');
+        assert.deepEqual(result.guestTransfer.returned, [11, 22, 33, 44]);
+        assert.equal(result.guestTransfer.nativeSenderDetached, true);
+        assert.equal(result.guestTransfer.target.graph.sameBuffer, true);
+        assert.deepEqual(result.guestTransfer.target.graph.subarray, [22, 33]);
+      }
       assert.deepEqual(result.nativeWorklet.samples, [0.25, 0.25]);
       assert.equal(result.worker.first.count, 1);
       assert.equal(result.worker.second.count, 2);
