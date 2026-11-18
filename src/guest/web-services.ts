@@ -1,4 +1,5 @@
 import type { GuestResources } from './resources.ts';
+import { parseGuestDocument } from './parser.ts';
 
 type RequestEventName =
   'loadstart' | 'progress' | 'abort' | 'error' | 'load' | 'timeout' | 'loadend';
@@ -105,6 +106,7 @@ export interface GuestWebServicesOptions {
   resources: GuestResources;
   nativeGlobal: Window | WorkerGlobalScope;
   application: string;
+  parseDocument?: (source: string, type: DOMParserSupportedType, url: string) => Document;
 }
 
 export interface GuestWebServices {
@@ -202,6 +204,7 @@ function decodedText(bytes: ArrayBuffer, mime: string): string {
 export function createGuestWebServices({
   resources,
   nativeGlobal,
+  parseDocument: parseDocumentSource,
 }: GuestWebServicesOptions): GuestWebServices {
   const states = new WeakMap<GuestXMLHttpRequest, RequestState>();
   const uploads = new WeakMap<GuestXMLHttpRequest, GuestXMLHttpRequestUpload>();
@@ -209,6 +212,7 @@ export function createGuestWebServices({
   const captures = new Set<MediaStream>();
   const cleanup: (() => void)[] = [];
   const isWindow = 'document' in nativeGlobal;
+  const parserDocument = 'document' in nativeGlobal ? nativeGlobal.document : undefined;
   let disposed = false;
 
   function state(request: GuestXMLHttpRequest): RequestState {
@@ -269,7 +273,7 @@ export function createGuestWebServices({
   function parseDocument(value: RequestState): Document | null {
     if (value.document !== undefined) return value.document;
     value.document = null;
-    if (!isWindow || typeof DOMParser === 'undefined') return null;
+    if (!parserDocument && !parseDocumentSource) return null;
     const mime = (value.mimeOverride || value.headers.get('Content-Type') || '')
       .split(';', 1)[0]
       .trim()
@@ -277,10 +281,13 @@ export function createGuestWebServices({
     const html = mime === 'text/html' && value.responseType === 'document';
     if (!html && !/^(?:text\/xml|application\/xml|[^/]+\/[^/]+\+xml)$/.test(mime))
       return null;
-    const document = new DOMParser().parseFromString(
-      value.text,
-      html ? 'text/html' : 'application/xml',
-    );
+    const mimeType = html ? 'text/html' : 'application/xml';
+    const document = parseDocumentSource
+      ? parseDocumentSource(value.text, mimeType, value.url)
+      : parserDocument
+        ? parseGuestDocument(parserDocument, resources, value.text, mimeType, value.url)
+        : null;
+    if (!document) return null;
     if (!html && document.querySelector('parsererror')) return null;
     value.document = document;
     return document;
