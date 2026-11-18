@@ -1,0 +1,120 @@
+{
+  "date": "2026-11-18T00:08:16.468Z",
+  "unchangedApp": {
+    "sha256": "5bf9a6fd27798274c5a5c03473a66ee96ecc6bfe8bd4c04c78ac1c93d55ca5ff",
+    "bytes": 287996
+  },
+  "browser": "155.0",
+  "node": "v26.2.0",
+  "packages": {
+    "quickjsEmscripten": "0.32.0",
+    "playwright": "1.63.0",
+    "esbuild": "0.28.2"
+  },
+  "sizes": {
+    "wasm": 503134,
+    "bundledJavaScript": 96082
+  },
+  "errors": [],
+  "requests": [
+    "http://127.0.0.1:37131/",
+    "http://127.0.0.1:37131/browser.js",
+    "http://127.0.0.1:37131/emscripten-module.wasm",
+    "http://127.0.0.1:37131/app-source.js"
+  ],
+  "result": {
+    "startup": {
+      "loadMs": 32,
+      "contextMs": 1
+    },
+    "state": "{\"identity\":true,\"prototype\":\"guest:1\",\"expando\":true,\"dispatched\":false,\"log\":[\"outer-enter\",\"inner\",\"inner-result:false\",\"outer-exit\"],\"caughtHost\":\"host-operation-failure\",\"persisted\":42}",
+    "events": [
+      {
+        "type": "inner",
+        "returned": false,
+        "defaultPrevented": true
+      },
+      {
+        "type": "outer",
+        "returned": false,
+        "defaultPrevented": true
+      }
+    ],
+    "errors": [
+      {
+        "name": "Error",
+        "message": "guest-listener-failure",
+        "stack": "    at <anonymous> (eval.js:24:58)\n    at <anonymous> (eval.js:34:76)\n"
+      }
+    ],
+    "beforeJobs": false,
+    "afterJobs": true,
+    "moduleAnswer": 42,
+    "dynamicAnswer": 42,
+    "moduleDenied": true,
+    "controls": {
+      "controlReturn": true,
+      "controlDefaultPrevented": false,
+      "errorDispatch": true,
+      "prototypeControl": false,
+      "deniedGlobals": "{\"fetch\":\"undefined\",\"XMLHttpRequest\":\"undefined\",\"Worker\":\"undefined\",\"WebAssembly\":\"undefined\",\"window\":\"undefined\",\"Function\":\"function\",\"eval\":\"function\"}",
+      "deniedOperation": true
+    },
+    "native": {
+      "input": "nested",
+      "text": "nested",
+      "storage": "nested",
+      "pixel": [
+        12,
+        34,
+        56,
+        255
+      ]
+    },
+    "buffers": {
+      "initialGuestByte": 1,
+      "hostOriginal": [
+        99,
+        2,
+        3,
+        4
+      ],
+      "guestBytes": [
+        1,
+        77,
+        3,
+        4
+      ]
+    },
+    "tlaValue": 43,
+    "costs": {
+      "bridge10000Ms": 62,
+      "guestLoop10000Ms": 0
+    },
+    "interruptError": {
+      "name": "InternalError",
+      "message": "interrupted",
+      "stack": "    at <eval> (eval.js:1:1)\n"
+    },
+    "recovered": 42,
+    "resources": [
+      {
+        "name": "http://127.0.0.1:37131/browser.js",
+        "duration": 68
+      },
+      {
+        "name": "http://127.0.0.1:37131/favicon.ico",
+        "duration": 106
+      },
+      {
+        "name": "http://127.0.0.1:37131/emscripten-module.wasm",
+        "duration": 19
+      }
+    ],
+    "unchangedApp": {
+      "name": "TypeError",
+      "message": "not a function",
+      "stack": "    at <anonymous> (unchanged-pitch.js:1:825)\n    at <eval> (unchanged-pitch.js:1:1452)\n"
+    }
+  }
+}
