@@ -87,6 +87,13 @@ try {
       assert.deepEqual(additional.errors, []);
       assert.equal(advanced.sameError, true);
       assert.equal(advanced.getterError, true);
+      assert.equal(advanced.binaryString, '\0\xff\ud800Z');
+      assert.equal(advanced.binaryKey, 2);
+      assert.deepEqual(advanced.binaryWrite, [3, 1]);
+      assert.equal(advanced.loneSurrogate, 'prefix\ud800suffix');
+      assert.equal(advanced.binaryRecord, '\0value\udfff');
+      assert.equal(advanced.binaryRegistry, 'registry\0suffix');
+      assert.deepEqual(advanced.binaryKeys, ['field', 'field\0suffix']);
       assert.equal(advanced.capturedViewConstructor, true);
       assert.deepEqual(advanced.domException, [true, 'SecurityError', 'denied', 18]);
       assert.deepEqual(advanced.nativeException, [true, 'SecurityError', 18]);

@@ -68,6 +68,9 @@ export function installGuestRuntime() {
   const SymbolConstructor = Symbol;
   const getNames = Object.getOwnPropertyNames;
   const symbolFor = Symbol.keyFor;
+  const makeSymbolFor = Symbol.for;
+  const parseJSON = JSON.parse;
+  const stringifyJSON = JSON.stringify;
   const arrayPush = Array.prototype.push;
   const byteSet = Uint8Array.prototype.set;
 
@@ -433,6 +436,10 @@ export function installGuestRuntime() {
         configurable: true,
       });
     },
+    parseString: (value: string) => parseJSON(value),
+    stringifyString: (value: string) => stringifyJSON(value),
+    makeSymbol: (description: string | undefined) => SymbolConstructor(description),
+    makeSymbolFor: (key: string) => reflectApply(makeSymbolFor, SymbolConstructor, [key]),
     createHost,
     kind,
     key,

@@ -8,6 +8,7 @@ import {
   type QuickJSDeferredPromise,
 } from 'quickjs-emscripten';
 import { installGuestRuntime } from './guest-runtime.ts';
+import { installGuestRegExpLegacy } from './legacy-regexp.ts';
 import resolveURI from '@jridgewell/resolve-uri';
 import type { GuestEngineOptions, GuestEvaluationMode, GuestHost } from './protocol.ts';
 
@@ -23,6 +24,8 @@ interface BufferMirror {
 }
 
 const modules = new Map<string, Promise<WebAssembly.Module>>();
+const requiresStringEncoding = /\0|[\ud800-\udfff]/u;
+const requiresStringRecovery = /\ufffd|[\ud800-\udfff]/u;
 const wellKnownSymbols = new Map<symbol, string>();
 const arrayBufferLength = Object.getOwnPropertyDescriptor(
   ArrayBuffer.prototype,
@@ -169,6 +172,12 @@ export class GuestEngine {
   }
 
   private initialize(): void {
+    this.unwrap(
+      this.context.evalCode(
+        `(${installGuestRegExpLegacy.toString()})();`,
+        'privacy:legacy-regexp',
+      ),
+    ).dispose();
     for (const [native, name] of wellKnownSymbols)
       this.symbolHandles.set(native, this.context.getWellKnownSymbol(name));
     const bridge = this.context.newFunction('__privacyHostDispatch', (...arguments_) => {
@@ -311,7 +320,7 @@ export class GuestEngine {
     this.assertOpen();
     const handle = this.encode(value);
     try {
-      const key = this.context.newString(name);
+      const key = this.encodeString(name);
       try {
         this.helper('defineGlobal', [key, handle]).dispose();
       } finally {
@@ -420,7 +429,7 @@ export class GuestEngine {
     const id = this.context.getNumber(idHandle);
     const target = this.nativeObjects.get(id);
     if (!target) throw new Error('Unknown native object');
-    const encodedKey = this.context.getString(keyHandle);
+    const encodedKey = this.readString(keyHandle);
     const key = this.propertyKey(encodedKey);
     // Native reads only retrieve references/values. Flush binary mirrors where
     // native code can consume or mutate them, rather than at each property lookup.
@@ -534,7 +543,7 @@ export class GuestEngine {
     if (value === null) return this.context.null;
     if (typeof value === 'boolean') return value ? this.context.true : this.context.false;
     if (typeof value === 'number') return this.context.newNumber(value);
-    if (typeof value === 'string') return this.context.newString(value);
+    if (typeof value === 'string') return this.encodeString(value);
     if (typeof value === 'bigint') return this.context.newBigInt(value);
     if (typeof value === 'symbol') return this.encodeSymbol(value);
     const object = value as object;
@@ -615,7 +624,7 @@ export class GuestEngine {
         if (!descriptor?.enumerable) continue;
         const item = this.encode(Reflect.get(object, key), seen);
         const property =
-          typeof key === 'symbol' ? this.encodeSymbol(key) : this.context.newString(key);
+          typeof key === 'symbol' ? this.encodeSymbol(key) : this.encodeString(key);
         this.context.setProp(result, property, item);
         property.dispose();
         item.dispose();
@@ -645,8 +654,8 @@ export class GuestEngine {
       return result;
     }
     if (value instanceof RegExp) {
-      const source = this.context.newString(value.source);
-      const flags = this.context.newString(value.flags);
+      const source = this.encodeString(value.source);
+      const flags = this.encodeString(value.flags);
       try {
         return this.helper('makeRegExp', [source, flags]);
       } finally {
@@ -674,7 +683,7 @@ export class GuestEngine {
       this.context.newNumber(id),
       typeof value === 'function' ? this.context.true : this.context.false,
       constructable ? this.context.true : this.context.false,
-      this.context.newString(typeof value === 'function' ? value.name : ''),
+      this.encodeString(typeof value === 'function' ? value.name : ''),
       prototypeObject ? this.context.true : this.context.false,
     ];
     try {
@@ -696,17 +705,52 @@ export class GuestEngine {
     return result;
   }
 
+  private encodeString(value: string): QuickJSHandle {
+    if (!requiresStringEncoding.test(value)) return this.context.newString(value);
+    const json = this.context.newString(JSON.stringify(value));
+    try {
+      return this.helper('parseString', [json]);
+    } finally {
+      json.dispose();
+    }
+  }
+
+  private readString(value: QuickJSHandle): string {
+    const result = this.context.getString(value);
+    if (
+      result.length === this.context.getLength(value) &&
+      !requiresStringRecovery.test(result)
+    )
+      return result;
+    // The SDK's C-string API terminates at NUL and may normalize lone surrogates.
+    const json = this.helper('stringifyString', [value]);
+    try {
+      return JSON.parse(this.context.getString(json)) as string;
+    } finally {
+      json.dispose();
+    }
+  }
+
   private encodeSymbol(value: symbol): QuickJSHandle {
     const cached = this.symbolHandles.get(value);
     if (cached) return cached.dup();
     const known = wellKnownSymbols.get(value);
     if (known) return this.context.getWellKnownSymbol(known);
     const registry = Symbol.keyFor(value);
-    if (registry !== undefined) return this.context.newSymbolFor(registry);
+    if (registry !== undefined) {
+      const key = this.encodeString(registry);
+      try {
+        return this.helper('makeSymbolFor', [key]);
+      } finally {
+        key.dispose();
+      }
+    }
     const id = this.nextSymbol++;
     this.symbolIds.set(value, id);
     this.symbols.set(id, value);
-    const result = this.context.newUniqueSymbol(value.description ?? '');
+    const description = this.encode(value.description);
+    const result = this.helper('makeSymbol', [description]);
+    description.dispose();
     const idHandle = this.context.newNumber(id);
     this.helper('registerSymbol', [result, idHandle]).dispose();
     idHandle.dispose();
@@ -757,14 +801,14 @@ export class GuestEngine {
   private decode(value: QuickJSHandle, seen = new Map<number, unknown>()): unknown {
     const type = this.context.typeof(value);
     if (type === 'undefined') return undefined;
-    if (type === 'string') return this.context.getString(value);
+    if (type === 'string') return this.readString(value);
     if (type === 'number') return this.context.getNumber(value);
     if (type === 'boolean') return this.context.getNumber(value) !== 0;
     if (type === 'bigint') return this.context.getBigInt(value);
     if (type === 'symbol') {
       const encoded = this.helper('key', [value]);
       try {
-        const symbol = this.propertyKey(this.context.getString(encoded));
+        const symbol = this.propertyKey(this.readString(encoded));
         if (typeof symbol === 'symbol' && !this.symbolHandles.has(symbol))
           this.symbolHandles.set(symbol, value.dup());
         return symbol;
@@ -879,16 +923,11 @@ export class GuestEngine {
         entries.dispose();
       }
     }
-    if (kind === 'regexp') {
-      const source = this.context.getProp(value, 'source');
-      const flags = this.context.getProp(value, 'flags');
-      try {
-        return new RegExp(this.context.getString(source), this.context.getString(flags));
-      } finally {
-        source.dispose();
-        flags.dispose();
-      }
-    }
+    if (kind === 'regexp')
+      return new RegExp(
+        String(this.readGuestProperty(value, 'source')),
+        String(this.readGuestProperty(value, 'flags')),
+      );
     const result: unknown[] | Record<PropertyKey, unknown> = previous
       ? (previous.value as unknown[] | Record<PropertyKey, unknown>)
       : kind === 'array'
@@ -907,9 +946,7 @@ export class GuestEngine {
       for (let index = 0; index < length; index++) {
         const key = this.context.getProp(keyArray, index);
         const name =
-          this.context.typeof(key) === 'symbol'
-            ? this.decode(key)
-            : this.context.getString(key);
+          this.context.typeof(key) === 'symbol' ? this.decode(key) : this.readString(key);
         if (typeof name !== 'string' && typeof name !== 'symbol') {
           key.dispose();
           continue;
@@ -1182,9 +1219,7 @@ export class GuestEngine {
     const read = (key: string) => {
       const value = this.context.getProp(info, key);
       try {
-        return this.context.typeof(value) === 'string'
-          ? this.context.getString(value)
-          : '';
+        return this.context.typeof(value) === 'string' ? this.readString(value) : '';
       } finally {
         value.dispose();
       }

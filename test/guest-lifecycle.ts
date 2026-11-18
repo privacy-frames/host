@@ -91,6 +91,7 @@ try {
         nullable: null,
         sparse: true,
         bytes: [4, 5],
+        binary: 'prefix\0\ud800suffix',
       });
     } finally {
       await browser.close();

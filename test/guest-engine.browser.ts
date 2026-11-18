@@ -48,6 +48,15 @@ try {
   });
   engine.set('fillBytes', (bytes: Uint8Array) => bytes.fill(9));
   engine.set('nativeFloats', () => new Float32Array([0.25, 0.5]));
+  engine.set('nativeBinaryString', () => '\0\xff\ud800Z');
+  engine.set('echoNativeString', (value: string) => value);
+  engine.set('nativeLoneSurrogate', () => 'prefix\ud800suffix');
+  engine.set('binaryRecord', { 'key\0suffix': '\0value\udfff' });
+  engine.set('nativeSymbolForBinary', () => Symbol.for('registry\0suffix'));
+  const opaqueStrings = Object.create({}) as Record<string, unknown>;
+  opaqueStrings.field = 1;
+  opaqueStrings['field\0suffix'] = 2;
+  engine.set('opaqueStrings', opaqueStrings);
   engine.set('nativeBuffer', new Uint8Array([1, 2, 3, 4]));
   engine.set('nativeThrow', () => {
     throw new Error('native failure');
@@ -124,6 +133,8 @@ try {
     const importedFloats = nativeFloats();
     Float32Array = OriginalFloat32Array;
     const capturedViewConstructor = importedFloats instanceof Float32Array && importedFloats[1] === 0.5;
+    const binaryKey = opaqueStrings['field\0suffix'];
+    opaqueStrings['field\0suffix'] = 3;
     const original = new Error('identity');
     const exception = new DOMException('denied', 'SecurityError');
     let nativeException;
@@ -170,6 +181,13 @@ try {
     return ({
       sameError,
       getterError,
+      binaryString: echoNativeString(nativeBinaryString()),
+      binaryKey,
+      binaryWrite: [opaqueStrings['field\0suffix'], opaqueStrings.field],
+      loneSurrogate: echoNativeString(nativeLoneSurrogate()),
+      binaryRecord: binaryRecord['key\0suffix'],
+      binaryRegistry: Symbol.keyFor(nativeSymbolForBinary()),
+      binaryKeys: Object.keys(opaqueStrings),
       capturedViewConstructor,
       domException: [exception instanceof DOMException, exception.name, exception.message, exception.code],
       nativeException,

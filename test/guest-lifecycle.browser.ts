@@ -101,7 +101,7 @@ try {
     request.onsuccess = () => {
       const database = request.result;
       const record = Object.assign({}, {id: 'document', type: 'content', hash: 42, text: 'stored text'},
-        {tx: 7, optional: undefined, nullable: null, sparse: Array(3), bytes: new Uint8Array([4, 5])});
+        {tx: 7, optional: undefined, nullable: null, sparse: Array(3), bytes: new Uint8Array([4, 5]), binary: 'prefix\\u0000\\ud800suffix'});
       Object.defineProperty(record, 'hiddenObserver', { get() { throw new Error('Hidden property should not be read by storage'); } });
       const transaction = database.transaction('records', 'readwrite');
       try { transaction.objectStore('records').put(record); }
@@ -115,7 +115,7 @@ try {
           resolve({text: value.text, type: value.type, tx: value.tx,
             optional: Object.hasOwn(value, 'optional') && value.optional === undefined,
             nullable: value.nullable, sparse: value.sparse.length === 3 && !(0 in value.sparse),
-            bytes: Array.from(value.bytes)});
+            bytes: Array.from(value.bytes), binary: value.binary});
           database.close();
         };
       };
