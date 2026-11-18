@@ -182,7 +182,27 @@ async function interaction(page: Page, id: string) {
         elements.filter((element) => element?.type === 'rectangle').length > before
       );
     }, rectangleCount);
-    return 'Rectangle drawn and persisted';
+    await page.waitForFunction(() => {
+      const canvas = document.querySelector<HTMLCanvasElement>('canvas.static');
+      const context = canvas?.getContext('2d');
+      if (!canvas || !context) return false;
+      const box = canvas.getBoundingClientRect();
+      const scale = canvas.width / box.width;
+      const x = Math.max(0, Math.floor((420 - box.left) * scale));
+      const y = Math.max(0, Math.floor((290 - box.top) * scale));
+      const width = Math.min(canvas.width - x, Math.floor(245 * scale));
+      const height = Math.min(canvas.height - y, Math.floor(175 * scale));
+      const pixels = context.getImageData(x, y, width, height).data;
+      let ink = 0;
+      for (let index = 0; index < pixels.length; index += 4)
+        if (
+          pixels[index + 3] > 128 &&
+          pixels[index] + pixels[index + 1] + pixels[index + 2] < 600
+        )
+          ink++;
+      return ink > 20;
+    });
+    return 'Rectangle drawn on native canvas and persisted';
   }
   if (id === 'stackedit') {
     const editor = page.locator('[contenteditable=true]').first();

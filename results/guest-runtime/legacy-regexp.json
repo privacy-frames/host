@@ -1,0 +1,2296 @@
+{
+  "completed": "2026-11-18T23:37:19.507Z",
+  "negativeControl": {
+    "rawQuickJSCaptureType": "undefined"
+  },
+  "guest": {
+    "results": [
+      {
+        "operation": "reset",
+        "value": true,
+        "state": {
+          "input": "",
+          "lastMatch": "",
+          "lastParen": "",
+          "leftContext": "",
+          "rightContext": "",
+          "captures": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ]
+        }
+      },
+      {
+        "operation": "exec-unmatched-capture",
+        "value": [
+          "a",
+          "a",
+          null
+        ],
+        "state": {
+          "input": "za!",
+          "lastMatch": "a",
+          "lastParen": "",
+          "leftContext": "z",
+          "rightContext": "!",
+          "captures": [
+            "a",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "za!",
+            "a",
+            "",
+            "z",
+            "!"
+          ]
+        }
+      },
+      {
+        "operation": "exec-lastIndex",
+        "value": 2,
+        "state": {
+          "input": "za!",
+          "lastMatch": "a",
+          "lastParen": "",
+          "leftContext": "z",
+          "rightContext": "!",
+          "captures": [
+            "a",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "za!",
+            "a",
+            "",
+            "z",
+            "!"
+          ]
+        }
+      },
+      {
+        "operation": "test",
+        "value": true,
+        "state": {
+          "input": "0ab1ab2",
+          "lastMatch": "ab",
+          "lastParen": "ab",
+          "leftContext": "0",
+          "rightContext": "1ab2",
+          "captures": [
+            "ab",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "0ab1ab2",
+            "ab",
+            "ab",
+            "0",
+            "1ab2"
+          ]
+        }
+      },
+      {
+        "operation": "match-global",
+        "value": [
+          "ab",
+          "ac"
+        ],
+        "state": {
+          "input": "0ab1ac2",
+          "lastMatch": "ac",
+          "lastParen": "c",
+          "leftContext": "0ab1",
+          "rightContext": "2",
+          "captures": [
+            "c",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "0ab1ac2",
+            "ac",
+            "c",
+            "0ab1",
+            "2"
+          ]
+        }
+      },
+      {
+        "operation": "replace-global",
+        "value": "1a2b",
+        "state": {
+          "input": "a1b2",
+          "lastMatch": "b2",
+          "lastParen": "2",
+          "leftContext": "a1",
+          "rightContext": "",
+          "captures": [
+            "b",
+            "2",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "a1b2",
+            "b2",
+            "2",
+            "a1",
+            ""
+          ]
+        }
+      },
+      {
+        "operation": "search",
+        "value": 1,
+        "state": {
+          "input": "x12y",
+          "lastMatch": "12",
+          "lastParen": "12",
+          "leftContext": "x",
+          "rightContext": "y",
+          "captures": [
+            "12",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "x12y",
+            "12",
+            "12",
+            "x",
+            "y"
+          ]
+        }
+      },
+      {
+        "operation": "search-lastIndex-restored",
+        "value": 3,
+        "state": {
+          "input": "x12y",
+          "lastMatch": "12",
+          "lastParen": "12",
+          "leftContext": "x",
+          "rightContext": "y",
+          "captures": [
+            "12",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "x12y",
+            "12",
+            "12",
+            "x",
+            "y"
+          ]
+        }
+      },
+      {
+        "operation": "split",
+        "value": [
+          "x",
+          "1",
+          "y",
+          "2",
+          "z"
+        ],
+        "state": {
+          "input": "x1y2z",
+          "lastMatch": "2",
+          "lastParen": "2",
+          "leftContext": "x1y",
+          "rightContext": "z",
+          "captures": [
+            "2",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "x1y2z",
+            "2",
+            "2",
+            "x1y",
+            "z"
+          ]
+        }
+      },
+      {
+        "operation": "matchAll-lazy",
+        "value": true,
+        "state": {
+          "input": "x1y2z",
+          "lastMatch": "2",
+          "lastParen": "2",
+          "leftContext": "x1y",
+          "rightContext": "z",
+          "captures": [
+            "2",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "x1y2z",
+            "2",
+            "2",
+            "x1y",
+            "z"
+          ]
+        }
+      },
+      {
+        "operation": "matchAll-first",
+        "value": [
+          "1",
+          "1"
+        ],
+        "state": {
+          "input": "x1y2z",
+          "lastMatch": "1",
+          "lastParen": "1",
+          "leftContext": "x",
+          "rightContext": "y2z",
+          "captures": [
+            "1",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "x1y2z",
+            "1",
+            "1",
+            "x",
+            "y2z"
+          ]
+        }
+      },
+      {
+        "operation": "matchAll-second",
+        "value": [
+          "2",
+          "2"
+        ],
+        "state": {
+          "input": "x1y2z",
+          "lastMatch": "2",
+          "lastParen": "2",
+          "leftContext": "x1y",
+          "rightContext": "z",
+          "captures": [
+            "2",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "x1y2z",
+            "2",
+            "2",
+            "x1y",
+            "z"
+          ]
+        }
+      },
+      {
+        "operation": "matchAll-done",
+        "value": true,
+        "state": {
+          "input": "x1y2z",
+          "lastMatch": "2",
+          "lastParen": "2",
+          "leftContext": "x1y",
+          "rightContext": "z",
+          "captures": [
+            "2",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "x1y2z",
+            "2",
+            "2",
+            "x1y",
+            "z"
+          ]
+        }
+      },
+      {
+        "operation": "failed-match-keeps-state",
+        "value": null,
+        "state": {
+          "input": "x1y2z",
+          "lastMatch": "2",
+          "lastParen": "2",
+          "leftContext": "x1y",
+          "rightContext": "z",
+          "captures": [
+            "2",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "x1y2z",
+            "2",
+            "2",
+            "x1y",
+            "z"
+          ]
+        }
+      },
+      {
+        "operation": "empty-match",
+        "value": [
+          "",
+          ""
+        ],
+        "state": {
+          "input": "ab",
+          "lastMatch": "",
+          "lastParen": "",
+          "leftContext": "",
+          "rightContext": "ab",
+          "captures": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "ab",
+            "",
+            "",
+            "",
+            "ab"
+          ]
+        }
+      },
+      {
+        "operation": "empty-lastIndex",
+        "value": 0,
+        "state": {
+          "input": "ab",
+          "lastMatch": "",
+          "lastParen": "",
+          "leftContext": "",
+          "rightContext": "ab",
+          "captures": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "ab",
+            "",
+            "",
+            "",
+            "ab"
+          ]
+        }
+      },
+      {
+        "operation": "input-setter",
+        "value": 1,
+        "state": {
+          "input": "manual input",
+          "lastMatch": "",
+          "lastParen": "",
+          "leftContext": "",
+          "rightContext": "ab",
+          "captures": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "manual input",
+            "",
+            "",
+            "",
+            "ab"
+          ]
+        }
+      },
+      {
+        "operation": "input-alias-setter",
+        "value": true,
+        "state": {
+          "input": "alias input",
+          "lastMatch": "",
+          "lastParen": "",
+          "leftContext": "",
+          "rightContext": "ab",
+          "captures": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "alias input",
+            "",
+            "",
+            "",
+            "ab"
+          ]
+        }
+      },
+      {
+        "operation": "symbol-input-ToString-error",
+        "value": "TypeError",
+        "state": {
+          "input": "alias input",
+          "lastMatch": "",
+          "lastParen": "",
+          "leftContext": "",
+          "rightContext": "ab",
+          "captures": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "alias input",
+            "",
+            "",
+            "",
+            "ab"
+          ]
+        }
+      },
+      {
+        "operation": "invalid-receiver-preserves-state",
+        "value": "TypeError",
+        "state": {
+          "input": "alias input",
+          "lastMatch": "",
+          "lastParen": "",
+          "leftContext": "",
+          "rightContext": "ab",
+          "captures": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "alias input",
+            "",
+            "",
+            "",
+            "ab"
+          ]
+        }
+      },
+      {
+        "operation": "browser-subclass-match",
+        "value": true,
+        "state": {
+          "input": "xderivedy",
+          "lastMatch": "derived",
+          "lastParen": "derived",
+          "leftContext": "x",
+          "rightContext": "y",
+          "captures": [
+            "derived",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "xderivedy",
+            "derived",
+            "derived",
+            "x",
+            "y"
+          ]
+        }
+      },
+      {
+        "operation": "browser-borrowed-getter",
+        "value": "derived",
+        "state": {
+          "input": "xderivedy",
+          "lastMatch": "derived",
+          "lastParen": "derived",
+          "leftContext": "x",
+          "rightContext": "y",
+          "captures": [
+            "derived",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "xderivedy",
+            "derived",
+            "derived",
+            "x",
+            "y"
+          ]
+        }
+      },
+      {
+        "operation": "regexp-public-prototype-change",
+        "value": [
+          "detached",
+          "detached"
+        ],
+        "state": {
+          "input": "xdetachedy",
+          "lastMatch": "detached",
+          "lastParen": "detached",
+          "leftContext": "x",
+          "rightContext": "y",
+          "captures": [
+            "detached",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "xdetachedy",
+            "detached",
+            "detached",
+            "x",
+            "y"
+          ]
+        }
+      },
+      {
+        "operation": "capture-assignment-does-not-change-value",
+        "value": true,
+        "state": {
+          "input": "xdetachedy",
+          "lastMatch": "detached",
+          "lastParen": "detached",
+          "leftContext": "x",
+          "rightContext": "y",
+          "captures": [
+            "detached",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "xdetachedy",
+            "detached",
+            "detached",
+            "x",
+            "y"
+          ]
+        }
+      },
+      {
+        "operation": "property-shape",
+        "value": {
+          "configurable": true,
+          "enumerable": false,
+          "getter": "function"
+        },
+        "state": {
+          "input": "xdetachedy",
+          "lastMatch": "detached",
+          "lastParen": "detached",
+          "leftContext": "x",
+          "rightContext": "y",
+          "captures": [
+            "detached",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "aliases": [
+            "xdetachedy",
+            "detached",
+            "detached",
+            "x",
+            "y"
+          ]
+        }
+      }
+    ],
+    "deletedPropertyStaysDeleted": true
+  },
+  "controls": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "matchingControls": 25,
+      "result": {
+        "results": [
+          {
+            "operation": "reset",
+            "value": true,
+            "state": {
+              "input": "",
+              "lastMatch": "",
+              "lastParen": "",
+              "leftContext": "",
+              "rightContext": "",
+              "captures": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "",
+                "",
+                "",
+                "",
+                ""
+              ]
+            }
+          },
+          {
+            "operation": "exec-unmatched-capture",
+            "value": [
+              "a",
+              "a",
+              null
+            ],
+            "state": {
+              "input": "za!",
+              "lastMatch": "a",
+              "lastParen": "",
+              "leftContext": "z",
+              "rightContext": "!",
+              "captures": [
+                "a",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "za!",
+                "a",
+                "",
+                "z",
+                "!"
+              ]
+            }
+          },
+          {
+            "operation": "exec-lastIndex",
+            "value": 2,
+            "state": {
+              "input": "za!",
+              "lastMatch": "a",
+              "lastParen": "",
+              "leftContext": "z",
+              "rightContext": "!",
+              "captures": [
+                "a",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "za!",
+                "a",
+                "",
+                "z",
+                "!"
+              ]
+            }
+          },
+          {
+            "operation": "test",
+            "value": true,
+            "state": {
+              "input": "0ab1ab2",
+              "lastMatch": "ab",
+              "lastParen": "ab",
+              "leftContext": "0",
+              "rightContext": "1ab2",
+              "captures": [
+                "ab",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "0ab1ab2",
+                "ab",
+                "ab",
+                "0",
+                "1ab2"
+              ]
+            }
+          },
+          {
+            "operation": "match-global",
+            "value": [
+              "ab",
+              "ac"
+            ],
+            "state": {
+              "input": "0ab1ac2",
+              "lastMatch": "ac",
+              "lastParen": "c",
+              "leftContext": "0ab1",
+              "rightContext": "2",
+              "captures": [
+                "c",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "0ab1ac2",
+                "ac",
+                "c",
+                "0ab1",
+                "2"
+              ]
+            }
+          },
+          {
+            "operation": "replace-global",
+            "value": "1a2b",
+            "state": {
+              "input": "a1b2",
+              "lastMatch": "b2",
+              "lastParen": "2",
+              "leftContext": "a1",
+              "rightContext": "",
+              "captures": [
+                "b",
+                "2",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "a1b2",
+                "b2",
+                "2",
+                "a1",
+                ""
+              ]
+            }
+          },
+          {
+            "operation": "search",
+            "value": 1,
+            "state": {
+              "input": "x12y",
+              "lastMatch": "12",
+              "lastParen": "12",
+              "leftContext": "x",
+              "rightContext": "y",
+              "captures": [
+                "12",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "x12y",
+                "12",
+                "12",
+                "x",
+                "y"
+              ]
+            }
+          },
+          {
+            "operation": "search-lastIndex-restored",
+            "value": 3,
+            "state": {
+              "input": "x12y",
+              "lastMatch": "12",
+              "lastParen": "12",
+              "leftContext": "x",
+              "rightContext": "y",
+              "captures": [
+                "12",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "x12y",
+                "12",
+                "12",
+                "x",
+                "y"
+              ]
+            }
+          },
+          {
+            "operation": "split",
+            "value": [
+              "x",
+              "1",
+              "y",
+              "2",
+              "z"
+            ],
+            "state": {
+              "input": "x1y2z",
+              "lastMatch": "2",
+              "lastParen": "2",
+              "leftContext": "x1y",
+              "rightContext": "z",
+              "captures": [
+                "2",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "x1y2z",
+                "2",
+                "2",
+                "x1y",
+                "z"
+              ]
+            }
+          },
+          {
+            "operation": "matchAll-lazy",
+            "value": true,
+            "state": {
+              "input": "x1y2z",
+              "lastMatch": "2",
+              "lastParen": "2",
+              "leftContext": "x1y",
+              "rightContext": "z",
+              "captures": [
+                "2",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "x1y2z",
+                "2",
+                "2",
+                "x1y",
+                "z"
+              ]
+            }
+          },
+          {
+            "operation": "matchAll-first",
+            "value": [
+              "1",
+              "1"
+            ],
+            "state": {
+              "input": "x1y2z",
+              "lastMatch": "1",
+              "lastParen": "1",
+              "leftContext": "x",
+              "rightContext": "y2z",
+              "captures": [
+                "1",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "x1y2z",
+                "1",
+                "1",
+                "x",
+                "y2z"
+              ]
+            }
+          },
+          {
+            "operation": "matchAll-second",
+            "value": [
+              "2",
+              "2"
+            ],
+            "state": {
+              "input": "x1y2z",
+              "lastMatch": "2",
+              "lastParen": "2",
+              "leftContext": "x1y",
+              "rightContext": "z",
+              "captures": [
+                "2",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "x1y2z",
+                "2",
+                "2",
+                "x1y",
+                "z"
+              ]
+            }
+          },
+          {
+            "operation": "matchAll-done",
+            "value": true,
+            "state": {
+              "input": "x1y2z",
+              "lastMatch": "2",
+              "lastParen": "2",
+              "leftContext": "x1y",
+              "rightContext": "z",
+              "captures": [
+                "2",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "x1y2z",
+                "2",
+                "2",
+                "x1y",
+                "z"
+              ]
+            }
+          },
+          {
+            "operation": "failed-match-keeps-state",
+            "value": null,
+            "state": {
+              "input": "x1y2z",
+              "lastMatch": "2",
+              "lastParen": "2",
+              "leftContext": "x1y",
+              "rightContext": "z",
+              "captures": [
+                "2",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "x1y2z",
+                "2",
+                "2",
+                "x1y",
+                "z"
+              ]
+            }
+          },
+          {
+            "operation": "empty-match",
+            "value": [
+              "",
+              ""
+            ],
+            "state": {
+              "input": "ab",
+              "lastMatch": "",
+              "lastParen": "",
+              "leftContext": "",
+              "rightContext": "ab",
+              "captures": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "ab",
+                "",
+                "",
+                "",
+                "ab"
+              ]
+            }
+          },
+          {
+            "operation": "empty-lastIndex",
+            "value": 0,
+            "state": {
+              "input": "ab",
+              "lastMatch": "",
+              "lastParen": "",
+              "leftContext": "",
+              "rightContext": "ab",
+              "captures": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "ab",
+                "",
+                "",
+                "",
+                "ab"
+              ]
+            }
+          },
+          {
+            "operation": "input-setter",
+            "value": 1,
+            "state": {
+              "input": "manual input",
+              "lastMatch": "",
+              "lastParen": "",
+              "leftContext": "",
+              "rightContext": "ab",
+              "captures": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "manual input",
+                "",
+                "",
+                "",
+                "ab"
+              ]
+            }
+          },
+          {
+            "operation": "input-alias-setter",
+            "value": true,
+            "state": {
+              "input": "alias input",
+              "lastMatch": "",
+              "lastParen": "",
+              "leftContext": "",
+              "rightContext": "ab",
+              "captures": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "alias input",
+                "",
+                "",
+                "",
+                "ab"
+              ]
+            }
+          },
+          {
+            "operation": "symbol-input-ToString-error",
+            "value": "TypeError",
+            "state": {
+              "input": "alias input",
+              "lastMatch": "",
+              "lastParen": "",
+              "leftContext": "",
+              "rightContext": "ab",
+              "captures": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "alias input",
+                "",
+                "",
+                "",
+                "ab"
+              ]
+            }
+          },
+          {
+            "operation": "invalid-receiver-preserves-state",
+            "value": "TypeError",
+            "state": {
+              "input": "alias input",
+              "lastMatch": "",
+              "lastParen": "",
+              "leftContext": "",
+              "rightContext": "ab",
+              "captures": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "alias input",
+                "",
+                "",
+                "",
+                "ab"
+              ]
+            }
+          },
+          {
+            "operation": "browser-subclass-match",
+            "value": true,
+            "state": {
+              "input": "xderivedy",
+              "lastMatch": "derived",
+              "lastParen": "derived",
+              "leftContext": "x",
+              "rightContext": "y",
+              "captures": [
+                "derived",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "xderivedy",
+                "derived",
+                "derived",
+                "x",
+                "y"
+              ]
+            }
+          },
+          {
+            "operation": "browser-borrowed-getter",
+            "value": "derived",
+            "state": {
+              "input": "xderivedy",
+              "lastMatch": "derived",
+              "lastParen": "derived",
+              "leftContext": "x",
+              "rightContext": "y",
+              "captures": [
+                "derived",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "xderivedy",
+                "derived",
+                "derived",
+                "x",
+                "y"
+              ]
+            }
+          },
+          {
+            "operation": "regexp-public-prototype-change",
+            "value": [
+              "detached",
+              "detached"
+            ],
+            "state": {
+              "input": "xdetachedy",
+              "lastMatch": "detached",
+              "lastParen": "detached",
+              "leftContext": "x",
+              "rightContext": "y",
+              "captures": [
+                "detached",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "xdetachedy",
+                "detached",
+                "detached",
+                "x",
+                "y"
+              ]
+            }
+          },
+          {
+            "operation": "capture-assignment-does-not-change-value",
+            "value": true,
+            "state": {
+              "input": "xdetachedy",
+              "lastMatch": "detached",
+              "lastParen": "detached",
+              "leftContext": "x",
+              "rightContext": "y",
+              "captures": [
+                "detached",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "xdetachedy",
+                "detached",
+                "detached",
+                "x",
+                "y"
+              ]
+            }
+          },
+          {
+            "operation": "property-shape",
+            "value": {
+              "configurable": true,
+              "enumerable": false,
+              "getter": "function"
+            },
+            "state": {
+              "input": "xdetachedy",
+              "lastMatch": "detached",
+              "lastParen": "detached",
+              "leftContext": "x",
+              "rightContext": "y",
+              "captures": [
+                "detached",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "xdetachedy",
+                "detached",
+                "detached",
+                "x",
+                "y"
+              ]
+            }
+          }
+        ],
+        "deletedPropertyStaysDeleted": true
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "matchingControls": 24,
+      "result": {
+        "results": [
+          {
+            "operation": "reset",
+            "value": true,
+            "state": {
+              "input": "",
+              "lastMatch": "",
+              "lastParen": "",
+              "leftContext": "",
+              "rightContext": "",
+              "captures": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "",
+                "",
+                "",
+                "",
+                ""
+              ]
+            }
+          },
+          {
+            "operation": "exec-unmatched-capture",
+            "value": [
+              "a",
+              "a",
+              null
+            ],
+            "state": {
+              "input": "za!",
+              "lastMatch": "a",
+              "lastParen": "",
+              "leftContext": "z",
+              "rightContext": "!",
+              "captures": [
+                "a",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "za!",
+                "a",
+                "",
+                "z",
+                "!"
+              ]
+            }
+          },
+          {
+            "operation": "exec-lastIndex",
+            "value": 2,
+            "state": {
+              "input": "za!",
+              "lastMatch": "a",
+              "lastParen": "",
+              "leftContext": "z",
+              "rightContext": "!",
+              "captures": [
+                "a",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "za!",
+                "a",
+                "",
+                "z",
+                "!"
+              ]
+            }
+          },
+          {
+            "operation": "test",
+            "value": true,
+            "state": {
+              "input": "0ab1ab2",
+              "lastMatch": "ab",
+              "lastParen": "ab",
+              "leftContext": "0",
+              "rightContext": "1ab2",
+              "captures": [
+                "ab",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "0ab1ab2",
+                "ab",
+                "ab",
+                "0",
+                "1ab2"
+              ]
+            }
+          },
+          {
+            "operation": "match-global",
+            "value": [
+              "ab",
+              "ac"
+            ],
+            "state": {
+              "input": "0ab1ac2",
+              "lastMatch": "ac",
+              "lastParen": "c",
+              "leftContext": "0ab1",
+              "rightContext": "2",
+              "captures": [
+                "c",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "0ab1ac2",
+                "ac",
+                "c",
+                "0ab1",
+                "2"
+              ]
+            }
+          },
+          {
+            "operation": "replace-global",
+            "value": "1a2b",
+            "state": {
+              "input": "a1b2",
+              "lastMatch": "b2",
+              "lastParen": "2",
+              "leftContext": "a1",
+              "rightContext": "",
+              "captures": [
+                "b",
+                "2",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "a1b2",
+                "b2",
+                "2",
+                "a1",
+                ""
+              ]
+            }
+          },
+          {
+            "operation": "search",
+            "value": 1,
+            "state": {
+              "input": "x12y",
+              "lastMatch": "12",
+              "lastParen": "12",
+              "leftContext": "x",
+              "rightContext": "y",
+              "captures": [
+                "12",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "x12y",
+                "12",
+                "12",
+                "x",
+                "y"
+              ]
+            }
+          },
+          {
+            "operation": "search-lastIndex-restored",
+            "value": 3,
+            "state": {
+              "input": "x12y",
+              "lastMatch": "12",
+              "lastParen": "12",
+              "leftContext": "x",
+              "rightContext": "y",
+              "captures": [
+                "12",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "x12y",
+                "12",
+                "12",
+                "x",
+                "y"
+              ]
+            }
+          },
+          {
+            "operation": "split",
+            "value": [
+              "x",
+              "1",
+              "y",
+              "2",
+              "z"
+            ],
+            "state": {
+              "input": "x1y2z",
+              "lastMatch": "2",
+              "lastParen": "2",
+              "leftContext": "x1y",
+              "rightContext": "z",
+              "captures": [
+                "2",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "x1y2z",
+                "2",
+                "2",
+                "x1y",
+                "z"
+              ]
+            }
+          },
+          {
+            "operation": "matchAll-lazy",
+            "value": true,
+            "state": {
+              "input": "x1y2z",
+              "lastMatch": "2",
+              "lastParen": "2",
+              "leftContext": "x1y",
+              "rightContext": "z",
+              "captures": [
+                "2",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "x1y2z",
+                "2",
+                "2",
+                "x1y",
+                "z"
+              ]
+            }
+          },
+          {
+            "operation": "matchAll-first",
+            "value": [
+              "1",
+              "1"
+            ],
+            "state": {
+              "input": "x1y2z",
+              "lastMatch": "1",
+              "lastParen": "1",
+              "leftContext": "x",
+              "rightContext": "y2z",
+              "captures": [
+                "1",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "x1y2z",
+                "1",
+                "1",
+                "x",
+                "y2z"
+              ]
+            }
+          },
+          {
+            "operation": "matchAll-second",
+            "value": [
+              "2",
+              "2"
+            ],
+            "state": {
+              "input": "x1y2z",
+              "lastMatch": "2",
+              "lastParen": "2",
+              "leftContext": "x1y",
+              "rightContext": "z",
+              "captures": [
+                "2",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "x1y2z",
+                "2",
+                "2",
+                "x1y",
+                "z"
+              ]
+            }
+          },
+          {
+            "operation": "matchAll-done",
+            "value": true,
+            "state": {
+              "input": "x1y2z",
+              "lastMatch": "2",
+              "lastParen": "2",
+              "leftContext": "x1y",
+              "rightContext": "z",
+              "captures": [
+                "2",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "x1y2z",
+                "2",
+                "2",
+                "x1y",
+                "z"
+              ]
+            }
+          },
+          {
+            "operation": "failed-match-keeps-state",
+            "value": null,
+            "state": {
+              "input": "x1y2z",
+              "lastMatch": "2",
+              "lastParen": "2",
+              "leftContext": "x1y",
+              "rightContext": "z",
+              "captures": [
+                "2",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "x1y2z",
+                "2",
+                "2",
+                "x1y",
+                "z"
+              ]
+            }
+          },
+          {
+            "operation": "empty-match",
+            "value": [
+              "",
+              ""
+            ],
+            "state": {
+              "input": "ab",
+              "lastMatch": "",
+              "lastParen": "",
+              "leftContext": "",
+              "rightContext": "ab",
+              "captures": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "ab",
+                "",
+                "",
+                "",
+                "ab"
+              ]
+            }
+          },
+          {
+            "operation": "empty-lastIndex",
+            "value": 0,
+            "state": {
+              "input": "ab",
+              "lastMatch": "",
+              "lastParen": "",
+              "leftContext": "",
+              "rightContext": "ab",
+              "captures": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "ab",
+                "",
+                "",
+                "",
+                "ab"
+              ]
+            }
+          },
+          {
+            "operation": "input-setter",
+            "value": 1,
+            "state": {
+              "input": "manual input",
+              "lastMatch": "",
+              "lastParen": "",
+              "leftContext": "",
+              "rightContext": "ab",
+              "captures": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "manual input",
+                "",
+                "",
+                "",
+                "ab"
+              ]
+            }
+          },
+          {
+            "operation": "input-alias-setter",
+            "value": true,
+            "state": {
+              "input": "alias input",
+              "lastMatch": "",
+              "lastParen": "",
+              "leftContext": "",
+              "rightContext": "ab",
+              "captures": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "alias input",
+                "",
+                "",
+                "",
+                "ab"
+              ]
+            }
+          },
+          {
+            "operation": "symbol-input-ToString-error",
+            "value": "TypeError",
+            "state": {
+              "input": "alias input",
+              "lastMatch": "",
+              "lastParen": "",
+              "leftContext": "",
+              "rightContext": "ab",
+              "captures": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "alias input",
+                "",
+                "",
+                "",
+                "ab"
+              ]
+            }
+          },
+          {
+            "operation": "invalid-receiver-preserves-state",
+            "value": "TypeError",
+            "state": {
+              "input": "alias input",
+              "lastMatch": "",
+              "lastParen": "",
+              "leftContext": "",
+              "rightContext": "ab",
+              "captures": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "alias input",
+                "",
+                "",
+                "",
+                "ab"
+              ]
+            }
+          },
+          {
+            "operation": "browser-subclass-match",
+            "value": true,
+            "state": {
+              "input": "xderivedy",
+              "lastMatch": "derived",
+              "lastParen": "derived",
+              "leftContext": "x",
+              "rightContext": "y",
+              "captures": [
+                "derived",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "xderivedy",
+                "derived",
+                "derived",
+                "x",
+                "y"
+              ]
+            }
+          },
+          {
+            "operation": "browser-borrowed-getter",
+            "value": "derived",
+            "state": {
+              "input": "xderivedy",
+              "lastMatch": "derived",
+              "lastParen": "derived",
+              "leftContext": "x",
+              "rightContext": "y",
+              "captures": [
+                "derived",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "xderivedy",
+                "derived",
+                "derived",
+                "x",
+                "y"
+              ]
+            }
+          },
+          {
+            "operation": "regexp-public-prototype-change",
+            "value": [
+              "detached",
+              "detached"
+            ],
+            "state": {
+              "input": "xdetachedy",
+              "lastMatch": "detached",
+              "lastParen": "detached",
+              "leftContext": "x",
+              "rightContext": "y",
+              "captures": [
+                "detached",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "xdetachedy",
+                "detached",
+                "detached",
+                "x",
+                "y"
+              ]
+            }
+          },
+          {
+            "operation": "capture-assignment-does-not-change-value",
+            "value": true,
+            "state": {
+              "input": "xdetachedy",
+              "lastMatch": "detached",
+              "lastParen": "detached",
+              "leftContext": "x",
+              "rightContext": "y",
+              "captures": [
+                "detached",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "xdetachedy",
+                "detached",
+                "detached",
+                "x",
+                "y"
+              ]
+            }
+          },
+          {
+            "operation": "property-shape",
+            "value": {
+              "configurable": false,
+              "enumerable": true,
+              "getter": "function"
+            },
+            "state": {
+              "input": "xdetachedy",
+              "lastMatch": "detached",
+              "lastParen": "detached",
+              "leftContext": "x",
+              "rightContext": "y",
+              "captures": [
+                "detached",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "aliases": [
+                "xdetachedy",
+                "detached",
+                "detached",
+                "x",
+                "y"
+              ]
+            }
+          }
+        ],
+        "deletedPropertyStaysDeleted": false
+      }
+    }
+  ],
+  "scope": "Browser-observed static capture properties and aliases. No RegExp.prototype.compile or proposed subclass/cross-realm invalidation; neither tested browser implements that invalidation. Descriptor configurability/enumerability follow Chrome and the TC39 draft; Firefox retains nonconfigurable enumerable statics."
+}
