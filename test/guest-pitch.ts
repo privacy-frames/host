@@ -1,12 +1,16 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, writeFile, mkdtemp, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { chromium, firefox } from 'playwright';
 import { parseResourceList } from '../src/installation/resource-list.ts';
 import { provideResourceList } from './resource-list-input.ts';
 import { servers } from './server.ts';
 
 declare global {
+  var guestPitchCaptures: MediaStream[];
+  var guestPitchCaptureErrors: { name: string; message: string }[];
   var guestPitchAudio: { frames: number; energy: number; state: string }[];
 }
 
@@ -43,6 +47,28 @@ const hashes = await Promise.all(
   }),
 );
 
+const temporary = await mkdtemp(join(tmpdir(), 'guest-pitch-audio-'));
+const tone = join(temporary, '220hz.wav');
+const frames = 44100 * 4;
+const wav = Buffer.alloc(44 + frames * 2);
+wav.write('RIFF', 0);
+wav.writeUInt32LE(wav.length - 8, 4);
+wav.write('WAVEfmt ', 8);
+wav.writeUInt32LE(16, 16);
+wav.writeUInt16LE(1, 20);
+wav.writeUInt16LE(1, 22);
+wav.writeUInt32LE(44100, 24);
+wav.writeUInt32LE(88200, 28);
+wav.writeUInt16LE(2, 32);
+wav.writeUInt16LE(16, 34);
+wav.write('data', 36);
+wav.writeUInt32LE(frames * 2, 40);
+for (let i = 0; i < frames; i++)
+  wav.writeInt16LE(
+    Math.round(12000 * Math.sin((2 * Math.PI * 220 * i) / 44100)),
+    44 + i * 2,
+  );
+await writeFile(tone, wav);
 const server = await servers({ publicExamples: true });
 const receipts: object[] = [];
 try {
@@ -52,13 +78,34 @@ try {
   ] as const;
   for (const [name, type] of browsers) {
     if (process.env.GUEST_BROWSER && process.env.GUEST_BROWSER !== name) continue;
-    const browser = await type.launch({ headless: true });
+    const browser = await type.launch({
+      headless: true,
+      ...(name === 'chromium' ? { executablePath: chromium.executablePath() } : {}),
+      ...(name === 'chromium'
+        ? {
+            args: [
+              '--use-fake-device-for-media-stream',
+              '--use-file-for-fake-audio-capture=' + tone,
+            ],
+          }
+        : {
+            firefoxUserPrefs: {
+              'media.navigator.streams.fake': true,
+              'media.navigator.permission.disabled': true,
+            },
+          }),
+    });
     const errors: string[] = [];
+    const consoleErrors: string[] = [];
     const checks: string[] = [];
     let failure: string | undefined;
     const started = performance.now();
     try {
       const context = await browser.newContext();
+      if (name === 'chromium')
+        await context.grantPermissions(['microphone'], {
+          origin: 'http://127.0.0.1:4211',
+        });
       const manager = await context.newPage();
       manager.on('pageerror', (error) => console.error(name, 'manager', error.message));
       await manager.goto('http://127.0.0.1:4210/privacy-frames/');
@@ -88,8 +135,12 @@ try {
         console.error(name, 'app', error.message);
       });
       app.on('console', (message) => {
-        if (message.type() === 'error')
+        if (message.type() === 'error') {
+          consoleErrors.push(
+            (message.location().url || '(browser)') + ': ' + message.text(),
+          );
           console.error(name, 'console', message.text().slice(0, 1800));
+        }
       });
       await app.waitForFunction(
         () =>
@@ -115,6 +166,20 @@ try {
       // property changes or a fabricated application-side success marker.
       await app.evaluate(() => {
         globalThis.guestPitchAudio = [];
+        globalThis.guestPitchCaptures = [];
+        globalThis.guestPitchCaptureErrors = [];
+        const capture = MediaDevices.prototype.getUserMedia;
+        MediaDevices.prototype.getUserMedia = async function (...args) {
+          try {
+            const stream = await Reflect.apply(capture, this, args);
+            guestPitchCaptures.push(stream);
+            return stream;
+          } catch (error) {
+            if (error instanceof Error)
+              guestPitchCaptureErrors.push({ name: error.name, message: error.message });
+            throw error;
+          }
+        };
         const start = AudioBufferSourceNode.prototype.start;
         AudioBufferSourceNode.prototype.start = function (...args) {
           const data = this.buffer?.getChannelData(0);
@@ -163,6 +228,57 @@ try {
         (await indexedDB.databases()).map((database) => database.name),
       );
       assert(databases.some((name) => name?.endsWith('piano-library')));
+      if (!process.env.GUEST_SKIP_MIC) {
+        await app.getByRole('button', { name: 'Start microphone', exact: true }).click();
+        await app.waitForFunction(
+          () => guestPitchCaptures.length > 0 || guestPitchCaptureErrors.length > 0,
+        );
+        assert.deepEqual(await app.evaluate(() => guestPitchCaptureErrors), []);
+        await app.getByText('Microphone on', { exact: true }).waitFor();
+        await app.waitForFunction(
+          () =>
+            /\d+\.\d Hz/.test(
+              document.querySelector('.meter .detected .sub')?.textContent || '',
+            ),
+          undefined,
+          { timeout: 30000 },
+        );
+        const frequencyText = await app.locator('.meter .detected .sub').textContent();
+        const frequency = Number(frequencyText?.match(/([\d.]+) Hz/)?.[1]);
+        if (name === 'chromium')
+          assert(
+            Math.abs(frequency - 220) < 3,
+            'Controlled 220 Hz tone was detected as ' + frequency,
+          );
+        else assert(frequency > 100 && frequency < 2000);
+        await app.getByRole('button', { name: 'Stop', exact: true }).click();
+        assert(
+          await app.evaluate(
+            () =>
+              guestPitchCaptures.length === 1 &&
+              guestPitchCaptures[0]!
+                .getTracks()
+                .every((track) => track.readyState === 'ended'),
+          ),
+        );
+        checks.push(
+          'Native microphone input reaches pitch analysis (' +
+            frequency +
+            ' Hz) and all capture tracks stop',
+        );
+        if (name === 'chromium') {
+          await context.clearPermissions();
+          await context.grantPermissions([], { origin: 'http://127.0.0.1:4211' });
+          await app
+            .getByRole('button', { name: 'Start microphone', exact: true })
+            .click();
+          await app.getByText('Microphone unavailable.', { exact: false }).waitFor();
+          assert.equal(await app.evaluate(() => guestPitchCaptures.length), 1);
+          checks.push(
+            'Denied native microphone permission is handled without creating another capture stream',
+          );
+        }
+      }
       await tab('Settings');
       await app.getByLabel('Instrument').selectOption('triangle');
       await context.setOffline(true);
@@ -193,6 +309,10 @@ try {
         'No application request reached the runtime HTTP server after confinement',
       );
       assert.deepEqual(errors, []);
+      assert(
+        !consoleErrors.some((message) => /Aborted\(|JS_FreeRuntime/.test(message)),
+        'Guest engine disposal aborted during offline reload',
+      );
     } catch (error) {
       failure = error instanceof Error ? error.stack : String(error);
       throw error;
@@ -207,6 +327,7 @@ try {
         elapsedMs: Math.round(performance.now() - started),
         checks,
         errors,
+        consoleErrors,
         failure,
       });
       console.log(JSON.stringify(receipts.at(-1)));
@@ -215,6 +336,7 @@ try {
   }
 } finally {
   await server.close();
+  await rm(temporary, { recursive: true, force: true });
   await mkdir('results/guest-runtime', { recursive: true });
   await writeFile(
     'results/guest-runtime/pitch.json',
