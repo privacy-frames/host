@@ -70,3 +70,25 @@ export interface BrowserBindingManifest {
   sourceHash: string;
   interfaces: readonly BrowserInterfaceDefinition[];
 }
+
+/** The runtime provisions properties through native Web IDL operations. */
+export interface RuntimeInterfaceMember {
+  name: string;
+  kind: InterfaceMember['kind'];
+  static: boolean;
+  exposed: readonly string[];
+  attributes: readonly string[];
+  readonly?: boolean;
+}
+
+export interface RuntimeInterfaceDefinition {
+  name: string;
+  kind: BrowserInterfaceDefinition['kind'];
+  parent: string | null;
+  exposed: readonly string[];
+  global: readonly string[];
+  hasInterfaceObject: boolean;
+  constructable: boolean;
+  /** Only global-interface members are needed to provision this projection. */
+  members: readonly RuntimeInterfaceMember[];
+}

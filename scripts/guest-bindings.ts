@@ -18,6 +18,8 @@ import type {
   BrowserInterfaceDefinition,
   InterfaceArgument,
   InterfaceMember,
+  RuntimeInterfaceDefinition,
+  RuntimeInterfaceMember,
 } from '../src/guest/interface-definitions.ts';
 
 const require = createRequire(import.meta.url);
@@ -291,7 +293,41 @@ export function compileInterfaceDefinitions(
   return definitions;
 }
 
-/** Generate the checked-in standard interface table before bundling the runtime. */
+/** Retain the runtime's global provisioning data, not unused conversion schemas. */
+export function runtimeInterfaceProjection(
+  definitions: readonly BrowserInterfaceDefinition[],
+): RuntimeInterfaceDefinition[] {
+  return definitions.map((definition) => ({
+    name: definition.name,
+    kind: definition.kind,
+    parent: definition.parent,
+    exposed: definition.exposed,
+    global: definition.global,
+    hasInterfaceObject: definition.hasInterfaceObject,
+    constructable: definition.constructorArguments !== null,
+    members: definition.global.length
+      ? definition.members.map((member): RuntimeInterfaceMember => ({
+          name: member.name,
+          kind: member.kind,
+          static: member.static,
+          exposed: member.exposed,
+          attributes: member.attributes,
+          ...(member.kind === 'attribute'
+            ? { readonly: member.readonly }
+            : member.kind === 'constant'
+              ? { readonly: true }
+              : {}),
+        }))
+      : [],
+  }));
+}
+
+async function writeChanged(path: string, text: string): Promise<void> {
+  const previous = await readFile(path, 'utf8').catch(() => null);
+  if (previous !== text) await writeFile(path, text);
+}
+
+/** Generate the full reference and runtime projection before computing build hashes. */
 export async function generateGuestBindings(
   root: string,
 ): Promise<BrowserBindingManifest> {
@@ -334,7 +370,18 @@ export async function generateGuestBindings(
     JSON.stringify(manifest, null, 2) +
     ';\n';
   const target = resolve(root, 'src/guest/generated-interfaces.ts');
-  const previous = await readFile(target, 'utf8').catch(() => null);
-  if (previous !== source) await writeFile(target, source);
+  await writeChanged(target, source);
+  const runtimeSource =
+    '// Generated runtime projection of the pinned @webref/idl corpus.\n' +
+    `// @webref/idl ${manifest.webrefVersion}; webidl2 ${manifest.parserVersion}; source ${manifest.sourceHash}.\n` +
+    '// Detailed conversion schemas remain in generated-interfaces.ts for build/reference use.\n' +
+    "import type { RuntimeInterfaceDefinition } from './interface-definitions.ts';\n\n" +
+    '// prettier-ignore\nexport const runtimeInterfaces: readonly RuntimeInterfaceDefinition[] = ' +
+    JSON.stringify(runtimeInterfaceProjection(manifest.interfaces), null, 2) +
+    ';\n';
+  await writeChanged(
+    resolve(root, 'src/guest/generated-runtime-interfaces.ts'),
+    runtimeSource,
+  );
   return manifest;
 }
