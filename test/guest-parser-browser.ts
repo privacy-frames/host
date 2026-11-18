@@ -77,11 +77,11 @@ try {
       assert.equal(result.html.contentType, 'text/html');
       assert.equal(result.html.doctype, 'html');
       assert.equal(result.html.base, 'https://publisher.invalid/app/');
-      assert.equal(result.html.mapped, base + '/installed/asset.png');
-      assert.equal(result.html.unknown, base + '/installed/__unavailable__');
+      assert(result.html.mapped.startsWith('blob:' + base + '/'));
+      assert.equal(result.html.unknown, 'data:application/octet-stream,');
       assert.equal(
         result.html.sourceSet,
-        base + '/installed/asset.png 1x, ' + base + '/installed/__unavailable__ 2x',
+        result.html.mapped + ' 1x, data:application/octet-stream, 2x',
       );
       for (const key of ['handlerAbsent', 'frameAbsent', 'objectAbsent', 'refreshAbsent'])
         assert.equal(result.html[key], true, key);
@@ -108,14 +108,14 @@ try {
       assert.equal(result.svg.namespace, 'http://www.w3.org/2000/svg');
       assert.equal(result.svg.gradientName, 'linearGradient');
       assert.equal(result.svg.viewBox, '0 0 10 10');
-      assert.equal(result.svg.href, base + '/installed/__unavailable__');
-      assert.equal(result.svg.animation, base + '/installed/__unavailable__');
-      assert(result.svg.fill.includes('/installed/__unavailable__'));
+      assert.equal(result.svg.href, 'data:application/octet-stream,');
+      assert.equal(result.svg.animation, 'data:application/octet-stream,');
+      assert(result.svg.fill.includes('data:application/octet-stream,'));
       assert.equal(result.svg.dangerousAnimationWithheld, true);
       assert.equal(result.svg.baseWithheld, true);
-      assert.equal(result.qualifiedAnimation, base + '/installed/__unavailable__');
+      assert.equal(result.qualifiedAnimation, 'data:application/octet-stream,');
       assert.equal(result.baseAnimationWithheld, true);
-      assert(result.stylesheetPI.includes(base + '/installed/__unavailable__'));
+      assert(result.stylesheetPI.includes('data:application/octet-stream,'));
       assert.equal(result.dtdSubset, 'parsererror');
       assert.deepEqual(result.publicDoctype, {
         publicId: '-//W3C//DTD SVG 1.1//EN',
