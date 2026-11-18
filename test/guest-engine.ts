@@ -102,6 +102,7 @@ try {
       assert.match(String(disposal.rejectedMessage), /expected rejection/);
       assert.match(String(disposal.closedMessage), /context is closed/);
       assert.deepEqual(disposal.lateErrors, []);
+      assert.equal(disposal.capturedNativeSymbol, true);
     } finally {
       await browser.close();
     }

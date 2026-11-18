@@ -211,6 +211,15 @@ try {
     wasmURL: '/quickjs.wasm',
     onError() {},
   });
+  disposable.set('returnNativeSymbol', () => Symbol.iterator);
+  const capturedNativeSymbol = disposable.evaluate(`(() => {
+    const original = Symbol;
+    Symbol.iterator = 'changed';
+    Symbol = () => 'replaced';
+    const result = returnNativeSymbol() === original.iterator;
+    Symbol = original;
+    return result;
+  })()`);
   let rejectedMessage = '';
   const rejected = disposable.evaluate(`Promise.reject(new Error('expected rejection'))`);
   disposable.drainJobs();
@@ -225,6 +234,14 @@ try {
       disposable.evaluate('throw repeatedError');
     } catch {}
   }
+  const queued = disposable.evaluate('Promise.resolve().then(() => 42)');
+  if (queued instanceof Promise) void queued.catch(() => {});
+  const pendingModule = disposable.evaluate(
+    'await new Promise(() => {})',
+    'https://example.test/pending-module.js',
+    'module',
+  );
+  if (pendingModule instanceof Promise) void pendingModule.catch(() => {});
   const pending = disposable.evaluate('new Promise(() => {})');
   disposable.dispose();
   let closedMessage = '';
@@ -272,7 +289,7 @@ try {
     result,
     additional,
     advanced,
-    disposal: { rejectedMessage, closedMessage, lateErrors },
+    disposal: { rejectedMessage, closedMessage, lateErrors, capturedNativeSymbol },
   };
 } catch (error) {
   globalThis.guestEngineResults = {

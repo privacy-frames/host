@@ -165,6 +165,8 @@ export class GuestEngine {
   }
 
   private initialize(): void {
+    for (const [native, name] of wellKnownSymbols)
+      this.symbolHandles.set(native, this.context.getWellKnownSymbol(name));
     const bridge = this.context.newFunction('__privacyHostDispatch', (...arguments_) => {
       try {
         return this.dispatch(arguments_);
@@ -174,16 +176,30 @@ export class GuestEngine {
     });
     this.context.setProp(this.context.global, '__privacyHostDispatch', bridge);
     bridge.dispose();
-    const helpers = this.unwrap(
-      this.context.evalCode(`(${installGuestRuntime.toString()})()`, 'privacy:bindings'),
+    const bindings = this.unwrap(
+      this.context.evalCode(
+        `(() => { const helpers = (${installGuestRuntime.toString()})(); return [helpers, Object.keys(helpers)]; })()`,
+        'privacy:bindings',
+      ),
     );
-    const names = this.context.getOwnPropertyNames(helpers).unwrap();
+    const helpers = this.context.getProp(bindings, 0);
+    const names = this.context.getProp(bindings, 1);
+    const length = this.context.getProp(names, 'length');
+    bindings.dispose();
     try {
-      for (const name of names) {
-        const key = this.context.getString(name);
-        this.helpers.set(key, this.context.getProp(helpers, name));
+      for (let index = 0; index < this.context.getNumber(length); index++) {
+        const name = this.context.getProp(names, index);
+        try {
+          this.helpers.set(
+            this.context.getString(name),
+            this.context.getProp(helpers, name),
+          );
+        } finally {
+          name.dispose();
+        }
       }
     } finally {
+      length.dispose();
       names.dispose();
       helpers.dispose();
     }
