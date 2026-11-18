@@ -15,6 +15,11 @@ function resources(): GuestResources {
     runtimeURL: 'https://runtime.example/',
     applicationURL: 'https://runtime.example/fixture/app/',
     engineWasm: new ArrayBuffer(0),
+    workerBootstrap: {
+      dedicated: new ArrayBuffer(0),
+      shared: new ArrayBuffer(0),
+      worklet: new ArrayBuffer(0),
+    },
     resources: [
       {
         url: 'https://publisher.example/app/value.txt',

@@ -9,6 +9,11 @@ const resources = new GuestResources({
   runtimeURL: location.origin + '/',
   applicationURL: location.origin + '/installed/',
   engineWasm: new ArrayBuffer(0),
+  workerBootstrap: {
+    dedicated: new ArrayBuffer(0),
+    shared: new ArrayBuffer(0),
+    worklet: new ArrayBuffer(0),
+  },
   resources: [
     {
       url: 'https://publisher.invalid/app/asset.png',

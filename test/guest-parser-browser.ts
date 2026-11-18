@@ -56,7 +56,7 @@ try {
       const browserRequests: string[] = [];
       page.on('pageerror', (error) => errors.push(error.message));
       page.on('request', (request) => browserRequests.push(request.url()));
-      const base = `http://127.0.0.1:${address.port}`;
+      const base: string = `http://127.0.0.1:${address.port}`;
       await page.goto(base + '/#' + encodeURIComponent(external));
       await page.waitForFunction(() => 'parserResult' in globalThis);
       await page.waitForTimeout(50);

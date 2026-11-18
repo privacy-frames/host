@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import type { RuntimeInterfaceDefinition } from '../src/guest/interface-definitions.ts';
 import { runtimeInterfaceProjection } from '../scripts/guest-bindings.ts';
 import {
   browserBindings,
@@ -19,7 +20,7 @@ test('runtime projection is generated from the complete pinned corpus', () => {
   );
   assert.equal(runtimeInterfaces.length, browserBindings.interfaces.length);
   for (let index = 0; index < runtimeInterfaces.length; index++) {
-    const compact = runtimeInterfaces[index];
+    const compact: RuntimeInterfaceDefinition = runtimeInterfaces[index];
     const full = browserBindings.interfaces[index];
     assert.equal(compact.name, full.name);
     assert.equal(compact.parent, full.parent);
