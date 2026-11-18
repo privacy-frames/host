@@ -383,6 +383,8 @@ export class GuestEngine {
     if (this.closed || this.pumping || this.depth) return;
     this.pumping = true;
     try {
+      // The pinned SDK patch refreshes output pointers after Wasm memory growth.
+      // See patches/quickjs-emscripten-core+0.32.0.patch and upstream issue #240.
       const jobs = this.runtime.executePendingJobs(1000);
       if (jobs.error) {
         const error = this.guestError(jobs.error);
@@ -591,10 +593,14 @@ export class GuestEngine {
       seen.set(value, result);
       this.nativeHandles.set(value, result.dup());
       for (let index = 0; index < value.length; index++) {
+        if (!Object.hasOwn(value, index)) continue;
         const item = this.encode(value[index], seen);
         this.context.setProp(result, index, item);
         item.dispose();
       }
+      const length = this.context.newNumber(value.length);
+      this.context.setProp(result, 'length', length);
+      length.dispose();
       return result;
     }
     const constructorDescriptor = Object.getOwnPropertyDescriptor(object, 'constructor');

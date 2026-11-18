@@ -103,6 +103,8 @@ try {
       assert.match(String(disposal.closedMessage), /context is closed/);
       assert.deepEqual(disposal.lateErrors, []);
       assert.equal(disposal.capturedNativeSymbol, true);
+      assert.equal(disposal.reflectedAfterGrowth, true);
+      assert.equal(disposal.lengthAfterGrowth, 3);
     } finally {
       await browser.close();
     }

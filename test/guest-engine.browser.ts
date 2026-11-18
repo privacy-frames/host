@@ -205,12 +205,37 @@ try {
     nativePrototype: Object.hasOwn(Element.prototype, 'describe'),
     errors,
   };
+  const returnedSymbol = engine.evaluate('Symbol("returned")');
+  if (typeof returnedSymbol !== 'symbol') throw new Error('Guest Symbol was not decoded');
   engine.dispose();
   const disposable = await GuestEngine.create({
     host,
     wasmURL: '/quickjs.wasm',
     onError() {},
   });
+  const growingJob = disposable.evaluate(
+    `Promise.resolve().then(() => { globalThis.largeAllocation = new Uint8Array(32 * 1024 * 1024); return 42; })`,
+  );
+  disposable.drainJobs();
+  await growingJob;
+  const namesAfterGrowth = disposable.context
+    .getOwnPropertyNames(disposable.context.global)
+    .unwrap();
+  let reflectedAfterGrowth = false;
+  try {
+    reflectedAfterGrowth = namesAfterGrowth.some(
+      (name) => disposable.context.getString(name) === 'largeAllocation',
+    );
+  } finally {
+    namesAfterGrowth.dispose();
+  }
+  disposable.evaluate('globalThis.arrayAfterGrowth = [1, 2, 3]');
+  const arrayAfterGrowth = disposable.context.getProp(
+    disposable.context.global,
+    'arrayAfterGrowth',
+  );
+  const lengthAfterGrowth = disposable.context.getLength(arrayAfterGrowth);
+  arrayAfterGrowth.dispose();
   disposable.set('returnNativeSymbol', () => Symbol.iterator);
   const capturedNativeSymbol = disposable.evaluate(`(() => {
     const original = Symbol;
@@ -289,7 +314,14 @@ try {
     result,
     additional,
     advanced,
-    disposal: { rejectedMessage, closedMessage, lateErrors, capturedNativeSymbol },
+    disposal: {
+      rejectedMessage,
+      closedMessage,
+      lateErrors,
+      capturedNativeSymbol,
+      reflectedAfterGrowth,
+      lengthAfterGrowth,
+    },
   };
 } catch (error) {
   globalThis.guestEngineResults = {
