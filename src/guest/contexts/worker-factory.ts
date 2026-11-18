@@ -5,9 +5,37 @@ import type {
 } from './types.ts';
 
 interface WorkerConstructors {
-  Worker: typeof Worker;
+  Worker?: typeof Worker;
   SharedWorker?: typeof SharedWorker;
   dispose(): void;
+}
+
+function workerOptions(value: unknown, shared = false): WorkerOptions {
+  if (
+    shared &&
+    value !== null &&
+    !['object', 'function', 'undefined'].includes(typeof value)
+  )
+    return { name: String(value) };
+  if (
+    value !== undefined &&
+    value !== null &&
+    typeof value !== 'object' &&
+    typeof value !== 'function'
+  )
+    throw new TypeError('Worker options must be a dictionary');
+  const type = value == null ? undefined : Reflect.get(value, 'type');
+  const credentials = value == null ? undefined : Reflect.get(value, 'credentials');
+  const name = value == null ? undefined : Reflect.get(value, 'name');
+  const scriptType = type === undefined ? 'classic' : String(type);
+  if (scriptType !== 'classic' && scriptType !== 'module')
+    throw new TypeError('Invalid worker type');
+  if (
+    credentials !== undefined &&
+    !['omit', 'same-origin', 'include'].includes(String(credentials))
+  )
+    throw new TypeError('Invalid worker credentials');
+  return { type: scriptType, name: name === undefined ? '' : String(name) };
 }
 
 /** Only trusted bootstrap URLs are ever given to native worker constructors. */
@@ -47,43 +75,45 @@ export function createGuestWorkers(
     );
   }
 
-  class ConfinedWorker extends NativeWorker {
-    constructor(input: string | URL, workerOptions: WorkerOptions = {}) {
-      const prepared = initialization(input, workerOptions?.type);
-      prepared.name = workerOptions?.name || '';
-      super(bootstrap(false), { name: prepared.name, type: 'classic' });
-      workers.add(this);
-      // This is sent before the instance is returned to guest code. Application
-      // messages therefore cannot precede the trusted initialization packet.
-      NativeWorker.prototype.postMessage.call(this, prepared);
-    }
+  let Dedicated: typeof Worker | undefined;
+  if (typeof NativeWorker === 'function') {
+    class ConfinedWorker extends NativeWorker {
+      constructor(input: string | URL, suppliedOptions: WorkerOptions = {}) {
+        const normalized = workerOptions(suppliedOptions);
+        const prepared = initialization(input, normalized.type);
+        prepared.name = normalized.name;
+        super(bootstrap(false), { name: prepared.name, type: 'classic' });
+        workers.add(this);
+        // This is sent before the instance is returned to guest code. Application
+        // messages therefore cannot precede the trusted initialization packet.
+        NativeWorker.prototype.postMessage.call(this, prepared);
+      }
 
-    override postMessage(
-      message: unknown,
-      transferOrOptions: Transferable[] | StructuredSerializeOptions = [],
-    ): void {
-      const transfer = Array.isArray(transferOrOptions)
-        ? transferOrOptions
-        : transferOrOptions.transfer || [];
-      NativeWorker.prototype.postMessage.call(this, message, { transfer });
-      options.commitTransfers(transfer);
-    }
+      override postMessage(
+        message: unknown,
+        transferOrOptions: Transferable[] | StructuredSerializeOptions = [],
+      ): void {
+        const transfer = Array.isArray(transferOrOptions)
+          ? transferOrOptions
+          : transferOrOptions?.transfer || [];
+        NativeWorker.prototype.postMessage.call(this, message, { transfer });
+        options.commitTransfers(transfer);
+      }
 
-    override terminate(): void {
-      workers.delete(this);
-      NativeWorker.prototype.terminate.call(this);
+      override terminate(): void {
+        workers.delete(this);
+        NativeWorker.prototype.terminate.call(this);
+      }
     }
+    Object.defineProperty(ConfinedWorker, 'name', { value: 'Worker' });
+    Dedicated = ConfinedWorker;
   }
-  Object.defineProperty(ConfinedWorker, 'name', { value: 'Worker' });
 
   let Shared: typeof SharedWorker | undefined;
   if (typeof NativeSharedWorker === 'function') {
     class ConfinedSharedWorker extends NativeSharedWorker {
       constructor(input: string | URL, optionsOrName: string | WorkerOptions = {}) {
-        const sharedOptions =
-          typeof optionsOrName === 'string'
-            ? { name: optionsOrName }
-            : optionsOrName || {};
+        const sharedOptions = workerOptions(optionsOrName, true);
         const prepared = initialization(input, sharedOptions.type);
         prepared.name = sharedOptions.name || '';
         const name = JSON.stringify([
@@ -102,7 +132,7 @@ export function createGuestWorkers(
   }
 
   return {
-    Worker: ConfinedWorker,
+    Worker: Dedicated,
     SharedWorker: Shared,
     dispose() {
       for (const worker of workers) NativeWorker.prototype.terminate.call(worker);

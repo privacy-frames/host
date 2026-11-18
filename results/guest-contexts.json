@@ -1,0 +1,130 @@
+{
+  "receipts": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "observation": {
+        "result": {
+          "worker": {
+            "count": 1,
+            "same": true,
+            "bytes": [
+              1,
+              7,
+              3,
+              4
+            ],
+            "denied": "undefined",
+            "buffer": {},
+            "detached": true,
+            "persistentCount": 2
+          },
+          "nested": 9,
+          "moduleWorker": 11,
+          "failedTransfer": {
+            "rejected": true,
+            "retained": true
+          },
+          "denied": true,
+          "shared": [
+            1,
+            2
+          ],
+          "sample": 0.25,
+          "workletMessages": [
+            {
+              "bytes": [
+                4,
+                4
+              ]
+            },
+            {
+              "detached": true,
+              "wasm": "undefined"
+            }
+          ],
+          "nativePortDetached": true,
+          "prepared": 1,
+          "closed": 1,
+          "stripped": true,
+          "childText": "prepared child"
+        }
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "observation": {
+        "result": {
+          "worker": {
+            "count": 1,
+            "same": true,
+            "bytes": [
+              1,
+              7,
+              3,
+              4
+            ],
+            "denied": "undefined",
+            "buffer": {},
+            "detached": true,
+            "persistentCount": 2
+          },
+          "nested": 9,
+          "moduleWorker": 11,
+          "failedTransfer": {
+            "rejected": true,
+            "retained": true
+          },
+          "denied": true,
+          "shared": [
+            1,
+            2
+          ],
+          "sample": 0.25,
+          "workletMessages": [
+            {
+              "bytes": [
+                4,
+                4
+              ]
+            },
+            {
+              "detached": true,
+              "wasm": "undefined"
+            }
+          ],
+          "nativePortDetached": true,
+          "prepared": 1,
+          "closed": 1,
+          "stripped": true,
+          "childText": "prepared child"
+        }
+      }
+    }
+  ],
+  "requests": [
+    "/",
+    "/browser.js",
+    "/quickjs.wasm",
+    "/app/__guest_worker__.js",
+    "/app/__guest_worker__.js",
+    "/app/__guest_worker__.js",
+    "/app/__guest_worker__.js",
+    "/app/__guest_worker__.js",
+    "/app/__guest_shared_worker__.js",
+    "/guest-worklet.js",
+    "/blank.html",
+    "/",
+    "/browser.js",
+    "/quickjs.wasm",
+    "/favicon.ico",
+    "/app/__guest_worker__.js",
+    "/app/__guest_worker__.js",
+    "/app/__guest_worker__.js",
+    "/app/__guest_worker__.js",
+    "/app/__guest_shared_worker__.js",
+    "/guest-worklet.js",
+    "/blank.html"
+  ]
+}

@@ -1,6 +1,14 @@
 export type GuestContextKind = 'window' | 'dedicated-worker' | 'shared-worker';
 export type GuestScriptType = 'classic' | 'module';
 
+export interface GuestAudioParamDescriptor {
+  name: string;
+  defaultValue?: number;
+  minValue?: number;
+  maxValue?: number;
+  automationRate?: AutomationRate;
+}
+
 /** Immutable admitted bytes are supplied before any guest source executes. */
 export interface GuestContextResource {
   url: string;
