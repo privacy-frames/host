@@ -14,10 +14,20 @@ export function installGuestRuntime() {
   const reflectConstruct = Reflect.construct;
   const getDescriptor = Object.getOwnPropertyDescriptor;
   const defineProperty = Object.defineProperty;
+  const getPrototype = Object.getPrototypeOf;
   const setPrototype = Object.setPrototypeOf;
   const ownKeys = Reflect.ownKeys;
   const arrayIsArray = Array.isArray;
   const bufferIsView = ArrayBuffer.isView;
+  const typedArrayPrototype = Object.getPrototypeOf(Uint8Array.prototype);
+  const typedBuffer = getDescriptor(typedArrayPrototype, 'buffer')!.get!;
+  const typedOffset = getDescriptor(typedArrayPrototype, 'byteOffset')!.get!;
+  const typedLength = getDescriptor(typedArrayPrototype, 'length')!.get!;
+  const typedBytes = getDescriptor(typedArrayPrototype, 'byteLength')!.get!;
+  const typedName = getDescriptor(typedArrayPrototype, Symbol.toStringTag)!.get!;
+  const dataBuffer = getDescriptor(DataView.prototype, 'buffer')!.get!;
+  const dataOffset = getDescriptor(DataView.prototype, 'byteOffset')!.get!;
+  const dataBytes = getDescriptor(DataView.prototype, 'byteLength')!.get!;
   const bufferLength = getDescriptor(ArrayBuffer.prototype, 'byteLength')!.get!;
   const bufferTransfer: Function = Reflect.get(ArrayBuffer.prototype, 'transfer');
   const dateGetTime = Date.prototype.getTime;
@@ -44,7 +54,6 @@ export function installGuestRuntime() {
   const symbolFor = Symbol.keyFor;
   const arrayPush = Array.prototype.push;
   const byteSet = Uint8Array.prototype.set;
-  const stringTag = Object.prototype.toString;
 
   class InternalMap<K, V> {
     private store = new MapConstructor<K, V>();
@@ -161,7 +170,9 @@ export function installGuestRuntime() {
           return descriptor;
         }
         if (current === functionPrototype) return undefined;
-        return getDescriptor(current, property);
+        const descriptor = getDescriptor(current, property);
+        if (descriptor) return descriptor;
+        current = getPrototype(current);
       }
     }
     return undefined;
@@ -201,6 +212,8 @@ export function installGuestRuntime() {
       get(_target, property, receiver) {
         const own = getDescriptor(target, property);
         if (own && !own.configurable && 'value' in own && !own.writable) return own.value;
+        if (record.local.has(property) && own) return readDescriptor(own, receiver);
+        if (property === '__proto__') return parent(record);
         if (
           callable &&
           ['call', 'apply', 'bind', 'constructor'].includes(String(property))
@@ -213,13 +226,29 @@ export function installGuestRuntime() {
         return native('get', id, property);
       },
       set(_target, property, value, receiver) {
+        if (property === '__proto__') {
+          if (
+            value === null ||
+            typeof value === 'object' ||
+            typeof value === 'function'
+          ) {
+            record.parent = value;
+            record.parentOverridden = true;
+          }
+          return true;
+        }
         const local = localDescriptor(record, property);
         if (local?.set) {
           reflectApply(local.set, receiver, [value]);
           return true;
         }
         if (local && !('value' in local)) return false;
-        if (record.prototypeObject || callable || record.local.has(property)) {
+        if (
+          record.prototypeObject ||
+          callable ||
+          property === 'constructor' ||
+          record.local.has(property)
+        ) {
           record.local.add(property);
           return reflectSet(target, property, value, target);
         }
@@ -279,8 +308,17 @@ export function installGuestRuntime() {
       apply(_target, receiver, args) {
         return native('call', id, undefined, receiver, args);
       },
-      construct(_target, args) {
-        return native('construct', id, undefined, args) as object;
+      construct(_target, args, newTarget) {
+        const value = native('construct', id, undefined, args) as object;
+        if (newTarget !== proxy) {
+          const prototype = reflectGet(newTarget, 'prototype');
+          if (
+            prototype &&
+            (typeof prototype === 'object' || typeof prototype === 'function')
+          )
+            setPrototype(value, prototype);
+        }
+        return value;
       },
     });
     record.proxy = proxy;
@@ -326,13 +364,24 @@ export function installGuestRuntime() {
     return 'object';
   };
 
-  const viewInfo = (value: ArrayBufferView) => ({
-    buffer: value.buffer,
-    offset: value.byteOffset,
-    byteLength: value.byteLength,
-    name: reflectApply(stringTag, value, []).slice(8, -1),
-    length: 'length' in value ? value.length : undefined,
-  });
+  const viewInfo = (value: ArrayBufferView) => {
+    try {
+      const buffer = reflectApply(dataBuffer, value, []);
+      return {
+        buffer,
+        offset: reflectApply(dataOffset, value, []),
+        byteLength: reflectApply(dataBytes, value, []),
+        name: 'DataView',
+      };
+    } catch {}
+    return {
+      buffer: reflectApply(typedBuffer, value, []),
+      offset: reflectApply(typedOffset, value, []),
+      byteLength: reflectApply(typedBytes, value, []),
+      name: reflectApply(typedName, value, []),
+      length: reflectApply(typedLength, value, []),
+    };
+  };
 
   return {
     createHost,
@@ -351,7 +400,23 @@ export function installGuestRuntime() {
     },
     viewInfo,
     dateTime: (value: Date) => reflectApply(dateGetTime, value, []),
-    objectKeys: (value: object) => ownKeys(value),
+    objectKeys(value: object) {
+      if (arrayIsArray(value)) return ownKeys(value);
+      const result: PropertyKey[] = [];
+      const seen = new InternalSet<PropertyKey>();
+      let current: object | null = value;
+      while (current && current !== objectPrototype && current !== functionPrototype) {
+        for (const key of ownKeys(current)) {
+          if ((key === 'constructor' && current !== value) || seen.has(key)) continue;
+          seen.add(key);
+          reflectApply(arrayPush, result, [key]);
+        }
+        current = getPrototype(current);
+      }
+      return result;
+    },
+    propertyEnumerable: (value: object, key: PropertyKey) =>
+      !!getDescriptor(value, key)?.enumerable,
     objectGet: (value: object, property: PropertyKey) => reflectGet(value, property),
     setPrototype: (value: object, prototype: object | null) =>
       setPrototype(value, prototype),
@@ -374,6 +439,28 @@ export function installGuestRuntime() {
     },
     makeDate: (value: number) => new DateConstructor(value),
     makeRegExp: (source: string, flags: string) => new RegExpConstructor(source, flags),
+    errorInfo(value: unknown) {
+      const read = (key: string) => {
+        try {
+          const field =
+            value && (typeof value === 'object' || typeof value === 'function')
+              ? reflectGet(value, key)
+              : undefined;
+          return typeof field === 'string' ? field : '';
+        } catch {
+          return '';
+        }
+      };
+      let fallback = 'Guest execution failed';
+      try {
+        fallback = String(value);
+      } catch {}
+      return {
+        name: read('name') || 'Error',
+        message: read('message') || fallback,
+        stack: read('stack'),
+      };
+    },
     makeMap: () => new MapConstructor(),
     makeSet: () => new SetConstructor(),
     setAdd: (value: Set<unknown>, item: unknown) => reflectApply(setAdd, value, [item]),

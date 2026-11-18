@@ -30,6 +30,7 @@ try {
   engine.set('Element', Element);
   engine.set('HTMLElement', HTMLElement);
   engine.set('Event', Event);
+  engine.set('CustomEvent', CustomEvent);
   engine.set('URL', URL);
   engine.set('console', console);
   engine.set('nativePromise', () => Promise.resolve({ answer: 42 }));
@@ -37,6 +38,24 @@ try {
   engine.set('nativeBuffer', new Uint8Array([1, 2, 3, 4]));
   engine.set('nativeThrow', () => {
     throw new Error('native failure');
+  });
+  engine.set('invokeSync', (callback: () => unknown) => callback());
+  engine.set('nestedBytes', (bytes: Uint8Array, callback: () => unknown) => {
+    bytes[0] = 3;
+    callback();
+    const written = bytes[1];
+    bytes[2] = 5;
+    return written;
+  });
+  engine.set('throwAfterWrite', (bytes: Uint8Array) => {
+    bytes[0] = 8;
+    throw new Error('after write');
+  });
+  engine.set('cloneNative', (value: unknown) => structuredClone(value));
+  engine.set('transferNative', (value: unknown, transfer: Transferable[]) => {
+    const cloned = structuredClone(value, { transfer });
+    engine.detachTransferred(transfer);
+    return cloned;
   });
   const parent = document.createElement('div');
   parent.id = 'fixture';
@@ -79,6 +98,51 @@ try {
       error,
     });
   `);
+  const advanced = engine.evaluate(`
+    (() => {
+    const original = new Error('identity');
+    let sameError = false;
+    try { invokeSync(() => { throw original; }); } catch (error) { sameError = error === original; }
+    const cyclic = { number: 4 }; cyclic.self = cyclic;
+    const map = new Map([[cyclic, new Set([1,2])]]);
+    const copiedMap = cloneNative(map);
+    const copiedKey = Array.from(copiedMap.keys())[0];
+    const unique = Symbol('private');
+    const node = document.getElementById('fixture');
+    node[unique] = 'symbol data';
+    const detail = { local: 9 };
+    const custom = new CustomEvent('custom', { detail });
+    class Listener { handleEvent(event) { detail.received = event.detail === detail; } }
+    node.addEventListener('custom', new Listener());
+    node.dispatchEvent(custom);
+    const disguised = new Uint8Array([4,5]);
+    Object.defineProperty(disguised, Symbol.toStringTag, { value: 'Function' });
+    fillBytes(disguised);
+    const nested = new Uint8Array([1,2,0]);
+    let callbackRead = 0;
+    const nativeRead = nestedBytes(nested, () => { callbackRead = nested[0]; nested[1] = 4; });
+    const throwing = new Uint8Array([1]);
+    try { throwAfterWrite(throwing); } catch {}
+    const buffer = new ArrayBuffer(4);
+    const bytes = new Uint8Array(buffer); bytes.set([1,2,3,4]);
+    const retained = new DataView(buffer,1,2);
+    const transferred = transferNative({ buffer, view: bytes, retained }, [buffer]);
+    let dataViewDetached = false;
+    try { retained.byteLength; } catch (error) { dataViewDetached = error instanceof TypeError; }
+    return ({
+      sameError,
+      map: copiedMap instanceof Map && copiedKey === copiedKey.self && copiedMap.get(copiedKey) instanceof Set,
+      symbol: node[unique],
+      detailIdentity: detail.received,
+      binaryBrand: Array.from(disguised),
+      nestedBytes: [callbackRead, nativeRead, ...nested],
+      throwingWrite: throwing[0],
+      sender: buffer.byteLength === 0 && bytes.byteLength === 0 && dataViewDetached,
+      receiver: transferred.buffer === transferred.view.buffer && transferred.buffer === transferred.retained.buffer,
+      bytes: Array.from(transferred.view),
+    });
+    })();
+  `);
   engine.evaluate(
     `nativePromise().then(value => { globalThis.promiseAnswer = value.answer; });`,
   );
@@ -99,7 +163,7 @@ try {
     errors,
   };
   engine.dispose();
-  globalThis.guestEngineResults = { result, additional };
+  globalThis.guestEngineResults = { result, additional, advanced };
 } catch (error) {
   globalThis.guestEngineResults = {
     error: String(error),

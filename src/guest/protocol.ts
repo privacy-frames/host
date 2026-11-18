@@ -15,6 +15,7 @@ export interface GuestEngineOptions {
   wasmModule?: WebAssembly.Module;
   wasmURL?: string;
   modules?: ReadonlyMap<string, string>;
+  resolveModule?: (specifier: string, referrer: string) => string;
   globalObject?: object;
   memoryLimit?: number;
   stackSize?: number;

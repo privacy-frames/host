@@ -8,6 +8,7 @@ import {
   type QuickJSDeferredPromise,
 } from 'quickjs-emscripten';
 import { installGuestRuntime } from './guest-runtime.ts';
+import resolveURI from '@jridgewell/resolve-uri';
 import type { GuestEngineOptions, GuestEvaluationMode, GuestHost } from './protocol.ts';
 
 interface RetainedGuest {
@@ -79,6 +80,21 @@ const intrinsicNames = [
   'BigInt64Array',
   'BigUint64Array',
 ] as const;
+
+const viewConstructors = new Map<string, Function>([
+  ['DataView', DataView],
+  ['Int8Array', Int8Array],
+  ['Uint8Array', Uint8Array],
+  ['Uint8ClampedArray', Uint8ClampedArray],
+  ['Int16Array', Int16Array],
+  ['Uint16Array', Uint16Array],
+  ['Int32Array', Int32Array],
+  ['Uint32Array', Uint32Array],
+  ['Float32Array', Float32Array],
+  ['Float64Array', Float64Array],
+  ['BigInt64Array', BigInt64Array],
+  ['BigUint64Array', BigUint64Array],
+]);
 
 /**
  * One persistent guest realm. All browser authority enters through GuestHost;
@@ -152,11 +168,7 @@ export class GuestEngine {
       try {
         return this.dispatch(arguments_);
       } catch (error) {
-        return {
-          error: this.context.newError(
-            error instanceof Error ? error : new Error(String(error)),
-          ),
-        };
+        return { error: this.exception(error) };
       }
     });
     this.context.setProp(this.context.global, '__privacyHostDispatch', bridge);
@@ -205,7 +217,14 @@ export class GuestEngine {
       },
       (base, name) => {
         if (catalog.has(name)) return name;
-        return new URL(name, base).href;
+        const resolved = this.options.resolveModule
+          ? this.options.resolveModule(name, base)
+          : typeof URL === 'function'
+            ? new URL(name, base).href
+            : resolveURI(name, base);
+        if (!catalog.has(resolved))
+          throw new Error('Module is not installed: ' + resolved);
+        return resolved;
       },
     );
     // No shared application memory is advertised until cross-engine storage is qualified.
@@ -270,10 +289,22 @@ export class GuestEngine {
     this.context.defineProp(this.context.global, name, {
       configurable: true,
       enumerable: true,
-      get: () => this.encode(this.host.get(target, key)),
+      get: () => {
+        this.syncBuffers('into-native');
+        try {
+          return this.encode(this.host.get(target, key));
+        } finally {
+          this.syncBuffers('into-guest');
+        }
+      },
       set: (value) => {
-        if (!this.host.set(target, key, this.decode(value)))
-          throw new TypeError('Property is read only');
+        this.syncBuffers('into-native');
+        try {
+          if (!this.host.set(target, key, this.decode(value)))
+            throw new TypeError('Property is read only');
+        } finally {
+          this.syncBuffers('into-guest');
+        }
       },
     });
   }
@@ -342,8 +373,8 @@ export class GuestEngine {
       return action();
     } finally {
       this.depth--;
+      this.syncBuffers('into-native');
       if (!this.depth) {
-        this.syncBuffers('into-native');
         this.scheduleJobs();
       }
     }
@@ -360,49 +391,48 @@ export class GuestEngine {
     const key = this.propertyKey(encodedKey);
     this.syncBuffers('into-native');
     let result: unknown;
-    switch (operation) {
-      case 'get':
-        result = this.host.get(target, key);
-        break;
-      case 'set':
-        result = this.host.set(target, key, this.decode(input[0]));
-        break;
-      case 'has':
-        result = this.has(target, key);
-        break;
-      case 'keys':
-        result = this.host.ownKeys(target);
-        break;
-      case 'prototype':
-        result = this.host.prototype(target);
-        break;
-      case 'descriptor': {
-        const descriptor = this.host.descriptor(target, key);
-        return descriptor ? this.encodeRecord(descriptor) : this.context.undefined;
+    try {
+      switch (operation) {
+        case 'get':
+          result = this.host.get(target, key);
+          break;
+        case 'set':
+          result = this.host.set(target, key, this.decode(input[0]));
+          break;
+        case 'has':
+          result = this.has(target, key);
+          break;
+        case 'keys':
+          result = this.host.ownKeys(target);
+          break;
+        case 'prototype':
+          result = this.host.prototype(target);
+          break;
+        case 'descriptor': {
+          const descriptor = this.host.descriptor(target, key);
+          return descriptor ? this.encodeRecord(descriptor) : this.context.undefined;
+        }
+        case 'call': {
+          if (typeof target !== 'function')
+            throw new TypeError('Native object is not callable');
+          const receiver = this.decode(input[0]);
+          const args = this.decodeArguments(input[1]);
+          result = this.host.call(target, receiver, args);
+          break;
+        }
+        case 'construct': {
+          if (typeof target !== 'function')
+            throw new TypeError('Native object is not a constructor');
+          const args = this.decodeArguments(input[0]);
+          result = this.host.construct(target, args);
+          break;
+        }
+        default:
+          throw new Error('Unknown guest operation');
       }
-      case 'call': {
-        if (typeof target !== 'function')
-          throw new TypeError('Native object is not callable');
-        const receiver = this.decode(input[0]);
-        const args = this.decode(input[1]);
-        if (!Array.isArray(args))
-          throw new TypeError('Native arguments must be an array');
-        result = this.host.call(target, receiver, args);
-        break;
-      }
-      case 'construct': {
-        if (typeof target !== 'function')
-          throw new TypeError('Native object is not a constructor');
-        const args = this.decode(input[0]);
-        if (!Array.isArray(args))
-          throw new TypeError('Constructor arguments must be an array');
-        result = this.host.construct(target, args);
-        break;
-      }
-      default:
-        throw new Error('Unknown guest operation');
+    } finally {
+      this.syncBuffers('into-guest');
     }
-    this.syncBuffers('into-guest');
     return this.encode(result);
   }
 
@@ -498,9 +528,43 @@ export class GuestEngine {
     if (Array.isArray(value)) {
       const result = this.context.newArray();
       seen.set(value, result);
+      this.nativeHandles.set(value, result.dup());
       for (let index = 0; index < value.length; index++) {
         const item = this.encode(value[index], seen);
         this.context.setProp(result, index, item);
+        item.dispose();
+      }
+      return result;
+    }
+    const constructorDescriptor = Object.getOwnPropertyDescriptor(object, 'constructor');
+    const constructor = constructorDescriptor?.value;
+    const prototypeObject =
+      typeof constructor === 'function' && constructor.prototype === object;
+    const prototype = Object.getPrototypeOf(object);
+    const sourceObject: unknown =
+      this.options.globalObject && Reflect.get(this.options.globalObject, 'Object');
+    const sourcePrototype =
+      typeof sourceObject === 'function' ? sourceObject.prototype : undefined;
+    const plain =
+      prototype === null ||
+      prototype === Object.prototype ||
+      prototype === sourcePrototype;
+    const descriptors = plain ? Object.getOwnPropertyDescriptors(object) : {};
+    const liveFacade = Object.values(descriptors).some(
+      (descriptor) => !('value' in descriptor) || !descriptor.enumerable,
+    );
+    if (!prototypeObject && plain && !liveFacade) {
+      const result = this.context.newObject();
+      seen.set(object, result);
+      this.nativeHandles.set(object, result.dup());
+      for (const key of Reflect.ownKeys(object)) {
+        const descriptor = Object.getOwnPropertyDescriptor(object, key);
+        if (!descriptor?.enumerable) continue;
+        const item = this.encode(Reflect.get(object, key), seen);
+        const property =
+          typeof key === 'symbol' ? this.encodeSymbol(key) : this.context.newString(key);
+        this.context.setProp(result, property, item);
+        property.dispose();
         item.dispose();
       }
       return result;
@@ -547,10 +611,6 @@ export class GuestEngine {
     }
     if (value instanceof Error) return this.context.newError(value);
     const id = this.registerNative(object);
-    const constructorDescriptor = Object.getOwnPropertyDescriptor(object, 'constructor');
-    const constructor = constructorDescriptor?.value;
-    const prototypeObject =
-      typeof constructor === 'function' && constructor.prototype === object;
     let constructable = false;
     if (typeof value === 'function') {
       try {
@@ -722,8 +782,15 @@ export class GuestEngine {
       }
     }
     if (kind === 'map' || kind === 'set') {
-      const result = kind === 'map' ? new Map<unknown, unknown>() : new Set<unknown>();
+      const result =
+        previous?.value instanceof Map || previous?.value instanceof Set
+          ? previous.value
+          : kind === 'map'
+            ? new Map<unknown, unknown>()
+            : new Set<unknown>();
+      result.clear();
       seen.set(id, result);
+      if (!previous) this.retainGuest(id, value.dup(), result);
       const entries = this.helper(kind === 'map' ? 'mapEntries' : 'setEntries', [value]);
       try {
         const decoded = this.decode(entries, seen);
@@ -749,25 +816,58 @@ export class GuestEngine {
         flags.dispose();
       }
     }
-    const result: unknown[] | Record<PropertyKey, unknown> =
-      kind === 'array' ? [] : Object.create(null);
+    const result: unknown[] | Record<PropertyKey, unknown> = previous
+      ? (previous.value as unknown[] | Record<PropertyKey, unknown>)
+      : kind === 'array'
+        ? []
+        : Object.create(null);
     seen.set(id, result);
-    const keys = this.context
-      .getOwnPropertyNames(value, { strings: true, numbersAsStrings: true })
-      .unwrap();
+    if (!previous) this.retainGuest(id, value.dup(), result);
+    for (const key of Reflect.ownKeys(result))
+      if (key !== 'length') Reflect.deleteProperty(result, key);
+    if (Array.isArray(result)) result.length = 0;
+    const keyArray = this.helper('objectKeys', [value]);
+    const keyCount = this.context.getProp(keyArray, 'length');
+    const length = this.context.getNumber(keyCount);
+    keyCount.dispose();
     try {
-      for (const key of keys) {
-        const name = this.context.getString(key);
-        if (kind === 'array' && name === 'length') continue;
+      for (let index = 0; index < length; index++) {
+        const key = this.context.getProp(keyArray, index);
+        const name =
+          this.context.typeof(key) === 'symbol'
+            ? this.decode(key)
+            : this.context.getString(key);
+        if (typeof name !== 'string' && typeof name !== 'symbol') {
+          key.dispose();
+          continue;
+        }
+        if (kind === 'array' && name === 'length') {
+          key.dispose();
+          continue;
+        }
         const item = this.context.getProp(value, key);
+        const enumerableHandle = this.helper('propertyEnumerable', [value, key]);
+        const enumerable = this.context.getNumber(enumerableHandle) !== 0;
+        enumerableHandle.dispose();
         try {
-          Reflect.set(result, name, this.decode(item, seen));
+          Reflect.defineProperty(result, name, {
+            value: this.decode(item, seen),
+            enumerable,
+            configurable: true,
+            writable: true,
+          });
         } finally {
           item.dispose();
+          key.dispose();
         }
       }
     } finally {
-      keys.dispose();
+      keyArray.dispose();
+    }
+    if (kind === 'array') {
+      const count = this.context.getProp(value, 'length');
+      Reflect.set(result, 'length', this.context.getNumber(count));
+      count.dispose();
     }
     return result;
   }
@@ -800,8 +900,8 @@ export class GuestEngine {
     const length = this.context.getNumber(lengthHandle);
     lengthHandle.dispose();
     info.dispose();
-    const Constructor: unknown = Reflect.get(globalThis, name);
-    if (typeof Constructor !== 'function') throw new TypeError('Unknown binary view');
+    const Constructor = viewConstructors.get(name);
+    if (!Constructor) throw new TypeError('Unknown binary view');
     const view: unknown = Reflect.construct(Constructor, [buffer, offset, length]);
     if (!ArrayBuffer.isView(view)) throw new TypeError('Invalid binary view');
     this.retainGuest(id, value.dup(), view);
@@ -813,6 +913,38 @@ export class GuestEngine {
     this.guestHandles.set(value, handle);
   }
 
+  private decodeArguments(value: QuickJSHandle): unknown[] {
+    const kind = this.helper('kind', [value]);
+    const isArray = this.context.getString(kind) === 'array';
+    kind.dispose();
+    if (!isArray) throw new TypeError('Native arguments must be an array');
+    const count = this.context.getProp(value, 'length');
+    const length = this.context.getNumber(count);
+    count.dispose();
+    const result: unknown[] = [];
+    const seen = new Map<number, unknown>();
+    for (let index = 0; index < length; index++) {
+      const item = this.context.getProp(value, index);
+      try {
+        result.push(this.decode(item, seen));
+      } finally {
+        item.dispose();
+      }
+    }
+    return result;
+  }
+
+  private encodeArguments(values: unknown[]): QuickJSHandle {
+    const result = this.context.newArray();
+    const seen = new Map<object, QuickJSHandle>();
+    for (let index = 0; index < values.length; index++) {
+      const item = this.encode(values[index], seen);
+      this.context.setProp(result, index, item);
+      item.dispose();
+    }
+    return result;
+  }
+
   private invoke(
     handle: QuickJSHandle,
     receiver: unknown,
@@ -821,7 +953,7 @@ export class GuestEngine {
   ): unknown {
     return this.enter(() => {
       const thisHandle = this.encode(receiver);
-      const args = this.encode(arguments_);
+      const args = this.encodeArguments(arguments_);
       try {
         const value = construct
           ? this.helper('construct', [handle, args])
@@ -902,8 +1034,11 @@ export class GuestEngine {
   }
 
   private guestError(handle: QuickJSHandle): Error {
+    const info = this.helpers.has('errorInfo')
+      ? this.helper('errorInfo', [handle])
+      : handle.dup();
     const read = (key: string) => {
-      const value = this.context.getProp(handle, key);
+      const value = this.context.getProp(info, key);
       try {
         return this.context.typeof(value) === 'string'
           ? this.context.getString(value)
@@ -916,7 +1051,31 @@ export class GuestEngine {
     error.name = read('name') || 'Error';
     const stack = read('stack');
     if (stack) error.stack = stack;
+    info.dispose();
+    if (
+      this.helpers.has('guestId') &&
+      ['object', 'function'].includes(this.context.typeof(handle))
+    ) {
+      const kind = this.helper('kind', [handle]);
+      const isObject = this.context.getString(kind) !== 'null';
+      kind.dispose();
+      if (isObject) {
+        const id = this.helper('guestId', [handle]);
+        this.retainGuest(this.context.getNumber(id), handle.dup(), error);
+        id.dispose();
+      }
+    }
     return error;
+  }
+
+  private exception(error: unknown): QuickJSHandle {
+    if (error && (typeof error === 'object' || typeof error === 'function')) {
+      const original = this.guestHandles.get(error);
+      if (original) return original.dup();
+    }
+    return this.context.newError(
+      error instanceof Error ? error : new Error(String(error)),
+    );
   }
 
   private assertOpen(): void {

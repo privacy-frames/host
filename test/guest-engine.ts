@@ -61,6 +61,7 @@ try {
       assert(result && !result.error, JSON.stringify(result));
       const values = result.result as Record<string, unknown>;
       const additional = result.additional as Record<string, unknown>;
+      const advanced = result.advanced as Record<string, unknown>;
       assert.equal(values.globalIdentity, true);
       assert.equal(values.identity, true);
       assert.equal(values.cancellation, false);
@@ -77,6 +78,16 @@ try {
       assert.equal(additional.module, 42);
       assert.equal(additional.nativePrototype, false);
       assert.deepEqual(additional.errors, []);
+      assert.equal(advanced.sameError, true);
+      assert.equal(advanced.map, true);
+      assert.equal(advanced.symbol, 'symbol data');
+      assert.equal(advanced.detailIdentity, true);
+      assert.deepEqual(advanced.binaryBrand, [9, 9]);
+      assert.deepEqual(advanced.nestedBytes, [3, 4, 3, 4, 5]);
+      assert.equal(advanced.throwingWrite, 8);
+      assert.equal(advanced.sender, true);
+      assert.equal(advanced.receiver, true);
+      assert.deepEqual(advanced.bytes, [1, 2, 3, 4]);
     } finally {
       await browser.close();
     }
