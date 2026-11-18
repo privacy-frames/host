@@ -2,7 +2,7 @@
 
 Type: task
 Label: wayfinder:task
-Status: claimed
+Status: resolved
 Assignee: DamenH
 Blocked by: 01-quickjs-capabilities.md, 02-boa-capabilities.md, 03-current-demo-contract.md, 04-dom-binding-boundary.md, 11-main-engine-placement.md, 12-browser-binding-reuse.md, 15-audio-worklet-feasibility.md, 16-defer-application-wasm.md
 
@@ -45,3 +45,30 @@ claims about enforcement. Keep admitted/local-only resource policy explicit.
 
 Evidence branches: research/wasm-study-quickjs,
 research/wasm-study-boa, research/wasm-study-contexts.
+
+## Resolution
+
+The coordinated browser study is complete. The
+[consolidated report](../../../docs/research/wasm-runtime/combined-feasibility.md)
+compares the executed mechanisms, source-supported reuse, remaining work and
+recommended architecture. Both engines support the required callback mechanism.
+QuickJS has the stronger tested browser integration path, including generated
+interfaces and contexts. Boa's generated binding fixture remains a genuine
+failure; no engine choice is made by resolving this evidence task.
+
+Retained evidence branches and commits:
+
+- QuickJS: research/wasm-study-quickjs,
+  8036da0dbdf14239002a269f3d41d939849da55a.
+- Boa: research/wasm-study-boa,
+  ddc0a102aefde49304efb20ab3fb8db335e07333.
+- Contexts/audio/transfers: research/wasm-study-contexts,
+  42614dc41dfc1212009b1b6a564dbb48f28102c2.
+- Generated bindings and native script control: research/wasm-study-bindings,
+  9c0719cf75fbf1283da8bef8cdaa6039272c201a.
+
+No research branch was merged; production and deployment remain unchanged.
+The evidence does not establish full application support, complete Web API
+bindings, live DSP deadlines or a confinement proof. Follow-on work should be
+planned as integrated implementation and acceptance gates rather than repeated
+permission requests for individual feasibility probes.

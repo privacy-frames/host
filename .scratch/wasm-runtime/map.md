@@ -52,7 +52,6 @@ current interface.
 - [QuickJS language, WebAssembly embedding and host feature support](issues/01-quickjs-capabilities.md): pinned upstream/wrapper research separates language support from browser bindings and guest Wasm.
 - [Boa language, WebAssembly embedding and host feature support](issues/02-boa-capabilities.md): release-source research distinguishes engine, optional runtime APIs and the application embedding still required.
 
-
 - [Choose the DOM and browser binding boundary](issues/04-dom-binding-boundary.md): use the browser's real DOM/layout/rendering, represented through guest bindings.
 
 - [Check existing applications without application service-worker execution](issues/10-app-service-worker-dependencies.md): source checks distinguish optional registration from dependent features and identify a conflicting test fixture.
@@ -62,6 +61,9 @@ current interface.
 
 - [Find a viable application WebAssembly integration](issues/14-guest-wasm-architecture.md): live memory is the main bridge constraint; txiki.js supplies a concrete embedded-runtime example requiring browser qualification.
 - [Qualify guest engines inside AudioWorklet](issues/15-audio-worklet-feasibility.md): native Wasm controls pass; the packaged QuickJS loader fails before guest execution, and Boa remains untested.
+
+- [Calibrate synchronous DOM event reentry in candidate embeddings](issues/13-synchronous-event-reentry.md): both engines pass native cancellation and nested callback fixtures; Boa needs scoped context lending.
+- [Compare complete guest-engine integration approaches in one feasibility pass](issues/17-combined-feasibility-study.md): executed browser probes support the architecture; the consolidated report recommends QuickJS and identifies the browser binding layer as the main implementation work.
 
 ## Not yet specified
 

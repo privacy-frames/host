@@ -46,3 +46,11 @@ does not establish that those bindings already work.
 Damen agreed to investigate worklets before engine selection, starting with
 AudioWorklet. See [Qualify guest engines inside AudioWorklet](15-audio-worklet-feasibility.md).
 The research must inform the remaining worklet architecture decision.
+
+## Feasibility evidence
+
+[The combined study](17-combined-feasibility-study.md) now supplies executable
+worker, child-document, buffer-transfer and AudioWorklet evidence. It supports
+the chosen native-context direction. The remaining worklet contract and the
+engine/binding selection should be considered together using that report;
+research completion alone does not resolve this human decision ticket.
