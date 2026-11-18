@@ -1,0 +1,90 @@
+[
+  {
+    "browser": "chromium",
+    "version": "153.0.8010.12",
+    "observation": {
+      "result": {
+        "finished": {
+          "value": 21,
+          "returned": false,
+          "cancelled": true,
+          "dynamicFlag": 1,
+          "attributeFlag": 1,
+          "evalFlag": 1,
+          "srcdoc": true
+        },
+        "brands": {
+          "node": true,
+          "element": true,
+          "document": true,
+          "frame": true,
+          "template": true,
+          "attr": true,
+          "blob": true,
+          "window": true,
+          "port": true,
+          "audio": true,
+          "cache": true,
+          "fakeNode": false,
+          "fakeElement": false
+        },
+        "nativeMarkers": {
+          "dynamic": true,
+          "attribute": true,
+          "eval": true
+        }
+      }
+    },
+    "requests": [
+      "http://127.0.0.1:35307/",
+      "http://127.0.0.1:35307/browser.js",
+      "http://127.0.0.1:35307/quickjs.wasm",
+      "http://127.0.0.1:35307/app/__guest_document__.html",
+      "http://127.0.0.1:35307/app/__unavailable__"
+    ]
+  },
+  {
+    "browser": "firefox",
+    "version": "155.0",
+    "observation": {
+      "result": {
+        "finished": {
+          "value": 21,
+          "returned": false,
+          "cancelled": true,
+          "dynamicFlag": 1,
+          "attributeFlag": 1,
+          "evalFlag": 1,
+          "srcdoc": true
+        },
+        "brands": {
+          "node": true,
+          "element": true,
+          "document": true,
+          "frame": true,
+          "template": true,
+          "attr": true,
+          "blob": true,
+          "window": true,
+          "port": true,
+          "audio": true,
+          "cache": true,
+          "fakeNode": false,
+          "fakeElement": false
+        },
+        "nativeMarkers": {
+          "dynamic": true,
+          "attribute": true,
+          "eval": true
+        }
+      }
+    },
+    "requests": [
+      "http://127.0.0.1:35307/",
+      "http://127.0.0.1:35307/browser.js",
+      "http://127.0.0.1:35307/quickjs.wasm",
+      "http://127.0.0.1:35307/app/__guest_document__.html",
+      "http://127.0.0.1:35307/app/__unavailable__"
+    ]
+  }
+]
