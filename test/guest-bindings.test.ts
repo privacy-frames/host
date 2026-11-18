@@ -137,6 +137,23 @@ test('compiler refuses unresolved includes and incomplete interface definitions'
       ]),
     /Missing primary Web IDL interface/,
   );
+  assert.throws(
+    () =>
+      compileInterfaceDefinitions([
+        { name: 'broken.idl', text: 'interface Example : Missing {};' },
+      ]),
+    /Missing Web IDL parent/,
+  );
+  assert.throws(
+    () =>
+      compileInterfaceDefinitions([
+        {
+          name: 'broken.idl',
+          text: 'interface First : Second {}; interface Second : First {};',
+        },
+      ]),
+    /Cyclic Web IDL inheritance/,
+  );
 });
 
 test('overload lookup retains every standard native operation signature', () => {

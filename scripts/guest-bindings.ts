@@ -215,7 +215,7 @@ export function compileInterfaceDefinitions(
     target.mixins.push(definition.includes);
   }
 
-  return [...parts]
+  const definitions = [...parts]
     .map(([name, part]): BrowserInterfaceDefinition => {
       const primary = part.primary.definition;
       if (
@@ -274,6 +274,21 @@ export function compileInterfaceDefinitions(
       };
     })
     .sort((a, b) => a.name.localeCompare(b.name, 'en'));
+
+  const byName = new Map(definitions.map((definition) => [definition.name, definition]));
+  for (const definition of definitions) {
+    const lineage = new Set<string>();
+    let current: BrowserInterfaceDefinition | undefined = definition;
+    while (current) {
+      if (lineage.has(current.name))
+        throw new Error('Cyclic Web IDL inheritance: ' + current.name);
+      lineage.add(current.name);
+      if (current.parent && !byName.has(current.parent))
+        throw new Error('Missing Web IDL parent: ' + current.parent);
+      current = current.parent ? byName.get(current.parent) : undefined;
+    }
+  }
+  return definitions;
 }
 
 /** Generate the checked-in standard interface table before bundling the runtime. */
