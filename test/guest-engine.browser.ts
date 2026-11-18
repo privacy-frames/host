@@ -34,6 +34,10 @@ try {
   engine.set('URL', URL);
   engine.set('console', console);
   engine.set('nativePromise', () => Promise.resolve({ answer: 42 }));
+  engine.set('nativeAsync', async () => 1);
+  engine.set('nativeGenerator', function* () {
+    yield 1;
+  });
   engine.set('fillBytes', (bytes: Uint8Array) => bytes.fill(9));
   engine.set('nativeBuffer', new Uint8Array([1, 2, 3, 4]));
   engine.set('nativeThrow', () => {
@@ -146,6 +150,9 @@ try {
   engine.evaluate(
     `nativePromise().then(value => { globalThis.promiseAnswer = value.answer; });`,
   );
+  engine.evaluate(
+    `Object.getPrototypeOf(nativeAsync).constructor('return typeof navigator')().then(value => { globalThis.asyncCompilerRealm = value; });`,
+  );
   engine.drainJobs();
   await new Promise((resolve) => setTimeout(resolve, 0));
   engine.drainJobs();
@@ -158,6 +165,10 @@ try {
   await module;
   const additional = {
     promise: engine.get('promiseAnswer'),
+    asyncCompilerRealm: engine.get('asyncCompilerRealm'),
+    generatorCompilerRealm: engine.evaluate(
+      `Object.getPrototypeOf(nativeGenerator).constructor('yield typeof navigator')().next().value`,
+    ),
     module: engine.get('moduleAnswer'),
     nativePrototype: Object.hasOwn(Element.prototype, 'describe'),
     errors,

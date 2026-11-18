@@ -75,6 +75,8 @@ try {
       assert.equal(values.url, 'https://example.test/hello');
       assert.equal(values.error, 'native failure');
       assert.equal(additional.promise, 42);
+      assert.equal(additional.asyncCompilerRealm, 'undefined');
+      assert.equal(additional.generatorCompilerRealm, 'undefined');
       assert.equal(additional.module, 42);
       assert.equal(additional.nativePrototype, false);
       assert.deepEqual(additional.errors, []);

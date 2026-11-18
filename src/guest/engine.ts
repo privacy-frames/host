@@ -207,6 +207,28 @@ export class GuestEngine {
       }
     }
 
+    // Async/generator constructors are reachable through a native callback's
+    // prototype even when native Function itself was never exposed.
+    const dynamicFunctions = [
+      {
+        native: Object.getPrototypeOf(async function () {}).constructor,
+        source: 'Object.getPrototypeOf(async function(){}).constructor',
+      },
+      {
+        native: Object.getPrototypeOf(function* () {}).constructor,
+        source: 'Object.getPrototypeOf(function*(){}).constructor',
+      },
+      {
+        native: Object.getPrototypeOf(async function* () {}).constructor,
+        source: 'Object.getPrototypeOf(async function*(){}).constructor',
+      },
+    ];
+    for (const { native, source } of dynamicFunctions) {
+      const guest = this.unwrap(this.context.evalCode(source, 'privacy:intrinsics'));
+      this.nativeHandles.set(native, guest);
+      this.nativeHandles.set(native.prototype, this.context.getProp(guest, 'prototype'));
+    }
+
     if (this.options.globalObject) this.aliasGlobal(this.options.globalObject);
     const catalog = this.options.modules ?? new Map<string, string>();
     this.runtime.setModuleLoader(
