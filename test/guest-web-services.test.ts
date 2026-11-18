@@ -90,6 +90,25 @@ test('synchronous catalog reads complete before send returns', () => {
   services.dispose();
 });
 
+test('XHR constants, upload identity and event-target ancestry match native interface shape', () => {
+  const services = createGuestWebServices({
+    resources: resources(),
+    nativeGlobal,
+    application: 'fixture',
+  });
+  const xhr = new services.XMLHttpRequest();
+  assert(xhr instanceof services.XMLHttpRequestEventTarget);
+  assert(xhr.upload instanceof services.XMLHttpRequestUpload);
+  assert(xhr.upload instanceof services.XMLHttpRequestEventTarget);
+  assert.equal(xhr.upload, xhr.upload);
+  assert.equal(Reflect.set(xhr, 'upload', {}), false);
+  assert.equal(Object.hasOwn(xhr, 'UNSENT'), false);
+  assert.equal(Reflect.set(services.XMLHttpRequest, 'UNSENT', 1), false);
+  assert.throws(() => new services.XMLHttpRequestUpload(), /Illegal constructor/);
+  assert.throws(() => new services.XMLHttpRequestEventTarget(), /Illegal constructor/);
+  services.dispose();
+});
+
 test('missing local resources fail without a network fallback', async () => {
   const services = createGuestWebServices({
     resources: resources(),
@@ -222,4 +241,67 @@ test('navigator exposes facts and denied permissions without native authority re
   assert.equal(Reflect.set(navigator, 'userAgent', 'forged'), false);
   services.dispose();
   await assert.rejects(services.fetch('value.txt'), { name: 'InvalidStateError' });
+  await assert.rejects(navigator.permissions.query({ name: 'microphone' }), {
+    name: 'InvalidStateError',
+  });
+});
+
+test('microphone capture delegates audio only and stops tracks on context disposal', async () => {
+  let stopped = 0;
+  const stream = Object.assign(new EventTarget(), {
+    getTracks: () => [{ stop: () => stopped++ }],
+  });
+  const constraints: MediaStreamConstraints[] = [];
+  const media = Object.assign(new EventTarget(), {
+    getUserMedia: async (value: MediaStreamConstraints) => {
+      constraints.push(value);
+      return stream;
+    },
+    enumerateDevices: async () => [],
+    getSupportedConstraints: () => ({ echoCancellation: true }),
+  });
+  // This fixture supplies only the native operations used by the adapter.
+  const scope = Object.create(nativeGlobal) as typeof nativeGlobal;
+  Object.defineProperty(scope, 'navigator', { value: { mediaDevices: media } });
+  const services = createGuestWebServices({
+    resources: resources(),
+    nativeGlobal: scope,
+    application: 'fixture',
+  });
+  const microphone = services.navigator.mediaDevices;
+  assert(microphone);
+  await assert.rejects(microphone.getUserMedia({ video: true, audio: true }), {
+    name: 'NotAllowedError',
+  });
+  assert.equal(constraints.length, 0);
+  const received = await microphone.getUserMedia({ audio: { echoCancellation: true } });
+  assert.equal(received, stream);
+  assert.deepEqual(constraints, [{ audio: { echoCancellation: true }, video: false }]);
+  services.dispose();
+  assert.equal(stopped, 1);
+  await assert.rejects(microphone.getUserMedia({ audio: true }), {
+    name: 'InvalidStateError',
+  });
+});
+
+test('a microphone request resolving after disposal stops its tracks before rejection', async () => {
+  let stopped = 0;
+  const stream = Object.assign(new EventTarget(), {
+    getTracks: () => [{ stop: () => stopped++ }],
+  });
+  let resolve!: (value: typeof stream) => void;
+  const pending = new Promise<typeof stream>((complete) => (resolve = complete));
+  const media = Object.assign(new EventTarget(), { getUserMedia: () => pending });
+  const scope = Object.create(nativeGlobal) as typeof nativeGlobal;
+  Object.defineProperty(scope, 'navigator', { value: { mediaDevices: media } });
+  const services = createGuestWebServices({
+    resources: resources(),
+    nativeGlobal: scope,
+    application: 'fixture',
+  });
+  const capture = services.navigator.mediaDevices!.getUserMedia({ audio: true });
+  services.dispose();
+  resolve(stream);
+  await assert.rejects(capture, { name: 'AbortError' });
+  assert.equal(stopped, 1);
 });

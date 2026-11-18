@@ -22,7 +22,7 @@ export interface GuestXMLHttpRequest extends EventTarget {
   responseType: XMLHttpRequestResponseType;
   timeout: number;
   withCredentials: boolean;
-  onreadystatechange: ((event: Event) => unknown) | null;
+  onreadystatechange: ((this: GuestXMLHttpRequest, event: Event) => unknown) | null;
   onloadstart: RequestEventHandler;
   onprogress: RequestEventHandler;
   onabort: RequestEventHandler;
@@ -65,6 +65,11 @@ export interface GuestXMLHttpRequestConstructor {
   readonly DONE: 4;
 }
 
+export interface GuestRequestEventTargetConstructor {
+  new (): GuestXMLHttpRequestUpload;
+  readonly prototype: GuestXMLHttpRequestUpload;
+}
+
 export interface GuestMediaDevices extends EventTarget {
   ondevicechange: ((event: Event) => unknown) | null;
   getUserMedia(constraints: MediaStreamConstraints): Promise<MediaStream>;
@@ -104,6 +109,8 @@ export interface GuestWebServicesOptions {
 
 export interface GuestWebServices {
   XMLHttpRequest: GuestXMLHttpRequestConstructor;
+  XMLHttpRequestEventTarget: GuestRequestEventTargetConstructor;
+  XMLHttpRequestUpload: GuestRequestEventTargetConstructor;
   navigator: GuestNavigator;
   fetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response>;
   dispose(): void;
@@ -197,6 +204,7 @@ export function createGuestWebServices({
   nativeGlobal,
 }: GuestWebServicesOptions): GuestWebServices {
   const states = new WeakMap<GuestXMLHttpRequest, RequestState>();
+  const uploads = new WeakMap<GuestXMLHttpRequest, GuestXMLHttpRequestUpload>();
   const active = new Set<GuestXMLHttpRequest>();
   const captures = new Set<MediaStream>();
   const cleanup: (() => void)[] = [];
@@ -334,7 +342,11 @@ export function createGuestWebServices({
     request.dispatchEvent(progress('loadend', bytes.byteLength, bytes.byteLength));
   }
 
-  class XMLHttpRequestUpload extends EventTarget implements GuestXMLHttpRequestUpload {
+  const requestTargetKey = Symbol();
+  class XMLHttpRequestEventTarget
+    extends EventTarget
+    implements GuestXMLHttpRequestUpload
+  {
     onloadstart: RequestEventHandler = null;
     onprogress: RequestEventHandler = null;
     onabort: RequestEventHandler = null;
@@ -342,34 +354,42 @@ export function createGuestWebServices({
     onload: RequestEventHandler = null;
     ontimeout: RequestEventHandler = null;
     onloadend: RequestEventHandler = null;
+    constructor(key?: symbol) {
+      super();
+      if (key !== requestTargetKey) throw new TypeError('Illegal constructor');
+      for (const name of eventNames)
+        this.addEventListener(name, (event) =>
+          this[`on${name}`]?.call(this, event as ProgressEvent),
+        );
+    }
+    get [Symbol.toStringTag]() {
+      return 'XMLHttpRequestEventTarget';
+    }
+  }
+
+  class XMLHttpRequestUpload extends XMLHttpRequestEventTarget {
     get [Symbol.toStringTag]() {
       return 'XMLHttpRequestUpload';
     }
   }
 
-  class XMLHttpRequest extends EventTarget implements GuestXMLHttpRequest {
+  class XMLHttpRequest extends XMLHttpRequestEventTarget implements GuestXMLHttpRequest {
     static readonly UNSENT = 0;
     static readonly OPENED = 1;
     static readonly HEADERS_RECEIVED = 2;
     static readonly LOADING = 3;
     static readonly DONE = 4;
-    readonly UNSENT = 0;
-    readonly OPENED = 1;
-    readonly HEADERS_RECEIVED = 2;
-    readonly LOADING = 3;
-    readonly DONE = 4;
-    readonly upload = new XMLHttpRequestUpload();
-    onreadystatechange: ((event: Event) => unknown) | null = null;
-    onloadstart: RequestEventHandler = null;
-    onprogress: RequestEventHandler = null;
-    onabort: RequestEventHandler = null;
-    onerror: RequestEventHandler = null;
-    onload: RequestEventHandler = null;
-    ontimeout: RequestEventHandler = null;
-    onloadend: RequestEventHandler = null;
+    declare readonly UNSENT: 0;
+    declare readonly OPENED: 1;
+    declare readonly HEADERS_RECEIVED: 2;
+    declare readonly LOADING: 3;
+    declare readonly DONE: 4;
+    onreadystatechange: ((this: GuestXMLHttpRequest, event: Event) => unknown) | null =
+      null;
 
     constructor() {
-      super();
+      super(requestTargetKey);
+      uploads.set(this, new XMLHttpRequestUpload(requestTargetKey));
       states.set(this, {
         readyState: 0,
         method: '',
@@ -395,14 +415,15 @@ export function createGuestWebServices({
       this.addEventListener('readystatechange', (event) =>
         this.onreadystatechange?.call(this, event),
       );
-      for (const name of eventNames)
-        this.addEventListener(name, (event) =>
-          this[`on${name}`]?.call(this, event as ProgressEvent),
-        );
     }
 
     get [Symbol.toStringTag]() {
       return 'XMLHttpRequest';
+    }
+    get upload(): GuestXMLHttpRequestUpload {
+      const upload = uploads.get(this);
+      if (!upload) throw new TypeError('Illegal XMLHttpRequest invocation');
+      return upload;
     }
     get readyState(): number {
       return state(this).readyState;
@@ -586,6 +607,18 @@ export function createGuestWebServices({
     }
   }
 
+  for (const [name, value] of Object.entries({
+    UNSENT: 0,
+    OPENED: 1,
+    HEADERS_RECEIVED: 2,
+    LOADING: 3,
+    DONE: 4,
+  })) {
+    const descriptor = { value, enumerable: true, writable: false, configurable: false };
+    Object.defineProperty(XMLHttpRequest, name, descriptor);
+    Object.defineProperty(XMLHttpRequest.prototype, name, descriptor);
+  }
+
   const nativeNavigator = nativeGlobal.navigator;
   const media =
     'mediaDevices' in nativeNavigator ? nativeNavigator.mediaDevices : undefined;
@@ -643,22 +676,27 @@ export function createGuestWebServices({
 
   const permissionStates = new WeakMap<
     PermissionStatus,
-    globalThis.PermissionStatus | null
+    { name: PermissionName; native: globalThis.PermissionStatus | null }
   >();
   class PermissionStatus extends EventTarget {
-    readonly name: PermissionName;
     onchange: ((event: Event) => unknown) | null = null;
     constructor(name: PermissionName, permission: globalThis.PermissionStatus | null) {
       super();
-      this.name = name;
-      permissionStates.set(this, permission);
+      permissionStates.set(this, { name, native: permission });
       const changed = () => this.dispatchEvent(new Event('change'));
       permission?.addEventListener('change', changed);
       cleanup.push(() => permission?.removeEventListener('change', changed));
       this.addEventListener('change', (event) => this.onchange?.call(this, event));
     }
+    get name(): PermissionName {
+      const value = permissionStates.get(this);
+      if (!value) throw new TypeError('Illegal PermissionStatus invocation');
+      return value.name;
+    }
     get state(): PermissionState {
-      return permissionStates.get(this)?.state || 'denied';
+      const value = permissionStates.get(this);
+      if (!value) throw new TypeError('Illegal PermissionStatus invocation');
+      return value.native?.state || 'denied';
     }
     get [Symbol.toStringTag]() {
       return 'PermissionStatus';
@@ -784,6 +822,8 @@ export function createGuestWebServices({
 
   return {
     XMLHttpRequest,
+    XMLHttpRequestEventTarget,
+    XMLHttpRequestUpload,
     navigator,
     fetch: localFetch,
     dispose() {
