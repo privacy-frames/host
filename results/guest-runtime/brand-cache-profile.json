@@ -1,0 +1,81 @@
+{
+  "completed": "2026-11-18T23:23:18.057Z",
+  "node": "v26.2.0",
+  "controlledNativeBlobWorkload": {
+    "classifications": 2000,
+    "receivers": 2,
+    "nativeGetterCallsBeforeCache": 2000,
+    "nativeGetterCallsAfterCache": 2,
+    "allResultsMatchNative": true
+  },
+  "applicationProfile": {
+    "application": "Unchanged CyberChef with trusted diagnostic host instrumentation",
+    "guardSHA256": "a4e4f7b4ac53def3f8fddf780a8836d6d2ce978f320b65f32f4b7475464aaff3",
+    "rawProfileSHA256": "b07f670a5ad0e0d05782e7444d35ae0e13c9d0d5b5e394725288e47324fad4ab",
+    "durationSeconds": 20.342879,
+    "totalSamples": 19577,
+    "topFunctions": [
+      {
+        "function": "(anonymous)",
+        "source": "http://127.0.0.1:4311/runtime/guard.js",
+        "line": 23968,
+        "samples": 9918
+      },
+      {
+        "function": "isArrayBuffer",
+        "source": "http://127.0.0.1:4311/runtime/guard.js",
+        "line": 44460,
+        "samples": 3203
+      },
+      {
+        "function": "wasm-function[221]",
+        "source": "wasm://wasm/001eb57a",
+        "line": 1,
+        "samples": 923
+      },
+      {
+        "function": "R4",
+        "source": "http://127.0.0.1:4311/runtime/guard.js",
+        "line": 4167,
+        "samples": 233
+      },
+      {
+        "function": "awaitEachYieldedPromise",
+        "source": "http://127.0.0.1:4311/runtime/guard.js",
+        "line": 2861,
+        "samples": 217
+      },
+      {
+        "function": "ConfinedWorker",
+        "source": "http://127.0.0.1:4311/runtime/guard.js",
+        "line": 42230,
+        "samples": 164
+      },
+      {
+        "function": "get",
+        "source": "http://127.0.0.1:4311/runtime/guard.js",
+        "line": 43385,
+        "samples": 162
+      },
+      {
+        "function": "U3",
+        "source": "http://127.0.0.1:4311/runtime/guard.js",
+        "line": 4185,
+        "samples": 145
+      },
+      {
+        "function": "(idle)",
+        "source": "",
+        "line": 0,
+        "samples": 135
+      },
+      {
+        "function": "(garbage collector)",
+        "source": "",
+        "line": 0,
+        "samples": 133
+      }
+    ]
+  },
+  "note": "The controlled workload measures getter invocation counts. The application profile is a separate diagnostic sample, not a before/after startup benchmark."
+}

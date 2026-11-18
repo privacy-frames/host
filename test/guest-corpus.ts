@@ -6,17 +6,35 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { chromium, firefox, type Page } from 'playwright';
 import { launch } from './browser-profile.ts';
+import { browserStorageState } from './browser-storage-state.ts';
 
 const root = process.cwd();
-const output = path.join(root, 'results/guest-runtime/corpus');
+const output = path.join(
+  root,
+  process.env.CORPUS_GUARD
+    ? 'results/guest-runtime/corpus-diagnostic'
+    : 'results/guest-runtime/corpus',
+);
 const runtimeDirectory = process.env.CORPUS_RUNTIME_DIRECTORY ?? 'dist-runtime';
 const publisher =
   process.env.PUBLISHER_DIRECTORY ?? path.join(root, 'publisher-source/dist');
-const managerURL = 'http://127.0.0.1:4310/privacy-frames/';
-const runtimeURL = 'http://127.0.0.1:4311/runtime/';
-const installationURL = 'http://127.0.0.1:4319/installation/';
-const publisherURL = 'http://127.0.0.1:4312/apps/';
-const bindingFixture = `<!doctype html><title>DOM compatibility fixture</title><body><script>
+const portBase = Number(process.env.CORPUS_PORT_BASE ?? 4310);
+const ports = {
+  manager: portBase,
+  runtime: portBase + 1,
+  installation: portBase + 9,
+  publisher: portBase + 2,
+};
+const managerURL = `http://127.0.0.1:${ports.manager}/privacy-frames/`;
+const runtimeURL = `http://127.0.0.1:${ports.runtime}/runtime/`;
+const installationURL = `http://127.0.0.1:${ports.installation}/installation/`;
+const publisherURL = `http://127.0.0.1:${ports.publisher}/apps/`;
+const bindingFixture = `<!doctype html><title>DOM compatibility fixture</title><body><object id=local-spinner data="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E"><span>Fallback spinner</span></object><script>
+const spinner = document.getElementById('local-spinner');
+if (!(spinner instanceof HTMLObjectElement) || !spinner.parentNode) throw new Error('Inert object structure was lost');
+if (spinner.getSVGDocument() !== null) throw new Error('Native object context must remain unavailable');
+spinner.parentNode.removeChild(spinner);
+document.body.appendChild(spinner);
 const node = document.createElement('div');
 node.appendChild(document.createTextNode('private text'));
 document.body.appendChild(node);
@@ -65,10 +83,10 @@ Object.assign(config, {
   })),
 });
 for (const [port, directory, prefix] of [
-  [4310, 'dist-manager', '/privacy-frames/'],
-  [4311, runtimeDirectory, '/runtime/'],
-  [4319, 'dist-installation', '/installation/'],
-  [4312, publisher, '/apps/'],
+  [ports.manager, 'dist-manager', '/privacy-frames/'],
+  [ports.runtime, runtimeDirectory, '/runtime/'],
+  [ports.installation, 'dist-installation', '/installation/'],
+  [ports.publisher, publisher, '/apps/'],
 ] as const) {
   const server = http.createServer(async (request, response) => {
     response.setHeader('Access-Control-Allow-Origin', '*');
@@ -78,18 +96,22 @@ for (const [port, directory, prefix] of [
       if (!url.pathname.startsWith(prefix)) throw new Error('Outside scope');
       let relative = decodeURIComponent(url.pathname.slice(prefix.length));
       if (relative.split('/').includes('..')) throw new Error('Invalid path');
-      if (port !== 4312 && relative === 'config.json') {
+      if (port !== ports.publisher && relative === 'config.json') {
         response.setHeader('Content-Type', 'application/json');
         response.end(JSON.stringify(config));
         return;
       }
       if (!relative || relative.endsWith('/')) relative += 'index.html';
-      if (port === 4312 && relative === 'bindings/index.html') {
+      if (port === ports.publisher && relative === 'bindings/index.html') {
         response.setHeader('Content-Type', 'text/html');
         response.end(bindingFixture);
         return;
       }
-      let bytes = await readFile(path.join(directory, relative));
+      let bytes = await readFile(
+        port === ports.runtime && relative === 'guard.js' && process.env.CORPUS_GUARD
+          ? process.env.CORPUS_GUARD
+          : path.join(directory, relative),
+      );
       if (relative.endsWith('.uris')) {
         bytes = Buffer.from(
           bytes
@@ -119,7 +141,17 @@ async function interaction(page: Page, id: string) {
       ),
       false,
     );
-    return 'Guest-local prototype extension, callback traversal and native DOM removal passed';
+    assert.deepEqual(
+      await page.evaluate(() => {
+        const spinner = document.querySelector('object');
+        return {
+          data: spinner?.getAttribute('data'),
+          document: spinner?.contentDocument,
+        };
+      }),
+      { data: null, document: null },
+    );
+    return 'Guest-local prototype extension, callback traversal and inert native object movement passed';
   }
   if (id === 'wikipedia') {
     await page.getByText('Albert Einstein', { exact: true }).first().waitFor();
@@ -255,7 +287,9 @@ const runtimeRevision = execFileSync('git', ['rev-parse', 'HEAD'], {
   encoding: 'utf8',
 }).trim();
 const guardHash = createHash('sha256')
-  .update(await readFile(path.join(runtimeDirectory, 'guard.js')))
+  .update(
+    await readFile(process.env.CORPUS_GUARD ?? path.join(runtimeDirectory, 'guard.js')),
+  )
   .digest('hex');
 const browserName = process.env.CORPUS_BROWSER ?? 'chromium';
 if (!['chromium', 'firefox'].includes(browserName)) throw new Error('Unknown browser');
@@ -316,6 +350,64 @@ try {
       const opened = context.waitForEvent('page');
       await manager.locator('#app-list a[data-app]').first().click();
       app = await opened;
+      if (process.env.CORPUS_GUARD) {
+        if (browserName === 'chromium') {
+          const profiler = await context.newCDPSession(app);
+          await profiler.send('Profiler.enable');
+          await profiler.send('Profiler.start');
+          setTimeout(async () => {
+            const result = await profiler.send('Profiler.stop').catch(() => undefined);
+            if (result) {
+              const profile = result.profile;
+              const nodes = new Map(profile.nodes.map((node) => [node.id, node]));
+              const functions = new Map<
+                string,
+                { name: string; source: string; line: number; samples: number }
+              >();
+              for (const sample of profile.samples ?? []) {
+                const frame = nodes.get(sample)?.callFrame;
+                if (!frame) continue;
+                const key = JSON.stringify(frame);
+                const entry = functions.get(key) ?? {
+                  name: frame.functionName || '(anonymous)',
+                  source: frame.url,
+                  line: frame.lineNumber + 1,
+                  samples: 0,
+                };
+                entry.samples++;
+                functions.set(key, entry);
+              }
+              await writeFile(
+                path.join(output, `${target.id}.profile.json`),
+                JSON.stringify(
+                  {
+                    guardHash,
+                    seconds: (profile.endTime - profile.startTime) / 1e6,
+                    samples: profile.samples?.length,
+                    functions: [...functions.values()]
+                      .sort((a, b) => b.samples - a.samples)
+                      .slice(0, 15),
+                  },
+                  null,
+                  2,
+                ) + '\n',
+              );
+            }
+          }, 15000).unref();
+        }
+        await app.waitForFunction(
+          () => typeof Reflect.get(window, '__guestDiagnosticEval') === 'function',
+          undefined,
+          { timeout: 90000 },
+        );
+        await app.waitForTimeout(10000);
+        row.diagnostic = await app.evaluate(() =>
+          Reflect.get(window, '__guestDiagnosticEval')(),
+        );
+        console.log(JSON.stringify(row.diagnostic));
+        row.passed = false;
+        continue;
+      }
       await app.waitForFunction(
         () =>
           ['ready', 'failed'].includes(
@@ -328,6 +420,8 @@ try {
       console.log(`${target.id}: runtime ${row.runtime}`);
       assert.equal(row.runtime, 'ready');
       row.task = await interaction(app, target.id);
+      if (process.env.CORPUS_CAPTURE_STORAGE)
+        row.storageBeforeReload = await browserStorageState(app);
       await context.setOffline(true);
       await app.reload({ waitUntil: 'commit' });
       await app.waitForFunction(
@@ -358,6 +452,10 @@ try {
     } finally {
       row.completed = new Date().toISOString();
       if (app) {
+        if (process.env.CORPUS_CAPTURE_STORAGE)
+          row.storageAfterReload = await browserStorageState(app).catch((error) => ({
+            error: String(error),
+          }));
         row.text = (
           await app
             .locator('body')
