@@ -84,6 +84,7 @@ try {
       assert.equal(additional.nativePrototype, false);
       assert.deepEqual(additional.errors, []);
       assert.equal(advanced.sameError, true);
+      assert.equal(advanced.capturedViewConstructor, true);
       assert.deepEqual(advanced.domException, [true, 'SecurityError', 'denied', 18]);
       assert.deepEqual(advanced.nativeException, [true, 'SecurityError', 18]);
       assert.equal(advanced.map, true);

@@ -20,6 +20,20 @@ export function installGuestRuntime() {
   const ownKeys = Reflect.ownKeys;
   const arrayIsArray = Array.isArray;
   const bufferIsView = ArrayBuffer.isView;
+  const DataViewConstructor = DataView;
+  const viewConstructors = {
+    Int8Array,
+    Uint8Array,
+    Uint8ClampedArray,
+    Int16Array,
+    Uint16Array,
+    Int32Array,
+    Uint32Array,
+    Float32Array,
+    Float64Array,
+    BigInt64Array,
+    BigUint64Array,
+  };
   const typedArrayPrototype = Object.getPrototypeOf(Uint8Array.prototype);
   const typedBuffer = getDescriptor(typedArrayPrototype, 'buffer')!.get!;
   const typedOffset = getDescriptor(typedArrayPrototype, 'byteOffset')!.get!;
@@ -507,8 +521,8 @@ export function installGuestRuntime() {
       return reflectApply(promiseThen, value, [resolve, reject]);
     },
     makeView(buffer: ArrayBuffer, name: string, offset: number, length: number) {
-      if (name === 'DataView') return new DataView(buffer, offset, length);
-      const Constructor = reflectGet(globalThis, name);
+      if (name === 'DataView') return new DataViewConstructor(buffer, offset, length);
+      const Constructor = reflectGet(viewConstructors, name);
       return new Constructor(buffer, offset, length);
     },
     mapEntries(value: Map<unknown, unknown>) {

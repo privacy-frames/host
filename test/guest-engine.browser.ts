@@ -47,6 +47,7 @@ try {
     yield 1;
   });
   engine.set('fillBytes', (bytes: Uint8Array) => bytes.fill(9));
+  engine.set('nativeFloats', () => new Float32Array([0.25, 0.5]));
   engine.set('nativeBuffer', new Uint8Array([1, 2, 3, 4]));
   engine.set('nativeThrow', () => {
     throw new Error('native failure');
@@ -118,6 +119,11 @@ try {
   `);
   const advanced = engine.evaluate(`
     (() => {
+    const OriginalFloat32Array = Float32Array;
+    Float32Array = function() { throw new Error('changed guest constructor'); };
+    const importedFloats = nativeFloats();
+    Float32Array = OriginalFloat32Array;
+    const capturedViewConstructor = importedFloats instanceof Float32Array && importedFloats[1] === 0.5;
     const original = new Error('identity');
     const exception = new DOMException('denied', 'SecurityError');
     let nativeException;
@@ -157,6 +163,7 @@ try {
     try { retained.byteLength; } catch (error) { dataViewDetached = error instanceof TypeError; }
     return ({
       sameError,
+      capturedViewConstructor,
       domException: [exception instanceof DOMException, exception.name, exception.message, exception.code],
       nativeException,
       map: copiedMap instanceof Map && copiedKey === copiedKey.self && copiedMap.get(copiedKey) instanceof Set,
