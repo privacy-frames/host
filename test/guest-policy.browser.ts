@@ -81,7 +81,7 @@ async function run() {
       ],
     };
     const session = await createGuestWindow(catalog, window);
-    session.render('<!doctype html><html><head></head><body></body></html>');
+    await session.render('<!doctype html><html><head></head><body></body></html>');
     prepareForeignEvent();
     try {
       returned = await session.engine.evaluate(source, 'policy:' + name);
