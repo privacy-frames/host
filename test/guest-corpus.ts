@@ -129,18 +129,27 @@ async function interaction(page: Page, id: string) {
   }
   if (id === 'excalidraw') {
     await page.locator('canvas').first().waitFor({ timeout: 90000 });
+    const rectangleCount = await page.evaluate(() => {
+      const key = Object.keys(localStorage).find((key) => key.endsWith('excalidraw'));
+      const elements: unknown = JSON.parse((key && localStorage.getItem(key)) || '[]');
+      return Array.isArray(elements)
+        ? elements.filter((element) => element?.type === 'rectangle').length
+        : 0;
+    });
     await page.keyboard.press('Escape');
     await page.keyboard.press('r');
     await page.mouse.move(430, 300);
     await page.mouse.down();
     await page.mouse.move(650, 450, { steps: 10 });
     await page.mouse.up();
-    await page.waitForFunction(() =>
-      Object.keys(localStorage).some(
-        (key) =>
-          key.endsWith('excalidraw') && localStorage.getItem(key)?.includes('rectangle'),
-      ),
-    );
+    await page.waitForFunction((before) => {
+      const key = Object.keys(localStorage).find((key) => key.endsWith('excalidraw'));
+      const elements: unknown = JSON.parse((key && localStorage.getItem(key)) || '[]');
+      return (
+        Array.isArray(elements) &&
+        elements.filter((element) => element?.type === 'rectangle').length > before
+      );
+    }, rectangleCount);
     return 'Rectangle drawn and persisted';
   }
   if (id === 'stackedit') {
@@ -153,7 +162,45 @@ async function interaction(page: Page, id: string) {
       .locator('.cl-preview-section h1')
       .getByText('Synthetic evaluation', { exact: true })
       .waitFor();
-    return 'Markdown edited and preview heading rendered';
+    await page.waitForFunction(
+      async () => {
+        const name = (await indexedDB.databases()).find((database) =>
+          database.name?.endsWith('stackedit-db'),
+        )?.name;
+        if (!name) return false;
+        const database = await new Promise<IDBDatabase>((resolve, reject) => {
+          const request = indexedDB.open(name);
+          request.onsuccess = () => resolve(request.result);
+          request.onerror = () => reject(request.error);
+        });
+        try {
+          if (!database.objectStoreNames.contains('objects')) return false;
+          const records = await new Promise<unknown[]>((resolve, reject) => {
+            const request = database
+              .transaction('objects')
+              .objectStore('objects')
+              .getAll();
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+          });
+          return records.some(
+            (record) =>
+              record !== null &&
+              typeof record === 'object' &&
+              'type' in record &&
+              record.type === 'content' &&
+              'text' in record &&
+              typeof record.text === 'string' &&
+              record.text.includes('# Synthetic evaluation'),
+          );
+        } finally {
+          database.close();
+        }
+      },
+      undefined,
+      { timeout: 30000 },
+    );
+    return 'Markdown edited, preview rendered and note committed to IndexedDB';
   }
   if (id === 'cyberchef') {
     const editor = page
@@ -295,6 +342,13 @@ try {
         await app.locator('html').getAttribute('data-privacy-runtime'),
         'ready',
       );
+      if (target.id === 'stackedit') {
+        await app
+          .locator('.cl-preview-section h1')
+          .getByText('Synthetic evaluation', { exact: true })
+          .waitFor();
+        row.offlinePersistence = true;
+      }
       row.offlineTask = await interaction(app, target.id);
       row.passed = true;
     } catch (error) {
