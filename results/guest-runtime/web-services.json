@@ -1,0 +1,180 @@
+{
+  "completed": "2026-11-18T21:16:22.776Z",
+  "receipts": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "result": {
+        "localAsync": {
+          "states": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "events": [
+            "loadstart",
+            "progress",
+            "load",
+            "loadend"
+          ],
+          "text": "local text",
+          "status": 200,
+          "statusText": "OK",
+          "url": "https://publisher.invalid/app/value.txt"
+        },
+        "nativeAsync": {
+          "states": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "events": [
+            "loadstart",
+            "progress",
+            "load",
+            "loadend"
+          ],
+          "text": "local text",
+          "status": 200,
+          "statusText": "OK",
+          "url": "http://127.0.0.1:36481/native.txt"
+        },
+        "localSync": {
+          "states": [
+            1,
+            4
+          ],
+          "events": [
+            "load",
+            "loadend"
+          ],
+          "text": "local text",
+          "status": 200,
+          "statusText": "OK",
+          "url": "https://publisher.invalid/app/value.txt"
+        },
+        "nativeSync": {
+          "states": [
+            1,
+            4
+          ],
+          "events": [
+            "load",
+            "loadend"
+          ],
+          "text": "local text",
+          "status": 200,
+          "statusText": "OK",
+          "url": "http://127.0.0.1:36481/native.txt"
+        },
+        "xml": "root",
+        "html": "HTML",
+        "inertScript": true,
+        "binary": "local text",
+        "syncResponseTypeError": "InvalidAccessError",
+        "cameraError": "NotAllowedError",
+        "cameraPermission": "denied",
+        "serviceWorkerAbsent": true,
+        "beaconBlocked": true,
+        "deniedRead": true
+      },
+      "pageErrors": [],
+      "requests": [
+        "/",
+        "/fixture.js",
+        "/native.txt",
+        "/native.txt"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "result": {
+        "localAsync": {
+          "states": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "events": [
+            "loadstart",
+            "progress",
+            "load",
+            "loadend"
+          ],
+          "text": "local text",
+          "status": 200,
+          "statusText": "OK",
+          "url": "https://publisher.invalid/app/value.txt"
+        },
+        "nativeAsync": {
+          "states": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "events": [
+            "loadstart",
+            "progress",
+            "load",
+            "loadend"
+          ],
+          "text": "local text",
+          "status": 200,
+          "statusText": "OK",
+          "url": "http://127.0.0.1:36481/native.txt"
+        },
+        "localSync": {
+          "states": [
+            1,
+            4
+          ],
+          "events": [
+            "load",
+            "loadend"
+          ],
+          "text": "local text",
+          "status": 200,
+          "statusText": "OK",
+          "url": "https://publisher.invalid/app/value.txt"
+        },
+        "nativeSync": {
+          "states": [
+            1,
+            4
+          ],
+          "events": [
+            "load",
+            "loadend"
+          ],
+          "text": "local text",
+          "status": 200,
+          "statusText": "OK",
+          "url": "http://127.0.0.1:36481/native.txt"
+        },
+        "xml": "root",
+        "html": "HTML",
+        "inertScript": true,
+        "binary": "local text",
+        "syncResponseTypeError": "InvalidAccessError",
+        "cameraError": "NotAllowedError",
+        "cameraPermission": "denied",
+        "serviceWorkerAbsent": true,
+        "beaconBlocked": true,
+        "deniedRead": true
+      },
+      "pageErrors": [],
+      "requests": [
+        "/",
+        "/fixture.js",
+        "/favicon.ico",
+        "/native.txt",
+        "/native.txt"
+      ]
+    }
+  ]
+}
