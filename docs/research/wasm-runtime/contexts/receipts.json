@@ -1,0 +1,198 @@
+{
+  "environment": {
+    "node": "v26.2.0",
+    "platform": "linux",
+    "arch": "x64",
+    "playwright": "1.63.0",
+    "esbuild": "0.28.2"
+  },
+  "loaderSha256": "3b8e916b3248062be4bbd3281c8d2832f074e6850596fc9951e93b846139ddea",
+  "wasmSha256": "105c3bed22d457e43e3d1c3c1c6959fda62a8fe06f0fc8a985303c3a2be72232",
+  "date": "2026-11-18T00:08:56.234Z",
+  "engine": "quickjs-emscripten@0.32.0",
+  "wasmBytes": 503134,
+  "browsers": [
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "native": {
+        "Worker": "function",
+        "SharedWorker": "function",
+        "AudioContext": "function",
+        "OfflineAudioContext": "function",
+        "structuredClone": "function"
+      },
+      "nativeTransfer": {
+        "senderDetached": true,
+        "received": [3, 4]
+      },
+      "worker": {
+        "senderDetached": true,
+        "first": {
+          "count": 1,
+          "buffer": [4, 4],
+          "native": {
+            "fetch": "function",
+            "Worker": "function",
+            "TextDecoder": "function"
+          }
+        },
+        "second": {
+          "count": 2
+        }
+      },
+      "sharedWorker": {
+        "one": {
+          "count": 1
+        },
+        "two": {
+          "count": 2
+        }
+      },
+      "child": {
+        "value": 22,
+        "identity": true,
+        "nativeIdentity": true,
+        "missingDOM": "undefined",
+        "error": "parent failure",
+        "prototype": 7
+      },
+      "audio": {
+        "copied": 0.125,
+        "rendered": 0.125,
+        "frames": 256,
+        "frequencyBins": 16,
+        "ended": null
+      },
+      "guestAudio": {
+        "guestToAudioSample": 0.125,
+        "analyserToGuestBins": 16
+      },
+      "cloneControl": {
+        "typedArray": true,
+        "cycle": true,
+        "separateBuffer": true,
+        "functionError": "DataCloneError"
+      },
+      "nativeWorklet": {
+        "samples": [0.25, 0.25]
+      },
+      "worklets": [
+        {
+          "adapted": false,
+          "startup": {
+            "error": "ReferenceError: TextDecoder is not defined",
+            "nativeDecoder": "undefined"
+          }
+        },
+        {
+          "adapted": true,
+          "startup": {
+            "ready": true,
+            "startupMs": 4,
+            "native": {
+              "TextDecoder": "undefined",
+              "fetch": "undefined",
+              "WebAssembly": "object"
+            }
+          },
+          "senderDetached": true,
+          "echo": [7],
+          "frames": 256,
+          "samples": [0.25, 0.25]
+        }
+      ]
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "native": {
+        "Worker": "function",
+        "SharedWorker": "function",
+        "AudioContext": "function",
+        "OfflineAudioContext": "function",
+        "structuredClone": "function"
+      },
+      "nativeTransfer": {
+        "senderDetached": true,
+        "received": [3, 4]
+      },
+      "worker": {
+        "senderDetached": true,
+        "first": {
+          "count": 1,
+          "buffer": [4, 4],
+          "native": {
+            "fetch": "function",
+            "Worker": "function",
+            "TextDecoder": "function"
+          }
+        },
+        "second": {
+          "count": 2
+        }
+      },
+      "sharedWorker": {
+        "one": {
+          "count": 1
+        },
+        "two": {
+          "count": 2
+        }
+      },
+      "child": {
+        "value": 22,
+        "identity": true,
+        "nativeIdentity": true,
+        "missingDOM": "undefined",
+        "error": "parent failure",
+        "prototype": 7
+      },
+      "audio": {
+        "copied": 0.125,
+        "rendered": 0.125,
+        "frames": 256,
+        "frequencyBins": 16,
+        "ended": null
+      },
+      "guestAudio": {
+        "guestToAudioSample": 0.125,
+        "analyserToGuestBins": 16
+      },
+      "cloneControl": {
+        "typedArray": true,
+        "cycle": true,
+        "separateBuffer": true,
+        "functionError": "DataCloneError"
+      },
+      "nativeWorklet": {
+        "samples": [0.25, 0.25]
+      },
+      "worklets": [
+        {
+          "adapted": false,
+          "startup": {
+            "error": "ReferenceError: TextDecoder is not defined",
+            "nativeDecoder": "undefined"
+          }
+        },
+        {
+          "adapted": true,
+          "startup": {
+            "ready": true,
+            "startupMs": 3,
+            "native": {
+              "TextDecoder": "undefined",
+              "fetch": "undefined",
+              "WebAssembly": "object"
+            }
+          },
+          "senderDetached": true,
+          "echo": [7],
+          "frames": 256,
+          "samples": [0.25, 0.25]
+        }
+      ]
+    }
+  ]
+}
