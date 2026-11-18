@@ -26,7 +26,7 @@ onmessage = async event => {
  bytes[1] += dependency;
  let denied=false;try{await fetch('https://remote.invalid/not-admitted')}catch{denied=true}
  postMessage({ count: ++count, same: value.alias === buffer && value.view.buffer === buffer,
-   bytes: Array.from(bytes), denied, buffer }, [buffer]);
+   bytes: Array.from(bytes), denied, buffer, binaryText:value.binaryText, keyed:value['field\\u0000suffix'], normal:value.field }, [buffer]);
 };`;
 const sharedSource = `let count=0;
 onconnect = event => { const port=event.ports[0];
@@ -114,7 +114,7 @@ async function run() {
         worker.postMessage({buffer:next,alias:next,view:nextView},[next]);
       }else{first.persistentCount=value.count;resolve(first);worker.terminate();}
     };
-    worker.postMessage({buffer,alias:buffer,view},[buffer]);
+    worker.postMessage({buffer,alias:buffer,view,binaryText:'\\u0000\\u00ff\\ud800Z',field:'decoy',['field\\u0000suffix']:'correct'},[buffer]);
   })`);
   const nested = await engine.evaluate(`new Promise(resolve=>{
     const worker=new Worker('https://fixture.invalid/worker.js');

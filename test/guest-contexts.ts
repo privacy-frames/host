@@ -108,6 +108,9 @@ try {
         buffer: {},
         detached: true,
         persistentCount: 2,
+        binaryText: String.fromCharCode(0, 255, 0xd800, 90),
+        keyed: 'correct',
+        normal: 'decoy',
       });
       assert.equal(result.nested, 9);
       assert.equal(result.moduleWorker, 11);
