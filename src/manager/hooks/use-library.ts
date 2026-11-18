@@ -48,7 +48,7 @@ export function useLibrary() {
     void start().catch((error: unknown) => report(errorMessage(error), true));
   }, []);
 
-  async function install(request: InstallationRequest): Promise<boolean> {
+  async function install(request: InstallationRequest): Promise<AppSummary | null> {
     setInstalling(true);
     try {
       await runtime().connect();
@@ -67,10 +67,10 @@ export function useLibrary() {
       );
       if (!installed) throw new Error('Installed application could not be found.');
       report(`Installed ${installed.manifest.name}.`);
-      return true;
+      return installed;
     } catch (error) {
       report(`Installation refused: ${errorMessage(error)}`, true);
-      return false;
+      return null;
     } finally {
       setInstalling(false);
     }

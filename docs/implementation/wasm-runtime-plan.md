@@ -50,3 +50,48 @@ of cross-application security isolation.
 The combined feasibility report is docs/research/wasm-runtime/combined-feasibility.md.
 Research branches are evidence, not production dependencies. Production checks
 and receipts for this branch must be newly executed.
+
+## Integration contracts and current ownership
+
+- Engine agent owns src/guest/engine.ts, protocol.ts, guest-runtime.ts and codecs.
+  API: GuestEngine.create({host,globalObject,wasmModule,modules,onError});
+  evaluate(source,url,mode='global'|'module'), get/set/bind globals,
+  call(function,args,receiver), drainJobs/dispose, detachTransferred(list).
+  Host mediates get/set/call/construct/ownKeys/descriptor/prototype on actual
+  native objects. Descriptors must wrap native accessors through host policy.
+- Bindings agent owns standard Webref metadata/helper/generator files. Build
+  invokes generateGuestBindings(root). The refined binding approach uses standard
+  metadata plus native WebIDL conversion/brands, avoiding duplicate generated
+  implementation/conversion code. Remove unused webidl2js dependency afterward.
+- Context agent owns src/guest/contexts/**. Catalog fields: application,
+  generation, sourceURL, documentBase, runtimeURL, applicationURL, engineWasm,
+  resources[{url,path,contentType,bytes}]. Factories serve fixed trusted worker
+  bootstrap URLs and send catalog as first native message before guest access;
+  entries queue application messages until the engine is ready. Native child
+  about:blank contexts are prepared by trusted parent before application markup.
+- Parent owns new src/guest/browser.ts native policy/globals, resource catalog,
+  guest window bootstrap/markup renderer, serviceworker/build integration,
+  application acceptance/report/deployment.
+
+All guest fetch/XHR reads use admitted catalog bytes (supplied through a private
+native SW MessageChannel). No native fetch is needed in application contexts:
+engine Wasm bytes are in catalog and compiled before GuestEngine.create. Thus
+connect-src 'none' is intended in window/worker CSP. CSS/images/media native
+requests use self/data/blob as appropriate and the serviceworker returns local
+admitted bytes or errors. Native WebSocket/WebTransport/WebRTC/etc are not
+exposed by guest globals or returned-object policy.
+
+Bootstrap elements/nonces are removed before guest markup; guest fetch of its
+source URL returns captured application HTML, never trusted bootstrap response.
+Native inline handlers/scripts remain disallowed by CSP and script source is
+routed to QuickJS. DOM insertion/mutation must preprocess markup/scripts,
+child-context attributes, resource URLs and navigation. Native original getter
+functions must not bypass that mediation through descriptors/lookupGetter.
+Guest prototype changes remain local. Root globalObject aliases window/self
+with guest globalThis and exposes only chosen globals, not raw native Window.
+
+The live manager gained installation share links after the original source pin.
+Its nine changed manager files are reused from published main revision
+f64e2686cf3689fc0bdb621553df817162657a5d so the fork preserves the current UI
+and sharing behavior. The runtime summary includes captured additional resources
+for those links. The native execution implementation is not merged.

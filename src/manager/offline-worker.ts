@@ -41,6 +41,8 @@ worker.addEventListener('activate', (event) => {
 });
 worker.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
+  // Fragments select client-side installation inputs, not a different cached shell.
+  url.hash = '';
   if (url.href === base.href) url.pathname += 'index.html';
   if (event.request.method === 'GET' && urls.has(url.href))
     event.respondWith(

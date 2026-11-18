@@ -11,7 +11,6 @@ import {
   publicResourceURL,
   RESOURCE_LIST_BYTES,
 } from './resource-list.ts';
-import { prepareRuntimeDocument } from '../runtime/document.ts';
 
 function resourceList(input: unknown): ResourceListInput | undefined {
   if (input === undefined) return;
@@ -103,15 +102,6 @@ export async function downloadWebsite(
         unavailableResources: finalized.unavailableResources,
       },
     };
-    const preparedEntry = finalized.resources.find(
-      (resource) => resource.path === 'index.html',
-    );
-    if (!preparedEntry) throw new Error('Missing prepared entry');
-    prepareRuntimeDocument(
-      installation,
-      preparedEntry.bytes,
-      new URL('https://validation.invalid/'),
-    );
     return installation;
   } finally {
     capture.close();

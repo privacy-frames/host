@@ -5,7 +5,6 @@ import {
   type DefaultTreeAdapterTypes as Tree,
 } from 'parse5';
 import { isDataScript, isExecutableScriptType } from '../shared/policy.ts';
-import { compileDocumentContent } from '../runtime/contexts/document-content.ts';
 import { decodeDocumentDataURL } from '../shared/document-data.ts';
 
 import { prepareCSS } from './css.ts';
@@ -276,19 +275,6 @@ function prepareSource(
   }
   walk(ast, base);
   const html = serialize(ast);
-  // Discovery aliases assert no runtime authority. Final admission recompiles
-  // against the actual downloaded graph before any application code can run.
-  const aliases: [string, string][] = scriptContexts.map((script) => [
-    script.url,
-    script.url,
-  ]);
-  compileDocumentContent({
-    kind,
-    text: html,
-    sourceURL: documentURL,
-    baseURL: base,
-    aliases,
-  });
   return {
     html,
     kind,

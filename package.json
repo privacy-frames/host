@@ -38,15 +38,21 @@
     "test:dependencies": "node test/connection-allowlist.ts && node test/markup-dependency.ts"
   },
   "dependencies": {
+    "@jridgewell/resolve-uri": "3.1.3",
     "@rollup/browser": "4.67.4",
+    "@webref/idl": "3.87.0",
     "acorn": "8.19.0",
     "acorn-import-phases": "1.0.4",
     "css-tree": "^3.2.1",
     "es-module-lexer": "^3.0.4",
     "es-module-shims": "2.8.4",
     "parse5": "8.0.1",
+    "quickjs-emscripten": "0.32.0",
     "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "react-dom": "^19.3.1",
+    "saxes": "6.0.0",
+    "webidl2": "24.5.0",
+    "webidl2js": "21.2.0"
   },
   "devDependencies": {
     "@locker/near-membrane-dom": "0.19.1",
@@ -55,6 +61,7 @@
     "@types/node": "^26.6.5",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
+    "@types/webidl2": "24.4.4",
     "dompurify": "3.4.17",
     "esbuild": "0.28.2",
     "marked": "^18.1.1",

@@ -1,656 +1,358 @@
-import { manifestURL } from './pwa.ts';
-import { bootstrapSource } from './bootstrap-source.ts';
 import { getApp, listApps, putApp, deleteApp, getResource } from './storage.ts';
-import { mime } from '../shared/policy.ts';
+import { admitInstallation } from './admission.ts';
 import {
-  applicationURL,
   applicationIdentity,
+  applicationURL,
   publicAlias,
 } from '../shared/runtime-url.ts';
+import { createGuestCatalog, GUEST_BOOTSTRAP_REQUEST } from '../guest/catalog.ts';
+import { manifestURL, webManifest } from './pwa.ts';
 import type { RuntimeEvent } from '../shared/types.ts';
-import { isApplicationRoute } from '../shared/application-navigation.ts';
-import { response } from './response-policy.ts';
-import { readInstalledContent } from './content-broker.ts';
-import {
-  INSTALLED_CONTENT_REQUEST,
-  INSTALLED_RESOURCE_REQUEST,
-  DOCUMENT_CONTROL_REQUEST,
-  WORKER_CONTROL_REQUEST,
-  WORKER_BIRTH_REQUEST,
-} from '../shared/types.ts';
-import {
-  parseResourceRequest,
-  resourceMessage,
-  readInstalledResource,
-  readPublicInstallationResource,
-} from './resource-broker.ts';
-import { admitInstallation } from './admission.ts';
-import { CONTEXT_POLICY_VERSION, ContextRegistry } from './contexts/model.ts';
-import { bindWorkerBirth } from './contexts/worker-birth.ts';
-import { parseWorkerResource } from './contexts/worker-resource-protocol.ts';
-import { requestWorkerControl, withWorkerAuthority } from './contexts/worker-control.ts';
-import { readDocumentRequest } from './contexts/document-request.ts';
-import { controllerContextStorage } from './contexts/controller-store.ts';
-import { contextResourceResponse } from './contexts/resources.ts';
-import { createDocumentController } from './contexts/document-controller.ts';
-import { DocumentIntentStore } from './contexts/document-intents.ts';
-import { createSharedController } from './contexts/shared-controller.ts';
-import { SharedConnectionStore } from './contexts/shared-connections.ts';
-import { createWorkletController } from './contexts/worklet-controller.ts';
-import { SHARED_WORKER_REQUEST } from '../shared/shared-worker.ts';
-import { WORKLET_REQUEST } from './contexts/worklet-types.ts';
-import { compileWorkletGraph } from './contexts/worklet-graph.ts';
-import { rollup } from 'trusted:worklet-compiler';
-import { createPublisherController } from './publisher/controller.ts';
+import { rewriteGuestCSS } from '../guest/css.ts';
+
 const worker = self as unknown as ServiceWorkerGlobalScope;
-const BASE = new URL('./', worker.location.href);
-const contexts = new ContextRegistry(controllerContextStorage(BASE));
-const trustedFiles = [
+const base = new URL('./', worker.location.href);
+const boot = 'pf-guest-bootstrap-' + __BUILD_ID__;
+const trusted = [
   'index.html',
+  'connect.html',
+  'connect.js',
+  'guard.js',
+  'guest-worker.js',
+  'guest-shared-worker.js',
+  'guest-worklet.js',
+  'engine.wasm',
   'host.css',
   'config.json',
   'report.html',
   'pwa-192.png',
   'pwa-512.png',
-  'guard.js',
-  'document-guard.js',
-  'shared-worker-guard.js',
-  'worklet-guard.js',
-  'worklet-imports.js',
-  'publisher-worker-guard.js',
-  'connect.html',
-  'connect.js',
 ];
-function isManagerURL(input: string | undefined) {
-  if (!input) return false;
-  try {
-    const u = new URL(input);
-    return (
-      u.origin === BASE.origin &&
-      !u.search &&
-      [BASE.pathname + 'connect.html'].includes(u.pathname)
-    );
-  } catch {
-    return false;
-  }
-}
-const BOOT = 'pf-trusted-bootstrap-' + __BUILD_ID__;
-const nativeWorkers = {
-  list: () => worker.clients.matchAll({ type: 'worker', includeUncontrolled: true }),
-  get: (id: string) => worker.clients.get(id),
-};
-const documents = createDocumentController({
-  base: BASE,
-  contexts,
-  intents: new DocumentIntentStore(),
-  client: (id) => worker.clients.get(id),
-  application: runtimeIdentity,
-  bootstrap: async () =>
-    (await caches.open(BOOT)).match(new URL('document-guard.js', BASE).href),
-});
-const sharedWorkers = createSharedController({
-  base: BASE,
-  contexts,
-  store: new SharedConnectionStore(),
-  installation: getApp,
-  client: (id) => worker.clients.get(id),
-  application: runtimeIdentity,
-  bootstrap: async () =>
-    (await caches.open(BOOT)).match(new URL('shared-worker-guard.js', BASE).href),
-});
-const worklets = createWorkletController({
-  base: BASE,
-  owner: async (id) => {
-    const client = id ? await worker.clients.get(id) : undefined;
-    if (!client || client.type !== 'window') return;
-    const application = await runtimeIdentity(client);
-    const app = application ? await getApp(application) : undefined;
-    const identity = await contexts.resolve(client);
-    if (
-      !app ||
-      identity?.kind !== 'window' ||
-      identity.installationGeneration !== app.generation
-    )
-      return;
-    return { app, clientId: client.id };
-  },
-  readResource: (app, path, generation) => getResource(app.id, path, generation),
-  guardSource: async () => {
-    const cached = await (
-      await caches.open(BOOT)
-    ).match(new URL('worklet-guard.js', BASE).href);
-    if (!cached) throw new Error('Trusted worklet guard unavailable');
-    return cached.text();
-  },
-  importSource: async () => {
-    const cached = await (
-      await caches.open(BOOT)
-    ).match(new URL('worklet-imports.js', BASE).href);
-    if (!cached) throw new Error('Trusted worklet import helper unavailable');
-    return cached.text();
-  },
-  compile: (options) => compileWorkletGraph(rollup, options),
-});
-const publishers = createPublisherController({
-  base: BASE,
-  contexts,
-  client: (id) => worker.clients.get(id),
-  application: runtimeIdentity,
-  windows: () => worker.clients.matchAll({ type: 'window' }),
-  bootstrap: async () =>
-    (await caches.open(BOOT)).match(new URL('publisher-worker-guard.js', BASE).href),
-  resource: async (app, path) => {
-    const item = app.resources.find((resource) => resource.path === path);
-    return item
-      ? response(
-          await getResource(app.id, path, app.generation),
-          item.contentType || mime(path),
-        )
-      : undefined;
-  },
-});
-// Management roles are issued only to trusted document loads, then bound to the
-// browser client ID. Changing a URL or supplying a claimed role is insufficient.
-const ROLES = 'pf-management-clients-v1';
-const roleURL = (id: string) =>
-  new URL('__host-client/' + encodeURIComponent(id), BASE).href;
-async function grantManagement(id: string) {
-  if (id) await (await caches.open(ROLES)).put(roleURL(id), new Response('manager'));
-}
-async function hasManagement(id: string | undefined) {
-  return !!id && !!(await (await caches.open(ROLES)).match(roleURL(id)));
-}
 const events: RuntimeEvent[] = [];
-function record(kind: string, url: string, method: string) {
+const record = (kind: string, url: string, method = 'GET') => {
   events.push({ kind, url, method, time: new Date().toISOString() });
-  if (events.length > 300) events.shift();
+  if (events.length > 500) events.shift();
+};
+const controlURL = new URL('connect.html', base).href;
+
+function headers(type: string, nonce?: string, document = false): HeadersInit {
+  return {
+    'Content-Type': type,
+    'Content-Security-Policy': [
+      "default-src 'none'",
+      `script-src ${nonce ? "'nonce-" + nonce + "' " : ''}'wasm-unsafe-eval' ${new URL('guest-worklet.js', base).href}`,
+      "connect-src 'none'",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: blob:",
+      "font-src 'self' data: blob:",
+      "media-src 'self' data: blob:",
+      "worker-src 'self'",
+      "frame-src 'self' about:",
+      "object-src 'none'",
+      "base-uri 'none'",
+      "form-action 'none'",
+      ...(document
+        ? [
+            "frame-ancestors 'self'",
+            'sandbox allow-scripts allow-same-origin allow-forms allow-popups',
+          ]
+        : []),
+    ].join('; '),
+    'Referrer-Policy': 'no-referrer',
+    'Cross-Origin-Opener-Policy': 'same-origin',
+    'X-DNS-Prefetch-Control': 'off',
+    'X-Content-Type-Options': 'nosniff',
+    'Cache-Control': 'no-store',
+    'Permissions-Policy':
+      'camera=(), microphone=(self), geolocation=(), usb=(), serial=(), hid=(), bluetooth=(), payment=(), attribution-reporting=(), browsing-topics=(), identity-credentials-get=()',
+    'Connection-Allowlist': '(response-origin); redirects=block; webrtc=block',
+  };
 }
-worker.addEventListener('install', (event) =>
+
+async function installation(input: string | undefined) {
+  if (!input) return;
+  const alias = applicationIdentity(input, base);
+  if (!alias) return;
+  return (await listApps()).find((app) => publicAlias(app.id) === alias);
+}
+
+worker.addEventListener('install', (event) => {
   event.waitUntil(
     (async () => {
-      const cache = await caches.open(BOOT);
-      await cache.addAll(trustedFiles.map((p) => new URL(p, BASE).href));
-      await worker.skipWaiting();
+      const cache = await caches.open(boot);
+      await cache.addAll(trusted.map((path) => new URL(path, base).href));
     })(),
-  ),
-);
-worker.addEventListener('activate', (event) =>
+  );
+});
+worker.addEventListener('activate', (event) => {
   event.waitUntil(
     (async () => {
+      if (worker.registration.navigationPreload)
+        await worker.registration.navigationPreload.disable();
       await worker.clients.claim();
+      for (const name of await caches.keys())
+        if (name.startsWith('pf-guest-bootstrap-') && name !== boot)
+          await caches.delete(name);
     })(),
-  ),
-);
-async function identityFromURL(url: string | undefined): Promise<string | null> {
-  if (!url) return null;
-  const key = applicationIdentity(url, BASE);
-  if (!key) return null;
-  const matches = (await listApps()).filter((app) => publicAlias(app.id) === key);
-  return matches.length === 1 ? matches[0].id : null;
-}
-async function runtimeIdentity(
-  client: Pick<Client, 'id' | 'url' | 'type'> | undefined | null,
-): Promise<string | null> {
-  if (!client) return null;
-  const bound = await contexts.resolve(client);
-  if (bound) {
-    const app = await getApp(bound.application);
-    return app?.generation === bound.installationGeneration ? bound.application : null;
-  }
-  return null;
-}
-async function readWorkerResource(
-  client: Pick<Client, 'id' | 'url' | 'type'> | undefined,
-  packet: unknown,
-) {
-  const input = parseWorkerResource(packet);
-  const request = parseResourceRequest(input);
-  return withWorkerAuthority(client, input.path, contexts, async (actor) => {
-    const result =
-      (await contextResourceResponse(
-        { request, clientId: actor.id, resultingClientId: '' },
-        contexts,
-        BASE,
-      )) ??
-      (await readInstalledResource(
-        actor,
-        request,
-        contexts,
-        BASE,
-        (app, resource, value) =>
-          publishers.intercept(
-            { request, clientId: actor.id, resultingClientId: '' },
-            app,
-            resource,
-            value,
-          ),
-      ));
-    return resourceMessage(request, result);
-  });
-}
+  );
+});
+
 let managementQueue = Promise.resolve();
 worker.addEventListener('message', (event) => {
-  const packet: unknown = event.data;
-  if (
-    packet &&
-    typeof packet === 'object' &&
-    'type' in packet &&
-    (packet.type === INSTALLED_CONTENT_REQUEST ||
-      packet.type === INSTALLED_RESOURCE_REQUEST ||
-      packet.type === DOCUMENT_CONTROL_REQUEST ||
-      packet.type === WORKER_CONTROL_REQUEST ||
-      packet.type === WORKER_BIRTH_REQUEST ||
-      packet.type === WORKLET_REQUEST ||
-      packet.type === SHARED_WORKER_REQUEST)
-  ) {
-    const port = event.ports[0];
-    if (!port) return;
-    event.waitUntil(
-      (async () => {
-        try {
-          const client =
-            event.source && 'id' in event.source
-              ? await worker.clients.get(event.source.id)
-              : undefined;
-          if (packet.type === SHARED_WORKER_REQUEST) {
-            const value = await sharedWorkers.request(client?.id || '', packet);
-            port.postMessage({ ok: true, value });
-            return;
-          }
-          if (packet.type === WORKLET_REQUEST) {
-            const value = await worklets.request(client?.id || '', packet);
-            port.postMessage({ ok: true, value });
-            return;
-          }
-          if (packet.type === WORKER_CONTROL_REQUEST) {
-            const value = await requestWorkerControl(client, packet, contexts);
-            port.postMessage({ ok: true, value });
-            return;
-          }
-          if (packet.type === WORKER_BIRTH_REQUEST) {
-            const value = await bindWorkerBirth(
-              client,
-              packet,
-              contexts,
-              BASE,
-              nativeWorkers,
-            );
-            port.postMessage({ ok: true, value });
-            return;
-          }
-          if (packet.type === DOCUMENT_CONTROL_REQUEST) {
-            const value = await documents.request(
-              client?.id || '',
-              'operation' in packet ? packet.operation : undefined,
-              'payload' in packet ? packet.payload : undefined,
-            );
-            port.postMessage({ ok: true, value });
-            return;
-          }
-          if (packet.type === INSTALLED_CONTENT_REQUEST) {
-            const value = await readInstalledContent(client, contexts, BASE);
-            port.postMessage({ ok: true, value });
-            return;
-          }
-          const value = await readWorkerResource(client, packet);
-          const { body } = value;
-          record('installed', value.url, 'GET');
-          port.postMessage({ ok: true, value }, [body]);
-        } catch (error) {
-          if (packet.type === INSTALLED_RESOURCE_REQUEST)
-            record(
-              'blocked',
-              'url' in packet && typeof packet.url === 'string'
-                ? packet.url
-                : 'invalid-resource-message',
-              'GET',
-            );
-          port.postMessage({
-            ok: false,
-            error: error instanceof Error ? error.message : String(error),
-          });
-        } finally {
-          port.close();
-        }
-      })(),
-    );
-    return;
-  }
-  if (publishers.handlesMessage(event.data)) {
-    event.waitUntil(publishers.message(event));
-    return;
-  }
   const port = event.ports[0];
-  if (!port) return;
-  const operation = managementQueue.then(async () => {
+  if (!port || !event.source || !('id' in event.source)) return;
+  const sourceID = event.source.id;
+  const operation = async () => {
     try {
-      const client =
-        event.source && 'id' in event.source
-          ? await worker.clients.get(event.source.id)
-          : undefined;
-      if (!client || !isManagerURL(client.url) || !(await hasManagement(client.id)))
-        throw new Error('Management client not authorized');
+      const client = await worker.clients.get(sourceID);
+      if (!client) throw new Error('Browser client is unavailable');
       const message: unknown = event.data;
-      if (!message || typeof message !== 'object' || !('operation' in message))
-        throw new Error('Invalid manager message');
-      const operation = message.operation;
+      if (!message || typeof message !== 'object')
+        throw new Error('Invalid host request');
+      if ('type' in message && message.type === GUEST_BOOTSTRAP_REQUEST) {
+        const app = await installation(client.url);
+        if (!app || client.type !== 'window')
+          throw new Error('Application client required');
+        const engine = await (
+          await caches.open(boot)
+        ).match(new URL('engine.wasm', base).href);
+        if (!engine?.ok) throw new Error('Guest engine is unavailable');
+        const value = await createGuestCatalog(app, base, await engine.arrayBuffer());
+        const current = await getApp(app.id);
+        if (current?.generation !== app.generation)
+          throw new Error('Installation changed');
+        port.postMessage({ ok: true, value }, [
+          value.engineWasm,
+          ...value.resources.map((item) => item.bytes),
+        ]);
+        return;
+      }
+      if (client.url !== controlURL || client.type !== 'window')
+        throw new Error('Trusted manager bridge required');
+      if (!('operation' in message)) throw new Error('Management operation required');
       const payload = 'payload' in message ? message.payload : undefined;
-      let value;
-      if (operation === 'install') {
-        const app = await admitInstallation(payload, BASE);
-        const windows = await worker.clients.matchAll({ type: 'window' });
-        if ((await Promise.all(windows.map((c) => runtimeIdentity(c)))).includes(app.id))
+      let value: unknown;
+      if (message.operation === 'install') {
+        const app = await admitInstallation(payload, base);
+        const clients = await worker.clients.matchAll({ type: 'window' });
+        if (
+          clients.some(
+            (candidate) =>
+              applicationIdentity(candidate.url, base) === publicAlias(app.id),
+          )
+        )
           throw new Error('Close application windows before replacing an installation');
         app.installedAt = new Date().toISOString();
         await putApp(app);
         value = { id: app.id };
-      } else if (operation === 'list')
-        value = (await listApps()).map((a) => ({
-          id: a.id,
-          manifest: a.manifest,
-          source: a.source,
-          installedAt: a.installedAt,
-          size: a.size,
+      } else if (message.operation === 'list') {
+        value = (await listApps()).map((app) => ({
+          id: app.id,
+          manifest: app.manifest,
+          source: app.source,
+          installedAt: app.installedAt,
+          size: app.size,
+          additionalResources: app.capture.additionalResources,
         }));
-      else if (operation === 'remove') {
-        if (typeof payload !== 'string') throw new Error('Invalid installation identity');
-        const windows = await worker.clients.matchAll({ type: 'window' });
-        if ((await Promise.all(windows.map((c) => runtimeIdentity(c)))).includes(payload))
+      } else if (message.operation === 'remove' && typeof payload === 'string') {
+        const app = await getApp(payload);
+        const clients = await worker.clients.matchAll({ type: 'window' });
+        if (
+          app &&
+          clients.some(
+            (candidate) =>
+              applicationIdentity(candidate.url, base) === publicAlias(app.id),
+          )
+        )
           throw new Error('Close application windows before uninstalling');
         await deleteApp(payload);
         value = true;
-      } else if (operation === 'events') value = events;
-      else throw new Error('Unknown operation');
+      } else if (message.operation === 'events') value = events;
+      else throw new Error('Unknown management operation');
       port.postMessage({ ok: true, value });
-    } catch (e) {
-      port.postMessage({ ok: false, error: e instanceof Error ? e.message : String(e) });
+    } catch (error) {
+      port.postMessage({
+        ok: false,
+        error: error instanceof Error ? error.message : String(error),
+      });
     }
-  });
-  managementQueue = operation.catch(() => {});
-  event.waitUntil(operation);
+  };
+  managementQueue = managementQueue.then(operation, operation);
+  event.waitUntil(managementQueue);
 });
+
 worker.addEventListener('fetch', (event) => {
   event.respondWith(
     (async () => {
-      const req = event.request;
-      const url = new URL(req.url);
-      const documentResponse = await documents.respond(event);
-      if (documentResponse) return documentResponse;
-      const sharedResponse = await sharedWorkers.respond(event);
-      if (sharedResponse) return sharedResponse;
-      const publisherResponse = await publishers.respond(event);
-      if (publisherResponse) return publisherResponse;
-      if (
-        (req.destination === 'iframe' || req.destination === 'frame') &&
-        !isManagerURL(url.href)
-      ) {
-        record('blocked-document-startup', req.url, req.method);
+      const request = event.request;
+      const url = new URL(request.url);
+      const client = event.clientId
+        ? await worker.clients.get(event.clientId)
+        : undefined;
+      const app =
+        (await installation(client?.url)) ||
+        (request.mode === 'navigate' ||
+        /\/__manifest\.webmanifest$|\/__icon\//.test(url.pathname)
+          ? await installation(url.href)
+          : undefined);
+      const cache = await caches.open(boot);
+      const publicPath =
+        url.origin === base.origin && url.pathname.startsWith(base.pathname)
+          ? url.pathname.slice(base.pathname.length)
+          : '';
+      if (!app) {
+        // Only fixed trusted bootstrap bytes are public. No runtime network fallback.
+        if (request.method === 'GET' && !url.search && trusted.includes(publicPath)) {
+          const cached = await cache.match(url.href);
+          if (cached) return cached;
+        }
         return Response.error();
       }
-      const contextResource = await contextResourceResponse(
-        event,
-        contexts,
-        BASE,
-        undefined,
-        (diagnostic) =>
-          record(
-            'blocked-context-resource:' + JSON.stringify(diagnostic),
-            req.url,
-            req.method,
-          ),
-      );
-      if (contextResource) return contextResource;
-      const boundWorker = event.clientId
-          ? await contexts.resolveWorker(event.clientId)
-          : undefined,
-        client = boundWorker
-          ? { id: event.clientId, url: boundWorker.url, type: 'worker' as const }
-          : event.clientId
-            ? await worker.clients.get(event.clientId)
-            : null;
-      if (url.pathname.endsWith('/__contexts/control')) {
+      if (
+        request.method === 'GET' &&
+        !url.search &&
+        ['pwa-192.png', 'pwa-512.png'].includes(publicPath)
+      )
+        return (await cache.match(url.href)) || Response.error();
+      const entry = applicationURL(app, base);
+      if (
+        request.method === 'GET' &&
+        !url.search &&
+        url.href === new URL('guard.js', base).href &&
+        request.destination === 'script'
+      )
+        return (await cache.match(url.href)) || Response.error();
+      const suffix =
+        url.origin === entry.origin && url.pathname.startsWith(entry.pathname)
+          ? url.pathname.slice(entry.pathname.length)
+          : '';
+      if (
+        request.method === 'GET' &&
+        !url.search &&
+        url.href === new URL('guest-worklet.js', base).href &&
+        request.destination === 'audioworklet'
+      ) {
+        const source = await cache.match(url.href);
+        return source
+          ? new Response(await source.arrayBuffer(), {
+              headers: headers('text/javascript'),
+            })
+          : Response.error();
+      }
+      if (['worker', 'sharedworker'].includes(request.destination)) {
+        const expected =
+          request.destination === 'worker'
+            ? '__guest_worker__.js'
+            : '__guest_shared_worker__.js';
+        if (!client || request.method !== 'GET' || url.search || suffix !== expected)
+          return Response.error();
+        const source = await cache.match(
+          new URL(
+            request.destination === 'worker'
+              ? 'guest-worker.js'
+              : 'guest-shared-worker.js',
+            base,
+          ).href,
+        );
+        return source
+          ? new Response(await source.arrayBuffer(), {
+              headers: headers('text/javascript'),
+            })
+          : Response.error();
+      }
+      if (
+        request.mode === 'navigate' &&
+        suffix === '__guest_document__.html' &&
+        request.method === 'GET' &&
+        !url.search &&
+        client &&
+        (await installation(client.url))
+      ) {
+        return new Response(
+          '<!doctype html><html><head><meta charset="utf-8"></head><body></body></html>',
+          { headers: headers('text/html;charset=utf-8', undefined, true) },
+        );
+      }
+      if (request.mode === 'navigate') {
         if (
-          !boundWorker ||
-          !client ||
-          req.method !== 'POST' ||
-          req.destination !== '' ||
-          req.mode === 'navigate' ||
-          event.resultingClientId ||
-          url.search ||
-          url.hash
+          request.destination !== 'document' ||
+          request.method !== 'GET' ||
+          url.origin !== entry.origin ||
+          (url.pathname !== entry.pathname &&
+            url.pathname !== entry.pathname + 'index.html')
+        ) {
+          record('blocked-navigation', url.href, request.method);
+          return Response.error();
+        }
+        const nonce = crypto.randomUUID().replaceAll('-', '');
+        const bootstrap = new URL('guard.js', base).href;
+        const document =
+          '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="manifest" href="' +
+          manifestURL(app, base).href +
+          '"></head><body><script nonce="' +
+          nonce +
+          '" src="' +
+          bootstrap +
+          '"></script></body></html>';
+        return new Response(document, {
+          headers: headers('text/html;charset=utf-8', nonce, true),
+        });
+      }
+      if (
+        url.href === manifestURL(app, base).href &&
+        request.method === 'GET' &&
+        !url.search
+      ) {
+        return new Response(JSON.stringify(webManifest(app, base)), {
+          headers: { 'Content-Type': 'application/manifest+json' },
+        });
+      }
+      const iconPrefix = new URL(publicAlias(app.id) + '/__icon/', base);
+      if (
+        url.origin === iconPrefix.origin &&
+        url.pathname.startsWith(iconPrefix.pathname)
+      ) {
+        const icon = Number(url.pathname.slice(iconPrefix.pathname.length));
+        const icons = app.resources.filter((item) => /image\//.test(item.contentType));
+        const resource = icons[icon];
+        if (resource && Number.isSafeInteger(icon) && icon >= 0)
+          return new Response(await getResource(app.id, resource.path, app.generation), {
+            headers: headers(resource.contentType),
+          });
+        return Response.error();
+      }
+      if (request.method !== 'GET') return Response.error();
+      const original = new URL(url);
+      original.hash = '';
+      const resource = app.resources.find(
+        (item) => item.path === suffix || item.url === original.href,
+      );
+      if (!resource) {
+        record('blocked', url.href, request.method);
+        return Response.error();
+      }
+      if (/\b(?:text\/html|image\/svg\+xml)\b/i.test(resource.contentType)) {
+        // Application documents are data for the prepared guest renderer, never a
+        // browser-controlled native script/context entry route.
+        if (
+          ['iframe', 'frame', 'object', 'embed', 'script'].includes(request.destination)
         )
           return Response.error();
-        try {
-          const app = await getApp(boundWorker.application);
-          if (
-            !app ||
-            url.href !== new URL('__contexts/control', applicationURL(app, BASE)).href
-          )
-            return Response.error();
-          const packet = await readDocumentRequest(req);
-          if (
-            packet &&
-            typeof packet === 'object' &&
-            'type' in packet &&
-            packet.type === WORKER_BIRTH_REQUEST
-          ) {
-            const value = await bindWorkerBirth(
-              client,
-              packet,
-              contexts,
-              BASE,
-              nativeWorkers,
-            );
-            return response(JSON.stringify(value), 'application/json');
-          }
-          if (
-            packet &&
-            typeof packet === 'object' &&
-            'type' in packet &&
-            packet.type === INSTALLED_RESOURCE_REQUEST
-          ) {
-            const value = await readWorkerResource(client, packet);
-            record('installed', value.url, 'GET');
-            return new Response(
-              [204, 205, 304].includes(value.status) ? null : value.body,
-              {
-                status: value.status,
-                statusText: value.statusText,
-                headers: value.headers,
-              },
-            );
-          }
-          const value = await requestWorkerControl(client, packet, contexts);
-          return response(JSON.stringify(value), 'application/json');
-        } catch {
-          return Response.error();
-        }
       }
-      // Fragments are application-local routing state, including on reload. They do
-      // not select a different installed document or authorize a resource request.
-      url.hash = '';
-      // New execution contexts may start only at the controller's bootstrap route.
-      // Their actual creator and reserved client are checked before serving code.
-      if (
-        [
-          'worker',
-          'sharedworker',
-          'audioworklet',
-          'paintworklet',
-          'serviceworker',
-        ].includes(req.destination)
-      ) {
-        const parentApplication = await runtimeIdentity(client);
-        const parentApp = parentApplication ? await getApp(parentApplication) : null;
-        const candidate = parentApp
-          ? new URL('__contexts/', applicationURL(parentApp, BASE))
-          : null;
-        const suffix =
-          candidate &&
-          url.origin === candidate.origin &&
-          url.pathname.startsWith(candidate.pathname)
-            ? url.pathname.slice(candidate.pathname.length)
-            : '';
-        if (
-          req.destination !== 'worker' ||
-          req.method !== 'GET' ||
-          url.search ||
-          !/^[a-f0-9-]{36}\/(?:classic|module)\.js$/.test(suffix)
-        ) {
-          record('blocked-context-startup', req.url, req.method);
-          return Response.error();
-        }
-      }
-      // Browsers may fetch manifests/icons without an application client. These
-      // fixed routes expose only public installation metadata and captured icons.
-      const publicPath =
-        url.origin === BASE.origin && url.pathname.startsWith(BASE.pathname)
-          ? url.pathname.slice(BASE.pathname.length)
-          : '';
-      const publicRoute = publicPath.match(
-        /^([A-Za-z0-9_-]{11})\/(__manifest\.webmanifest|__icon\/(\d+))$/,
-      );
-      if (publicRoute && req.method === 'GET' && !url.search && req.mode !== 'navigate') {
-        const apps = (await listApps()).filter(
-          (app) => publicAlias(app.id) === publicRoute[1],
-        );
-        if (apps.length === 1) {
-          const app = apps[0];
-          return (
-            (await readPublicInstallationResource(app, url, BASE)) || Response.error()
-          );
-        }
-        return Response.error();
-      }
-      if (
-        req.method === 'GET' &&
-        !url.search &&
-        ['pwa-192.png', 'pwa-512.png'].some(
-          (path) => url.href === new URL(path, BASE).href,
-        ) &&
-        req.mode !== 'navigate'
-      )
-        return (await (await caches.open(BOOT)).match(url.href)) || Response.error();
-      const id =
-        (await runtimeIdentity(client)) ||
-        (req.mode === 'navigate' ? await identityFromURL(url.href) : null);
-      const isTrusted =
-        url.origin === BASE.origin &&
-        trustedFiles.some((p) => url.href === new URL(p, BASE).href);
-      const manager = isManagerURL(client?.url) && (await hasManagement(client?.id));
-      const readOnlyHost =
-        client?.url === new URL('report.html', BASE).href ||
-        [BASE.href, new URL('index.html', BASE).href].includes(client?.url || '');
-      const managerNavigation = req.mode === 'navigate' && isManagerURL(url.href);
-      const hostDocument =
-        req.mode === 'navigate' &&
-        (url.href === new URL('report.html', BASE).href ||
-          [BASE.href, new URL('index.html', BASE).href].includes(url.href));
-      if (!id && managerNavigation) await grantManagement(event.resultingClientId);
-      if (
-        req.method === 'GET' &&
-        url.href === BASE.href &&
-        !id &&
-        (managerNavigation || manager || hostDocument)
-      ) {
-        return (
-          (await (await caches.open(BOOT)).match(new URL('index.html', BASE).href)) ||
-          Response.error()
-        );
-      }
-      if (
-        isTrusted &&
-        req.method === 'GET' &&
-        ((!id && (manager || readOnlyHost || managerNavigation || hostDocument)) ||
-          (url.href === new URL('guard.js', BASE).href && id))
-      ) {
-        const cached = await (await caches.open(BOOT)).match(url.href);
-        return cached || Response.error();
-      }
-      if (!id) {
-        record(
-          'blocked-unmanaged:' +
-            JSON.stringify({
-              clientId: event.clientId,
-              resultingClientId: event.resultingClientId,
-              destination: req.destination,
-              clientURL: client?.url,
-              bound: boundWorker?.id,
-            }),
-          req.url,
-          req.method,
-        );
-        return Response.error();
-      }
-      const app = await getApp(id);
-      if (!app) return response('<h1>Application not installed</h1>', 'text/html', 404);
-      const entry = applicationURL(app, BASE);
-      const contextPrefix = new URL('__contexts/', entry).pathname;
-      if (url.origin === BASE.origin && url.pathname.startsWith(contextPrefix)) {
-        return Response.error();
-      }
-      if (req.mode === 'navigate') {
-        // Any attempt to use a different document is refused. Bootstrap contains no untrusted markup.
-        if (req.method === 'GET' && url.origin === entry.origin && !url.search) {
-          const parts = url.pathname.slice(BASE.pathname.length).split('/');
-          if (
-            parts[0] === publicAlias(app.id) &&
-            (parts.length <= 2 ||
-              (parts.length === 3 && parts[2] === '') ||
-              (parts.length === 3 && parts[2] === app.manifest.entry)) &&
-            url.href !== entry.href
-          )
-            return new Response(null, { status: 302, headers: { Location: entry.href } });
-        }
-        if (!isApplicationRoute(url.href, entry.href) || req.method !== 'GET') {
-          record('blocked-navigation', req.url, req.method);
-          return Response.error();
-        }
-        if (req.destination !== 'document' || !event.resultingClientId)
-          return Response.error();
-        await contexts.bind(event.resultingClientId, {
-          policyVersion: CONTEXT_POLICY_VERSION,
-          installationGeneration: app.generation,
-          id: crypto.randomUUID(),
-          application: app.id,
-          parent: null,
-          kind: 'window',
-          state: 'preparing',
-          url: entry.href,
+      record('installed', url.href, request.method);
+      const body = await getResource(app.id, resource.path, app.generation);
+      if (/^text\/css(?:;|$)/i.test(resource.contentType)) {
+        const text = rewriteGuestCSS(new TextDecoder().decode(body), (input) => {
+          if (input.startsWith('#') || /^(?:data:|blob:)/i.test(input)) return input;
+          const address = new URL(input, resource.url);
+          const match = app.resources.find((candidate) => candidate.url === address.href);
+          return match
+            ? new URL(match.path, entry).href
+            : new URL('__unavailable__', entry).href;
         });
-        const script = new URL('guard.js', BASE).href;
-        const code = await bootstrapSource(await (await caches.open(BOOT)).match(script));
-        const nonce = crypto.randomUUID().replaceAll('-', '');
-        return response(
-          `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${app.manifest.name.replace(/[&<>"]/g, (c) => (({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '\"': '&quot;' }) as Record<string, string>)[c] || c)}</title><link rel="manifest" href="${manifestURL(app, BASE).href}"></head><body><script src="${code}" data-privacy-bootstrap-url="${script}" nonce="${nonce}" data-installation="${app.id}" data-application-url="${entry.href}"></script></body></html>`,
-          'text/html',
-          200,
-          {
-            scriptNonce: nonce,
-            popups: true,
-            workerSource: new URL('__contexts/', entry).href,
-            frameSource: new URL('__contexts/', entry).href,
-            controllerSource: new URL('sw.js', BASE).href,
-          },
-        );
+        return new Response(text, { headers: headers(resource.contentType) });
       }
-      if (req.method === 'GET' && client) {
-        try {
-          const result = await readInstalledResource(
-            client,
-            req,
-            contexts,
-            BASE,
-            (app, resource, value) => publishers.intercept(event, app, resource, value),
-          );
-          record('installed', req.url, req.method);
-          return result;
-        } catch {
-          // Admission and generation failures remain local in either transport.
-        }
-      }
-      record('blocked', req.url, req.method);
-      return Response.error();
+      return new Response(body, { headers: headers(resource.contentType) });
     })().catch((error) => {
       console.error(error);
       return Response.error();

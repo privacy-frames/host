@@ -195,6 +195,7 @@ async function initialize(): Promise<void> {
   // message roles can authorize an application window as the manager.
   window.addEventListener('message', async (event: MessageEvent<unknown>) => {
     if (
+      !event.isTrusted ||
       port ||
       window.parent === window ||
       event.source !== window.parent ||

@@ -1,13 +1,11 @@
 import { digest, LIMITS, safePath, validateMetadata } from '../shared/policy.ts';
 import { applicationURL, publicAlias, resourceURL } from '../shared/runtime-url.ts';
-import { compileDocumentContent } from './contexts/document-content.ts';
 import type {
   DownloadedResource,
   PreparedInstallation,
   ResourceCaptureSummary,
   UnavailableResource,
 } from '../shared/types.ts';
-import { prepareRuntimeDocument } from './document.ts';
 import { listApps } from './storage.ts';
 
 function isObject(value: unknown): value is Record<string, unknown> {
@@ -151,36 +149,18 @@ export async function admitInstallation(
   };
   const appURL = applicationURL(app, runtime).href;
   const resolvedPaths = new Set<string>();
-  const aliases: [string, string][] = resources.map((resource) => {
+  for (const resource of resources) {
     const resolved = resourceURL(app, resource.path, runtime).href;
     if (resolved === appURL || !resolved.startsWith(appURL))
       throw new Error('Resource path leaves its application');
     if (resolvedPaths.has(resolved)) throw new Error('Duplicate resolved resource path');
     resolvedPaths.add(resolved);
-    return [resource.url, resolved];
-  });
-  for (const resource of resources)
-    if (
-      resource.path.endsWith('.html') ||
-      resource.contentType.split(';')[0].trim().toLowerCase() === 'text/html'
-    )
-      compileDocumentContent({
-        kind: 'html',
-        text: new TextDecoder().decode(resource.bytes),
-        sourceURL: resource.url,
-        baseURL:
-          resource.documentBase ||
-          (resource.url === source ? app.documentBase : undefined) ||
-          resource.url,
-        aliases,
-        unavailableURLs: capture.unavailableResources.map((item) => item.url),
-      });
+  }
   if (
     (await listApps()).some(
       (other) => other.id !== id && publicAlias(other.id) === publicAlias(id),
     )
   )
     throw new Error('Installation alias collision');
-  prepareRuntimeDocument(app, entry.bytes, runtime);
   return app;
 }

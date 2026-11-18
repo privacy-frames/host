@@ -7,7 +7,7 @@ import type {
 export type AppSummary = Pick<
   Installation,
   'id' | 'manifest' | 'source' | 'installedAt' | 'size'
->;
+> & { additionalResources: string[] };
 export type HostConfig = Pick<
   Configuration,
   'managerURL' | 'runtimeURL' | 'installationURL' | 'examples'
