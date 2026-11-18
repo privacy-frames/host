@@ -66,6 +66,7 @@ try {
     frameAbsent:
       !html.querySelector('iframe')?.hasAttribute('src') &&
       !html.querySelector('iframe')?.hasAttribute('srcdoc'),
+    frameHasNoContext: html.querySelector('iframe')?.contentWindow === null,
     objectAbsent: !html.querySelector('object')?.hasAttribute('data'),
     refreshAbsent: !html.querySelector('meta')?.hasAttribute('http-equiv'),
     scriptType: script.getAttribute('type'),
@@ -127,6 +128,10 @@ try {
     '<!DOCTYPE root [<!ENTITY x "local">]><root/>',
     'application/xml',
   );
+  const publicDoctype = parser.parseFromString(
+    '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg xmlns="http://www.w3.org/2000/svg"/>',
+    'image/svg+xml',
+  );
   let unsupported = false;
   try {
     parser.parseFromString('', 'text/plain' as DOMParserSupportedType);
@@ -162,6 +167,10 @@ try {
       ?.hasAttribute('attributeName'),
     stylesheetPI: stylesheet.firstChild?.nodeValue,
     dtdSubset: subset.documentElement.localName,
+    publicDoctype: {
+      publicId: publicDoctype.doctype?.publicId,
+      systemId: publicDoctype.doctype?.systemId,
+    },
     malformed: malformed.documentElement.localName,
     unknownEntity: entity.documentElement.localName,
     unsupported,

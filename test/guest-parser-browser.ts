@@ -86,6 +86,7 @@ try {
       for (const key of ['handlerAbsent', 'frameAbsent', 'objectAbsent', 'refreshAbsent'])
         assert.equal(result.html[key], true, key);
       assert.equal(result.html.customConstructorsBeforeAttachment, 0);
+      assert.equal(result.html.frameHasNoContext, true);
       assert.equal(result.html.template, 'kept');
       assert.equal(result.html.jsonKept, '{"local":true}');
       assert.equal(result.html.scriptType, 'application/x-privacy-frames-inert');
@@ -116,6 +117,10 @@ try {
       assert.equal(result.baseAnimationWithheld, true);
       assert(result.stylesheetPI.includes(base + '/installed/__unavailable__'));
       assert.equal(result.dtdSubset, 'parsererror');
+      assert.deepEqual(result.publicDoctype, {
+        publicId: '-//W3C//DTD SVG 1.1//EN',
+        systemId: 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd',
+      });
       assert.equal(result.malformed, 'parsererror');
       assert.equal(result.unknownEntity, 'parsererror');
       assert.equal(result.unsupported, true);

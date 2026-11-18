@@ -132,6 +132,7 @@ interface RequestState {
   timer: ReturnType<typeof setTimeout> | null;
   status: number;
   statusText: string;
+  responseURL: string;
   headers: Headers;
   requestHeaders: Headers;
   mimeOverride: string | null;
@@ -200,6 +201,15 @@ function decodedText(bytes: ArrayBuffer, mime: string): string {
   }
 }
 
+function logicalResponseURL(resources: GuestResources, input: string): string {
+  const requested = new URL(resources.resolve(input));
+  const installed = resources.resource(requested.href);
+  const logical = installed ? new URL(installed.url) : requested;
+  if (requested.search) logical.search = requested.search;
+  logical.hash = '';
+  return logical.href;
+}
+
 /** Browser-style local resource reads without a native network implementation. */
 export function createGuestWebServices({
   resources,
@@ -229,6 +239,7 @@ export function createGuestWebServices({
   function resetResponse(value: RequestState): void {
     value.status = 0;
     value.statusText = '';
+    value.responseURL = '';
     value.headers = new Headers();
     value.bytes = new ArrayBuffer(0);
     value.text = '';
@@ -283,9 +294,15 @@ export function createGuestWebServices({
       return null;
     const mimeType = html ? 'text/html' : 'application/xml';
     const document = parseDocumentSource
-      ? parseDocumentSource(value.text, mimeType, value.url)
+      ? parseDocumentSource(value.text, mimeType, value.responseURL || value.url)
       : parserDocument
-        ? parseGuestDocument(parserDocument, resources, value.text, mimeType, value.url)
+        ? parseGuestDocument(
+            parserDocument,
+            resources,
+            value.text,
+            mimeType,
+            value.responseURL || value.url,
+          )
         : null;
     if (!document) return null;
     if (!html && document.querySelector('parsererror')) return null;
@@ -327,6 +344,7 @@ export function createGuestWebServices({
     if (!value.sent || value.generation !== generation) return;
     value.status = response.status;
     value.statusText = response.statusText || (response.status === 200 ? 'OK' : '');
+    value.responseURL = logicalResponseURL(resources, value.url);
     value.headers = new Headers(response.headers);
     if (value.async) changeState(request, 2);
     if (!value.sent || value.generation !== generation) return;
@@ -411,6 +429,7 @@ export function createGuestWebServices({
         timer: null,
         status: 0,
         statusText: '',
+        responseURL: '',
         headers: new Headers(),
         requestHeaders: new Headers(),
         mimeOverride: null,
@@ -443,7 +462,7 @@ export function createGuestWebServices({
     }
     get responseURL() {
       const value = state(this);
-      return value.status ? value.url : '';
+      return value.status ? value.responseURL : '';
     }
     get response() {
       const value = state(this);
@@ -812,17 +831,17 @@ export function createGuestWebServices({
     const signal = init?.signal || (input instanceof Request ? input.signal : undefined);
     if (signal?.aborted)
       throw signal.reason || exception('The request was aborted.', 'AbortError');
-    const url = new URL(
-      resources.resolve(input instanceof Request ? input.url : String(input)),
+    const url = logicalResponseURL(
+      resources,
+      input instanceof Request ? input.url : String(input),
     );
-    url.hash = '';
     return new Promise<Response>((resolve, reject) => {
       const aborted = () =>
         reject(signal?.reason || exception('The request was aborted.', 'AbortError'));
       signal?.addEventListener('abort', aborted, { once: true });
       void resources
         .fetch(input, init)
-        .then((response) => resolve(responseWithURL(response, url.href)), reject)
+        .then((response) => resolve(responseWithURL(response, url)), reject)
         .finally(() => signal?.removeEventListener('abort', aborted));
     });
   }

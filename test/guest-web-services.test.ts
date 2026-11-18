@@ -215,6 +215,12 @@ test('local fetch exposes logical URL, native Response brand, clone and cancella
   assert.equal(copy.url, response.url);
   assert.equal(await Response.prototype.text.call(response), 'local text');
   assert.equal(await copy.text(), 'local text');
+  const alias = await services.fetch('https://runtime.example/fixture/app/value.txt');
+  assert.equal(alias.url, 'https://publisher.example/app/value.txt');
+  const xhr = new services.XMLHttpRequest();
+  xhr.open('GET', 'https://runtime.example/fixture/app/value.txt', false);
+  xhr.send();
+  assert.equal(xhr.responseURL, 'https://publisher.example/app/value.txt');
   const controller = new AbortController();
   controller.abort();
   await assert.rejects(services.fetch('value.txt', { signal: controller.signal }), {
