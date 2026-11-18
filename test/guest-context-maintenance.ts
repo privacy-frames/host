@@ -5,6 +5,11 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { chromium, firefox, type Page } from 'playwright';
 import { servers } from './server.ts';
 import { provideResourceList } from './resource-list-input.ts';
+import {
+  maintenanceCoverage,
+  type MaintenanceSample,
+  type MaintenanceSensor,
+} from './guest-context-maintenance-coverage.ts';
 
 const scripts: Record<string, string> = {
   '/classic.js': 'importScripts("./dependency.js");postMessage(globalThis.ready);',
@@ -109,10 +114,9 @@ const address = publisher.address();
 assert(address && typeof address === 'object');
 const origin = `http://127.0.0.1:${address.port}`;
 const server = await servers({ receiver: false });
-const samples: object[] = [];
-const groups: object[] = [];
-const violations: object[] = [];
-const missingControls: object[] = [];
+const samples: MaintenanceSample[] = [];
+const sensors: MaintenanceSensor[] = [];
+let coverage: ReturnType<typeof maintenanceCoverage> | undefined;
 let completed = false;
 let failure: string | undefined;
 const artifacts = [
@@ -166,6 +170,16 @@ try {
         : {}),
     });
     try {
+      const sensor = await browser.newPage();
+      const sensorStart = publisherTraffic.length;
+      await sensor.goto(origin + '/sensor?profile=' + profile.name);
+      const sensorRequests = publisherTraffic.slice(sensorStart);
+      assert(
+        sensorRequests.some((request) => request.path.startsWith('/sensor?')),
+        'Native physical HTTP sensor did not reach publisher',
+      );
+      sensors.push({ profile: profile.name, requests: sensorRequests });
+      await sensor.close();
       for (const kind of [
         'classic',
         'dynamic',
@@ -180,7 +194,6 @@ try {
         if (process.env.GUEST_CASES && !process.env.GUEST_CASES.split(',').includes(kind))
           continue;
         for (const confined of [false, true]) {
-          let positives = 0;
           const expectUpdate =
             !['worklet', 'resources'].includes(kind) || profile.forcedAge;
           if (kind === 'reload' && !confined) continue;
@@ -275,9 +288,6 @@ try {
               };
               samples.push(observation);
               console.log(JSON.stringify(observation));
-              if (confined && (runtime.length || publisherRequests.length))
-                violations.push(observation);
-              if (!confined && bit === '1' && updates.length) positives++;
               if (
                 !confined &&
                 expectUpdate &&
@@ -296,14 +306,6 @@ try {
               await context.close();
             }
           }
-          groups.push({
-            profile: profile.name,
-            kind,
-            confined,
-            positiveUpdateSamples: positives,
-          });
-          if (!confined && expectUpdate && positives === 0)
-            missingControls.push({ profile: profile.name, kind });
         }
       }
     } finally {
@@ -315,13 +317,9 @@ try {
     hashes,
     'Runtime artifacts changed during measurement',
   );
+  coverage = maintenanceCoverage(samples, sensors);
   completed = true;
-  assert.deepEqual(violations, [], 'Guest worker creation caused physical HTTP traffic');
-  assert.deepEqual(
-    missingControls,
-    [],
-    'Native worker update control did not demonstrate the browser behavior',
-  );
+  assert(coverage.passed, coverage.errors.join('\n'));
 } catch (error) {
   failure = error instanceof Error ? error.stack : String(error);
   throw error;
@@ -332,7 +330,15 @@ try {
   await writeFile(
     'results/guest-runtime/worker-maintenance.json',
     JSON.stringify(
-      { completed, failure, hashes, groups, samples, violations, missingControls },
+      {
+        completed,
+        passed: completed && !failure,
+        failure,
+        hashes,
+        sensors,
+        coverage: coverage || maintenanceCoverage(samples, sensors),
+        samples,
+      },
       null,
       2,
     ) + '\n',
