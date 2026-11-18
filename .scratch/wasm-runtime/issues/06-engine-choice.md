@@ -4,7 +4,7 @@ Type: grilling
 Label: wayfinder:grilling
 Status: open
 Assignee: unassigned
-Blocked by: 01-quickjs-capabilities.md, 02-boa-capabilities.md, 03-current-demo-contract.md, 04-dom-binding-boundary.md, 05-execution-contexts.md, 11-main-engine-placement.md, 12-browser-binding-reuse.md, 13-synchronous-event-reentry.md, 15-audio-worklet-feasibility.md
+Blocked by: 01-quickjs-capabilities.md, 02-boa-capabilities.md, 03-current-demo-contract.md, 04-dom-binding-boundary.md, 05-execution-contexts.md, 11-main-engine-placement.md, 12-browser-binding-reuse.md, 13-synchronous-event-reentry.md, 15-audio-worklet-feasibility.md, 17-combined-feasibility-study.md
 
 ## Question
 
