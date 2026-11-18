@@ -79,12 +79,23 @@ try {
       assert.equal(result.html.base, 'https://publisher.invalid/app/');
       assert(result.html.mapped.startsWith('blob:' + base + '/'));
       assert.equal(result.html.unknown, 'data:application/octet-stream,');
+      assert.equal(result.html.invalid, 'data:application/octet-stream,');
       assert.equal(
         result.html.sourceSet,
         result.html.mapped + ' 1x, data:application/octet-stream, 2x',
       );
-      for (const key of ['handlerAbsent', 'frameAbsent', 'objectAbsent', 'refreshAbsent'])
+      for (const key of [
+        'handlerAbsent',
+        'frameAbsent',
+        'objectDataWithheld',
+        'objectRetained',
+        'objectAttributesWithheld',
+        'embedRetained',
+        'embedSourceWithheld',
+        'refreshAbsent',
+      ])
         assert.equal(result.html[key], true, key);
+      assert.equal(result.inertObjectsAfterInsertion, true);
       assert.equal(result.html.customConstructorsBeforeAttachment, 0);
       assert.equal(result.html.frameHasNoContext, true);
       assert.equal(result.html.template, 'kept');

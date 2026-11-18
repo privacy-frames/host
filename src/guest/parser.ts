@@ -128,7 +128,7 @@ function mapURL(resources: GuestResources, value: string, base: string): string 
   try {
     return resources.nativeURL(value, base);
   } catch {
-    return new URL('__unavailable__', resources.catalog.applicationURL).href;
+    return 'data:application/octet-stream,';
   }
 }
 

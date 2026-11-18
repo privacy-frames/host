@@ -44,11 +44,11 @@ try {
   const html = parser.parseFromString(
     `<!doctype html><html><head><base href="https://publisher.invalid/app/"><style>@\\69mport "${external}/outside.css?marker=style"; .probe{background:image-set("${external}/outside.png?marker=css" 1x)}</style></head><body>
     <parser-probe></parser-probe><img id="mapped" src="asset.png" srcset="asset.png 1x, ${external}/outside.png?marker=srcset 2x" onerror="globalThis.nativeHandlerMarker=true">
-    <img id="unknown" src="${external}/outside.png?marker=img">
+    <img id="unknown" src="${external}/outside.png?marker=img"><img id="invalid" src="http://[">
     <script id="code" src="${external}/outside.js?marker=script">globalThis.nativeScriptMarker=true</script>
     <script type="application/json" id="json">{"local":true}</script>
     <iframe src="${external}/outside.html?marker=frame" srcdoc="<script>globalThis.frameMarker=true<\/script>"></iframe>
-    <object data="${external}/outside.html?marker=object"></object>
+    <object id="parsedObject" data="${external}/outside.html?marker=object" codebase="${external}/outside/?marker=codebase" archive="${external}/outside.jar?marker=archive"><span>Fallback</span></object><embed id="parsedEmbed" src="${external}/outside.html?marker=embed" type="text/html">
     <meta http-equiv="refresh" content="0;url=${external}/outside.html?marker=refresh">
     <template><p data-value="kept">Template value</p></template></body></html>`,
     'text/html',
@@ -63,6 +63,7 @@ try {
     base: html.baseURI,
     mapped: html.querySelector('#mapped')?.getAttribute('src'),
     unknown: html.querySelector('#unknown')?.getAttribute('src'),
+    invalid: html.querySelector('#invalid')?.getAttribute('src'),
     sourceSet: html.querySelector('#mapped')?.getAttribute('srcset'),
     handlerAbsent: !html.querySelector('#mapped')?.hasAttribute('onerror'),
     handlerMetadata: parsedElementSource(html.querySelector('#mapped')!)?.handlers.get(
@@ -72,7 +73,13 @@ try {
       !html.querySelector('iframe')?.hasAttribute('src') &&
       !html.querySelector('iframe')?.hasAttribute('srcdoc'),
     frameHasNoContext: html.querySelector('iframe')?.contentWindow === null,
-    objectAbsent: !html.querySelector('object')?.hasAttribute('data'),
+    objectDataWithheld: !html.querySelector('object')?.hasAttribute('data'),
+    objectRetained: html.querySelector('object') instanceof HTMLObjectElement,
+    objectAttributesWithheld: ['data', 'codebase', 'archive'].every(
+      (name) => !html.querySelector('object')?.hasAttribute(name),
+    ),
+    embedRetained: html.querySelector('embed') instanceof HTMLEmbedElement,
+    embedSourceWithheld: !html.querySelector('embed')?.hasAttribute('src'),
     refreshAbsent: !html.querySelector('meta')?.hasAttribute('http-equiv'),
     scriptType: script.getAttribute('type'),
     scriptMetadata: scriptSource?.script,
@@ -159,9 +166,18 @@ try {
   const nativeScript = nativeScriptDocument.querySelector('script');
   if (nativeScript) document.body.appendChild(nativeScript);
   document.body.appendChild(script);
+  const object = html.querySelector('object');
+  const embed = html.querySelector('embed');
+  if (!object || !embed) throw new Error('Inert element structure lost');
+  document.body.append(object, embed);
+  const inertObjectsAfterInsertion =
+    object.contentDocument === null &&
+    object.getSVGDocument() === null &&
+    embed.getSVGDocument() === null;
   await fetch(external + '/outside.png?marker=positive-control');
   Reflect.set(globalThis, 'parserResult', {
     html: htmlResult,
+    inertObjectsAfterInsertion,
     xml: xmlResult,
     svg: svgResult,
     qualifiedAnimation: qualifiedAnimation
