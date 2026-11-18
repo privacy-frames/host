@@ -1,0 +1,20 @@
+[package]
+name = "boa-browser-probe"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+boa_engine = { git = "https://github.com/boa-dev/boa.git", rev = "337a3668a0dc86dd401ea20906e782249a64a228", features = ["js", "annex-b"] }
+wasm-bindgen = "=0.2.130"
+console_error_panic_hook = "0.1.7"
+scoped-tls-hkt = "=0.1.5"
+
+[features]
+intl = ["boa_engine/intl_bundled"]
+
+[profile.release]
+lto = true
+opt-level = "s"

@@ -1,0 +1,217 @@
+{
+  "date": "2026-11-18T00:15:10.636Z",
+  "browser": "chromium",
+  "version": "153.0.8010.12",
+  "node": "v24.18.0",
+  "wasmBytes": 5971064,
+  "wasmSha256": "c3705738915a168ecf6ddcdc79bfed6ad93559ed08af2ef2f144fdc389f9dbf3",
+  "generatedGuestSha256": "694ed34dd15e3e6043d0358180738d626580118c559d4b528e4150abb7131579",
+  "cargoFeatures": [
+    "float16",
+    "xsum",
+    "temporal",
+    "js",
+    "annex-b"
+  ],
+  "receipts": [
+    {
+      "name": "persistent-write",
+      "passed": true,
+      "detail": "41"
+    },
+    {
+      "name": "persistent-read",
+      "passed": true,
+      "detail": "42"
+    },
+    {
+      "name": "install-fixture",
+      "passed": true,
+      "detail": "true"
+    },
+    {
+      "name": "naive-reentry-control",
+      "passed": true,
+      "detail": "true"
+    },
+    {
+      "name": "naive-reentry-error",
+      "passed": true,
+      "detail": [
+        "Context already borrowed: naive reentry rejected"
+      ]
+    },
+    {
+      "name": "scoped-native-nested-reentry",
+      "passed": true,
+      "detail": "true"
+    },
+    {
+      "name": "scoped-no-listener-errors",
+      "passed": true,
+      "detail": []
+    },
+    {
+      "name": "guest-listener-error-native-dispatch-semantics",
+      "passed": true,
+      "detail": "true"
+    },
+    {
+      "name": "guest-listener-error-reported",
+      "passed": true,
+      "detail": [
+        "Error: guest sentinel (unknown at :2:33)\n    at throw (unknown at :12:26)\n    at host (native)\n    at <main> (unknown at :2:33)"
+      ]
+    },
+    {
+      "name": "host-exception-catchable",
+      "passed": true,
+      "detail": "true"
+    },
+    {
+      "name": "context-recovers-after-errors",
+      "passed": true,
+      "detail": "true"
+    },
+    {
+      "name": "wrapper-identity-expando-prototype",
+      "passed": true,
+      "detail": "true"
+    },
+    {
+      "name": "typedarray-canvas-copy-roundtrip",
+      "passed": true,
+      "detail": "true"
+    },
+    {
+      "name": "storage-string-roundtrip",
+      "passed": true,
+      "detail": "true"
+    },
+    {
+      "name": "promise-before-drain",
+      "passed": true,
+      "detail": "true"
+    },
+    {
+      "name": "promise-after-drain",
+      "passed": true,
+      "detail": "true"
+    },
+    {
+      "name": "module-top-level-await",
+      "passed": true,
+      "detail": "Fulfilled(JsValue(Undefined))"
+    },
+    {
+      "name": "module-visible-result",
+      "passed": true,
+      "detail": "true"
+    },
+    {
+      "name": "admitted-module-import",
+      "passed": true,
+      "detail": "Fulfilled(JsValue(Undefined))"
+    },
+    {
+      "name": "admitted-module-value",
+      "passed": true,
+      "detail": "true"
+    },
+    {
+      "name": "dynamic-import-start",
+      "passed": true,
+      "detail": "true"
+    },
+    {
+      "name": "dynamic-import-result",
+      "passed": true,
+      "detail": "true"
+    },
+    {
+      "name": "module-unconfigured-import-rejected",
+      "passed": true,
+      "detail": "Rejected(JsValue(Object((\"boa_engine::object::jsobject::ErasedObjectData\") 0x2D39E0)))"
+    },
+    {
+      "name": "admitted-resource",
+      "passed": true,
+      "detail": "true"
+    },
+    {
+      "name": "denied-resource",
+      "passed": true,
+      "detail": "true"
+    },
+    {
+      "name": "ambient-native-globals-absent",
+      "passed": true,
+      "detail": "true"
+    },
+    {
+      "name": "guest-function-constructor-stays-guest",
+      "passed": true,
+      "detail": "true"
+    },
+    {
+      "name": "idle-native-event-nested-reentry",
+      "passed": true,
+      "detail": {
+        "externalReturned": false,
+        "canceled": true,
+        "listenerErrors": []
+      }
+    },
+    {
+      "name": "private-field-stamping",
+      "passed": true,
+      "detail": "true"
+    },
+    {
+      "name": "private-brand-with-optional-chain-and-getter",
+      "passed": true,
+      "detail": "true"
+    },
+    {
+      "name": "install-generated-fixture-adapters",
+      "passed": true,
+      "detail": "true"
+    },
+    {
+      "name": "generated-webidl-fixture",
+      "passed": false,
+      "detail": "TypeError: not a callable function (unknown at :1299:3)\n    at <main> (unknown at :513:74)\n    at <main> (unknown at :1112:55)\n    at <main> (unknown at :1179:39)\n    at <main> (unknown at :1259:27)\n    at guest.cjs (unknown at :1295:9)\n    at __require (unknown at :8:51)\n    at <main> (unknown at :1298:16)\n    at <main> (unknown at :1299:3)"
+    }
+  ],
+  "application": {
+    "sha256": "5bf9a6fd27798274c5a5c03473a66ee96ecc6bfe8bd4c04c78ac1c93d55ca5ff",
+    "bytes": 287996,
+    "firstError": "ReferenceError: document is not defined (unknown at :1:1452)\n    at <main> (unknown at :1:834)\n    at <main> (unknown at :1:1452)",
+    "elapsedMs": 153.79999995231628
+  },
+  "intl": {
+    "available": "\"undefined\"",
+    "dateStyleResult": "ReferenceError: Intl is not defined (unknown at :1:10)\n    at <main> (unknown at :1:10)"
+  },
+  "nativeDispatchCount": 5,
+  "allowedResources": 1,
+  "deniedResources": 1,
+  "timingMs": {
+    "fetchCompileInstantiate": 31.400000035762787,
+    "contextInitialize": 8.199999988079071
+  },
+  "features": {
+    "sharedArrayBuffer": "\"function\"",
+    "atomics": "\"object\""
+  },
+  "errors": [],
+  "requests": [
+    "http://127.0.0.1:34339/",
+    "http://127.0.0.1:34339/browser.ts",
+    "http://127.0.0.1:34339/pkg/boa_browser_probe.js",
+    "http://127.0.0.1:34339/pkg/snippets/boa-browser-probe-fa153dcb67d58309/bridge.js",
+    "http://127.0.0.1:34339/pkg/boa_browser_probe_bg.wasm",
+    "http://127.0.0.1:34339/generated-guest.js",
+    "http://127.0.0.1:34339/pitch-main.js"
+  ]
+}

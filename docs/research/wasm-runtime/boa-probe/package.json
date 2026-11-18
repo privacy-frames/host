@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "cargo build --locked --target wasm32-unknown-unknown --release && wasm-bindgen target/wasm32-unknown-unknown/release/boa_browser_probe.wasm --target web --out-dir pkg",
+    "probe": "node run.ts",
+    "typecheck": "tsc --ignoreConfig --noEmit --strict --skipLibCheck --target ES2023 --module NodeNext --moduleResolution NodeNext --types node browser.ts run.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "playwright": "1.63.0",
+    "typescript": "6.0.3"
+  }
+}
