@@ -7,6 +7,7 @@ import {
 } from './guest-policy-cases.ts';
 
 declare const __GUEST_ENGINE_BASE64__: string;
+declare const __GUEST_WORKER_BASE64__: string;
 declare global {
   var guestPolicyResult: Record<string, unknown> | undefined;
 }
@@ -51,6 +52,10 @@ async function run() {
   } else {
     const documentBase = new URL('/app/', location.href).href;
     const text = (value: string) => new TextEncoder().encode(value).buffer;
+    const workerBytes = decode(__GUEST_WORKER_BASE64__);
+    const workerURL = URL.createObjectURL(
+      new Blob([workerBytes], { type: 'text/javascript' }),
+    );
     const catalog: GuestContextCatalog = {
       application: 'policy-' + 'a'.repeat(64),
       generation: 'policy-fixture',
@@ -59,6 +64,15 @@ async function run() {
       runtimeURL: new URL('/', location.href).href,
       applicationURL: new URL('/installed/policy/', location.href).href,
       engineWasm: decode(__GUEST_ENGINE_BASE64__),
+      workerBootstrap: {
+        dedicated: workerBytes,
+        shared: workerBytes,
+        worklet: new ArrayBuffer(0),
+      },
+      workerBootstrapURLs: {
+        dedicated: workerURL,
+        shared: workerURL,
+      },
       resources: [
         {
           url: documentBase,
@@ -117,6 +131,7 @@ async function run() {
         : null,
     };
     session.close();
+    URL.revokeObjectURL(workerURL);
     closeForeign();
     return;
   }

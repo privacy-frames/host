@@ -17,15 +17,6 @@ const output = new URL('../.tools/guest-policy/', import.meta.url);
 await mkdir(output, { recursive: true });
 const wasm = await readFile(require.resolve('@jitl/quickjs-wasmfile-release-sync/wasm'));
 await build({
-  entryPoints: [new URL('./guest-policy.browser.ts', import.meta.url).pathname],
-  outfile: new URL('browser.js', output).pathname,
-  bundle: true,
-  format: 'esm',
-  platform: 'browser',
-  target: 'es2022',
-  define: { __GUEST_ENGINE_BASE64__: JSON.stringify(wasm.toString('base64')) },
-});
-await build({
   entryPoints: [new URL('../src/guest/worker-entry.ts', import.meta.url).pathname],
   outfile: new URL('worker.js', output).pathname,
   bundle: true,
@@ -33,8 +24,20 @@ await build({
   platform: 'browser',
   target: 'es2022',
 });
-const bundle = await readFile(new URL('browser.js', output));
 const worker = await readFile(new URL('worker.js', output));
+await build({
+  entryPoints: [new URL('./guest-policy.browser.ts', import.meta.url).pathname],
+  outfile: new URL('browser.js', output).pathname,
+  bundle: true,
+  format: 'esm',
+  platform: 'browser',
+  target: 'es2022',
+  define: {
+    __GUEST_ENGINE_BASE64__: JSON.stringify(wasm.toString('base64')),
+    __GUEST_WORKER_BASE64__: JSON.stringify(worker.toString('base64')),
+  },
+});
+const bundle = await readFile(new URL('browser.js', output));
 const events: { url: string; method: string }[] = [];
 const receiver = createServer((request, response) => {
   events.push({ url: request.url || '/', method: request.method || 'GET' });
@@ -77,7 +80,7 @@ const app = createServer((request, response) => {
   if (url.searchParams.get('mode') !== 'control') {
     response.setHeader(
       'Content-Security-Policy',
-      "default-src 'none'; script-src 'nonce-fixture-kernel' 'wasm-unsafe-eval'; connect-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self'; frame-src 'self' about:; object-src 'none'; base-uri 'none'; form-action 'none'; sandbox allow-scripts allow-same-origin allow-forms allow-popups",
+      "default-src 'none'; script-src 'nonce-fixture-kernel' 'wasm-unsafe-eval'; connect-src 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data: blob:; media-src 'self' data: blob:; worker-src 'self' blob:; frame-src 'self' about:; object-src 'none'; base-uri 'none'; form-action 'none'; sandbox allow-scripts allow-same-origin allow-forms allow-popups",
     );
     response.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
     response.setHeader('X-DNS-Prefetch-Control', 'off');
@@ -122,6 +125,11 @@ try {
           url.searchParams.set('case', fixture.name);
           url.searchParams.set('receiver', sink);
           const errors: string[] = [];
+          let navigations = 0;
+          page.on('request', (request) => {
+            if (request.isNavigationRequest() && request.frame() === page.mainFrame())
+              navigations++;
+          });
           page.on('pageerror', (error) => errors.push(error.message));
           let result: unknown;
           let interrupted: string | undefined;
@@ -145,6 +153,7 @@ try {
             result,
             interrupted,
             receiverRequests: sent,
+            navigations,
             url: page.url(),
             errors,
           };
@@ -159,6 +168,17 @@ try {
               ? (record.native as Record<string, unknown>)
               : {};
           if (mode === 'protected') {
+            if (
+              fixture.control === 'reload' &&
+              (navigations !== 1 ||
+                !record.returned ||
+                typeof record.returned !== 'object' ||
+                !('blocked' in record.returned) ||
+                record.returned.blocked !== 'SecurityError')
+            )
+              failures.push(
+                `${browserName}/${fixture.name}: reload reached native navigation or was not denied`,
+              );
             if (sent.length)
               failures.push(
                 `${browserName}/${fixture.name}: receiver observed a request`,
@@ -235,6 +255,10 @@ try {
                 );
             }
           } else {
+            if (fixture.control === 'reload' && navigations < 2)
+              failures.push(
+                `${browserName}/${fixture.name}: unrestricted reload control did not make a second HTTP navigation`,
+              );
             if (['navigation', 'request'].includes(fixture.control) && !sent.length) {
               if (fixture.name.startsWith('meta-') && native.equiv === 'refresh') {
                 inactiveControls.push(

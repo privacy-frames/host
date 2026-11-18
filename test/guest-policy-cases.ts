@@ -1,10 +1,20 @@
 export interface GuestPolicyCase {
   name: string;
   code(receiver: string): string;
-  control: 'navigation' | 'request' | 'script' | 'spellcheck' | 'worker';
+  control: 'navigation' | 'request' | 'script' | 'spellcheck' | 'worker' | 'reload';
 }
 
 export const guestPolicyCases: GuestPolicyCase[] = [
+  {
+    name: 'location-reload',
+    control: 'reload',
+    code: () => `(() => {
+      if (sessionStorage.getItem('policy-reloaded')) return { reloaded: true };
+      sessionStorage.setItem('policy-reloaded', 'true');
+      try { location.reload(); return new Promise(() => {}); }
+      catch (error) { return { blocked: error.name }; }
+    })()`,
+  },
   {
     name: 'anchor-noncancelable',
     control: 'navigation',
