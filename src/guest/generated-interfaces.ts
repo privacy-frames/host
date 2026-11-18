@@ -82427,7 +82427,7 @@ export const browserBindings: BrowserBindingManifest = {
       "global": [],
       "constructorArguments": null,
       "legacyAliases": [],
-      "hasInterfaceObject": false,
+      "hasInterfaceObject": true,
       "attributes": [
         "Exposed"
       ],

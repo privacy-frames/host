@@ -269,7 +269,8 @@ export function compileInterfaceDefinitions(
         ],
         hasInterfaceObject:
           !attributes.includes('LegacyNoInterfaceObject') &&
-          primary.type !== 'callback interface',
+          (primary.type !== 'callback interface' ||
+            primary.members.some((member) => member.type === 'const')),
         attributes,
         members,
         sources: [...new Set(merged.map((entry) => entry.source))].sort(),

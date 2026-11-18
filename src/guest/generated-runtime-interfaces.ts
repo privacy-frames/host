@@ -8030,7 +8030,7 @@ export const runtimeInterfaces: readonly RuntimeInterfaceDefinition[] = [
       "Window"
     ],
     "global": [],
-    "hasInterfaceObject": false,
+    "hasInterfaceObject": true,
     "constructable": false,
     "members": []
   },

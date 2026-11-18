@@ -162,3 +162,30 @@ test('overload lookup retains every standard native operation signature', () => 
   assert(operations.every((operation) => operation.kind === 'operation'));
   assert.equal(interfaceMember('HTMLInputElement', 'value')?.kind, 'attribute');
 });
+
+// https://webidl.spec.whatwg.org/#legacy-callback-interface-object
+test('callback interfaces expose a legacy object only when they declare constants', () => {
+  const definitions = compileInterfaceDefinitions([
+    {
+      name: 'callback.idl',
+      text: '[Exposed=Window] callback interface Filter { const unsigned short ACCEPT = 1; unsigned short acceptNode(); }; callback interface Listener { undefined handleEvent(); };',
+    },
+  ]);
+  assert.equal(
+    definitions.find((value) => value.name === 'Filter')?.hasInterfaceObject,
+    true,
+  );
+  assert.equal(
+    definitions.find((value) => value.name === 'Listener')?.hasInterfaceObject,
+    false,
+  );
+  const nodeFilter = exposedInterfaces(['Window']).find(
+    (value) => value.name === 'NodeFilter',
+  );
+  assert(nodeFilter);
+  assert.equal(nodeFilter.kind, 'callback');
+  assert.equal(
+    nodeFilter.members.find((member) => member.name === 'SHOW_ELEMENT')?.kind,
+    'constant',
+  );
+});
