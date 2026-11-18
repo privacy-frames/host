@@ -1,44 +1,34 @@
-# Enforcement surface
+# Runtime enforcement map
 
-This inventory describes controls in the current source. Receipts in `results/`
-identify the revisions and browser versions actually measured. Final regressions,
-corpus evaluation, independent network checks and public deployment of the current
-batch remain pending.
+Application JavaScript crosses the QuickJS boundary to use native browser objects.
+The host mediates those operations before they reach the browser. Native rendering
+uses local Blob or data URLs; guest resource reads use admitted catalog bytes.
 
-| Surface                                                   | Current control                                                                                                                            | Verification to inspect or renew                                            |
-| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------- |
-| Initial HTML/SVG, templates and resource declarations     | Compile content against the admitted graph; prepare the realm before execution                                                             | Document compiler, renderer and installation fixtures                       |
-| Dynamic markup, Range, Shadow DOM and inert documents     | Viewless native parsing checks actual nodes before live insertion; compiler checks remain                                                  | Native markup, inert-document and renderer fixtures with native controls    |
-| Dynamic scripts, links, attributes and resources          | Map installed resources locally; uncaptured script loads fail through a local placeholder                                                  | Script events/order, resource-element and independent receiver tests        |
-| Custom elements                                           | Admit autonomous definitions; deny customized built-ins                                                                                    | Custom-element fixture and hostile context creation                         |
-| Frames, objects and child HTML/SVG                        | Host creates and prepares the context; pending references stay hidden                                                                      | Document lifecycle, parser, indexed-window and recursive-context fixtures   |
-| Popups and named windows                                  | Host prepares a private Window and exposes a mediated facade                                                                               | Popup lifecycle and inherited getter/method/setter receiver controls        |
-| Document navigation and history                           | Cancel document exits; scope root same-document URL updates to the installed application                                                   | History, navigation, foreign URL and management-identity tests              |
-| External embedding and openers                            | Deny external framing; root apps launch without an opener                                                                                  | Embedding and private-canary receiver controls                              |
-| Dedicated/shared workers and worklets                     | Trusted bootstrap and inherited application resource identity before publisher code                                                        | Classic/module/Blob/nested workers, shared connections and worklets         |
-| Broadcast channels, ShadowRealm and unadapted contexts    | Refuse unsupported context routes                                                                                                          | Context policy probes                                                       |
-| Fetch, XHR, images, CSS, media, fonts and cache downloads | Exact installed-resource aliases, runtime-only CSP and no worker network fallback                                                          | Original URL fixtures; independent DNS/HTTP/TCP observations                |
-| Resource hints and speculation                            | Capture supported installation hints; reject uncontrolled runtime hints                                                                    | DNS controls and hostile insertion tests                                    |
-| WebAssembly                                               | Execute inside the prepared realm; imports inherit its effects policy                                                                      | Wasm task and host-function network probes                                  |
-| WebSocket, WebTransport, WebRTC and deferred networking   | Protected constructors/prototypes; same-origin transport also denied                                                                       | External receivers, same-runtime WebSocket upgrade controls and native STUN |
-| Speech, remote playback and OS artwork URLs               | Refuse remote operations and URL-bearing artwork; retain local audio/text metadata                                                         | Transport and media fixtures                                                |
-| Publisher service workers                                 | Prepared executors and mediated lifecycle/fetch/message operations; host keeps native control                                              | Publisher fixtures, executable-response and role attacks                    |
-| Public language extensions                                | Permit reviewed prototype/static/native-function metadata extensions; protect enforcement operations, implicit hooks and Error stack hooks | Intrinsic compatibility, prototype interception and global-binding fixtures |
-| Trusted state                                             | Explicit private arrays/Maps/Sets/records/descriptors/options and captured native operations                                               | Primordial unit tests, raw-context interception and popup receiver controls |
-| Local/session storage and events                          | Namespace operations and filter exposed handles/events                                                                                     | Same-app persistence and namespace regressions                              |
-| IndexedDB and Cache Storage                               | Scoped factory names and native transaction/response behavior                                                                              | Database/cache round trips, prototype routes and application tasks          |
-| Alternative storage handles, legacy filesystem and WebSQL | Refuse unsupported authority                                                                                                               | Storage-access and authority probes                                         |
-| Host storage and admission                                | Separate metadata/bodies; reconstruct and validate package before publication                                                              | Admission, integrity, replacement and response-policy tests                 |
-| Management                                                | Exact origin/window channel authentication and browser-client roles                                                                        | Separate-origin and test-only native management attacks                     |
-| PWA metadata                                              | Adapt admitted manifest data into host-owned app identity/scope                                                                            | Manifest and native desktop installation checks                             |
-| Installation                                              | Separate authenticated origin/session; serialized declaration/list capture; no publisher execution                                           | Installation-origin, session, resource-list and capture fixtures                       |
-| Partial captures                                          | Retain successful ordinary downloads; missing resources have no runtime network fallback                                                   | Partial-capture unit tests and functional/offline corpus tasks              |
+| Surface                                                     | Implementation                                                                      | Checks                                                                          |
+| ----------------------------------------------------------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Guest values, prototypes, callbacks and promises            | `src/guest/engine.ts`, `guest-runtime.ts`                                           | `test/guest-engine.ts`, `guest-lifecycle.ts`                                    |
+| Native property access, accessors, methods and constructors | `src/guest/browser.ts`                                                              | `test/guest-policy.ts`, `guest-context-windows.ts`                              |
+| Initial and dynamic HTML, SVG, handlers and scripts         | `src/guest/dom.ts`, `parser.ts`                                                     | `test/guest-parser-browser.ts`, `guest-policy.ts`, `guest-examples.ts`          |
+| CSS, images, fonts, media and unknown resources             | `src/guest/resources.ts`, `css.ts`                                                  | `test/guest-resources.test.ts`, `guest-context-maintenance.ts`                  |
+| Fetch, XHR and navigator services                           | `src/guest/web-services.ts`                                                         | `test/guest-web-services.test.ts`, `guest-web-services-browser.ts`              |
+| Dedicated and shared worker startup                         | `src/guest/contexts/worker-factory.ts`, `worker-registry.ts`, `worker-bootstrap.ts` | `test/guest-contexts.ts`, `guest-context-maintenance.ts`                        |
+| Child windows, frames, messages and cancellation            | `src/guest/contexts/window-contexts.ts`, `documents.ts`                             | `test/guest-context-windows.ts`                                                 |
+| Audio worklets                                              | `src/guest/contexts/audio-worklet.ts`, `worklet-entry.ts`                           | `test/guest-contexts.ts`, `guest-context-maintenance.ts`                        |
+| Local storage APIs and host record integrity                | `src/guest/storage.ts`, `src/runtime/storage.ts`                                    | `test/guest-lifecycle.ts`, `runtime-admission.test.ts`, `guest-installation.ts` |
+| Management authorization and installation publication       | `src/runtime/worker.ts`, `src/bridge/connect.ts`                                    | `test/guest-examples.ts`, `runtime-admission.test.ts`                           |
+| Startup CSP and browser service-worker maintenance          | `src/runtime/worker.ts`, `src/guest/window.ts`                                      | `test/guest-context-maintenance.ts`, `guest-policy.ts`                          |
 
-The prototype shares a runtime origin across installed apps. Storage namespacing
-is useful behavior, but cross-application storage and browser-permission isolation
-are not guarantees. Browser UI, extensions, browser defects, physical side
-channels and availability are outside the threat model. Microphone access still
-requires browser permission.
+The policy tests include native controls and observe an independent receiver.
+Context tests check that guest-created contexts receive the same restrictions,
+including synchronous callbacks and transferred objects. The maintenance fixture
+compares private-bit inputs with quiet controls under fresh and forced-age
+service-worker registrations.
 
-Network conclusions apply to calibrated routes in the recorded build. Host
-service-worker update traffic must be distinguished from application traffic.
+Storage namespacing supports application compatibility. Host installation records,
+bootstrap bytes and management channels still require integrity even though
+cross-application storage isolation is outside this demonstration.
+
+Application Wasm and application service-worker execution are deferred. Broader
+browser coverage and a machine-checked correspondence between the implementation
+and its confinement requirements remain research work. Historical route inventories
+and formal models under `formal/` describe the earlier native runtime.

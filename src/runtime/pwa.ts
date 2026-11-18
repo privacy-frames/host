@@ -29,6 +29,15 @@ interface WebManifest {
   shortcuts?: Array<{ name: string; url: string }>;
 }
 
+type ManifestApplication = Pick<
+  Installation,
+  'id' | 'source' | 'manifest' | 'publisherManifest'
+> & {
+  resources: ReadonlyArray<
+    Pick<Installation['resources'][number], 'url' | 'contentType'>
+  >;
+};
+
 function text(value: unknown, maximum = 200): string | undefined {
   return typeof value === 'string' ? value.slice(0, maximum) : undefined;
 }
@@ -64,7 +73,7 @@ function localLaunch(
 }
 
 /** Publisher metadata describes presentation; the host supplies all local routes. */
-export function webManifest(app: Installation, base: string | URL): WebManifest {
+export function webManifest(app: ManifestApplication, base: string | URL): WebManifest {
   const entry = applicationURL(app, base);
   const launch = applicationLaunchURL(app, base);
   const root = new URL(`${publicAlias(app.id)}/`, base);

@@ -113,7 +113,7 @@ test('manifest adapts identity, hash launch and presentation without granting ha
   assert.equal(manifest.id, '/ywJX53taGnk/');
   assert.equal(manifest.scope, '/ywJX53taGnk/');
   assert.equal(manifest.start_url, '/ywJX53taGnk/pitch-training/#/reference');
-  assert.equal(manifest.shortcuts.length, 1);
+  assert.equal(manifest.shortcuts?.length, 1);
   assert(!('file_handlers' in manifest));
   assert(!('protocol_handlers' in manifest));
   assert.equal(manifest.icons.length, 2);
@@ -139,7 +139,7 @@ test('unreadable or malformed optional publisher manifests preserve a valid docu
     nativeFetch = globalThis.fetch;
   try {
     for (const failure of ['malformed', 'unreadable']) {
-      const progress = [];
+      const progress: string[] = [];
       globalThis.fetch = async (input) => {
         const url = String(input);
         if (url.endsWith('/index.html'))

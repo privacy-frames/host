@@ -32,6 +32,8 @@ function catalog(value: unknown): GuestContextCatalog {
     !(value.workerBootstrap.dedicated instanceof ArrayBuffer) ||
     !('shared' in value.workerBootstrap) ||
     !(value.workerBootstrap.shared instanceof ArrayBuffer) ||
+    !('worklet' in value.workerBootstrap) ||
+    !(value.workerBootstrap.worklet instanceof ArrayBuffer) ||
     !('resources' in value) ||
     !Array.isArray(value.resources)
   )
@@ -68,6 +70,7 @@ function catalog(value: unknown): GuestContextCatalog {
     workerBootstrap: {
       dedicated: value.workerBootstrap.dedicated,
       shared: value.workerBootstrap.shared,
+      worklet: value.workerBootstrap.worklet,
     },
     resources,
   };
@@ -98,7 +101,11 @@ async function start() {
     '/__manifest.webmanifest';
   const icon = document.createElement('link');
   icon.rel = 'icon';
-  icon.href = new URL('pwa-192.png', data.runtimeURL).href;
+  icon.href =
+    'data:image/svg+xml,' +
+    encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#18181b"/><text x="32" y="42" text-anchor="middle" font-family="sans-serif" font-size="28" fill="white">PF</text></svg>',
+    );
   document.head.append(manifest, icon);
   document.documentElement.dataset.privacyRuntime = 'ready';
 }

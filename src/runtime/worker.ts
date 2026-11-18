@@ -41,13 +41,13 @@ function headers(type: string, nonce?: string, document = false): HeadersInit {
     'Content-Type': type,
     'Content-Security-Policy': [
       "default-src 'none'",
-      `script-src ${nonce ? "'nonce-" + nonce + "' " : ''}'wasm-unsafe-eval' ${new URL('guest-worklet.js', base).href}`,
+      `script-src ${nonce ? "'nonce-" + nonce + "' " : ''}'wasm-unsafe-eval' blob:`,
       "connect-src 'none'",
-      "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: blob:",
-      "font-src 'self' data: blob:",
-      "media-src 'self' data: blob:",
-      'worker-src blob:',
+      "style-src 'unsafe-inline' data: blob:",
+      'img-src data: blob:',
+      'font-src data: blob:',
+      'media-src data: blob:',
+      `worker-src blob: ${new URL('__guest_worker_registry__.js', base).href} ${new URL('sw.js', base).href}`,
       "frame-src 'self' about:",
       "object-src 'none'",
       "base-uri 'none'",
@@ -55,7 +55,7 @@ function headers(type: string, nonce?: string, document = false): HeadersInit {
       ...(document
         ? [
             "frame-ancestors 'self'",
-            'sandbox allow-scripts allow-same-origin allow-forms allow-popups',
+            'sandbox allow-scripts allow-same-origin allow-forms allow-popups allow-downloads',
           ]
         : []),
     ].join('; '),
@@ -128,6 +128,7 @@ worker.addEventListener('message', (event) => {
         const value = await createGuestCatalog(app, base, await engine.arrayBuffer(), {
           dedicated: await bootstrapBytes('guest-worker.js'),
           shared: await bootstrapBytes('guest-shared-worker.js'),
+          worklet: await bootstrapBytes('guest-worklet.js'),
         });
         const current = await getApp(app.id);
         if (current?.generation !== app.generation)
@@ -136,6 +137,7 @@ worker.addEventListener('message', (event) => {
           value.engineWasm,
           value.workerBootstrap.dedicated,
           value.workerBootstrap.shared,
+          value.workerBootstrap.worklet,
           ...value.resources.map((item) => item.bytes),
         ]);
         return;
@@ -240,19 +242,6 @@ worker.addEventListener('fetch', (event) => {
           ? url.pathname.slice(entry.pathname.length)
           : '';
       if (
-        request.method === 'GET' &&
-        !url.search &&
-        url.href === new URL('guest-worklet.js', base).href &&
-        request.destination === 'audioworklet'
-      ) {
-        const source = await cache.match(url.href);
-        return source
-          ? new Response(await source.arrayBuffer(), {
-              headers: headers('text/javascript'),
-            })
-          : Response.error();
-      }
-      if (
         request.destination === 'sharedworker' &&
         request.method === 'GET' &&
         !url.search &&
@@ -266,40 +255,8 @@ worker.addEventListener('fetch', (event) => {
             })
           : Response.error();
       }
-      if (['worker', 'sharedworker'].includes(request.destination)) {
-        const expected =
-          request.destination === 'worker'
-            ? '__guest_worker__.js'
-            : '__guest_shared_worker__.js';
-        if (!client || request.method !== 'GET' || url.search || suffix !== expected)
-          return Response.error();
-        const source = await cache.match(
-          new URL(
-            request.destination === 'worker'
-              ? 'guest-worker.js'
-              : 'guest-shared-worker.js',
-            base,
-          ).href,
-        );
-        return source
-          ? new Response(await source.arrayBuffer(), {
-              headers: headers('text/javascript'),
-            })
-          : Response.error();
-      }
-      if (
-        request.mode === 'navigate' &&
-        suffix === '__guest_document__.html' &&
-        request.method === 'GET' &&
-        !url.search &&
-        client &&
-        (await installation(client.url))
-      ) {
-        return new Response(
-          '<!doctype html><html><head><meta charset="utf-8"></head><body></body></html>',
-          { headers: headers('text/html;charset=utf-8', undefined, true) },
-        );
-      }
+      if (['worker', 'sharedworker'].includes(request.destination))
+        return Response.error();
       if (request.mode === 'navigate') {
         if (
           request.destination !== 'document' ||

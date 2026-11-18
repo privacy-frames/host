@@ -432,6 +432,7 @@ export class BrowserEnvironment {
       btoa,
     });
     for (const name of [
+      'HTMLDocument',
       'TextEncoder',
       'TextDecoder',
       'URL',
@@ -544,7 +545,17 @@ export class BrowserEnvironment {
           const anchor = isElement(target) ? target.closest('a,area') : null;
           if (!anchor) return;
           const href = anchor.getAttribute('href') || '';
-          if (anchor.hasAttribute('download') && /^(?:blob:|data:)/.test(href)) return;
+          const logical = this.dom?.logicalAttribute(anchor, 'href') || href;
+          if (anchor.hasAttribute('download') && /^(?:blob:|data:)/i.test(logical)) {
+            event.preventDefault();
+            // Keep navigable URLs off application nodes. A detached host-owned
+            // link performs the local export without exposing a navigation route.
+            const download = native.document.createElement('a');
+            download.href = logical;
+            download.download = anchor.getAttribute('download') || '';
+            download.click();
+            return;
+          }
           if (!href.startsWith('#')) event.preventDefault();
         },
         true,
@@ -662,6 +673,11 @@ export class BrowserEnvironment {
       if (key === 'cookie') return '';
     }
     if (this.document && isElement(target)) {
+      if (['object', 'embed'].includes(target.localName) &&
+        ['data', 'src', 'codeBase', 'classid', 'archive'].includes(String(key))) {
+        const logical = this.dom?.logicalAttribute(target, String(key));
+        if (logical !== undefined) return logical;
+      }
       if (
         target.namespaceURI === 'http://www.w3.org/1999/xhtml' &&
         (target.localName === 'a' || target.localName === 'area') &&
@@ -834,7 +850,7 @@ export class BrowserEnvironment {
       }
       if (
         typeof key === 'string' &&
-        ['src', 'href', 'srcset', 'poster', 'nonce', 'type'].includes(key)
+        ['src', 'href', 'srcset', 'poster', 'nonce', 'type', 'data', 'codeBase', 'classid', 'archive'].includes(key)
       ) {
         if (!this.dom!.attribute(target, key, String(value))) return true;
       }
@@ -927,6 +943,11 @@ export class BrowserEnvironment {
     key: PropertyKey,
     args: unknown[],
   ): unknown {
+    if (
+      key === 'submit' &&
+      Object.prototype.toString.call(receiver) === '[object HTMLFormElement]'
+    )
+      throw new DOMException('Native form navigation is unavailable', 'SecurityError');
     if (key === 'fetch')
       return this.resources.fetch(
         String(args[0]),
@@ -1011,13 +1032,11 @@ export class BrowserEnvironment {
         typeof args[1] === 'string' ? args[1] : '/',
         Array.isArray(args[2]) ? args[2] : [],
       );
-    if (
-      key === 'addModule' &&
-      receiver &&
-      typeof receiver === 'object' &&
-      this.audioOwners.has(receiver)
-    )
-      return this.audio!.addModule(this.audioOwners.get(receiver)!, String(args[0]));
+    if (key === 'addModule') {
+      if (receiver && typeof receiver === 'object' && this.audioOwners.has(receiver))
+        return this.audio!.addModule(this.audioOwners.get(receiver)!, String(args[0]));
+      throw new DOMException('This worklet context is unavailable', 'SecurityError');
+    }
     if (
       receiver &&
       typeof receiver === 'object' &&
@@ -1207,7 +1226,9 @@ export class BrowserEnvironment {
     const result: Record<string, unknown> = {
       assign: (value: string) => environment.navigate(value),
       replace: (value: string) => environment.navigate(value),
-      reload: () => native.location.reload(),
+      reload: () => {
+        throw new DOMException('Native document reload is unavailable', 'SecurityError');
+      },
       toString: () => native.location.href,
     };
     for (const key of [

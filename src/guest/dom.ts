@@ -70,6 +70,19 @@ export class GuestDOM {
     )
       return true;
     const key = name.toLowerCase();
+    if (
+      ['object', 'embed'].includes(element.localName) &&
+      ['data', 'src', 'codebase', 'classid', 'archive'].includes(key)
+    ) {
+      let attributes = this.attributes.get(element);
+      if (!attributes) {
+        attributes = new Map();
+        this.attributes.set(element, attributes);
+      }
+      attributes.set(key, value);
+      element.removeAttribute(name);
+      return false;
+    }
     if (key === 'xml:base') {
       let attributes = this.attributes.get(element);
       if (!attributes) {
@@ -85,7 +98,7 @@ export class GuestDOM {
     }
     if (
       key === 'attributename' &&
-      /^(?:href|xlink:href|src|srcdoc|target|formtarget|action|formaction|ping|attributionsrc|nonce|http-equiv|content|rel|base|xml:base|referrerpolicy|spellcheck|writingsuggestions|autocorrect)$/i.test(
+      /^(?:[^:]+:)?(?:href|src|srcdoc|target|formtarget|action|formaction|ping|attributionsrc|nonce|http-equiv|content|rel|base|referrerpolicy|spellcheck|writingsuggestions|autocorrect)$/i.test(
         value.trim(),
       )
     )
@@ -155,15 +168,13 @@ export class GuestDOM {
         this.attributes.set(element, attributes);
       }
       attributes.set(key, value);
-      if ((element.localName === 'a' || element.localName === 'area') && key === 'href') {
-        element.setAttribute(
-          name,
-          value.startsWith('#') || /^(?:blob:|data:)/i.test(value)
-            ? value
-            : this.options.resources.resource(value)
-              ? this.options.resources.nativeURL(value)
-              : '#',
-        );
+      if (
+        key === 'href' &&
+        (element.localName === 'a' ||
+          element.localName === 'area' ||
+          element.namespaceURI === 'http://www.w3.org/1998/Math/MathML')
+      ) {
+        element.setAttribute(name, value.startsWith('#') ? value : '#');
       } else element.setAttribute(name, this.options.resources.nativeURL(value));
       return false;
     }
@@ -191,8 +202,6 @@ export class GuestDOM {
       if (
         [
           'base',
-          'object',
-          'embed',
           'applet',
           'portal',
           'fencedframe',
@@ -313,8 +322,6 @@ export class GuestDOM {
     if (
       [
         'base',
-        'object',
-        'embed',
         'applet',
         'portal',
         'fencedframe',

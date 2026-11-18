@@ -1,4 +1,5 @@
 import type { GuestContextCatalog, GuestContextResource } from './contexts/types.ts';
+import { rewriteGuestCSS } from './css.ts';
 
 export interface GuestSource {
   url: string;
@@ -10,6 +11,8 @@ export class GuestResources {
   private resources = new Map<string, GuestContextResource>();
   private blobs = new Map<string, Blob>();
   private blobSources = new WeakMap<Blob, string>();
+  private nativeURLs = new WeakMap<GuestContextResource, string>();
+  private preparingCSS = new WeakSet<GuestContextResource>();
   readonly modules = new Map<string, string>();
 
   constructor(readonly catalog: GuestContextCatalog) {
@@ -53,8 +56,27 @@ export class GuestResources {
     const url = new URL(input, base);
     if (['data:', 'blob:'].includes(url.protocol)) return url.href;
     const resource = this.resource(url.href);
-    if (!resource) return new URL('__unavailable__', this.catalog.applicationURL).href;
-    return new URL(resource.path, this.catalog.applicationURL).href + url.hash;
+    if (!resource) return 'data:application/octet-stream,';
+    let local = this.nativeURLs.get(resource);
+    if (!local) {
+      // Stop recursive imports with an empty stylesheet, keeping the cycle local.
+      if (this.preparingCSS.has(resource)) return 'data:text/css,';
+      let blob: Blob;
+      if (/^text\/css(?:;|$)/i.test(resource.contentType)) {
+        this.preparingCSS.add(resource);
+        try {
+          const css = rewriteGuestCSS(new TextDecoder().decode(resource.bytes), (input) =>
+            this.nativeURL(input, resource.url),
+          );
+          blob = new Blob([css], { type: resource.contentType });
+        } finally {
+          this.preparingCSS.delete(resource);
+        }
+      } else blob = new Blob([resource.bytes], { type: resource.contentType });
+      local = this.createObjectURL(blob);
+      this.nativeURLs.set(resource, local);
+    }
+    return local + url.hash;
   }
 
   source(input: string, base = this.catalog.documentBase): GuestSource {

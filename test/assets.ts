@@ -2,9 +2,14 @@ import assert from 'node:assert/strict';
 import { readFile, writeFile, readdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 const root = new URL('../', import.meta.url),
-  sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
-const evidence = { date: new Date().toISOString(), assets: [] };
-async function filesUnder(directory, prefix = '') {
+  sha = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
+interface ReleaseEvidence {
+  date: string;
+  assets: { site: string; file: string; sha256: string }[];
+  githubEntry?: { managerURL: string; runtimeURL: string; installationURL: string };
+}
+const evidence: ReleaseEvidence = { date: new Date().toISOString(), assets: [] };
+async function filesUnder(directory: URL, prefix = ''): Promise<string[]> {
   const paths = [];
   for (const item of await readdir(new URL(prefix, directory), { withFileTypes: true })) {
     const path = prefix + item.name;
@@ -66,7 +71,7 @@ for (const id of [
   const base = `https://privacy-frames.github.io/apps/${id}/`;
   const directory = new URL('dist-examples/' + id + '/', root);
   for (const file of (await filesUnder(directory)).filter(
-    (file) => !['_headers', '_redirects'].includes(file.split('/').at(-1)),
+    (file) => !['_headers', '_redirects'].includes(file.split('/').at(-1) || ''),
   )) {
     const response = await fetch(new URL(file, base), {
       signal: AbortSignal.timeout(15000),
@@ -86,7 +91,20 @@ for (const id of [
 }
 const github = await fetch('https://privacy-frames.github.io/host/config.json');
 assert.equal(github.status, 200);
-const config = await github.json();
+const config: unknown = await github.json();
+assert(
+  config &&
+    typeof config === 'object' &&
+    'managerURL' in config &&
+    'runtimeURL' in config &&
+    'installationURL' in config &&
+    'managerOrigins' in config,
+);
+assert(
+  typeof config.managerURL === 'string' &&
+    typeof config.runtimeURL === 'string' &&
+    typeof config.installationURL === 'string',
+);
 assert.equal(config.managerURL, 'https://pf.damenh.com/');
 assert.equal(config.installationURL, 'https://install.pf.damenh.com/');
 assert.deepEqual(config.managerOrigins, ['https://pf.damenh.com']);

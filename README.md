@@ -1,19 +1,14 @@
 # Privacy Frames
 
-Install a web application from its URL, then run a local copy with private input.
-Installation can download public resources. During execution, requests receive
-installed resources or fail.
+Install a web application from its URL and run a local copy with private input.
+The installer downloads public resources. Application JavaScript runs in QuickJS
+compiled to WebAssembly; the browser supplies the DOM, rendering and audio.
 
-Complete network confinement remains unestablished. A
-[known worker-update counterexample](formal/runtime-verification/service-worker-maintenance.md)
-lets private application input determine whether the browser requests the trusted
-service-worker script, even when the worker loads locally.
-
-The app manager is at **https://pf.damenh.com/**. Installed applications
-run at **https://apps.pf.damenh.com/** using `/<short-source-id>/<app-name>/` URLs.
-Installation uses a third origin, **https://install.pf.damenh.com/**. All three
-sites use GitHub Pages. Origin-checked message channels through embedded iframes connect the manager to
-the installer and runtime storage.
+The manager is at **https://pf.damenh.com/**, installation uses
+**https://install.pf.damenh.com/**, and applications run at
+**https://apps.pf.damenh.com/<short-source-id>/<app-name>/**. All three sites use
+GitHub Pages. Unrestricted examples and licensed mirrors live in
+[privacy-frames/apps](https://github.com/privacy-frames/apps).
 
 ## Develop locally
 
@@ -29,99 +24,64 @@ npm test
 npm run serve
 ```
 
+`npm ci` applies the pinned QuickJS wrapper patch in `patches/`. Its regression
+covers Wasm memory growth during promise jobs and reflection. Installation must
+run package scripts.
+
 Open http://127.0.0.1:4210/privacy-frames/. The runtime uses port 4211 and the
-installer uses 4219. Publishers use 4212–4215 and 4217–4218; the diagnostic receiver
-uses 4366. These are separate origins, matching the production architecture.
+installer uses 4219. Local publisher fixtures use other ports, matching the
+separate production origins. `npm run build` prepares those fixtures from the
+revision in `publisher-source-ref.txt`.
 
-Implementation lives in this repository. Example source lives in [privacy-frames/apps](https://github.com/privacy-frames/apps); the test build checks out the revision in `publisher-source-ref.txt`. Building creates
-`dist-manager/`, `dist-runtime/`, `dist-installation/` and `dist-examples/`. React and Tailwind provide
-the manager interface; installation, runtime enforcement and examples use
-TypeScript. Prettier defines source formatting.
+## Runtime
 
-## Install an application
+Guest objects and prototype changes stay in the interpreter. Trusted native code
+forwards permitted browser operations and handles callbacks synchronously, so an
+application event handler can cancel a native browser action. Browser-interface
+metadata is generated from the pinned Webref IDL corpus; native browser methods
+perform Web IDL conversion and brand checks.
 
-Paste its webpage URL into the manager and choose **Install**. Open the installed
-copy from the list. Publishers need readable cross-origin responses through CORS.
-The host follows explicit HTML and CSS references and literal JavaScript imports.
-For dependencies loaded dynamically, provide an additional resource list by URL,
-file upload or pasted text. Lists use `text/uri-list`: one absolute HTTPS URL per
-line, with optional `#` comments. Catalog examples select their lists automatically. The total
-installation limit is 100 MiB, with at most 1,000 resources.
+Guest fetch and XHR read an immutable resource catalog. Native rendering receives
+Blob or data URLs, including rewritten CSS dependencies. Dedicated workers,
+SharedWorkers and audio worklets run guest engines in prepared native contexts.
+Child windows retain their initial blank document and receive host-rendered markup.
 
-A standard web app manifest can supply names, icons and launch preferences. The
-host generates a local manifest for each installation. There is no host-specific
-publisher manifest or application SDK.
+Installation follows explicit HTML, CSS and literal module references without
+running application code. A supplemental `text/uri-list` supplies resources chosen
+dynamically by an application. The entry and listed resources are mandatory;
+other unavailable dependencies fail locally. Installation limits are 100 MiB and
+1,000 resources.
 
-No application code runs during installation. The installer downloads resources
-and parses their declarations; it does not guess filenames or evaluate loaders.
-An unavailable explicitly listed resource rejects installation. Unavailable
-automatically discovered dependencies are recorded, while successful downloads
-are retained. The entry document, resource limits and admission checks remain
-mandatory. Missing resources fail locally during execution.
+Application-provided Wasm and service-worker execution are deferred. PhotoCraft
+and Squoosh therefore remain future compatibility targets. Storage APIs use
+application-scoped names, but applications share an origin and browser permission
+grants; cross-application storage isolation is not claimed.
 
-Application service-worker behavior runs inside confinement using admitted
-resources. It cannot replace the host controller or provide network fallback.
-Installations use one resource format; packages from the previous installer must
-be reinstalled. Private application storage is kept separately.
+## Verification
 
-## Examples and tests
+`npm test` runs unit, engine, browser-service, context, network-policy and manager
+installation checks. `npm run test:pitch` checks unchanged Pitch Training,
+including audio, microphone input and offline persistence.
 
-The visible examples emphasize note editing and installed resources, an editable
-code playground and hostile browser probes. Smaller image, precache and document
-fixtures remain focused automated tests. See [the publisher repository](https://github.com/privacy-frames/apps)
-for their source and independent publisher setup.
+For the larger application corpus, build the pinned publisher mirrors with
+`npm --prefix publisher-source run build`, then run `npm run test:compatibility`.
+`PUBLISHER_DIRECTORY` can select another built publisher checkout. Browser
+receipts are written under `results/guest-runtime/`.
 
-Pitch Training, Wikipedia and an independently developed Wasm image editor
-exercise the same importer as other applications. The Wasm fixture also checks
-inline modules, preload declarations, relocated dependencies and offline startup.
-
-```sh
-npm run test:storage-policy
-npm run test:mobile
-npm run test:compatibility
-npm run test:wasm
-npm run test:pitch
-npm run test:network
-npm run test:embedding
-```
-
-The network suite requires Linux `strace` and uses independent HTTP/TCP and STUN
-receivers. It traces fresh test browser processes and removes raw traces after
-extracting results. The pitch suite downloads the public Pitch Training build
-and uses synthetic microphone input.
-
-Live deployment checks use:
-
-```sh
-HOST_URL=https://pf.damenh.com/ npm run test:deployed
-HOST_URL=https://pf.damenh.com/ DOCUMENT_URL=https://privacy-frames.github.io/apps/ordinary/document/index.html LIVE_ARTICLE=1 LIVE_PITCH_NATIVE=1 npm run test:compatibility
-npm run test:assets
-```
-
-[Compatibility results](evaluation/compatibility.md) link each comparison to its
-receipts and tested revision. Receipts record browser versions and scope in `results/`.
-The [confinement verification results](formal/RESULTS.md) describe the models,
-receiver tests, findings and remaining gaps.
+[REPORT.md](REPORT.md) explains the threat model and mechanism.
+[SURFACE_INVENTORY.md](SURFACE_INVENTORY.md) maps enforcement to implementation and
+tests. Historical native-runtime experiments remain under `formal/`; reproduce
+those against [the native source baseline](https://github.com/privacy-frames/host/tree/3013bd51d4fde27cd8adf327e7009430641c8e40).
+Current evidence must come from the QuickJS implementation.
 
 ## Deployment
 
-`deployment/config.json` specifies trusted origins and example links. The manager
-Pages workflow publishes `dist-manager/`. The deployment-only
-[privacy-frames/runtime](https://github.com/privacy-frames/runtime)
-repository publishes `dist-runtime/` from a pinned revision of this repository.
-The [installation publisher](https://github.com/privacy-frames/installation)
-builds `dist-installation/` from its own tested source pin. Release all three roles
-from the same verified host revision. Configure `pf.damenh.com`,
-`apps.pf.damenh.com` and `install.pf.damenh.com` in their GitHub Pages settings and
-point their DNS CNAMEs to `privacy-frames.github.io`.
+`deployment/config.json` defines origins and catalog entries. The host repository
+publishes `dist-manager/`. The deployment repositories
+[privacy-frames/runtime](https://github.com/privacy-frames/runtime) and
+[privacy-frames/installer](https://github.com/privacy-frames/installer) build a
+pinned host revision and publish only their respective role output.
 
-Examples are untrusted publisher content, published at `https://privacy-frames.github.io/apps/`. Their assets must stay off all three trusted origins.
-Separate paths on a shared hostname do not create origin isolation.
-
-The deployment requires static hosting only. Virtual application URLs return
-static 404s until the browser's host service worker handles them. No server-side
-routing or SPA fallback is used.
-
-[REPORT.md](REPORT.md) explains the threat model and security argument.
-[IMPLEMENTATION.md](IMPLEMENTATION.md) maps the implementation boundaries, and
-[SURFACE_INVENTORY.md](SURFACE_INVENTORY.md) records the enforcement surfaces.
+Unrestricted application files must never be published to a trusted host origin.
+`npm run test:assets` compares deployed files with the local release build and
+checks that publisher paths are absent from trusted sites.

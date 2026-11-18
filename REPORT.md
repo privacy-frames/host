@@ -2,54 +2,96 @@
 
 ## Aim
 
-The host installs a web application from a URL and runs a local copy against private input. Installation can use the network. During confined execution, HTTP requests must receive admitted local resources or fail. There is no network fallback.
+A browser application can process a private file locally while retaining the
+ability to contact its developer. This host installs a local copy and controls
+its communication. The user supplies an application URL, installs its resources,
+and opens it against private input.
 
-Three static websites separate the trusted manager, installer and runtime. The manager accepts installation requests and launches applications. The installer collects resources; the runtime serves confined applications. They run in the browser without a backend and can be hosted on GitHub Pages. Applications retain JavaScript, asynchronous callbacks, DOM rendering, canvas, audio and local file processing.
+The manager, installer and runtime are separate static websites. They require no
+backend and use GitHub Pages. The implementation keeps native browser rendering
+while running application JavaScript in a separate interpreter.
 
 ## Threat model
 
-The developer and the entire application may be malicious, including its dependencies. An application may try to disclose private input, create an unrestricted context, navigate away or recover a forbidden browser capability.
+We assume the developer is malicious. The application may try to disclose private input, recover a restricted browser capability or
+create an unrestricted execution context.
 
-The browser, host implementation, host dependencies and hosting origins are trusted. The user supplies private input only after installation. The configured origins are `pf.damenh.com` for the manager, `install.pf.damenh.com` for installation and `apps.pf.damenh.com` for execution. Publishers use other origins. Untrusted application interfaces never run on the manager origin.
+We trust the browser, the host and its dependencies, and the origins hosting the
+manager, installer and runtime. Application code never runs on the manager or
+installer origin. Private input enters the application only after trusted setup
+has finished. Initial host startup may contact its origin; application code must
+not cause network traffic afterward.
 
-The target is application-initiated network disclosure. Local display, playback and file processing are intended. Browser defects, malicious extensions, physical side channels, availability attacks, developer tools and deliberate browser-menu exports are outside this demonstration. Installed applications share an origin; storage namespacing provides compatibility, without a guarantee of isolation between applications or their permission grants. Protecting the host's policy and setup code remains necessary for confinement.
+Local display, audio, file processing and local downloads are intended. Browser
+bugs, malicious extensions, developer tools, physical side channels and deliberate
+browser-menu exports are outside this demonstration. Applications share a runtime
+origin and browser permission grants. Storage namespacing supports ordinary apps;
+it does not establish isolation between installed applications.
 
 ## Installation
 
-The installer follows explicit HTML and CSS references and literal JavaScript imports. For resources selected by application logic, a user or publisher can supply a plain URL list. The manager accepts a list URL, file or pasted text; catalog entries can supply one automatically. The application itself remains unchanged.
+The installer downloads explicit HTML and CSS dependencies and literal JavaScript
+imports without executing application code. A user or publisher can supply a
+plain URL list for resources selected dynamically. Publishers do not need to change application code.
 
-No application code runs during installation. Downloads omit credentials, require CORS access and reject redirects. Limits of 1,000 resources and 100 MiB apply as bytes arrive. The entry document and explicitly listed resources must download successfully. Other unavailable dependencies are recorded; missing resources fail locally during execution.
+Downloads omit credentials, require CORS access and reject redirects. Limits of
+1,000 resources and 100 MiB apply as bytes arrive. The entry and explicitly listed
+resources must be available. Other failed downloads are recorded; missing
+resources fail locally during execution. The runtime validates paths, counts,
+sizes and SHA-256 digests before publishing an installation.
 
-The runtime validates paths, content, counts and SHA-256 digests before committing the installation. Installation transfers resource bytes and metadata, not running JavaScript state. Publisher service-worker events run later inside prepared, confined executors; they cannot replace the native host controller or enable network fallback.
+## Execution
 
-## Confinement
+Application JavaScript runs in QuickJS compiled to WebAssembly. Its values,
+functions and prototype extensions live in a separate heap. Trusted native code
+provides browser interfaces and forwards permitted operations to real DOM nodes,
+canvas contexts, audio graphs and storage. Callbacks can enter the interpreter
+synchronously, preserving event cancellation.
 
-An application opens at `/<ALIAS>/<NAME>/`. The host service worker supplies an initial document containing only trusted setup code. Application code starts after its controls are established. The runtime also prepares child documents, popups, dedicated and shared workers, and supported worklets before their application code starts.
+The host uses generated Webref metadata for browser interface names and
+inheritance. The browser performs native argument conversion and receiver checks.
+The host separately controls operations that can communicate, navigate, create a
+context or execute JavaScript. Script source, handler attributes and dynamic evaluation execute in QuickJS;
+native script elements stay inert.
 
-The runtime’s Content Security Policy (CSP) restricts HTTP requests to its own origin. Firefox experiments showed DNS resolution before service-worker rejection of external requests. CSP prevents those external requests; the service worker applies the cache-or-block rule within the allowed origin. Publisher resource URLs are mapped locally to admitted copies.
+Guest fetch and XHR read admitted bytes directly. Native rendering receives Blob
+or data URLs, with CSS references rewritten to local resources. This also avoids
+HTTP requests that could provoke browser service-worker maintenance. CSP restricts
+images, fonts, media and stylesheets to local URLs and forbids network connections.
+Browser transports such as WebRTC are withheld.
+The trusted service worker serves startup files and admitted resources without a
+network fallback.
 
-Generated document and worker responses also carry a same-origin Connection Allowlist, with WebRTC and redirects blocked. Independent tests show enforcement in Chromium 153 and no enforcement in Firefox 155. Same-origin network traffic remains possible under that header, so the runtime retains its transport blockers and resource gate.
+Dedicated workers and SharedWorkers contain guest engines in native worker
+contexts. A trusted bootstrap registry prepares local worker URLs before any
+application code runs, preserving sharing across app tabs. Child documents keep
+their initial blank document and receive prepared markup. Audio worklets load a
+trusted local bootstrap and run application processor code in a guest engine.
 
-Runtime guards mediate context creation, navigation, script loading and browser services outside ordinary HTTP interception. WebSocket and WebRTC remain restricted. Same-application history paths, queries and fragments are supported. DOM construction and resource loading retain their checks when invoked from custom elements or dynamically evaluated code. The checked surfaces are recorded in [SURFACE_INVENTORY.md](https://github.com/privacy-frames/host/blob/main/SURFACE_INVENTORY.md).
+## Management and storage
 
-Application JavaScript runs in its native browser context. Document parsing and markup validation run in a private detached iframe with independent intrinsics, exchanging serialized text with local guards. Native DOM and event hooks remain beside the application and use captured operations and protected records. Selected prototype extensions, polyfills and dynamic evaluation remain supported under the communication policy.
+Origin-checked message channels connect the manager to the installer and runtime.
+The runtime service worker checks the actual browser client before accepting
+management operations. Application-supplied identities cannot authorize an
+installation or change runtime policy.
 
-## Storage and management
+Local storage, session storage, IndexedDB and Cache Storage use scoped names
+through ordinary application APIs. Native factories and host installation records
+remain behind the trusted boundary.
 
-Local storage, session storage, IndexedDB and Cache Storage use application-scoped names through ordinary APIs.
+## Evaluation
 
-Origin-checked message channels connect the manager to installation and runtime storage. Runtime management also requires a role bound to an actual trusted browser client. Applications cannot use those interfaces to reopen installation or change the confinement policy. The runtime service worker continues enforcing requests when the manager is closed.
+Browser tests exercise synchronous callbacks, prototype extensions, dynamic
+scripts, parsing, workers, child windows, audio worklets, transfers and storage.
+Communication tests observe independent receivers and include unrestricted
+controls. A separate regression compares private-input-dependent context creation
+with quiet controls, including Firefox's forced-age service-worker checks.
 
-## Compatibility
+The application corpus tests installation, a useful interaction and offline
+reopening. Current receipts and application-specific qualifications are recorded
+in [evaluation/compatibility.md](evaluation/compatibility.md). These observations
+are implementation evidence; a complete browser confinement proof remains open.
 
-The fixed [eight-application corpus](https://github.com/privacy-frames/host/blob/main/evaluation/compatibility.md) compares useful tasks in Chromium and Firefox, with standalone controls and offline checks. This compatibility pass changes the host rather than patching application behavior. Licensed mirrors relocate URLs for static hosting and retain their modification inventories.
-
-Targeted local Squoosh tests encode a synthetic PNG into a smaller, decodable JPEG, change quality and verify different output bytes, then repeat the task offline. Other tasks include painting an image, editing a drawing, rendering Markdown and processing files. The [compatibility results](https://github.com/privacy-frames/host/blob/main/evaluation/compatibility.md) identify tested revisions, browser versions, local and deployed checks, and remaining failures.
-
-## Evidence and remaining work
-
-Hostile fixtures attempt communication from ordinary code, prototype hooks, custom-element callbacks and evaluated code, including newly created contexts. Independent HTTP, TCP, DNS and STUN observations accompany working unrestricted controls. Functional checks read saved data, inspect rendered output or decode generated files. Browser versions and revision evidence accompany receipts in `results/`.
-
-A [worker-update counterexample](formal/runtime-verification/service-worker-maintenance.md) remains unresolved. In Chromium and Firefox, an installed application can make private input determine whether worker creation triggers a request for the trusted service-worker script. Serving the worker locally does not prevent that separate browser request. This violates the current no-application-caused-network contract.
-
-These experiments cover a documented browser surface; they are not a machine-checked confinement proof. General updates, interactive preparation, per-application origins, WebKit and real-device mobile installation remain future work. IFC and selective release of private information are separate research questions.
+Application-provided Wasm and service-worker execution are deferred. PhotoCraft
+and Squoosh remain future targets. IFC and selective release of private
+information are separate research work.
