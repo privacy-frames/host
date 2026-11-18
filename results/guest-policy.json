@@ -1,12 +1,51 @@
 {
   "provenance": {
-    "head": "0d7bb2c0e8ad6856722401e13c0f8718f386af5c",
+    "head": "906888ca7a5d7c37bb6da2f26d6e72dbcae83499",
     "dirty": true,
-    "kernelSha256": "af634a3888763fcf549dc0d2559b67e6a5900525dd93e9406a0428ac4c131791",
-    "workerSha256": "be66e0880c1632aa09feb36a3a857d9fa1aa90b163f7b755172cbf9c346aaed5",
+    "kernelSha256": "709cf08f96e8a82b0484a7ceb08f3538e05718cfaf1310160d3d7ea6373acab9",
+    "workerSha256": "a585b041df3c11af53b8f9aae41c9cb0a06a571d1c1318ebf7f03c3270b5cc4e",
     "engineSha256": "105c3bed22d457e43e3d1c3c1c6959fda62a8fe06f0fc8a985303c3a2be72232"
   },
   "observations": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "paint-worklet-module",
+      "mode": "control",
+      "result": {
+        "returned": {
+          "available": true,
+          "error": "AbortError"
+        },
+        "native": null
+      },
+      "receiverRequests": [
+        {
+          "url": "/chromium/control/paint-worklet-module",
+          "method": "GET"
+        }
+      ],
+      "navigations": 1,
+      "url": "http://127.0.0.1:41035/?mode=control&case=paint-worklet-module&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fcontrol%2Fpaint-worklet-module",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "paint-worklet-module",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "available": true,
+          "error": "SecurityError"
+        },
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:41035/?mode=protected&case=paint-worklet-module&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fprotected%2Fpaint-worklet-module",
+      "errors": []
+    },
     {
       "browser": "chromium",
       "version": "153.0.8010.12",
@@ -20,7 +59,7 @@
       },
       "receiverRequests": [],
       "navigations": 2,
-      "url": "http://127.0.0.1:43455/?mode=control&case=location-reload&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fcontrol%2Flocation-reload",
+      "url": "http://127.0.0.1:41035/?mode=control&case=location-reload&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fcontrol%2Flocation-reload",
       "errors": []
     },
     {
@@ -36,7 +75,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=location-reload&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fprotected%2Flocation-reload",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=location-reload&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fprotected%2Flocation-reload",
       "errors": []
     },
     {
@@ -52,7 +91,7 @@
         }
       ],
       "navigations": 2,
-      "url": "http://127.0.0.1:34813/chromium/control/anchor-noncancelable",
+      "url": "http://127.0.0.1:33587/chromium/control/anchor-noncancelable",
       "errors": []
     },
     {
@@ -62,7 +101,7 @@
       "mode": "protected",
       "result": {
         "returned": {
-          "href": "http://127.0.0.1:34813/chromium/protected/anchor-noncancelable"
+          "href": "http://127.0.0.1:33587/chromium/protected/anchor-noncancelable"
         },
         "native": {
           "tag": "a",
@@ -75,7 +114,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=anchor-noncancelable&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fprotected%2Fanchor-noncancelable#",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=anchor-noncancelable&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fprotected%2Fanchor-noncancelable#",
       "errors": []
     },
     {
@@ -91,7 +130,7 @@
         }
       ],
       "navigations": 2,
-      "url": "http://127.0.0.1:34813/chromium/control/anchor-components",
+      "url": "http://127.0.0.1:33587/chromium/control/anchor-components",
       "errors": []
     },
     {
@@ -101,7 +140,7 @@
       "mode": "protected",
       "result": {
         "returned": {
-          "href": "http://127.0.0.1:34813/chromium/protected/anchor-components"
+          "href": "http://127.0.0.1:33587/chromium/protected/anchor-components"
         },
         "native": {
           "tag": "a",
@@ -114,7 +153,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=anchor-components&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fprotected%2Fanchor-components#",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=anchor-components&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fprotected%2Fanchor-components#",
       "errors": []
     },
     {
@@ -130,7 +169,7 @@
         }
       ],
       "navigations": 2,
-      "url": "http://127.0.0.1:34813/chromium/control/meta-properties",
+      "url": "http://127.0.0.1:33587/chromium/control/meta-properties",
       "errors": []
     },
     {
@@ -153,7 +192,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=meta-properties&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fprotected%2Fmeta-properties",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=meta-properties&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fprotected%2Fmeta-properties",
       "errors": []
     },
     {
@@ -169,7 +208,7 @@
         }
       ],
       "navigations": 2,
-      "url": "http://127.0.0.1:34813/chromium/control/meta-attribute-node",
+      "url": "http://127.0.0.1:33587/chromium/control/meta-attribute-node",
       "errors": []
     },
     {
@@ -192,7 +231,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=meta-attribute-node&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fprotected%2Fmeta-attribute-node",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=meta-attribute-node&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fprotected%2Fmeta-attribute-node",
       "errors": []
     },
     {
@@ -208,7 +247,7 @@
         }
       ],
       "navigations": 2,
-      "url": "http://127.0.0.1:34813/chromium/control/meta-named-map",
+      "url": "http://127.0.0.1:33587/chromium/control/meta-named-map",
       "errors": []
     },
     {
@@ -231,7 +270,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=meta-named-map&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fprotected%2Fmeta-named-map",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=meta-named-map&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fprotected%2Fmeta-named-map",
       "errors": []
     },
     {
@@ -247,7 +286,7 @@
         }
       ],
       "navigations": 2,
-      "url": "http://127.0.0.1:34813/chromium/control/meta-attr-value",
+      "url": "http://127.0.0.1:33587/chromium/control/meta-attr-value",
       "errors": []
     },
     {
@@ -270,7 +309,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=meta-attr-value&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fprotected%2Fmeta-attr-value",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=meta-attr-value&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fprotected%2Fmeta-attr-value",
       "errors": []
     },
     {
@@ -294,7 +333,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=control&case=script-text&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fcontrol%2Fscript-text",
+      "url": "http://127.0.0.1:41035/?mode=control&case=script-text&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fcontrol%2Fscript-text",
       "errors": []
     },
     {
@@ -318,7 +357,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=script-text&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fprotected%2Fscript-text",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=script-text&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fprotected%2Fscript-text",
       "errors": []
     },
     {
@@ -340,7 +379,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=control&case=inline-handler&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fcontrol%2Finline-handler",
+      "url": "http://127.0.0.1:41035/?mode=control&case=inline-handler&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fcontrol%2Finline-handler",
       "errors": []
     },
     {
@@ -362,7 +401,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=inline-handler&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fprotected%2Finline-handler",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=inline-handler&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fprotected%2Finline-handler",
       "errors": []
     },
     {
@@ -388,7 +427,7 @@
         }
       ],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=control&case=borrowed-innerhtml-setter&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fcontrol%2Fborrowed-innerhtml-setter",
+      "url": "http://127.0.0.1:41035/?mode=control&case=borrowed-innerhtml-setter&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fcontrol%2Fborrowed-innerhtml-setter",
       "errors": []
     },
     {
@@ -410,7 +449,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=borrowed-innerhtml-setter&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fprotected%2Fborrowed-innerhtml-setter",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=borrowed-innerhtml-setter&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fprotected%2Fborrowed-innerhtml-setter",
       "errors": []
     },
     {
@@ -426,7 +465,7 @@
         }
       ],
       "navigations": 2,
-      "url": "http://127.0.0.1:34813/chromium/control/document-location",
+      "url": "http://127.0.0.1:33587/chromium/control/document-location",
       "errors": []
     },
     {
@@ -442,7 +481,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=document-location&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fprotected%2Fdocument-location",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=document-location&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fprotected%2Fdocument-location",
       "errors": []
     },
     {
@@ -458,7 +497,7 @@
         }
       ],
       "navigations": 2,
-      "url": "http://127.0.0.1:34813/chromium/control/window-navigation",
+      "url": "http://127.0.0.1:33587/chromium/control/window-navigation",
       "errors": []
     },
     {
@@ -474,7 +513,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=window-navigation&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fprotected%2Fwindow-navigation",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=window-navigation&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fprotected%2Fwindow-navigation",
       "errors": []
     },
     {
@@ -495,7 +534,7 @@
         }
       ],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=control&case=foreign-window-source&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fcontrol%2Fforeign-window-source",
+      "url": "http://127.0.0.1:41035/?mode=control&case=foreign-window-source&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fcontrol%2Fforeign-window-source",
       "errors": []
     },
     {
@@ -512,7 +551,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=foreign-window-source&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fprotected%2Fforeign-window-source",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=foreign-window-source&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fprotected%2Fforeign-window-source",
       "errors": []
     },
     {
@@ -534,7 +573,7 @@
         }
       ],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=control&case=client-information&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fcontrol%2Fclient-information",
+      "url": "http://127.0.0.1:41035/?mode=control&case=client-information&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fcontrol%2Fclient-information",
       "errors": []
     },
     {
@@ -551,7 +590,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=client-information&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fprotected%2Fclient-information",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=client-information&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fprotected%2Fclient-information",
       "errors": []
     },
     {
@@ -572,7 +611,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=control&case=spellcheck-property&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fcontrol%2Fspellcheck-property",
+      "url": "http://127.0.0.1:41035/?mode=control&case=spellcheck-property&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fcontrol%2Fspellcheck-property",
       "errors": []
     },
     {
@@ -593,7 +632,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=spellcheck-property&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fprotected%2Fspellcheck-property",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=spellcheck-property&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fprotected%2Fspellcheck-property",
       "errors": []
     },
     {
@@ -614,7 +653,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=control&case=writing-suggestions&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fcontrol%2Fwriting-suggestions",
+      "url": "http://127.0.0.1:41035/?mode=control&case=writing-suggestions&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fcontrol%2Fwriting-suggestions",
       "errors": []
     },
     {
@@ -635,7 +674,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=writing-suggestions&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fprotected%2Fwriting-suggestions",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=writing-suggestions&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fprotected%2Fwriting-suggestions",
       "errors": []
     },
     {
@@ -651,7 +690,7 @@
         }
       ],
       "navigations": 2,
-      "url": "http://127.0.0.1:34813/chromium/control/svg-href",
+      "url": "http://127.0.0.1:33587/chromium/control/svg-href",
       "errors": []
     },
     {
@@ -671,7 +710,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=svg-href&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fprotected%2Fsvg-href#",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=svg-href&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fprotected%2Fsvg-href#",
       "errors": []
     },
     {
@@ -687,7 +726,7 @@
         }
       ],
       "navigations": 2,
-      "url": "http://127.0.0.1:34813/chromium/control/smil-href",
+      "url": "http://127.0.0.1:33587/chromium/control/smil-href",
       "errors": []
     },
     {
@@ -701,7 +740,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=smil-href&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fprotected%2Fsmil-href",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=smil-href&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fprotected%2Fsmil-href",
       "errors": []
     },
     {
@@ -718,7 +757,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=control&case=worker-borrowed-import&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fcontrol%2Fworker-borrowed-import",
+      "url": "http://127.0.0.1:41035/?mode=control&case=worker-borrowed-import&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fcontrol%2Fworker-borrowed-import",
       "errors": []
     },
     {
@@ -735,7 +774,39 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=worker-borrowed-import&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Fchromium%2Fprotected%2Fworker-borrowed-import",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=worker-borrowed-import&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Fchromium%2Fprotected%2Fworker-borrowed-import",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "paint-worklet-module",
+      "mode": "control",
+      "result": {
+        "returned": {
+          "available": false
+        },
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:41035/?mode=control&case=paint-worklet-module&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fcontrol%2Fpaint-worklet-module",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "paint-worklet-module",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "available": false
+        },
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:41035/?mode=protected&case=paint-worklet-module&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fprotected%2Fpaint-worklet-module",
       "errors": []
     },
     {
@@ -751,7 +822,7 @@
       },
       "receiverRequests": [],
       "navigations": 2,
-      "url": "http://127.0.0.1:43455/?mode=control&case=location-reload&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fcontrol%2Flocation-reload",
+      "url": "http://127.0.0.1:41035/?mode=control&case=location-reload&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fcontrol%2Flocation-reload",
       "errors": []
     },
     {
@@ -767,7 +838,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=location-reload&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fprotected%2Flocation-reload",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=location-reload&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fprotected%2Flocation-reload",
       "errors": []
     },
     {
@@ -783,7 +854,7 @@
         }
       ],
       "navigations": 2,
-      "url": "http://127.0.0.1:34813/firefox/control/anchor-noncancelable",
+      "url": "http://127.0.0.1:33587/firefox/control/anchor-noncancelable",
       "errors": []
     },
     {
@@ -793,7 +864,7 @@
       "mode": "protected",
       "result": {
         "returned": {
-          "href": "http://127.0.0.1:34813/firefox/protected/anchor-noncancelable"
+          "href": "http://127.0.0.1:33587/firefox/protected/anchor-noncancelable"
         },
         "native": {
           "tag": "a",
@@ -805,7 +876,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=anchor-noncancelable&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fprotected%2Fanchor-noncancelable#",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=anchor-noncancelable&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fprotected%2Fanchor-noncancelable#",
       "errors": []
     },
     {
@@ -821,7 +892,7 @@
         }
       ],
       "navigations": 2,
-      "url": "http://127.0.0.1:34813/firefox/control/anchor-components",
+      "url": "http://127.0.0.1:33587/firefox/control/anchor-components",
       "errors": []
     },
     {
@@ -831,7 +902,7 @@
       "mode": "protected",
       "result": {
         "returned": {
-          "href": "http://127.0.0.1:34813/firefox/protected/anchor-components"
+          "href": "http://127.0.0.1:33587/firefox/protected/anchor-components"
         },
         "native": {
           "tag": "a",
@@ -843,7 +914,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=anchor-components&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fprotected%2Fanchor-components#",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=anchor-components&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fprotected%2Fanchor-components#",
       "errors": []
     },
     {
@@ -865,7 +936,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=control&case=meta-properties&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fcontrol%2Fmeta-properties",
+      "url": "http://127.0.0.1:41035/?mode=control&case=meta-properties&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fcontrol%2Fmeta-properties",
       "errors": []
     },
     {
@@ -887,7 +958,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=meta-properties&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fprotected%2Fmeta-properties",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=meta-properties&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fprotected%2Fmeta-properties",
       "errors": []
     },
     {
@@ -909,7 +980,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=control&case=meta-attribute-node&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fcontrol%2Fmeta-attribute-node",
+      "url": "http://127.0.0.1:41035/?mode=control&case=meta-attribute-node&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fcontrol%2Fmeta-attribute-node",
       "errors": []
     },
     {
@@ -931,7 +1002,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=meta-attribute-node&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fprotected%2Fmeta-attribute-node",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=meta-attribute-node&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fprotected%2Fmeta-attribute-node",
       "errors": []
     },
     {
@@ -953,7 +1024,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=control&case=meta-named-map&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fcontrol%2Fmeta-named-map",
+      "url": "http://127.0.0.1:41035/?mode=control&case=meta-named-map&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fcontrol%2Fmeta-named-map",
       "errors": []
     },
     {
@@ -975,7 +1046,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=meta-named-map&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fprotected%2Fmeta-named-map",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=meta-named-map&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fprotected%2Fmeta-named-map",
       "errors": []
     },
     {
@@ -997,7 +1068,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=control&case=meta-attr-value&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fcontrol%2Fmeta-attr-value",
+      "url": "http://127.0.0.1:41035/?mode=control&case=meta-attr-value&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fcontrol%2Fmeta-attr-value",
       "errors": []
     },
     {
@@ -1019,7 +1090,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=meta-attr-value&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fprotected%2Fmeta-attr-value",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=meta-attr-value&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fprotected%2Fmeta-attr-value",
       "errors": []
     },
     {
@@ -1042,7 +1113,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=control&case=script-text&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fcontrol%2Fscript-text",
+      "url": "http://127.0.0.1:41035/?mode=control&case=script-text&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fcontrol%2Fscript-text",
       "errors": []
     },
     {
@@ -1065,7 +1136,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=script-text&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fprotected%2Fscript-text",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=script-text&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fprotected%2Fscript-text",
       "errors": []
     },
     {
@@ -1086,7 +1157,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=control&case=inline-handler&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fcontrol%2Finline-handler",
+      "url": "http://127.0.0.1:41035/?mode=control&case=inline-handler&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fcontrol%2Finline-handler",
       "errors": []
     },
     {
@@ -1107,7 +1178,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=inline-handler&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fprotected%2Finline-handler",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=inline-handler&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fprotected%2Finline-handler",
       "errors": []
     },
     {
@@ -1132,7 +1203,7 @@
         }
       ],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=control&case=borrowed-innerhtml-setter&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fcontrol%2Fborrowed-innerhtml-setter",
+      "url": "http://127.0.0.1:41035/?mode=control&case=borrowed-innerhtml-setter&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fcontrol%2Fborrowed-innerhtml-setter",
       "errors": []
     },
     {
@@ -1153,7 +1224,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=borrowed-innerhtml-setter&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fprotected%2Fborrowed-innerhtml-setter",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=borrowed-innerhtml-setter&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fprotected%2Fborrowed-innerhtml-setter",
       "errors": []
     },
     {
@@ -1169,7 +1240,7 @@
         }
       ],
       "navigations": 2,
-      "url": "http://127.0.0.1:34813/firefox/control/document-location",
+      "url": "http://127.0.0.1:33587/firefox/control/document-location",
       "errors": []
     },
     {
@@ -1185,7 +1256,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=document-location&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fprotected%2Fdocument-location",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=document-location&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fprotected%2Fdocument-location",
       "errors": []
     },
     {
@@ -1201,7 +1272,7 @@
         }
       ],
       "navigations": 2,
-      "url": "http://127.0.0.1:34813/firefox/control/window-navigation",
+      "url": "http://127.0.0.1:33587/firefox/control/window-navigation",
       "errors": []
     },
     {
@@ -1217,7 +1288,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=window-navigation&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fprotected%2Fwindow-navigation",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=window-navigation&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fprotected%2Fwindow-navigation",
       "errors": []
     },
     {
@@ -1238,7 +1309,7 @@
         }
       ],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=control&case=foreign-window-source&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fcontrol%2Fforeign-window-source",
+      "url": "http://127.0.0.1:41035/?mode=control&case=foreign-window-source&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fcontrol%2Fforeign-window-source",
       "errors": []
     },
     {
@@ -1255,7 +1326,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=foreign-window-source&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fprotected%2Fforeign-window-source",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=foreign-window-source&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fprotected%2Fforeign-window-source",
       "errors": []
     },
     {
@@ -1277,7 +1348,7 @@
         }
       ],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=control&case=client-information&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fcontrol%2Fclient-information",
+      "url": "http://127.0.0.1:41035/?mode=control&case=client-information&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fcontrol%2Fclient-information",
       "errors": []
     },
     {
@@ -1294,7 +1365,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=client-information&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fprotected%2Fclient-information",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=client-information&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fprotected%2Fclient-information",
       "errors": []
     },
     {
@@ -1314,7 +1385,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=control&case=spellcheck-property&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fcontrol%2Fspellcheck-property",
+      "url": "http://127.0.0.1:41035/?mode=control&case=spellcheck-property&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fcontrol%2Fspellcheck-property",
       "errors": []
     },
     {
@@ -1334,7 +1405,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=spellcheck-property&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fprotected%2Fspellcheck-property",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=spellcheck-property&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fprotected%2Fspellcheck-property",
       "errors": []
     },
     {
@@ -1354,7 +1425,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=control&case=writing-suggestions&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fcontrol%2Fwriting-suggestions",
+      "url": "http://127.0.0.1:41035/?mode=control&case=writing-suggestions&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fcontrol%2Fwriting-suggestions",
       "errors": []
     },
     {
@@ -1374,7 +1445,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=writing-suggestions&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fprotected%2Fwriting-suggestions",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=writing-suggestions&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fprotected%2Fwriting-suggestions",
       "errors": []
     },
     {
@@ -1390,7 +1461,7 @@
         }
       ],
       "navigations": 2,
-      "url": "http://127.0.0.1:34813/firefox/control/svg-href",
+      "url": "http://127.0.0.1:33587/firefox/control/svg-href",
       "errors": []
     },
     {
@@ -1410,7 +1481,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=svg-href&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fprotected%2Fsvg-href#",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=svg-href&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fprotected%2Fsvg-href#",
       "errors": []
     },
     {
@@ -1426,7 +1497,7 @@
         }
       ],
       "navigations": 2,
-      "url": "http://127.0.0.1:34813/firefox/control/smil-href",
+      "url": "http://127.0.0.1:33587/firefox/control/smil-href",
       "errors": []
     },
     {
@@ -1440,7 +1511,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=smil-href&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fprotected%2Fsmil-href",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=smil-href&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fprotected%2Fsmil-href",
       "errors": []
     },
     {
@@ -1457,7 +1528,7 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=control&case=worker-borrowed-import&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fcontrol%2Fworker-borrowed-import",
+      "url": "http://127.0.0.1:41035/?mode=control&case=worker-borrowed-import&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fcontrol%2Fworker-borrowed-import",
       "errors": []
     },
     {
@@ -1474,12 +1545,13 @@
       },
       "receiverRequests": [],
       "navigations": 1,
-      "url": "http://127.0.0.1:43455/?mode=protected&case=worker-borrowed-import&receiver=http%3A%2F%2F127.0.0.1%3A34813%2Ffirefox%2Fprotected%2Fworker-borrowed-import",
+      "url": "http://127.0.0.1:41035/?mode=protected&case=worker-borrowed-import&receiver=http%3A%2F%2F127.0.0.1%3A33587%2Ffirefox%2Fprotected%2Fworker-borrowed-import",
       "errors": []
     }
   ],
   "failures": [],
   "inactiveControls": [
+    "firefox/paint-worklet-module: Paint Worklet is unavailable",
     "firefox/meta-properties: native reflected-attribute mutation succeeded, but no automatic navigation occurred during observation",
     "firefox/meta-attribute-node: native reflected-attribute mutation succeeded, but no automatic navigation occurred during observation",
     "firefox/meta-named-map: native reflected-attribute mutation succeeded, but no automatic navigation occurred during observation",

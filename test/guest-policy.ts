@@ -168,6 +168,16 @@ try {
               ? (record.native as Record<string, unknown>)
               : {};
           if (mode === 'protected') {
+            if (fixture.control === 'worklet') {
+              const returned =
+                record.returned && typeof record.returned === 'object'
+                  ? (record.returned as Record<string, unknown>)
+                  : {};
+              if (returned.available !== false && returned.error !== 'SecurityError')
+                failures.push(
+                  `${browserName}/${fixture.name}: native worklet module was not denied`,
+                );
+            }
             if (
               fixture.control === 'reload' &&
               (navigations !== 1 ||
@@ -259,8 +269,21 @@ try {
               failures.push(
                 `${browserName}/${fixture.name}: unrestricted reload control did not make a second HTTP navigation`,
               );
-            if (['navigation', 'request'].includes(fixture.control) && !sent.length) {
-              if (fixture.name.startsWith('meta-') && native.equiv === 'refresh') {
+            if (
+              ['navigation', 'request', 'worklet'].includes(fixture.control) &&
+              !sent.length
+            ) {
+              if (
+                fixture.control === 'worklet' &&
+                record.returned &&
+                typeof record.returned === 'object' &&
+                'available' in record.returned &&
+                record.returned.available === false
+              ) {
+                inactiveControls.push(
+                  `${browserName}/${fixture.name}: Paint Worklet is unavailable`,
+                );
+              } else if (fixture.name.startsWith('meta-') && native.equiv === 'refresh') {
                 inactiveControls.push(
                   `${browserName}/${fixture.name}: native reflected-attribute mutation succeeded, but no automatic navigation occurred during observation`,
                 );

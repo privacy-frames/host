@@ -1,10 +1,21 @@
 export interface GuestPolicyCase {
   name: string;
   code(receiver: string): string;
-  control: 'navigation' | 'request' | 'script' | 'spellcheck' | 'worker' | 'reload';
+  control:
+    'navigation' | 'request' | 'script' | 'spellcheck' | 'worker' | 'reload' | 'worklet';
 }
 
 export const guestPolicyCases: GuestPolicyCase[] = [
+  {
+    name: 'paint-worklet-module',
+    control: 'worklet',
+    code: (receiver) => `(async () => {
+      const worklet = globalThis.CSS?.paintWorklet;
+      if (!worklet) return { available: false };
+      try { await worklet.addModule(${JSON.stringify(receiver)}); return {available: true}; }
+      catch (error) { return {available: true, error: error.name}; }
+    })()`,
+  },
   {
     name: 'location-reload',
     control: 'reload',
