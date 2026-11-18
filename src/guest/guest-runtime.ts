@@ -467,6 +467,8 @@ export function installGuestRuntime() {
     propertyEnumerable: (value: object, key: PropertyKey) =>
       !!getDescriptor(value, key)?.enumerable,
     objectGet: (value: object, property: PropertyKey) => reflectGet(value, property),
+    objectSet: (target: object, property: PropertyKey, value: unknown) =>
+      reflectSet(target, property, value),
     setPrototype: (value: object, prototype: object | null) =>
       setPrototype(value, prototype),
     apply: (fn: (...args: unknown[]) => unknown, receiver: unknown, args: unknown[]) =>

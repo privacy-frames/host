@@ -128,6 +128,8 @@ try {
     const exception = new DOMException('denied', 'SecurityError');
     let nativeException;
     try { nativeSecurityError(); } catch(error) { nativeException=[error instanceof DOMException,error.name,error.code]; }
+    let getterError = false;
+    try { cloneNative({get invalid() { throw original; }}); } catch (error) { getterError = error === original; }
     let sameError = false;
     try { invokeSync(() => { throw original; }); } catch (error) { sameError = error === original; }
     const cyclic = { number: 4 }; cyclic.self = cyclic;
@@ -144,7 +146,11 @@ try {
     const afterDataset = 'fresh' in node.dataset;
     const detail = { local: 9 };
     const custom = new CustomEvent('custom', { detail });
-    class Listener { handleEvent(event) { detail.received = event.detail === detail; } }
+    class Listener {
+      #calls = 0;
+      get unused() { throw new Error('Unused callback property must stay lazy'); }
+      handleEvent(event) { detail.received = event.detail === detail && ++this.#calls === 1; }
+    }
     node.addEventListener('custom', new Listener());
     node.dispatchEvent(custom);
     const disguised = new Uint8Array([4,5]);
@@ -163,6 +169,7 @@ try {
     try { retained.byteLength; } catch (error) { dataViewDetached = error instanceof TypeError; }
     return ({
       sameError,
+      getterError,
       capturedViewConstructor,
       domException: [exception instanceof DOMException, exception.name, exception.message, exception.code],
       nativeException,

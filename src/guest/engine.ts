@@ -28,14 +28,18 @@ const arrayBufferLength = Object.getOwnPropertyDescriptor(
   ArrayBuffer.prototype,
   'byteLength',
 )!.get!;
+const arrayBufferKinds = new WeakMap<object, boolean>();
 const isArrayBuffer = (value: unknown): value is ArrayBuffer => {
   if (!value || typeof value !== 'object') return false;
+  const cached = arrayBufferKinds.get(value);
+  if (cached !== undefined) return cached;
+  let matches = false;
   try {
     Reflect.apply(arrayBufferLength, value, []);
-    return true;
-  } catch {
-    return false;
-  }
+    matches = true;
+  } catch {}
+  arrayBufferKinds.set(value, matches);
+  return matches;
 };
 for (const key of Object.getOwnPropertyNames(Symbol)) {
   const value: unknown = Reflect.get(Symbol, key);
@@ -300,15 +304,7 @@ export class GuestEngine {
   }
 
   get(name: string): unknown {
-    this.assertOpen();
-    return this.enter(() => {
-      const value = this.context.getProp(this.context.global, name);
-      try {
-        return this.decode(value);
-      } finally {
-        value.dispose();
-      }
-    });
+    return this.readGuestProperty(this.context.global, name);
   }
 
   set(name: string, value: unknown): void {
@@ -899,7 +895,7 @@ export class GuestEngine {
         ? []
         : Object.create(null);
     seen.set(id, result);
-    if (!previous) this.retainGuest(id, value.dup(), result);
+    const retained = previous ?? this.retainGuest(id, value.dup(), result);
     for (const key of Reflect.ownKeys(result))
       if (key !== 'length') Reflect.deleteProperty(result, key);
     if (Array.isArray(result)) result.length = 0;
@@ -922,19 +918,34 @@ export class GuestEngine {
           key.dispose();
           continue;
         }
-        const item = this.context.getProp(value, key);
-        const enumerableHandle = this.helper('propertyEnumerable', [value, key]);
-        const enumerable = this.context.getNumber(enumerableHandle) !== 0;
-        enumerableHandle.dispose();
         try {
-          Reflect.defineProperty(result, name, {
-            value: this.decode(item, seen),
-            enumerable,
-            configurable: true,
-            writable: true,
-          });
+          const enumerableHandle = this.helper('propertyEnumerable', [value, key]);
+          const enumerable = this.context.getNumber(enumerableHandle) !== 0;
+          enumerableHandle.dispose();
+          if (!enumerable) {
+            // Cloning ignores hidden fields; callback dictionaries may read
+            // inherited methods. Defer those reads until a native API asks.
+            Reflect.defineProperty(result, name, {
+              get: () => this.readGuestProperty(retained.handle, name),
+              set: (next: unknown) =>
+                this.writeGuestProperty(retained.handle, name, next),
+              enumerable: false,
+              configurable: true,
+            });
+            continue;
+          }
+          const item = this.helper('objectGet', [value, key]);
+          try {
+            Reflect.defineProperty(result, name, {
+              value: this.decode(item, seen),
+              enumerable: true,
+              configurable: true,
+              writable: true,
+            });
+          } finally {
+            item.dispose();
+          }
         } finally {
-          item.dispose();
           key.dispose();
         }
       }
@@ -942,7 +953,9 @@ export class GuestEngine {
       keyArray.dispose();
     }
     if (kind === 'array') {
-      const count = this.context.getProp(value, 'length');
+      const lengthKey = this.context.newString('length');
+      const count = this.helper('objectGet', [value, lengthKey]);
+      lengthKey.dispose();
       Reflect.set(result, 'length', this.context.getNumber(count));
       count.dispose();
     }
@@ -985,17 +998,58 @@ export class GuestEngine {
     return view;
   }
 
-  private retainGuest(id: number, handle: QuickJSHandle, value: object): void {
+  private readGuestProperty(handle: QuickJSHandle, key: PropertyKey): unknown {
+    return this.enter(() => {
+      const property = this.encode(key);
+      try {
+        const value = this.helper('objectGet', [handle, property]);
+        try {
+          return this.decode(value);
+        } finally {
+          value.dispose();
+        }
+      } finally {
+        property.dispose();
+      }
+    });
+  }
+
+  private writeGuestProperty(
+    handle: QuickJSHandle,
+    key: PropertyKey,
+    value: unknown,
+  ): void {
+    this.enter(() => {
+      const property = this.encode(key);
+      const next = this.encode(value);
+      try {
+        const written = this.helper('objectSet', [handle, property, next]);
+        try {
+          if (!this.context.getNumber(written))
+            throw new TypeError('Property is read only');
+        } finally {
+          written.dispose();
+        }
+      } finally {
+        property.dispose();
+        next.dispose();
+      }
+    });
+  }
+
+  private retainGuest(id: number, handle: QuickJSHandle, value: object): RetainedGuest {
     const previous = this.guestObjects.get(id);
     if (previous) {
       // A repeatedly thrown guest exception can acquire several native Error
       // wrappers. Keep one owned handle instead of losing the previous retain.
       handle.dispose();
       this.guestHandles.set(value, previous.handle);
-      return;
+      return previous;
     }
-    this.guestObjects.set(id, { id, handle, value });
+    const retained = { id, handle, value };
+    this.guestObjects.set(id, retained);
     this.guestHandles.set(value, handle);
+    return retained;
   }
 
   private decodeArguments(value: QuickJSHandle): unknown[] {
