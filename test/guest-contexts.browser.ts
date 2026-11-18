@@ -1,3 +1,4 @@
+import { prepareGuestWorkerBootstraps } from '../src/guest/contexts/worker-registry.ts';
 import { GuestEngine } from '../src/guest/engine.ts';
 import type { GuestHost } from '../src/guest/protocol.ts';
 import { createGuestWorkers } from '../src/guest/contexts/worker-factory.ts';
@@ -6,6 +7,7 @@ import { createGuestDocuments } from '../src/guest/contexts/documents.ts';
 import type { GuestContextCatalog } from '../src/guest/contexts/types.ts';
 
 declare global {
+  var guestSharedProbe: (() => Promise<unknown>) | undefined;
   var guestContextResults:
     { result?: Record<string, unknown>; error?: string } | undefined;
 }
@@ -57,7 +59,8 @@ async function run() {
     ['https://fixture.invalid/worklet.js', workletSource],
     ['https://fixture.invalid/worklet-math.js', 'export const gain=0.25;'],
   ]);
-  const catalog: GuestContextCatalog = {
+  const workerBootstrap = await (await fetch('/worker.js')).arrayBuffer();
+  const catalog: GuestContextCatalog = await prepareGuestWorkerBootstraps({
     application: 'fixture',
     generation: 'fixture-generation',
     applicationURL: new URL('/app/', location.href).href,
@@ -65,13 +68,14 @@ async function run() {
     sourceURL: 'https://fixture.invalid/index.html',
     documentBase: 'https://fixture.invalid/',
     engineWasm: wasm,
+    workerBootstrap: { dedicated: workerBootstrap, shared: workerBootstrap },
     resources: [...sources].map(([url, source], index) => ({
       url,
       path: `${index}.js`,
       contentType: 'text/javascript',
       bytes: new TextEncoder().encode(source).buffer,
     })),
-  };
+  });
   const host: GuestHost = {
     get: (target, key) => Reflect.get(target, key),
     set: (target, key, value) => Reflect.set(target, key, value),
@@ -145,8 +149,12 @@ async function run() {
         port.postMessage('next');
       });
     shared = [await next(first.port), await next(second.port)];
-    first.port.close();
-    second.port.close();
+    globalThis.guestSharedProbe = async () => {
+      const worker = new workers.SharedWorker!('https://fixture.invalid/shared.js', {
+        name: 'fixture',
+      });
+      return next(worker.port);
+    };
   }
 
   const audio = new OfflineAudioContext(1, 256, 48000);
@@ -210,7 +218,9 @@ async function run() {
   documents.disconnected(frame);
   frame.remove();
   documents.dispose();
-  workers.dispose();
+  window.addEventListener('pagehide', (event) => {
+    if (event.isTrusted && !event.persisted) workers.dispose();
+  });
   engine.dispose();
   return {
     worker,

@@ -25,6 +25,9 @@ export interface GuestContextCatalog {
   runtimeURL: string;
   applicationURL: string;
   engineWasm: ArrayBuffer;
+  workerBootstrap: { dedicated: ArrayBuffer; shared: ArrayBuffer };
+  /** Prepared before guest execution and inherited by every child context. */
+  workerBootstrapURLs?: { dedicated: string; shared: string };
   resources: GuestContextResource[];
 }
 

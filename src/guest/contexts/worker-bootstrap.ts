@@ -36,7 +36,11 @@ function initialization(value: unknown, location: string): GuestWorkerInitializa
   ) {
     throw new TypeError('Invalid worker initialization');
   }
-  if (new URL('./', location).href !== catalog.applicationURL)
+  const bootstrapURL = new URL(location);
+  if (
+    bootstrapURL.protocol !== 'blob:' ||
+    bootstrapURL.origin !== new URL(catalog.applicationURL).origin
+  )
     throw new DOMException('Worker initialization has another owner', 'SecurityError');
   // The complete record was validated at the message boundary above.
   return packet as GuestWorkerInitialization;

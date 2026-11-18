@@ -52,6 +52,7 @@ async function run() {
     applicationURL: new URL('/app/', location.href).href,
     runtimeURL: new URL('/', location.href).href,
     engineWasm,
+    workerBootstrap: { dedicated: new ArrayBuffer(0), shared: new ArrayBuffer(0) },
     resources: [
       {
         url: 'https://fixture.invalid/popup.html',
@@ -85,7 +86,7 @@ globalThis.finished=new Promise(resolve=>{
   const nativeTrust: boolean[] = [];
   const observeTrust = (event: MessageEvent) => nativeTrust.push(event.isTrusted);
   addEventListener('message', observeTrust);
-  session.render(html);
+  await session.render(html);
   const finished = await session.engine.get('finished');
   const embeddedWindow =
     document.querySelector<HTMLIFrameElement>('#embedded')?.contentWindow;
@@ -188,8 +189,10 @@ globalThis.finished=new Promise(resolve=>{
     attempt++
   )
     await new Promise<void>((resolve) => setTimeout(resolve, 5));
+  session.engine.evaluate("popup.dispatchEvent(new Event('pagehide'))");
   const popup = {
     guest: session.engine.evaluate('popup.popupMarker'),
+    syntheticPagehideSurvives: session.engine.evaluate('popup.popupMarker === 7'),
     native: Reflect.get(opened, 'popupMarker') === undefined,
     trustedURL: opened.location.pathname === '/app/__guest_document__.html',
     nativeContent: opened.document.getElementById('popup')?.textContent,

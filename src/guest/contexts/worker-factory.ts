@@ -69,10 +69,21 @@ export function createGuestWorkers(
   }
 
   function bootstrap(shared: boolean): URL {
-    return new URL(
-      shared ? '__guest_shared_worker__.js' : '__guest_worker__.js',
-      options.catalog.applicationURL,
-    );
+    const urls = options.catalog.workerBootstrapURLs;
+    if (!urls)
+      throw new Error(
+        'Trusted worker bootstraps were not prepared before guest execution',
+      );
+    const url = new URL(shared ? urls.shared : urls.dedicated);
+    if (
+      url.protocol !== 'blob:' ||
+      url.origin !== new URL(options.catalog.applicationURL).origin
+    )
+      throw new DOMException(
+        'Worker bootstrap is not a local application Blob',
+        'SecurityError',
+      );
+    return url;
   }
 
   let Dedicated: typeof Worker | undefined;

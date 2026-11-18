@@ -13,13 +13,15 @@ const entries = {
   browser: new URL('./guest-contexts.browser.ts', import.meta.url).pathname,
   worker: new URL('./guest-contexts.worker.ts', import.meta.url).pathname,
   worklet: new URL('../src/guest/contexts/worklet-entry.ts', import.meta.url).pathname,
+  registry: new URL('../src/guest/contexts/worker-registry-entry.ts', import.meta.url)
+    .pathname,
 };
 for (const [name, entry] of Object.entries(entries))
   await build({
     entryPoints: [entry],
     outfile: new URL(`${name}.js`, output).pathname,
     bundle: true,
-    format: name === 'worker' ? 'iife' : 'esm',
+    format: name === 'worker' || name === 'registry' ? 'iife' : 'esm',
     platform: 'browser',
     target: 'es2022',
     plugins: name === 'worklet' ? [guestWorkletLoaderPlugin(root)] : [],
@@ -50,14 +52,15 @@ const server = createServer((request, response) => {
       ? wasm
       : path === '/browser.js'
         ? bundles.get('browser')
-        : path === '/app/__guest_worker__.js' ||
-            path === '/app/__guest_shared_worker__.js'
+        : path === '/worker.js'
           ? bundles.get('worker')
-          : path === '/guest-worklet.js'
-            ? bundles.get('worklet')
-            : path === '/blank.html'
-              ? '<!doctype html><body></body>'
-              : '<!doctype html><script type="module" src="/browser.js"></script>',
+          : path === '/__guest_worker_registry__.js'
+            ? bundles.get('registry')
+            : path === '/guest-worklet.js'
+              ? bundles.get('worklet')
+              : path === '/blank.html'
+                ? '<!doctype html><body></body>'
+                : '<!doctype html><script type="module" src="/browser.js"></script>',
   );
 });
 await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', resolve));
@@ -88,6 +91,11 @@ try {
         version: browser.version(),
         observation,
         requestURLs,
+        withoutNativeSharedWorker: undefined as
+          | { dedicated: boolean; nested: boolean; module: boolean; registryHTTP: number }
+          | undefined,
+        crossRootShared: undefined as
+          { second: unknown; afterFirstRootClose: unknown } | undefined,
       });
       console.log(JSON.stringify(receipts.at(-1)));
       assert(observation && !observation.error, JSON.stringify(observation));
@@ -116,7 +124,74 @@ try {
       assert.equal(result.closed, 1);
       assert.equal(result.stripped, true);
       assert.equal(result.childText, 'prepared child');
-      assert(requestURLs.every((url) => new URL(url).hostname === '127.0.0.1'));
+      const second = await context.newPage();
+      await second.goto(`http://127.0.0.1:${address.port}/`);
+      await second.waitForFunction(
+        () => globalThis.guestContextResults !== undefined,
+        undefined,
+        { timeout: 60000 },
+      );
+      const secondObservation = await second.evaluate(
+        () => globalThis.guestContextResults,
+      );
+      assert(
+        secondObservation && !secondObservation.error,
+        JSON.stringify(secondObservation),
+      );
+      assert.deepEqual(secondObservation.result!.shared, [3, 4]);
+      await page.close();
+      const survivingShared = await second.evaluate(() =>
+        globalThis.guestSharedProbe?.(),
+      );
+      assert.equal(
+        survivingShared,
+        5,
+        'Closing the first root revoked another root shared worker bootstrap',
+      );
+      receipts.at(-1)!.crossRootShared = {
+        second: secondObservation.result!.shared,
+        afterFirstRootClose: survivingShared,
+      };
+      const withoutShared = await context.newPage();
+      await withoutShared.addInitScript(() =>
+        Object.defineProperty(globalThis, 'SharedWorker', {
+          configurable: true,
+          value: undefined,
+        }),
+      );
+      const registrationsBeforeFallback = requests.filter(
+        (path) => path === '/__guest_worker_registry__.js',
+      ).length;
+      await withoutShared.goto(`http://127.0.0.1:${address.port}/`);
+      await withoutShared.waitForFunction(
+        () => globalThis.guestContextResults !== undefined,
+        undefined,
+        { timeout: 60000 },
+      );
+      const fallback = await withoutShared.evaluate(() => globalThis.guestContextResults);
+      assert(fallback && !fallback.error, JSON.stringify(fallback));
+      assert.equal(fallback.result!.shared, 'unavailable');
+      assert.equal(fallback.result!.nested, 9);
+      assert.equal(fallback.result!.moduleWorker, 11);
+      assert.equal(
+        requests.filter((path) => path === '/__guest_worker_registry__.js').length,
+        registrationsBeforeFallback,
+      );
+      receipts.at(-1)!.withoutNativeSharedWorker = {
+        dedicated: true,
+        nested: true,
+        module: true,
+        registryHTTP: 0,
+      };
+
+      assert(
+        requestURLs.every(
+          (url) =>
+            new URL(url).hostname === '127.0.0.1' ||
+            (new URL(url).protocol === 'blob:' &&
+              new URL(new URL(url).origin).hostname === '127.0.0.1'),
+        ),
+      );
     } finally {
       await browser.close();
     }

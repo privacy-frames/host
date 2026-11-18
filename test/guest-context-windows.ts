@@ -109,6 +109,7 @@ try {
       });
       assert.deepEqual(result.popup, {
         guest: 7,
+        syntheticPagehideSurvives: true,
         native: true,
         trustedURL: true,
         nativeContent: 'popup',

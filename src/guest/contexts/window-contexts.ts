@@ -249,14 +249,13 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
     if (disposed || popup.closed || state.generation !== generation) session.close();
     else {
       state.session = session;
-      popup.addEventListener(
-        'pagehide',
-        () => {
-          session.close();
-          if (state.session === session) state.session = undefined;
-        },
-        { once: true },
-      );
+      const hidden = (event: PageTransitionEvent) => {
+        if (!event.isTrusted || event.persisted) return;
+        popup.removeEventListener('pagehide', hidden);
+        session.close();
+        if (state.session === session) state.session = undefined;
+      };
+      popup.addEventListener('pagehide', hidden);
     }
   }
 
