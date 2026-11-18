@@ -2,6 +2,9 @@
 export interface GuestHost {
   get(target: object, key: PropertyKey): unknown;
   set(target: object, key: PropertyKey, value: unknown): boolean;
+  delete?(target: object, key: PropertyKey): boolean;
+  /** Web IDL named/indexed setters may accept keys not yet present on the object. */
+  settable?(target: object, key: PropertyKey): boolean;
   call(target: Function, receiver: unknown, arguments_: unknown[]): unknown;
   construct(target: Function, arguments_: unknown[]): object;
   ownKeys(target: object): (string | symbol)[];

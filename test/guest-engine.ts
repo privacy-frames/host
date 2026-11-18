@@ -81,8 +81,10 @@ try {
       assert.equal(additional.nativePrototype, false);
       assert.deepEqual(additional.errors, []);
       assert.equal(advanced.sameError, true);
+      assert.deepEqual(advanced.domException, [true, 'SecurityError', 'denied', 18]);
       assert.equal(advanced.map, true);
       assert.equal(advanced.symbol, 'symbol data');
+      assert.deepEqual(advanced.dataset, [false, 'value', false]);
       assert.equal(advanced.detailIdentity, true);
       assert.deepEqual(advanced.binaryBrand, [9, 9]);
       assert.deepEqual(advanced.nestedBytes, [3, 4, 3, 4, 5]);

@@ -110,6 +110,7 @@ export function installGuestRuntime() {
     target: object;
     proxy: object;
     local: InternalSet<PropertyKey>;
+    own: InternalMap<PropertyKey, boolean>;
     callable: boolean;
     prototypeObject: boolean;
     parent: object | null | undefined;
@@ -152,14 +153,21 @@ export function installGuestRuntime() {
   const localDescriptor = (
     record: ProxyRecord,
     property: PropertyKey,
-  ): PropertyDescriptor | undefined => {
+  ): PropertyDescriptor | null | undefined => {
     let current: object | null = record.proxy;
     const visited = new InternalSet<object>();
     while (current && !visited.has(current)) {
       visited.add(current);
       const entry = records.get(current);
       if (entry) {
-        if (entry.local.has(property)) return getDescriptor(entry.target, property);
+        if (entry.local.has(property))
+          return getDescriptor(entry.target, property) ?? null;
+        let own = entry.prototypeObject ? entry.own.get(property) : undefined;
+        if (own === undefined) {
+          own = !!native('own', entry.id, property);
+          if (entry.prototypeObject) entry.own.set(property, own);
+        }
+        if (own) return undefined;
         current = parent(entry);
       } else {
         if (current === objectPrototype) {
@@ -203,6 +211,7 @@ export function installGuestRuntime() {
       target,
       proxy: target,
       local: new InternalSet(),
+      own: new InternalMap(),
       callable,
       prototypeObject,
       parent: undefined,
@@ -222,6 +231,7 @@ export function installGuestRuntime() {
         if (property === Symbol.hasInstance && callable)
           return reflectGet(functionPrototype, property, receiver);
         const local = localDescriptor(record, property);
+        if (local === null) return undefined;
         if (local) return readDescriptor(local, receiver);
         return native('get', id, property);
       },
@@ -238,6 +248,10 @@ export function installGuestRuntime() {
           return true;
         }
         const local = localDescriptor(record, property);
+        if (local === null) {
+          record.local.add(property);
+          return reflectSet(target, property, value, target);
+        }
         if (local?.set) {
           reflectApply(local.set, receiver, [value]);
           return true;
@@ -252,7 +266,8 @@ export function installGuestRuntime() {
           record.local.add(property);
           return reflectSet(target, property, value, target);
         }
-        if (native('has', id, property)) return !!native('set', id, property, value);
+        if (native('has', id, property) || native('settable', id, property))
+          return !!native('set', id, property, value);
         record.local.add(property);
         return reflectSet(target, property, value, target);
       },
@@ -262,14 +277,22 @@ export function installGuestRuntime() {
       },
       deleteProperty(_target, property) {
         if (record.local.has(property)) {
-          record.local.delete(property);
-          return Reflect.deleteProperty(target, property);
+          const deleted = Reflect.deleteProperty(target, property);
+          if (deleted) record.local.delete(property);
+          return deleted;
         }
-        // Deleting an inherited browser member does not delete its prototype.
-        return true;
+        if (record.prototypeObject || callable) {
+          const descriptor = getDescriptor(target, property);
+          if (descriptor && !descriptor.configurable) return false;
+          Reflect.deleteProperty(target, property);
+          record.local.add(property);
+          return true;
+        }
+        return !!native('delete', id, property);
       },
       has(_target, property) {
-        return !!localDescriptor(record, property) || !!native('has', id, property);
+        const local = localDescriptor(record, property);
+        return local !== undefined ? local !== null : !!native('has', id, property);
       },
       ownKeys() {
         const result: (string | symbol)[] = [];
@@ -277,6 +300,7 @@ export function installGuestRuntime() {
         const append = (input: (string | symbol)[]) => {
           for (let index = 0; index < input.length; index++) {
             const key = input[index];
+            if (record.local.has(key) && !getDescriptor(target, key)) continue;
             if (keys.has(key)) continue;
             keys.add(key);
             reflectApply(arrayPush, result, [key]);
@@ -288,6 +312,7 @@ export function installGuestRuntime() {
       },
       getOwnPropertyDescriptor(_target, property) {
         const own = getDescriptor(target, property);
+        if (record.local.has(property) && !own) return undefined;
         if (own && (!own.configurable || record.local.has(property))) return own;
         const descriptor = native('descriptor', id, property) as
           PropertyDescriptor | undefined;

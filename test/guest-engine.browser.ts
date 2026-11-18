@@ -8,6 +8,10 @@ declare global {
 const host: GuestHost = {
   get: (target, key) => Reflect.get(target, key),
   set: (target, key, value) => Reflect.set(target, key, value),
+  delete: (target, key) => Reflect.deleteProperty(target, key),
+  settable: (target, key) =>
+    typeof key === 'string' &&
+    Object.prototype.toString.call(target) === '[object DOMStringMap]',
   call: (target, receiver, arguments_) => Reflect.apply(target, receiver, arguments_),
   construct: (target, arguments_) => Reflect.construct(target, arguments_),
   ownKeys: (target) => Reflect.ownKeys(target),
@@ -31,6 +35,7 @@ try {
   engine.set('HTMLElement', HTMLElement);
   engine.set('Event', Event);
   engine.set('CustomEvent', CustomEvent);
+  engine.set('DOMException', DOMException);
   engine.set('URL', URL);
   engine.set('console', console);
   engine.set('nativePromise', () => Promise.resolve({ answer: 42 }));
@@ -105,6 +110,7 @@ try {
   const advanced = engine.evaluate(`
     (() => {
     const original = new Error('identity');
+    const exception = new DOMException('denied', 'SecurityError');
     let sameError = false;
     try { invokeSync(() => { throw original; }); } catch (error) { sameError = error === original; }
     const cyclic = { number: 4 }; cyclic.self = cyclic;
@@ -114,6 +120,11 @@ try {
     const unique = Symbol('private');
     const node = document.getElementById('fixture');
     node[unique] = 'symbol data';
+    const beforeDataset = 'fresh' in node.dataset;
+    node.dataset.fresh = 'value';
+    const datasetAttribute = node.getAttribute('data-fresh');
+    delete node.dataset.fresh;
+    const afterDataset = 'fresh' in node.dataset;
     const detail = { local: 9 };
     const custom = new CustomEvent('custom', { detail });
     class Listener { handleEvent(event) { detail.received = event.detail === detail; } }
@@ -135,8 +146,10 @@ try {
     try { retained.byteLength; } catch (error) { dataViewDetached = error instanceof TypeError; }
     return ({
       sameError,
+      domException: [exception instanceof DOMException, exception.name, exception.message, exception.code],
       map: copiedMap instanceof Map && copiedKey === copiedKey.self && copiedMap.get(copiedKey) instanceof Set,
       symbol: node[unique],
+      dataset: [beforeDataset, datasetAttribute, afterDataset],
       detailIdentity: detail.received,
       binaryBrand: Array.from(disguised),
       nestedBytes: [callbackRead, nativeRead, ...nested],

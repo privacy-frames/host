@@ -421,8 +421,17 @@ export class GuestEngine {
         case 'set':
           result = this.host.set(target, key, this.decode(input[0]));
           break;
+        case 'delete':
+          result = this.host.delete?.(target, key) ?? false;
+          break;
         case 'has':
           result = this.has(target, key);
+          break;
+        case 'own':
+          result = this.host.descriptor(target, key) !== undefined;
+          break;
+        case 'settable':
+          result = this.host.settable?.(target, key) ?? false;
           break;
         case 'keys':
           result = this.host.ownKeys(target);
@@ -631,7 +640,6 @@ export class GuestEngine {
         time.dispose();
       }
     }
-    if (value instanceof Error) return this.context.newError(value);
     const id = this.registerNative(object);
     let constructable = false;
     if (typeof value === 'function') {
