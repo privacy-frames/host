@@ -974,6 +974,14 @@ export class GuestEngine {
   }
 
   private retainGuest(id: number, handle: QuickJSHandle, value: object): void {
+    const previous = this.guestObjects.get(id);
+    if (previous) {
+      // A repeatedly thrown guest exception can acquire several native Error
+      // wrappers. Keep one owned handle instead of losing the previous retain.
+      handle.dispose();
+      this.guestHandles.set(value, previous.handle);
+      return;
+    }
     this.guestObjects.set(id, { id, handle, value });
     this.guestHandles.set(value, handle);
   }

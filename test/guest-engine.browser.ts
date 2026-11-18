@@ -219,6 +219,12 @@ try {
   } catch (error) {
     rejectedMessage = String(error);
   }
+  disposable.evaluate('globalThis.repeatedError = new Error("repeated")');
+  for (let i = 0; i < 3; i++) {
+    try {
+      disposable.evaluate('throw repeatedError');
+    } catch {}
+  }
   const pending = disposable.evaluate('new Promise(() => {})');
   disposable.dispose();
   let closedMessage = '';
