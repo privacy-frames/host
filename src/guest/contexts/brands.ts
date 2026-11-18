@@ -12,22 +12,30 @@ function getter(
   return Object.getOwnPropertyDescriptor(prototype, property)?.get;
 }
 
-function accepts(
-  value: unknown,
+/** Cache native internal-slot checks, which do not change with public prototypes. */
+export function nativeBrand<T extends object>(
   read: ((this: unknown) => unknown) | undefined,
-): boolean {
-  if (
-    !read ||
-    (typeof value !== 'object' && typeof value !== 'function') ||
-    value === null
-  )
-    return false;
-  try {
-    apply(read, value, []);
-    return true;
-  } catch {
-    return false;
-  }
+): (value: unknown) => value is T {
+  const cache = new WeakMap<object, boolean>();
+  return (value: unknown): value is T => {
+    if (
+      !read ||
+      value === null ||
+      (typeof value !== 'object' && typeof value !== 'function')
+    )
+      return false;
+    const known = cache.get(value);
+    if (known !== undefined) return known;
+    let accepted = false;
+    try {
+      apply(read, value, []);
+      accepted = true;
+    } catch {
+      // A Web IDL getter rejects receivers without its native internal slots.
+    }
+    cache.set(value, accepted);
+    return accepted;
+  };
 }
 
 const nodeType = getter('Node', 'nodeType');
@@ -45,22 +53,16 @@ const nativeWindow =
       getter('Window', 'window')
     : undefined;
 
-export const isNode = (value: unknown): value is Node => accepts(value, nodeType);
-export const isElement = (value: unknown): value is Element =>
-  accepts(value, elementName);
-export const isAttr = (value: unknown): value is Attr => accepts(value, attributeName);
-export const isDocument = (value: unknown): value is Document =>
-  accepts(value, documentURL);
-export const isHTMLIFrameElement = (value: unknown): value is HTMLIFrameElement =>
-  accepts(value, frameWindow);
-export const isHTMLTemplateElement = (value: unknown): value is HTMLTemplateElement =>
-  accepts(value, templateContent);
-export const isBaseAudioContext = (value: unknown): value is BaseAudioContext =>
-  accepts(value, audioRate);
-export const isBlob = (value: unknown): value is Blob => accepts(value, blobSize);
-export const isMessagePort = (value: unknown): value is MessagePort =>
-  accepts(value, portMessage);
-export const isWindow = (value: unknown): value is Window => accepts(value, nativeWindow);
+export const isNode = nativeBrand<Node>(nodeType);
+export const isElement = nativeBrand<Element>(elementName);
+export const isAttr = nativeBrand<Attr>(attributeName);
+export const isDocument = nativeBrand<Document>(documentURL);
+export const isHTMLIFrameElement = nativeBrand<HTMLIFrameElement>(frameWindow);
+export const isHTMLTemplateElement = nativeBrand<HTMLTemplateElement>(templateContent);
+export const isBaseAudioContext = nativeBrand<BaseAudioContext>(audioRate);
+export const isBlob = nativeBrand<Blob>(blobSize);
+export const isMessagePort = nativeBrand<MessagePort>(portMessage);
+export const isWindow = nativeBrand<Window>(nativeWindow);
 
 /**
  * Cache has no synchronous branded getter. This is a conservative dispatch
