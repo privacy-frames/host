@@ -45,6 +45,7 @@ export function installGuestRuntime() {
   const MapConstructor = Map;
   const WeakMapConstructor = WeakMap;
   const PromiseConstructor = Promise;
+  const promiseThen = Promise.prototype.then;
   const SetConstructor = Set;
   const RegExpConstructor = RegExp;
   const DateConstructor = Date;
@@ -489,6 +490,13 @@ export function installGuestRuntime() {
     makeMap: () => new MapConstructor(),
     makeSet: () => new SetConstructor(),
     setAdd: (value: Set<unknown>, item: unknown) => reflectApply(setAdd, value, [item]),
+    observePromise(
+      value: Promise<unknown>,
+      resolve: (value: unknown) => void,
+      reject: (error: unknown) => void,
+    ) {
+      return reflectApply(promiseThen, value, [resolve, reject]);
+    },
     makeView(buffer: ArrayBuffer, name: string, offset: number, length: number) {
       if (name === 'DataView') return new DataView(buffer, offset, length);
       const Constructor = reflectGet(globalThis, name);

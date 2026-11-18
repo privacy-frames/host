@@ -62,7 +62,9 @@ try {
       const values = result.result as Record<string, unknown>;
       const additional = result.additional as Record<string, unknown>;
       const advanced = result.advanced as Record<string, unknown>;
+      const disposal = result.disposal as Record<string, unknown>;
       assert.equal(values.globalIdentity, true);
+      assert.equal(values.globalPrototype, true);
       assert.equal(values.identity, true);
       assert.equal(values.cancellation, false);
       assert.deepEqual(values.trace, ['outer', 'inner', false]);
@@ -82,6 +84,7 @@ try {
       assert.deepEqual(additional.errors, []);
       assert.equal(advanced.sameError, true);
       assert.deepEqual(advanced.domException, [true, 'SecurityError', 'denied', 18]);
+      assert.deepEqual(advanced.nativeException, [true, 'SecurityError', 18]);
       assert.equal(advanced.map, true);
       assert.equal(advanced.symbol, 'symbol data');
       assert.deepEqual(advanced.dataset, [false, 'value', false]);
@@ -92,6 +95,8 @@ try {
       assert.equal(advanced.sender, true);
       assert.equal(advanced.receiver, true);
       assert.deepEqual(advanced.bytes, [1, 2, 3, 4]);
+      assert.match(String(disposal.rejectedMessage), /expected rejection/);
+      assert.match(String(disposal.closedMessage), /context is closed/);
     } finally {
       await browser.close();
     }

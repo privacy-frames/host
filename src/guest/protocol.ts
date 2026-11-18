@@ -26,16 +26,3 @@ export interface GuestEngineOptions {
 }
 
 export type GuestEvaluationMode = 'global' | 'module';
-
-export interface GuestPropertyKey {
-  type: 'string' | 'symbol';
-  value: string;
-}
-
-export interface GuestHostReference {
-  id: number;
-  callable: boolean;
-  constructable: boolean;
-  name: string;
-  prototype?: number;
-}

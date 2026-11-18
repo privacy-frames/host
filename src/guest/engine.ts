@@ -117,6 +117,7 @@ export class GuestEngine {
   private readonly guestSymbols = new Map<string, symbol>();
   private readonly buffers = new Map<ArrayBuffer, BufferMirror>();
   private readonly promises = new Set<QuickJSDeferredPromise>();
+  private readonly pendingPromises = new Set<(error: Error) => void>();
   private readonly disposers = new Set<() => void>();
   private nextNative = 1;
   private nextSymbol = 1;
@@ -229,7 +230,15 @@ export class GuestEngine {
       this.nativeHandles.set(native.prototype, this.context.getProp(guest, 'prototype'));
     }
 
-    if (this.options.globalObject) this.aliasGlobal(this.options.globalObject);
+    if (this.options.globalObject) {
+      this.aliasGlobal(this.options.globalObject);
+      const nativePrototype = this.host.prototype(this.options.globalObject);
+      if (nativePrototype) {
+        const prototype = this.encode(nativePrototype);
+        this.helper('setPrototype', [this.context.global, prototype]).dispose();
+        prototype.dispose();
+      }
+    }
     const catalog = this.options.modules ?? new Map<string, string>();
     this.runtime.setModuleLoader(
       (name) => {
@@ -789,17 +798,38 @@ export class GuestEngine {
     if (kind === 'view') return this.decodeView(value, id, seen);
     if (kind === 'promise') {
       if (previous) return previous.value;
-      const handle = value.dup();
-      const promise = this.context.resolvePromise(handle).then((result) => {
-        const resolved = this.unwrap(result);
+      let resolvePromise: (value: unknown) => void;
+      let rejectPromise: (error: Error) => void;
+      const promise = new Promise<unknown>((resolve, reject) => {
+        resolvePromise = resolve;
+        rejectPromise = reject;
+      });
+      this.pendingPromises.add(rejectPromise!);
+      const resolve = this.context.newFunction('resolve', (result) => {
+        if (this.closed) return;
+        this.pendingPromises.delete(rejectPromise);
         try {
-          return this.decode(resolved);
-        } finally {
-          resolved.dispose();
-          handle.dispose();
+          resolvePromise(this.decode(result));
+        } catch (error) {
+          rejectPromise(error instanceof Error ? error : new Error(String(error)));
         }
       });
+      const reject = this.context.newFunction('reject', (error) => {
+        if (this.closed) return;
+        this.pendingPromises.delete(rejectPromise);
+        rejectPromise(this.guestError(error));
+      });
+      try {
+        this.helper('observePromise', [value, resolve, reject]).dispose();
+      } finally {
+        resolve.dispose();
+        reject.dispose();
+      }
       this.retainGuest(id, value.dup(), promise);
+      void promise.catch((error: unknown) => {
+        if (!this.closed)
+          this.report(error instanceof Error ? error : new Error(String(error)));
+      });
       this.scheduleJobs();
       return promise;
     }
@@ -1103,9 +1133,11 @@ export class GuestEngine {
       const original = this.guestHandles.get(error);
       if (original) return original.dup();
     }
-    return this.context.newError(
-      error instanceof Error ? error : new Error(String(error)),
-    );
+    try {
+      return this.encode(error);
+    } catch {
+      return this.context.newError(new Error('Native operation failed'));
+    }
   }
 
   private assertOpen(): void {
@@ -1120,6 +1152,9 @@ export class GuestEngine {
   dispose(): void {
     if (this.closed) return;
     this.closed = true;
+    for (const reject of this.pendingPromises)
+      reject(new Error('Application context is closed'));
+    this.pendingPromises.clear();
     for (const dispose of this.disposers) {
       try {
         dispose();

@@ -20,6 +20,7 @@ const host: GuestHost = {
 };
 
 try {
+  Reflect.set(globalThis, '__nativeEngineWitness', 42);
   const errors: string[] = [];
   const engine = await GuestEngine.create({
     host,
@@ -33,6 +34,7 @@ try {
   engine.set('document', document);
   engine.set('Element', Element);
   engine.set('HTMLElement', HTMLElement);
+  engine.set('Window', Window);
   engine.set('Event', Event);
   engine.set('CustomEvent', CustomEvent);
   engine.set('DOMException', DOMException);
@@ -47,6 +49,9 @@ try {
   engine.set('nativeBuffer', new Uint8Array([1, 2, 3, 4]));
   engine.set('nativeThrow', () => {
     throw new Error('native failure');
+  });
+  engine.set('nativeSecurityError', () => {
+    throw new DOMException('native denied', 'SecurityError');
   });
   engine.set('invokeSync', (callback: () => unknown) => callback());
   engine.set('nestedBytes', (bytes: Uint8Array, callback: () => unknown) => {
@@ -75,6 +80,7 @@ try {
     const button = document.createElement('button');
     parent.appendChild(button);
     Element.prototype.describe = function () { return this.nodeName; };
+    Window.prototype.guestWindowExtension = 'window guest';
     button.customState = { value: 7 };
     button.addEventListener('inner', event => {
       trace.push('inner');
@@ -94,6 +100,7 @@ try {
     try { nativeThrow(); } catch (caught) { error = caught.message; }
     ({
       globalIdentity: window === self && window === globalThis,
+      globalPrototype: window instanceof Window && window.guestWindowExtension === 'window guest',
       identity: parent.firstChild === button && button.parentNode === parent,
       cancellation, trace,
       prototype: button.describe(),
@@ -111,6 +118,8 @@ try {
     (() => {
     const original = new Error('identity');
     const exception = new DOMException('denied', 'SecurityError');
+    let nativeException;
+    try { nativeSecurityError(); } catch(error) { nativeException=[error instanceof DOMException,error.name,error.code]; }
     let sameError = false;
     try { invokeSync(() => { throw original; }); } catch (error) { sameError = error === original; }
     const cyclic = { number: 4 }; cyclic.self = cyclic;
@@ -147,6 +156,7 @@ try {
     return ({
       sameError,
       domException: [exception instanceof DOMException, exception.name, exception.message, exception.code],
+      nativeException,
       map: copiedMap instanceof Map && copiedKey === copiedKey.self && copiedMap.get(copiedKey) instanceof Set,
       symbol: node[unique],
       dataset: [beforeDataset, datasetAttribute, afterDataset],
@@ -164,7 +174,7 @@ try {
     `nativePromise().then(value => { globalThis.promiseAnswer = value.answer; });`,
   );
   engine.evaluate(
-    `Object.getPrototypeOf(nativeAsync).constructor('return typeof navigator')().then(value => { globalThis.asyncCompilerRealm = value; });`,
+    `Object.getPrototypeOf(nativeAsync).constructor('return typeof __nativeEngineWitness')().then(value => { globalThis.asyncCompilerRealm = value; });`,
   );
   engine.drainJobs();
   await new Promise((resolve) => setTimeout(resolve, 0));
@@ -180,14 +190,40 @@ try {
     promise: engine.get('promiseAnswer'),
     asyncCompilerRealm: engine.get('asyncCompilerRealm'),
     generatorCompilerRealm: engine.evaluate(
-      `Object.getPrototypeOf(nativeGenerator).constructor('yield typeof navigator')().next().value`,
+      `Object.getPrototypeOf(nativeGenerator).constructor('yield typeof __nativeEngineWitness')().next().value`,
     ),
     module: engine.get('moduleAnswer'),
     nativePrototype: Object.hasOwn(Element.prototype, 'describe'),
     errors,
   };
   engine.dispose();
-  globalThis.guestEngineResults = { result, additional, advanced };
+  const disposable = await GuestEngine.create({
+    host,
+    wasmURL: '/quickjs.wasm',
+    onError() {},
+  });
+  let rejectedMessage = '';
+  const rejected = disposable.evaluate(`Promise.reject(new Error('expected rejection'))`);
+  disposable.drainJobs();
+  try {
+    await rejected;
+  } catch (error) {
+    rejectedMessage = String(error);
+  }
+  const pending = disposable.evaluate('new Promise(() => {})');
+  disposable.dispose();
+  let closedMessage = '';
+  try {
+    await pending;
+  } catch (error) {
+    closedMessage = String(error);
+  }
+  globalThis.guestEngineResults = {
+    result,
+    additional,
+    advanced,
+    disposal: { rejectedMessage, closedMessage },
+  };
 } catch (error) {
   globalThis.guestEngineResults = {
     error: String(error),
