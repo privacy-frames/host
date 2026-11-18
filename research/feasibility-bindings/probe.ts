@@ -10,6 +10,7 @@ import type { BindingObservation } from './types.ts';
 await import('./build.ts');
 const require = createRequire(import.meta.url);
 const root = fileURLToPath(new URL('.', import.meta.url));
+const comparisonSource = process.env.BINDING_COMPARISON_SOURCE;
 const sources = new Map([
   [
     '/',
@@ -26,7 +27,10 @@ const sources = new Map([
   ],
   [
     '/guest.js',
-    { type: 'text/javascript', bytes: await readFile(root + 'build/guest.js') },
+    {
+      type: 'text/javascript',
+      bytes: await readFile(comparisonSource || root + 'build/guest.js'),
+    },
   ],
   [
     '/engine.wasm',
@@ -103,7 +107,7 @@ try {
   );
 }
 await writeFile(
-  root + 'results.json',
+  root + (comparisonSource ? 'comparison-results.json' : 'results.json'),
   JSON.stringify(
     {
       date: new Date().toISOString(),

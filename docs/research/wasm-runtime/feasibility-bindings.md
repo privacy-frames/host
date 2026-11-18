@@ -52,8 +52,13 @@ All four passed these checks:
 The guest cache and native handle table retain their contents until disposal.
 The experiment does not qualify browser/guest GC cycles, weak retention, DOM
 collections, custom elements, cross-document identity or long-running sessions.
-The companion Boa report records that engine's attempt with this same generated
-bundle; this report claims execution results only for QuickJS.
+The companion Boa report records a failure with a frozen copy of the generated
+bundle. A separate QuickJS comparison ran that exact file, SHA-256
+`694ed34dd15e3e6043d0358180738d626580118c559d4b528e4150abb7131579`,
+and passed in both browsers under both CSP controls. Those observations are
+retained in [comparison-results.json](../../../research/feasibility-bindings/comparison-results.json).
+The separately regenerated bundle differs in formatting; its hash is recorded
+in the main receipt. This report claims engine execution results only for QuickJS.
 
 ## Native execution still needs a policy
 
@@ -84,6 +89,10 @@ npx playwright install chromium firefox
 npm run probe
 npm run typecheck
 ```
+
+To compare the exact frozen Boa input, set BINDING_COMPARISON_SOURCE to that
+study's `boa-probe/fixtures/generated-guest.js` before running the probe. This
+writes comparison-results.json instead of the main receipt.
 
 The build generates the guest wrappers and bundles them without application
 downleveling. It separately bundles the browser-side engine loader and serves

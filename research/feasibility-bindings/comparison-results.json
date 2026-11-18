@@ -1,0 +1,141 @@
+{
+  "date": "2026-11-18T00:17:52.559Z",
+  "versions": {
+    "quickjsEmscripten": "0.32.0",
+    "webidl2js": "21.2.0",
+    "playwright": "1.63.0",
+    "esbuild": "0.28.2"
+  },
+  "resources": {
+    "/": {
+      "bytes": 90,
+      "sha256": "0ae49d06c3f5bade5ccc0ef30e59e8bd8f2f125cb05ab36a968f74b41e2dd9a4"
+    },
+    "/browser.js": {
+      "bytes": 90576,
+      "sha256": "873a77b728ccd42ef31fd1c8ccdd2aa8d2056ce6f99a4e78b49b37fbc9e150ad"
+    },
+    "/guest.js": {
+      "bytes": 45962,
+      "sha256": "694ed34dd15e3e6043d0358180738d626580118c559d4b528e4150abb7131579"
+    },
+    "/engine.wasm": {
+      "bytes": 503134,
+      "sha256": "105c3bed22d457e43e3d1c3c1c6959fda62a8fe06f0fc8a985303c3a2be72232"
+    }
+  },
+  "observations": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "result": {
+        "status": "passed",
+        "guest": {
+          "identity": true,
+          "appendIdentity": true,
+          "instance": true,
+          "branding": "[object StudyNode]",
+          "nativeRead": "SPAN",
+          "conversion": "converted guest text",
+          "extension": "SPAN: converted guest text",
+          "forgedReceiverRejected": true,
+          "wrongArgumentRejected": true,
+          "illegalConstructorRejected": true,
+          "guestConstructor": "undefined"
+        },
+        "nativeMutation": "native mutation",
+        "nativeText": "native mutation",
+        "nodeCount": 1,
+        "engineStartupMs": 9,
+        "totalMs": 40.19999998807907,
+        "nativeScriptExecuted": true
+      },
+      "errors": [],
+      "restricted": false
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "result": {
+        "status": "passed",
+        "guest": {
+          "identity": true,
+          "appendIdentity": true,
+          "instance": true,
+          "branding": "[object StudyNode]",
+          "nativeRead": "SPAN",
+          "conversion": "converted guest text",
+          "extension": "SPAN: converted guest text",
+          "forgedReceiverRejected": true,
+          "wrongArgumentRejected": true,
+          "illegalConstructorRejected": true,
+          "guestConstructor": "undefined"
+        },
+        "nativeMutation": "native mutation",
+        "nativeText": "native mutation",
+        "nodeCount": 1,
+        "engineStartupMs": 9,
+        "totalMs": 36.80000001192093,
+        "nativeScriptExecuted": false
+      },
+      "errors": [],
+      "restricted": true
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "result": {
+        "status": "passed",
+        "guest": {
+          "identity": true,
+          "appendIdentity": true,
+          "instance": true,
+          "branding": "[object StudyNode]",
+          "nativeRead": "SPAN",
+          "conversion": "converted guest text",
+          "extension": "SPAN: converted guest text",
+          "forgedReceiverRejected": true,
+          "wrongArgumentRejected": true,
+          "illegalConstructorRejected": true,
+          "guestConstructor": "undefined"
+        },
+        "nativeMutation": "native mutation",
+        "nativeText": "native mutation",
+        "nodeCount": 1,
+        "engineStartupMs": 27,
+        "totalMs": 99,
+        "nativeScriptExecuted": true
+      },
+      "errors": [],
+      "restricted": false
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "result": {
+        "status": "passed",
+        "guest": {
+          "identity": true,
+          "appendIdentity": true,
+          "instance": true,
+          "branding": "[object StudyNode]",
+          "nativeRead": "SPAN",
+          "conversion": "converted guest text",
+          "extension": "SPAN: converted guest text",
+          "forgedReceiverRejected": true,
+          "wrongArgumentRejected": true,
+          "illegalConstructorRejected": true,
+          "guestConstructor": "undefined"
+        },
+        "nativeMutation": "native mutation",
+        "nativeText": "native mutation",
+        "nodeCount": 1,
+        "engineStartupMs": 33,
+        "totalMs": 46,
+        "nativeScriptExecuted": false
+      },
+      "errors": [],
+      "restricted": true
+    }
+  ]
+}
