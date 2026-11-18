@@ -37,6 +37,11 @@ export const run = async () => {
     if (result.value.alive) result.value.dispose();
     return value;
   };
+  const dateFormatter = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'UTC',
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  });
   const host = vm.newFunction('__host', (opHandle, idHandle, argsHandle) => {
     const op = vm.getString(opHandle);
     const id = vm.getNumber(idHandle);
@@ -116,6 +121,12 @@ export const run = async () => {
         });
         break;
       }
+      case 'intlFormat':
+        value = dateFormatter.format(Number(args[0]));
+        break;
+      case 'intlOptions':
+        value = dateFormatter.resolvedOptions();
+        break;
       case 'noop':
         value = 1;
         break;
@@ -180,6 +191,18 @@ export const run = async () => {
     HTMLElement.prototype,
     'label',
   );
+  const intrinsicIntl = evaluate('typeof Intl');
+  evaluate(`globalThis.fixtureIntl = { DateTimeFormat: class {
+    constructor(locale, options) {
+      if (locale !== 'en-GB' || options.timeZone !== 'UTC' || options.dateStyle !== 'medium' || options.timeStyle !== 'short') throw new Error('unsupported fixture Intl options');
+    }
+    format(timestamp) { return invoke('intlFormat', 0, [timestamp]); }
+    resolvedOptions() { return invoke('intlOptions', 0); }
+  }};`);
+  const intlFixture = evaluate(`JSON.stringify((() => {
+    const formatter = new fixtureIntl.DateTimeFormat('en-GB', { timeZone: 'UTC', dateStyle: 'medium', timeStyle: 'short' });
+    return { formatted: formatter.format(0), options: formatter.resolvedOptions() };
+  })())`);
   const originalBytes = new Uint8Array([1, 2, 3, 4]);
   const buffer = vm.newArrayBuffer(originalBytes.buffer);
   vm.setProp(vm.global, 'hostBuffer', buffer);
@@ -244,6 +267,8 @@ export const run = async () => {
           .getImageData(0, 0, 1, 1).data,
       ),
     },
+    intrinsicIntl,
+    intlFixture,
     buffers,
     tlaValue,
     costs: { bridge10000Ms, guestLoop10000Ms },

@@ -109,6 +109,9 @@ try {
         guestBytes: [1, 77, 3, 4],
       });
       assert.equal(result.tlaValue, 43);
+      assert.equal(result.intrinsicIntl, 'undefined');
+      assert.ok(typeof result.intlFixture === 'string');
+      assert.equal(JSON.parse(result.intlFixture).formatted, '1 Jan 1970, 00:00');
       assert.equal(
         requests.every((url) => url.startsWith(`http://127.0.0.1:${address.port}/`)),
         true,

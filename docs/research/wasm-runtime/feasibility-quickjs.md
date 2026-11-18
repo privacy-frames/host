@@ -84,19 +84,37 @@ research checkout. It is intentionally not vendored into this probe. The source
 hash identifies the exact optional input; reproducing that result requires the
 same file. The core fixture can run without it.
 
+## Missing Intl and a bounded host example
+
+`typeof Intl` is **`undefined`** in the tested packaged engine in both browsers.
+The broader study's application inventory therefore cannot assume native browser
+Intl exists inside this QuickJS build. This is separate from the earlier
+`document.createElement` blocker in the unchanged Pitch evaluation.
+
+A separate guest `fixtureIntl.DateTimeFormat` class demonstrates a small native
+Intl binding without passing a native object into the guest. Its constructor
+accepts only the demonstrated `en-GB` locale with UTC, medium date style and short
+time style; other options throw. Its `format(0)` synchronously calls a fixed
+native formatter and returns `1 Jan 1970, 00:00`; `resolvedOptions()` returns a
+JSON copy showing Gregorian calendar, Latin digits and UTC. Both browsers match.
+It does not populate global `Intl`, accept the full option space, implement bound
+format accessors or qualify the rest of ECMA-402. Native Intl binding or an
+appropriately qualified guest implementation remains required for apps that use
+those APIs.
+
 ## Measurements
 
 These are single local headless runs without warmup or distribution analysis.
 The uncompressed engine Wasm is **503,134 bytes**; the esbuild JavaScript bundle,
-including fixture and trusted host code, is **96,082 bytes**. The bundle includes
+including fixture and trusted host code, is **97,458 bytes**. The bundle includes
 the default package's variant plumbing, so it is not a minimal production size.
 
 | Measurement                                                            | Chromium |                            Firefox |
 | ---------------------------------------------------------------------- | -------: | ---------------------------------: |
-| `getQuickJS()` elapsed, including loopback engine load                 |   8.2 ms |                              32 ms |
-| Runtime/context creation                                               |   2.2 ms |                               1 ms |
-| 10,000 guest→host calls with string/number arguments and JSON response |  41.1 ms |                              62 ms |
-| 10,000 guest arithmetic iterations, including evaluation               |   0.4 ms | 0 ms at available timer resolution |
+| `getQuickJS()` elapsed, including loopback engine load                 |   8.8 ms |                              32 ms |
+| Runtime/context creation                                               |   2.2 ms | 0 ms at available timer resolution |
+| 10,000 guest→host calls with string/number arguments and JSON response |  45.3 ms |                              67 ms |
+| 10,000 guest arithmetic iterations, including evaluation               |   0.5 ms |                               1 ms |
 
 These measure this adapter and machine. They do not predict application frame
 rates, startup over a network or DOM-heavy workloads. The explicit job queue

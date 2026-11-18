@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-18T00:08:15.498Z",
+  "date": "2026-11-18T00:10:33.973Z",
   "unchangedApp": {
     "sha256": "5bf9a6fd27798274c5a5c03473a66ee96ecc6bfe8bd4c04c78ac1c93d55ca5ff",
     "bytes": 287996
@@ -13,19 +13,19 @@
   },
   "sizes": {
     "wasm": 503134,
-    "bundledJavaScript": 96082
+    "bundledJavaScript": 97458
   },
   "errors": [],
   "requests": [
-    "http://127.0.0.1:37131/",
-    "http://127.0.0.1:37131/browser.js",
-    "http://127.0.0.1:37131/emscripten-module.wasm",
-    "http://127.0.0.1:37131/app-source.js"
+    "http://127.0.0.1:35903/",
+    "http://127.0.0.1:35903/browser.js",
+    "http://127.0.0.1:35903/emscripten-module.wasm",
+    "http://127.0.0.1:35903/app-source.js"
   ],
   "result": {
     "startup": {
-      "loadMs": 8.199999988079071,
-      "contextMs": 2.199999988079071
+      "loadMs": 8.799999952316284,
+      "contextMs": 2.200000047683716
     },
     "state": "{\"identity\":true,\"prototype\":\"guest:1\",\"expando\":true,\"dispatched\":false,\"log\":[\"outer-enter\",\"inner\",\"inner-result:false\",\"outer-exit\"],\"caughtHost\":\"host-operation-failure\",\"persisted\":42}",
     "events": [
@@ -71,6 +71,8 @@
         255
       ]
     },
+    "intrinsicIntl": "undefined",
+    "intlFixture": "{\"formatted\":\"1 Jan 1970, 00:00\",\"options\":{\"locale\":\"en-GB\",\"calendar\":\"gregory\",\"numberingSystem\":\"latn\",\"timeZone\":\"UTC\",\"hourCycle\":\"h23\",\"hour12\":false,\"dateStyle\":\"medium\",\"timeStyle\":\"short\"}}",
     "buffers": {
       "initialGuestByte": 1,
       "hostOriginal": [
@@ -88,8 +90,8 @@
     },
     "tlaValue": 43,
     "costs": {
-      "bridge10000Ms": 41.09999996423721,
-      "guestLoop10000Ms": 0.40000003576278687
+      "bridge10000Ms": 45.30000001192093,
+      "guestLoop10000Ms": 0.5
     },
     "interruptError": {
       "name": "InternalError",
@@ -99,12 +101,12 @@
     "recovered": 42,
     "resources": [
       {
-        "name": "http://127.0.0.1:37131/browser.js",
-        "duration": 4
+        "name": "http://127.0.0.1:35903/browser.js",
+        "duration": 3.700000047683716
       },
       {
-        "name": "http://127.0.0.1:37131/emscripten-module.wasm",
-        "duration": 2.199999988079071
+        "name": "http://127.0.0.1:35903/emscripten-module.wasm",
+        "duration": 1.899999976158142
       }
     ],
     "unchangedApp": {

@@ -1,5 +1,5 @@
 {
-  "date": "2026-11-18T00:08:16.468Z",
+  "date": "2026-11-18T00:10:35.062Z",
   "unchangedApp": {
     "sha256": "5bf9a6fd27798274c5a5c03473a66ee96ecc6bfe8bd4c04c78ac1c93d55ca5ff",
     "bytes": 287996
@@ -13,19 +13,19 @@
   },
   "sizes": {
     "wasm": 503134,
-    "bundledJavaScript": 96082
+    "bundledJavaScript": 97458
   },
   "errors": [],
   "requests": [
-    "http://127.0.0.1:37131/",
-    "http://127.0.0.1:37131/browser.js",
-    "http://127.0.0.1:37131/emscripten-module.wasm",
-    "http://127.0.0.1:37131/app-source.js"
+    "http://127.0.0.1:35903/",
+    "http://127.0.0.1:35903/browser.js",
+    "http://127.0.0.1:35903/emscripten-module.wasm",
+    "http://127.0.0.1:35903/app-source.js"
   ],
   "result": {
     "startup": {
       "loadMs": 32,
-      "contextMs": 1
+      "contextMs": 0
     },
     "state": "{\"identity\":true,\"prototype\":\"guest:1\",\"expando\":true,\"dispatched\":false,\"log\":[\"outer-enter\",\"inner\",\"inner-result:false\",\"outer-exit\"],\"caughtHost\":\"host-operation-failure\",\"persisted\":42}",
     "events": [
@@ -71,6 +71,8 @@
         255
       ]
     },
+    "intrinsicIntl": "undefined",
+    "intlFixture": "{\"formatted\":\"1 Jan 1970, 00:00\",\"options\":{\"locale\":\"en-GB\",\"calendar\":\"gregory\",\"numberingSystem\":\"latn\",\"timeZone\":\"UTC\",\"hourCycle\":\"h23\",\"hour12\":false,\"dateStyle\":\"medium\",\"timeStyle\":\"short\"}}",
     "buffers": {
       "initialGuestByte": 1,
       "hostOriginal": [
@@ -88,8 +90,8 @@
     },
     "tlaValue": 43,
     "costs": {
-      "bridge10000Ms": 62,
-      "guestLoop10000Ms": 0
+      "bridge10000Ms": 67,
+      "guestLoop10000Ms": 1
     },
     "interruptError": {
       "name": "InternalError",
@@ -99,15 +101,11 @@
     "recovered": 42,
     "resources": [
       {
-        "name": "http://127.0.0.1:37131/browser.js",
-        "duration": 68
+        "name": "http://127.0.0.1:35903/browser.js",
+        "duration": 54
       },
       {
-        "name": "http://127.0.0.1:37131/favicon.ico",
-        "duration": 106
-      },
-      {
-        "name": "http://127.0.0.1:37131/emscripten-module.wasm",
+        "name": "http://127.0.0.1:35903/emscripten-module.wasm",
         "duration": 19
       }
     ],
