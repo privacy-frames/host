@@ -4,7 +4,7 @@ export interface GuestHost {
   set(target: object, key: PropertyKey, value: unknown): boolean;
   call(target: Function, receiver: unknown, arguments_: unknown[]): unknown;
   construct(target: Function, arguments_: unknown[]): object;
-  ownKeys(target: object): PropertyKey[];
+  ownKeys(target: object): (string | symbol)[];
   descriptor(target: object, key: PropertyKey): PropertyDescriptor | undefined;
   prototype(target: object): object | null;
 }
