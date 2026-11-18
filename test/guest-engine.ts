@@ -48,7 +48,8 @@ try {
     const browser = await browserType.launch({ headless: true });
     try {
       const page = await browser.newPage();
-      page.on('pageerror', (error) => console.error(name, error));
+      const pageErrors: string[] = [];
+      page.on('pageerror', (error) => pageErrors.push(error.message));
       await page.goto(`http://127.0.0.1:${address.port}`);
       await page.waitForFunction(
         () => globalThis.guestEngineResults !== undefined,
@@ -59,6 +60,7 @@ try {
       observations.push({ browser: name, version: browser.version(), result });
       console.log(JSON.stringify(observations.at(-1)));
       assert(result && !result.error, JSON.stringify(result));
+      assert.deepEqual(pageErrors, []);
       const values = result.result as Record<string, unknown>;
       const additional = result.additional as Record<string, unknown>;
       const advanced = result.advanced as Record<string, unknown>;
@@ -99,6 +101,7 @@ try {
       assert.deepEqual(advanced.bytes, [1, 2, 3, 4]);
       assert.match(String(disposal.rejectedMessage), /expected rejection/);
       assert.match(String(disposal.closedMessage), /context is closed/);
+      assert.deepEqual(disposal.lateErrors, []);
     } finally {
       await browser.close();
     }

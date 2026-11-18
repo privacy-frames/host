@@ -233,11 +233,46 @@ try {
   } catch (error) {
     closedMessage = String(error);
   }
+  const lateErrors: string[] = [];
+  for (let i = 0; i < 3; i++) {
+    const closing = await GuestEngine.create({
+      host,
+      wasmURL: '/quickjs.wasm',
+      onError: (error) => lateErrors.push(String(error)),
+    });
+    let settle: (value: unknown) => void = () => {};
+    let rejectLate: (error: Error) => void = () => {};
+    closing.set(
+      'lateResolution',
+      new Promise((resolve) => {
+        settle = resolve;
+      }),
+    );
+    closing.set(
+      'lateRejection',
+      new Promise((_resolve, reject) => {
+        rejectLate = reject;
+      }),
+    );
+    const callback = closing.evaluate('() => 1');
+    closing.dispose();
+    closing.dispose();
+    settle({ answer: 42 });
+    rejectLate(new Error('rejected after close'));
+    if (typeof callback !== 'function') throw new Error('Guest callback is not callable');
+    try {
+      callback();
+    } catch (error) {
+      if (!String(error).includes('Application context is closed')) throw error;
+    }
+    await Promise.resolve();
+    await Promise.resolve();
+  }
   globalThis.guestEngineResults = {
     result,
     additional,
     advanced,
-    disposal: { rejectedMessage, closedMessage },
+    disposal: { rejectedMessage, closedMessage, lateErrors },
   };
 } catch (error) {
   globalThis.guestEngineResults = {
