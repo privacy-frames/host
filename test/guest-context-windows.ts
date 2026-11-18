@@ -83,6 +83,7 @@ try {
         port: true,
         detached: true,
       });
+      assert.deepEqual(result.receiverRealm, { event: true, buffer: true, port: true });
       assert.equal(result.pendingWindow, true);
       assert.deepEqual(result.nativeTrust, [false]);
       assert.deepEqual(result.removed, { hidden: true, callbackClosed: true });

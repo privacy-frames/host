@@ -37,11 +37,11 @@ interface PopupState {
   session?: GuestDocumentSession;
 }
 
-const messageEvents = new WeakSet<MessageEvent>();
+const messageEvents = new WeakSet<object>();
 
 /** Native host authentication still sees these synthetic events as untrusted. */
 export const isGuestWindowMessage = (event: unknown): event is MessageEvent =>
-  event instanceof MessageEvent && messageEvents.has(event);
+  typeof event === 'object' && event !== null && messageEvents.has(event);
 
 function textDocument(text: string): string {
   return (
@@ -359,7 +359,10 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
         throw new DOMException('Invalid target origin', 'SyntaxError');
       }
       const ports = transfer.filter(isMessagePort);
-      const copied = structuredClone({ message, ports }, { transfer });
+      const copied = Reflect.apply(target.structuredClone, target, [
+        { message, ports },
+        { transfer },
+      ]) as { message: unknown; ports: MessagePort[] };
       options.commitTransfers?.(transfer);
       nativeWindow.setTimeout(() => {
         if (
@@ -368,7 +371,11 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
           (origin !== '*' && origin !== target.location.origin)
         )
           return;
-        const event = new MessageEvent('message', {
+        const EventConstructor = Reflect.get(
+          target,
+          'MessageEvent',
+        ) as typeof MessageEvent;
+        const event = new EventConstructor('message', {
           data: copied.message,
           ports: copied.ports,
           source: nativeWindow,

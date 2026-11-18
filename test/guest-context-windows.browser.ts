@@ -87,6 +87,21 @@ globalThis.finished=new Promise(resolve=>{
   addEventListener('message', observeTrust);
   session.render(html);
   const finished = await session.engine.get('finished');
+  const embeddedWindow =
+    document.querySelector<HTMLIFrameElement>('#embedded')?.contentWindow;
+  if (!embeddedWindow) throw new Error('Child window is unavailable');
+  const receiverRealm: Record<string, boolean> = {};
+  embeddedWindow.addEventListener('message', (event: MessageEvent) => {
+    receiverRealm.event = constructor(embeddedWindow, 'MessageEvent')[Symbol.hasInstance](
+      event,
+    );
+    receiverRealm.buffer = constructor(embeddedWindow, 'ArrayBuffer')[Symbol.hasInstance](
+      event.data.buffer,
+    );
+    receiverRealm.port = constructor(embeddedWindow, 'MessagePort')[Symbol.hasInstance](
+      event.ports[0],
+    );
+  });
   const messages = await session.engine.evaluate(`(()=>{
     const child=document.getElementById('embedded').contentWindow;
     const buffer=new Uint8Array([9,7]).buffer;
@@ -199,6 +214,7 @@ globalThis.finished=new Promise(resolve=>{
   return {
     finished,
     messages,
+    receiverRealm,
     nativeTrust,
     pendingWindow,
     brands,
