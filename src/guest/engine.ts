@@ -176,31 +176,21 @@ export class GuestEngine {
     });
     this.context.setProp(this.context.global, '__privacyHostDispatch', bridge);
     bridge.dispose();
-    const bindings = this.unwrap(
-      this.context.evalCode(
-        `(() => { const helpers = (${installGuestRuntime.toString()})(); return [helpers, Object.keys(helpers)]; })()`,
-        'privacy:bindings',
-      ),
+    const helpers = this.unwrap(
+      this.context.evalCode(`(${installGuestRuntime.toString()})()`, 'privacy:bindings'),
     );
-    const helpers = this.context.getProp(bindings, 0);
-    const names = this.context.getProp(bindings, 1);
-    const length = this.context.getProp(names, 'length');
-    bindings.dispose();
     try {
-      for (let index = 0; index < this.context.getNumber(length); index++) {
-        const name = this.context.getProp(names, index);
-        try {
+      const names = this.context.getOwnPropertyNames(helpers).unwrap();
+      try {
+        for (const name of names)
           this.helpers.set(
             this.context.getString(name),
             this.context.getProp(helpers, name),
           );
-        } finally {
-          name.dispose();
-        }
+      } finally {
+        names.dispose();
       }
     } finally {
-      length.dispose();
-      names.dispose();
       helpers.dispose();
     }
 

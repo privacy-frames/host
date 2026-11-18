@@ -22,8 +22,13 @@ export async function createGuestWindow(
     global: window,
     createWindow: async (childCatalog, childWindow, html) => {
       const session = await createGuestWindow(childCatalog, childWindow);
-      await session.render(html);
-      return session;
+      try {
+        await session.render(html);
+        return session;
+      } catch (error) {
+        session.close();
+        throw error;
+      }
     },
   });
   const engine = await GuestEngine.create({
@@ -144,11 +149,12 @@ export async function createGuestWorkerSession(
   return {
     async start(url, type) {
       const source = environment.resources.source(url);
-      await engine.evaluate(
+      const completion = engine.evaluate(
         source.code,
         source.url,
         type === 'module' ? 'module' : 'global',
       );
+      if (type === 'module') await completion;
     },
     close() {
       engine.dispose();

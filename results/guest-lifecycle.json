@@ -1,0 +1,114 @@
+[
+  {
+    "browser": "chromium",
+    "version": "153.0.8010.12",
+    "result": {
+      "before": {
+        "rendered": false,
+        "timeline": [
+          "classic",
+          "module-start"
+        ]
+      },
+      "initial": [
+        "classic",
+        "module-start",
+        "module-end",
+        "module-load",
+        "DOMContentLoaded:interactive",
+        "window-load:complete"
+      ],
+      "beforeDynamic": [
+        "classic",
+        "module-start",
+        "module-end",
+        "module-load",
+        "DOMContentLoaded:interactive",
+        "window-load:complete"
+      ],
+      "dynamicTimeline": [
+        "classic",
+        "module-start",
+        "module-end",
+        "module-load",
+        "DOMContentLoaded:interactive",
+        "window-load:complete",
+        "dynamic-end",
+        "dynamic-load"
+      ],
+      "failure": "module-error",
+      "reported": [
+        "Error: expected module failure"
+      ],
+      "syntheticPagehide": 42,
+      "storedRecord": {
+        "text": "stored text",
+        "type": "content",
+        "tx": 7,
+        "optional": true,
+        "nullable": null,
+        "sparse": true,
+        "bytes": [
+          4,
+          5
+        ]
+      }
+    }
+  },
+  {
+    "browser": "firefox",
+    "version": "155.0",
+    "result": {
+      "before": {
+        "rendered": false,
+        "timeline": [
+          "classic",
+          "module-start"
+        ]
+      },
+      "initial": [
+        "classic",
+        "module-start",
+        "module-end",
+        "module-load",
+        "DOMContentLoaded:interactive",
+        "window-load:complete"
+      ],
+      "beforeDynamic": [
+        "classic",
+        "module-start",
+        "module-end",
+        "module-load",
+        "DOMContentLoaded:interactive",
+        "window-load:complete"
+      ],
+      "dynamicTimeline": [
+        "classic",
+        "module-start",
+        "module-end",
+        "module-load",
+        "DOMContentLoaded:interactive",
+        "window-load:complete",
+        "dynamic-end",
+        "dynamic-load"
+      ],
+      "failure": "module-error",
+      "reported": [
+        "Error: expected module failure"
+      ],
+      "syntheticPagehide": 42,
+      "storedRecord": {
+        "text": "stored text",
+        "type": "content",
+        "tx": 7,
+        "optional": true,
+        "nullable": null,
+        "sparse": true,
+        "bytes": [
+          4,
+          5
+        ]
+      }
+    }
+  }
+]
