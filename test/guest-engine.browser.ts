@@ -34,6 +34,7 @@ try {
   engine.set('document', document);
   engine.set('Element', Element);
   engine.set('HTMLElement', HTMLElement);
+  engine.set('installedOwnGlobal', 1);
   engine.set('Window', Window);
   engine.set('Event', Event);
   engine.set('CustomEvent', CustomEvent);
@@ -100,6 +101,7 @@ try {
     try { nativeThrow(); } catch (caught) { error = caught.message; }
     ({
       globalIdentity: window === self && window === globalThis,
+      ownGlobal: Object.hasOwn(globalThis, 'installedOwnGlobal') && ++installedOwnGlobal === 2,
       globalPrototype: window instanceof Window && window.guestWindowExtension === 'window guest',
       identity: parent.firstChild === button && button.parentNode === parent,
       cancellation, trace,

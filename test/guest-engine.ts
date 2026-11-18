@@ -64,6 +64,7 @@ try {
       const advanced = result.advanced as Record<string, unknown>;
       const disposal = result.disposal as Record<string, unknown>;
       assert.equal(values.globalIdentity, true);
+      assert.equal(values.ownGlobal, true);
       assert.equal(values.globalPrototype, true);
       assert.equal(values.identity, true);
       assert.equal(values.cancellation, false);

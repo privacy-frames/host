@@ -309,7 +309,12 @@ export class GuestEngine {
     this.assertOpen();
     const handle = this.encode(value);
     try {
-      this.context.setProp(this.context.global, name, handle);
+      const key = this.context.newString(name);
+      try {
+        this.helper('defineGlobal', [key, handle]).dispose();
+      } finally {
+        key.dispose();
+      }
     } finally {
       handle.dispose();
     }
@@ -320,14 +325,7 @@ export class GuestEngine {
     this.context.defineProp(this.context.global, name, {
       configurable: true,
       enumerable: true,
-      get: () => {
-        this.syncBuffers('into-native');
-        try {
-          return this.encode(this.host.get(target, key));
-        } finally {
-          this.syncBuffers('into-guest');
-        }
-      },
+      get: () => this.encode(this.host.get(target, key)),
       set: (value) => {
         this.syncBuffers('into-native');
         try {
@@ -420,7 +418,14 @@ export class GuestEngine {
     if (!target) throw new Error('Unknown native object');
     const encodedKey = this.context.getString(keyHandle);
     const key = this.propertyKey(encodedKey);
-    this.syncBuffers('into-native');
+    // Native reads only retrieve references/values. Flush binary mirrors where
+    // native code can consume or mutate them, rather than at each property lookup.
+    const effects =
+      operation === 'call' ||
+      operation === 'construct' ||
+      operation === 'set' ||
+      operation === 'delete';
+    if (effects) this.syncBuffers('into-native');
     let result: unknown;
     try {
       switch (operation) {
@@ -471,7 +476,7 @@ export class GuestEngine {
           throw new Error('Unknown guest operation');
       }
     } finally {
-      this.syncBuffers('into-guest');
+      if (effects) this.syncBuffers('into-guest');
     }
     return this.encode(result);
   }
@@ -1046,13 +1051,16 @@ export class GuestEngine {
         detached.dispose();
         if (nativeDetached && !guestDetached) {
           this.helper('detachBuffer', [mirror.guest]).dispose();
-          continue;
         }
         if (guestDetached && !nativeDetached) {
           structuredClone(mirror.native, { transfer: [mirror.native] });
+        }
+        if (nativeDetached || guestDetached) {
+          this.buffers.delete(mirror.native);
+          mirror.guest.dispose();
           continue;
         }
-        if (guestDetached || !mirror.native.byteLength) continue;
+        if (!mirror.native.byteLength) continue;
         const size = this.helper('bufferSize', [mirror.guest]);
         const guestLength = this.context.getNumber(size);
         size.dispose();

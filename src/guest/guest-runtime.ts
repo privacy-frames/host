@@ -1,5 +1,6 @@
 /** This function is compiled once as trusted code, then evaluated inside QuickJS. */
 export function installGuestRuntime() {
+  const guestGlobal = globalThis;
   const dispatch: (...arguments_: unknown[]) => unknown = Reflect.get(
     globalThis,
     '__privacyHostDispatch',
@@ -410,6 +411,14 @@ export function installGuestRuntime() {
   };
 
   return {
+    defineGlobal(name: string, value: unknown) {
+      defineProperty(guestGlobal, name, {
+        value,
+        writable: true,
+        enumerable: true,
+        configurable: true,
+      });
+    },
     createHost,
     kind,
     key,
