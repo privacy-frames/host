@@ -103,9 +103,21 @@ test('the entry document remains mandatory even though dependencies are best eff
     );
 });
 
-test('partial capture does not swallow unsafe documents or module analysis errors', async () => {
+test('capture retains markup as data without executing application code', async () => {
+  await withFetch(
+    async () =>
+      new Response('<a href="javascript:throw new Error(1)">Link</a>', {
+        headers: { 'content-type': 'text/html' },
+      }),
+    async () => {
+      const installation = await downloadWebsite({ url: source });
+      assert(installation.resources.some((resource) => resource.path === 'index.html'));
+    },
+  );
+});
+
+test('partial capture does not swallow unsupported script or module analysis errors', async () => {
   for (const body of [
-    '<a href="javascript:escape()">Unsafe</a>',
     '<script type="unrecognized" src="unsafe.js"></script>',
     '<script type="module">import value from "unmapped-package";</script>',
   ])

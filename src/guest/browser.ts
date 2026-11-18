@@ -179,6 +179,7 @@ const interfaceNames = new Set([
   'NodeList',
   'NamedNodeMap',
   'Element',
+  'CharacterData',
   'Text',
   'Comment',
   'CDATASection',

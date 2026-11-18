@@ -37,6 +37,7 @@ const entries = {
   guard: 'src/guest/window.ts',
   connect: 'src/bridge/connect.ts',
   installation: 'src/installation/controller.ts',
+  __guest_worker_registry__: 'src/guest/contexts/worker-registry-entry.ts',
   'guest-worker': 'src/guest/worker-entry.ts',
   'guest-shared-worker': 'src/guest/shared-worker-entry.ts',
   'guest-worklet': 'src/guest/contexts/worklet-entry.ts',

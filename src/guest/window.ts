@@ -1,6 +1,7 @@
 import { createControllerClient } from '../runtime/controller-client.ts';
 import { GUEST_BOOTSTRAP_REQUEST } from './catalog.ts';
 import { createGuestWindow } from './session.ts';
+import { prepareGuestWorkerBootstraps } from './contexts/worker-registry.ts';
 import type { GuestContextCatalog } from './contexts/types.ts';
 
 const bootstrap = document.currentScript;
@@ -24,6 +25,13 @@ function catalog(value: unknown): GuestContextCatalog {
     typeof value.applicationURL !== 'string' ||
     !('engineWasm' in value) ||
     !(value.engineWasm instanceof ArrayBuffer) ||
+    !('workerBootstrap' in value) ||
+    !value.workerBootstrap ||
+    typeof value.workerBootstrap !== 'object' ||
+    !('dedicated' in value.workerBootstrap) ||
+    !(value.workerBootstrap.dedicated instanceof ArrayBuffer) ||
+    !('shared' in value.workerBootstrap) ||
+    !(value.workerBootstrap.shared instanceof ArrayBuffer) ||
     !('resources' in value) ||
     !Array.isArray(value.resources)
   )
@@ -57,6 +65,10 @@ function catalog(value: unknown): GuestContextCatalog {
     runtimeURL: value.runtimeURL,
     applicationURL: value.applicationURL,
     engineWasm: value.engineWasm,
+    workerBootstrap: {
+      dedicated: value.workerBootstrap.dedicated,
+      shared: value.workerBootstrap.shared,
+    },
     resources,
   };
 }
@@ -67,11 +79,18 @@ async function start() {
   if (!navigator.serviceWorker.controller)
     throw new Error('Trusted host control is required');
   const controller = createControllerClient();
-  const data = catalog(await controller.request({ type: GUEST_BOOTSTRAP_REQUEST }));
+  const data = await prepareGuestWorkerBootstraps(
+    catalog(await controller.request({ type: GUEST_BOOTSTRAP_REQUEST })),
+  );
   const entry = data.resources.find((resource) => resource.path === 'index.html');
   if (!entry) throw new Error('Application entry document is missing');
   const session = await createGuestWindow(data, window);
-  await session.render(new TextDecoder().decode(entry.bytes));
+  try {
+    await session.render(new TextDecoder().decode(entry.bytes));
+  } catch (error) {
+    session.close();
+    throw error;
+  }
   const manifest = document.createElement('link');
   manifest.rel = 'manifest';
   manifest.href =

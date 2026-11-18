@@ -10,6 +10,7 @@ export async function createGuestCatalog(
   app: StoredInstallation,
   base: URL,
   engineWasm: ArrayBuffer,
+  workerBootstrap: GuestContextCatalog['workerBootstrap'],
 ): Promise<GuestContextCatalog> {
   const resources = await Promise.all(
     app.resources.map(async (resource) => ({
@@ -27,6 +28,7 @@ export async function createGuestCatalog(
     applicationURL: applicationURL(app, base).href,
     runtimeURL: base.href,
     engineWasm,
+    workerBootstrap,
     resources,
   };
 }

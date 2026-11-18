@@ -18,6 +18,7 @@ const trusted = [
   'connect.html',
   'connect.js',
   'guard.js',
+  '__guest_worker_registry__.js',
   'guest-worker.js',
   'guest-shared-worker.js',
   'guest-worklet.js',
@@ -46,7 +47,7 @@ function headers(type: string, nonce?: string, document = false): HeadersInit {
       "img-src 'self' data: blob:",
       "font-src 'self' data: blob:",
       "media-src 'self' data: blob:",
-      "worker-src 'self'",
+      'worker-src blob:',
       "frame-src 'self' about:",
       "object-src 'none'",
       "base-uri 'none'",
@@ -117,12 +118,24 @@ worker.addEventListener('message', (event) => {
           await caches.open(boot)
         ).match(new URL('engine.wasm', base).href);
         if (!engine?.ok) throw new Error('Guest engine is unavailable');
-        const value = await createGuestCatalog(app, base, await engine.arrayBuffer());
+        const bootstrapBytes = async (path: string) => {
+          const response = await (
+            await caches.open(boot)
+          ).match(new URL(path, base).href);
+          if (!response?.ok) throw new Error('Worker bootstrap is unavailable');
+          return response.arrayBuffer();
+        };
+        const value = await createGuestCatalog(app, base, await engine.arrayBuffer(), {
+          dedicated: await bootstrapBytes('guest-worker.js'),
+          shared: await bootstrapBytes('guest-shared-worker.js'),
+        });
         const current = await getApp(app.id);
         if (current?.generation !== app.generation)
           throw new Error('Installation changed');
         port.postMessage({ ok: true, value }, [
           value.engineWasm,
+          value.workerBootstrap.dedicated,
+          value.workerBootstrap.shared,
           ...value.resources.map((item) => item.bytes),
         ]);
         return;
@@ -231,6 +244,20 @@ worker.addEventListener('fetch', (event) => {
         !url.search &&
         url.href === new URL('guest-worklet.js', base).href &&
         request.destination === 'audioworklet'
+      ) {
+        const source = await cache.match(url.href);
+        return source
+          ? new Response(await source.arrayBuffer(), {
+              headers: headers('text/javascript'),
+            })
+          : Response.error();
+      }
+      if (
+        request.destination === 'sharedworker' &&
+        request.method === 'GET' &&
+        !url.search &&
+        client &&
+        url.href === new URL('__guest_worker_registry__.js', base).href
       ) {
         const source = await cache.match(url.href);
         return source
