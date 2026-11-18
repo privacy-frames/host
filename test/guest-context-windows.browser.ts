@@ -52,7 +52,11 @@ async function run() {
     applicationURL: new URL('/app/', location.href).href,
     runtimeURL: new URL('/', location.href).href,
     engineWasm,
-    workerBootstrap: { dedicated: new ArrayBuffer(0), shared: new ArrayBuffer(0) },
+    workerBootstrap: {
+      dedicated: new ArrayBuffer(0),
+      shared: new ArrayBuffer(0),
+      worklet: new ArrayBuffer(0),
+    },
     resources: [
       {
         url: 'https://fixture.invalid/popup.html',
@@ -67,9 +71,11 @@ async function run() {
   const escaped = child.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
   const html = `<iframe id="embedded" srcdoc="${escaped}"></iframe><script>
 globalThis.parentCallback=value=>value+5;
+globalThis.childLoads=0;
 globalThis.finished=new Promise(resolve=>{
  const frame=document.getElementById('embedded');
  frame.addEventListener('load',()=>{
+  childLoads++;
   try{
    const value=frame.contentWindow.childCallback(7);
    const event=new Event('click',{cancelable:true});
@@ -194,7 +200,7 @@ globalThis.finished=new Promise(resolve=>{
     guest: session.engine.evaluate('popup.popupMarker'),
     syntheticPagehideSurvives: session.engine.evaluate('popup.popupMarker === 7'),
     native: Reflect.get(opened, 'popupMarker') === undefined,
-    trustedURL: opened.location.pathname === '/app/__guest_document__.html',
+    trustedURL: opened.location.href === 'about:blank',
     nativeContent: opened.document.getElementById('popup')?.textContent,
   };
   foreignChannel.port1.close();
@@ -213,9 +219,31 @@ globalThis.finished=new Promise(resolve=>{
     ),
   };
   removeEventListener('message', observeTrust);
+  session.engine.evaluate(`(()=>{
+    for (const [id,href] of [
+      ['blob-anchor',URL.createObjectURL(new Blob(['<script>globalThis.anchorEscape=1</script>'],{type:'text/html'}))],
+      ['data-anchor','data:text/html,'+encodeURIComponent('<script>globalThis.anchorEscape=1</script>')]
+    ]) { const anchor=document.createElement('a');anchor.id=id;anchor.href=href;document.body.append(anchor); }
+    const download=document.createElement('a');download.id='safe-download';
+    download.href=URL.createObjectURL(new Blob(['unchanged guest download bytes'],{type:'text/plain'}));
+    download.download='guest-download.txt';document.body.append(download);
+  })()`);
+  for (const id of ['blob-anchor', 'data-anchor'])
+    document
+      .getElementById(id)!
+      .dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: false }));
+  await new Promise<void>((resolve) => setTimeout(resolve, 0));
+  const anchors = {
+    stayedInDocument: document.getElementById('blob-anchor') !== null,
+    nativeScriptAbsent: Reflect.get(window, 'anchorEscape') === undefined,
+  };
+  session.engine.evaluate("document.getElementById('safe-download').click()");
+  const logicalLoadCount = session.engine.get('childLoads');
   session.close();
   return {
     finished,
+    logicalLoadCount,
+    anchors,
     messages,
     receiverRealm,
     nativeTrust,

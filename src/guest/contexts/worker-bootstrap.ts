@@ -24,6 +24,13 @@ function initialization(value: unknown, location: string): GuestWorkerInitializa
     typeof catalog.runtimeURL !== 'string' ||
     typeof catalog.applicationURL !== 'string' ||
     !(catalog.engineWasm instanceof ArrayBuffer) ||
+    !catalog.workerBootstrap ||
+    !(catalog.workerBootstrap.dedicated instanceof ArrayBuffer) ||
+    !(catalog.workerBootstrap.shared instanceof ArrayBuffer) ||
+    !(catalog.workerBootstrap.worklet instanceof ArrayBuffer) ||
+    !catalog.workerBootstrapURLs ||
+    typeof catalog.workerBootstrapURLs.dedicated !== 'string' ||
+    typeof catalog.workerBootstrapURLs.shared !== 'string' ||
     !Array.isArray(catalog.resources) ||
     !catalog.resources.every(
       (resource) =>
@@ -39,7 +46,10 @@ function initialization(value: unknown, location: string): GuestWorkerInitializa
   const bootstrapURL = new URL(location);
   if (
     bootstrapURL.protocol !== 'blob:' ||
-    bootstrapURL.origin !== new URL(catalog.applicationURL).origin
+    bootstrapURL.origin !== new URL(catalog.applicationURL).origin ||
+    ![catalog.workerBootstrapURLs.dedicated, catalog.workerBootstrapURLs.shared].includes(
+      bootstrapURL.href,
+    )
   )
     throw new DOMException('Worker initialization has another owner', 'SecurityError');
   // The complete record was validated at the message boundary above.

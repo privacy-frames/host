@@ -87,6 +87,7 @@ export async function prepareGuestWorkerBootstraps(
         port.postMessage({
           application: catalog.application,
           generation: catalog.generation,
+          engineWasm: catalog.engineWasm,
           workerBootstrap: catalog.workerBootstrap,
         });
       },

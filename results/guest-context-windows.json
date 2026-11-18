@@ -13,6 +13,11 @@
           "evalFlag": 1,
           "srcdoc": true
         },
+        "logicalLoadCount": 1,
+        "anchors": {
+          "stayedInDocument": true,
+          "nativeScriptAbsent": true
+        },
         "messages": {
           "reply": {
             "bytes": [
@@ -69,12 +74,15 @@
       }
     },
     "requests": [
-      "http://127.0.0.1:36761/",
-      "http://127.0.0.1:36761/browser.js",
-      "http://127.0.0.1:36761/quickjs.wasm",
-      "http://127.0.0.1:36761/app/__guest_document__.html",
-      "http://127.0.0.1:36761/app/__unavailable__"
-    ]
+      "http://127.0.0.1:38091/",
+      "http://127.0.0.1:38091/browser.js",
+      "http://127.0.0.1:38091/quickjs.wasm"
+    ],
+    "nativeBlobNavigationControl": true,
+    "download": {
+      "filename": "guest-download.txt",
+      "bytes": "unchanged guest download bytes"
+    }
   },
   {
     "browser": "firefox",
@@ -90,6 +98,11 @@
           "evalFlag": 1,
           "srcdoc": true
         },
+        "logicalLoadCount": 1,
+        "anchors": {
+          "stayedInDocument": true,
+          "nativeScriptAbsent": true
+        },
         "messages": {
           "reply": {
             "bytes": [
@@ -146,11 +159,14 @@
       }
     },
     "requests": [
-      "http://127.0.0.1:36761/",
-      "http://127.0.0.1:36761/browser.js",
-      "http://127.0.0.1:36761/quickjs.wasm",
-      "http://127.0.0.1:36761/app/__guest_document__.html",
-      "http://127.0.0.1:36761/app/__unavailable__"
-    ]
+      "http://127.0.0.1:38091/",
+      "http://127.0.0.1:38091/browser.js",
+      "http://127.0.0.1:38091/quickjs.wasm"
+    ],
+    "nativeBlobNavigationControl": true,
+    "download": {
+      "filename": "guest-download.txt",
+      "bytes": "unchanged guest download bytes"
+    }
   }
 ]

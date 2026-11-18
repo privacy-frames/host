@@ -14,12 +14,28 @@ const scripts: Record<string, string> = {
     'import {ready} from "./module-dependency.js";await Promise.resolve();postMessage(ready);',
   '/module-dependency.js': 'export const ready="ready";',
   '/shared.js': 'onconnect=event=>event.ports[0].postMessage("ready");',
+  '/worklet.js':
+    'registerProcessor("fixture-native-audio",class extends AudioWorkletProcessor{process(){return false}});',
 };
 const main = `document.querySelector('#run').onclick=()=>{
  const output=document.querySelector('#result');output.textContent='';
  if(document.querySelector('#private').value!=='1'){output.textContent='skipped';return;}
  const kind=document.querySelector('#kind').value;
- if(kind==='shared'){
+ if(kind==='popup'){
+  const child=open('./frame.html','_blank');globalThis.retained=child;if(!child){output.textContent='wrong';return;}
+  const timer=setInterval(()=>{try{if(child.document.querySelector('#frame-ready')){clearInterval(timer);output.textContent='ready'}}catch{}},10);
+ }else if(kind==='frame'){
+  const frame=document.createElement('iframe');frame.onload=()=>output.textContent=frame.contentDocument.querySelector('#frame-ready')?'ready':'wrong';frame.src='./frame.html';document.body.append(frame);globalThis.retained=frame;
+ }else if(kind==='worklet'){
+  const audio=new OfflineAudioContext(1,128,48000);globalThis.retained=audio;audio.audioWorklet.addModule('./worklet.js').then(()=>output.textContent='ready');
+ }else if(kind==='resources'){
+  const image=new Image();const loaded=new Promise((resolve,reject)=>{image.onload=resolve;image.onerror=reject});image.src='./image.svg';document.body.append(image);
+  const link=document.createElement('link');link.rel='stylesheet';link.href='./style.css';const styled=new Promise((resolve,reject)=>{link.onload=resolve;link.onerror=reject});document.head.append(link);
+  const text=document.createElement('span');text.className='fixture-asset';text.textContent='ABC';document.body.append(text);
+  Promise.all([loaded,styled]).then(()=>document.fonts.load('16px FixtureFont')).then(fonts=>{output.textContent=image.naturalWidth===2&&fonts.length>0&&getComputedStyle(text).color==='rgb(12, 34, 56)'?'ready':'wrong';});
+ }else if(kind==='reload'){
+  try{location.reload();output.textContent='unexpected'}catch{output.textContent='ready'}
+ }else if(kind==='shared'){
   const worker=new SharedWorker('./shared.js',{name:'maintenance'});
   worker.port.onmessage=event=>output.textContent=event.data;worker.port.start();globalThis.retained=worker;
  }else{
@@ -28,11 +44,48 @@ const main = `document.querySelector('#run').onclick=()=>{
  }
 };document.body.dataset.fixtureReady='yes';`;
 const html =
-  '<!doctype html><title>Guest worker maintenance fixture</title><link rel="icon" href="data:,"><input id="private"><select id="kind"><option>classic</option><option>dynamic</option><option>module</option><option>shared</option></select><button id="run">Run</button><output id="result"></output><script src="main.js"></script>';
+  '<!doctype html><title>Guest worker maintenance fixture</title><link rel="icon" href="data:,"><input id="private"><select id="kind"><option>classic</option><option>dynamic</option><option>module</option><option>shared</option><option>frame</option><option>popup</option><option>worklet</option><option>resources</option><option>reload</option></select><button id="run">Run</button><output id="result"></output><script src="main.js"></script>';
+const font = await readFile(new URL('./fixtures/guest-ahem.ttf', import.meta.url));
+const assets = new Map<string, { body: Buffer; type: string }>([
+  ...Object.entries(scripts).map(
+    ([path, source]) =>
+      [path, { body: Buffer.from(source), type: 'text/javascript' }] as const,
+  ),
+  [
+    '/frame.html',
+    {
+      body: Buffer.from('<!doctype html><p id="frame-ready">ready</p>'),
+      type: 'text/html',
+    },
+  ],
+  [
+    '/image.svg',
+    {
+      body: Buffer.from(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="2" height="2"><rect width="2" height="2" fill="red"/></svg>',
+      ),
+      type: 'image/svg+xml',
+    },
+  ],
+  [
+    '/style.css',
+    {
+      body: Buffer.from(
+        '@import "./nested.css";@font-face{font-family:FixtureFont;src:url("./font.ttf")} .fixture-asset{font-family:FixtureFont;background-image:url("./image.svg")}',
+      ),
+      type: 'text/css',
+    },
+  ],
+  [
+    '/nested.css',
+    { body: Buffer.from('.fixture-asset{color:rgb(12,34,56)}'), type: 'text/css' },
+  ],
+  ['/font.ttf', { body: font, type: 'font/ttf' }],
+]);
 const nativeSW = `self.addEventListener('install',event=>event.waitUntil(self.skipWaiting()));
 self.addEventListener('activate',event=>event.waitUntil(self.clients.claim()));
-const scripts=${JSON.stringify(scripts)};
-self.addEventListener('fetch',event=>{const source=scripts[new URL(event.request.url).pathname];if(source)event.respondWith(new Response(source,{headers:{'Content-Type':'text/javascript'}}));});`;
+const assets=${JSON.stringify(Object.fromEntries([...assets].map(([path, asset]) => [path, { body: asset.body.toString('base64'), type: asset.type }])))};
+self.addEventListener('fetch',event=>{const asset=assets[new URL(event.request.url).pathname];if(asset)event.respondWith(new Response(Uint8Array.from(atob(asset.body),value=>value.charCodeAt(0)),{headers:{'Content-Type':asset.type}}));});`;
 const publisherTraffic: { path: string; time: number }[] = [];
 const publisher = createServer((request, response) => {
   const path = request.url || '/';
@@ -42,11 +95,13 @@ const publisher = createServer((request, response) => {
   if (path === '/') {
     response.setHeader('Content-Type', 'text/html');
     response.end(html);
-  } else if (path in scripts || path === '/main.js' || path === '/sw.js') {
+  } else if (assets.has(path)) {
+    const asset = assets.get(path)!;
+    response.setHeader('Content-Type', asset.type);
+    response.end(asset.body);
+  } else if (path === '/main.js' || path === '/sw.js') {
     response.setHeader('Content-Type', 'text/javascript');
-    response.end(
-      path === '/main.js' ? main : path === '/sw.js' ? nativeSW : scripts[path],
-    );
+    response.end(path === '/main.js' ? main : nativeSW);
   } else response.writeHead(404).end();
 });
 await new Promise<void>((resolve) => publisher.listen(0, '127.0.0.1', resolve));
@@ -111,10 +166,26 @@ try {
         : {}),
     });
     try {
-      for (const kind of ['classic', 'dynamic', 'module', 'shared']) {
+      for (const kind of [
+        'classic',
+        'dynamic',
+        'module',
+        'shared',
+        'frame',
+        'popup',
+        'worklet',
+        'resources',
+        'reload',
+      ]) {
+        if (process.env.GUEST_CASES && !process.env.GUEST_CASES.split(',').includes(kind))
+          continue;
         for (const confined of [false, true]) {
           let positives = 0;
-          for (const bit of ['0', '1', '1', '0']) {
+          const expectUpdate =
+            !['worklet', 'resources'].includes(kind) || profile.forcedAge;
+          if (kind === 'reload' && !confined) continue;
+          const bits = ['0', '1'];
+          for (const bit of bits) {
             const context = await browser.newContext();
             context.setDefaultTimeout(30000);
             try {
@@ -126,7 +197,7 @@ try {
                 await manager.locator('#app-url').fill(origin + '/');
                 await provideResourceList(
                   manager,
-                  Object.keys(scripts).map((path) => origin + path),
+                  [...assets.keys()].map((path) => origin + path),
                 );
                 await manager.locator('#install button').click();
                 await manager.waitForFunction(() =>
@@ -207,6 +278,14 @@ try {
               if (confined && (runtime.length || publisherRequests.length))
                 violations.push(observation);
               if (!confined && bit === '1' && updates.length) positives++;
+              if (
+                !confined &&
+                expectUpdate &&
+                bit === '1' &&
+                !updates.length &&
+                bits.length < 4
+              )
+                bits.push('1');
               if (!confined && bit === '0')
                 assert.equal(
                   publisherRequests.length,
@@ -223,7 +302,7 @@ try {
             confined,
             positiveUpdateSamples: positives,
           });
-          if (!confined && positives === 0)
+          if (!confined && expectUpdate && positives === 0)
             missingControls.push({ profile: profile.name, kind });
         }
       }

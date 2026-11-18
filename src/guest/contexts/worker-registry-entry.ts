@@ -3,6 +3,7 @@ export {};
 interface Registration {
   application: string;
   generation: string;
+  engineWasm: ArrayBuffer;
   workerBootstrap: { dedicated: ArrayBuffer; shared: ArrayBuffer };
 }
 
@@ -27,6 +28,7 @@ scope.addEventListener('connect', (event) => {
         !request ||
         typeof request.application !== 'string' ||
         typeof request.generation !== 'string' ||
+        !(request.engineWasm instanceof ArrayBuffer) ||
         !(request.workerBootstrap?.dedicated instanceof ArrayBuffer) ||
         !(request.workerBootstrap.shared instanceof ArrayBuffer)
       )
@@ -35,6 +37,7 @@ scope.addEventListener('connect', (event) => {
       const key = JSON.stringify([
         request.application,
         request.generation,
+        await fingerprint(request.engineWasm),
         await fingerprint(dedicated),
         await fingerprint(shared),
       ]);

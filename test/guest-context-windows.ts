@@ -33,11 +33,9 @@ const server = createServer((request, response) => {
       ? wasm
       : path === '/browser.js'
         ? bundle
-        : path === '/app/__guest_document__.html'
-          ? '<html><body></body></html>'
-          : path.startsWith('/app/')
-            ? ''
-            : '<!doctype html><script type="module" src="/browser.js"></script>',
+        : path.startsWith('/app/')
+          ? ''
+          : '<!doctype html><script type="module" src="/browser.js"></script>',
   );
 });
 await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', resolve));
@@ -58,6 +56,7 @@ try {
       page.on('console', (message) => {
         if (message.type() === 'error') console.error(name, message.text());
       });
+      const downloaded = page.waitForEvent('download');
       await page.goto(`http://127.0.0.1:${address.port}/`);
       await page.waitForFunction(
         () => globalThis.guestWindowResults !== undefined,
@@ -65,7 +64,14 @@ try {
         { timeout: 30000 },
       );
       const observation = await page.evaluate(() => globalThis.guestWindowResults);
-      receipts.push({ browser: name, version: browser.version(), observation, requests });
+      receipts.push({
+        browser: name,
+        version: browser.version(),
+        observation,
+        requests,
+        nativeBlobNavigationControl: false,
+        download: undefined as { filename: string; bytes: string } | undefined,
+      });
       console.log(JSON.stringify(receipts.at(-1)));
       assert(observation && !observation.error, JSON.stringify(observation));
       const result = observation.result!;
@@ -83,6 +89,21 @@ try {
         port: true,
         detached: true,
       });
+      assert.equal(result.logicalLoadCount, 1);
+      assert.deepEqual(result.anchors, {
+        stayedInDocument: true,
+        nativeScriptAbsent: true,
+      });
+      const download = await downloaded;
+      assert.equal(download.suggestedFilename(), 'guest-download.txt');
+      const downloadPath = await download.path();
+      assert(downloadPath);
+      const downloadedBytes = await readFile(downloadPath, 'utf8');
+      assert.equal(downloadedBytes, 'unchanged guest download bytes');
+      receipts.at(-1)!.download = {
+        filename: download.suggestedFilename(),
+        bytes: downloadedBytes,
+      };
       assert.deepEqual(result.receiverRealm, { event: true, buffer: true, port: true });
       assert.equal(result.pendingWindow, true);
       assert.deepEqual(result.nativeTrust, [false]);
@@ -115,6 +136,29 @@ try {
         nativeContent: 'popup',
       });
       assert(requests.every((url) => new URL(url).hostname === '127.0.0.1'));
+      const control = await browser.newPage();
+      await control.goto(`http://127.0.0.1:${address.port}/app/native-control.html`);
+      await Promise.all([
+        control.waitForNavigation(),
+        control.evaluate(() => {
+          const anchor = document.createElement('a');
+          anchor.href = URL.createObjectURL(
+            new Blob(['<script>globalThis.anchorNativeControl=1</script>'], {
+              type: 'text/html',
+            }),
+          );
+          document.body.append(anchor);
+          anchor.dispatchEvent(
+            new MouseEvent('click', { bubbles: true, cancelable: false }),
+          );
+        }),
+      ]);
+      assert.equal(
+        await control.evaluate(() => Reflect.get(window, 'anchorNativeControl')),
+        1,
+      );
+      receipts.at(-1)!.nativeBlobNavigationControl = true;
+      await control.close();
     } finally {
       await browser.close();
     }

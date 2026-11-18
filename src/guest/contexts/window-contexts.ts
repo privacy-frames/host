@@ -96,7 +96,7 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
   const known = new WeakSet<Window>();
   const popups = new Map<Window, PopupState>();
   const names = new Map<string, Window>();
-  const bootstrap = new URL('__guest_document__.html', catalog.applicationURL).href;
+  const securityOrigin = new URL(catalog.applicationURL).origin;
   let disposed = false;
 
   async function prepareSource(source: GuestDocumentSource): Promise<PreparedDocument> {
@@ -175,7 +175,7 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
       const prepared = await prepareSource(source);
       signal.throwIfAborted();
       if (!frame.isConnected) throw new DOMException('Frame was removed', 'AbortError');
-      await documents.navigate(frame, bootstrap);
+      await documents.initial(frame);
       signal.throwIfAborted();
       const child = frame.contentWindow;
       if (!child) throw new Error('Child document window is unavailable');
@@ -238,7 +238,7 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
     // Initial about:blank listeners disappear when navigation replaces that
     // global. Guest-dispatched load events must not establish host readiness.
     while (
-      popup.location.href !== bootstrap ||
+      popup.location.href !== 'about:blank' ||
       popup.document.readyState !== 'complete'
     ) {
       if (disposed || popup.closed || state.generation !== generation) return;
@@ -318,7 +318,7 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
       const parsed = popupFeatures(features);
       let popup = target && target !== '_blank' ? names.get(target) : undefined;
       if (!popup || popup.closed) {
-        popup = nativeWindow.open(bootstrap, '_blank', parsed.features) || undefined;
+        popup = nativeWindow.open('', '_blank', parsed.features) || undefined;
         if (!popup) return null;
         popups.set(popup, { generation: 0 });
         known.add(popup);
@@ -350,7 +350,7 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
       try {
         origin =
           requestedOrigin === '/'
-            ? nativeWindow.location.origin
+            ? securityOrigin
             : requestedOrigin === '*'
               ? '*'
               : new URL(requestedOrigin).origin;
@@ -364,11 +364,7 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
       ]) as { message: unknown; ports: MessagePort[] };
       options.commitTransfers?.(transfer);
       nativeWindow.setTimeout(() => {
-        if (
-          disposed ||
-          target.closed ||
-          (origin !== '*' && origin !== target.location.origin)
-        )
+        if (disposed || target.closed || (origin !== '*' && origin !== securityOrigin))
           return;
         const EventConstructor = Reflect.get(
           target,
@@ -378,7 +374,7 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
           data: copied.message,
           ports: copied.ports,
           source: nativeWindow,
-          origin: nativeWindow.location.origin,
+          origin: securityOrigin,
         });
         messageEvents.add(event);
         target.dispatchEvent(event);

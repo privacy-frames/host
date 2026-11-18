@@ -1,0 +1,312 @@
+[
+  {
+    "browser": "chromium",
+    "version": "153.0.8010.12",
+    "checks": [
+      "Unchanged hostile application executes local evaluation and prototype changes without modifying native globals or native prototypes",
+      "Unchanged hostile disclosure button produces no receiver HTTP or WebSocket traffic",
+      "Unchanged playground dynamically imports user-entered JavaScript and edits native Shadow DOM/CSS while default disclosure remains blocked",
+      "User-entered code creates a prepared native child frame with synchronous guest callbacks and no native application execution",
+      "The same unchanged playground sends to the live receiver when run outside the host"
+    ],
+    "observations": {
+      "hostileRows": [
+        {
+          "name": "createElement iframe",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "createElementNS iframe",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "innerHTML iframe",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "insertAdjacentHTML iframe",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "outerHTML iframe",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "template parser",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "Shadow DOM parser",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "Range parser",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "DOMParser import",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "document creation",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "document.write",
+          "status": "Use isolated control fixture"
+        },
+        {
+          "name": "Audio worklet",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "Uninstalled Worker",
+          "status": "Blocked: TypeError"
+        },
+        {
+          "name": "SharedWorker",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "WebSocket",
+          "status": "Blocked: TypeError"
+        },
+        {
+          "name": "WebRTC",
+          "status": "Blocked: TypeError"
+        },
+        {
+          "name": "window.open",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "service worker authority",
+          "status": "Blocked: TypeError"
+        },
+        {
+          "name": "Native storage prototype recovery",
+          "status": "Blocked: TypeError"
+        },
+        {
+          "name": "Storage access handle",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "Remote speech service",
+          "status": "Blocked: TypeError"
+        },
+        {
+          "name": "Media artwork URL",
+          "status": "Blocked: TypeError"
+        },
+        {
+          "name": "Existing script property mutation",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "history identity spoof",
+          "status": "Use isolated control fixture"
+        },
+        {
+          "name": "history replace spoof",
+          "status": "Use isolated control fixture"
+        },
+        {
+          "name": "SVG parser mismatch",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "setHTMLUnsafe",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "document execCommand",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "history traversal",
+          "status": "Use isolated control fixture"
+        },
+        {
+          "name": "custom built-in",
+          "status": "Blocked: TypeError"
+        },
+        {
+          "name": "eval",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "Function constructor",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "prototype tampering",
+          "status": "Allowed / available"
+        }
+      ],
+      "control": [
+        {
+          "port": 4366,
+          "path": "/disclosure?secret=demonstration-only",
+          "method": "GET",
+          "origin": "http://127.0.0.1:4217"
+        }
+      ]
+    }
+  },
+  {
+    "browser": "firefox",
+    "version": "155.0",
+    "checks": [
+      "Unchanged hostile application executes local evaluation and prototype changes without modifying native globals or native prototypes",
+      "Unchanged hostile disclosure button produces no receiver HTTP or WebSocket traffic",
+      "Unchanged playground dynamically imports user-entered JavaScript and edits native Shadow DOM/CSS while default disclosure remains blocked",
+      "User-entered code creates a prepared native child frame with synchronous guest callbacks and no native application execution",
+      "The same unchanged playground sends to the live receiver when run outside the host"
+    ],
+    "observations": {
+      "hostileRows": [
+        {
+          "name": "createElement iframe",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "createElementNS iframe",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "innerHTML iframe",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "insertAdjacentHTML iframe",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "outerHTML iframe",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "template parser",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "Shadow DOM parser",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "Range parser",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "DOMParser import",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "document creation",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "document.write",
+          "status": "Use isolated control fixture"
+        },
+        {
+          "name": "Audio worklet",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "Uninstalled Worker",
+          "status": "Blocked: TypeError"
+        },
+        {
+          "name": "SharedWorker",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "WebSocket",
+          "status": "Blocked: TypeError"
+        },
+        {
+          "name": "WebRTC",
+          "status": "Blocked: TypeError"
+        },
+        {
+          "name": "window.open",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "service worker authority",
+          "status": "Blocked: TypeError"
+        },
+        {
+          "name": "Native storage prototype recovery",
+          "status": "Blocked: TypeError"
+        },
+        {
+          "name": "Storage access handle",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "Remote speech service",
+          "status": "Blocked: TypeError"
+        },
+        {
+          "name": "Media artwork URL",
+          "status": "Blocked: TypeError"
+        },
+        {
+          "name": "Existing script property mutation",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "history identity spoof",
+          "status": "Use isolated control fixture"
+        },
+        {
+          "name": "history replace spoof",
+          "status": "Use isolated control fixture"
+        },
+        {
+          "name": "SVG parser mismatch",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "setHTMLUnsafe",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "document execCommand",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "history traversal",
+          "status": "Use isolated control fixture"
+        },
+        {
+          "name": "custom built-in",
+          "status": "Blocked: TypeError"
+        },
+        {
+          "name": "eval",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "Function constructor",
+          "status": "Allowed / available"
+        },
+        {
+          "name": "prototype tampering",
+          "status": "Allowed / available"
+        }
+      ],
+      "control": [
+        {
+          "port": 4366,
+          "path": "/disclosure?secret=demonstration-only",
+          "method": "GET",
+          "origin": "http://127.0.0.1:4217"
+        }
+      ]
+    }
+  }
+]

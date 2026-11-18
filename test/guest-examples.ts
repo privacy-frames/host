@@ -70,7 +70,7 @@ try {
       const manager = await context.newPage();
       await manager.goto('http://127.0.0.1:4210/privacy-frames/');
       await manager.getByText('Ready to install.', { exact: true }).waitFor();
-      const hostile = await install(manager, context, 4214, [
+      const hostile = await install(manager, context, 4215, [
         'index.html',
         'app.js',
         'app.css',
@@ -116,7 +116,7 @@ try {
       );
       const hostileStart = server.traffic.length;
       await hostile.locator('#diagnostic').fill('synthetic-guest-hostile-' + name);
-      await hostile.locator('#network').click();
+      await hostile.locator('#network').click({ noWaitAfter: true });
       await hostile
         .getByText(
           'Fetch and XHR rejected. Inspect the receiver for all attempted routes.',

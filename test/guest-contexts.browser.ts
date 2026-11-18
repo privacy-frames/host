@@ -68,7 +68,11 @@ async function run() {
     sourceURL: 'https://fixture.invalid/index.html',
     documentBase: 'https://fixture.invalid/',
     engineWasm: wasm,
-    workerBootstrap: { dedicated: workerBootstrap, shared: workerBootstrap },
+    workerBootstrap: {
+      dedicated: workerBootstrap,
+      shared: workerBootstrap,
+      worklet: await (await fetch('/guest-worklet.js')).arrayBuffer(),
+    },
     resources: [...sources].map(([url, source], index) => ({
       url,
       path: `${index}.js`,
@@ -197,7 +201,7 @@ async function run() {
   documents = createGuestDocuments({
     baseURL: catalog.documentBase,
     async prepare(target) {
-      await documents.navigate(target, new URL('/blank.html', location.href).href);
+      await documents.initial(target);
       prepared++;
       target.contentDocument!.body.textContent = 'prepared child';
       return {

@@ -63,8 +63,14 @@ export function createGuestAudioWorklets(options: GuestAudioWorkletOptions) {
       return value;
     }
     const loading = (async () => {
-      const address = new URL('guest-worklet.js', options.catalog.runtimeURL);
-      await context.audioWorklet.addModule(address);
+      const address = URL.createObjectURL(
+        new Blob([options.catalog.workerBootstrap.worklet], { type: 'text/javascript' }),
+      );
+      try {
+        await context.audioWorklet.addModule(address);
+      } finally {
+        URL.revokeObjectURL(address);
+      }
       const module = await (compiled ||= WebAssembly.compile(options.catalog.engineWasm));
       if (disposed) throw new Error('Guest audio worklet manager is closed');
       const node = new AudioWorkletNode(context, 'privacy-frames:bootstrap', {

@@ -23,7 +23,6 @@ interface DocumentState {
   pending?: Promise<void>;
   ready: boolean;
   nativeLoad?: { resolve(): void; reject(error: Error): void };
-  nativeURL?: string;
   preparation?: AbortController;
 }
 
@@ -66,13 +65,15 @@ export function createGuestDocuments(options: GuestDocumentFactoryOptions) {
         if (event.isTrusted) {
           if (
             created.nativeLoad &&
-            frame.contentWindow?.location.href === created.nativeURL &&
+            frame.contentWindow?.location.href === 'about:blank' &&
             frame.contentDocument?.readyState === 'complete'
           ) {
             created.nativeLoad.resolve();
             created.nativeLoad = undefined;
           }
-          if (!created.ready) event.stopImmediatePropagation();
+          // Native loads describe the initial empty document. Logical app loads
+          // are dispatched only after its guest environment and markup are ready.
+          event.stopImmediatePropagation();
         }
       },
       true,
@@ -91,7 +92,6 @@ export function createGuestDocuments(options: GuestDocumentFactoryOptions) {
       new DOMException('Document preparation changed', 'AbortError'),
     );
     current.nativeLoad = undefined;
-    current.nativeURL = undefined;
     if (current.session) {
       sessions.delete(current.session);
       current.session.close();
@@ -150,16 +150,18 @@ export function createGuestDocuments(options: GuestDocumentFactoryOptions) {
     source(frame: HTMLIFrameElement): GuestDocumentSource {
       return state(frame).source;
     },
-    /** Trusted preparation can await the native bootstrap while guest load waits. */
-    navigate(frame: HTMLIFrameElement, bootstrapURL: string): Promise<void> {
+    /** Keep the initial inherited document: even local-scheme navigation can
+     * schedule a controlling service worker's HTTP update check.
+     */
+    initial(frame: HTMLIFrameElement): Promise<void> {
       const current = state(frame);
-      current.nativeLoad?.reject(
-        new DOMException('Document navigation replaced', 'AbortError'),
-      );
+      if (!frame.isConnected || frame.contentWindow?.location.href !== 'about:blank')
+        return Promise.reject(
+          new DOMException('Child is not an initial blank document', 'SecurityError'),
+        );
+      if (frame.contentDocument?.readyState === 'complete') return Promise.resolve();
       return new Promise<void>((resolve, reject) => {
         current.nativeLoad = { resolve, reject };
-        current.nativeURL = bootstrapURL;
-        frame.src = bootstrapURL;
       });
     },
     connected: prepare,
