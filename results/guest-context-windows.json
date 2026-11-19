@@ -22,6 +22,176 @@
           "stayedInDocument": true,
           "nativeScriptAbsent": true
         },
+        "conversions": [
+          {
+            "method": "setAttribute",
+            "name": 1,
+            "value": 1
+          },
+          {
+            "method": "setAttributeNS",
+            "name": 1,
+            "value": 1
+          },
+          {
+            "method": "removeAttribute",
+            "name": 1
+          },
+          {
+            "method": "removeAttributeNS",
+            "name": 1
+          },
+          {
+            "method": "toggleAttribute",
+            "name": 1
+          },
+          {
+            "method": "removeNamedItem",
+            "name": 1
+          },
+          {
+            "method": "removeNamedItemNS",
+            "name": 1
+          }
+        ],
+        "conversionDOM": [
+          {
+            "method": "setAttribute",
+            "href": null,
+            "label": true,
+            "spellcheck": null
+          },
+          {
+            "method": "setAttributeNS",
+            "href": null,
+            "label": true,
+            "spellcheck": null
+          },
+          {
+            "method": "removeAttribute",
+            "href": null,
+            "label": false,
+            "spellcheck": "false"
+          },
+          {
+            "method": "removeAttributeNS",
+            "href": null,
+            "label": false,
+            "spellcheck": "false"
+          },
+          {
+            "method": "toggleAttribute",
+            "href": null,
+            "label": false,
+            "spellcheck": "false"
+          },
+          {
+            "method": "removeNamedItem",
+            "href": null,
+            "label": false,
+            "spellcheck": "false"
+          },
+          {
+            "method": "removeNamedItemNS",
+            "href": null,
+            "label": false,
+            "spellcheck": "false"
+          }
+        ],
+        "namespaceAttempts": [
+          {
+            "method": "setAttributeNS",
+            "result": "returned"
+          },
+          {
+            "method": "setAttributeNodeNS",
+            "result": "returned"
+          },
+          {
+            "method": "setNamedItemNS",
+            "result": "returned"
+          }
+        ],
+        "namespaceDOM": [
+          {
+            "method": "setAttributeNS",
+            "localTarget": true
+          },
+          {
+            "method": "setAttributeNodeNS",
+            "localTarget": true
+          },
+          {
+            "method": "setNamedItemNS",
+            "localTarget": true
+          }
+        ],
+        "namespaceBaseLocal": true,
+        "modifierTargets": [
+          {
+            "kind": "html",
+            "modifier": "ctrl",
+            "physicalTarget": "_self",
+            "physicalHref": null,
+            "xlinkHref": null
+          },
+          {
+            "kind": "html",
+            "modifier": "shift",
+            "physicalTarget": "_self",
+            "physicalHref": null,
+            "xlinkHref": null
+          },
+          {
+            "kind": "svg",
+            "modifier": "ctrl",
+            "physicalTarget": "_self",
+            "physicalHref": null,
+            "xlinkHref": null
+          },
+          {
+            "kind": "svg",
+            "modifier": "shift",
+            "physicalTarget": "_self",
+            "physicalHref": null,
+            "xlinkHref": null
+          }
+        ],
+        "guestConfirmationUnavailable": true,
+        "detached": {
+          "click": true,
+          "cancelled": true,
+          "dispatch": true
+        },
+        "editing": {
+          "local": {
+            "inserted": true,
+            "formatted": true,
+            "text": "Local editing",
+            "markup": "<b>Local editing</b>"
+          },
+          "denied": {
+            "insertHTML": "SecurityError",
+            "createLink": "SecurityError",
+            "insertImage": "SecurityError",
+            "copy": "SecurityError",
+            "cut": "SecurityError",
+            "paste": "SecurityError"
+          },
+          "converted": {
+            "calls": 1,
+            "valueCalls": 1,
+            "text": "<span id=\"converted-command-node\">Literal text</span>",
+            "parsed": false
+          },
+          "block": {
+            "calls": 1,
+            "result": true,
+            "paragraph": true,
+            "frame": false,
+            "text": "Block formatting"
+          }
+        },
         "messages": {
           "reply": {
             "bytes": [
@@ -78,15 +248,46 @@
       }
     },
     "requests": [
-      "http://127.0.0.1:39457/",
-      "http://127.0.0.1:39457/browser.js",
-      "http://127.0.0.1:39457/quickjs.wasm"
+      "http://127.0.0.1:44033/",
+      "http://127.0.0.1:44033/browser.js",
+      "http://127.0.0.1:44033/quickjs.wasm"
+    ],
+    "approvals": [
+      {
+        "type": "confirm",
+        "message": "Allow this application to export a file? Exported data leaves confinement. Your browser may send download metadata for security checks.",
+        "accepted": false
+      },
+      {
+        "type": "confirm",
+        "message": "Allow this application to export a file? Exported data leaves confinement. Your browser may send download metadata for security checks.",
+        "accepted": true
+      },
+      {
+        "type": "confirm",
+        "message": "Allow this application to export a file? Exported data leaves confinement. Your browser may send download metadata for security checks.",
+        "accepted": true
+      }
     ],
     "nativeBlobNavigationControl": true,
-    "download": {
-      "filename": "guest-download.txt",
-      "bytes": "unchanged guest download bytes"
-    }
+    "nativeNamespaceControl": {
+      "xlink": true,
+      "xmlBase": false
+    },
+    "nativeEditingControl": {
+      "inserted": true,
+      "parsed": "Native HTML"
+    },
+    "downloads": [
+      {
+        "filename": "guest-download.txt",
+        "bytes": "unchanged guest download bytes"
+      },
+      {
+        "filename": "guest-detached-download.txt",
+        "bytes": "unchanged detached download bytes"
+      }
+    ]
   },
   {
     "browser": "firefox",
@@ -111,6 +312,176 @@
           "stayedInDocument": true,
           "nativeScriptAbsent": true
         },
+        "conversions": [
+          {
+            "method": "setAttribute",
+            "name": 1,
+            "value": 1
+          },
+          {
+            "method": "setAttributeNS",
+            "name": 1,
+            "value": 1
+          },
+          {
+            "method": "removeAttribute",
+            "name": 1
+          },
+          {
+            "method": "removeAttributeNS",
+            "name": 1
+          },
+          {
+            "method": "toggleAttribute",
+            "name": 1
+          },
+          {
+            "method": "removeNamedItem",
+            "name": 1
+          },
+          {
+            "method": "removeNamedItemNS",
+            "name": 1
+          }
+        ],
+        "conversionDOM": [
+          {
+            "method": "setAttribute",
+            "href": null,
+            "label": true,
+            "spellcheck": null
+          },
+          {
+            "method": "setAttributeNS",
+            "href": null,
+            "label": true,
+            "spellcheck": null
+          },
+          {
+            "method": "removeAttribute",
+            "href": null,
+            "label": false,
+            "spellcheck": "false"
+          },
+          {
+            "method": "removeAttributeNS",
+            "href": null,
+            "label": false,
+            "spellcheck": "false"
+          },
+          {
+            "method": "toggleAttribute",
+            "href": null,
+            "label": false,
+            "spellcheck": "false"
+          },
+          {
+            "method": "removeNamedItem",
+            "href": null,
+            "label": false,
+            "spellcheck": "false"
+          },
+          {
+            "method": "removeNamedItemNS",
+            "href": null,
+            "label": false,
+            "spellcheck": "false"
+          }
+        ],
+        "namespaceAttempts": [
+          {
+            "method": "setAttributeNS",
+            "result": "returned"
+          },
+          {
+            "method": "setAttributeNodeNS",
+            "result": "returned"
+          },
+          {
+            "method": "setNamedItemNS",
+            "result": "returned"
+          }
+        ],
+        "namespaceDOM": [
+          {
+            "method": "setAttributeNS",
+            "localTarget": true
+          },
+          {
+            "method": "setAttributeNodeNS",
+            "localTarget": true
+          },
+          {
+            "method": "setNamedItemNS",
+            "localTarget": true
+          }
+        ],
+        "namespaceBaseLocal": true,
+        "modifierTargets": [
+          {
+            "kind": "html",
+            "modifier": "ctrl",
+            "physicalTarget": "_self",
+            "physicalHref": null,
+            "xlinkHref": null
+          },
+          {
+            "kind": "html",
+            "modifier": "shift",
+            "physicalTarget": "_self",
+            "physicalHref": null,
+            "xlinkHref": null
+          },
+          {
+            "kind": "svg",
+            "modifier": "ctrl",
+            "physicalTarget": "_self",
+            "physicalHref": null,
+            "xlinkHref": null
+          },
+          {
+            "kind": "svg",
+            "modifier": "shift",
+            "physicalTarget": "_self",
+            "physicalHref": null,
+            "xlinkHref": null
+          }
+        ],
+        "guestConfirmationUnavailable": true,
+        "detached": {
+          "click": true,
+          "cancelled": true,
+          "dispatch": true
+        },
+        "editing": {
+          "local": {
+            "inserted": true,
+            "formatted": true,
+            "text": "Local editing",
+            "markup": "<b>Local editing</b>"
+          },
+          "denied": {
+            "insertHTML": "SecurityError",
+            "createLink": "SecurityError",
+            "insertImage": "SecurityError",
+            "copy": "SecurityError",
+            "cut": "SecurityError",
+            "paste": "SecurityError"
+          },
+          "converted": {
+            "calls": 1,
+            "valueCalls": 1,
+            "text": "<span id=\"converted-command-node\">Literal text</span>",
+            "parsed": false
+          },
+          "block": {
+            "calls": 1,
+            "result": true,
+            "paragraph": true,
+            "frame": false,
+            "text": "Block formatting"
+          }
+        },
         "messages": {
           "reply": {
             "bytes": [
@@ -167,14 +538,45 @@
       }
     },
     "requests": [
-      "http://127.0.0.1:39457/",
-      "http://127.0.0.1:39457/browser.js",
-      "http://127.0.0.1:39457/quickjs.wasm"
+      "http://127.0.0.1:44033/",
+      "http://127.0.0.1:44033/browser.js",
+      "http://127.0.0.1:44033/quickjs.wasm"
+    ],
+    "approvals": [
+      {
+        "type": "confirm",
+        "message": "Allow this application to export a file? Exported data leaves confinement. Your browser may send download metadata for security checks.",
+        "accepted": false
+      },
+      {
+        "type": "confirm",
+        "message": "Allow this application to export a file? Exported data leaves confinement. Your browser may send download metadata for security checks.",
+        "accepted": true
+      },
+      {
+        "type": "confirm",
+        "message": "Allow this application to export a file? Exported data leaves confinement. Your browser may send download metadata for security checks.",
+        "accepted": true
+      }
     ],
     "nativeBlobNavigationControl": true,
-    "download": {
-      "filename": "guest-download.txt",
-      "bytes": "unchanged guest download bytes"
-    }
+    "nativeNamespaceControl": {
+      "xlink": true,
+      "xmlBase": false
+    },
+    "nativeEditingControl": {
+      "inserted": true,
+      "parsed": "Native HTML"
+    },
+    "downloads": [
+      {
+        "filename": "guest-download.txt",
+        "bytes": "unchanged guest download bytes"
+      },
+      {
+        "filename": "guest-detached-download.txt",
+        "bytes": "unchanged detached download bytes"
+      }
+    ]
   }
 ]

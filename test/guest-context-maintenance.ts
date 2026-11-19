@@ -26,7 +26,15 @@ const main = `document.querySelector('#run').onclick=()=>{
  const output=document.querySelector('#result');output.textContent='';
  if(document.querySelector('#private').value!=='1'){output.textContent='skipped';return;}
  const kind=document.querySelector('#kind').value;
- if(kind==='popup'){
+ if(kind==='modifier'){
+  for(const namespace of ['http://www.w3.org/1999/xhtml','http://www.w3.org/2000/svg'])for(const modifier of ['ctrl','shift']){
+   const container=namespace.endsWith('svg')?document.createElementNS(namespace,'svg'):document.body;
+   if(container!==document.body)document.body.append(container);
+   const anchor=document.createElementNS(namespace,'a');anchor.setAttribute('href','#modifier-'+modifier);anchor.setAttribute('target','_blank');container.append(anchor);
+   anchor.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:false,ctrlKey:modifier==='ctrl',shiftKey:modifier==='shift'}));
+  }
+  output.textContent='ready';
+ }else if(kind==='popup'){
   const child=open('./frame.html','_blank');globalThis.retained=child;if(!child){output.textContent='wrong';return;}
   const timer=setInterval(()=>{try{if(child.document.querySelector('#frame-ready')){clearInterval(timer);output.textContent='ready'}}catch{}},10);
  }else if(kind==='frame'){
@@ -49,7 +57,7 @@ const main = `document.querySelector('#run').onclick=()=>{
  }
 };document.body.dataset.fixtureReady='yes';`;
 const html =
-  '<!doctype html><title>Guest worker maintenance fixture</title><link rel="icon" href="data:,"><input id="private"><select id="kind"><option>classic</option><option>dynamic</option><option>module</option><option>shared</option><option>frame</option><option>popup</option><option>worklet</option><option>resources</option><option>reload</option></select><button id="run">Run</button><output id="result"></output><script src="main.js"></script>';
+  '<!doctype html><title>Guest worker maintenance fixture</title><link rel="icon" href="data:,"><input id="private"><select id="kind"><option>classic</option><option>dynamic</option><option>module</option><option>shared</option><option>frame</option><option>popup</option><option>modifier</option><option>worklet</option><option>resources</option><option>reload</option></select><button id="run">Run</button><output id="result"></output><script src="main.js"></script>';
 const font = await readFile(new URL('./fixtures/guest-ahem.ttf', import.meta.url));
 const assets = new Map<string, { body: Buffer; type: string }>([
   ...Object.entries(scripts).map(
@@ -187,6 +195,7 @@ try {
         'shared',
         'frame',
         'popup',
+        'modifier',
         'worklet',
         'resources',
         'reload',

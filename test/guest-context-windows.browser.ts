@@ -222,6 +222,82 @@ globalThis.finished=new Promise(resolve=>{
     ),
   };
   removeEventListener('message', observeTrust);
+  const conversions = session.engine.evaluate(`(()=>{
+    const results=[];
+    const changing=(first,second)=>{let count=0;return {value:{toString(){return ++count===1?first:second}},count:()=>count}};
+    const blob=URL.createObjectURL(new Blob(['<p>Local document</p>'],{type:'text/html'}));
+    for(const method of ['setAttribute','setAttributeNS']){
+      const node=document.createElement('a');node.dataset.coercionCase=method;
+      const name=changing('data-label','href'),value=changing(blob,blob);
+      if(method==='setAttributeNS')node.setAttributeNS(null,name.value,value.value);
+      else node.setAttribute(name.value,value.value);
+      document.body.append(node);results.push({method,name:name.count(),value:value.count()});
+    }
+    for(const method of ['removeAttribute','removeAttributeNS','toggleAttribute','removeNamedItem','removeNamedItemNS']){
+      const node=document.createElement('input');node.dataset.coercionCase=method;
+      node.setAttribute('data-label','present');document.body.append(node);
+      const name=changing('data-label','spellcheck');
+      if(method==='removeAttributeNS')node.removeAttributeNS(null,name.value);
+      else if(method==='toggleAttribute')node.toggleAttribute(name.value,false);
+      else if(method==='removeNamedItemNS')node.attributes.removeNamedItemNS(null,name.value);
+      else if(method==='removeNamedItem')node.attributes.removeNamedItem(name.value);
+      else node.removeAttribute(name.value);
+      results.push({method,name:name.count()});
+    }
+    return results;
+  })()`);
+  const conversionDOM = Array.from(
+    document.querySelectorAll('[data-coercion-case]'),
+    (node) => ({
+      method: node.getAttribute('data-coercion-case'),
+      href: node.getAttribute('href'),
+      label: node.hasAttribute('data-label'),
+      spellcheck: node.localName === 'input' ? node.getAttribute('spellcheck') : null,
+    }),
+  );
+  const namespaceAttempts = session.engine.evaluate(`(()=>{
+    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');document.body.append(svg);
+    const blob=URL.createObjectURL(new Blob(['<p>Local SVG destination</p>'],{type:'text/html'}));
+    const results=[];for(const method of ['setAttributeNS','setAttributeNodeNS','setNamedItemNS']){
+      const anchor=document.createElementNS('http://www.w3.org/2000/svg','a');anchor.setAttribute('data-namespace-case',method);svg.append(anchor);
+      try{
+        if(method==='setAttributeNS')anchor.setAttributeNS('http://www.w3.org/1999/xlink','alias:href',blob);
+        else{const attribute=document.createAttributeNS('http://www.w3.org/1999/xlink','alias:href');attribute.value=blob;if(method==='setAttributeNodeNS')anchor.setAttributeNodeNS(attribute);else anchor.attributes.setNamedItemNS(attribute)}
+        results.push({method,result:'returned'});
+      }catch(error){results.push({method,result:error.name})}
+    }
+    svg.setAttribute('data-namespace-base','');try{svg.setAttributeNS('http://www.w3.org/XML/1998/namespace','alias:base',new URL('/namespace-base-control/',location.href).href)}catch{}
+    return results;
+  })()`);
+  const namespaceDOM = Array.from(
+    document.querySelectorAll<SVGAElement>('[data-namespace-case]'),
+    (node) => ({
+      method: node.getAttribute('data-namespace-case'),
+      localTarget: ['', '#'].includes(node.href.baseVal),
+    }),
+  );
+  const namespaceBaseLocal =
+    document.querySelector('[data-namespace-base]')?.baseURI === document.baseURI;
+  const editing = session.engine.evaluate(`(()=>{
+    const editor=document.createElement('div');editor.id='editing-fixture';editor.contentEditable='true';document.body.append(editor);editor.focus();
+    const select=()=>{const range=document.createRange();range.selectNodeContents(editor);const selection=getSelection();selection.removeAllRanges();selection.addRange(range)};
+    select();const inserted=document.execCommand('insertText',false,'Local editing');
+    select();const formatted=document.execCommand('bold',false);
+    const local={inserted,formatted,text:editor.textContent,markup:editor.innerHTML};
+    const denied={};for(const command of ['insertHTML','createLink','insertImage','copy','cut','paste']){
+      try{document.execCommand(command,false,'<span id="raw-command-node">Markup</span>');denied[command]='allowed'}catch(error){denied[command]=error.name}
+    }
+    editor.textContent='';select();let calls=0,valueCalls=0;
+    const command={toString(){return ++calls===1?'insertText':'insertHTML'}};
+    const value={toString(){valueCalls++;return '<span id="converted-command-node">Literal text</span>'}};
+    document.execCommand(command,false,value);
+    const converted={calls,valueCalls,text:editor.textContent,parsed:!!editor.querySelector('#converted-command-node')};
+    editor.textContent='Block formatting';select();let blockCalls=0;
+    const blockValue={toString(){return ++blockCalls===1?'<p>':'<iframe>'}};
+    const blockResult=document.execCommand('formatBlock',false,blockValue);
+    const block={calls:blockCalls,result:blockResult,paragraph:!!editor.querySelector('p'),frame:!!editor.querySelector('iframe'),text:editor.textContent};
+    return {local,denied,converted,block};
+  })()`);
   session.engine.evaluate(`(()=>{
     for (const [id,href] of [
       ['blob-anchor',URL.createObjectURL(new Blob(['<script>globalThis.anchorEscape=1</script>'],{type:'text/html'}))],
@@ -240,13 +316,88 @@ globalThis.finished=new Promise(resolve=>{
     stayedInDocument: document.getElementById('blob-anchor') !== null,
     nativeScriptAbsent: Reflect.get(window, 'anchorEscape') === undefined,
   };
+  session.engine.evaluate(`(()=>{
+    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');document.body.append(svg);
+    for(const kind of ['html','svg'])for(const modifier of ['ctrl','shift']){
+      const anchor=kind==='svg'?document.createElementNS('http://www.w3.org/2000/svg','a'):document.createElement('a');
+      anchor.id='modifier-'+kind+'-'+modifier;anchor.setAttribute('href','#modifier-'+kind+'-'+modifier);anchor.setAttribute('target','_blank');
+      if(kind==='svg')anchor.target.baseVal='_blank';
+      (kind==='svg'?svg:document.body).append(anchor);
+    }
+  })()`);
+  const modifierTargets = [];
+  for (const kind of ['html', 'svg'])
+    for (const modifier of ['ctrl', 'shift']) {
+      const anchor = document.getElementById('modifier-' + kind + '-' + modifier)!;
+      modifierTargets.push({
+        kind,
+        modifier,
+        physicalTarget: anchor.getAttribute('target'),
+        physicalHref: anchor.getAttribute('href'),
+        xlinkHref: anchor.getAttributeNS('http://www.w3.org/1999/xlink', 'href'),
+      });
+      anchor.dispatchEvent(
+        new MouseEvent('click', {
+          bubbles: true,
+          cancelable: false,
+          ctrlKey: modifier === 'ctrl',
+          shiftKey: modifier === 'shift',
+        }),
+      );
+    }
+  await new Promise<void>((resolve) => setTimeout(resolve, 100));
+  session.engine.evaluate(
+    `globalThis.detachedLink=document.createElement('a');detachedLink.href='#detached-link';detachedLink.click()`,
+  );
+  await new Promise<void>((resolve) => setTimeout(resolve, 0));
+  const detachedClick = location.hash === '#detached-link';
+  session.engine.evaluate(
+    `detachedLink.href='#cancelled-link';detachedLink.addEventListener('click',event=>event.preventDefault(),{once:true});detachedLink.click()`,
+  );
+  await new Promise<void>((resolve) => setTimeout(resolve, 0));
+  const detachedCancelled = location.hash === '#detached-link';
+  session.engine.evaluate(
+    `detachedLink.href='#detached-dispatch';detachedLink.dispatchEvent(new MouseEvent('click',{cancelable:false}))`,
+  );
+  await new Promise<void>((resolve) => setTimeout(resolve, 0));
+  const detachedDispatch = location.hash === '#detached-dispatch';
+  const guestConfirmationUnavailable = session.engine.evaluate(
+    'typeof confirm === "undefined"',
+  );
+  session.engine.evaluate(`(()=>{
+    const anchor=document.createElement('a');
+    const url=URL.createObjectURL(new Blob(['declined export must remain local'],{type:'text/plain'}));
+    anchor.href=url;anchor.download='guest-declined-download.txt';anchor.click();URL.revokeObjectURL(url);
+  })()`);
+  await new Promise<void>((resolve) => setTimeout(resolve, 0));
   session.engine.evaluate("document.getElementById('safe-download').click()");
+  await new Promise<void>((resolve) => setTimeout(resolve, 0));
+  session.engine.evaluate(`(()=>{
+    const anchor=document.createElement('a');
+    const url=URL.createObjectURL(new Blob(['unchanged detached download bytes'],{type:'text/plain'}));
+    anchor.href=url;anchor.download='guest-detached-download.txt';anchor.click();URL.revokeObjectURL(url);
+  })()`);
+  await new Promise<void>((resolve) => setTimeout(resolve, 0));
+
   const logicalLoadCount = session.engine.get('childLoads');
   session.close();
   return {
     finished,
     logicalLoadCount,
     anchors,
+    conversions,
+    conversionDOM,
+    namespaceAttempts,
+    namespaceDOM,
+    namespaceBaseLocal,
+    modifierTargets,
+    guestConfirmationUnavailable,
+    detached: {
+      click: detachedClick,
+      cancelled: detachedCancelled,
+      dispatch: detachedDispatch,
+    },
+    editing,
     messages,
     receiverRealm,
     nativeTrust,
@@ -257,9 +408,12 @@ globalThis.finished=new Promise(resolve=>{
     removed,
   };
 }
-run()
-  .then((result) => (globalThis.guestWindowResults = { result }))
-  .catch((error) => {
-    globalThis.guestWindowResults = { error: String(error) };
-    console.error(error);
-  });
+if (location.hash.startsWith('#modifier-')) {
+  document.body.textContent = 'Native modifier navigation control';
+} else
+  run()
+    .then((result) => (globalThis.guestWindowResults = { result }))
+    .catch((error) => {
+      globalThis.guestWindowResults = { error: String(error) };
+      console.error(error);
+    });
