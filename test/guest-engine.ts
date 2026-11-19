@@ -65,6 +65,29 @@ try {
       const additional = result.additional as Record<string, unknown>;
       const advanced = result.advanced as Record<string, unknown>;
       const disposal = result.disposal as Record<string, unknown>;
+      assert.deepEqual(result.cache, {
+        alias: true,
+        descriptor: 11,
+        descriptorThenWrite: 22,
+        defined: 33,
+        subRead: 44,
+        subWrite: 55,
+        coercion: true,
+        argument: 43,
+        throwPreserved: true,
+        canonical: true,
+        prototypeLength: 123,
+        nativeLength: 19,
+        bufferIdentity: true,
+        noPrivateKeys: true,
+        grown: true,
+      });
+      assert.deepEqual(result.asyncCache, {
+        argument: 43,
+        thrown: 47,
+        resumed: 91,
+        thenable: 93,
+      });
       assert.equal(values.globalIdentity, true);
       assert.equal(values.ownGlobal, true);
       assert.equal(values.globalPrototype, true);

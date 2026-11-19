@@ -22,6 +22,13 @@ interface RetainedGuest {
   value: object;
 }
 
+interface IndexShadow {
+  id: number;
+  native: ArrayBuffer;
+  backing: QuickJSArrayBufferBacking;
+  valid: boolean;
+}
+
 interface BufferMirror {
   native: ArrayBuffer;
   guest: QuickJSHandle;
@@ -40,6 +47,27 @@ const arrayBufferResizable = Object.getOwnPropertyDescriptor(
   ArrayBuffer.prototype,
   'resizable',
 )?.get;
+const typedArrayPrototype = Object.getPrototypeOf(Uint8Array.prototype);
+const typedArrayBuffer = Object.getOwnPropertyDescriptor(
+  typedArrayPrototype,
+  'buffer',
+)!.get!;
+const typedArrayLength = Object.getOwnPropertyDescriptor(
+  typedArrayPrototype,
+  'length',
+)!.get!;
+const typedArrayOffset = Object.getOwnPropertyDescriptor(
+  typedArrayPrototype,
+  'byteOffset',
+)!.get!;
+const typedArrayByteLength = Object.getOwnPropertyDescriptor(
+  typedArrayPrototype,
+  'byteLength',
+)!.get!;
+const typedArrayName = Object.getOwnPropertyDescriptor(
+  typedArrayPrototype,
+  Symbol.toStringTag,
+)!.get!;
 const arrayBufferKinds = new WeakMap<object, boolean>();
 const isArrayBuffer = (value: unknown): value is ArrayBuffer => {
   if (!value || typeof value !== 'object') return false;
@@ -137,6 +165,12 @@ export class GuestEngine {
   private readonly guestSymbols = new Map<string, symbol>();
   private readonly buffers = new Map<ArrayBuffer, BufferMirror>();
   private readonly fixedWasmBuffers = new WeakSet<ArrayBuffer>();
+  private readonly wasmBuffers = new WeakSet<ArrayBuffer>();
+  private readonly indexShadows = new WeakMap<ArrayBuffer, IndexShadow>();
+  private readonly indexShadowRecords = new Map<number, IndexShadow>();
+  private nextIndexShadow = 1;
+  private wasmDepth = 0;
+  private wasmDeferralAllowed = false;
   private readonly promises = new Set<QuickJSDeferredPromise>();
   private readonly pendingPromises = new Set<(error: Error) => void>();
   private readonly disposers = new Set<() => void>();
@@ -293,19 +327,15 @@ export class GuestEngine {
     );
     this.installBinary();
     this.wasm = createNativeWasm({
+      runWasm: (action, deferOrdinary = false) => this.runWasm(action, deferOrdinary),
       retainBuffer: (buffer) => {
+        if (isArrayBuffer(buffer)) this.wasmBuffers.add(buffer);
         if (
           isArrayBuffer(buffer) &&
           !(arrayBufferResizable && Reflect.apply(arrayBufferResizable, buffer, []))
-        ) {
+        )
           this.fixedWasmBuffers.add(buffer);
-          const mirror = this.buffers.get(buffer);
-          if (mirror) this.helper('markFixedWasmBuffer', [mirror.guest]).dispose();
-        } else {
-          // Shared and resizable stores need native views: copying cannot retain
-          // cross-agent visibility or in-place size changes.
-          this.binary.retainBuffer(buffer);
-        }
+        this.binary.retainBuffer(buffer);
       },
       captureImports: (imports, descriptors) => {
         const input = this.encode(imports);
@@ -342,6 +372,7 @@ export class GuestEngine {
         this.context.callFunction(installer, this.context.undefined, bindings, hooks),
       );
       try {
+        this.helper('captureIndexGetters', [aliases]).dispose();
         for (const [name, native] of this.binary.aliases()) {
           const constructor = this.context.getProp(aliases, name);
           if (this.context.typeof(constructor) !== 'function') {
@@ -522,6 +553,9 @@ export class GuestEngine {
     if (this.closed || this.pumping || this.depth) return;
     this.pumping = true;
     try {
+      this.flushIndexShadows();
+      this.invalidateIndexShadows();
+      this.syncBuffers('into-guest');
       // The pinned SDK patch refreshes output pointers after Wasm memory growth.
       // See patches/quickjs-emscripten-core+0.32.0.patch and upstream issue #240.
       const jobs = this.runtime.executePendingJobs(1000);
@@ -532,6 +566,9 @@ export class GuestEngine {
       }
       if (this.runtime.hasPendingJob()) this.scheduleJobs();
     } finally {
+      this.flushIndexShadows();
+      this.invalidateIndexShadows();
+      this.syncBuffers('into-native');
       this.pumping = false;
     }
   }
@@ -551,15 +588,19 @@ export class GuestEngine {
     });
   }
 
-  private enter<T>(action: () => T): T {
+  private enter<T>(action: () => T, skipOrdinary = false): T {
     this.assertOpen();
-    this.syncBuffers('into-guest');
+    this.flushIndexShadows();
+    this.invalidateIndexShadows();
+    if (!skipOrdinary) this.syncBuffers('into-guest');
     this.depth++;
     try {
       return action();
     } finally {
       this.depth--;
-      this.syncBuffers('into-native');
+      this.flushIndexShadows();
+      this.invalidateIndexShadows();
+      if (!skipOrdinary || !this.canDeferOrdinary()) this.syncBuffers('into-native');
       if (!this.depth) {
         this.scheduleJobs();
       }
@@ -576,31 +617,45 @@ export class GuestEngine {
     const encodedKey = this.readString(keyHandle);
     const key = this.propertyKey(encodedKey);
     const host = this.owner(target);
+    if (operation === 'index-shadow') return this.prepareIndexShadow(target);
+    this.flushIndexShadows();
+    const copyWithin =
+      this.canDeferOrdinary() && operation === 'call' && typeof target === 'function'
+        ? this.primitiveCopyWithinCall(target, input)
+        : undefined;
     // Native reads only retrieve references/values. Flush binary mirrors where
     // native code can consume or mutate them, rather than at each property lookup.
     const effects =
       operation === 'call' ||
       operation === 'construct' ||
       operation === 'set' ||
-      operation === 'delete';
+      operation === 'delete' ||
+      operation === 'define';
     const primitiveIndexWrite =
       operation === 'set' &&
       this.binary.view(target) &&
       typeof key === 'string' &&
       (String(Number(key)) === key || key === '-0') &&
       !['object', 'function'].includes(this.context.typeof(input[0]));
-    const synchronize = effects && !primitiveIndexWrite;
+    const synchronize = effects && !primitiveIndexWrite && !copyWithin;
     if (synchronize) this.syncBuffers('into-native');
     let result: unknown;
+    let nativeActionStarted = false;
     try {
       switch (operation) {
         case 'get':
           result = host.get(target, key);
           break;
-        case 'set':
-          result = host.set(target, key, this.decode(input[0]));
+        case 'set': {
+          const value = this.decode(input[0]);
+          this.flushIndexShadows();
+          if (synchronize) this.syncBuffers('into-native');
+          nativeActionStarted = true;
+          result = host.set(target, key, value);
           break;
+        }
         case 'delete':
+          nativeActionStarted = true;
           result = host.delete?.(target, key) ?? false;
           break;
         case 'define': {
@@ -609,6 +664,9 @@ export class GuestEngine {
           const value = this.decode(input[0]);
           if (!value || typeof value !== 'object')
             throw new TypeError('Invalid descriptor');
+          this.flushIndexShadows();
+          if (synchronize) this.syncBuffers('into-native');
+          nativeActionStarted = true;
           result = this.binary.define(target, key, value);
           break;
         }
@@ -634,8 +692,13 @@ export class GuestEngine {
         case 'call': {
           if (typeof target !== 'function')
             throw new TypeError('Native object is not callable');
-          const receiver = this.decode(input[0]);
-          const args = this.decodeArguments(input[1], this.wasm?.importsArgument(target));
+          const receiver = copyWithin ? copyWithin.receiver : this.decode(input[0]);
+          const args = copyWithin
+            ? copyWithin.args
+            : this.decodeArguments(input[1], this.wasm?.importsArgument(target));
+          this.flushIndexShadows();
+          if (synchronize) this.syncBuffers('into-native');
+          nativeActionStarted = true;
           result = host.call(target, receiver, args);
           break;
         }
@@ -644,6 +707,9 @@ export class GuestEngine {
             throw new TypeError('Native object is not a constructor');
           const args = this.decodeArguments(input[0], this.wasm?.importsArgument(target));
           const newTarget = input[1] ? this.decode(input[1]) : undefined;
+          this.flushIndexShadows();
+          if (synchronize) this.syncBuffers('into-native');
+          nativeActionStarted = true;
           result = host.construct(
             target,
             args,
@@ -655,7 +721,14 @@ export class GuestEngine {
           throw new Error('Unknown guest operation');
       }
     } finally {
-      if (synchronize) this.syncBuffers('into-guest');
+      if (effects && !nativeActionStarted) {
+        // Argument getters may have changed guest bytes before throwing. Preserve
+        // those changes rather than refreshing them from the old native copy.
+        this.flushIndexShadows();
+        if (synchronize) this.syncBuffers('into-native');
+      }
+      if (effects) this.invalidateIndexShadows();
+      if (synchronize && nativeActionStarted) this.syncBuffers('into-guest');
     }
     return this.encode(result);
   }
@@ -733,17 +806,25 @@ export class GuestEngine {
         .then(
           (result) => {
             if (this.closed) return;
-            const encoded = this.encode(result);
-            deferred.resolve(encoded);
-            encoded.dispose();
-            this.scheduleJobs();
+            this.enter(() => {
+              const encoded = this.encode(result);
+              try {
+                deferred.resolve(encoded);
+              } finally {
+                encoded.dispose();
+              }
+            });
           },
           (error: unknown) => {
             if (this.closed) return;
-            const encoded = this.encode(error);
-            deferred.reject(encoded);
-            encoded.dispose();
-            this.scheduleJobs();
+            this.enter(() => {
+              const encoded = this.encode(error);
+              try {
+                deferred.reject(encoded);
+              } finally {
+                encoded.dispose();
+              }
+            });
           },
         )
         .finally(() => {
@@ -857,6 +938,7 @@ export class GuestEngine {
       this.encodeString(
         this.binary.buffer(value) ? 'buffer' : this.binary.view(value) ? 'view' : '',
       ),
+      this.indexedBuffer(object) ? this.context.true : this.context.false,
     ];
     try {
       const result = this.helper('createHost', arguments_);
@@ -949,8 +1031,6 @@ export class GuestEngine {
     const backing = this.context.newArrayBufferBacking(value);
     // The backing API closes over this original handle; callers receive dupes.
     const result = backing.handle.dup();
-    if (this.fixedWasmBuffers.has(value))
-      this.helper('markFixedWasmBuffer', [result]).dispose();
     this.buffers.set(value, { native: value, guest: backing.handle, backing });
     this.nativeHandles.set(value, result.dup());
     const id = this.helper('guestId', [result]);
@@ -1026,8 +1106,17 @@ export class GuestEngine {
       if (previous) return previous.value;
       const engine = this;
       const handle = value.dup();
+      const tagged = this.helper('isWasmImport', [value]);
+      const wasmImport = this.context.getNumber(tagged) !== 0;
+      tagged.dispose();
       const callable = function (this: unknown, ...arguments_: unknown[]): unknown {
-        return engine.invoke(handle, this, arguments_, new.target !== undefined);
+        return engine.invoke(
+          handle,
+          this,
+          arguments_,
+          new.target !== undefined,
+          wasmImport,
+        );
       };
       this.retainGuest(id, handle, callable);
       return callable;
@@ -1336,6 +1425,7 @@ export class GuestEngine {
     receiver: unknown,
     arguments_: unknown[],
     construct: boolean,
+    wasmImport = false,
   ): unknown {
     return this.enter(() => {
       const thisHandle = this.encode(receiver);
@@ -1353,7 +1443,225 @@ export class GuestEngine {
         thisHandle.dispose();
         args.dispose();
       }
-    });
+    }, wasmImport && this.canDeferOrdinary());
+  }
+
+  private hostReference(value: QuickJSHandle): object | undefined {
+    const id = this.helper('hostId', [value]);
+    try {
+      return this.context.typeof(id) === 'number'
+        ? this.nativeObjects.get(this.context.getNumber(id))
+        : undefined;
+    } finally {
+      id.dispose();
+    }
+  }
+
+  /** Inspect protocol-owned dense rest arrays without running argument coercions. */
+  private primitiveArguments(value: QuickJSHandle): unknown[] | undefined {
+    const length = this.context.getProp(value, 'length');
+    const count = this.context.getNumber(length);
+    length.dispose();
+    const result: unknown[] = [];
+    for (let i = 0; i < count; i++) {
+      const item = this.context.getProp(value, i);
+      try {
+        if (
+          ['object', 'function', 'symbol'].includes(this.context.typeof(item)) &&
+          !this.context.eq(item, this.context.null)
+        )
+          return;
+        result.push(this.decode(item));
+      } finally {
+        item.dispose();
+      }
+    }
+    return result;
+  }
+
+  private primitiveCopyWithinCall(
+    target: Function,
+    input: QuickJSHandle[],
+  ): { receiver: object; args: unknown[] } | undefined {
+    if (!this.binary.owns(target)) return;
+    const receiver = this.hostReference(input[0]);
+    if (!receiver) return;
+    let args: unknown[] | undefined;
+    if (target === this.binary.bindings.invoke) {
+      const length = this.context.getProp(input[1], 'length');
+      const count = this.context.getNumber(length);
+      length.dispose();
+      if (count !== 5) return;
+      const handles = Array.from({ length: 5 }, (_, i) =>
+        this.context.getProp(input[1], i),
+      );
+      try {
+        if (handles.slice(0, 3).some((value) => this.context.typeof(value) !== 'string'))
+          return;
+        const view = this.hostReference(handles[3]);
+        if (!view) return;
+        const indices = this.primitiveArguments(handles[4]);
+        if (!indices) return;
+        args = [
+          this.readString(handles[0]),
+          this.readString(handles[1]),
+          this.readString(handles[2]),
+          view,
+          indices,
+        ];
+      } finally {
+        for (const handle of handles) handle.dispose();
+      }
+    } else {
+      args = this.primitiveArguments(input[1]);
+    }
+    if (!args) return;
+    const buffer = this.binary.copyWithinBuffer(target, receiver, args);
+    if (!buffer || (isArrayBuffer(buffer) && this.buffers.has(buffer))) return;
+    return { receiver, args };
+  }
+
+  private indexedBuffer(value: object): ArrayBuffer | undefined {
+    try {
+      const buffer: unknown = Reflect.apply(typedArrayBuffer, value, []);
+      return isArrayBuffer(buffer) &&
+        this.fixedWasmBuffers.has(buffer) &&
+        !this.buffers.has(buffer)
+        ? buffer
+        : undefined;
+    } catch {
+      return;
+    }
+  }
+
+  private prepareIndexShadow(target: object): QuickJSHandle {
+    const buffer = this.indexedBuffer(target);
+    if (!buffer) return this.context.undefined;
+    try {
+      new Uint8Array(buffer);
+    } catch {
+      return this.context.undefined;
+    }
+    let shadow = this.indexShadows.get(buffer);
+    if (!shadow) {
+      shadow = {
+        id: this.nextIndexShadow++,
+        native: buffer,
+        backing: this.context.newArrayBufferBacking(buffer),
+        valid: true,
+      };
+      this.indexShadows.set(buffer, shadow);
+      this.indexShadowRecords.set(shadow.id, shadow);
+    } else if (!shadow.valid) {
+      shadow.backing.writeFrom(new Uint8Array(buffer));
+      shadow.valid = true;
+    }
+    // No public prototype setter may intercept the private backing buffer.
+    const result = this.context.newObject(this.context.null);
+    this.context.setProp(result, 'buffer', shadow.backing.handle);
+    const fields = {
+      key: shadow.id,
+      name: Reflect.apply(typedArrayName, target, []),
+      length: Reflect.apply(typedArrayLength, target, []),
+      byteLength: Reflect.apply(typedArrayByteLength, target, []),
+      byteOffset: Reflect.apply(typedArrayOffset, target, []),
+      lengthOwn: Object.hasOwn(target, 'length'),
+      byteLengthOwn: Object.hasOwn(target, 'byteLength'),
+      byteOffsetOwn: Object.hasOwn(target, 'byteOffset'),
+    };
+    for (const [key, value] of Object.entries(fields)) {
+      const encoded = this.encode(value);
+      this.context.setProp(result, key, encoded);
+      encoded.dispose();
+    }
+    return result;
+  }
+
+  /** Publish staged indexed writes before handing control to native code. */
+  private flushIndexShadows(): void {
+    if (!this.helpers.size || this.closed) return;
+    const dirty = this.helper('takeDirtyIndexShadows', []);
+    const length = this.context.getProp(dirty, 'length');
+    const count = this.context.getNumber(length);
+    length.dispose();
+    try {
+      for (let index = 0; index < count; index++) {
+        const id = this.context.getProp(dirty, index);
+        const shadow = this.indexShadowRecords.get(this.context.getNumber(id));
+        id.dispose();
+        if (!shadow) continue;
+        let target: Uint8Array;
+        try {
+          target = new Uint8Array(shadow.native);
+        } catch {
+          continue;
+        }
+        shadow.backing.readInto(target);
+      }
+    } finally {
+      dirty.dispose();
+    }
+  }
+
+  /** End an access epoch so later indexed reads observe native mutations. */
+  private invalidateIndexShadows(): void {
+    if (!this.helpers.size || this.closed) return;
+    this.helper('invalidateIndexShadows', []).dispose();
+    for (const shadow of this.indexShadowRecords.values()) {
+      shadow.valid = false;
+      try {
+        new Uint8Array(shadow.native);
+      } catch {
+        this.helper('detachBuffer', [shadow.backing.handle]).dispose();
+        shadow.backing.handle.dispose();
+        this.indexShadows.delete(shadow.native);
+        this.indexShadowRecords.delete(shadow.id);
+      }
+    }
+  }
+
+  private setIndexCacheEnabled(enabled: boolean): void {
+    this.helper('setIndexCacheEnabled', [
+      enabled ? this.context.true : this.context.false,
+    ]).dispose();
+  }
+
+  private canDeferOrdinary(): boolean {
+    if (!this.wasmDepth || !this.wasmDeferralAllowed || !this.wasm?.canDeferOrdinary())
+      return false;
+    for (const buffer of this.buffers.keys())
+      if (this.wasmBuffers.has(buffer)) return false;
+    return true;
+  }
+
+  /** Only proven instance execution with disjoint native memory can defer copies. */
+  private runWasm<T>(action: () => T, allowDeferral: boolean): T {
+    const outer = this.wasmDepth === 0;
+    const previousAllowance = this.wasmDeferralAllowed;
+    const nextAllowance = outer ? allowDeferral : previousAllowance && allowDeferral;
+    const needsEntryBarrier = outer || !nextAllowance || !this.canDeferOrdinary();
+    if (needsEntryBarrier) {
+      this.flushIndexShadows();
+      this.invalidateIndexShadows();
+      this.syncBuffers('into-native');
+    }
+    if (outer) this.setIndexCacheEnabled(false);
+    this.wasmDeferralAllowed = nextAllowance;
+    this.wasmDepth++;
+    try {
+      return action();
+    } finally {
+      const deferred = this.canDeferOrdinary();
+      try {
+        if (!deferred) this.syncBuffers('into-guest');
+        else if (outer) this.syncBuffers('into-native');
+      } finally {
+        this.wasmDepth--;
+        this.wasmDeferralAllowed = previousAllowance;
+        this.invalidateIndexShadows();
+        if (outer) this.setIndexCacheEnabled(true);
+      }
+    }
   }
 
   private syncBuffers(direction: 'into-guest' | 'into-native'): void {
@@ -1503,6 +1811,8 @@ export class GuestEngine {
       if (handle.alive) handle.dispose();
     for (const handle of this.symbolHandles.values()) if (handle.alive) handle.dispose();
     for (const { guest } of this.buffers.values()) if (guest.alive) guest.dispose();
+    for (const shadow of this.indexShadowRecords.values())
+      if (shadow.backing.handle.alive) shadow.backing.handle.dispose();
     for (const promise of this.promises) promise.dispose();
     this.helpers.clear();
     this.nativeHandles.clear();
@@ -1511,6 +1821,7 @@ export class GuestEngine {
     this.importReferences.clear();
     this.symbolHandles.clear();
     this.buffers.clear();
+    this.indexShadowRecords.clear();
     this.promises.clear();
     this.context.dispose();
     this.runtime.dispose();

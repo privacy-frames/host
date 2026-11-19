@@ -117,7 +117,30 @@ export function installGuestRuntime() {
     }
   }
   const hostIds = new InternalWeakMap<object, number>();
-  const fixedWasmBuffers = new InternalWeakMap<object, true>();
+  const wasmImportFunctions = new InternalWeakMap<object, true>();
+  const indexGetters = new InternalWeakMap<Function, PropertyKey>();
+  const indexConstructors = new InternalMap<string, Function>();
+  for (const name of [
+    'Int8Array',
+    'Uint8Array',
+    'Uint8ClampedArray',
+    'Int16Array',
+    'Uint16Array',
+    'Int32Array',
+    'Uint32Array',
+    'Float16Array',
+    'Float32Array',
+    'Float64Array',
+    'BigInt64Array',
+    'BigUint64Array',
+  ]) {
+    const constructor = reflectGet(guestGlobal, name);
+    if (typeof constructor === 'function') indexConstructors.set(name, constructor);
+  }
+  let indexEpoch = 0;
+  let indexCacheEnabled = true;
+  let dirtyIndexShadows: number[] = [];
+  const dirtyIndexKeys = new InternalSet<number>();
   const guestIds = new InternalWeakMap<object, number>();
   const proxies = new InternalMap<number, object>();
   const records = new InternalWeakMap<object, ProxyRecord>();
@@ -136,6 +159,19 @@ export function installGuestRuntime() {
     parent: object | null | undefined;
     parentOverridden: boolean;
     binary: string;
+    indexed: boolean;
+    index?: {
+      epoch: number;
+      dirty: boolean;
+      key: number;
+      view: object;
+      length: number;
+      byteLength: number;
+      byteOffset: number;
+      lengthOwn: boolean;
+      byteLengthOwn: boolean;
+      byteOffsetOwn: boolean;
+    };
   }
 
   const key = (value: PropertyKey): string => {
@@ -162,6 +198,63 @@ export function installGuestRuntime() {
     ...args: unknown[]
   ) => dispatch(operation, id, property === undefined ? '' : key(property), ...args);
 
+  const indexState = (record: ProxyRecord): ProxyRecord['index'] => {
+    if (!record.indexed || !indexCacheEnabled) return;
+    if (record.index?.epoch === indexEpoch) return record.index;
+    const info = native('index-shadow', record.id) as
+      | {
+          buffer: ArrayBuffer;
+          name: string;
+          key: number;
+          byteOffset: number;
+          byteLength: number;
+          length: number;
+          lengthOwn: boolean;
+          byteLengthOwn: boolean;
+          byteOffsetOwn: boolean;
+        }
+      | undefined;
+    if (!info) {
+      record.indexed = false;
+      return;
+    }
+    const constructor = indexConstructors.get(info.name);
+    if (!constructor) {
+      record.indexed = false;
+      return;
+    }
+    record.index = {
+      epoch: indexEpoch,
+      dirty: false,
+      key: info.key,
+      view: reflectConstruct(constructor, [info.buffer, info.byteOffset, info.length]),
+      length: info.length,
+      byteLength: info.byteLength,
+      byteOffset: info.byteOffset,
+      lengthOwn: info.lengthOwn,
+      byteLengthOwn: info.byteLengthOwn,
+      byteOffsetOwn: info.byteOffsetOwn,
+    };
+    return record.index;
+  };
+  const validIndex = (property: PropertyKey): number | undefined => {
+    if (typeof property !== 'string' || property === '-0' || property === '') return;
+    const index = NumberValue(property);
+    if (index >= 0 && index % 1 === 0 && StringValue(index) === property) return index;
+  };
+  const geometryGetter = (record: ProxyRecord, property: PropertyKey): boolean => {
+    let prototype = parent(record);
+    const visited = new InternalSet<object>();
+    while (prototype && !visited.has(prototype)) {
+      if (records.has(prototype)) return false;
+      visited.add(prototype);
+      const descriptor = getDescriptor(prototype, property);
+      if (descriptor)
+        return !!descriptor.get && indexGetters.get(descriptor.get) === property;
+      prototype = getPrototype(prototype);
+    }
+    return false;
+  };
   const parent = (record: ProxyRecord): object | null => {
     if (record.parent === undefined) {
       record.parent = native('prototype', record.id) as object | null;
@@ -213,6 +306,7 @@ export function installGuestRuntime() {
     name: string,
     prototypeObject: boolean,
     binary = '',
+    indexed = false,
   ): object => {
     const existing = proxies.get(id);
     if (existing) return existing;
@@ -235,9 +329,15 @@ export function installGuestRuntime() {
       parent: undefined,
       parentOverridden: false,
       binary,
+      indexed,
     };
     const proxy = new Proxy(target, {
       get(_target, property, receiver) {
+        const index = validIndex(property);
+        if (index !== undefined && record.indexed && indexCacheEnabled) {
+          const shadow = indexState(record);
+          if (shadow && index < shadow.length) return reflectGet(shadow.view, property);
+        }
         if (
           record.binary === 'view' &&
           typeof property === 'string' &&
@@ -247,6 +347,21 @@ export function installGuestRuntime() {
         const own = getDescriptor(target, property);
         if (own && !own.configurable && 'value' in own && !own.writable) return own.value;
         if (record.local.has(property) && own) return readDescriptor(own, receiver);
+        if (
+          record.indexed &&
+          indexCacheEnabled &&
+          (property === 'length' ||
+            property === 'byteLength' ||
+            property === 'byteOffset') &&
+          geometryGetter(record, property)
+        ) {
+          const shadow = indexState(record);
+          if (
+            shadow &&
+            !shadow[(property + 'Own') as 'lengthOwn' | 'byteLengthOwn' | 'byteOffsetOwn']
+          )
+            return shadow[property];
+        }
         if (record.binary && property === 'constructor')
           return reflectGet(parent(record)!, property, receiver);
         if (property === '__proto__') return parent(record);
@@ -263,6 +378,29 @@ export function installGuestRuntime() {
         return native('get', id, property);
       },
       set(_target, property, value, receiver) {
+        const index = validIndex(property);
+        if (
+          index !== undefined &&
+          record.indexed &&
+          indexCacheEnabled &&
+          (value === null ||
+            (typeof value !== 'object' &&
+              typeof value !== 'function' &&
+              typeof value !== 'symbol'))
+        ) {
+          const shadow = indexState(record);
+          if (shadow && index < shadow.length) {
+            const written = reflectSet(shadow.view, property, value, shadow.view);
+            if (written && !shadow.dirty) {
+              shadow.dirty = true;
+              if (!dirtyIndexKeys.has(shadow.key)) {
+                dirtyIndexKeys.add(shadow.key);
+                reflectApply(arrayPush, dirtyIndexShadows, [shadow.key]);
+              }
+            }
+            return written;
+          }
+        }
         if (
           record.binary === 'view' &&
           typeof property === 'string' &&
@@ -454,9 +592,29 @@ export function installGuestRuntime() {
   };
 
   return {
-    markFixedWasmBuffer: (value: ArrayBuffer) => fixedWasmBuffers.set(value, true),
+    isWasmImport: (value: object) => wasmImportFunctions.has(value),
+    setIndexCacheEnabled: (enabled: boolean) => {
+      indexCacheEnabled = enabled;
+    },
+    invalidateIndexShadows: () => {
+      indexEpoch++;
+    },
+    takeDirtyIndexShadows: () => {
+      const dirty = dirtyIndexShadows;
+      dirtyIndexShadows = [];
+      // Reset per-view dirty marks after a flush without walking every alias.
+      if (dirty.length) indexEpoch++;
+      for (let i = 0; i < dirty.length; i++) dirtyIndexKeys.delete(dirty[i]);
+      return dirty;
+    },
+    captureIndexGetters(aliases: { Uint8Array: { prototype: object } }) {
+      const prototype = getPrototype(aliases.Uint8Array.prototype)!;
+      for (const property of ['length', 'byteLength', 'byteOffset']) {
+        const getter = getDescriptor(prototype, property)?.get;
+        if (getter) indexGetters.set(getter, property);
+      }
+    },
     binaryHooks: () => ({
-      nonTransferable: (value: object) => fixedWasmBuffers.has(value),
       binaryKind: (value: unknown) =>
         value && (typeof value === 'object' || typeof value === 'function')
           ? (records.get(value)?.binary ?? '')
@@ -492,7 +650,10 @@ export function installGuestRuntime() {
                 if (item.kind !== 'function' || typeof value !== 'function') return value;
                 // A host proxy decoded directly would reveal its raw native
                 // function. A guest closure keeps each call on the policy path.
-                return (...args: unknown[]) => reflectApply(value, undefined, args);
+                const callback = (...args: unknown[]) =>
+                  reflectApply(value, undefined, args);
+                wasmImportFunctions.set(callback, true);
+                return callback;
               },
               configurable: true,
             });

@@ -230,6 +230,65 @@ try {
     nativePrototype: Object.hasOwn(Element.prototype, 'describe'),
     errors,
   };
+  engine.set('cacheInspect', (view: Uint32Array) => Array.from(view));
+  engine.set('cacheReadArgument', (_record: object, view: Uint32Array | Uint8Array) =>
+    Array.from(view),
+  );
+  engine.set('cacheTouch', (_view: Uint8Array) => undefined);
+  engine.set('cacheNativeLength', (view: Uint32Array) =>
+    Object.defineProperty(view, 'length', { value: 19, configurable: true }),
+  );
+  engine.set('cacheAsyncMutation', async (view: Uint8Array) => {
+    await Promise.resolve();
+    view[0] = 91;
+  });
+  engine.set('cacheAsyncObject', async (view: Uint8Array) => {
+    await Promise.resolve();
+    view[0] = 93;
+    return opaqueStrings;
+  });
+  const cache = engine.evaluate(`(() => {
+    const memory=new WebAssembly.Memory({initial:1,maximum:3});
+    const words=new Uint32Array(memory.buffer,4,4);
+    const bytes=new Uint8Array(memory.buffer,4,16);
+    const data=new DataView(memory.buffer);
+    words[0]=0x11223344;
+    const alias=bytes[0]===0x44 && data.getUint32(4,true)===0x11223344;
+    words[0]=11;const descriptor=Object.getOwnPropertyDescriptor(words,'0').value;
+    words[0]=22;const descriptorThenWrite=cacheInspect(words)[0];
+    Object.defineProperty(words,'1',{value:33});const defined=words[1];
+    const sub=words.subarray(1,3);words[1]=44;const subRead=sub[0];sub[1]=55;const subWrite=words[2];
+    Reflect.set(words,'2',{valueOf(){words[3]=77;return 88;}});
+    const coercion=words[2]===88 && words[3]===77;
+    const argument=cacheReadArgument({get token(){words[0]=43;return 0;}},words)[0];
+    let threw=false;try{cacheReadArgument({get token(){words[0]=49;throw new Error('getter sentinel');}},words);}catch(error){threw=error.message==='getter sentinel';}
+    const throwPreserved=threw && words[0]===49 && cacheInspect(words)[0]===49;
+    Reflect.set(words,'-0',99);words['01']=27;
+    const canonical=words['-0']===undefined && words[0]===49 && words['01']===27;
+    const ownLength=Object.getOwnPropertyDescriptor(Uint32Array.prototype,'length');
+    Object.defineProperty(Uint32Array.prototype,'length',{get(){return 123;},configurable:true});
+    const prototypeLength=words.length;
+    if(ownLength)Object.defineProperty(Uint32Array.prototype,'length',ownLength);else delete Uint32Array.prototype.length;
+    cacheNativeLength(words);const nativeLength=words.length;
+    const bufferIdentity=words.buffer===memory.buffer;
+    const noPrivateKeys=Object.getOwnPropertyNames(words).every(key=>['0','1','2','3','01','length'].includes(key));
+    const old=words;
+    Reflect.set(words,'2',{valueOf(){memory.grow(1);new Uint32Array(memory.buffer,4,4)[0]=101;return 202;}});
+    const grown=old.length===19 && old[0]===undefined && new Uint32Array(memory.buffer,4,4)[0]===101;
+    return {alias,descriptor,descriptorThenWrite,defined,subRead,subWrite,coercion,argument,throwPreserved,canonical,prototypeLength,nativeLength,bufferIdentity,noPrivateKeys,grown};
+  })()`);
+  const asyncCache = await engine.evaluate(`(async () => {
+    const ordinary=new Uint8Array(4);cacheTouch(ordinary);
+    const argument=cacheReadArgument({get token(){ordinary[0]=43;return 0;}},ordinary)[0];
+    try{cacheReadArgument({get token(){ordinary[0]=47;throw new Error('ordinary getter');}},ordinary);}catch{}
+    const thrown=ordinary[0];
+    await cacheAsyncMutation(ordinary);const resumed=ordinary[0];
+    let observed=-1;
+    Object.defineProperty(opaqueStrings,'then',{get(){observed=ordinary[0];return undefined;},configurable:true});
+    await cacheAsyncObject(ordinary);
+    delete opaqueStrings.then;
+    return {argument,thrown,resumed,thenable:observed};
+  })()`);
   const returnedSymbol = engine.evaluate('Symbol("returned")');
   if (typeof returnedSymbol !== 'symbol') throw new Error('Guest Symbol was not decoded');
   engine.dispose();
@@ -429,6 +488,8 @@ try {
     result,
     additional,
     advanced,
+    cache,
+    asyncCache,
     disposal: {
       rejectedMessage,
       closedMessage,
