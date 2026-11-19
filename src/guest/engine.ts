@@ -123,6 +123,7 @@ export class GuestEngine {
   private readonly nativeObjects = new Map<number, object>();
   private readonly nativeHandles = new Map<object, QuickJSHandle>();
   private readonly guestObjects = new Map<number, RetainedGuest>();
+  private readonly importReferences = new Map<number, RetainedGuest>();
   private readonly guestHandles = new WeakMap<object, QuickJSHandle>();
   private readonly symbolIds = new Map<symbol, number>();
   private readonly symbols = new Map<number, symbol>();
@@ -614,14 +615,14 @@ export class GuestEngine {
           if (typeof target !== 'function')
             throw new TypeError('Native object is not callable');
           const receiver = this.decode(input[0]);
-          const args = this.decodeArguments(input[1]);
+          const args = this.decodeArguments(input[1], this.wasm?.importsArgument(target));
           result = host.call(target, receiver, args);
           break;
         }
         case 'construct': {
           if (typeof target !== 'function')
             throw new TypeError('Native object is not a constructor');
-          const args = this.decodeArguments(input[0]);
+          const args = this.decodeArguments(input[0], this.wasm?.importsArgument(target));
           const newTarget = input[1] ? this.decode(input[1]) : undefined;
           result = host.construct(
             target,
@@ -1253,7 +1254,26 @@ export class GuestEngine {
     return retained;
   }
 
-  private decodeArguments(value: QuickJSHandle): unknown[] {
+  /** Wasm import namespaces must stay lazy until native declaration-order reads. */
+  private decodeReference(value: QuickJSHandle): unknown {
+    const kindHandle = this.helper('kind', [value]);
+    const kind = this.context.getString(kindHandle);
+    kindHandle.dispose();
+    if (kind === 'host' || kind === 'null' || this.context.typeof(value) !== 'object')
+      return this.decode(value);
+    const idHandle = this.helper('guestId', [value]);
+    const id = this.context.getNumber(idHandle);
+    idHandle.dispose();
+    const previous = this.guestObjects.get(id) ?? this.importReferences.get(id);
+    if (previous) return previous.value;
+    const reference: object = Object.create(null);
+    const handle = value.dup();
+    this.importReferences.set(id, { id, handle, value: reference });
+    this.guestHandles.set(reference, handle);
+    return reference;
+  }
+
+  private decodeArguments(value: QuickJSHandle, opaqueIndex?: number): unknown[] {
     const kind = this.helper('kind', [value]);
     const isArray = this.context.getString(kind) === 'array';
     kind.dispose();
@@ -1266,7 +1286,9 @@ export class GuestEngine {
     for (let index = 0; index < length; index++) {
       const item = this.context.getProp(value, index);
       try {
-        result.push(this.decode(item, seen));
+        result.push(
+          index === opaqueIndex ? this.decodeReference(item) : this.decode(item, seen),
+        );
       } finally {
         item.dispose();
       }
@@ -1447,6 +1469,8 @@ export class GuestEngine {
     for (const handle of this.nativeHandles.values()) if (handle.alive) handle.dispose();
     for (const { handle } of this.guestObjects.values())
       if (handle.alive) handle.dispose();
+    for (const { handle } of this.importReferences.values())
+      if (handle.alive) handle.dispose();
     for (const handle of this.symbolHandles.values()) if (handle.alive) handle.dispose();
     for (const { guest } of this.buffers.values()) if (guest.alive) guest.dispose();
     for (const promise of this.promises) promise.dispose();
@@ -1454,6 +1478,7 @@ export class GuestEngine {
     this.nativeHandles.clear();
     this.nativeObjects.clear();
     this.guestObjects.clear();
+    this.importReferences.clear();
     this.symbolHandles.clear();
     this.buffers.clear();
     this.promises.clear();

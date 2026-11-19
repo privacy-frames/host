@@ -461,7 +461,10 @@ export function installGuestRuntime() {
       constructorOf: (value: object) => reflectGet(value, 'constructor'),
       speciesOf: (value: object) => reflectGet(value, speciesSymbol),
     }),
-    captureWasmImports(imports: object, descriptors: { module: string; name: string }[]) {
+    captureWasmImports(
+      imports: object,
+      descriptors: { module: string; name: string; kind: string }[],
+    ) {
       if (
         imports !== undefined &&
         (imports === null ||
@@ -469,36 +472,27 @@ export function installGuestRuntime() {
       )
         throw new TypeError('Wasm imports must be an object');
       const captured = ObjectConstructor.create(null);
-      const modules = new InternalMap<string, string[]>();
+      let next = 0;
       for (let index = 0; index < descriptors.length; index++) {
-        const item = descriptors[index];
-        let names = modules.get(item.module);
-        if (!names) {
-          names = [];
-          modules.set(item.module, names);
-        }
-        let included = false;
-        for (let nameIndex = 0; nameIndex < names.length; nameIndex++)
-          if (names[nameIndex] === item.name) included = true;
-        if (!included) reflectApply(arrayPush, names, [item.name]);
-      }
-      for (let index = 0; index < descriptors.length; index++) {
-        const item = descriptors[index];
-        if (getDescriptor(captured, item.module)) continue;
-        defineProperty(captured, item.module, {
-          // Hidden accessors are decoded lazily. The browser controls access
-          // order and validation; each read still executes through guest policy.
+        const module = descriptors[index].module;
+        if (getDescriptor(captured, module)) continue;
+        defineProperty(captured, module, {
+          // Native instantiation reads namespaces in import declaration order,
+          // including repeated module/name pairs whose kinds can differ.
           get() {
-            const namespace = reflectGet(imports, item.module);
+            const item = descriptors[next++];
+            const namespace = reflectGet(imports, module);
             const protectedNamespace = ObjectConstructor.create(null);
-            const names = modules.get(item.module)!;
-            for (let nameIndex = 0; nameIndex < names.length; nameIndex++) {
-              const name = names[nameIndex];
-              defineProperty(protectedNamespace, name, {
-                get: () => reflectGet(namespace, name),
-                configurable: true,
-              });
-            }
+            defineProperty(protectedNamespace, item.name, {
+              get() {
+                const value = reflectGet(namespace, item.name);
+                if (item.kind !== 'function' || typeof value !== 'function') return value;
+                // A host proxy decoded directly would reveal its raw native
+                // function. A guest closure keeps each call on the policy path.
+                return (...args: unknown[]) => reflectApply(value, undefined, args);
+              },
+              configurable: true,
+            });
             return protectedNamespace;
           },
           configurable: true,

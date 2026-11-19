@@ -14,6 +14,7 @@ export interface NativeWasmOptions {
 export interface NativeWasmDomain extends GuestHost {
   readonly namespace: object;
   owns(target: object): boolean;
+  importsArgument(target: Function): number | undefined;
 }
 
 type WasmKind =
@@ -60,6 +61,7 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
   const kinds = new WeakMap<object, WasmKind | false>();
   const replacements = new Map<Function, Function>();
   const methods = new Map<Function, Function>();
+  const importArguments = new WeakMap<Function, number>();
   // A native funcref table distinguishes exported Wasm functions from arbitrary
   // externrefs. Marking an arbitrary returned JS constructor domain-owned would
   // bypass the browser host's constructor policy.
@@ -229,6 +231,10 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
     };
     copiedName(replacement, original);
     replacements.set(original, replacement);
+    if (name === 'Instance') {
+      importArguments.set(original, 1);
+      importArguments.set(replacement, 1);
+    }
     owned.add(original);
     owned.add(replacement);
     const nativePrototype: unknown = get(original, 'prototype');
@@ -328,6 +334,10 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
     if (typeof original !== 'function' || (name.endsWith('Streaming') && !responseStatus))
       continue;
     copiedName(fn, original);
+    if (name === 'instantiate' || name === 'instantiateStreaming') {
+      importArguments.set(original, 1);
+      importArguments.set(fn, 1);
+    }
     owned.add(fn);
     define(namespace, name, { ...descriptor(native, name), value: fn });
   }
@@ -342,6 +352,7 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
 
   return {
     namespace,
+    importsArgument: (target) => importArguments.get(target),
     owns(target) {
       if (owned.has(target)) return true;
       if (typeof target === 'function' && !wasmFunction(target)) return false;

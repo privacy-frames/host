@@ -1,7 +1,8 @@
 {
-  "revision": "b1447b2a9d865df3946104b4fe1348f8f0abb532",
-  "bundleHash": "8c44a23d0cf352205dd116e1e1adf0d0addfe151c8930920b03ed44947905aec",
+  "revision": "fe8c34b0913ddd7e17adacf15e569ad8cc99e5dd",
+  "bundleHash": "8b2ff1484f982bb494527d17b418f0252c5e3fc77ad9309187f28aa73a53a958",
   "fixtures": {
+    "/mixed-import.wasm": "2aab7417d3891f7fc72d7d46ee45226534570ec2d5bc0c73d4f6494e1025cabe",
     "/quickjs.wasm": "105c3bed22d457e43e3d1c3c1c6959fda62a8fe06f0fc8a985303c3a2be72232",
     "/memory.wasm": "07a57cad5b1bb617def75d84982f16ccb9093ac385338ee658be377debea19c3",
     "/transport.wasm": "5f469e5a729e2a1c4ff0d1d1a0363407e68539ce0cdb4480d97505d38efc7b93",
@@ -36,6 +37,10 @@
             "passed": true
           },
           {
+            "name": "native function imports retain the owning host call policy",
+            "passed": true
+          },
+          {
             "name": "async compile and instantiate retain import callbacks",
             "passed": true
           }
@@ -59,6 +64,10 @@
           },
           {
             "name": "declared imports use inherited getters without traversing unused fields",
+            "passed": true
+          },
+          {
+            "name": "native function imports retain the owning host call policy",
             "passed": true
           },
           {
@@ -110,6 +119,10 @@
             "passed": true
           },
           {
+            "name": "native function imports retain the owning host call policy",
+            "passed": true
+          },
+          {
             "name": "async compile and instantiate retain import callbacks",
             "passed": true
           }
@@ -133,6 +146,10 @@
           },
           {
             "name": "declared imports use inherited getters without traversing unused fields",
+            "passed": true
+          },
+          {
+            "name": "native function imports retain the owning host call policy",
             "passed": true
           },
           {

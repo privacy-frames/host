@@ -160,6 +160,41 @@ const cases = [
     `,
   },
   {
+    name: 'native function imports retain the owning host call policy',
+    source: `
+      check(nativePolicyCallback(0) === expectedPolicyValue, 'direct native call uses fixture policy');
+      const memory = new WebAssembly.Memory({initial:1,maximum:3});
+      const instance = new WebAssembly.Instance(new WebAssembly.Module(plainBytes), {
+        env:{memory,callback:nativePolicyCallback},
+      });
+      check(instance.exports.roundtrip(0) === expectedPolicyValue + 10, 'native Wasm import uses fixture policy');
+      const trace=[];
+      const mixedImports = {
+        get env(){trace.push('env');return {get item(){trace.push('item');return nativePolicyCallback;}};},
+        get unused(){throw new Error('undeclared enumerable import getter');},
+      };
+      const mixed = new WebAssembly.Instance(new WebAssembly.Module(mixedBytes), mixedImports);
+      check(trace.join(',') === 'env,item,env,item', 'mixed-kind import getter order');
+      check(mixed.exports.call(0) === expectedPolicyValue, 'mixed-kind function import uses fixture policy');
+      check(mixed.exports.reference() === nativePolicyCallback, 'externref import preserves original object identity');
+      check(mixed.exports.reference()(0) === expectedPolicyValue, 'returned externref function keeps fixture policy');
+      for(const [imports,kind] of [[[], 'Array'], [new Uint8Array(8),'Uint8Array'], [new ArrayBuffer(8),'ArrayBuffer'], [new Map(),'Map']]) {
+        imports.env = {memory,callback:nativePolicyCallback};
+        new WebAssembly.Instance(new WebAssembly.Module(plainBytes), imports);
+        check(nativeKind(imports) === kind, 'opaque import reference preserves subsequent native ' + kind + ' conversion');
+      }
+      const asyncTrace=[];
+      const pending = WebAssembly.instantiate(plainBytes, {
+        get env(){asyncTrace.push('env');return {memory,callback:nativePolicyCallback};},
+        get unused(){throw new Error('undeclared asynchronous import getter');},
+      });
+      check(asyncTrace.length === 0, 'async compile does not eagerly read imports');
+      const asynchronous = await pending;
+      check(asyncTrace.join(',') === 'env,env', 'async imports read in declaration order');
+      check(asynchronous.instance.exports.roundtrip(0) === expectedPolicyValue+10, 'async native function import uses fixture policy');
+    `,
+  },
+  {
     name: 'async compile and instantiate retain import callbacks',
     source: `
       const memory = new WebAssembly.Memory({initial: 1, maximum: 3});
@@ -211,11 +246,14 @@ const workerRoundtrip = (memory: WebAssembly.Memory, module: WebAssembly.Module)
     worker.postMessage({ memory, module });
   });
 
+const nativePolicyCallback = (_value: number) => 1;
+const nativeKind = (value: unknown) => Object.prototype.toString.call(value).slice(8, -1);
 const host: GuestHost = {
   get: (target, key) => Reflect.get(target, key),
   set: (target, key, value) => Reflect.set(target, key, value),
   settable: (target) => ArrayBuffer.isView(target),
-  call: (target, receiver, args) => Reflect.apply(target, receiver, args),
+  call: (target, receiver, args) =>
+    target === nativePolicyCallback ? 2 : Reflect.apply(target, receiver, args),
   construct: (target, args) => Reflect.construct(target, args),
   ownKeys: (target) => Reflect.ownKeys(target),
   descriptor: (target, key) => Object.getOwnPropertyDescriptor(target, key),
@@ -239,14 +277,30 @@ const runCases = async (evaluate: (source: string) => unknown): Promise<CaseResu
 try {
   const plainBytes = new Uint8Array(await (await fetch('/memory.wasm')).arrayBuffer());
   const sharedBytes = new Uint8Array(await (await fetch('/shared.wasm')).arrayBuffer());
+  const mixedBytes = new Uint8Array(
+    await (await fetch('/mixed-import.wasm')).arrayBuffer(),
+  );
   const native = await runCases((source) =>
     new Function(
       'plainBytes',
       'sharedBytes',
       'workerRoundtrip',
       'check',
+      'nativePolicyCallback',
+      'expectedPolicyValue',
+      'mixedBytes',
+      'nativeKind',
       `return ${source}`,
-    )(plainBytes, sharedBytes, workerRoundtrip, check),
+    )(
+      plainBytes,
+      sharedBytes,
+      workerRoundtrip,
+      check,
+      nativePolicyCallback,
+      1,
+      mixedBytes,
+      nativeKind,
+    ),
   );
   let outcome: NonNullable<typeof globalThis.guestWasmResults>;
   console.log('Wasm fixture: creating guest engine');
@@ -256,6 +310,10 @@ try {
     engine.set('plainBytes', plainBytes);
     engine.set('sharedBytes', sharedBytes);
     engine.set('check', check);
+    engine.set('nativePolicyCallback', nativePolicyCallback);
+    engine.set('expectedPolicyValue', 2);
+    engine.set('mixedBytes', mixedBytes);
+    engine.set('nativeKind', nativeKind);
     engine.set('workerRoundtrip', workerRoundtrip);
     engine.set('TextDecoder', TextDecoder);
     const guest = await runCases((source) => engine.evaluate(source, 'wasm:fixture'));

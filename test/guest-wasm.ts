@@ -21,6 +21,10 @@ await build({
 const files = new Map([
   ['/browser.js', await readFile(new URL('browser.js', directory))],
   [
+    '/mixed-import.wasm',
+    await readFile(new URL('fixtures/wasm/mixed-import.wasm', import.meta.url)),
+  ],
+  [
     '/quickjs.wasm',
     await readFile(require.resolve('@jitl/quickjs-wasmfile-release-sync/wasm')),
   ],
@@ -124,8 +128,8 @@ for (const observation of observations) {
   assert.deepEqual(result.policy?.control, [true, true]);
   assert.deepEqual(result.policy?.guest, [false, false]);
   assert.deepEqual(observation.requests, ['/import-probe', '/constructor-probe']);
-  assert.equal(result.native.length, 6);
-  assert.equal(result.guest.length, 6);
+  assert.equal(result.native.length, 7);
+  assert.equal(result.guest.length, 7);
   for (const test of [...result.native, ...result.guest])
     assert(test.passed, JSON.stringify(test));
 }
