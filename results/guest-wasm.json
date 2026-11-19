@@ -1,9 +1,9 @@
 {
-  "revision": "0cfa0ad656e13f5c5c36cc4c269ab87c4eaed422",
-  "bundleHash": "a8ce276d8503fd2271c1481211228af3f1dadaa51dda0290fb4e2ee78f0790e8",
+  "revision": "5f62e61d6599904fad7c7ad56822e40e76c024c9",
+  "bundleHash": "4f0e2e5bfb8803572d6f6c41461738fc1258a2ab478e0574ef57f4273efca17d",
   "fixtures": {
     "/mixed-import.wasm": "2aab7417d3891f7fc72d7d46ee45226534570ec2d5bc0c73d4f6494e1025cabe",
-    "/quickjs.wasm": "4f006f23e7ab871b55ef367a4e58cba65eb36c54eb2ce9b83b168fcc309b786a",
+    "/quickjs.wasm": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
     "/memory.wasm": "f5579291e0798dc7674eba5a525023fca073a63a42dc3154c150e5e2b0dfe917",
     "/transport.wasm": "5f469e5a729e2a1c4ff0d1d1a0363407e68539ce0cdb4480d97505d38efc7b93",
     "/shared.wasm": "ade966b90c847d70a61f5e0b0adb9271075fc2609c4fb127296dfa0e6704fee7",
@@ -17,6 +17,14 @@
       "result": {
         "isolated": true,
         "native": [
+          {
+            "name": "indexed copy loop and ordinary native copies preserve aliases",
+            "passed": true
+          },
+          {
+            "name": "indexed coercion and numeric families retain native semantics",
+            "passed": true
+          },
           {
             "name": "consecutive imports preserve ordinary bytes through native reentry and throw",
             "passed": true
@@ -56,6 +64,14 @@
         ],
         "guest": [
           {
+            "name": "indexed copy loop and ordinary native copies preserve aliases",
+            "passed": true
+          },
+          {
+            "name": "indexed coercion and numeric families retain native semantics",
+            "passed": true
+          },
+          {
             "name": "consecutive imports preserve ordinary bytes through native reentry and throw",
             "passed": true
           },
@@ -92,6 +108,20 @@
             "passed": true
           }
         ],
+        "copyElision": {
+          "baseline": {
+            "intoNative": 19,
+            "intoGuest": 10
+          },
+          "copying": {
+            "intoNative": 19,
+            "intoGuest": 10
+          },
+          "coercing": {
+            "intoNative": 25,
+            "intoGuest": 14
+          }
+        },
         "foreign": [
           "raw export",
           "late imported memory",
@@ -121,6 +151,14 @@
         "isolated": true,
         "native": [
           {
+            "name": "indexed copy loop and ordinary native copies preserve aliases",
+            "passed": true
+          },
+          {
+            "name": "indexed coercion and numeric families retain native semantics",
+            "passed": true
+          },
+          {
             "name": "consecutive imports preserve ordinary bytes through native reentry and throw",
             "passed": true
           },
@@ -159,6 +197,14 @@
         ],
         "guest": [
           {
+            "name": "indexed copy loop and ordinary native copies preserve aliases",
+            "passed": true
+          },
+          {
+            "name": "indexed coercion and numeric families retain native semantics",
+            "passed": true
+          },
+          {
             "name": "consecutive imports preserve ordinary bytes through native reentry and throw",
             "passed": true
           },
@@ -195,6 +241,20 @@
             "passed": true
           }
         ],
+        "copyElision": {
+          "baseline": {
+            "intoNative": 19,
+            "intoGuest": 10
+          },
+          "copying": {
+            "intoNative": 19,
+            "intoGuest": 10
+          },
+          "coercing": {
+            "intoNative": 25,
+            "intoGuest": 14
+          }
+        },
         "foreign": [
           "raw export",
           "late imported memory",
