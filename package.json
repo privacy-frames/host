@@ -12,7 +12,7 @@
     "format": "prettier --write src scripts test *.json .github deployment --ignore-unknown",
     "format:check": "prettier --check src scripts test *.json .github deployment --ignore-unknown",
     "serve": "tsx test/serve.ts",
-    "pretest": "npm run build:engine",
+    "pretest": "npm run build",
     "test": "npm run test:unit && npm run test:guest",
     "test:unit": "tsx --test test/*.test.ts",
     "test:guest": "npm run test:guest:core && npm run test:contexts && npm run test:policy && npm run test:installation",

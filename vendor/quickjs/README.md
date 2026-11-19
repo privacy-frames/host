@@ -2,7 +2,7 @@
 
 Privacy Frames builds its JavaScript interpreter from this directory. The runtime
 and browser tests use the resulting engine and loader together. The npm package
-supplies the TypeScript bindings and FFI declarations; its prebuilt engine is not
+supplies the TypeScript bindings and FFI adapter; its prebuilt engine is not
 used.
 
 `upstream/` contains QuickJS 2025-09-13 from quickjs-emscripten v0.32.0, including
