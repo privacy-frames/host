@@ -386,6 +386,12 @@ try {
               privateRequests.push(request.url());
           });
           const responses: { url: string; status: number }[] = [];
+          const failedResources: { url: string; error?: string }[] = [];
+          context.on('requestfailed', (request) => {
+            const failure = { url: request.url(), error: request.failure()?.errorText };
+            failedResources.push(failure);
+            console.log('Image request failed: ' + JSON.stringify(failure));
+          });
           context.on('page', (page) => {
             page.on('pageerror', (error) => errors.push(error.stack ?? error.message));
             page.on('crash', () => errors.push('Application renderer crashed'));
@@ -422,7 +428,10 @@ try {
                   /^TypeError: Script resource is not installed: https?:\/\//.test(text)
                 )
                   resourceRefusals.push(text);
-                else errors.push(text);
+                else {
+                  errors.push(text);
+                  console.log('Image runtime error: ' + text);
+                }
               })(),
             );
           });
@@ -444,6 +453,7 @@ try {
             started: new Date().toISOString(),
             errors,
             responses,
+            failedResources,
             browserDiagnostics,
             resourceRefusals,
             privateRequests,
