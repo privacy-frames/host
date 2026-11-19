@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v6
@@ -27,14 +27,14 @@ jobs:
           printf '%s\n' 'https://security.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors-security.txt > /dev/null
       - run: npx playwright install --with-deps chromium firefox
         timeout-minutes: 10
-      - run: npm test
-      - name: Provide virtual audio for native Firefox playback
+      - name: Prepare native audio and software graphics
+        timeout-minutes: 5
         run: |
-          sudo apt-get update
-          sudo apt-get install -y pulseaudio pulseaudio-utils strace xvfb libgl1-mesa-dri
+          sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::https::Timeout=20 install -y --no-install-recommends pulseaudio pulseaudio-utils strace xvfb xauth libgl1-mesa-dri libegl-mesa0 libglx-mesa0
           pulseaudio --start --exit-idle-time=-1
           pactl load-module module-null-sink sink_name=privacy_frames_test
           pactl set-default-sink privacy_frames_test
+      - run: npm test
       - run: npm run test:pitch
       - name: Build pinned publisher mirrors for application acceptance
         run: npm --prefix publisher-source run build
@@ -53,7 +53,7 @@ jobs:
   deploy:
     if: vars.PAGES_ENABLED == 'true' && github.ref == 'refs/heads/main'
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       pages: write
