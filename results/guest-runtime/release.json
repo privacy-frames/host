@@ -1,0 +1,62 @@
+{
+  "completed": "2026-11-19T02:06:59.816525+00:00",
+  "qualifiedSource": "bd15d13a084779d8f5767120d2fba43dda63cc67",
+  "sourceTag": "wasm-runtime-2026-11-19",
+  "recoveryTag": "pre-wasm-runtime-2026-11-18",
+  "qualification": {
+    "url": "https://github.com/privacy-frames/host/actions/runs/44438192676",
+    "conclusion": "success"
+  },
+  "deployments": [
+    {
+      "role": "manager",
+      "url": "https://pf.damenh.com/",
+      "workflow": "https://github.com/privacy-frames/host/actions/runs/44438192676",
+      "source": "bd15d13a084779d8f5767120d2fba43dda63cc67"
+    },
+    {
+      "role": "runtime",
+      "url": "https://apps.pf.damenh.com/",
+      "workflow": "https://github.com/privacy-frames/runtime/actions/runs/44441362529",
+      "revision": "db3f1443a8d1adaac5e135fb9ee23609a6607426",
+      "source": "bd15d13a084779d8f5767120d2fba43dda63cc67"
+    },
+    {
+      "role": "installation",
+      "url": "https://install.pf.damenh.com/",
+      "workflow": "https://github.com/privacy-frames/installation/actions/runs/44441366050",
+      "revision": "5126636c1f8563e2600336706e5dc8bad489cef7",
+      "source": "bd15d13a084779d8f5767120d2fba43dda63cc67"
+    }
+  ],
+  "publisherSource": "8db931d2833e5d86202574d554d0bea79c33342f",
+  "unitTests": 102,
+  "corpusObservations": 12,
+  "maintenanceObservations": 122,
+  "confinedMaintenanceSamples": 60,
+  "confinedMaintenanceHTTPRequests": 0,
+  "publishedFilesCompared": 71,
+  "unpublishedPathResponses": {
+    "404": 10,
+    "503": 5
+  },
+  "postDeploymentVerifier": {
+    "path": "test/assets.ts",
+    "sha256": "de071a82a6a74764ad1dcd1753ec5b24889bf3a3f847ef6a09c422c27f142339",
+    "scope": "Exact published-file hashes; unpublished paths return 404 or the identified script-free GitHub Varnish 503 template."
+  },
+  "publicBrowserEvidence": "results/public-quickjs-smoke.json",
+  "assetEvidence": "results/assets.json",
+  "runtimeHashes": {
+    "guard.js": "071fb2c6434400624074940a079d067f82d67a4324e2908b1b5d333be5fcafb7",
+    "sw.js": "2dfe8138dc04ca3ec6026188c22a223efe086536013ddd5edb2a6c11310c637d",
+    "guest-worker.js": "5ec57c27675dddd9447cd0d98a082db6f616820d44ad38b8e04b1bb10543a83f",
+    "guest-shared-worker.js": "962d80c2dce1388257746dfe7b51e0db445683c780e9ba9a0e5e9559fbd81114",
+    "__guest_worker_registry__.js": "106b77a615aff3a3bdc0c29b349894b596006a01078a1d7f8c1a167bbce664fc",
+    "engine.wasm": "105c3bed22d457e43e3d1c3c1c6959fda62a8fe06f0fc8a985303c3a2be72232"
+  },
+  "limitations": [
+    "Application Wasm and application service-worker execution are deferred.",
+    "Browser receiver observations and implementation tests do not establish a complete confinement proof."
+  ]
+}

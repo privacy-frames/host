@@ -1,15 +1,15 @@
 {
-  "date": "2026-10-29T23:27:18.543Z",
+  "date": "2026-11-19T02:05:54.475Z",
   "assets": [
     {
       "site": "manager",
       "file": "config.json",
-      "sha256": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9"
+      "sha256": "35cd085b76fe1d71a3bb924d313a7eeb7437553b1d5414f61fb660e6931de690"
     },
     {
       "site": "manager",
       "file": "host.css",
-      "sha256": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92"
+      "sha256": "5053a45ecaca74a28e8dd218fcc5f22463798d129d3034483bdceab4453fa22f"
     },
     {
       "site": "manager",
@@ -19,7 +19,7 @@
     {
       "site": "manager",
       "file": "manager.js",
-      "sha256": "e623333e57ba30b0359bd8548e97efc428534541ccad53316ac07656e7f8d015"
+      "sha256": "d206a0722c287cb0e96c192ad3c6a1c47a1ed1b531ec977d43f2a1c2a352da96"
     },
     {
       "site": "manager",
@@ -34,17 +34,22 @@
     {
       "site": "manager",
       "file": "report.html",
-      "sha256": "f8ae7bd8e4c781dee2a6ad135bd1fcc38186b7b2c1f54b9bb53a5bb0ac3ba654"
+      "sha256": "9daca5eebb03c04870c177df4a4813a183ac3dd8b9d962bd058b528926b7225b"
     },
     {
       "site": "manager",
       "file": "sw.js",
-      "sha256": "44678346edbd5dd05cc7258b68d6bce3e2e041234ede93b80d9022b7236a0bcc"
+      "sha256": "0884a0182f3370b8a09662e163259f9fb02efc31110f027301e716773f9362d1"
+    },
+    {
+      "site": "runtime",
+      "file": "__guest_worker_registry__.js",
+      "sha256": "106b77a615aff3a3bdc0c29b349894b596006a01078a1d7f8c1a167bbce664fc"
     },
     {
       "site": "runtime",
       "file": "config.json",
-      "sha256": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9"
+      "sha256": "35cd085b76fe1d71a3bb924d313a7eeb7437553b1d5414f61fb660e6931de690"
     },
     {
       "site": "runtime",
@@ -54,32 +59,42 @@
     {
       "site": "runtime",
       "file": "connect.js",
-      "sha256": "afdc49cca49dd8490f3d4b646c8460c2244b389275ad8c7fab6d77791684f2ce"
+      "sha256": "32a672be00cf28559a8d51f34d25b5f81eec6bbc17382d4ed0bd646d7d4a310b"
     },
     {
       "site": "runtime",
-      "file": "document-guard.js",
-      "sha256": "c7bb92138af58d4327c5953166f8a88df4e2a2721c83f0c93708f1862e70335d"
+      "file": "engine.wasm",
+      "sha256": "105c3bed22d457e43e3d1c3c1c6959fda62a8fe06f0fc8a985303c3a2be72232"
     },
     {
       "site": "runtime",
       "file": "guard.js",
-      "sha256": "e2bb36f422da6e8fe73ac34ebef1cfcf39c0fa023b34b540fd9896b39a8fb71d"
+      "sha256": "071fb2c6434400624074940a079d067f82d67a4324e2908b1b5d333be5fcafb7"
+    },
+    {
+      "site": "runtime",
+      "file": "guest-shared-worker.js",
+      "sha256": "962d80c2dce1388257746dfe7b51e0db445683c780e9ba9a0e5e9559fbd81114"
+    },
+    {
+      "site": "runtime",
+      "file": "guest-worker.js",
+      "sha256": "5ec57c27675dddd9447cd0d98a082db6f616820d44ad38b8e04b1bb10543a83f"
+    },
+    {
+      "site": "runtime",
+      "file": "guest-worklet.js",
+      "sha256": "3ba030df5d917327f208888c79c94baf36c5649d46c968a3a1b2752c75439d37"
     },
     {
       "site": "runtime",
       "file": "host.css",
-      "sha256": "25fc275593dd5e46aa4923807c5b23b36e5ae8b3412ddcbd9ba8004ca71dca92"
+      "sha256": "5053a45ecaca74a28e8dd218fcc5f22463798d129d3034483bdceab4453fa22f"
     },
     {
       "site": "runtime",
       "file": "index.html",
       "sha256": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489"
-    },
-    {
-      "site": "runtime",
-      "file": "publisher-worker-guard.js",
-      "sha256": "8a2a2f552231bb1f3c1ed728be176c7010684c86ffd1f21bccdc0f25a5dcd174"
     },
     {
       "site": "runtime",
@@ -94,32 +109,17 @@
     {
       "site": "runtime",
       "file": "report.html",
-      "sha256": "f8ae7bd8e4c781dee2a6ad135bd1fcc38186b7b2c1f54b9bb53a5bb0ac3ba654"
-    },
-    {
-      "site": "runtime",
-      "file": "shared-worker-guard.js",
-      "sha256": "1e6582d76235779e346c3df316821e4ea24a18f95b0bc43a8e09d2ab8f6cdfce"
+      "sha256": "9daca5eebb03c04870c177df4a4813a183ac3dd8b9d962bd058b528926b7225b"
     },
     {
       "site": "runtime",
       "file": "sw.js",
-      "sha256": "0177edf83fb84e10bf93b3292d5ddde7a459a8107f41517c4671c51c571b17df"
-    },
-    {
-      "site": "runtime",
-      "file": "worker-guard.js",
-      "sha256": "308abcdb6883fbcfcc46373079f70bac641119a06639b043f8957e382421a209"
-    },
-    {
-      "site": "runtime",
-      "file": "worklet-guard.js",
-      "sha256": "547b60f4d568b619fafb7dbd4b4e5f065761d8ed46b888c6d33128f7ea74ba2c"
+      "sha256": "2dfe8138dc04ca3ec6026188c22a223efe086536013ddd5edb2a6c11310c637d"
     },
     {
       "site": "installation",
       "file": "config.json",
-      "sha256": "0fc6df1519bd58f5c75a26c93e24aa4d9d4fa7fae57bde4d52e72aaf48706fb9"
+      "sha256": "35cd085b76fe1d71a3bb924d313a7eeb7437553b1d5414f61fb660e6931de690"
     },
     {
       "site": "installation",
@@ -129,7 +129,7 @@
     {
       "site": "installation",
       "file": "installation.js",
-      "sha256": "af0760b4a4824d6cfbf88cefb15927ca03675f376f24eef88df060f893d4fded"
+      "sha256": "f1a44718ed7d218dbbc5b51e570badbe0619cbd41e14d5dbec72cbed4f5e5c6a"
     },
     {
       "site": "notes",
@@ -319,7 +319,7 @@
     {
       "site": "resource-lists",
       "file": "inventories.json",
-      "sha256": "c785867ea2b4af9ab961a33b6065e5eed75dc31b703f4cab9a7a35a9ba473f84"
+      "sha256": "3b45c697605408def6efc6aade2ea15ef6b8ede9db51a4ae4306070a5f69fbf0"
     },
     {
       "site": "resource-lists",
@@ -339,7 +339,7 @@
     {
       "site": "resource-lists",
       "file": "pitch-training.uris",
-      "sha256": "03b5ac4dfdc8fd24ae06f3cbd3e6c2d9cdf6c0795b57956da08caa30bec728d4"
+      "sha256": "c5099c1c628e98f92c079e52ef08208e43ebfbecb12d08467d6b29c828b2907d"
     },
     {
       "site": "resource-lists",
@@ -355,6 +355,83 @@
       "site": "resource-lists",
       "file": "stackedit.uris",
       "sha256": "587af83df23d4f8b27450c0a8f722e57b383528af3468385e59c0370cbfb9889"
+    }
+  ],
+  "unpublishedPaths": [
+    {
+      "url": "https://pf.damenh.com/AAAAAAAAAAA/not-installed/",
+      "status": 404,
+      "githubEdgeError": false
+    },
+    {
+      "url": "https://pf.damenh.com/notes/index.html",
+      "status": 404,
+      "githubEdgeError": false
+    },
+    {
+      "url": "https://pf.damenh.com/adversary/index.html",
+      "status": 404,
+      "githubEdgeError": false
+    },
+    {
+      "url": "https://pf.damenh.com/ordinary/index.html",
+      "status": 404,
+      "githubEdgeError": false
+    },
+    {
+      "url": "https://pf.damenh.com/resource-lists/notes.uris",
+      "status": 503,
+      "githubEdgeError": true
+    },
+    {
+      "url": "https://apps.pf.damenh.com/AAAAAAAAAAA/not-installed/",
+      "status": 404,
+      "githubEdgeError": false
+    },
+    {
+      "url": "https://apps.pf.damenh.com/notes/index.html",
+      "status": 404,
+      "githubEdgeError": false
+    },
+    {
+      "url": "https://apps.pf.damenh.com/adversary/index.html",
+      "status": 404,
+      "githubEdgeError": false
+    },
+    {
+      "url": "https://apps.pf.damenh.com/ordinary/index.html",
+      "status": 404,
+      "githubEdgeError": false
+    },
+    {
+      "url": "https://apps.pf.damenh.com/resource-lists/notes.uris",
+      "status": 503,
+      "githubEdgeError": true
+    },
+    {
+      "url": "https://install.pf.damenh.com/AAAAAAAAAAA/not-installed/",
+      "status": 503,
+      "githubEdgeError": true
+    },
+    {
+      "url": "https://install.pf.damenh.com/notes/index.html",
+      "status": 404,
+      "githubEdgeError": false
+    },
+    {
+      "url": "https://install.pf.damenh.com/adversary/index.html",
+      "status": 404,
+      "githubEdgeError": false
+    },
+    {
+      "url": "https://install.pf.damenh.com/ordinary/index.html",
+      "status": 503,
+      "githubEdgeError": true
+    },
+    {
+      "url": "https://install.pf.damenh.com/resource-lists/notes.uris",
+      "status": 503,
+      "githubEdgeError": true
     }
   ],
   "githubEntry": {

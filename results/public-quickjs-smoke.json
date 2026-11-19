@@ -1,0 +1,1731 @@
+{
+  "completed": "2026-11-19T02:04:24.527Z",
+  "revision": "bd15d13a084779d8f5767120d2fba43dda63cc67",
+  "scope": "Actual public manager installation and share flow in fresh automated browser contexts. HTTP observations are Playwright-visible requests/responses, not packet capture or browser-service verification. Private-editing phase must have no HTTP request outside service-worker responses; offline reopening is a separate phase.",
+  "metadata": [
+    {
+      "url": "https://pf.damenh.com/manager.js",
+      "sha256": "d206a0722c287cb0e96c192ad3c6a1c47a1ed1b531ec977d43f2a1c2a352da96",
+      "bytes": 728601,
+      "server": "GitHub.com",
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://apps.pf.damenh.com/guard.js",
+      "sha256": "071fb2c6434400624074940a079d067f82d67a4324e2908b1b5d333be5fcafb7",
+      "bytes": 1437860,
+      "server": "GitHub.com",
+      "contentType": "application/javascript; charset=utf-8"
+    },
+    {
+      "url": "https://apps.pf.damenh.com/engine.wasm",
+      "sha256": "105c3bed22d457e43e3d1c3c1c6959fda62a8fe06f0fc8a985303c3a2be72232",
+      "bytes": 503134,
+      "server": "GitHub.com",
+      "contentType": "application/wasm"
+    },
+    {
+      "url": "https://install.pf.damenh.com/installation.js",
+      "sha256": "f1a44718ed7d218dbbc5b51e570badbe0619cbd41e14d5dbec72cbed4f5e5c6a",
+      "bytes": 1087887,
+      "server": "GitHub.com",
+      "contentType": "application/javascript; charset=utf-8"
+    }
+  ],
+  "configurations": [
+    {
+      "origin": "https://pf.damenh.com",
+      "config": {
+        "managerURL": "https://pf.damenh.com/",
+        "runtimeURL": "https://apps.pf.damenh.com/",
+        "installationURL": "https://install.pf.damenh.com/",
+        "managerOrigins": [
+          "https://pf.damenh.com"
+        ],
+        "examples": [
+          {
+            "name": "Notebook",
+            "url": "https://privacy-frames.github.io/apps/notes/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/notes.uris"
+          },
+          {
+            "name": "Hostile app",
+            "url": "https://privacy-frames.github.io/apps/adversary/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/adversary.uris"
+          },
+          {
+            "name": "Code playground",
+            "url": "https://privacy-frames.github.io/apps/playground/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/playground.uris"
+          },
+          {
+            "name": "Pitch Training",
+            "url": "https://damenh.github.io/pitch-training/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/pitch-training.uris"
+          },
+          {
+            "name": "Wikipedia article",
+            "url": "https://en.wikipedia.org/w/rest.php/v1/page/Albert_Einstein/html"
+          },
+          {
+            "name": "Excalidraw",
+            "url": "https://privacy-frames.github.io/apps/excalidraw/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/excalidraw.uris"
+          },
+          {
+            "name": "diagrams.net",
+            "url": "https://privacy-frames.github.io/apps/drawio/?offline=1",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/drawio.uris"
+          },
+          {
+            "name": "CyberChef",
+            "url": "https://gchq.github.io/CyberChef/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/cyberchef.uris"
+          },
+          {
+            "name": "StackEdit",
+            "url": "https://privacy-frames.github.io/apps/stackedit/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/stackedit.uris"
+          }
+        ]
+      }
+    },
+    {
+      "origin": "https://apps.pf.damenh.com",
+      "config": {
+        "managerURL": "https://pf.damenh.com/",
+        "runtimeURL": "https://apps.pf.damenh.com/",
+        "installationURL": "https://install.pf.damenh.com/",
+        "managerOrigins": [
+          "https://pf.damenh.com"
+        ],
+        "examples": [
+          {
+            "name": "Notebook",
+            "url": "https://privacy-frames.github.io/apps/notes/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/notes.uris"
+          },
+          {
+            "name": "Hostile app",
+            "url": "https://privacy-frames.github.io/apps/adversary/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/adversary.uris"
+          },
+          {
+            "name": "Code playground",
+            "url": "https://privacy-frames.github.io/apps/playground/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/playground.uris"
+          },
+          {
+            "name": "Pitch Training",
+            "url": "https://damenh.github.io/pitch-training/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/pitch-training.uris"
+          },
+          {
+            "name": "Wikipedia article",
+            "url": "https://en.wikipedia.org/w/rest.php/v1/page/Albert_Einstein/html"
+          },
+          {
+            "name": "Excalidraw",
+            "url": "https://privacy-frames.github.io/apps/excalidraw/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/excalidraw.uris"
+          },
+          {
+            "name": "diagrams.net",
+            "url": "https://privacy-frames.github.io/apps/drawio/?offline=1",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/drawio.uris"
+          },
+          {
+            "name": "CyberChef",
+            "url": "https://gchq.github.io/CyberChef/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/cyberchef.uris"
+          },
+          {
+            "name": "StackEdit",
+            "url": "https://privacy-frames.github.io/apps/stackedit/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/stackedit.uris"
+          }
+        ]
+      }
+    },
+    {
+      "origin": "https://install.pf.damenh.com",
+      "config": {
+        "managerURL": "https://pf.damenh.com/",
+        "runtimeURL": "https://apps.pf.damenh.com/",
+        "installationURL": "https://install.pf.damenh.com/",
+        "managerOrigins": [
+          "https://pf.damenh.com"
+        ],
+        "examples": [
+          {
+            "name": "Notebook",
+            "url": "https://privacy-frames.github.io/apps/notes/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/notes.uris"
+          },
+          {
+            "name": "Hostile app",
+            "url": "https://privacy-frames.github.io/apps/adversary/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/adversary.uris"
+          },
+          {
+            "name": "Code playground",
+            "url": "https://privacy-frames.github.io/apps/playground/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/playground.uris"
+          },
+          {
+            "name": "Pitch Training",
+            "url": "https://damenh.github.io/pitch-training/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/pitch-training.uris"
+          },
+          {
+            "name": "Wikipedia article",
+            "url": "https://en.wikipedia.org/w/rest.php/v1/page/Albert_Einstein/html"
+          },
+          {
+            "name": "Excalidraw",
+            "url": "https://privacy-frames.github.io/apps/excalidraw/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/excalidraw.uris"
+          },
+          {
+            "name": "diagrams.net",
+            "url": "https://privacy-frames.github.io/apps/drawio/?offline=1",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/drawio.uris"
+          },
+          {
+            "name": "CyberChef",
+            "url": "https://gchq.github.io/CyberChef/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/cyberchef.uris"
+          },
+          {
+            "name": "StackEdit",
+            "url": "https://privacy-frames.github.io/apps/stackedit/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/stackedit.uris"
+          }
+        ]
+      }
+    }
+  ],
+  "results": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "manual-install",
+      "requests": [
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/host.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/manager.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/sw.js",
+          "method": "GET",
+          "type": "script"
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/index.html",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/manager.js",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/host.css",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/report.html",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/pwa-192.png",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/pwa-512.png",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/host.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/manager.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/connect.html",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/host.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/connect.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/sw.js",
+          "method": "GET",
+          "type": "script"
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/index.html",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/connect.html",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/connect.js",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/guard.js",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/__guest_worker_registry__.js",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/guest-worker.js",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/guest-shared-worker.js",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/guest-worklet.js",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/engine.wasm",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/host.css",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/report.html",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/pwa-192.png",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/pwa-512.png",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/connect.html",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/host.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/connect.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://install.pf.damenh.com/",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://install.pf.damenh.com/installation.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://install.pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/resource-lists/notes.uris",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/manifest.webmanifest",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/app.css",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/app.js",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/article.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/cover.svg",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/index.html",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/sw.js",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/jZJXB-hGo2U/notes/",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/guard.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/__guest_worker_registry__.js",
+          "method": "GET",
+          "type": "script"
+        },
+        {
+          "phase": "startup",
+          "url": "blob:https://apps.pf.damenh.com/b3647e03-b135-42a2-997f-6e14ec902ff4",
+          "method": "GET",
+          "type": "stylesheet",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "blob:https://apps.pf.damenh.com/e663ba72-504d-4f0b-afaa-f66310647ed7",
+          "method": "GET",
+          "type": "image",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "offline-reload",
+          "url": "https://apps.pf.damenh.com/jZJXB-hGo2U/notes/",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "offline-reload",
+          "url": "https://apps.pf.damenh.com/guard.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "offline-reload",
+          "url": "https://apps.pf.damenh.com/__guest_worker_registry__.js",
+          "method": "GET",
+          "type": "script"
+        },
+        {
+          "phase": "offline-reload",
+          "url": "blob:https://apps.pf.damenh.com/16529caa-2ce9-4681-856d-6d0c61defc93",
+          "method": "GET",
+          "type": "stylesheet",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "offline-reload",
+          "url": "blob:https://apps.pf.damenh.com/1785a958-d5da-49c4-8cd8-ba2ce78e7728",
+          "method": "GET",
+          "type": "image",
+          "fromServiceWorker": false,
+          "status": 200
+        }
+      ],
+      "errors": [],
+      "installation": "Installed Notes.",
+      "appURL": "https://apps.pf.damenh.com/jZJXB-hGo2U/notes/",
+      "nativeDOM": {
+        "nativeTextarea": true,
+        "width": 850,
+        "nativeImage": true,
+        "imageWidth": 270
+      },
+      "savedAndRestoredOffline": true,
+      "privateHTTPRequests": [],
+      "passed": true
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "fresh-share-link",
+      "requests": [
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/host.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/manager.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/sw.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/index.html",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/manager.js",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/host.css",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/report.html",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/pwa-192.png",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/pwa-512.png",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/host.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/manager.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/connect.html",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/host.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/connect.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/sw.js",
+          "method": "GET",
+          "type": "script"
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/index.html",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/connect.html",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/connect.js",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/guard.js",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/__guest_worker_registry__.js",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/guest-worker.js",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/guest-shared-worker.js",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/guest-worklet.js",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/engine.wasm",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/host.css",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/report.html",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/pwa-192.png",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/pwa-512.png",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/connect.html",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/host.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/connect.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://install.pf.damenh.com/",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://install.pf.damenh.com/installation.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://install.pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/resource-lists/notes.uris",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/manifest.webmanifest",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/app.css",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/app.js",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/article.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/cover.svg",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/index.html",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/sw.js",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/jZJXB-hGo2U/notes/",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/guard.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/__guest_worker_registry__.js",
+          "method": "GET",
+          "type": "script"
+        },
+        {
+          "phase": "startup",
+          "url": "blob:https://apps.pf.damenh.com/442d320c-1b4b-477f-a6cc-a99637d2a94b",
+          "method": "GET",
+          "type": "stylesheet",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "blob:https://apps.pf.damenh.com/db8bfb08-0460-46eb-9576-80c5f337034b",
+          "method": "GET",
+          "type": "image",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "offline-reload",
+          "url": "https://apps.pf.damenh.com/jZJXB-hGo2U/notes/",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "offline-reload",
+          "url": "https://apps.pf.damenh.com/guard.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "offline-reload",
+          "url": "https://apps.pf.damenh.com/__guest_worker_registry__.js",
+          "method": "GET",
+          "type": "script"
+        },
+        {
+          "phase": "offline-reload",
+          "url": "blob:https://apps.pf.damenh.com/761ed329-7285-46ba-9588-14e51d7c476d",
+          "method": "GET",
+          "type": "stylesheet",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "offline-reload",
+          "url": "blob:https://apps.pf.damenh.com/5723d33c-e59f-4edb-80b9-5dfd4ed0e9e8",
+          "method": "GET",
+          "type": "image",
+          "fromServiceWorker": false,
+          "status": 200
+        }
+      ],
+      "errors": [],
+      "shareURL": "https://pf.damenh.com/#v=1&url=https%3A%2F%2Fprivacy-frames.github.io%2Fapps%2Fnotes%2F&list-url=https%3A%2F%2Fprivacy-frames.github.io%2Fapps%2Fresource-lists%2Fnotes.uris",
+      "appURL": "https://apps.pf.damenh.com/jZJXB-hGo2U/notes/",
+      "nativeDOM": {
+        "nativeTextarea": true,
+        "width": 850,
+        "nativeImage": true,
+        "imageWidth": 270
+      },
+      "savedAndRestoredOffline": true,
+      "privateHTTPRequests": [],
+      "sameTabShareFlow": true,
+      "passed": true
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "manual-install",
+      "requests": [
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/host.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/manager.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/manager.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/connect.html",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/host.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/connect.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/connect.html",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/connect.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://install.pf.damenh.com/",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://install.pf.damenh.com/installation.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://install.pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/resource-lists/notes.uris",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/manifest.webmanifest",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/app.css",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/app.js",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/article.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/cover.svg",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/index.html",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/sw.js",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/jZJXB-hGo2U/notes/",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/guard.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "offline-reload",
+          "url": "https://apps.pf.damenh.com/jZJXB-hGo2U/notes/",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "offline-reload",
+          "url": "https://apps.pf.damenh.com/guard.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": true,
+          "status": 200
+        }
+      ],
+      "errors": [],
+      "installation": "Installed Notes.",
+      "appURL": "https://apps.pf.damenh.com/jZJXB-hGo2U/notes/",
+      "nativeDOM": {
+        "nativeTextarea": true,
+        "width": 850,
+        "nativeImage": true,
+        "imageWidth": 300
+      },
+      "savedAndRestoredOffline": true,
+      "privateHTTPRequests": [],
+      "passed": true
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "fresh-share-link",
+      "requests": [
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/host.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/manager.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/manager.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/connect.html",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/host.css",
+          "method": "GET",
+          "type": "stylesheet",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/connect.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/connect.html",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/connect.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://install.pf.damenh.com/",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://install.pf.damenh.com/installation.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://install.pf.damenh.com/config.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/resource-lists/notes.uris",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/manifest.webmanifest",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/app.css",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/app.js",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/article.json",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/cover.svg",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/index.html",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://privacy-frames.github.io/apps/notes/sw.js",
+          "method": "GET",
+          "type": "fetch",
+          "fromServiceWorker": false,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/jZJXB-hGo2U/notes/",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "startup",
+          "url": "https://apps.pf.damenh.com/guard.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "offline-reload",
+          "url": "https://apps.pf.damenh.com/jZJXB-hGo2U/notes/",
+          "method": "GET",
+          "type": "document",
+          "fromServiceWorker": true,
+          "status": 200
+        },
+        {
+          "phase": "offline-reload",
+          "url": "https://apps.pf.damenh.com/guard.js",
+          "method": "GET",
+          "type": "script",
+          "fromServiceWorker": true,
+          "status": 200
+        }
+      ],
+      "errors": [],
+      "shareURL": "https://pf.damenh.com/#v=1&url=https%3A%2F%2Fprivacy-frames.github.io%2Fapps%2Fnotes%2F&list-url=https%3A%2F%2Fprivacy-frames.github.io%2Fapps%2Fresource-lists%2Fnotes.uris",
+      "appURL": "https://apps.pf.damenh.com/jZJXB-hGo2U/notes/",
+      "nativeDOM": {
+        "nativeTextarea": true,
+        "width": 850,
+        "nativeImage": true,
+        "imageWidth": 300
+      },
+      "savedAndRestoredOffline": true,
+      "privateHTTPRequests": [],
+      "sameTabShareFlow": true,
+      "passed": true
+    }
+  ],
+  "failed": false
+}

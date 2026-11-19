@@ -1,15 +1,43 @@
 {
   "completed": true,
   "passed": true,
-  "artifactRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17",
   "hashes": {
-    "guard.js": "e3b5e1a57754f04e7cbb076d55120e361d117cb81533785ca00dd190d60e219b",
-    "sw.js": "cabff7548aa853dc60ebb8d394b0b34beb9bdab4aca59ea6b872b3f5dad06dcb",
-    "guest-worker.js": "2b1970b24dc73ace57e7d0ff0264bfa8cfe38c3c7d8060e05580d10b28d33c92",
-    "guest-shared-worker.js": "66ff2bebfc1e33651bef6ad4fe716f9c83e50c79206bb1cac0f891422e5ece86",
+    "guard.js": "071fb2c6434400624074940a079d067f82d67a4324e2908b1b5d333be5fcafb7",
+    "sw.js": "2dfe8138dc04ca3ec6026188c22a223efe086536013ddd5edb2a6c11310c637d",
+    "guest-worker.js": "5ec57c27675dddd9447cd0d98a082db6f616820d44ad38b8e04b1bb10543a83f",
+    "guest-shared-worker.js": "962d80c2dce1388257746dfe7b51e0db445683c780e9ba9a0e5e9559fbd81114",
     "__guest_worker_registry__.js": "106b77a615aff3a3bdc0c29b349894b596006a01078a1d7f8c1a167bbce664fc",
     "engine.wasm": "105c3bed22d457e43e3d1c3c1c6959fda62a8fe06f0fc8a985303c3a2be72232"
   },
+  "sensors": [
+    {
+      "profile": "chromium",
+      "requests": [
+        {
+          "path": "/sensor?profile=chromium",
+          "time": 1795052291552
+        }
+      ]
+    },
+    {
+      "profile": "firefox",
+      "requests": [
+        {
+          "path": "/sensor?profile=firefox",
+          "time": 1795052666234
+        }
+      ]
+    },
+    {
+      "profile": "firefox-forced-age",
+      "requests": [
+        {
+          "path": "/sensor?profile=firefox-forced-age",
+          "time": 1795052979552
+        }
+      ]
+    }
+  ],
   "coverage": {
     "passed": true,
     "method": "Zero HTTP and successful paired actions in every profile; physical HTTP sensor per profile; positive native maintenance control per mechanism in at least one profile",
@@ -20,7 +48,7 @@
         "requests": [
           {
             "path": "/sensor?profile=chromium",
-            "time": 1795047970517
+            "time": 1795052291552
           }
         ]
       },
@@ -30,7 +58,7 @@
         "requests": [
           {
             "path": "/sensor?profile=firefox",
-            "time": 1795048849395
+            "time": 1795052666234
           }
         ]
       },
@@ -40,7 +68,7 @@
         "requests": [
           {
             "path": "/sensor?profile=firefox-forced-age",
-            "time": 1795049209861
+            "time": 1795052979552
           }
         ]
       }
@@ -328,35 +356,6 @@
     "violations": [],
     "errors": []
   },
-  "sensors": [
-    {
-      "profile": "chromium",
-      "requests": [
-        {
-          "path": "/sensor?profile=chromium",
-          "time": 1795047970517
-        }
-      ]
-    },
-    {
-      "profile": "firefox",
-      "requests": [
-        {
-          "path": "/sensor?profile=firefox",
-          "time": 1795048849395
-        }
-      ]
-    },
-    {
-      "profile": "firefox-forced-age",
-      "requests": [
-        {
-          "path": "/sensor?profile=firefox-forced-age",
-          "time": 1795049209861
-        }
-      ]
-    }
-  ],
   "samples": [
     {
       "profile": "chromium",
@@ -644,13 +643,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795048185553
+          "time": 1795052490945
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795048185553
+          "time": 1795052490945
         }
       ]
     },
@@ -698,13 +697,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795048219197
+          "time": 1795052524279
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795048219197
+          "time": 1795052524279
         }
       ]
     },
@@ -752,45 +751,45 @@
       "publisher": [
         {
           "path": "/",
-          "time": 1795048252875
+          "time": 1795052556198
         },
         {
           "path": "/",
-          "time": 1795048252883
+          "time": 1795052556202
         },
         {
           "path": "/",
-          "time": 1795048252885
+          "time": 1795052556209
         },
         {
           "path": "/",
-          "time": 1795048252889
+          "time": 1795052556213
         },
         {
           "path": "/main.js",
-          "time": 1795048252894
+          "time": 1795052556216
         },
         {
           "path": "/main.js",
-          "time": 1795048252899
+          "time": 1795052556217
         },
         {
           "path": "/main.js",
-          "time": 1795048252913
+          "time": 1795052556218
         },
         {
           "path": "/main.js",
-          "time": 1795048252923
+          "time": 1795052556226
         },
         {
           "path": "/sw.js",
-          "time": 1795048254728
+          "time": 1795052558043
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795048254728
+          "time": 1795052558043
         }
       ]
     },
@@ -948,13 +947,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795048862140
+          "time": 1795052678746
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795048862140
+          "time": 1795052678746
         }
       ]
     },
@@ -1002,13 +1001,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795048895764
+          "time": 1795052711359
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795048895764
+          "time": 1795052711359
         }
       ]
     },
@@ -1056,13 +1055,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795048935033
+          "time": 1795052744226
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795048935033
+          "time": 1795052744226
         }
       ]
     },
@@ -1110,13 +1109,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795048980540
+          "time": 1795052776670
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795048980540
+          "time": 1795052776670
         }
       ]
     },
@@ -1164,13 +1163,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795049016080
+          "time": 1795052809254
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795049016080
+          "time": 1795052809254
         }
       ]
     },
@@ -1218,17 +1217,17 @@
       "publisher": [
         {
           "path": "/favicon.ico",
-          "time": 1795049051358
+          "time": 1795052840954
         },
         {
           "path": "/sw.js",
-          "time": 1795049052349
+          "time": 1795052841957
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795049052349
+          "time": 1795052841957
         }
       ]
     },
@@ -1276,21 +1275,21 @@
       "publisher": [
         {
           "path": "/",
-          "time": 1795049088929
+          "time": 1795052873376
         },
         {
           "path": "/main.js",
-          "time": 1795049088978
+          "time": 1795052873416
         },
         {
           "path": "/sw.js",
-          "time": 1795049090005
+          "time": 1795052874429
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795049090005
+          "time": 1795052874429
         }
       ]
     },
@@ -1448,13 +1447,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795049222225
+          "time": 1795052992091
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795049222225
+          "time": 1795052992091
         }
       ]
     },
@@ -1502,13 +1501,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795049255897
+          "time": 1795053024685
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795049255897
+          "time": 1795053024685
         }
       ]
     },
@@ -1556,13 +1555,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795049289854
+          "time": 1795053057662
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795049289854
+          "time": 1795053057662
         }
       ]
     },
@@ -1610,13 +1609,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795049322395
+          "time": 1795053089247
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795049322395
+          "time": 1795053089247
         }
       ]
     },
@@ -1664,13 +1663,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795049354588
+          "time": 1795053121832
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795049354588
+          "time": 1795053121832
         }
       ]
     },
@@ -1718,17 +1717,17 @@
       "publisher": [
         {
           "path": "/favicon.ico",
-          "time": 1795049386110
+          "time": 1795053153695
         },
         {
           "path": "/sw.js",
-          "time": 1795049387111
+          "time": 1795053154697
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795049387111
+          "time": 1795053154697
         }
       ]
     },
@@ -1776,21 +1775,21 @@
       "publisher": [
         {
           "path": "/",
-          "time": 1795049418441
+          "time": 1795053186224
         },
         {
           "path": "/main.js",
-          "time": 1795049418474
+          "time": 1795053186270
         },
         {
           "path": "/sw.js",
-          "time": 1795049419484
+          "time": 1795053187278
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795049419484
+          "time": 1795053187278
         }
       ]
     },
@@ -1838,13 +1837,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795049451685
+          "time": 1795053219963
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795049451685
+          "time": 1795053219963
         }
       ]
     },
@@ -1892,13 +1891,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795049483674
+          "time": 1795053252281
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795049483674
+          "time": 1795053252281
         }
       ]
     },
@@ -1946,32 +1945,5 @@
       "publisher": [],
       "updates": []
     }
-  ],
-  "collection": {
-    "method": "Complete Chromium cells retained from first stage, then complete fresh and forced-age Firefox stages; no action samples discarded or repeated.",
-    "sensorHarnessCorrection": "Firefox did not finish load for an empty404 HTTP sensor page. Later stages use successful200 HTML. Only the before-action HTTP sensor changed; all application actions and frozen runtime artifacts are unchanged.",
-    "stages": [
-      {
-        "path": "worker-maintenance-c38-sensor-failure.json",
-        "sha256": "9b9b5f1f026c79d00987ce80659eb58a8332663da8f72f65b66a20faed6417be",
-        "completed": false,
-        "passed": false,
-        "failure": "page.goto: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:44295/sensor?profile=firefox\", waiting until \"load\"\u001b[22m\n\n    at /home/damen/Projects/privacy-frames-wasm-runtime/test/guest-context-maintenance.ts:183:20"
-      },
-      {
-        "path": "worker-maintenance-c38-firefox.json",
-        "sha256": "4fe3d30350e12e6df6f4744f5d6e39c4aec9d11f99775b256587884aa4fccfec",
-        "completed": true,
-        "passed": false,
-        "failure": "AssertionError [ERR_ASSERTION]: worklet: native update was not observed in any tested profile\nresources: native update was not observed in any tested profile\n    at file:///home/damen/Projects/privacy-frames-wasm-runtime/test/guest-context-maintenance.ts:334:3"
-      },
-      {
-        "path": "worker-maintenance-c38-aged.json",
-        "sha256": "334648e4c41c6606c5856ef5feb290fdfe596b102ebbe767c4b86d9883553b88",
-        "completed": true,
-        "passed": true
-      }
-    ],
-    "driverSHA256": "e61ce44899f2abb6f2571b7e533211dceb5e56fd197285a9572abfc97e927dfc"
-  }
+  ]
 }

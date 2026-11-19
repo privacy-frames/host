@@ -7,8 +7,34 @@ interface ReleaseEvidence {
   date: string;
   assets: { site: string; file: string; sha256: string }[];
   githubEntry?: { managerURL: string; runtimeURL: string; installationURL: string };
+  unpublishedPaths: { url: string; status: number; githubEdgeError: boolean }[];
 }
-const evidence: ReleaseEvidence = { date: new Date().toISOString(), assets: [] };
+const evidence: ReleaseEvidence = {
+  date: new Date().toISOString(),
+  assets: [],
+  unpublishedPaths: [],
+};
+
+async function assertUnpublished(url: URL) {
+  const response = await fetch(url, { cache: 'no-store' });
+  const body = await response.text();
+  // GitHub Pages intermittently returns its Varnish error template for missing
+  // paths. Record that hosting error separately from an ordinary missing file.
+  const githubEdgeError =
+    response.status === 503 &&
+    response.headers.get('server') === 'Varnish' &&
+    /<title>Unicorn! &middot; GitHub<\/title>/.test(body);
+  assert(
+    response.status === 404 || githubEdgeError,
+    `Unexpected response for an unpublished path: ${url} (${response.status})`,
+  );
+  assert(!/<script\b/i.test(body), 'Unpublished paths must not execute scripts');
+  evidence.unpublishedPaths.push({
+    url: url.href,
+    status: response.status,
+    githubEdgeError,
+  });
+}
 async function filesUnder(directory: URL, prefix = ''): Promise<string[]> {
   const paths = [];
   for (const item of await readdir(new URL(prefix, directory), { withFileTypes: true })) {
@@ -44,20 +70,14 @@ for (const [site, base, directory] of [
     );
     evidence.assets.push({ site, file, sha256: sha(bytes) });
   }
-  const missing = await fetch(new URL('AAAAAAAAAAA/not-installed/', base));
-  assert.equal(missing.status, 404, 'Static fallback admitted an uncontrolled app');
+  await assertUnpublished(new URL('AAAAAAAAAAA/not-installed/', base));
   for (const path of [
     'notes/index.html',
     'adversary/index.html',
     'ordinary/index.html',
     'resource-lists/notes.uris',
   ]) {
-    const response = await fetch(new URL(path, base), { cache: 'no-store' });
-    assert.equal(
-      response.status,
-      404,
-      'Publisher code must not be served on the trusted ' + site + ' origin',
-    );
+    await assertUnpublished(new URL(path, base));
   }
 }
 for (const id of [
@@ -119,5 +139,5 @@ await writeFile(
 );
 console.log(
   evidence.assets.length,
-  'published assets match release source files; uncontrolled paths return 404.',
+  'published assets match release source files; unpublished paths contain no scripts (404 or recorded GitHub edge errors).',
 );
