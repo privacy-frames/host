@@ -88,6 +88,16 @@ const cases = [
       native.set(localCopy);
       check(native[0] === 9, 'local to native set copies');
       check([...native].join(',') === '9,4,5', 'native typed iterator');
+      const nanMemory = new WebAssembly.Memory({initial: 1});
+      const nanBits = new Uint32Array(nanMemory.buffer);
+      nanBits[0] = 0x7fc01234;
+      const nanSource = new Float32Array(nanMemory.buffer, 0, 1);
+      const nanLocal = new Float32Array(1);
+      nanLocal.set(nanSource);
+      check(new Uint32Array(nanLocal.buffer)[0] === 0x7fc01234, 'mixed native-to-local set preserves raw NaN payload');
+      const nanBorrowed = new Float32Array(1);
+      Float32Array.prototype.set.call(nanBorrowed, nanSource);
+      check(new Uint32Array(nanBorrowed.buffer)[0] === 0x7fc01234, 'borrowed mixed set preserves raw NaN payload');
     `,
   },
   {
@@ -111,6 +121,32 @@ const cases = [
     `,
   },
   {
+    name: 'declared imports use inherited getters without traversing unused fields',
+    source: `
+      const trace = [];
+      const memory = new WebAssembly.Memory({initial: 1, maximum: 3});
+      const namespace = Object.create({
+        get memory() { trace.push('memory'); return memory; },
+        get callback() { trace.push('callback'); return value => value; },
+      });
+      Object.defineProperty(namespace, 'unused', {enumerable: true, get() {
+        throw new Error('undeclared import getter evaluated');
+      }});
+      const imports = Object.create({get env() {trace.push('env'); return namespace;}});
+      const instance = new WebAssembly.Instance(new WebAssembly.Module(plainBytes), imports);
+      check(trace.join(',') === 'env,memory,env,callback', 'declaration-order import getters: ' + trace.join(','));
+      check(instance.exports.roundtrip(2) === 12, 'inherited import fields');
+      const sentinel = new Error('declared import getter sentinel');
+      let same = false;
+      try {
+        new WebAssembly.Instance(new WebAssembly.Module(plainBytes), {
+          env: {get memory() {throw sentinel;}},
+        });
+      } catch (error) {same = error === sentinel;}
+      check(same, 'declared import getter preserves guest exception identity');
+    `,
+  },
+  {
     name: 'async compile and instantiate retain import callbacks',
     source: `
       const memory = new WebAssembly.Memory({initial: 1, maximum: 3});
@@ -129,6 +165,7 @@ const cases = [
 
 const check = (condition: unknown, message: string) => {
   if (!condition) throw new Error(message);
+  console.log('Wasm check: ' + message);
 };
 const workers = new Set<Worker>();
 const workerRoundtrip = (memory: WebAssembly.Memory, module: WebAssembly.Module) =>
@@ -175,6 +212,7 @@ const host: GuestHost = {
 const runCases = async (evaluate: (source: string) => unknown): Promise<CaseResult[]> => {
   const results: CaseResult[] = [];
   for (const test of cases) {
+    console.log('Wasm fixture: ' + test.name);
     try {
       await evaluate(`(async () => {${test.source}})()`);
       results.push({ name: test.name, passed: true });
@@ -197,16 +235,20 @@ try {
       `return ${source}`,
     )(plainBytes, sharedBytes, workerRoundtrip, check),
   );
+  let outcome: NonNullable<typeof globalThis.guestWasmResults>;
+  console.log('Wasm fixture: creating guest engine');
   const engine = await GuestEngine.create({ host, wasmURL: '/quickjs.wasm' });
   try {
+    console.log('Wasm fixture: registering guest fixtures');
     engine.set('plainBytes', plainBytes);
     engine.set('sharedBytes', sharedBytes);
     engine.set('check', check);
     engine.set('workerRoundtrip', workerRoundtrip);
     engine.set('TextDecoder', TextDecoder);
     const guest = await runCases((source) => engine.evaluate(source, 'wasm:fixture'));
-    globalThis.guestWasmResults = { isolated: crossOriginIsolated, native, guest };
+    outcome = { isolated: crossOriginIsolated, native, guest };
   } finally {
+    console.log('Wasm fixture: disposing core engine');
     engine.dispose();
   }
   const transportBytes = new Uint8Array(
@@ -252,10 +294,11 @@ try {
       securitySource,
       'wasm:policy',
     )) as boolean[];
-    globalThis.guestWasmResults!.policy = { control, guest };
+    outcome.policy = { control, guest };
   } finally {
     session.close();
   }
+  globalThis.guestWasmResults = outcome;
 } catch (error) {
   globalThis.guestWasmResults = {
     isolated: crossOriginIsolated,
