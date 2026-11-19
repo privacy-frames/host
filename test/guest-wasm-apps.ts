@@ -212,17 +212,13 @@ async function photo(page: Page, confined: boolean) {
   }, png.toString('base64'));
   await page.locator('canvas').first().dispatchEvent('drop', { dataTransfer: transfer });
   await page.waitForTimeout(2000);
-  const before = await page.screenshot({
-    path: path.join(output, 'photocraft-import.png'),
-  });
+  const before = await page.screenshot();
   await page.mouse.move(570, 350);
   await page.mouse.down();
   await page.mouse.move(620, 400, { steps: 12 });
   await page.mouse.up();
   await page.waitForTimeout(500);
-  const after = await page.screenshot({
-    path: path.join(output, 'photocraft-brush.png'),
-  });
+  const after = await page.screenshot();
   const pixels = await page.evaluate(
     async ({ before, after }) => {
       const values: number[][] = [];
@@ -249,7 +245,6 @@ async function photo(page: Page, confined: boolean) {
   await page.waitForTimeout(250);
   await page.mouse.move(75, 465);
   await page.waitForTimeout(350);
-  await page.screenshot({ path: path.join(output, 'photocraft-menu.png') });
   if (process.env.WASM_APPS_INSPECT) return { inspected: true };
   const exported = await download(page, () => page.mouse.click(350, 100), confined);
   assert.equal(exported.decoded.width, 256);
