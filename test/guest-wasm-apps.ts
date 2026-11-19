@@ -319,7 +319,9 @@ try {
   ] as const) {
     if (process.env.WASM_APPS_BROWSER && name !== process.env.WASM_APPS_BROWSER) continue;
     const softwareDisplay =
-      name === 'firefox' ? process.env.WASM_APPS_FIREFOX_DISPLAY : undefined;
+      name === 'firefox'
+        ? (process.env.WASM_APPS_FIREFOX_DISPLAY ?? process.env.DISPLAY)
+        : undefined;
     const firefoxUserPrefs = {
       'webgl.force-enabled': true,
       'webgl.disabled': false,
