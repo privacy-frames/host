@@ -20,8 +20,8 @@ five third-party applications and a browser-interface fixture in both browsers;
 Pitch Training and Notebook have separate installation checks.
 
 `test/guest-corpus-matrix.ts` runs `test/guest-corpus.ts` for both browsers and
-rejects stale receipts, changed build artifacts and failed tasks. It covers the larger applications and an independent DOM
-compatibility fixture. `test/guest-pitch.ts` also checks native microphone capture,
+rejects stale receipts, changed build artifacts and failed tasks.
+`test/guest-pitch.ts` also checks native microphone capture,
 track shutdown and denied permission. `test/guest-examples.ts` checks local dynamic
 evaluation, prototype extensions, prepared contexts and communication attempts
 against an unrestricted receiver control.
