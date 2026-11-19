@@ -116,6 +116,19 @@ remain inert DOM nodes with source attributes withheld, because deleting them
 breaks ordinary DOM queries. Hidden guest fields stay lazy at native dictionary
 boundaries; structured-clone operations read enumerable application data.
 
+Custom elements use native browser elements and a controlled registry facade.
+Trusted native subclasses enter the guest engine for construction and lifecycle
+callbacks; guest prototype aliases preserve methods and `instanceof`. Callbacks
+and registration metadata are captured through guest property access. The
+native registry stays inside the adapter; the facade returns guest constructors.
+
+A native registry survives while its Window survives. Replacing a child
+document through a logical `src` or `srcdoc` change currently reuses that Window,
+so registering the same custom-element name again can fail. Supporting such
+navigation requires a fresh native blank realm or a design for scoped registries;
+scoped `CustomElementRegistry` construction is currently rejected. Closing a
+guest session disables its old lifecycle callbacks.
+
 Formal models and implementation checks from the native runtime are historical
 research evidence, with the source baseline linked from formal/README.md. They do
 not establish correctness of this implementation. Release qualification uses the
