@@ -255,6 +255,16 @@ globalThis.finished=new Promise(resolve=>{
       spellcheck: node.localName === 'input' ? node.getAttribute('spellcheck') : null,
     }),
   );
+  const logicalAttributes = session.engine.evaluate(`(()=>{
+    const anchor=document.createElement('a');anchor.href='#logical-link';
+    anchor.removeAttribute('href');const removed=!anchor.hasAttribute('href')&&anchor.getAttribute('href')===null;
+    const added=anchor.toggleAttribute('href');const empty=anchor.hasAttribute('href')&&anchor.getAttribute('href')==='';
+    const toggled=anchor.toggleAttribute('href',false);const absent=!anchor.hasAttribute('href')&&anchor.getAttribute('href')===null;
+    const svg=document.createElementNS('http://www.w3.org/2000/svg','a');
+    svg.setAttributeNS('http://www.w3.org/1999/xlink','alias:href','#logical-ns');svg.removeAttributeNS('http://www.w3.org/1999/xlink','href');
+    const removedNS=!svg.hasAttributeNS('http://www.w3.org/1999/xlink','href')&&svg.getAttributeNS('http://www.w3.org/1999/xlink','href')===null;
+    return {removed,added,empty,toggled,absent,removedNS};
+  })()`);
   const namespaceAttempts = session.engine.evaluate(`(()=>{
     const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');document.body.append(svg);
     const blob=URL.createObjectURL(new Blob(['<p>Local SVG destination</p>'],{type:'text/html'}));
@@ -387,6 +397,7 @@ globalThis.finished=new Promise(resolve=>{
     anchors,
     conversions,
     conversionDOM,
+    logicalAttributes,
     namespaceAttempts,
     namespaceDOM,
     namespaceBaseLocal,

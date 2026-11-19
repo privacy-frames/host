@@ -130,6 +130,14 @@ try {
           'removeNamedItemNS',
         ].map((method) => ({ method, href: null, label: false, spellcheck: 'false' })),
       ]);
+      assert.deepEqual(result.logicalAttributes, {
+        removed: true,
+        added: true,
+        empty: true,
+        toggled: false,
+        absent: true,
+        removedNS: true,
+      });
       assert.deepEqual(
         result.namespaceDOM,
         ['setAttributeNS', 'setAttributeNodeNS', 'setNamedItemNS'].map((method) => ({
