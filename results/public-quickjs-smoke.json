@@ -1,6 +1,6 @@
 {
-  "completed": "2026-11-19T02:04:24.527Z",
-  "revision": "bd15d13a084779d8f5767120d2fba43dda63cc67",
+  "completed": "2026-11-19T13:17:01.928Z",
+  "revision": "0ff5bb37df4672d70f5e64d7d437bdf5371380a3",
   "scope": "Actual public manager installation and share flow in fresh automated browser contexts. HTTP observations are Playwright-visible requests/responses, not packet capture or browser-service verification. Private-editing phase must have no HTTP request outside service-worker responses; offline reopening is a separate phase.",
   "metadata": [
     {
@@ -12,8 +12,8 @@
     },
     {
       "url": "https://apps.pf.damenh.com/guard.js",
-      "sha256": "071fb2c6434400624074940a079d067f82d67a4324e2908b1b5d333be5fcafb7",
-      "bytes": 1437860,
+      "sha256": "779836652a4e0fc94188b66e3cdf2682c5880d2493163242622f2672164e479f",
+      "bytes": 1489142,
       "server": "GitHub.com",
       "contentType": "application/javascript; charset=utf-8"
     },
@@ -86,6 +86,16 @@
             "name": "StackEdit",
             "url": "https://privacy-frames.github.io/apps/stackedit/",
             "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/stackedit.uris"
+          },
+          {
+            "name": "PhotoCraft",
+            "url": "https://share.damenh.com/craft/hVO5F2d3gEg2c4hY5/#photo-craft",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/photocraft.uris"
+          },
+          {
+            "name": "Squoosh",
+            "url": "https://privacy-frames.github.io/apps/squoosh/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/squoosh.uris"
           }
         ]
       }
@@ -143,6 +153,16 @@
             "name": "StackEdit",
             "url": "https://privacy-frames.github.io/apps/stackedit/",
             "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/stackedit.uris"
+          },
+          {
+            "name": "PhotoCraft",
+            "url": "https://share.damenh.com/craft/hVO5F2d3gEg2c4hY5/#photo-craft",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/photocraft.uris"
+          },
+          {
+            "name": "Squoosh",
+            "url": "https://privacy-frames.github.io/apps/squoosh/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/squoosh.uris"
           }
         ]
       }
@@ -200,6 +220,16 @@
             "name": "StackEdit",
             "url": "https://privacy-frames.github.io/apps/stackedit/",
             "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/stackedit.uris"
+          },
+          {
+            "name": "PhotoCraft",
+            "url": "https://share.damenh.com/craft/hVO5F2d3gEg2c4hY5/#photo-craft",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/photocraft.uris"
+          },
+          {
+            "name": "Squoosh",
+            "url": "https://privacy-frames.github.io/apps/squoosh/",
+            "resourceListURL": "https://privacy-frames.github.io/apps/resource-lists/squoosh.uris"
           }
         ]
       }
@@ -247,7 +277,9 @@
           "phase": "startup",
           "url": "https://pf.damenh.com/sw.js",
           "method": "GET",
-          "type": "script"
+          "type": "script",
+          "fromServiceWorker": false,
+          "status": 200
         },
         {
           "phase": "startup",
@@ -373,7 +405,9 @@
           "phase": "startup",
           "url": "https://apps.pf.damenh.com/sw.js",
           "method": "GET",
-          "type": "script"
+          "type": "script",
+          "fromServiceWorker": false,
+          "status": 200
         },
         {
           "phase": "startup",
@@ -639,7 +673,7 @@
         },
         {
           "phase": "startup",
-          "url": "blob:https://apps.pf.damenh.com/b3647e03-b135-42a2-997f-6e14ec902ff4",
+          "url": "blob:https://apps.pf.damenh.com/bb597148-8b95-4f7b-9290-504a95b7910c",
           "method": "GET",
           "type": "stylesheet",
           "fromServiceWorker": false,
@@ -647,7 +681,7 @@
         },
         {
           "phase": "startup",
-          "url": "blob:https://apps.pf.damenh.com/e663ba72-504d-4f0b-afaa-f66310647ed7",
+          "url": "blob:https://apps.pf.damenh.com/2b19a97a-c6fe-4833-90ef-17c59bdc839c",
           "method": "GET",
           "type": "image",
           "fromServiceWorker": false,
@@ -677,7 +711,7 @@
         },
         {
           "phase": "offline-reload",
-          "url": "blob:https://apps.pf.damenh.com/16529caa-2ce9-4681-856d-6d0c61defc93",
+          "url": "blob:https://apps.pf.damenh.com/3f800d3d-aa02-4931-b4f6-dbf0621fa409",
           "method": "GET",
           "type": "stylesheet",
           "fromServiceWorker": false,
@@ -685,7 +719,7 @@
         },
         {
           "phase": "offline-reload",
-          "url": "blob:https://apps.pf.damenh.com/1785a958-d5da-49c4-8cd8-ba2ce78e7728",
+          "url": "blob:https://apps.pf.damenh.com/9452dbd1-8f5d-4ff5-9ede-8854d9cf6861",
           "method": "GET",
           "type": "image",
           "fromServiceWorker": false,
@@ -874,7 +908,9 @@
           "phase": "startup",
           "url": "https://apps.pf.damenh.com/sw.js",
           "method": "GET",
-          "type": "script"
+          "type": "script",
+          "fromServiceWorker": false,
+          "status": 200
         },
         {
           "phase": "startup",
@@ -1140,7 +1176,7 @@
         },
         {
           "phase": "startup",
-          "url": "blob:https://apps.pf.damenh.com/442d320c-1b4b-477f-a6cc-a99637d2a94b",
+          "url": "blob:https://apps.pf.damenh.com/1ef89979-95bd-431e-930b-907118882ddc",
           "method": "GET",
           "type": "stylesheet",
           "fromServiceWorker": false,
@@ -1148,7 +1184,7 @@
         },
         {
           "phase": "startup",
-          "url": "blob:https://apps.pf.damenh.com/db8bfb08-0460-46eb-9576-80c5f337034b",
+          "url": "blob:https://apps.pf.damenh.com/d74b71a1-b45a-42ff-82b6-c72a3dfb59fd",
           "method": "GET",
           "type": "image",
           "fromServiceWorker": false,
@@ -1178,7 +1214,7 @@
         },
         {
           "phase": "offline-reload",
-          "url": "blob:https://apps.pf.damenh.com/761ed329-7285-46ba-9588-14e51d7c476d",
+          "url": "blob:https://apps.pf.damenh.com/a033e99c-b78d-46c2-911c-c0b66f0ef7f8",
           "method": "GET",
           "type": "stylesheet",
           "fromServiceWorker": false,
@@ -1186,7 +1222,7 @@
         },
         {
           "phase": "offline-reload",
-          "url": "blob:https://apps.pf.damenh.com/5723d33c-e59f-4edb-80b9-5dfd4ed0e9e8",
+          "url": "blob:https://apps.pf.damenh.com/e60bd85c-29df-44eb-93ab-9dc242cff763",
           "method": "GET",
           "type": "image",
           "fromServiceWorker": false,
