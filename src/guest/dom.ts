@@ -32,6 +32,7 @@ export class GuestDOM {
   private scripts = new WeakMap<Element, ScriptSource>();
   private executed = new WeakSet<Element>();
   private prepared = new WeakSet<Node>();
+  private resourceHints = new WeakMap<Element, { key: string }>();
   private pending: Element[] = [];
   private ready = false;
   private current: Element | null = null;
@@ -165,6 +166,34 @@ export class GuestDOM {
     if (key === 'ping' || key === 'attributionsrc') return false;
     if (key === 'nonce' || key === 'integrity' || key === 'is') return false;
     if (element.localName === 'meta' && key === 'http-equiv') return false;
+    if (key === 'rel' && /(?:preconnect|dns-prefetch|prefetch|prerender)/i.test(value))
+      return false;
+    if (element.localName === 'link' && (key === 'rel' || key === 'href')) {
+      let attributes = this.attributes.get(element);
+      if (!attributes) {
+        attributes = new Map();
+        this.attributes.set(element, attributes);
+      }
+      attributes.set(key, value);
+      const rel =
+        this.logicalAttribute(element, 'rel') ?? element.getAttribute('rel') ?? '';
+      if (this.isResourceHint(rel)) {
+        // Catalog bytes are already cached. Complete the hint from that catalog;
+        // separately inserted scripts still execute through the guest loader.
+        element.removeAttribute('href');
+        if (key === 'rel') element.setAttribute('rel', value);
+        this.resourceHint(element);
+        return false;
+      }
+      this.resourceHints.delete(element);
+      if (key === 'rel') {
+        element.setAttribute('rel', value);
+        const href = this.logicalAttribute(element, 'href');
+        if (href !== undefined)
+          element.setAttribute('href', this.options.resources.nativeURL(href));
+        return false;
+      }
+    }
     if (element.localName === 'script') {
       const script = this.scripts.get(element) || {
         code: element.textContent || '',
@@ -247,8 +276,7 @@ export class GuestDOM {
       return false;
     }
     if (key === 'action' || key === 'formaction') return false;
-    if (key === 'rel' && /(?:preconnect|dns-prefetch|prefetch|prerender)/i.test(value))
-      return false;
+
     return true;
   }
 
@@ -326,6 +354,7 @@ export class GuestDOM {
   connected(node: Node): void {
     if (node.nodeType === Node.ELEMENT_NODE) {
       const element = node as Element;
+      if (element.localName === 'link' && node.isConnected) this.resourceHint(element);
       if (element.localName === 'script' && node.isConnected) {
         if (this.ready) void this.execute(element);
         else if (!this.pending.includes(element)) this.pending.push(element);
@@ -333,6 +362,57 @@ export class GuestDOM {
       if (isHTMLIFrameElement(element) && node.isConnected) this.options.child?.(element);
     }
     for (const child of Array.from(node.childNodes)) this.connected(child);
+  }
+
+  private isResourceHint(rel: string): boolean {
+    return rel
+      .toLowerCase()
+      .split(/\s+/)
+      .some((token) => token === 'preload' || token === 'modulepreload');
+  }
+
+  private resourceHint(element: Element): void {
+    const rel =
+      this.logicalAttribute(element, 'rel') ?? element.getAttribute('rel') ?? '';
+    const href = this.logicalAttribute(element, 'href');
+    if (!this.isResourceHint(rel) || href === undefined || !href) {
+      this.resourceHints.delete(element);
+      return;
+    }
+    element.removeAttribute('href');
+    if (!element.isConnected) return;
+    const url = this.options.resources.resolve(href);
+    const key = rel.toLowerCase() + '\n' + url;
+    if (this.resourceHints.get(element)?.key === key) return;
+    const request = { key };
+    this.resourceHints.set(element, request);
+    queueMicrotask(() => {
+      if (this.resourceHints.get(element) !== request) return;
+      if (!element.isConnected) {
+        this.resourceHints.delete(element);
+        return;
+      }
+      const currentRel =
+        this.logicalAttribute(element, 'rel') ?? element.getAttribute('rel') ?? '';
+      if (
+        !this.isResourceHint(currentRel) ||
+        this.logicalAttribute(element, 'href') !== href
+      ) {
+        this.resourceHints.delete(element);
+        return;
+      }
+      let available = false;
+      try {
+        if (
+          currentRel.toLowerCase().split(/\s+/).includes('modulepreload') ||
+          element.getAttribute('as')?.toLowerCase() === 'script'
+        ) {
+          this.options.resources.source(url);
+          available = true;
+        } else available = this.options.resources.resource(url) !== undefined;
+      } catch {}
+      element.dispatchEvent(new this.eventConstructor(available ? 'load' : 'error'));
+    });
   }
 
   private async execute(element: Element): Promise<void> {
