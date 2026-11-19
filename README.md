@@ -33,6 +33,13 @@ installer uses 4219. Local publisher fixtures use other ports, matching the
 separate production origins. `npm run build` prepares those fixtures from the
 revision in `publisher-source-ref.txt`.
 
+## Sharing
+
+Copy link creates an installation link containing the application URL and any
+supplemental resource list. Opening it installs and launches the app in the same
+tab. An existing installation opens directly. Private files and stored application
+data are not included in the link.
+
 ## Runtime
 
 Guest objects and prototype changes stay in the interpreter. Trusted native code

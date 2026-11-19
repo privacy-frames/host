@@ -78,7 +78,7 @@ export function SharedInstallation({ state, dismiss, library }: Props) {
       : library.status.message
     : state.kind === 'loading'
       ? 'Reading share link…'
-      : 'Checking your local library…';
+      : 'Checking installed applications…';
 
   return (
     <section
@@ -108,7 +108,7 @@ export function SharedInstallation({ state, dismiss, library }: Props) {
                 dismiss();
               }}
             >
-              Back to library
+              Back to applications
             </a>
           </>
         ) : (

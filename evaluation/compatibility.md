@@ -15,7 +15,12 @@ a useful task, reloads offline and checks the result again. Receipts under
 | StackEdit      | Edit Markdown, render its preview and reopen the saved file offline                    |
 | CyberChef      | Run To Base64 and verify the expected output offline                                   |
 
-`test/guest-corpus.ts` covers the larger applications and an independent DOM
+The required interactions pass in Chromium and Firefox. The corpus matrix covers
+five third-party applications and a browser-interface fixture in both browsers;
+Pitch Training and Notebook have separate installation checks.
+
+`test/guest-corpus-matrix.ts` runs `test/guest-corpus.ts` for both browsers and
+rejects stale receipts, changed build artifacts and failed tasks. It covers the larger applications and an independent DOM
 compatibility fixture. `test/guest-pitch.ts` also checks native microphone capture,
 track shutdown and denied permission. `test/guest-examples.ts` checks local dynamic
 evaluation, prototype extensions, prepared contexts and communication attempts

@@ -52,7 +52,7 @@ export async function loadConfig(base: URL): Promise<HostConfig> {
   installationConfiguration(value, installation.origin);
   if (manager.origin !== location.origin) {
     location.replace(manager.href);
-    throw new Error('Opening the application library…');
+    throw new Error('Opening the app manager…');
   }
   if (runtime.origin === manager.origin) {
     throw new Error('Application storage requires a separate runtime origin.');
