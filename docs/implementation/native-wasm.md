@@ -3,7 +3,9 @@
 Application JavaScript and imported JavaScript callbacks run in QuickJS. The
 browser compiles and executes application Wasm. Wasm receives only the imports
 read through the guest engine's property policy; passing a guest `window` alias
-as an import namespace does not expose native browser methods.
+as an import namespace does not expose native browser methods. Function imports
+call back into QuickJS before invoking host operations. Native memory, table and
+global imports retain their actual object identity.
 
 `native-wasm.ts` owns browser Module, Instance, Memory, Table, Global and exception
 objects. Constructor and descriptor routes use the same adapter. Streaming
