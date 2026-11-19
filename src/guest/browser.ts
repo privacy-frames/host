@@ -1098,6 +1098,12 @@ export class BrowserEnvironment {
     key: PropertyKey,
     args: unknown[],
   ): unknown {
+    if (key === 'createProcessingInstruction' && isDocument(receiver)) {
+      if (args.length < target.length)
+        throw new TypeError('Missing processing-instruction argument');
+      args[0] = domString(args[0]);
+      args[1] = domString(args[1]);
+    }
     if ((key === 'click' || key === 'dispatchEvent') && isNode(receiver)) {
       const element = isElement(receiver) ? receiver : receiver.parentElement;
       const anchor = element?.closest('a,area');
@@ -1562,6 +1568,7 @@ export class BrowserEnvironment {
       unused: string,
       url?: string | URL | null,
     ) => {
+      let destination: string | null | undefined = url == null ? url : undefined;
       if (url !== undefined && url !== null) {
         const next = new URL(String(url), native.location.href);
         if (
@@ -1571,10 +1578,11 @@ export class BrowserEnvironment {
           )
         )
           throw new DOMException('History leaves this application', 'SecurityError');
+        destination = next.href;
       }
       return replace
-        ? native.history.replaceState(data, unused, url)
-        : native.history.pushState(data, unused, url);
+        ? native.history.replaceState(data, unused, destination)
+        : native.history.pushState(data, unused, destination);
     };
     return {
       get length() {

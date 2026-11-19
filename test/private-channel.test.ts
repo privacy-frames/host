@@ -153,4 +153,3 @@ test('a private peer that never replies times out', async () => {
     channel.port2.close();
   }
 });
-
