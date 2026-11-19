@@ -85,6 +85,7 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
   }
 
   function kind(value: object): WasmKind | false {
+    if (typeof value === 'function') return false;
     const known = kinds.get(value);
     if (known !== undefined) return known;
     let found: WasmKind | false = false;
