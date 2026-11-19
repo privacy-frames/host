@@ -105,7 +105,10 @@ const publisher = createServer((request, response) => {
   publisherTraffic.push({ path, time: Date.now() });
   response.setHeader('Access-Control-Allow-Origin', '*');
   response.setHeader('Cache-Control', 'no-store');
-  if (path === '/') {
+  if (path.startsWith('/sensor?')) {
+    response.setHeader('Content-Type', 'text/html');
+    response.end('<!doctype html><link rel="icon" href="data:,"><p>HTTP sensor</p>');
+  } else if (path === '/') {
     response.setHeader('Content-Type', 'text/html');
     response.end(html);
   } else if (assets.has(path)) {

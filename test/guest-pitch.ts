@@ -1,11 +1,11 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { mkdir, writeFile, mkdtemp, rm } from 'node:fs/promises';
+import { mkdir, writeFile, mkdtemp, rm, readFile, readdir, stat } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { chromium, firefox } from 'playwright';
 import { parseResourceList } from '../src/installation/resource-list.ts';
-import { provideResourceList } from './resource-list-input.ts';
 import { servers } from './server.ts';
 
 declare global {
@@ -19,16 +19,37 @@ const listURL =
   'https://privacy-frames.github.io/apps/resource-lists/pitch-training.uris';
 const listResponse = await fetch(listURL);
 assert(listResponse.ok, `Resource list returned ${listResponse.status}`);
-const candidates = parseResourceList(await listResponse.text());
-// Supplemental lists are user input. Discard stale publisher entries before pasting;
-// the ordinary HTML discovery path still discovers the current release's assets.
-const checked = await Promise.all(
-  candidates.map(async (url) => {
-    const response = await fetch(url, { method: 'HEAD' });
-    return { url, status: response.status };
-  }),
+const listText = await listResponse.text();
+const resourceCount = parseResourceList(listText).length;
+const listSHA256 = createHash('sha256').update(listText).digest('hex');
+const sourceRevision = execFileSync('git', ['rev-parse', 'HEAD'], {
+  encoding: 'utf8',
+}).trim();
+const sourceChanges = execFileSync('git', ['diff', '--name-only'], { encoding: 'utf8' })
+  .trim()
+  .split('\n')
+  .filter(Boolean);
+const roleHashes = Object.fromEntries(
+  await Promise.all(
+    ['manager', 'runtime', 'installation'].map(async (role) => {
+      const entries = [];
+      for (const path of (await readdir('dist-' + role, { recursive: true })).sort()) {
+        const full = 'dist-' + role + '/' + path;
+        if ((await stat(full)).isFile())
+          entries.push({
+            path,
+            sha256: createHash('sha256')
+              .update(await readFile(full))
+              .digest('hex'),
+          });
+      }
+      return [role, createHash('sha256').update(JSON.stringify(entries)).digest('hex')];
+    }),
+  ),
 );
-const resources = checked.filter(({ status }) => status === 200).map(({ url }) => url);
+const testSHA256 = createHash('sha256')
+  .update(await readFile(new URL(import.meta.url)))
+  .digest('hex');
 const htmlResponse = await fetch(sourceURL);
 assert(htmlResponse.ok);
 const sourceHTML = await htmlResponse.text();
@@ -111,7 +132,6 @@ try {
       await manager.goto('http://127.0.0.1:4210/privacy-frames/');
       await manager.getByText('Ready to install.', { exact: true }).waitFor();
       await manager.locator('#app-url').fill(sourceURL);
-      await provideResourceList(manager, resources);
       await manager.locator('#install button').click();
       await manager.waitForFunction(
         () =>
@@ -124,7 +144,7 @@ try {
       const status = await manager.locator('#status').textContent();
       assert.match(status || '', /^Installed /);
       checks.push(
-        'Installed unchanged public release using an explicit resource URL list',
+        'Installed unchanged public release by pasting its URL with the published default resource list',
       );
       const opened = context.waitForEvent('page');
       await manager.locator('#app-list a[data-app]').first().click();
@@ -323,7 +343,12 @@ try {
         sourceURL,
         listURL,
         hashes,
-        omittedResources: checked.filter((item) => item.status !== 200),
+        resourceCount,
+        listSHA256,
+        sourceRevision,
+        sourceChanges,
+        roleHashes,
+        testSHA256,
         elapsedMs: Math.round(performance.now() - started),
         checks,
         errors,

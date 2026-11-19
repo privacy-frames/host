@@ -1,11 +1,12 @@
 {
   "completed": true,
   "passed": true,
+  "artifactRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17",
   "hashes": {
-    "guard.js": "dde18d6d6cda1b024013fc5b31c5c5d273f97134b13a3f9322667f73f9e6177b",
-    "sw.js": "95412e104869d18a0445ac76ad3cf91b75ccd82f0492f99b8308ba1daae39d5e",
-    "guest-worker.js": "00161b30f835c039b375963b3b71b9fb806788b0ffdf9370f34540d2e2b6f26a",
-    "guest-shared-worker.js": "4a417cc556c3a014c4e2b063d713b93e37ebc3dee635c92bda1defece49aa3be",
+    "guard.js": "e3b5e1a57754f04e7cbb076d55120e361d117cb81533785ca00dd190d60e219b",
+    "sw.js": "cabff7548aa853dc60ebb8d394b0b34beb9bdab4aca59ea6b872b3f5dad06dcb",
+    "guest-worker.js": "2b1970b24dc73ace57e7d0ff0264bfa8cfe38c3c7d8060e05580d10b28d33c92",
+    "guest-shared-worker.js": "66ff2bebfc1e33651bef6ad4fe716f9c83e50c79206bb1cac0f891422e5ece86",
     "__guest_worker_registry__.js": "106b77a615aff3a3bdc0c29b349894b596006a01078a1d7f8c1a167bbce664fc",
     "engine.wasm": "105c3bed22d457e43e3d1c3c1c6959fda62a8fe06f0fc8a985303c3a2be72232"
   },
@@ -15,91 +16,31 @@
     "sensorCoverage": [
       {
         "profile": "chromium",
-        "source": "captured native operation",
+        "source": "uncached native HTTP control",
         "requests": [
           {
-            "path": "/sw.js",
-            "time": 1795043701078
-          },
-          {
-            "path": "/sw.js",
-            "time": 1795043734311
+            "path": "/sensor?profile=chromium",
+            "time": 1795047970517
           }
         ]
       },
       {
         "profile": "firefox",
-        "source": "captured native operation",
+        "source": "uncached native HTTP control",
         "requests": [
           {
-            "path": "/sw.js",
-            "time": 1795043857196
-          },
-          {
-            "path": "/sw.js",
-            "time": 1795043889297
-          },
-          {
-            "path": "/sw.js",
-            "time": 1795043921588
-          },
-          {
-            "path": "/sw.js",
-            "time": 1795043954153
-          },
-          {
-            "path": "/sw.js",
-            "time": 1795043986700
-          },
-          {
-            "path": "/favicon.ico",
-            "time": 1795044018316
-          },
-          {
-            "path": "/sw.js",
-            "time": 1795044019319
+            "path": "/sensor?profile=firefox",
+            "time": 1795048849395
           }
         ]
       },
       {
         "profile": "firefox-forced-age",
-        "source": "captured native operation",
+        "source": "uncached native HTTP control",
         "requests": [
           {
-            "path": "/sw.js",
-            "time": 1795044145740
-          },
-          {
-            "path": "/sw.js",
-            "time": 1795044177946
-          },
-          {
-            "path": "/sw.js",
-            "time": 1795044210296
-          },
-          {
-            "path": "/sw.js",
-            "time": 1795044242697
-          },
-          {
-            "path": "/sw.js",
-            "time": 1795044275009
-          },
-          {
-            "path": "/favicon.ico",
-            "time": 1795044306555
-          },
-          {
-            "path": "/sw.js",
-            "time": 1795044307558
-          },
-          {
-            "path": "/sw.js",
-            "time": 1795044341264
-          },
-          {
-            "path": "/sw.js",
-            "time": 1795044373562
+            "path": "/sensor?profile=firefox-forced-age",
+            "time": 1795049209861
           }
         ]
       }
@@ -143,6 +84,14 @@
       },
       {
         "kind": "popup",
+        "profiles": [
+          "chromium",
+          "firefox",
+          "firefox-forced-age"
+        ]
+      },
+      {
+        "kind": "modifier",
         "profiles": [
           "chromium",
           "firefox",
@@ -251,6 +200,12 @@
       },
       {
         "profile": "chromium",
+        "kind": "modifier",
+        "samples": 1,
+        "positiveSamples": 1
+      },
+      {
+        "profile": "chromium",
         "kind": "worklet",
         "samples": 1,
         "positiveSamples": 0
@@ -299,6 +254,12 @@
       },
       {
         "profile": "firefox",
+        "kind": "modifier",
+        "samples": 1,
+        "positiveSamples": 1
+      },
+      {
+        "profile": "firefox",
         "kind": "worklet",
         "samples": 1,
         "positiveSamples": 0
@@ -347,6 +308,12 @@
       },
       {
         "profile": "firefox-forced-age",
+        "kind": "modifier",
+        "samples": 1,
+        "positiveSamples": 1
+      },
+      {
+        "profile": "firefox-forced-age",
         "kind": "worklet",
         "samples": 1,
         "positiveSamples": 1
@@ -361,6 +328,35 @@
     "violations": [],
     "errors": []
   },
+  "sensors": [
+    {
+      "profile": "chromium",
+      "requests": [
+        {
+          "path": "/sensor?profile=chromium",
+          "time": 1795047970517
+        }
+      ]
+    },
+    {
+      "profile": "firefox",
+      "requests": [
+        {
+          "path": "/sensor?profile=firefox",
+          "time": 1795048849395
+        }
+      ]
+    },
+    {
+      "profile": "firefox-forced-age",
+      "requests": [
+        {
+          "path": "/sensor?profile=firefox-forced-age",
+          "time": 1795049209861
+        }
+      ]
+    }
+  ],
   "samples": [
     {
       "profile": "chromium",
@@ -648,13 +644,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795043701078
+          "time": 1795048185553
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795043701078
+          "time": 1795048185553
         }
       ]
     },
@@ -702,13 +698,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795043734311
+          "time": 1795048219197
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795043734311
+          "time": 1795048219197
         }
       ]
     },
@@ -727,6 +723,92 @@
       "profile": "chromium",
       "version": "153.0.8010.12",
       "kind": "popup",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "modifier",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "modifier",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [
+        {
+          "path": "/",
+          "time": 1795048252875
+        },
+        {
+          "path": "/",
+          "time": 1795048252883
+        },
+        {
+          "path": "/",
+          "time": 1795048252885
+        },
+        {
+          "path": "/",
+          "time": 1795048252889
+        },
+        {
+          "path": "/main.js",
+          "time": 1795048252894
+        },
+        {
+          "path": "/main.js",
+          "time": 1795048252899
+        },
+        {
+          "path": "/main.js",
+          "time": 1795048252913
+        },
+        {
+          "path": "/main.js",
+          "time": 1795048252923
+        },
+        {
+          "path": "/sw.js",
+          "time": 1795048254728
+        }
+      ],
+      "updates": [
+        {
+          "path": "/sw.js",
+          "time": 1795048254728
+        }
+      ]
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "modifier",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "modifier",
       "confined": true,
       "bit": "1",
       "result": "ready",
@@ -866,13 +948,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795043857196
+          "time": 1795048862140
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795043857196
+          "time": 1795048862140
         }
       ]
     },
@@ -920,13 +1002,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795043889297
+          "time": 1795048895764
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795043889297
+          "time": 1795048895764
         }
       ]
     },
@@ -974,13 +1056,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795043921588
+          "time": 1795048935033
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795043921588
+          "time": 1795048935033
         }
       ]
     },
@@ -1028,13 +1110,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795043954153
+          "time": 1795048980540
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795043954153
+          "time": 1795048980540
         }
       ]
     },
@@ -1082,13 +1164,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795043986700
+          "time": 1795049016080
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795043986700
+          "time": 1795049016080
         }
       ]
     },
@@ -1136,17 +1218,17 @@
       "publisher": [
         {
           "path": "/favicon.ico",
-          "time": 1795044018316
+          "time": 1795049051358
         },
         {
           "path": "/sw.js",
-          "time": 1795044019319
+          "time": 1795049052349
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795044019319
+          "time": 1795049052349
         }
       ]
     },
@@ -1165,6 +1247,68 @@
       "profile": "firefox",
       "version": "155.0",
       "kind": "popup",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "modifier",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "modifier",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [
+        {
+          "path": "/",
+          "time": 1795049088929
+        },
+        {
+          "path": "/main.js",
+          "time": 1795049088978
+        },
+        {
+          "path": "/sw.js",
+          "time": 1795049090005
+        }
+      ],
+      "updates": [
+        {
+          "path": "/sw.js",
+          "time": 1795049090005
+        }
+      ]
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "modifier",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "modifier",
       "confined": true,
       "bit": "1",
       "result": "ready",
@@ -1304,13 +1448,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795044145740
+          "time": 1795049222225
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795044145740
+          "time": 1795049222225
         }
       ]
     },
@@ -1358,13 +1502,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795044177946
+          "time": 1795049255897
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795044177946
+          "time": 1795049255897
         }
       ]
     },
@@ -1412,13 +1556,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795044210296
+          "time": 1795049289854
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795044210296
+          "time": 1795049289854
         }
       ]
     },
@@ -1466,13 +1610,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795044242697
+          "time": 1795049322395
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795044242697
+          "time": 1795049322395
         }
       ]
     },
@@ -1520,13 +1664,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795044275009
+          "time": 1795049354588
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795044275009
+          "time": 1795049354588
         }
       ]
     },
@@ -1574,17 +1718,17 @@
       "publisher": [
         {
           "path": "/favicon.ico",
-          "time": 1795044306555
+          "time": 1795049386110
         },
         {
           "path": "/sw.js",
-          "time": 1795044307558
+          "time": 1795049387111
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795044307558
+          "time": 1795049387111
         }
       ]
     },
@@ -1603,6 +1747,68 @@
       "profile": "firefox-forced-age",
       "version": "155.0",
       "kind": "popup",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "modifier",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "modifier",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [
+        {
+          "path": "/",
+          "time": 1795049418441
+        },
+        {
+          "path": "/main.js",
+          "time": 1795049418474
+        },
+        {
+          "path": "/sw.js",
+          "time": 1795049419484
+        }
+      ],
+      "updates": [
+        {
+          "path": "/sw.js",
+          "time": 1795049419484
+        }
+      ]
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "modifier",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "modifier",
       "confined": true,
       "bit": "1",
       "result": "ready",
@@ -1632,13 +1838,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795044341264
+          "time": 1795049451685
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795044341264
+          "time": 1795049451685
         }
       ]
     },
@@ -1686,13 +1892,13 @@
       "publisher": [
         {
           "path": "/sw.js",
-          "time": 1795044373562
+          "time": 1795049483674
         }
       ],
       "updates": [
         {
           "path": "/sw.js",
-          "time": 1795044373562
+          "time": 1795049483674
         }
       ]
     },
@@ -1741,30 +1947,31 @@
       "updates": []
     }
   ],
-  "reEvaluation": {
-    "sourceReceipt": "worker-maintenance-strict-per-profile.json",
-    "sourceSHA256": "e458e11cd57dcc2b707ccc5a78ef7c1951194571f4cb564af5f1e4316255d80b",
-    "strictRunnerSHA256": "27b2588d89cf61465c10c3554e62718ce6c895b608be20c9cb80e04f39a6ffc1",
-    "strictFailure": "AssertionError [ERR_ASSERTION]: Native worker update control did not demonstrate the browser behavior\n+ actual - expected\n\n+ [\n+   {\n+     kind: 'classic',\n+     profile: 'chromium'\n+   },\n+   {\n+     kind: 'dynamic',\n+     profile: 'chromium'\n+   },\n+   {\n+     kind: 'module',\n+     profile: 'chromium'\n+   },\n+   {\n+     kind: 'shared',\n+     profile: 'chromium'\n+   }\n+ ]\n- []\n\n    at file:///home/damen/Projects/privacy-frames-wasm-runtime/test/guest-context-maintenance.ts:320:10",
-    "unobservedStrictControls": [
+  "collection": {
+    "method": "Complete Chromium cells retained from first stage, then complete fresh and forced-age Firefox stages; no action samples discarded or repeated.",
+    "sensorHarnessCorrection": "Firefox did not finish load for an empty404 HTTP sensor page. Later stages use successful200 HTML. Only the before-action HTTP sensor changed; all application actions and frozen runtime artifacts are unchanged.",
+    "stages": [
       {
-        "profile": "chromium",
-        "kind": "classic"
+        "path": "worker-maintenance-c38-sensor-failure.json",
+        "sha256": "9b9b5f1f026c79d00987ce80659eb58a8332663da8f72f65b66a20faed6417be",
+        "completed": false,
+        "passed": false,
+        "failure": "page.goto: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:44295/sensor?profile=firefox\", waiting until \"load\"\u001b[22m\n\n    at /home/damen/Projects/privacy-frames-wasm-runtime/test/guest-context-maintenance.ts:183:20"
       },
       {
-        "profile": "chromium",
-        "kind": "dynamic"
+        "path": "worker-maintenance-c38-firefox.json",
+        "sha256": "4fe3d30350e12e6df6f4744f5d6e39c4aec9d11f99775b256587884aa4fccfec",
+        "completed": true,
+        "passed": false,
+        "failure": "AssertionError [ERR_ASSERTION]: worklet: native update was not observed in any tested profile\nresources: native update was not observed in any tested profile\n    at file:///home/damen/Projects/privacy-frames-wasm-runtime/test/guest-context-maintenance.ts:334:3"
       },
       {
-        "profile": "chromium",
-        "kind": "module"
-      },
-      {
-        "profile": "chromium",
-        "kind": "shared"
+        "path": "worker-maintenance-c38-aged.json",
+        "sha256": "334648e4c41c6606c5856ef5feb290fdfe596b102ebbe767c4b86d9883553b88",
+        "completed": true,
+        "passed": true
       }
     ],
-    "evaluatorSHA256": "497ccf3452caa2e453a4c7165468c903a2d878961b9b13c668f713129efcf70c",
-    "method": "Re-evaluates the unchanged completed browser observations; no browser samples repeated or discarded. Per-profile HTTP sensors are demonstrated by recorded native iframe/popup requests. Fresh Chromium worker update scheduling remains explicitly unobserved."
+    "driverSHA256": "e61ce44899f2abb6f2571b7e533211dceb5e56fd197285a9572abfc97e927dfc"
   }
 }
