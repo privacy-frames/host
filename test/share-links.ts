@@ -188,7 +188,8 @@ try {
           .filter((request) => request.port === 4366 || request.port === 4218),
         [],
       );
-      const control = await context.newPage();
+      const controlContext = await browser.newContext();
+      const control = await controlContext.newPage();
       await control.goto('http://127.0.0.1:4218/review/');
       assert.equal(
         await control.evaluate(async () =>
@@ -203,7 +204,7 @@ try {
             (request) => request.port === 4366 && request.path === '/share-link-probe',
           ),
       );
-      await control.close();
+      await controlContext.close();
       checks.push(
         'Server traffic and a working unrestricted control confirm that the automatically opened application remains confined',
       );
