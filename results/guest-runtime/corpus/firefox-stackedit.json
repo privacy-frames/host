@@ -1,0 +1,23 @@
+{
+  "id": "stackedit",
+  "url": "http://127.0.0.1:4512/apps/stackedit/",
+  "started": "2026-11-19T00:31:20.438Z",
+  "browser": "155.0",
+  "guardHash": "e3b5e1a57754f04e7cbb076d55120e361d117cb81533785ca00dd190d60e219b",
+  "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
+  "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17",
+  "publisherSource": "Existing static publisher mirrors; app files served byte-for-byte without test modifications",
+  "errors": [
+    "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]",
+    "JSHandle@object",
+    "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]"
+  ],
+  "failedRequests": [],
+  "installation": "Installed StackEdit.",
+  "runtime": "ready",
+  "task": "Markdown edited, preview rendered and note committed to IndexedDB",
+  "passed": false,
+  "error": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.cl-preview-section h1').getByText('Synthetic evaluation', { exact: true }) to be visible\u001b[22m\n\n    at <anonymous> (/home/damen/Projects/privacy-frames-wasm-runtime/test/guest-corpus.ts:463:12)",
+  "completed": "2026-11-19T00:31:59.713Z",
+  "text": "Welcome file\n# Welcome to StackEdit!\n\n\nHi! I'm your first Markdown file in **StackEdit**. If you want to learn about StackEdit, you can read me. If you want to play with Markdown, you can edit me. Once you have finished with me, you can create new files by opening the **file explorer** on the left corner of the navigation bar.\n\n\n\n# Files\n\n\nStackEdit stores your files in your browser, which means all your files are automatically saved locally and are accessible **offline!**\n\n\n## Create files and folders\n\n\nThe file explorer is accessible using the button in left corner of the navigation bar. You can create a new file by clicking the **New file** button in the file explorer. You can also create folders by clicking the **New folder** button.\n\n\n## Switch to another file\n\n\nAll your files and folders are presented as a tree in the file explorer. You can switch from one to another by clicking a file in the tree.\n\n\n## Rename a file\n\n\nYou can rename the current file by clicking the file name in the navigation bar or by clicking the **Rename** button in the file explorer.\n\n\n## Delete a file\n\n\nYou can delete the current file by clicking the **Remove** button in the file explorer. The file will be moved into the **Trash** folder and automatically deleted after 7 days of inactivity.\n\n\n## Export a file\n\n\nYou can export the current file by clicking **Export to disk** in the menu. You can choose to export the file as plain Markdown, as HTML using a Handlebars template or as a PDF.\n\n\n\n# Synchronization\n\n\nSynchronization is one of the biggest features of StackEdit. It enables you to synchronize any file in your workspace with other files stored in your **Google Drive**, your **Dropbox** and your **GitHub** accounts. This allows you to keep writing on other devices, collaborate with people you share the file with, integrate easily into your workflow... The synchronization mechanism takes place every minute in the background, downloading, merging, and uploading file modifications.\n\n\nThere are two types of synchronization and they can complement each other:\n\n\n- The workspace synchronization will sync all your files, folders and settings automatically. This will allow you to fetch your workspace on any other device.\n\t> To start syncing your workspace, just sign in with Google in the menu.\n\n- The file synchronization will keep one file of the workspace synced with one or multiple files in **Google Drive**, **Dropbox** or **GitHub**.\n\t> Before starting to sync files, you must link an account in the **Synchronize** sub-menu.\n\n\n## Open a file\n\n\nYou can open a file from **Google Drive**, **Dropbox** or **GitHub** by opening the **Synchronize** sub-menu and clicking **Open from**. Once opened in the workspace, any modification in the file will be automatically synced.\n\n\n## Save a file\n\n\nYou can save any file of the workspace to **Google Drive**, **Dropbox** or **GitHub** by opening the **Synchronize** sub-menu and clicking **Save on**. Even if a file in the workspace is alre"
+}

@@ -48,16 +48,14 @@ interface CorpusReceipt {
 
 for (const browser of browsers) {
   const started = Date.now();
+  const environment: NodeJS.ProcessEnv = { ...process.env, CORPUS_BROWSER: browser };
+  delete environment.CORPUS_TARGET;
+  delete environment.CORPUS_GUARD;
+  delete environment.CORPUS_CAPTURE_STORAGE;
   exitCodes[browser] = await new Promise<number>((resolve, reject) => {
     const child = spawn(process.execPath, ['--import', 'tsx', 'test/guest-corpus.ts'], {
       stdio: 'inherit',
-      env: {
-        ...process.env,
-        CORPUS_BROWSER: browser,
-        CORPUS_TARGET: '',
-        CORPUS_GUARD: '',
-        CORPUS_CAPTURE_STORAGE: '',
-      },
+      env: environment,
     });
     child.once('error', reject);
     child.once('exit', (code) => resolve(code ?? 1));

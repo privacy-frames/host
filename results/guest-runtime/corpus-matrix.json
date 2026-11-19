@@ -1,0 +1,218 @@
+{
+  "sourceRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17",
+  "artifacts": {
+    ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "__guest_worker_registry__.js": "106b77a615aff3a3bdc0c29b349894b596006a01078a1d7f8c1a167bbce664fc",
+    "config.json": "35cd085b76fe1d71a3bb924d313a7eeb7437553b1d5414f61fb660e6931de690",
+    "connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
+    "connect.js": "32a672be00cf28559a8d51f34d25b5f81eec6bbc17382d4ed0bd646d7d4a310b",
+    "engine.wasm": "105c3bed22d457e43e3d1c3c1c6959fda62a8fe06f0fc8a985303c3a2be72232",
+    "guard.js": "e3b5e1a57754f04e7cbb076d55120e361d117cb81533785ca00dd190d60e219b",
+    "guest-shared-worker.js": "66ff2bebfc1e33651bef6ad4fe716f9c83e50c79206bb1cac0f891422e5ece86",
+    "guest-worker.js": "2b1970b24dc73ace57e7d0ff0264bfa8cfe38c3c7d8060e05580d10b28d33c92",
+    "guest-worklet.js": "3ba030df5d917327f208888c79c94baf36c5649d46c968a3a1b2752c75439d37",
+    "host.css": "5053a45ecaca74a28e8dd218fcc5f22463798d129d3034483bdceab4453fa22f",
+    "index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
+    "pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+    "pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+    "report.html": "9daca5eebb03c04870c177df4a4813a183ac3dd8b9d962bd058b528926b7225b",
+    "sw.js": "cabff7548aa853dc60ebb8d394b0b34beb9bdab4aca59ea6b872b3f5dad06dcb"
+  },
+  "exitCodes": {
+    "chromium": 0,
+    "firefox": 1
+  },
+  "observations": [
+    {
+      "application": "bindings",
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "passed": true,
+      "task": "Guest-local prototype extension, callback traversal and inert native object movement passed",
+      "offlineTask": "Guest-local prototype extension, callback traversal and inert native object movement passed",
+      "optionalResourceFailures": [],
+      "runtimeErrors": [],
+      "otherConsoleDiagnostics": [],
+      "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
+      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+    },
+    {
+      "application": "wikipedia",
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "passed": true,
+      "task": "Article rendered and scrolled to final section",
+      "offlineTask": "Article rendered and scrolled to final section",
+      "optionalResourceFailures": [],
+      "runtimeErrors": [],
+      "otherConsoleDiagnostics": [],
+      "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
+      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+    },
+    {
+      "application": "excalidraw",
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "passed": true,
+      "task": "Rectangle drawn on native canvas and persisted",
+      "offlineTask": "Rectangle drawn on native canvas and persisted",
+      "optionalResourceFailures": [
+        "TypeError: Script resource is not installed: https://scripts.simpleanalyticscdn.com/latest.js\n    at GuestResources.source (http://127.0.0.1:4511/runtime/guard.js:15453:15)\n    at GuestDOM.execute (http://127.0.0.1:4511/runtime/guard.js:24372:65)\n    at GuestDOM.connected (http://127.0.0.1:4511/runtime/guard.js:24347:37)\n    at BrowserEnvironment.invoke (http://127.0.0.1:4511/runtime/guard.js:44164:76)\n    at HTMLBodyElement.appendChild (http://127.0.0.1:4511/runtime/guard.js:43705:31)\n    at Object.call (http://127.0.0.1:4511/runtime/guard.js:43329:51)\n    at _GuestEngine.dispatch (http://127.0.0.1:4511/runtime/guard.js:45278:32)\n    at WeakLifetime.<anonymous> (http://127.0.0.1:4511/runtime/guard.js:45023:23)\n    at QuickJSContext.<anonymous> (http://127.0.0.1:4511/runtime/guard.js:3397:48)\n    at next (<anonymous>)",
+        "TypeError: Script resource is not installed: https://scripts.simpleanalyticscdn.com/latest.js\n    at GuestResources.source (http://127.0.0.1:4511/runtime/guard.js:15453:15)\n    at GuestDOM.execute (http://127.0.0.1:4511/runtime/guard.js:24372:65)\n    at GuestDOM.connected (http://127.0.0.1:4511/runtime/guard.js:24347:37)\n    at BrowserEnvironment.invoke (http://127.0.0.1:4511/runtime/guard.js:44164:76)\n    at HTMLBodyElement.appendChild (http://127.0.0.1:4511/runtime/guard.js:43705:31)\n    at Object.call (http://127.0.0.1:4511/runtime/guard.js:43329:51)\n    at _GuestEngine.dispatch (http://127.0.0.1:4511/runtime/guard.js:45278:32)\n    at WeakLifetime.<anonymous> (http://127.0.0.1:4511/runtime/guard.js:45023:23)\n    at QuickJSContext.<anonymous> (http://127.0.0.1:4511/runtime/guard.js:3397:48)\n    at next (<anonymous>)"
+      ],
+      "runtimeErrors": [],
+      "otherConsoleDiagnostics": [
+        "Failed to load resource: the server responded with a status of 404 (Not Found)"
+      ],
+      "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
+      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+    },
+    {
+      "application": "drawio",
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "passed": true,
+      "task": "Shape dragged into diagram",
+      "offlineTask": "Shape dragged into diagram",
+      "optionalResourceFailures": [],
+      "runtimeErrors": [],
+      "otherConsoleDiagnostics": [],
+      "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
+      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+    },
+    {
+      "application": "stackedit",
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "passed": true,
+      "task": "Markdown edited, preview rendered and note committed to IndexedDB",
+      "offlineTask": "Markdown edited, preview rendered and note committed to IndexedDB",
+      "offlinePersistence": true,
+      "optionalResourceFailures": [
+        "TypeError: Script resource is not installed: https://apis.google.com/js/api.js?1795048102116\n    at GuestResources.source (http://127.0.0.1:4511/runtime/guard.js:15453:15)\n    at GuestDOM.execute (http://127.0.0.1:4511/runtime/guard.js:24372:65)\n    at GuestDOM.connected (http://127.0.0.1:4511/runtime/guard.js:24347:37)\n    at BrowserEnvironment.invoke (http://127.0.0.1:4511/runtime/guard.js:44164:76)\n    at HTMLHeadElement.appendChild (http://127.0.0.1:4511/runtime/guard.js:43705:31)\n    at Object.call (http://127.0.0.1:4511/runtime/guard.js:43329:51)\n    at _GuestEngine.dispatch (http://127.0.0.1:4511/runtime/guard.js:45278:32)\n    at WeakLifetime.<anonymous> (http://127.0.0.1:4511/runtime/guard.js:45023:23)\n    at QuickJSContext.<anonymous> (http://127.0.0.1:4511/runtime/guard.js:3397:48)\n    at next (<anonymous>)"
+      ],
+      "runtimeErrors": [],
+      "otherConsoleDiagnostics": [],
+      "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
+      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+    },
+    {
+      "application": "cyberchef",
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "passed": true,
+      "task": "To Base64 produced expected output",
+      "offlineTask": "To Base64 produced expected output",
+      "optionalResourceFailures": [],
+      "runtimeErrors": [],
+      "otherConsoleDiagnostics": [],
+      "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
+      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+    },
+    {
+      "application": "bindings",
+      "browser": "firefox",
+      "version": "155.0",
+      "passed": true,
+      "task": "Guest-local prototype extension, callback traversal and inert native object movement passed",
+      "offlineTask": "Guest-local prototype extension, callback traversal and inert native object movement passed",
+      "optionalResourceFailures": [],
+      "runtimeErrors": [],
+      "otherConsoleDiagnostics": [
+        "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]",
+        "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]"
+      ],
+      "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
+      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+    },
+    {
+      "application": "wikipedia",
+      "browser": "firefox",
+      "version": "155.0",
+      "passed": true,
+      "task": "Article rendered and scrolled to final section",
+      "offlineTask": "Article rendered and scrolled to final section",
+      "optionalResourceFailures": [],
+      "runtimeErrors": [],
+      "otherConsoleDiagnostics": [
+        "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]",
+        "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]"
+      ],
+      "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
+      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+    },
+    {
+      "application": "excalidraw",
+      "browser": "firefox",
+      "version": "155.0",
+      "passed": true,
+      "task": "Rectangle drawn on native canvas and persisted",
+      "offlineTask": "Rectangle drawn on native canvas and persisted",
+      "optionalResourceFailures": [],
+      "runtimeErrors": [],
+      "otherConsoleDiagnostics": [
+        "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]",
+        "JSHandle@object",
+        "[JavaScript Error: \"downloadable font: font load failed (font-family: \"Excalifont\" style:normal weight:400 width:100 src index:0): status=2147500037 source: data:application/octet-stream,\"]",
+        "[JavaScript Error: \"downloadable font: font load failed (font-family: \"Excalifont\" style:normal weight:400 width:100 src index:1): status=2147500037 source: data:application/octet-stream,\"]",
+        "[JavaScript Error: \"downloadable font: font load failed (font-family: \"Excalifont\" style:normal weight:400 width:100 src index:2): status=2147500037 source: data:application/octet-stream,\"]",
+        "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]",
+        "JSHandle@object"
+      ],
+      "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
+      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+    },
+    {
+      "application": "drawio",
+      "browser": "firefox",
+      "version": "155.0",
+      "passed": true,
+      "task": "Shape dragged into diagram",
+      "offlineTask": "Shape dragged into diagram",
+      "optionalResourceFailures": [],
+      "runtimeErrors": [],
+      "otherConsoleDiagnostics": [
+        "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]",
+        "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]"
+      ],
+      "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
+      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+    },
+    {
+      "application": "stackedit",
+      "browser": "firefox",
+      "version": "155.0",
+      "passed": false,
+      "task": "Markdown edited, preview rendered and note committed to IndexedDB",
+      "optionalResourceFailures": [],
+      "runtimeErrors": [],
+      "otherConsoleDiagnostics": [
+        "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]",
+        "JSHandle@object",
+        "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]"
+      ],
+      "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
+      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+    },
+    {
+      "application": "cyberchef",
+      "browser": "firefox",
+      "version": "155.0",
+      "passed": true,
+      "task": "To Base64 produced expected output",
+      "offlineTask": "To Base64 produced expected output",
+      "optionalResourceFailures": [],
+      "runtimeErrors": [],
+      "otherConsoleDiagnostics": [
+        "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]",
+        "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]"
+      ],
+      "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
+      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+    }
+  ],
+  "failures": [
+    "firefox: corpus runner exited 1",
+    "firefox/stackedit: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.cl-preview-section h1').getByText('Synthetic evaluation', { exact: true }) to be visible\u001b[22m\n\n    at <anonymous> (/home/damen/Projects/privacy-frames-wasm-runtime/test/guest-corpus.ts:463:12)"
+  ]
+}
