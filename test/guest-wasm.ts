@@ -58,11 +58,19 @@ try {
     ['chromium', chromium],
     ['firefox', firefox],
   ] as const) {
-    const browser = await type.launch({ headless: true });
+    // The bundled headless shell crashes on native Wasm memory traps; the full
+    // Chromium binary correctly delivers the JavaScript RuntimeError control.
+    const browser = await type.launch({
+      headless: true,
+      ...(name === 'chromium' ? { executablePath: chromium.executablePath() } : {}),
+    });
     try {
       const initialRequests = requests.length;
       const page = await browser.newPage();
       const errors: string[] = [];
+      page.on('console', (message) =>
+        console.log(`[${name}] ${message.type()}: ${message.text()}`),
+      );
       page.on('pageerror', (error) => errors.push(error.message));
       await page.goto(`http://127.0.0.1:${address.port}`);
       await page.waitForFunction(
@@ -116,8 +124,8 @@ for (const observation of observations) {
   assert.deepEqual(result.policy?.control, [true, true]);
   assert.deepEqual(result.policy?.guest, [false, false]);
   assert.deepEqual(observation.requests, ['/import-probe', '/constructor-probe']);
-  assert.equal(result.native.length, 4);
-  assert.equal(result.guest.length, 4);
+  assert.equal(result.native.length, 5);
+  assert.equal(result.guest.length, 5);
   for (const test of [...result.native, ...result.guest])
     assert(test.passed, JSON.stringify(test));
 }
