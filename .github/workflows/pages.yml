@@ -21,10 +21,14 @@ jobs:
       - run: npm run typecheck
       - run: npm run format:check
       - run: npm run build
-      - name: Use the Ubuntu HTTPS archive for browser dependencies
+      - name: Use prioritized HTTPS mirrors for browser dependencies
         run: |
-          printf '%s\n' 'https://archive.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt > /dev/null
-          printf '%s\n' 'https://security.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors-security.txt > /dev/null
+          printf '%s\tpriority:%s\n' \
+            'https://azure.archive.ubuntu.com/ubuntu/' 1 \
+            'https://mirrors.edge.kernel.org/ubuntu/' 2 \
+            'https://archive.ubuntu.com/ubuntu/' 3 \
+            'https://security.ubuntu.com/ubuntu/' 4 \
+            | sudo tee /etc/apt/apt-mirrors.txt /etc/apt/apt-mirrors-security.txt > /dev/null
       - run: npx playwright install --with-deps chromium firefox
         timeout-minutes: 10
       - name: Prepare native audio and software graphics
