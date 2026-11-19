@@ -257,15 +257,104 @@ async function photo(page: Page, confined: boolean) {
     screenPixels: pixels,
   };
 }
+async function comparisonHandle(page: Page) {
+  const handle = page.locator('two-up > [class*="two-up-handle"]').first();
+  const before = await handle.boundingBox();
+  assert(
+    before && before.width >= 10 && before.width <= 80 && before.height > 500,
+    'Comparison handle is rendered as a narrow full-height control',
+  );
+  const splitBefore = await page
+    .locator('two-up')
+    .evaluate((element) =>
+      parseFloat(getComputedStyle(element).getPropertyValue('--split-point')),
+    );
+  const start = { x: before.x + before.width / 2, y: before.y + before.height / 2 };
+  const clip = {
+    x: Math.round(start.x + 40),
+    y: Math.round(start.y - 10),
+    width: 20,
+    height: 20,
+  };
+  const original = await page.screenshot({ clip });
+  await page.mouse.move(start.x, start.y);
+  await page.mouse.down();
+  await page.mouse.move(start.x + 100, start.y, { steps: 8 });
+  await page.mouse.up();
+  await page.waitForFunction((previous) => {
+    const element = document.querySelector('two-up');
+    return (
+      element &&
+      parseFloat(getComputedStyle(element).getPropertyValue('--split-point')) >
+        previous + 50
+    );
+  }, splitBefore);
+  const after = await handle.boundingBox();
+  assert(
+    after && after.x > before.x + 50,
+    'Dragging moves the rendered comparison boundary',
+  );
+  const modified = await page.screenshot({ clip });
+  const changedPixels = await page.evaluate(
+    async (images) => {
+      const frames: Uint8ClampedArray[] = [];
+      for (const image of images) {
+        const bytes = Uint8Array.from(atob(image), (value) => value.charCodeAt(0));
+        const bitmap = await createImageBitmap(new Blob([bytes], { type: 'image/png' }));
+        const canvas = document.createElement('canvas');
+        canvas.width = bitmap.width;
+        canvas.height = bitmap.height;
+        const context = canvas.getContext('2d')!;
+        context.drawImage(bitmap, 0, 0);
+        frames.push(context.getImageData(0, 0, canvas.width, canvas.height).data);
+        bitmap.close();
+      }
+      let changed = 0;
+      for (let offset = 0; offset < frames[0].length; offset += 4)
+        if (
+          [0, 1, 2].some(
+            (channel) => frames[0][offset + channel] !== frames[1][offset + channel],
+          )
+        )
+          changed++;
+      return changed;
+    },
+    [original.toString('base64'), modified.toString('base64')],
+  );
+  assert(
+    changedPixels > 100,
+    'Dragging changes the actual original/compressed preview pixels',
+  );
+  return { before, after, splitBefore, changedPixels };
+}
+
 async function squoosh(page: Page, confined: boolean) {
   await page
     .locator('file-drop input[type=file]')
     .waitFor({ state: 'attached', timeout: 90000 });
   console.log('Squoosh: guest-rendered input ready');
-  const png = await image(page, true);
+  const started = Date.now();
   await page
-    .locator('file-drop input[type=file]')
-    .setInputFiles({ name: 'synthetic-noise.png', mimeType: 'image/png', buffer: png });
+    .getByRole('button')
+    .filter({ has: page.getByAltText('Large photo', { exact: true }) })
+    .click();
+  // Both panes offer photo.jpg. The second link is the encoded output; the
+  // original-image link is available before compression has finished.
+  const largeLink = page.locator('a[download="photo.jpg"]').nth(1);
+  await largeLink.waitFor({ timeout: 120000 });
+  const large = await download(page, () => largeLink.click(), confined);
+  assert.equal(large.decoded.width, 3872);
+  assert.equal(large.decoded.height, 2592);
+  assert(large.bytes.length < 2000000, 'Large photo was compressed, not copied');
+  console.log('Squoosh: large photo compressed after', Date.now() - started, 'ms');
+  const png = await image(page, true);
+  const transfer = await page.evaluateHandle((encoded) => {
+    const bytes = Uint8Array.from(atob(encoded), (value) => value.charCodeAt(0));
+    const transfer = new DataTransfer();
+    transfer.items.add(new File([bytes], 'synthetic-noise.png', { type: 'image/png' }));
+    return transfer;
+  }, png.toString('base64'));
+  await page.locator('file-drop').dispatchEvent('drop', { dataTransfer: transfer });
   console.log('Squoosh: PNG upload delivered');
   const link = page.locator('a[download="synthetic-noise.jpg"]');
   await link.waitFor({ timeout: 120000 });
@@ -273,6 +362,7 @@ async function squoosh(page: Page, confined: boolean) {
   assert.equal(before.decoded.width, 256);
   assert.equal(before.decoded.height, 256);
   assert.deepEqual([...before.bytes.subarray(0, 3)], [255, 216, 255]);
+  const comparison = await comparisonHandle(page);
   const previousURL = await link.evaluate(
     (element) => element.getAttribute('data-pf-href') || element.getAttribute('href'),
   );
@@ -307,6 +397,8 @@ async function squoosh(page: Page, confined: boolean) {
   assert(avif.bytes.subarray(0, 32).includes(Buffer.from('ftypavif')));
   return {
     inputBytes: png.length,
+    large: { ...large, bytes: large.bytes.length },
+    comparison,
     before: { ...before, bytes: before.bytes.length },
     after: { ...after, bytes: after.bytes.length },
     avif: { ...avif, bytes: avif.bytes.length },
