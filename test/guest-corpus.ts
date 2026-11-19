@@ -9,6 +9,14 @@ import { launch } from './browser-profile.ts';
 import { browserStorageState } from './browser-storage-state.ts';
 import { waitUntil } from './helpers/poll.ts';
 
+interface BrowserConsoleObject {
+  name?: string;
+  message?: string;
+  stack?: string;
+  nativeClass?: string;
+  inspectionError?: string;
+}
+
 const root = process.cwd();
 const output = path.join(
   root,
@@ -324,7 +332,7 @@ try {
     const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
     context.setDefaultTimeout(30000);
     const errors: string[] = [];
-    const consoleObjects: unknown[] = [];
+    const consoleObjects: (string | BrowserConsoleObject)[][] = [];
     const consoleReads: Promise<void>[] = [];
     const failedRequests: string[] = [];
     context.on('page', (page) =>
@@ -344,8 +352,8 @@ try {
                     (typeof value !== 'object' && typeof value !== 'function')
                   )
                     return String(value);
-                  const fields: Record<string, string> = {};
-                  for (const key of ['name', 'message', 'stack']) {
+                  const fields: BrowserConsoleObject = {};
+                  for (const key of ['name', 'message', 'stack'] as const) {
                     try {
                       const field = Reflect.get(value, key);
                       if (typeof field === 'string') fields[key] = field;
@@ -356,7 +364,9 @@ try {
                   } catch {}
                   return fields;
                 })
-                .catch((error) => ({ inspectionError: String(error) })),
+                .catch((error): BrowserConsoleObject => ({
+                  inspectionError: String(error),
+                })),
             ),
           ).then((details) => {
             consoleObjects.push(details);
