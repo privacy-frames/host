@@ -61,6 +61,7 @@ function headers(type: string, nonce?: string, document = false): HeadersInit {
     ].join('; '),
     'Referrer-Policy': 'no-referrer',
     'Cross-Origin-Opener-Policy': 'same-origin',
+    'Cross-Origin-Embedder-Policy': 'require-corp',
     'X-DNS-Prefetch-Control': 'off',
     'X-Content-Type-Options': 'nosniff',
     'Cache-Control': 'no-store',
