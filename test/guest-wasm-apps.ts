@@ -38,7 +38,6 @@ Object.assign(config, {
     resourceListURL: target.list,
   })),
 });
-const requests: { port: number; url: string; method: string }[] = [];
 const media: Record<string, string> = {
   '.html': 'text/html',
   '.js': 'text/javascript',
@@ -58,7 +57,6 @@ for (const [port, directory, prefix] of [
   [4812, publisher, '/apps/'],
 ] as const) {
   const server = createServer(async (request, response) => {
-    requests.push({ port, url: request.url ?? '/', method: request.method ?? 'GET' });
     response.setHeader('Access-Control-Allow-Origin', '*');
     response.setHeader('Cache-Control', 'no-store');
     if (port === 4812) {
