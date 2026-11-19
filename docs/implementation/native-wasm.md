@@ -45,3 +45,8 @@ checks do not establish complete browser confinement or ECMAScript conformance.
 Chrome exposes non-extensible Wasm SharedArrayBuffer wrappers. Their default
 `slice` works, but a custom guest species constructor is not observed on that
 route. The bridge keeps the native operation and its same-data-block checks.
+
+The existing `srcset` rewriting splits on commas, which misparses data URLs.
+Squoosh's capability probe exposes this as a local `data:` decoding error. The
+image receipts retain that diagnostic separately from JavaScript exceptions;
+a standards-compliant URL-list parser remains future work.
