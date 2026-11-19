@@ -367,12 +367,16 @@ export class BrowserEnvironment {
     this.document = 'document' in native ? native.document : undefined;
     environments.set(native, this);
     if (this.document?.defaultView) {
-      this.customElements = createGuestCustomElements(this.document.defaultView, {
-        property: (value, key) => this.requireEngine().property(value, key),
-        construct: (constructor, args) =>
-          this.requireEngine().construct(constructor, args),
-        alias: (native, guest) => this.requireEngine().alias(native, guest),
-      });
+      this.customElements = createGuestCustomElements(
+        this.document.defaultView,
+        {
+          property: (value, key) => this.requireEngine().property(value, key),
+          construct: (constructor, args) =>
+            this.requireEngine().construct(constructor, args),
+          alias: (native, guest) => this.requireEngine().alias(native, guest),
+        },
+        (element) => this.prepareNode(element),
+      );
       this.globals.customElements = this.customElements.registry;
     }
     const eventTarget: unknown = Reflect.get(native, 'EventTarget');
@@ -655,7 +659,7 @@ export class BrowserEnvironment {
   }
 
   private followAnchor(anchor: Element, event: Event): void {
-    this.dom?.prepare(anchor);
+    this.prepareNode(anchor);
     if (this.linkActions.has(event)) return;
     const action = () => {
       if (this.linkActions.get(event) !== action) return;
@@ -1105,6 +1109,13 @@ export class BrowserEnvironment {
     return wrapped;
   }
 
+  private prepareNode(node: Node): void {
+    // Native custom-element creation requires an attribute-free result. Guest
+    // constructor operations remain mediated, but automatic node hardening waits
+    // until the enclosing browser constructor has performed its validation.
+    if (!this.customElements?.isConstructing(node)) this.dom?.prepare(node);
+  }
+
   private construct(target: Function, args: unknown[], newTarget?: Function): object {
     const custom = this.customElements?.constructBase(target, args, newTarget);
     if (custom) return custom;
@@ -1155,7 +1166,7 @@ export class BrowserEnvironment {
       const element = isElement(receiver) ? receiver : receiver.parentElement;
       const anchor = element?.closest('a,area');
       if (anchor) {
-        this.dom?.prepare(anchor);
+        this.prepareNode(anchor);
         let activated: Event | undefined;
         const follow = (event: Event) => {
           activated = event;
@@ -1507,8 +1518,7 @@ export class BrowserEnvironment {
       else this.document!.body.append(fragment);
       return;
     }
-    for (const value of args)
-      if (this.document && isNode(value)) this.dom?.prepare(value);
+    for (const value of args) if (this.document && isNode(value)) this.prepareNode(value);
     if (isCache(receiver) && (key === 'add' || key === 'addAll')) {
       const requests = key === 'addAll' && Array.isArray(args[0]) ? args[0] : [args[0]];
       return Promise.all(
@@ -1538,7 +1548,7 @@ export class BrowserEnvironment {
         ]),
       );
     }
-    if (this.document && isElement(result)) this.dom?.prepare(result);
+    if (this.document && isElement(result)) this.prepareNode(result);
     for (const value of args)
       if (this.document && isNode(value) && value.isConnected) this.dom?.connected(value);
     if (key === 'postMessage' && args.length > 1) {

@@ -43,10 +43,24 @@ try {
   await session.render(`<!doctype html><x-before></x-before><output id="result"></output><script>
 (async () => {
   const events = [];
+  const constructorAttributes = [];
   let observations = 0;
   class Before extends HTMLElement {
     static get observedAttributes() { observations++; return ['title']; }
-    constructor() { super(); this.guestField = 42; events.push('construct'); }
+    constructor() {
+      super();
+      this.guestField = 42;
+      const observer = new ResizeObserver(() => {});
+      observer.observe(this);
+      observer.disconnect();
+      this.getRootNode();
+      this.querySelector('span');
+      this.getAttribute('title');
+      this.attachShadow({ mode: 'open' });
+      this.addEventListener('local', () => {});
+      constructorAttributes.push(this.attributes.length);
+      events.push('construct');
+    }
     connectedCallback() {
       globalThis.nativeCustomCallback = true;
       events.push('connected');
@@ -79,8 +93,17 @@ try {
   const buttonNew = new Button();
   let invalid = '';
   try { customElements.define('invalid', class extends HTMLElement {}); } catch(error) { invalid = error.name; }
+  let retained;
+  class Throws extends HTMLElement { constructor() { super(); retained=this; throw new Error('Expected failure'); } }
+  customElements.define('x-throws', Throws);
+  try { new Throws(); } catch {}
+  await new Promise(resolve => setTimeout(resolve, 0));
+  const automaticHardening = [created, constructed, retained].every(element =>
+    element.getAttribute('spellcheck') === 'false' &&
+    element.getAttribute('writingsuggestions') === 'false' &&
+    element.getAttribute('autocorrect') === 'off');
   document.getElementById('result').textContent = JSON.stringify({
-    events, observations, resolved: resolved === Before, registered: customElements.get('x-before') === Before,
+    events, constructorAttributes, automaticHardening, observations, resolved: resolved === Before, registered: customElements.get('x-before') === Before,
     prototypes: [upgraded, created, constructed].map(element => element instanceof Before && element instanceof HTMLElement && element.describe() === 'x-before:42'),
     synchronousCancellation: !dispatched && click.defaultPrevented,
     late: late instanceof Late && late.upgraded,

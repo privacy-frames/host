@@ -69,6 +69,8 @@ try {
       const result = observation.result as {
         error?: string;
         events: unknown[];
+        constructorAttributes: number[];
+        automaticHardening: boolean;
         observations: number;
         resolved: boolean;
         registered: boolean;
@@ -80,6 +82,8 @@ try {
       };
       assert.equal(result.error, undefined);
       assert.equal(result.observations, 1);
+      assert.equal(result.automaticHardening, true);
+      assert.equal(result.constructorAttributes[1], 0);
       assert.equal(result.resolved, true);
       assert.equal(result.registered, true);
       assert.deepEqual(result.prototypes, [true, true, true]);

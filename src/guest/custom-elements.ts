@@ -34,6 +34,7 @@ const callbackNames = [
 export function createGuestCustomElements(
   window: Window & typeof globalThis,
   engine: GuestCustomElementEngine,
+  prepare: (element: HTMLElement) => void,
 ) {
   const registry = window.customElements;
   const definitions = new Map<Function, Definition>();
@@ -89,10 +90,17 @@ export function createGuestCustomElements(
           : Array.from(suppliedDisabledFeatures as Iterable<unknown>, String);
       let definition: Definition;
       const NativeBase: typeof HTMLElement = base;
+      const finish = (element: HTMLElement) =>
+        window.queueMicrotask(() => {
+          if (!closed) prepare(element);
+        });
       class TrustedElement extends NativeBase {
         constructor() {
           super();
-          if (skip === definition) return;
+          if (skip === definition) {
+            finish(this);
+            return;
+          }
           if (closed)
             throw new DOMException('Guest context is closed', 'InvalidStateError');
           const construction = { definition, element: this, consumed: false };
@@ -105,6 +113,7 @@ export function createGuestCustomElements(
               );
           } finally {
             pending.pop();
+            finish(this);
           }
         }
       }
@@ -171,6 +180,9 @@ export function createGuestCustomElements(
 
   return {
     registry: new GuestRegistry(),
+    isConstructing(value: object): boolean {
+      return pending.some((construction) => construction.element === value);
+    },
     constructBase(
       target: Function,
       _args: unknown[],
