@@ -1,9 +1,8 @@
 # QuickJS
 
 Privacy Frames builds its JavaScript interpreter from this directory. The runtime
-and browser tests use the resulting engine and loader together. The npm package
-supplies the TypeScript bindings and FFI adapter; its prebuilt engine is not
-used.
+and browser tests use the resulting engine and loader together. The
+quickjs-emscripten TypeScript bindings and FFI adapter remain npm dependencies.
 
 `upstream/` contains QuickJS 2025-09-13 from quickjs-emscripten v0.32.0, including
 its existing WebKit workaround. `c/interface.c` and the two loader extensions come
