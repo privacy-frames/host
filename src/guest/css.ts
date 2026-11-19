@@ -24,6 +24,9 @@ export function rewriteGuestCSS(
       const ast = parse(text, {
         context,
         parseCustomProperty: true,
+        // Conditions are validated by the browser and do not fetch resources.
+        // Keep their grammar intact; @import is parsed explicitly below.
+        parseAtrulePrelude: false,
         onParseError(error) {
           throw error;
         },
@@ -39,21 +42,30 @@ export function rewriteGuestCSS(
             prelude = parse(prelude.value, {
               context: 'atrulePrelude',
               atrule: 'import',
+              onParseError(error) {
+                throw error;
+              },
             });
             if (prelude.type === 'AtrulePrelude') node.prelude = prelude;
           }
           if (prelude?.type === 'AtrulePrelude') {
             const first = prelude.children.first;
-            if (first?.type === 'String' || first?.type === 'Url')
+            let resource = false;
+            if (first?.type === 'String' || first?.type === 'Url') {
               first.value = mapped(first.value);
-            else if (
+              resource = true;
+            } else if (
               first?.type === 'Function' &&
               ident.decode(first.name).toLowerCase() === 'url'
             ) {
               const argument = first.children.first;
-              if (argument?.type === 'String') argument.value = mapped(argument.value);
+              if (argument?.type === 'String' && first.children.size === 1) {
+                argument.value = mapped(argument.value);
+                resource = true;
+              }
             }
-          }
+            if (!resource) throw new SyntaxError('Invalid import resource');
+          } else throw new SyntaxError('Invalid import prelude');
         }
         // URLs in namespace/supports preludes do not fetch resources.
         if (node.type === 'AtrulePrelude') return this.skip;

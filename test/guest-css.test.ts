@@ -66,3 +66,38 @@ test('invalid CSS is withheld and an invalid individual URL becomes inert data',
     'a{background:url(data:,);color:red}',
   );
 });
+
+test('nested supports conditions survive while enclosed resources remain mediated', () => {
+  const found: string[] = [];
+  const condition =
+    'not ((clip-path:inset(0 0 0 0)) or (-webkit-clip-path:inset(0 0 0 0)))';
+  const css = rewriteGuestCSS(
+    `@supports ${condition}{.comparison{display:grid;background:u\\72l("private.png")}}`,
+    (url) => {
+      found.push(url);
+      return '/local/' + url;
+    },
+  );
+  assert(css.includes('@supports ' + condition));
+  assert(css.includes('display:grid'));
+  assert(css.includes('url("/local/private.png")'));
+  assert.deepEqual(found, ['private.png']);
+});
+
+test('import URLs remain parsed and rewritten alongside raw conditional preludes', () => {
+  const found: string[] = [];
+  const css = rewriteGuestCSS(
+    '@\\69mport url("theme.css");@supports not ((display:grid) or (display:flex)){a{mask:url(mask.svg)}}',
+    (url) => {
+      found.push(url);
+      return '/local/' + url;
+    },
+  );
+  assert(css.includes('@import url(/local/theme.css)'));
+  assert(css.includes('mask:url(/local/mask.svg)'));
+  assert.deepEqual(found, ['theme.css', 'mask.svg']);
+  assert.equal(
+    rewriteGuestCSS('@import url(a b);a{color:red}', (url) => url),
+    '',
+  );
+});
