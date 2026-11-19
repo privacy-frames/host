@@ -1,5 +1,5 @@
 {
-  "sourceRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17",
+  "sourceRevision": "333c169630f3e0d0c8f1564f57a34b8bf65f5502",
   "artifacts": {
     ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
     "__guest_worker_registry__.js": "106b77a615aff3a3bdc0c29b349894b596006a01078a1d7f8c1a167bbce664fc",
@@ -7,20 +7,20 @@
     "connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
     "connect.js": "32a672be00cf28559a8d51f34d25b5f81eec6bbc17382d4ed0bd646d7d4a310b",
     "engine.wasm": "105c3bed22d457e43e3d1c3c1c6959fda62a8fe06f0fc8a985303c3a2be72232",
-    "guard.js": "e3b5e1a57754f04e7cbb076d55120e361d117cb81533785ca00dd190d60e219b",
-    "guest-shared-worker.js": "66ff2bebfc1e33651bef6ad4fe716f9c83e50c79206bb1cac0f891422e5ece86",
-    "guest-worker.js": "2b1970b24dc73ace57e7d0ff0264bfa8cfe38c3c7d8060e05580d10b28d33c92",
+    "guard.js": "071fb2c6434400624074940a079d067f82d67a4324e2908b1b5d333be5fcafb7",
+    "guest-shared-worker.js": "962d80c2dce1388257746dfe7b51e0db445683c780e9ba9a0e5e9559fbd81114",
+    "guest-worker.js": "5ec57c27675dddd9447cd0d98a082db6f616820d44ad38b8e04b1bb10543a83f",
     "guest-worklet.js": "3ba030df5d917327f208888c79c94baf36c5649d46c968a3a1b2752c75439d37",
     "host.css": "5053a45ecaca74a28e8dd218fcc5f22463798d129d3034483bdceab4453fa22f",
     "index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
     "pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
     "pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
     "report.html": "9daca5eebb03c04870c177df4a4813a183ac3dd8b9d962bd058b528926b7225b",
-    "sw.js": "cabff7548aa853dc60ebb8d394b0b34beb9bdab4aca59ea6b872b3f5dad06dcb"
+    "sw.js": "2dfe8138dc04ca3ec6026188c22a223efe086536013ddd5edb2a6c11310c637d"
   },
   "exitCodes": {
     "chromium": 0,
-    "firefox": 1
+    "firefox": 0
   },
   "observations": [
     {
@@ -33,8 +33,9 @@
       "optionalResourceFailures": [],
       "runtimeErrors": [],
       "otherConsoleDiagnostics": [],
+      "consoleObjects": [],
       "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
-      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+      "runtimeRevision": "333c169630f3e0d0c8f1564f57a34b8bf65f5502"
     },
     {
       "application": "wikipedia",
@@ -46,8 +47,9 @@
       "optionalResourceFailures": [],
       "runtimeErrors": [],
       "otherConsoleDiagnostics": [],
+      "consoleObjects": [],
       "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
-      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+      "runtimeRevision": "333c169630f3e0d0c8f1564f57a34b8bf65f5502"
     },
     {
       "application": "excalidraw",
@@ -57,15 +59,16 @@
       "task": "Rectangle drawn on native canvas and persisted",
       "offlineTask": "Rectangle drawn on native canvas and persisted",
       "optionalResourceFailures": [
-        "TypeError: Script resource is not installed: https://scripts.simpleanalyticscdn.com/latest.js\n    at GuestResources.source (http://127.0.0.1:4511/runtime/guard.js:15453:15)\n    at GuestDOM.execute (http://127.0.0.1:4511/runtime/guard.js:24372:65)\n    at GuestDOM.connected (http://127.0.0.1:4511/runtime/guard.js:24347:37)\n    at BrowserEnvironment.invoke (http://127.0.0.1:4511/runtime/guard.js:44164:76)\n    at HTMLBodyElement.appendChild (http://127.0.0.1:4511/runtime/guard.js:43705:31)\n    at Object.call (http://127.0.0.1:4511/runtime/guard.js:43329:51)\n    at _GuestEngine.dispatch (http://127.0.0.1:4511/runtime/guard.js:45278:32)\n    at WeakLifetime.<anonymous> (http://127.0.0.1:4511/runtime/guard.js:45023:23)\n    at QuickJSContext.<anonymous> (http://127.0.0.1:4511/runtime/guard.js:3397:48)\n    at next (<anonymous>)",
-        "TypeError: Script resource is not installed: https://scripts.simpleanalyticscdn.com/latest.js\n    at GuestResources.source (http://127.0.0.1:4511/runtime/guard.js:15453:15)\n    at GuestDOM.execute (http://127.0.0.1:4511/runtime/guard.js:24372:65)\n    at GuestDOM.connected (http://127.0.0.1:4511/runtime/guard.js:24347:37)\n    at BrowserEnvironment.invoke (http://127.0.0.1:4511/runtime/guard.js:44164:76)\n    at HTMLBodyElement.appendChild (http://127.0.0.1:4511/runtime/guard.js:43705:31)\n    at Object.call (http://127.0.0.1:4511/runtime/guard.js:43329:51)\n    at _GuestEngine.dispatch (http://127.0.0.1:4511/runtime/guard.js:45278:32)\n    at WeakLifetime.<anonymous> (http://127.0.0.1:4511/runtime/guard.js:45023:23)\n    at QuickJSContext.<anonymous> (http://127.0.0.1:4511/runtime/guard.js:3397:48)\n    at next (<anonymous>)"
+        "TypeError: Script resource is not installed: https://scripts.simpleanalyticscdn.com/latest.js\n    at GuestResources.source (http://127.0.0.1:4511/runtime/guard.js:15453:15)\n    at GuestDOM.execute (http://127.0.0.1:4511/runtime/guard.js:24372:65)\n    at GuestDOM.connected (http://127.0.0.1:4511/runtime/guard.js:24347:37)\n    at BrowserEnvironment.invoke (http://127.0.0.1:4511/runtime/guard.js:44170:76)\n    at HTMLBodyElement.appendChild (http://127.0.0.1:4511/runtime/guard.js:43705:31)\n    at Object.call (http://127.0.0.1:4511/runtime/guard.js:43329:51)\n    at _GuestEngine.dispatch (http://127.0.0.1:4511/runtime/guard.js:45286:32)\n    at WeakLifetime.<anonymous> (http://127.0.0.1:4511/runtime/guard.js:45031:23)\n    at QuickJSContext.<anonymous> (http://127.0.0.1:4511/runtime/guard.js:3397:48)\n    at next (<anonymous>)",
+        "TypeError: Script resource is not installed: https://scripts.simpleanalyticscdn.com/latest.js\n    at GuestResources.source (http://127.0.0.1:4511/runtime/guard.js:15453:15)\n    at GuestDOM.execute (http://127.0.0.1:4511/runtime/guard.js:24372:65)\n    at GuestDOM.connected (http://127.0.0.1:4511/runtime/guard.js:24347:37)\n    at BrowserEnvironment.invoke (http://127.0.0.1:4511/runtime/guard.js:44170:76)\n    at HTMLBodyElement.appendChild (http://127.0.0.1:4511/runtime/guard.js:43705:31)\n    at Object.call (http://127.0.0.1:4511/runtime/guard.js:43329:51)\n    at _GuestEngine.dispatch (http://127.0.0.1:4511/runtime/guard.js:45286:32)\n    at WeakLifetime.<anonymous> (http://127.0.0.1:4511/runtime/guard.js:45031:23)\n    at QuickJSContext.<anonymous> (http://127.0.0.1:4511/runtime/guard.js:3397:48)\n    at next (<anonymous>)"
       ],
       "runtimeErrors": [],
       "otherConsoleDiagnostics": [
         "Failed to load resource: the server responded with a status of 404 (Not Found)"
       ],
+      "consoleObjects": [],
       "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
-      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+      "runtimeRevision": "333c169630f3e0d0c8f1564f57a34b8bf65f5502"
     },
     {
       "application": "drawio",
@@ -77,8 +80,9 @@
       "optionalResourceFailures": [],
       "runtimeErrors": [],
       "otherConsoleDiagnostics": [],
+      "consoleObjects": [],
       "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
-      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+      "runtimeRevision": "333c169630f3e0d0c8f1564f57a34b8bf65f5502"
     },
     {
       "application": "stackedit",
@@ -89,12 +93,13 @@
       "offlineTask": "Markdown edited, preview rendered and note committed to IndexedDB",
       "offlinePersistence": true,
       "optionalResourceFailures": [
-        "TypeError: Script resource is not installed: https://apis.google.com/js/api.js?1795048102116\n    at GuestResources.source (http://127.0.0.1:4511/runtime/guard.js:15453:15)\n    at GuestDOM.execute (http://127.0.0.1:4511/runtime/guard.js:24372:65)\n    at GuestDOM.connected (http://127.0.0.1:4511/runtime/guard.js:24347:37)\n    at BrowserEnvironment.invoke (http://127.0.0.1:4511/runtime/guard.js:44164:76)\n    at HTMLHeadElement.appendChild (http://127.0.0.1:4511/runtime/guard.js:43705:31)\n    at Object.call (http://127.0.0.1:4511/runtime/guard.js:43329:51)\n    at _GuestEngine.dispatch (http://127.0.0.1:4511/runtime/guard.js:45278:32)\n    at WeakLifetime.<anonymous> (http://127.0.0.1:4511/runtime/guard.js:45023:23)\n    at QuickJSContext.<anonymous> (http://127.0.0.1:4511/runtime/guard.js:3397:48)\n    at next (<anonymous>)"
+        "TypeError: Script resource is not installed: https://apis.google.com/js/api.js?1795050623677\n    at GuestResources.source (http://127.0.0.1:4511/runtime/guard.js:15453:15)\n    at GuestDOM.execute (http://127.0.0.1:4511/runtime/guard.js:24372:65)\n    at GuestDOM.connected (http://127.0.0.1:4511/runtime/guard.js:24347:37)\n    at BrowserEnvironment.invoke (http://127.0.0.1:4511/runtime/guard.js:44170:76)\n    at HTMLHeadElement.appendChild (http://127.0.0.1:4511/runtime/guard.js:43705:31)\n    at Object.call (http://127.0.0.1:4511/runtime/guard.js:43329:51)\n    at _GuestEngine.dispatch (http://127.0.0.1:4511/runtime/guard.js:45286:32)\n    at WeakLifetime.<anonymous> (http://127.0.0.1:4511/runtime/guard.js:45031:23)\n    at QuickJSContext.<anonymous> (http://127.0.0.1:4511/runtime/guard.js:3397:48)\n    at next (<anonymous>)"
       ],
       "runtimeErrors": [],
       "otherConsoleDiagnostics": [],
+      "consoleObjects": [],
       "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
-      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+      "runtimeRevision": "333c169630f3e0d0c8f1564f57a34b8bf65f5502"
     },
     {
       "application": "cyberchef",
@@ -106,8 +111,9 @@
       "optionalResourceFailures": [],
       "runtimeErrors": [],
       "otherConsoleDiagnostics": [],
+      "consoleObjects": [],
       "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
-      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+      "runtimeRevision": "333c169630f3e0d0c8f1564f57a34b8bf65f5502"
     },
     {
       "application": "bindings",
@@ -122,8 +128,9 @@
         "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]",
         "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]"
       ],
+      "consoleObjects": [],
       "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
-      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+      "runtimeRevision": "faf88cabc4627d7c118b5f1a1997a7055632b082"
     },
     {
       "application": "wikipedia",
@@ -138,8 +145,9 @@
         "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]",
         "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]"
       ],
+      "consoleObjects": [],
       "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
-      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+      "runtimeRevision": "faf88cabc4627d7c118b5f1a1997a7055632b082"
     },
     {
       "application": "excalidraw",
@@ -148,7 +156,10 @@
       "passed": true,
       "task": "Rectangle drawn on native canvas and persisted",
       "offlineTask": "Rectangle drawn on native canvas and persisted",
-      "optionalResourceFailures": [],
+      "optionalResourceFailures": [
+        "TypeError: Script resource is not installed: https://scripts.simpleanalyticscdn.com/latest.js",
+        "TypeError: Script resource is not installed: https://scripts.simpleanalyticscdn.com/latest.js"
+      ],
       "runtimeErrors": [],
       "otherConsoleDiagnostics": [
         "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]",
@@ -159,8 +170,26 @@
         "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]",
         "JSHandle@object"
       ],
+      "consoleObjects": [
+        [
+          {
+            "name": "TypeError",
+            "message": "Script resource is not installed: https://scripts.simpleanalyticscdn.com/latest.js",
+            "stack": "source@http://127.0.0.1:4511/runtime/guard.js:15453:15\nexecute@http://127.0.0.1:4511/runtime/guard.js:24372:65\nconnected@http://127.0.0.1:4511/runtime/guard.js:24347:37\ninvoke@http://127.0.0.1:4511/runtime/guard.js:44170:85\nwrapper@http://127.0.0.1:4511/runtime/guard.js:43705:31\ncall@http://127.0.0.1:4511/runtime/guard.js:43329:51\ndispatch@http://127.0.0.1:4511/runtime/guard.js:45286:32\ninitialize/bridge<@http://127.0.0.1:4511/runtime/guard.js:45031:23\nnode_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs/QuickJSContext/callFunction/<@http://127.0.0.1:4511/runtime/guard.js:3397:48\nawaitEachYieldedPromise@http://127.0.0.1:4511/runtime/guard.js:2866:31\nawaitYieldOf@http://127.0.0.1:4511/runtime/guard.js:2850:23\nnode_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs/withScopeMaybeAsync/<@http://127.0.0.1:4511/runtime/guard.js:3119:37\nawaitEachYieldedPromise@http://127.0.0.1:4511/runtime/guard.js:2866:31\nmaybeAsync@http://127.0.0.1:4511/runtime/guard.js:2860:12\nwithScopeMaybeAsync@http://127.0.0.1:4511/runtime/guard.js:3116:18\ncallFunction@http://127.0.0.1:4511/runtime/guard.js:3390:26\nnode_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs/QuickJSModuleCallbacks/callFunction/<@http://127.0.0.1:4511/runtime/guard.js:3852:25\nhandleAsyncify@http://127.0.0.1:4511/runtime/guard.js:3918:23\ncallFunction@http://127.0.0.1:4511/runtime/guard.js:3848:81\ns@http://127.0.0.1:4511/runtime/guard.js:4440:26\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1142]:0x5c45d\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1040]:0x56ab5\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0xee71\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[28]:0x1e9f\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[425]:0x24386\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x10414\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[33]:0x1f84\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x103d5\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x10193\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0xfbf8\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[28]:0x1e9f\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1015]:0x5495f\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0xee71\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x102bd\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x1025a\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[61]:0x2a49\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[688]:0x3de16\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[992]:0x52fe3\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[729]:0x41501\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[556]:0x2cf77\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1152]:0x5c815\nta@http://127.0.0.1:4511/runtime/guard.js:4327:11\nQuickJSRaw/c.cwrap/<@http://127.0.0.1:4511/runtime/guard.js:4343:67\nnode_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs/evalCode/resultPtr<@http://127.0.0.1:4511/runtime/guard.js:3644:178\nconsume@http://127.0.0.1:4511/runtime/guard.js:3060:27\nevalCode@http://127.0.0.1:4511/runtime/guard.js:3644:145\nevaluate/<@http://127.0.0.1:4511/runtime/guard.js:45135:49\nenter@http://127.0.0.1:4511/runtime/guard.js:45230:16\nevaluate@http://127.0.0.1:4511/runtime/guard.js:45134:19\nevaluate@http://127.0.0.1:4511/runtime/guard.js:43305:66\nexecute@http://127.0.0.1:4511/runtime/guard.js:24376:37\nrender@http://127.0.0.1:4511/runtime/guard.js:24502:68\nrender@http://127.0.0.1:4511/runtime/guard.js:46075:32\nstart2@http://127.0.0.1:4511/runtime/guard.js:46212:21\nasync*@http://127.0.0.1:4511/runtime/guard.js:46228:8\n@http://127.0.0.1:4511/runtime/guard.js:46238:3\n",
+            "nativeClass": "[object Error]"
+          }
+        ],
+        [
+          {
+            "name": "TypeError",
+            "message": "Script resource is not installed: https://scripts.simpleanalyticscdn.com/latest.js",
+            "stack": "source@http://127.0.0.1:4511/runtime/guard.js:15453:15\nexecute@http://127.0.0.1:4511/runtime/guard.js:24372:65\nconnected@http://127.0.0.1:4511/runtime/guard.js:24347:37\ninvoke@http://127.0.0.1:4511/runtime/guard.js:44170:85\nwrapper@http://127.0.0.1:4511/runtime/guard.js:43705:31\ncall@http://127.0.0.1:4511/runtime/guard.js:43329:51\ndispatch@http://127.0.0.1:4511/runtime/guard.js:45286:32\ninitialize/bridge<@http://127.0.0.1:4511/runtime/guard.js:45031:23\nnode_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs/QuickJSContext/callFunction/<@http://127.0.0.1:4511/runtime/guard.js:3397:48\nawaitEachYieldedPromise@http://127.0.0.1:4511/runtime/guard.js:2866:31\nawaitYieldOf@http://127.0.0.1:4511/runtime/guard.js:2850:23\nnode_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs/withScopeMaybeAsync/<@http://127.0.0.1:4511/runtime/guard.js:3119:37\nawaitEachYieldedPromise@http://127.0.0.1:4511/runtime/guard.js:2866:31\nmaybeAsync@http://127.0.0.1:4511/runtime/guard.js:2860:12\nwithScopeMaybeAsync@http://127.0.0.1:4511/runtime/guard.js:3116:18\ncallFunction@http://127.0.0.1:4511/runtime/guard.js:3390:26\nnode_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs/QuickJSModuleCallbacks/callFunction/<@http://127.0.0.1:4511/runtime/guard.js:3852:25\nhandleAsyncify@http://127.0.0.1:4511/runtime/guard.js:3918:23\ncallFunction@http://127.0.0.1:4511/runtime/guard.js:3848:81\ns@http://127.0.0.1:4511/runtime/guard.js:4440:26\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1142]:0x5c45d\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1040]:0x56ab5\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0xee71\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[28]:0x1e9f\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[425]:0x24386\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x10414\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[33]:0x1f84\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x103d5\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x10193\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0xfbf8\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[28]:0x1e9f\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1015]:0x5495f\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0xee71\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x102bd\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x1025a\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[61]:0x2a49\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[688]:0x3de16\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[992]:0x52fe3\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[729]:0x41501\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[556]:0x2cf77\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1152]:0x5c815\nta@http://127.0.0.1:4511/runtime/guard.js:4327:11\nQuickJSRaw/c.cwrap/<@http://127.0.0.1:4511/runtime/guard.js:4343:67\nnode_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs/evalCode/resultPtr<@http://127.0.0.1:4511/runtime/guard.js:3644:178\nconsume@http://127.0.0.1:4511/runtime/guard.js:3060:27\nevalCode@http://127.0.0.1:4511/runtime/guard.js:3644:145\nevaluate/<@http://127.0.0.1:4511/runtime/guard.js:45135:49\nenter@http://127.0.0.1:4511/runtime/guard.js:45230:16\nevaluate@http://127.0.0.1:4511/runtime/guard.js:45134:19\nevaluate@http://127.0.0.1:4511/runtime/guard.js:43305:66\nexecute@http://127.0.0.1:4511/runtime/guard.js:24376:37\nrender@http://127.0.0.1:4511/runtime/guard.js:24502:68\nrender@http://127.0.0.1:4511/runtime/guard.js:46075:32\nstart2@http://127.0.0.1:4511/runtime/guard.js:46212:21\nasync*@http://127.0.0.1:4511/runtime/guard.js:46228:8\n@http://127.0.0.1:4511/runtime/guard.js:46238:3\n",
+            "nativeClass": "[object Error]"
+          }
+        ]
+      ],
       "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
-      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+      "runtimeRevision": "faf88cabc4627d7c118b5f1a1997a7055632b082"
     },
     {
       "application": "drawio",
@@ -175,24 +204,39 @@
         "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]",
         "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]"
       ],
+      "consoleObjects": [],
       "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
-      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+      "runtimeRevision": "faf88cabc4627d7c118b5f1a1997a7055632b082"
     },
     {
       "application": "stackedit",
       "browser": "firefox",
       "version": "155.0",
-      "passed": false,
+      "passed": true,
       "task": "Markdown edited, preview rendered and note committed to IndexedDB",
-      "optionalResourceFailures": [],
+      "offlineTask": "Markdown edited, preview rendered and note committed to IndexedDB",
+      "offlinePersistence": true,
+      "optionalResourceFailures": [
+        "TypeError: Script resource is not installed: https://apis.google.com/js/api.js?1795050747033"
+      ],
       "runtimeErrors": [],
       "otherConsoleDiagnostics": [
         "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]",
         "JSHandle@object",
         "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]"
       ],
+      "consoleObjects": [
+        [
+          {
+            "name": "TypeError",
+            "message": "Script resource is not installed: https://apis.google.com/js/api.js?1795050747033",
+            "stack": "source@http://127.0.0.1:4511/runtime/guard.js:15453:15\nexecute@http://127.0.0.1:4511/runtime/guard.js:24372:65\nconnected@http://127.0.0.1:4511/runtime/guard.js:24347:37\ninvoke@http://127.0.0.1:4511/runtime/guard.js:44170:85\nwrapper@http://127.0.0.1:4511/runtime/guard.js:43705:31\ncall@http://127.0.0.1:4511/runtime/guard.js:43329:51\ndispatch@http://127.0.0.1:4511/runtime/guard.js:45286:32\ninitialize/bridge<@http://127.0.0.1:4511/runtime/guard.js:45031:23\nnode_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs/QuickJSContext/callFunction/<@http://127.0.0.1:4511/runtime/guard.js:3397:48\nawaitEachYieldedPromise@http://127.0.0.1:4511/runtime/guard.js:2866:31\nawaitYieldOf@http://127.0.0.1:4511/runtime/guard.js:2850:23\nnode_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs/withScopeMaybeAsync/<@http://127.0.0.1:4511/runtime/guard.js:3119:37\nawaitEachYieldedPromise@http://127.0.0.1:4511/runtime/guard.js:2866:31\nmaybeAsync@http://127.0.0.1:4511/runtime/guard.js:2860:12\nwithScopeMaybeAsync@http://127.0.0.1:4511/runtime/guard.js:3116:18\ncallFunction@http://127.0.0.1:4511/runtime/guard.js:3390:26\nnode_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs/QuickJSModuleCallbacks/callFunction/<@http://127.0.0.1:4511/runtime/guard.js:3852:25\nhandleAsyncify@http://127.0.0.1:4511/runtime/guard.js:3918:23\ncallFunction@http://127.0.0.1:4511/runtime/guard.js:3848:81\ns@http://127.0.0.1:4511/runtime/guard.js:4440:26\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1142]:0x5c45d\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1040]:0x56ab5\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0xee71\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[28]:0x1e9f\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[425]:0x24386\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x10414\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[33]:0x1f84\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x103d5\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x10193\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0xfbf8\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[28]:0x1e9f\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1015]:0x5495f\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0xee71\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x102bd\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x1025a\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[28]:0x1e9f\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[687]:0x3dcf3\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1036]:0x5635d\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[536]:0x2bb20\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x1022d\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x101cc\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[536]:0x2bb7a\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x1022d\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x101cc\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[28]:0x1e9f\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1235]:0x5ffb8\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1036]:0x5635d\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0xee71\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x102bd\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x1025a\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x10193\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0xfbf8\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x102bd\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x1025a\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x102bd\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x1025a\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x10193\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0xfbf8\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[28]:0x1e9f\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[687]:0x3dcf3\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1036]:0x5635d\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[536]:0x2bb20\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x1022d\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x101cc\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[536]:0x2bb7a\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x1022d\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x101cc\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[28]:0x1e9f\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[425]:0x24386\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1036]:0x561f0\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0xee71\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x102bd\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x1025a\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x10193\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0xfbf8\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[28]:0x1e9f\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1235]:0x5ffb8\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1036]:0x5635d\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0xee71\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x102bd\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x1025a\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x10193\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0xfbf8\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x102bd\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x1025a\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x102bd\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x1025a\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x10193\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0xfbf8\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[28]:0x1e9f\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[687]:0x3dcf3\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1036]:0x5635d\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[536]:0x2bb20\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x1022d\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x101cc\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[536]:0x2bb7a\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x1022d\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x101cc\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x10193\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0xfbf8\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x102bd\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x1025a\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[28]:0x1e9f\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1235]:0x5ffb8\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1036]:0x5635d\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0xee71\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x102bd\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x1025a\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x10193\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0xfbf8\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x102bd\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x1025a\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x102bd\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x1025a\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0x10193\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[221]:0xfbf8\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[28]:0x1e9f\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1108]:0x5a119\n@http://127.0.0.1:4511/runtime/guard.js line 46047 > WebAssembly.compile:wasm-function[1203]:0x5eede\nexecutePendingJobs@http://127.0.0.1:4511/runtime/guard.js:3789:86\ndrainJobs@http://127.0.0.1:4511/runtime/guard.js:45203:35\nscheduleJobs/<@http://127.0.0.1:4511/runtime/guard.js:45222:14\nVoidFunction*scheduleJobs@http://127.0.0.1:4511/runtime/guard.js:45220:15\nenter@http://127.0.0.1:4511/runtime/guard.js:45235:16\ninvoke@http://127.0.0.1:4511/runtime/guard.js:45875:19\ncallable@http://127.0.0.1:4511/runtime/guard.js:45621:25\n",
+            "nativeClass": "[object Error]"
+          }
+        ]
+      ],
       "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
-      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+      "runtimeRevision": "faf88cabc4627d7c118b5f1a1997a7055632b082"
     },
     {
       "application": "cyberchef",
@@ -207,12 +251,10 @@
         "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]",
         "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4511/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]"
       ],
+      "consoleObjects": [],
       "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
-      "runtimeRevision": "c38cf0157069211a20a9acfc11355b57e0e9ce17"
+      "runtimeRevision": "faf88cabc4627d7c118b5f1a1997a7055632b082"
     }
   ],
-  "failures": [
-    "firefox: corpus runner exited 1",
-    "firefox/stackedit: locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.cl-preview-section h1').getByText('Synthetic evaluation', { exact: true }) to be visible\u001b[22m\n\n    at <anonymous> (/home/damen/Projects/privacy-frames-wasm-runtime/test/guest-corpus.ts:463:12)"
-  ]
+  "failures": []
 }
