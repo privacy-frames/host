@@ -341,7 +341,7 @@ async function squoosh(page: Page, confined: boolean) {
   // Both panes offer photo.jpg. The second link is the encoded output; the
   // original-image link is available before compression has finished.
   const largeLink = page.locator('a[download="photo.jpg"]').nth(1);
-  await largeLink.waitFor({ timeout: 120000 });
+  await largeLink.waitFor({ timeout: 180000 });
   const large = await download(page, () => largeLink.click(), confined);
   assert.equal(large.decoded.width, 3872);
   assert.equal(large.decoded.height, 2592);

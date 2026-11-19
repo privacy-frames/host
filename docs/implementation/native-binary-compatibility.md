@@ -1,10 +1,15 @@
 # Native binary compatibility
 
-Ordinary guest arrays use QuickJS storage. Views over native Wasm memory and
-shared buffers use the browser's storage, so a Wasm import callback or another
-worker can read and write the same bytes. `test/guest-wasm.ts` checks callbacks,
-aliases, growth, detachment, atomic updates, native decoding and default shared
-buffer slicing against unrestricted browser controls.
+Ordinary guest arrays use QuickJS storage. Wasm buffers and views retain native
+identity, including growth, detachment and transfer refusal. A hidden cache speeds
+up indexed JavaScript access to fixed, non-shared memory; native operations flush
+cached writes and invalidate stale reads. Overlapping views share the same cache.
+Shared and resizable memory always uses native views, so workers observe the same
+shared bytes without copying.
+
+`test/guest-wasm.ts` checks callbacks, aliases, growth, detachment, transfer refusal,
+atomic updates, native decoding and default shared-buffer slicing against
+unrestricted browser controls.
 
 One known difference concerns custom `Symbol.species` on a Wasm shared buffer.
 Chromium 153 exposes `WebAssembly.Memory({shared: true}).buffer` as a

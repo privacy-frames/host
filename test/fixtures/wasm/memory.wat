@@ -7,4 +7,9 @@
     i32.const 0 i32.const 10 i32.store
     local.get 0 call $callback
     i32.const 0 i32.load i32.add)
+  (func (export "twice") (param i32) (result i32)
+    i32.const 0 i32.const 10 i32.store
+    local.get 0 call $callback drop
+    i32.const 0 i32.const 11 i32.store
+    local.get 0 call $callback)
   (func (export "grow") (param i32) (result i32) local.get 0 memory.grow))

@@ -53,9 +53,10 @@ canvas contexts, audio graphs and storage. Callbacks can enter the interpreter
 synchronously, preserving event cancellation.
 
 Application Wasm executes in the browser and receives imports through the same
-guest policy. Its memory stays in native buffers, including real shared memory
-used by prepared workers. Guest typed-array operations address that storage
-directly; native Atomics coordinate access across workers.
+guest policy. Memory retains its native browser identity. Indexed JavaScript
+access to fixed, non-shared memory uses a private cache, synchronized before native
+consumers and refreshed after native writes. Shared and resizable memory use
+native views; native Atomics coordinate access across prepared workers.
 
 The host uses generated Webref metadata for browser interface names and
 inheritance. The browser performs native argument conversion and receiver checks.

@@ -45,6 +45,7 @@ jobs:
       - run: npm run test:compatibility
       - name: Exercise native and confined Wasm image applications
         run: xvfb-run -a npm run test:wasm-apps
+        timeout-minutes: 20
       - uses: actions/upload-artifact@v4
         if: always()
         with:

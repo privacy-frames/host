@@ -185,6 +185,43 @@ export class NativeBinary implements GuestHost {
     );
   }
 
+  /** A branded copyWithin with primitive indices can only change this buffer.
+   * Object coercion and other methods retain the engine's full synchronization. */
+  copyWithinBuffer(
+    target: Function,
+    receiver: unknown,
+    arguments_: unknown[],
+  ): ArrayBufferLike | undefined {
+    const method = this.descriptors.get('TypedArray')?.get('copyWithin')?.value;
+    let view = receiver;
+    let indices = arguments_;
+    if (target === this.bindings.invoke) {
+      const [name, key, operation, targetView, args] = arguments_;
+      if (
+        name !== 'TypedArray' ||
+        key !== 'copyWithin' ||
+        operation !== 'value' ||
+        !Array.isArray(args)
+      )
+        return;
+      view = targetView;
+      indices = args;
+    } else if (target !== method) return;
+
+    if (
+      indices.some(
+        (value) =>
+          value !== null && (typeof value === 'object' || typeof value === 'function'),
+      )
+    )
+      return;
+    try {
+      return apply(typedBuffer, view, []);
+    } catch {
+      return;
+    }
+  }
+
   private retainResult(value: unknown): unknown {
     if (isView(value)) {
       let buffer: ArrayBufferLike;

@@ -13,11 +13,22 @@ compilation consumes an admitted native Response, never a URL or a native fetch.
 Browser feature availability still determines the Wasm instructions and proposal
 APIs an application can use.
 
-`native-binary.ts` retains native memory buffers and their views. `guest-binary.ts`
-installs guest constructors and prototype methods that dispatch on the receiver's
-backing store. Ordinary guest buffers remain in QuickJS. A view over native Wasm
-memory addresses the actual browser allocation: writes, aliases, growth and
-native Atomics do not use a copied shared buffer.
+Wasm buffers and views retain their native identity. Indexed JavaScript access to
+fixed, non-shared memory uses a private QuickJS cache so byte-copy loops do not
+require a host call per element. Cached writes reach native memory before native
+consumers run; native effects invalidate the cache. The cache is hidden from
+application code, including `.buffer`, descriptors and returned views.
+
+During synchronous Wasm execution, imported JavaScript callbacks use native views.
+Ordinary guest buffers are synchronized at the outer call and at mediated browser
+effects. A captured native `copyWithin` with primitive indices can operate directly
+on its native heap without copying unrelated image buffers around each callback.
+Other native calls retain conservative synchronization.
+
+`native-binary.ts` retains native buffers and their views. `guest-binary.ts`
+dispatches constructors and prototype methods according to the receiver's backing
+store. Shared and resizable buffers always use native views. Shared memory and
+native Atomics operate on the actual browser allocation.
 
 The runtime service worker supplies COOP and COEP headers on controlled startup
 responses. Prepared dedicated workers join that isolated environment and use

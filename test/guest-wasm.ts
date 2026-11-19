@@ -34,6 +34,10 @@ const files = new Map([
     await readFile(new URL('fixtures/wasm/transport.wasm', import.meta.url)),
   ],
   ['/shared.wasm', await readFile(new URL('fixtures/wasm/shared.wasm', import.meta.url))],
+  [
+    '/table-start.wasm',
+    await readFile(new URL('fixtures/wasm/table-start.wasm', import.meta.url)),
+  ],
 ]);
 const requests: string[] = [];
 const server = createServer((request, response) => {
@@ -128,8 +132,13 @@ for (const observation of observations) {
   assert.deepEqual(result.policy?.control, [true, true]);
   assert.deepEqual(result.policy?.guest, [false, false]);
   assert.deepEqual(observation.requests, ['/import-probe', '/constructor-probe']);
-  assert.equal(result.native.length, 8);
-  assert.equal(result.guest.length, 8);
+  assert.equal(result.native.length, 9);
+  assert.equal(result.guest.length, 9);
+  assert.deepEqual(result.foreign, [
+    'raw export',
+    'late imported memory',
+    'late imported table start',
+  ]);
   for (const test of [...result.native, ...result.guest])
     assert(test.passed, JSON.stringify(test));
 }

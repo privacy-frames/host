@@ -9,12 +9,15 @@ export interface NativeWasmOptions {
   ): object;
   /** Preserve actual native memory identity, including buffers imported from workers. */
   retainBuffer(buffer: ArrayBufferLike): void;
+  /** Enter synchronous Wasm execution; imported guest callbacks reenter this scope. */
+  runWasm<T>(action: () => T, deferOrdinary: boolean): T;
 }
 
 export interface NativeWasmDomain extends GuestHost {
   readonly namespace: object;
   owns(target: object): boolean;
   importsArgument(target: Function): number | undefined;
+  canDeferOrdinary(): boolean;
 }
 
 type WasmKind =
@@ -68,6 +71,11 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
   const functionProbe = new native.Table({ element: 'anyfunc', initial: 1 });
   const probeSet = native.Table.prototype.set;
   const functionKinds = new WeakMap<Function, boolean>();
+  const createdInstances = new WeakSet<object>();
+  const localFunctions = new WeakSet<Function>();
+  const localTables = new WeakSet<object>();
+  let foreignCode = false;
+  const tableGet = native.Table.prototype.get;
   const exceptionIs =
     typeof native.Exception === 'function' ? native.Exception.prototype.is : undefined;
   const probeTag =
@@ -149,17 +157,29 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
     if (typeof value === 'function') {
       const replacement = replacements.get(value) || methods.get(value);
       if (replacement) return replacement;
-      if (!owned.has(value) && wasmFunction(value)) owned.add(value);
+      if (!owned.has(value) && wasmFunction(value)) {
+        owned.add(value);
+        if (!localFunctions.has(value)) foreignCode = true;
+      }
       return value;
     }
     if (owned.has(value)) return value;
     const type = kind(value);
     if (!type) return value;
     owned.add(value);
+    if (type === 'Table' && !localTables.has(value)) foreignCode = true;
     if (type === 'Memory') retainMemory(value);
     if (type === 'Instance') {
       const exports: WebAssembly.Exports = apply(instanceExports, value, []);
       owned.add(exports);
+      if (createdInstances.has(value)) {
+        for (const key of ownKeys(exports)) {
+          const exported = get(exports, key);
+          if (typeof exported === 'function') localFunctions.add(exported);
+          else if (object(exported) && kind(exported) === 'Table')
+            localTables.add(exported);
+        }
+      }
       for (const key of ownKeys(exports)) remember(get(exports, key));
     }
     return value;
@@ -173,11 +193,33 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
       native.Module,
       [module],
     );
-    return options.captureImports(imports, descriptors);
+    const captured = options.captureImports(imports, descriptors);
+    return new Proxy(captured, {
+      get(target, key) {
+        const namespace = get(target, key);
+        if (!object(namespace)) return namespace;
+        return new Proxy(namespace, {
+          get(target, key) {
+            // Observe the actual declaration-order Get, without reading an
+            // application getter twice. Memory aliases can disable deferral.
+            return remember(get(target, key));
+          },
+        });
+      },
+    });
+  }
+
+  function created(value: object): object {
+    createdInstances.add(value);
+    return remember(value);
   }
 
   function createInstance(module: unknown, imports: unknown): object {
-    return remember(construct(native.Instance, [module, capture(module, imports)]));
+    const captured = capture(module, imports);
+    return options.runWasm(
+      () => created(construct(native.Instance, [module, captured])),
+      !foreignCode,
+    );
   }
 
   function copiedName(target: Function, source: Function): void {
@@ -193,6 +235,15 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
     const wrapped = {
       invoke(this: unknown, ...args: unknown[]) {
         const result: unknown = apply(original, this, args);
+        if (
+          original === tableGet &&
+          object(this) &&
+          localTables.has(this) &&
+          !foreignCode &&
+          typeof result === 'function' &&
+          wasmFunction(result)
+        )
+          localFunctions.add(result);
         if (object(this) && kind(this) === 'Memory') {
           retainMemory(this);
           if (buffer(result)) options.retainBuffer(result);
@@ -226,6 +277,7 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
       if (!new.target) return remember(apply(original, this, args));
       if (name === 'Instance') return createInstance(args[0], args[1]);
       const value = construct(original, args);
+      if (name === 'Table') localTables.add(value);
       if (name === 'Tag' || name === 'Exception') kinds.set(value, name);
       return remember(value);
     };
@@ -287,7 +339,7 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
     },
     async instantiate(source: unknown, imports?: unknown, configuration?: unknown) {
       if (object(source) && kind(source) === 'Module')
-        return remember(
+        return created(
           await apply(instantiate, native, [source, capture(source, imports)]),
         );
       const module: WebAssembly.Module = await apply(compile, native, [
@@ -295,7 +347,7 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
         configuration,
       ]);
       remember(module);
-      const instance = remember(
+      const instance = created(
         await apply(instantiate, native, [module, capture(module, imports)]),
       );
       return { module, instance };
@@ -323,7 +375,7 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
         configuration,
       ]);
       remember(module);
-      const instance = remember(
+      const instance = created(
         await apply(instantiate, native, [module, capture(module, imports)]),
       );
       return { module, instance };
@@ -353,6 +405,7 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
   return {
     namespace,
     importsArgument: (target) => importArguments.get(target),
+    canDeferOrdinary: () => !foreignCode,
     owns(target) {
       if (owned.has(target)) return true;
       if (typeof target === 'function' && !wasmFunction(target)) return false;
@@ -389,7 +442,10 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
     },
     call(target, receiver, args) {
       const replacement = replacements.get(target) || methods.get(target) || target;
-      return remember(apply(replacement, receiver, args));
+      const invoke = () => remember(apply(replacement, receiver, args));
+      return wasmFunction(target)
+        ? options.runWasm(invoke, localFunctions.has(target) && !foreignCode)
+        : invoke();
     },
     construct(target, args) {
       const replacement = replacements.get(target) || target;

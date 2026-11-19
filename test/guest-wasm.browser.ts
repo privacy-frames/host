@@ -11,6 +11,7 @@ declare global {
         guest: CaseResult[];
         error?: string;
         policy?: { control: boolean[]; guest: boolean[] };
+        foreign?: string[];
       }
     | undefined;
 }
@@ -18,6 +19,43 @@ declare global {
 // The same program exercises browser-native controls and the actual guest bridge.
 // Native callbacks below are fixture adapters, not the production DOM policy.
 const cases = [
+  {
+    name: 'consecutive imports preserve ordinary bytes through native reentry and throw',
+    source: `
+      const ordinary = new Uint8Array(4);
+      nativeKind(ordinary); // Establish an ordinary host/guest buffer mirror.
+      ordinary[0] = 1;
+      const memory = new WebAssembly.Memory({initial: 1, maximum: 3});
+      const words = new Int32Array(memory.buffer);
+      const sentinel = new Error('second import');
+      let calls = 0;
+      const instance = new WebAssembly.Instance(new WebAssembly.Module(plainBytes), {
+        env: {memory, callback() {
+          calls++;
+          if (calls === 1) {
+            check(ordinary[0] === 1 && words[0] === 10, 'first import sees current bytes');
+            ordinary[0] = 2;
+            const result = nativeBufferRoundtrip(ordinary, () => {
+              check(ordinary[1] === 7, 'nested native mutation reaches ordinary callback');
+              ordinary[2] = 9;
+            });
+            check(result.before === 2 && result.written === 9, 'nested native consumer sees guest writes');
+            check(ordinary[3] === 8, 'native continuation reaches imported callback');
+            ordinary[0] = 3;
+            return 22;
+          }
+          check(ordinary[0] === 3, 'second import retains preceding guest-only write');
+          check(words[0] === 11, 'native continuation invalidates indexed heap reads');
+          ordinary[0] = 4;
+          throw sentinel;
+        }},
+      });
+      let sameError = false;
+      try {instance.exports.twice(0);} catch(error) {sameError = error === sentinel;}
+      check(sameError && calls === 2, 'exception crosses the outer Wasm scope');
+      check(ordinary.join(',') === '4,7,9,8', 'exceptional scope exit preserves all ordinary bytes');
+    `,
+  },
   {
     name: 'ordinary memory, reentrant import and alias writes',
     source: `
@@ -283,6 +321,14 @@ const nativePolicyCallback = (_value: number) => 1;
 const transferNative = (value: ArrayBuffer) =>
   structuredClone(value, { transfer: [value] });
 const nativeKind = (value: unknown) => Object.prototype.toString.call(value).slice(8, -1);
+const nativeBufferRoundtrip = (bytes: Uint8Array, callback: () => void) => {
+  const before = bytes[0];
+  bytes[1] = 7;
+  callback();
+  const written = bytes[2];
+  bytes[3] = 8;
+  return { before, written };
+};
 const host: GuestHost = {
   get: (target, key) => Reflect.get(target, key),
   set: (target, key, value) => Reflect.set(target, key, value),
@@ -326,6 +372,7 @@ try {
       'mixedBytes',
       'nativeKind',
       'transferNative',
+      'nativeBufferRoundtrip',
       `return ${source}`,
     )(
       plainBytes,
@@ -337,6 +384,7 @@ try {
       mixedBytes,
       nativeKind,
       transferNative,
+      nativeBufferRoundtrip,
     ),
   );
   let outcome: NonNullable<typeof globalThis.guestWasmResults>;
@@ -351,6 +399,7 @@ try {
     engine.set('expectedPolicyValue', 2);
     engine.set('mixedBytes', mixedBytes);
     engine.set('nativeKind', nativeKind);
+    engine.set('nativeBufferRoundtrip', nativeBufferRoundtrip);
     engine.set('transferNative', (buffer: ArrayBuffer) => {
       const clone = transferNative(buffer);
       engine.detachTransferred([buffer]);
@@ -364,6 +413,79 @@ try {
     console.log('Wasm fixture: disposing core engine');
     engine.dispose();
   }
+  const foreign: string[] = [];
+  const tableStartBytes = new Uint8Array(
+    await (await fetch('/table-start.wasm')).arrayBuffer(),
+  );
+  for (const variant of [
+    'raw export',
+    'late imported memory',
+    'late imported table start',
+  ]) {
+    const memory = new WebAssembly.Memory({ initial: 1, maximum: 3 });
+    const bytes = new Uint8Array(memory.buffer);
+    const foreignEngine = await GuestEngine.create({ host, wasmURL: '/quickjs.wasm' });
+    try {
+      // Deliberately expose bytes before the owner learns their Wasm identity.
+      foreignEngine.set('foreignBytes', bytes);
+      foreignEngine.set('plainBytes', plainBytes);
+      foreignEngine.set('check', check);
+      if (variant === 'raw export') {
+        const instance = new WebAssembly.Instance(new WebAssembly.Module(plainBytes), {
+          env: { memory, callback: (value: number) => value },
+        });
+        foreignEngine.set('foreignRoundtrip', instance.exports.roundtrip);
+        foreignEngine.evaluate(`
+          foreignBytes[0] = 3;
+          check(foreignRoundtrip(5) === 15, 'foreign native export return value');
+          check(foreignBytes[0] === 10, 'unrecognized native Wasm memory refreshes ordinary mirror');
+        `);
+      } else if (variant === 'late imported memory') {
+        foreignEngine.set('lateMemory', () => memory);
+        foreignEngine.evaluate(`
+          let memoryReads = 0;
+          const instance = new WebAssembly.Instance(new WebAssembly.Module(plainBytes), {
+            env: {
+              get memory() { memoryReads++; return lateMemory(); },
+              callback(value) {
+                check(foreignBytes[0] === 10, 'late recognized memory reaches imported callback');
+                foreignBytes[0] = 20;
+                return value;
+              },
+            },
+          });
+          check(memoryReads === 1, 'memory provenance observes the actual import Get once');
+          check(instance.exports.roundtrip(7) === 27, 'late imported memory preserves callback writes');
+          check(foreignBytes[0] === 20, 'ordinary mirror retains native callback result');
+        `);
+      } else {
+        const instance = new WebAssembly.Instance(new WebAssembly.Module(plainBytes), {
+          env: { memory, callback: (value: number) => value },
+        });
+        const table = new WebAssembly.Table({ initial: 1, element: 'anyfunc' });
+        table.set(0, instance.exports.roundtrip);
+        foreignEngine.set('tableStartBytes', tableStartBytes);
+        foreignEngine.set('lateTable', () => table);
+        foreignEngine.evaluate(`
+          foreignBytes[0] = 3;
+          let tableReads = 0;
+          new WebAssembly.Instance(new WebAssembly.Module(tableStartBytes), {
+            env: {get table() {tableReads++; return lateTable();}},
+          });
+          check(tableReads === 1, 'table provenance observes the actual import Get once');
+          check(foreignBytes[0] === 10, 'foreign indirect start writes refresh the ordinary mirror');
+        `);
+      }
+      check(
+        bytes[0] === (variant === 'late imported memory' ? 20 : 10),
+        'foreign native bytes',
+      );
+      foreign.push(variant);
+    } finally {
+      foreignEngine.dispose();
+    }
+  }
+  outcome.foreign = foreign;
   const transportBytes = new Uint8Array(
     await (await fetch('/transport.wasm')).arrayBuffer(),
   );
