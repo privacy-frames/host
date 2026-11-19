@@ -12,13 +12,12 @@
     ],
     "resourceCount": 39,
     "listSHA256": "c5099c1c628e98f92c079e52ef08208e43ebfbecb12d08467d6b29c828b2907d",
-    "sourceRevision": "4225606820c0e39d0eecc92c25a2b5ea9f90d7cb",
+    "sourceRevision": "b1447b2a9d865df3946104b4fe1348f8f0abb532",
     "sourceChanges": [
-      "package.json",
+      "results/guest-context-windows.json",
+      "results/guest-policy.json",
       "results/guest-runtime/corpus-matrix.json",
       "results/guest-runtime/corpus/chromium-bindings.json",
-      "results/guest-runtime/corpus/chromium-cyberchef.json",
-      "results/guest-runtime/corpus/chromium-cyberchef.png",
       "results/guest-runtime/corpus/chromium-drawio.json",
       "results/guest-runtime/corpus/chromium-drawio.png",
       "results/guest-runtime/corpus/chromium-excalidraw.json",
@@ -29,8 +28,6 @@
       "results/guest-runtime/corpus/chromium-wikipedia.png",
       "results/guest-runtime/corpus/firefox-bindings.json",
       "results/guest-runtime/corpus/firefox-bindings.png",
-      "results/guest-runtime/corpus/firefox-cyberchef.json",
-      "results/guest-runtime/corpus/firefox-cyberchef.png",
       "results/guest-runtime/corpus/firefox-drawio.json",
       "results/guest-runtime/corpus/firefox-drawio.png",
       "results/guest-runtime/corpus/firefox-excalidraw.json",
@@ -42,18 +39,15 @@
       "results/guest-runtime/legacy-regexp.json",
       "results/guest-runtime/parser.json",
       "results/guest-runtime/web-services.json",
-      "src/guest/engine.ts",
-      "src/guest/guest-runtime.ts",
-      "test/guest-policy-cases.ts",
-      "test/guest-policy.ts"
+      "test/guest-wasm-apps.ts"
     ],
     "roleHashes": {
-      "manager": "5a435ad42046de22d9f2754f5346028204043be8353bb702ee43938e13a76673",
-      "runtime": "38a61a9f330fba73b5bd0a6dec0298df09c0fcde9682ec3d9f1116b0e15c7b73",
-      "installation": "b637ea0b7e953b9c974b55cac64c23ea75433910c1584cc8f9ca53e4b631fa07"
+      "manager": "3bee6024704cd7e81e85e09b83d606355d93b3eb64570f7e446ea94dbc34c7bd",
+      "runtime": "ba5adc823e3dcda75d65825e6034db6635700e519d90ba1fa5eb17c847840f9b",
+      "installation": "ceaa659102130b4c4187d532aebb333befd8afda461f19f0de7ee89061c0e406"
     },
     "testSHA256": "0d90177c9c343ebf86f6c814309ee1bf9eae3d63ac186be226809a70feabaf7c",
-    "elapsedMs": 55267,
+    "elapsedMs": 47704,
     "checks": [
       "Installed unchanged public release by pasting its URL with the published default resource list",
       "Guest JavaScript renders the application against the native DOM",
@@ -79,13 +73,12 @@
     ],
     "resourceCount": 39,
     "listSHA256": "c5099c1c628e98f92c079e52ef08208e43ebfbecb12d08467d6b29c828b2907d",
-    "sourceRevision": "4225606820c0e39d0eecc92c25a2b5ea9f90d7cb",
+    "sourceRevision": "b1447b2a9d865df3946104b4fe1348f8f0abb532",
     "sourceChanges": [
-      "package.json",
+      "results/guest-context-windows.json",
+      "results/guest-policy.json",
       "results/guest-runtime/corpus-matrix.json",
       "results/guest-runtime/corpus/chromium-bindings.json",
-      "results/guest-runtime/corpus/chromium-cyberchef.json",
-      "results/guest-runtime/corpus/chromium-cyberchef.png",
       "results/guest-runtime/corpus/chromium-drawio.json",
       "results/guest-runtime/corpus/chromium-drawio.png",
       "results/guest-runtime/corpus/chromium-excalidraw.json",
@@ -96,8 +89,6 @@
       "results/guest-runtime/corpus/chromium-wikipedia.png",
       "results/guest-runtime/corpus/firefox-bindings.json",
       "results/guest-runtime/corpus/firefox-bindings.png",
-      "results/guest-runtime/corpus/firefox-cyberchef.json",
-      "results/guest-runtime/corpus/firefox-cyberchef.png",
       "results/guest-runtime/corpus/firefox-drawio.json",
       "results/guest-runtime/corpus/firefox-drawio.png",
       "results/guest-runtime/corpus/firefox-excalidraw.json",
@@ -109,18 +100,15 @@
       "results/guest-runtime/legacy-regexp.json",
       "results/guest-runtime/parser.json",
       "results/guest-runtime/web-services.json",
-      "src/guest/engine.ts",
-      "src/guest/guest-runtime.ts",
-      "test/guest-policy-cases.ts",
-      "test/guest-policy.ts"
+      "test/guest-wasm-apps.ts"
     ],
     "roleHashes": {
-      "manager": "5a435ad42046de22d9f2754f5346028204043be8353bb702ee43938e13a76673",
-      "runtime": "38a61a9f330fba73b5bd0a6dec0298df09c0fcde9682ec3d9f1116b0e15c7b73",
-      "installation": "b637ea0b7e953b9c974b55cac64c23ea75433910c1584cc8f9ca53e4b631fa07"
+      "manager": "3bee6024704cd7e81e85e09b83d606355d93b3eb64570f7e446ea94dbc34c7bd",
+      "runtime": "ba5adc823e3dcda75d65825e6034db6635700e519d90ba1fa5eb17c847840f9b",
+      "installation": "ceaa659102130b4c4187d532aebb333befd8afda461f19f0de7ee89061c0e406"
     },
     "testSHA256": "0d90177c9c343ebf86f6c814309ee1bf9eae3d63ac186be226809a70feabaf7c",
-    "elapsedMs": 34954,
+    "elapsedMs": 32743,
     "checks": [
       "Installed unchanged public release by pasting its URL with the published default resource list",
       "Guest JavaScript renders the application against the native DOM",
