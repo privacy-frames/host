@@ -61,6 +61,10 @@ for (const [port, directory, prefix] of [
     requests.push({ port, url: request.url ?? '/', method: request.method ?? 'GET' });
     response.setHeader('Access-Control-Allow-Origin', '*');
     response.setHeader('Cache-Control', 'no-store');
+    if (port === 4812) {
+      response.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+      response.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+    }
     try {
       const address = new URL(request.url ?? '/', 'http://local');
       if (!address.pathname.startsWith(prefix)) throw new Error('Outside scope');
@@ -277,10 +281,18 @@ async function squoosh(page: Page, confined: boolean) {
   const after = await download(page, () => link.click(), confined);
   assert.notEqual(before.sha256, after.sha256);
   assert(after.bytes.length < before.bytes.length);
+  await page.locator('select').nth(1).selectOption('avif');
+  const avifLink = page.locator('a[download="synthetic-noise.avif"]');
+  await avifLink.waitFor({ timeout: 120000 });
+  const avif = await download(page, () => avifLink.click(), confined);
+  assert.equal(avif.decoded.width, 256);
+  assert.equal(avif.decoded.height, 256);
+  assert(avif.bytes.subarray(0, 32).includes(Buffer.from('ftypavif')));
   return {
     inputBytes: png.length,
     before: { ...before, bytes: before.bytes.length },
     after: { ...after, bytes: after.bytes.length },
+    avif: { ...avif, bytes: avif.bytes.length },
     workers: page.workers().length,
     controls: await page.locator('select').evaluateAll((elements) =>
       elements
@@ -411,6 +423,10 @@ try {
               );
             }
             row.url = page.url();
+            row.nativeCapabilities = await page.evaluate(() => ({
+              crossOriginIsolated,
+              sharedArrayBuffer: typeof SharedArrayBuffer,
+            }));
             privateTask = true;
             row.task = await (target.id === 'photocraft'
               ? photo(page, mode === 'confined')
