@@ -30,6 +30,12 @@ Scoped custom-element registries are unavailable. Logical child-document
 navigation reuses its native Window, so native element definitions persist across
 those navigations; repeated registration is a compatibility limitation.
 
+Applications see their original document URL through `location` and `document.URL`.
+Same-document history stores logical routes and application data in a host-owned
+browser history record. The actual URL stays on the admitted runtime document;
+only its fragment changes. Script preloads receive asynchronous load/error events
+from the admitted catalog. A successful preload does not execute native JavaScript.
+
 Focused native-control/guest comparisons cover synchronous reentry, exceptions,
 indexed operations, species constructors, NaN payload copies, memory growth,
 shared-memory workers and import getter ordering. Network-policy checks observe
@@ -39,4 +45,3 @@ checks do not establish complete browser confinement or ECMAScript conformance.
 Chrome exposes non-extensible Wasm SharedArrayBuffer wrappers. Their default
 `slice` works, but a custom guest species constructor is not observed on that
 route. The bridge keeps the native operation and its same-data-block checks.
-It does not emulate shared storage to recover this uncommon customization.
