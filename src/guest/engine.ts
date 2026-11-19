@@ -6,6 +6,7 @@ import {
   type QuickJSHandle,
   type QuickJSRuntime,
   type QuickJSDeferredPromise,
+  type QuickJSArrayBufferBacking,
 } from 'quickjs-emscripten';
 import { installGuestRuntime } from './guest-runtime.ts';
 import { installGuestRegExpLegacy } from './legacy-regexp.ts';
@@ -24,6 +25,7 @@ interface RetainedGuest {
 interface BufferMirror {
   native: ArrayBuffer;
   guest: QuickJSHandle;
+  backing?: QuickJSArrayBufferBacking;
 }
 
 const modules = new Map<string, Promise<WebAssembly.Module>>();
@@ -944,10 +946,12 @@ export class GuestEngine {
   private encodeBuffer(value: ArrayBuffer): QuickJSHandle {
     const existing = this.buffers.get(value);
     if (existing) return existing.guest.dup();
-    const result = this.context.newArrayBuffer(value);
+    const backing = this.context.newArrayBufferBacking(value);
+    // The backing API closes over this original handle; callers receive dupes.
+    const result = backing.handle.dup();
     if (this.fixedWasmBuffers.has(value))
       this.helper('markFixedWasmBuffer', [result]).dispose();
-    this.buffers.set(value, { native: value, guest: result.dup() });
+    this.buffers.set(value, { native: value, guest: backing.handle, backing });
     this.nativeHandles.set(value, result.dup());
     const id = this.helper('guestId', [result]);
     this.retainGuest(this.context.getNumber(id), result.dup(), value);
@@ -1382,6 +1386,12 @@ export class GuestEngine {
         const guestLength = this.context.getNumber(size);
         size.dispose();
         if (!guestLength || guestLength !== mirror.native.byteLength) continue;
+        if (mirror.backing) {
+          const bytes = new Uint8Array(mirror.native);
+          if (direction === 'into-guest') mirror.backing.writeFrom(bytes);
+          else mirror.backing.readInto(bytes);
+          continue;
+        }
         if (direction === 'into-guest') {
           const source = this.context.newArrayBuffer(mirror.native);
           this.helper('writeBuffer', [mirror.guest, source]).dispose();

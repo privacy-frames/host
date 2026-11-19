@@ -113,6 +113,22 @@ try {
       assert.equal(disposal.capturedNativeSymbol, true);
       assert.equal(disposal.reflectedAfterGrowth, true);
       assert.equal(disposal.lengthAfterGrowth, 3);
+      assert.deepEqual(disposal.backing, {
+        grewBackingHeap: true,
+        backingAfterGrowth: [9, 8, 7, 6],
+        mirroredAfterGrowth: [31, 0, 0, 0],
+        mirrorNativeWrite: 32,
+        mirrorNativeDetached: 0,
+        backingAfterTamper: [9, 8, 7, 6],
+        backingGuestShape: { length: 4, keys: [] },
+        backingWrongLength: 'RangeError',
+        backingDetachedRead: 'TypeError',
+        backingDetachedWrite: 'TypeError',
+        zeroBackingDetached: 'TypeError',
+        backingTransferDestination: [9, 8, 7, 6],
+        backingDisposed: 'Error',
+        backingContextDisposed: 'Error',
+      });
     } finally {
       await browser.close();
     }

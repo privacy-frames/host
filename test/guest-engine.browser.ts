@@ -238,11 +238,33 @@ try {
     wasmURL: '/quickjs.wasm',
     onError() {},
   });
-  const growingJob = disposable.evaluate(
-    `Promise.resolve().then(() => { globalThis.largeAllocation = new Uint8Array(32 * 1024 * 1024); return 42; })`,
+  const sdkBacking = disposable.context.newArrayBufferBacking(
+    new Uint8Array([1, 2, 3, 4]).buffer,
   );
-  disposable.drainJobs();
-  await growingJob;
+  disposable.context.setProp(disposable.context.global, 'sdkBacking', sdkBacking.handle);
+  const zeroBacking = disposable.context.newArrayBufferBacking(new ArrayBuffer(0));
+  disposable.context.setProp(
+    disposable.context.global,
+    'zeroBacking',
+    zeroBacking.handle,
+  );
+  const originalMemoryGrow = WebAssembly.Memory.prototype.grow;
+  let backingHeapGrowths = 0;
+  WebAssembly.Memory.prototype.grow = function (delta) {
+    backingHeapGrowths++;
+    return Reflect.apply(originalMemoryGrow, this, [delta]);
+  };
+  const growthMirror = new Uint8Array(4);
+  disposable.set('growthMirror', growthMirror);
+  try {
+    const growingJob = disposable.evaluate(
+      `Promise.resolve().then(() => { globalThis.largeAllocation = new Uint8Array(32 * 1024 * 1024); return 42; })`,
+    );
+    disposable.drainJobs();
+    await growingJob;
+  } finally {
+    WebAssembly.Memory.prototype.grow = originalMemoryGrow;
+  }
   const namesAfterGrowth = disposable.context
     .getOwnPropertyNames(disposable.context.global)
     .unwrap();
@@ -270,6 +292,71 @@ try {
     Symbol = original;
     return result;
   })()`);
+  const backingError = (operation: () => void): string => {
+    try {
+      operation();
+      return '';
+    } catch (error) {
+      return error instanceof Error ? error.name : String(error);
+    }
+  };
+  const grewBackingHeap = backingHeapGrowths > 0;
+  sdkBacking.writeFrom(new Uint8Array([9, 8, 7, 6]));
+  const backingAfterGrowth = new Uint8Array(4);
+  sdkBacking.readInto(backingAfterGrowth);
+  growthMirror[0] = 31;
+  const mirroredAfterGrowth = disposable.evaluate('Array.from(growthMirror)');
+  disposable.evaluate('growthMirror[1] = 32');
+  const mirrorNativeWrite = growthMirror[1];
+  structuredClone(growthMirror.buffer, { transfer: [growthMirror.buffer] });
+  const mirrorNativeDetached = disposable.evaluate('growthMirror.byteLength');
+  disposable.evaluate(`
+    globalThis.CapturedFixtureView = Uint8Array;
+    Object.defineProperty(ArrayBuffer.prototype, 'byteLength', {get(){return 4;}, configurable:true});
+    Uint8Array = () => ({});
+    Reflect.apply = () => 4;
+  `);
+  sdkBacking.writeFrom(new Uint8Array([9, 8, 7, 6]));
+  const backingAfterTamper = disposable.evaluate(
+    'Array.from(new CapturedFixtureView(sdkBacking))',
+  );
+  const backingGuestShape = disposable.evaluate(
+    '({length:new CapturedFixtureView(sdkBacking).length,keys:Object.getOwnPropertyNames(sdkBacking)})',
+  );
+  const backingWrongLength = backingError(() => sdkBacking.writeFrom(new Uint8Array(3)));
+  zeroBacking.writeFrom(new Uint8Array(0));
+  zeroBacking.readInto(new Uint8Array(0));
+  disposable.evaluate(
+    'globalThis.sdkMoved = sdkBacking.transfer(); zeroBacking.transfer();',
+  );
+  const backingDetachedRead = backingError(() => sdkBacking.readInto(new Uint8Array(4)));
+  const backingDetachedWrite = backingError(() =>
+    sdkBacking.writeFrom(new Uint8Array([3, 3, 3, 3])),
+  );
+  const zeroBackingDetached = backingError(() => zeroBacking.readInto(new Uint8Array(0)));
+  const backingTransferDestination = disposable.evaluate(
+    'Array.from(new CapturedFixtureView(sdkMoved))',
+  );
+  const backingDuplicate = sdkBacking.handle.dup();
+  sdkBacking.handle.dispose();
+  const backingDisposed = backingError(() => sdkBacking.readInto(new Uint8Array(4)));
+  backingDuplicate.dispose();
+  zeroBacking.handle.dispose();
+  const backing = {
+    grewBackingHeap,
+    backingAfterGrowth: Array.from(backingAfterGrowth),
+    mirroredAfterGrowth,
+    mirrorNativeWrite,
+    mirrorNativeDetached,
+    backingAfterTamper,
+    backingGuestShape,
+    backingWrongLength,
+    backingDetachedRead,
+    backingDetachedWrite,
+    zeroBackingDetached,
+    backingTransferDestination,
+    backingDisposed,
+  };
   let rejectedMessage = '';
   const rejected = disposable.evaluate(`Promise.reject(new Error('expected rejection'))`);
   disposable.drainJobs();
@@ -294,6 +381,9 @@ try {
   if (pendingModule instanceof Promise) void pendingModule.catch(() => {});
   const pending = disposable.evaluate('new Promise(() => {})');
   disposable.dispose();
+  const backingContextDisposed = backingError(() =>
+    sdkBacking.readInto(new Uint8Array(4)),
+  );
   let closedMessage = '';
   try {
     await pending;
@@ -346,6 +436,7 @@ try {
       capturedNativeSymbol,
       reflectedAfterGrowth,
       lengthAfterGrowth,
+      backing: { ...backing, backingContextDisposed },
     },
   };
 } catch (error) {
