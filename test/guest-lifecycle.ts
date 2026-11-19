@@ -92,6 +92,13 @@ try {
         sparse: true,
         bytes: [4, 5],
         binary: 'prefix\0\ud800suffix',
+        importedMutation: {
+          text: 'updated imported record',
+          tx: 8,
+          sparse: 'new item',
+          bytes: [4, 9],
+          binary: 'prefix\0\ud800suffix',
+        },
       });
     } finally {
       await browser.close();

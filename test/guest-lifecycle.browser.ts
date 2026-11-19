@@ -112,11 +112,25 @@ try {
         read.onerror = () => reject(read.error);
         read.onsuccess = () => {
           const value = read.result;
-          resolve({text: value.text, type: value.type, tx: value.tx,
+          const before = {text: value.text, type: value.type, tx: value.tx,
             optional: Object.hasOwn(value, 'optional') && value.optional === undefined,
             nullable: value.nullable, sparse: value.sparse.length === 3 && !(0 in value.sparse),
-            bytes: Array.from(value.bytes), binary: value.binary});
-          database.close();
+            bytes: Array.from(value.bytes), binary: value.binary};
+          value.text = 'updated imported record'; value.tx = 8;
+          value.sparse[3] = 'new item'; value.bytes[1] = 9;
+          const update = database.transaction('records', 'readwrite');
+          update.objectStore('records').put(value);
+          update.onerror = () => reject(update.error);
+          update.oncomplete = () => {
+            const verify = database.transaction('records').objectStore('records').get('document');
+            verify.onerror = () => reject(verify.error);
+            verify.onsuccess = () => {
+              const result = verify.result;
+              resolve({...before, importedMutation: {text:result.text,tx:result.tx,
+                sparse:result.sparse[3], bytes:Array.from(result.bytes), binary:result.binary}});
+              database.close();
+            };
+          };
         };
       };
     };

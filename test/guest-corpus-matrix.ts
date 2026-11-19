@@ -43,6 +43,7 @@ interface CorpusReceipt {
   offlineTask?: string;
   offlinePersistence?: boolean;
   errors: string[];
+  consoleObjects?: unknown[];
   error?: string;
 }
 
@@ -114,6 +115,7 @@ for (const browser of browsers) {
         optionalResourceFailures,
         runtimeErrors,
         otherConsoleDiagnostics,
+        consoleObjects: receipt.consoleObjects,
         publisherRevision: receipt.publisherRevision,
         runtimeRevision: receipt.runtimeRevision,
       });

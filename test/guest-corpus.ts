@@ -7,6 +7,7 @@ import path from 'node:path';
 import { chromium, firefox, type Page } from 'playwright';
 import { launch } from './browser-profile.ts';
 import { browserStorageState } from './browser-storage-state.ts';
+import { waitUntil } from './helpers/poll.ts';
 
 const root = process.cwd();
 const output = path.join(
@@ -214,43 +215,44 @@ async function interaction(page: Page, id: string) {
       .locator('.cl-preview-section h1')
       .getByText('Synthetic evaluation', { exact: true })
       .waitFor();
-    await page.waitForFunction(
-      async () => {
-        const name = (await indexedDB.databases()).find((database) =>
-          database.name?.endsWith('stackedit-db'),
-        )?.name;
-        if (!name) return false;
-        const database = await new Promise<IDBDatabase>((resolve, reject) => {
-          const request = indexedDB.open(name);
-          request.onsuccess = () => resolve(request.result);
-          request.onerror = () => reject(request.error);
-        });
-        try {
-          if (!database.objectStoreNames.contains('objects')) return false;
-          const records = await new Promise<unknown[]>((resolve, reject) => {
-            const request = database
-              .transaction('objects')
-              .objectStore('objects')
-              .getAll();
+    await waitUntil(
+      () =>
+        page.evaluate(async () => {
+          const name = (await indexedDB.databases()).find((database) =>
+            database.name?.endsWith('stackedit-db'),
+          )?.name;
+          if (!name) return false;
+          const database = await new Promise<IDBDatabase>((resolve, reject) => {
+            const request = indexedDB.open(name);
             request.onsuccess = () => resolve(request.result);
             request.onerror = () => reject(request.error);
           });
-          return records.some(
-            (record) =>
-              record !== null &&
-              typeof record === 'object' &&
-              'type' in record &&
-              record.type === 'content' &&
-              'text' in record &&
-              typeof record.text === 'string' &&
-              record.text.includes('# Synthetic evaluation'),
-          );
-        } finally {
-          database.close();
-        }
-      },
-      undefined,
-      { timeout: 30000 },
+          try {
+            if (!database.objectStoreNames.contains('objects')) return false;
+            const records = await new Promise<unknown[]>((resolve, reject) => {
+              const request = database
+                .transaction('objects')
+                .objectStore('objects')
+                .getAll();
+              request.onsuccess = () => resolve(request.result);
+              request.onerror = () => reject(request.error);
+            });
+            return records.some(
+              (record) =>
+                record !== null &&
+                typeof record === 'object' &&
+                'type' in record &&
+                record.type === 'content' &&
+                'text' in record &&
+                typeof record.text === 'string' &&
+                record.text.includes('# Synthetic evaluation'),
+            );
+          } finally {
+            database.close();
+          }
+        }),
+      'Edited note did not reach committed IndexedDB storage',
+      30000,
     );
     return 'Markdown edited, preview rendered and note committed to IndexedDB';
   }
@@ -322,12 +324,53 @@ try {
     const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
     context.setDefaultTimeout(30000);
     const errors: string[] = [];
+    const consoleObjects: unknown[] = [];
+    const consoleReads: Promise<void>[] = [];
     const failedRequests: string[] = [];
     context.on('page', (page) =>
       page.on('pageerror', (error) => errors.push(error.stack ?? error.message)),
     );
     context.on('console', (message) => {
-      if (message.type() === 'error') errors.push(message.text());
+      if (message.type() !== 'error') return;
+      errors.push(message.text());
+      if (/JSHandle@/.test(message.text()))
+        consoleReads.push(
+          Promise.all(
+            message.args().map((argument) =>
+              argument
+                .evaluate((value) => {
+                  if (
+                    !value ||
+                    (typeof value !== 'object' && typeof value !== 'function')
+                  )
+                    return String(value);
+                  const fields: Record<string, string> = {};
+                  for (const key of ['name', 'message', 'stack']) {
+                    try {
+                      const field = Reflect.get(value, key);
+                      if (typeof field === 'string') fields[key] = field;
+                    } catch {}
+                  }
+                  try {
+                    fields.nativeClass = Object.prototype.toString.call(value);
+                  } catch {}
+                  return fields;
+                })
+                .catch((error) => ({ inspectionError: String(error) })),
+            ),
+          ).then((details) => {
+            consoleObjects.push(details);
+            for (const detail of details)
+              if (
+                typeof detail === 'object' &&
+                typeof detail.name === 'string' &&
+                typeof detail.message === 'string'
+              )
+                errors.push(
+                  `${detail.nativeClass === '[object DOMException]' ? 'DOMException ' : ''}${detail.name}: ${detail.message}`,
+                );
+          }),
+        );
     });
     context.on('requestfailed', (request) =>
       failedRequests.push(`${request.url()} ${request.failure()?.errorText}`),
@@ -342,6 +385,7 @@ try {
       publisherSource:
         'Existing static publisher mirrors; app files served byte-for-byte without test modifications',
       errors,
+      consoleObjects,
       failedRequests,
     };
     console.log(`Starting ${target.id}`);
@@ -470,6 +514,7 @@ try {
       failed = true;
       row.error = error instanceof Error ? error.stack : String(error);
     } finally {
+      await Promise.allSettled(consoleReads);
       row.completed = new Date().toISOString();
       if (app) {
         if (process.env.CORPUS_CAPTURE_STORAGE)
