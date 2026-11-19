@@ -1,3 +1,4 @@
+import { GuestLocation } from './location.ts';
 import { GuestEngine } from './engine.ts';
 import type { GuestHost } from './protocol.ts';
 import { GuestResources } from './resources.ts';
@@ -332,6 +333,7 @@ const own = (value: object, key: PropertyKey) =>
 
 /** Native browser authority is concentrated here, independent of guest prototypes. */
 export class BrowserEnvironment {
+  private navigation?: GuestLocation;
   readonly resources: GuestResources;
   readonly host: GuestHost;
   readonly globals: Record<string, unknown> = Object.create(null);
@@ -388,6 +390,12 @@ export class BrowserEnvironment {
         resources: this.resources,
         nativeWindow: native,
         createSession: options.createWindow,
+        logicalOrigin: (target) => {
+          const environment = environments.get(target);
+          return environment
+            ? new URL(environment.options.catalog.sourceURL).origin
+            : undefined;
+        },
         report,
         commitTransfers: (transfer) => this.requireEngine().detachTransferred(transfer),
         canMessage: (target) =>
@@ -588,8 +596,10 @@ export class BrowserEnvironment {
       this.globals.sessionStorage = session;
       this.namedSetters.add(local);
       this.namedSetters.add(session);
-      this.globals.location = this.location(native);
-      this.globals.history = this.history(native);
+      this.navigation = new GuestLocation(native, catalog);
+      this.globals.location = this.navigation.location;
+      this.globals.origin = new URL(catalog.sourceURL).origin;
+      this.globals.history = this.navigation.createHistory();
       this.globals.requestAnimationFrame = (callback: FrameRequestCallback) =>
         native.requestAnimationFrame((time) => {
           if (!this.disposed) callback(time);
@@ -794,15 +804,28 @@ export class BrowserEnvironment {
       return target.defaultView
         ? environments.get(target.defaultView)?.globals.location
         : null;
+    if (
+      key === 'state' &&
+      typeof PopStateEvent === 'function' &&
+      target instanceof PopStateEvent &&
+      target.isTrusted &&
+      target.target === this.options.global
+    )
+      return this.navigation ? this.navigation.eventState(target.state) : target.state;
     if (key === 'cookie' && isDocument(target)) return '';
     if (target === this.document) {
       if (key === 'currentScript') return this.dom?.currentScript;
       if (key === 'readyState') return this.dom?.readyState;
       if (key === 'baseURI') return this.options.catalog.documentBase;
-      if (key === 'URL' || key === 'documentURI') return this.options.catalog.sourceURL;
+      if (key === 'URL' || key === 'documentURI')
+        return this.navigation?.href ?? this.options.catalog.sourceURL;
       if (key === 'cookie') return '';
     }
     if (this.document && isElement(target)) {
+      if (target.localName === 'link' && key === 'href') {
+        const logical = this.dom?.logicalAttribute(target, 'href');
+        if (logical !== undefined) return this.resources.resolve(logical);
+      }
       if (
         key === 'target' &&
         target.namespaceURI === 'http://www.w3.org/1999/xhtml' &&
@@ -1534,113 +1557,13 @@ export class BrowserEnvironment {
   }
 
   private navigate(input: string): void {
-    const native = this.options.global;
-    if (!('document' in native))
+    if (!this.navigation)
       throw new DOMException('Worker navigation is unavailable', 'SecurityError');
-    const url = new URL(input, native.location.href);
-    const current = new URL(native.location.href);
-    if (
-      url.origin !== current.origin ||
-      url.pathname !== current.pathname ||
-      url.search !== current.search
-    )
-      throw new DOMException('Navigation leaves the installed document', 'SecurityError');
-    native.location.hash = url.hash;
-  }
-
-  private location(native: Window): object {
-    const environment = this;
-    const result: Record<string, unknown> = {
-      assign: (value: string) => environment.navigate(value),
-      replace: (value: string) => environment.navigate(value),
-      reload: () => {
-        throw new DOMException('Native document reload is unavailable', 'SecurityError');
-      },
-      toString: () => native.location.href,
-    };
-    for (const key of [
-      'href',
-      'origin',
-      'protocol',
-      'host',
-      'hostname',
-      'port',
-      'pathname',
-      'search',
-      'hash',
-    ] as const)
-      Object.defineProperty(result, key, {
-        enumerable: true,
-        get: () => native.location[key],
-        set: (value: string) =>
-          key === 'href'
-            ? this.navigate(value)
-            : this.navigate(
-                new URL(
-                  key === 'hash' ? '#' + value.replace(/^#/, '') : String(value),
-                  native.location.href,
-                ).href,
-              ),
-      });
-    return result;
-  }
-
-  private history(native: Window): object {
-    const update = (
-      replace: boolean,
-      data: unknown,
-      unused: string,
-      url?: string | URL | null,
-    ) => {
-      let destination: string | null | undefined = url == null ? url : undefined;
-      if (url !== undefined && url !== null) {
-        const next = new URL(String(url), native.location.href);
-        if (
-          next.origin !== native.location.origin ||
-          !next.pathname.startsWith(
-            this.options.catalog.applicationURL.replace(native.location.origin, ''),
-          )
-        )
-          throw new DOMException('History leaves this application', 'SecurityError');
-        destination = next.href;
-      }
-      return replace
-        ? native.history.replaceState(data, unused, destination)
-        : native.history.pushState(data, unused, destination);
-    };
-    return {
-      get length() {
-        return native.history.length;
-      },
-      get state() {
-        return native.history.state;
-      },
-      pushState: (data: unknown, unused: string, url?: string | URL | null) =>
-        update(false, data, unused, url),
-      replaceState: (data: unknown, unused: string, url?: string | URL | null) =>
-        update(true, data, unused, url),
-      back: () => {
-        throw new DOMException(
-          'History traversal may leave this application',
-          'SecurityError',
-        );
-      },
-      forward: () => {
-        throw new DOMException(
-          'History traversal may leave this application',
-          'SecurityError',
-        );
-      },
-      go: () => {
-        throw new DOMException(
-          'History traversal may leave this application',
-          'SecurityError',
-        );
-      },
-    };
+    this.navigation.navigate(input);
   }
 
   dispose(): void {
+    this.navigation?.dispose();
     if (this.disposed) return;
     this.disposed = true;
     this.stopServices();
