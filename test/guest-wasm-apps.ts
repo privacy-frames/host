@@ -7,13 +7,30 @@ import { chromium, firefox, type Page } from 'playwright';
 import { launch } from './browser-profile.ts';
 
 const root = process.cwd();
-const output = path.join(root, 'results/guest-runtime/wasm-apps');
+const publicRun = process.env.WASM_APPS_PUBLIC === '1';
+if (publicRun && process.env.PUBLIC_DEPLOYMENT_READY !== 'yes')
+  throw new Error('Public image qualification requires PUBLIC_DEPLOYMENT_READY=yes');
+const output = path.join(
+  root,
+  publicRun
+    ? 'results/guest-runtime/wasm-apps-public'
+    : 'results/guest-runtime/wasm-apps',
+);
+const runtimeDirectory = process.env.WASM_APPS_RUNTIME_DIRECTORY ?? 'dist-runtime';
 const publisher =
   process.env.PUBLISHER_DIRECTORY ?? path.join(root, 'publisher-source/dist');
-const managerURL = 'http://127.0.0.1:4810/privacy-frames/';
-const runtimeURL = 'http://127.0.0.1:4811/runtime/';
-const installationURL = 'http://127.0.0.1:4819/installation/';
-const publisherURL = 'http://127.0.0.1:4812/apps/';
+const managerURL = publicRun
+  ? 'https://pf.damenh.com/'
+  : 'http://127.0.0.1:4810/privacy-frames/';
+const runtimeURL = publicRun
+  ? 'https://apps.pf.damenh.com/'
+  : 'http://127.0.0.1:4811/runtime/';
+const installationURL = publicRun
+  ? 'https://install.pf.damenh.com/'
+  : 'http://127.0.0.1:4819/installation/';
+const publisherURL = publicRun
+  ? 'https://privacy-frames.github.io/apps/'
+  : 'http://127.0.0.1:4812/apps/';
 const targets = [
   {
     id: 'photocraft',
@@ -26,7 +43,9 @@ const targets = [
     list: publisherURL + 'resource-lists/squoosh.uris',
   },
 ] as const;
-const config = JSON.parse(await readFile('dist-manager/config.json', 'utf8'));
+const config = publicRun
+  ? {}
+  : JSON.parse(await readFile('dist-manager/config.json', 'utf8'));
 Object.assign(config, {
   managerURL,
   runtimeURL,
@@ -50,12 +69,13 @@ const media: Record<string, string> = {
   '.svg': 'image/svg+xml',
 };
 const servers = [];
-for (const [port, directory, prefix] of [
+const serverDefinitions = [
   [4810, 'dist-manager', '/privacy-frames/'],
-  [4811, 'dist-runtime', '/runtime/'],
+  [4811, runtimeDirectory, '/runtime/'],
   [4819, 'dist-installation', '/installation/'],
   [4812, publisher, '/apps/'],
-] as const) {
+] as const;
+for (const [port, directory, prefix] of publicRun ? [] : serverDefinitions) {
   const server = createServer(async (request, response) => {
     response.setHeader('Access-Control-Allow-Origin', '*');
     response.setHeader('Cache-Control', 'no-store');
@@ -310,9 +330,14 @@ async function squoosh(page: Page, confined: boolean) {
 }
 
 await mkdir(output, { recursive: true });
-const guardHash = createHash('sha256')
-  .update(await readFile('dist-runtime/guard.js'))
-  .digest('hex');
+const guardResponse = publicRun
+  ? await fetch(new URL('guard.js', runtimeURL))
+  : undefined;
+if (guardResponse) assert(guardResponse.ok, 'Public runtime guard could not be read');
+const guardBytes = guardResponse
+  ? Buffer.from(await guardResponse.arrayBuffer())
+  : await readFile(path.join(runtimeDirectory, 'guard.js'));
+const guardHash = createHash('sha256').update(guardBytes).digest('hex');
 let failed = false;
 try {
   for (const [name, engine] of [
@@ -344,6 +369,7 @@ try {
         if (process.env.WASM_APPS_TARGET && target.id !== process.env.WASM_APPS_TARGET)
           continue;
         for (const mode of ['native', 'confined'] as const) {
+          if (publicRun && mode === 'native') continue;
           if (process.env.WASM_APPS_MODE && mode !== process.env.WASM_APPS_MODE) continue;
           const context = await browser.newContext({
             viewport: { width: 1280, height: 800 },
@@ -406,6 +432,7 @@ try {
           });
           const row: Record<string, unknown> = {
             browser: name,
+            deployment: publicRun ? 'public' : 'local',
             version: browser.version(),
             application: target.id,
             graphicsProfile: softwareDisplay
