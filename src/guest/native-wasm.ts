@@ -21,14 +21,17 @@ type WasmKind =
 
 const native = WebAssembly;
 const apply = Reflect.apply;
-const construct = Reflect.construct;
+const construct: (target: Function, args: unknown[]) => object = Reflect.construct;
 const get = Reflect.get;
 const set = Reflect.set;
 const ownKeys = Reflect.ownKeys;
 const descriptor = Object.getOwnPropertyDescriptor;
 const define = Object.defineProperty;
 const prototype = Object.getPrototypeOf;
-const responseStatus = descriptor(Response.prototype, 'status')!.get!;
+const responseStatus =
+  typeof Response === 'function'
+    ? descriptor(Response.prototype, 'status')!.get!
+    : undefined;
 const memoryBuffer = descriptor(native.Memory.prototype, 'buffer')!.get!;
 const instanceExports = descriptor(native.Instance.prototype, 'exports')!.get!;
 const tableLength = descriptor(native.Table.prototype, 'length')!.get!;
@@ -292,6 +295,8 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
     },
     async compileStreaming(source: unknown, configuration?: unknown) {
       const response = await source;
+      if (!responseStatus)
+        throw new TypeError('Native Response streaming is unavailable');
       apply(responseStatus, response, []);
       return remember(await apply(compileStreaming, native, [response, configuration]));
     },
@@ -303,6 +308,8 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
       const response = await source;
       // Native Response brand validation excludes URL strings and user-defined
       // pseudo-responses; native streaming compilation performs no URL fetch.
+      if (!responseStatus)
+        throw new TypeError('Native Response streaming is unavailable');
       apply(responseStatus, response, []);
       const module: WebAssembly.Module = await apply(compileStreaming, native, [
         response,
@@ -317,7 +324,8 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
   };
   for (const [name, fn] of Object.entries(functions)) {
     const original: unknown = get(native, name);
-    if (typeof original !== 'function') continue;
+    if (typeof original !== 'function' || (name.endsWith('Streaming') && !responseStatus))
+      continue;
     copiedName(fn, original);
     owned.add(fn);
     define(namespace, name, { ...descriptor(native, name), value: fn });
