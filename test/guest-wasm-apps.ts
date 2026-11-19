@@ -351,6 +351,8 @@ try {
           });
           const errors: string[] = [];
           const browserDiagnostics: string[] = [];
+          const resourceRefusals: string[] = [];
+          const diagnosticTasks: Promise<void>[] = [];
           const privateRequests: string[] = [];
           let privateTask = false;
           context.on('request', (request) => {
@@ -364,14 +366,39 @@ try {
           });
           context.on('console', (message) => {
             if (message.type() !== 'error') return;
-            const text = message.text();
-            if (
-              text.includes('resource:///modules/FaviconLoader.sys.mjs') &&
-              text.includes('/favicon.ico') &&
-              text.includes('img-src')
-            )
-              browserDiagnostics.push(text);
-            else errors.push(text);
+            diagnosticTasks.push(
+              (async () => {
+                const text =
+                  message.text() === 'JSHandle@object'
+                    ? (
+                        await Promise.all(
+                          message.args().map(async (argument) => {
+                            try {
+                              return await argument.evaluate((value: unknown) =>
+                                value instanceof Error
+                                  ? String(value) + '\n' + value.stack
+                                  : String(value),
+                              );
+                            } catch {
+                              return message.text();
+                            }
+                          }),
+                        )
+                      ).join(' ')
+                    : message.text();
+                if (
+                  text.includes('resource:///modules/FaviconLoader.sys.mjs') &&
+                  text.includes('/favicon.ico') &&
+                  text.includes('img-src')
+                )
+                  browserDiagnostics.push(text);
+                else if (
+                  /^TypeError: Script resource is not installed: https?:\/\//.test(text)
+                )
+                  resourceRefusals.push(text);
+                else errors.push(text);
+              })(),
+            );
           });
           context.on('response', (response) => {
             if (response.status() >= 400)
@@ -391,6 +418,7 @@ try {
             errors,
             responses,
             browserDiagnostics,
+            resourceRefusals,
             privateRequests,
           };
           console.log(`Starting ${name}/${target.id}/${mode}`);
@@ -438,10 +466,28 @@ try {
               );
             }
             row.url = page.url();
-            row.nativeCapabilities = await page.evaluate(() => ({
-              crossOriginIsolated,
-              sharedArrayBuffer: typeof SharedArrayBuffer,
-            }));
+            row.nativeCapabilities = await page.evaluate(() => {
+              const canvas = document.createElement('canvas');
+              const gl = canvas.getContext('webgl2');
+              const debug = gl?.getExtension('WEBGL_debug_renderer_info');
+              const capabilities = {
+                crossOriginIsolated,
+                sharedArrayBuffer: typeof SharedArrayBuffer,
+                webgl2: gl
+                  ? {
+                      version: String(gl.getParameter(gl.VERSION)),
+                      vendor: String(
+                        gl.getParameter(debug?.UNMASKED_VENDOR_WEBGL ?? gl.VENDOR),
+                      ),
+                      renderer: gl.getParameter(
+                        debug?.UNMASKED_RENDERER_WEBGL ?? gl.RENDERER,
+                      ),
+                    }
+                  : null,
+              };
+              gl?.getExtension('WEBGL_lose_context')?.loseContext();
+              return capabilities;
+            });
             privateTask = true;
             row.task = await (target.id === 'photocraft'
               ? photo(page, mode === 'confined')
@@ -466,6 +512,7 @@ try {
                 [],
                 'Private image task performs no HTTP requests',
               );
+            await Promise.all(diagnosticTasks);
             assert.deepEqual(errors, [], 'Image app emits no runtime errors');
             row.passed = !process.env.WASM_APPS_INSPECT;
           } catch (error) {
@@ -501,7 +548,9 @@ try {
             await page
               .screenshot({ path: path.join(output, `${name}-${target.id}-${mode}.png`) })
               .catch(() => {});
+            await Promise.all(diagnosticTasks);
             await context.close();
+            await Promise.all(diagnosticTasks);
             if (errors.length) {
               row.passed = false;
               failed = true;
