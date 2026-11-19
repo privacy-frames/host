@@ -130,6 +130,13 @@ try {
           'removeNamedItemNS',
         ].map((method) => ({ method, href: null, label: false, spellcheck: 'false' })),
       ]);
+      assert.deepEqual(result.conversionBoundaries, {
+        history: [
+          { method: 'pushState', count: 1, path: '/app/history-pushState' },
+          { method: 'replaceState', count: 1, path: '/app/history-replaceState' },
+        ],
+        instruction: { count: 1, target: 'local-note' },
+      });
       assert.deepEqual(result.logicalAttributes, {
         removed: true,
         added: true,

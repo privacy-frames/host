@@ -255,6 +255,19 @@ globalThis.finished=new Promise(resolve=>{
       spellcheck: node.localName === 'input' ? node.getAttribute('spellcheck') : null,
     }),
   );
+  const conversionBoundaries = session.engine.evaluate(`(()=>{
+    const historyResults=[];
+    for(const method of ['pushState','replaceState']){
+      let count=0;const allowed=new URL('/app/history-'+method,location.href).href;
+      const url={toString(){return ++count===1?allowed:new URL('/runtime/connect.html',location.href).href}};
+      history[method]({method},'',url);
+      historyResults.push({method,count,path:location.pathname});
+    }
+    let targetCount=0;
+    const target={toString(){return ++targetCount===1?'local-note':'xml-stylesheet'}};
+    const instruction=document.createProcessingInstruction(target,'local test data');
+    return {history:historyResults,instruction:{count:targetCount,target:instruction.target}};
+  })()`);
   const logicalAttributes = session.engine.evaluate(`(()=>{
     const anchor=document.createElement('a');anchor.href='#logical-link';
     anchor.removeAttribute('href');const removed=!anchor.hasAttribute('href')&&anchor.getAttribute('href')===null;
@@ -397,6 +410,7 @@ globalThis.finished=new Promise(resolve=>{
     anchors,
     conversions,
     conversionDOM,
+    conversionBoundaries,
     logicalAttributes,
     namespaceAttempts,
     namespaceDOM,
