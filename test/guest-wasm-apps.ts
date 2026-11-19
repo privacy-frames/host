@@ -373,6 +373,7 @@ try {
           const errors: string[] = [];
           const browserDiagnostics: string[] = [];
           const resourceRefusals: string[] = [];
+          const resourceDiagnostics: string[] = [];
           const diagnosticTasks: Promise<void>[] = [];
           const privateRequests: string[] = [];
           let privateTask = false;
@@ -395,7 +396,7 @@ try {
             if (message.type() !== 'error') return;
             diagnosticTasks.push(
               (async () => {
-                const text =
+                let text =
                   message.text() === 'JSHandle@object'
                     ? (
                         await Promise.all(
@@ -413,13 +414,18 @@ try {
                         )
                       ).join(' ')
                     : message.text();
+                if (text.startsWith('Failed to load resource:'))
+                  text += '\n' + JSON.stringify(message.location());
                 if (
                   text.includes('resource:///modules/FaviconLoader.sys.mjs') &&
                   text.includes('/favicon.ico') &&
                   text.includes('img-src')
                 )
                   browserDiagnostics.push(text);
-                else if (
+                else if (/^Failed to load resource: net::[A-Z_]+(?:\n|$)/.test(text)) {
+                  resourceDiagnostics.push(text);
+                  console.log('Image resource diagnostic: ' + text);
+                } else if (
                   /^TypeError: Script resource is not installed: https?:\/\//.test(text)
                 )
                   resourceRefusals.push(text);
@@ -451,6 +457,7 @@ try {
             failedResources,
             browserDiagnostics,
             resourceRefusals,
+            resourceDiagnostics,
             privateRequests,
           };
           console.log(`Starting ${name}/${target.id}/${mode}`);
