@@ -59,7 +59,7 @@ async function fallbackClipboard(page: Page) {
     Object.defineProperty(navigator, 'clipboard', {
       configurable: true,
       value: {
-        writeText: async () => {
+        async writeText() {
           throw new Error('Clipboard unavailable');
         },
       },
@@ -255,7 +255,7 @@ try {
         Object.defineProperty(navigator, 'clipboard', {
           configurable: true,
           value: {
-            writeText: async (text: string) => {
+            async writeText(text: string) {
               Reflect.set(window, 'copiedLink', text);
             },
           },
