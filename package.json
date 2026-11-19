@@ -20,7 +20,7 @@
     "test:pitch": "tsx test/guest-pitch.ts",
     "test:compatibility": "tsx test/guest-corpus.ts",
     "test:assets": "tsx test/assets.ts",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package --error-on-fail"
   },
   "dependencies": {
     "@jridgewell/resolve-uri": "3.1.3",

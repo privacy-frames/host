@@ -48,14 +48,14 @@ function headers(type: string, nonce?: string, document = false): HeadersInit {
       'font-src data: blob:',
       'media-src data: blob:',
       `worker-src blob: ${new URL('__guest_worker_registry__.js', base).href} ${new URL('sw.js', base).href}`,
-      "frame-src 'self' about:",
+      'frame-src about:',
       "object-src 'none'",
       "base-uri 'none'",
       "form-action 'none'",
       ...(document
         ? [
             "frame-ancestors 'self'",
-            'sandbox allow-scripts allow-same-origin allow-forms allow-popups allow-downloads',
+            'sandbox allow-scripts allow-same-origin allow-forms allow-popups allow-downloads allow-modals',
           ]
         : []),
     ].join('; '),

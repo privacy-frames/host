@@ -18,6 +18,15 @@ export interface GuestDOMOptions {
   error(error: unknown): void;
 }
 
+function effectAttribute(name: string, namespace?: string | null): string {
+  const qualified = name.toLowerCase();
+  const local = qualified.slice(qualified.lastIndexOf(':') + 1);
+  if (namespace === 'http://www.w3.org/XML/1998/namespace' && local === 'base')
+    return 'xml:base';
+  if (namespace === 'http://www.w3.org/1999/xlink' && local === 'href') return 'href';
+  return qualified;
+}
+
 /** Pure HTML parsing precedes every native node insertion. Scripts stay inert. */
 export class GuestDOM {
   private scripts = new WeakMap<Element, ScriptSource>();
@@ -27,10 +36,15 @@ export class GuestDOM {
   private ready = false;
   private current: Element | null = null;
   private attributes = new WeakMap<Element, Map<string, string>>();
+  private removedAttributes = new WeakMap<Element, Set<string>>();
   readyState: DocumentReadyState = 'loading';
   private observer: MutationObserver;
+  private eventConstructor: typeof Event;
 
   constructor(private options: GuestDOMOptions) {
+    this.eventConstructor = options.document.defaultView
+      ? Reflect.get(options.document.defaultView, 'Event')
+      : Event;
     this.observer = new MutationObserver((records) => {
       for (const record of records) {
         for (const node of record.addedNodes) this.connected(node);
@@ -45,11 +59,31 @@ export class GuestDOM {
   script(element: Element): ScriptSource | undefined {
     return this.scripts.get(element);
   }
-  logicalAttribute(element: Element, name: string): string | undefined {
-    return (
-      this.attributes.get(element)?.get(name.toLowerCase()) ??
-      parsedElementSource(element)?.attributes.get(name)
-    );
+  logicalAttribute(
+    element: Element,
+    name: string,
+    namespace?: string | null,
+  ): string | undefined {
+    const key = effectAttribute(name, namespace);
+    if (this.removedAttributes.get(element)?.has(key)) return;
+    const value = this.attributes.get(element)?.get(key);
+    if (value !== undefined) return value;
+    if (key === 'href' && ['a', 'area'].includes(element.localName)) {
+      const cloned = element.getAttribute('data-pf-href');
+      if (cloned !== null) return cloned;
+    }
+    return parsedElementSource(element)?.attributes.get(name);
+  }
+  forgetAttribute(element: Element, name: string, namespace?: string | null): void {
+    const key = effectAttribute(name, namespace);
+    this.attributes.get(element)?.delete(key);
+    let removed = this.removedAttributes.get(element);
+    if (!removed) {
+      removed = new Set();
+      this.removedAttributes.set(element, removed);
+    }
+    removed.add(key);
+    if (key === 'href') element.removeAttribute('data-pf-href');
   }
   scriptText(element: Element, text: string): void {
     const script = this.scripts.get(element) || {
@@ -60,7 +94,15 @@ export class GuestDOM {
     this.scripts.set(element, script);
   }
 
-  attribute(element: Element, name: string, value: string): boolean {
+  attribute(
+    element: Element,
+    name: string,
+    value: string,
+    namespace?: string | null,
+  ): boolean {
+    const key = effectAttribute(name, namespace);
+    this.removedAttributes.get(element)?.delete(key);
+    this.attributes.get(element)?.set(key, value);
     if (
       ![
         'http://www.w3.org/1999/xhtml',
@@ -69,7 +111,21 @@ export class GuestDOM {
       ].includes(element.namespaceURI || '')
     )
       return true;
-    const key = name.toLowerCase();
+    if (
+      key === 'target' &&
+      (element.localName === 'a' ||
+        element.localName === 'area' ||
+        element.namespaceURI === 'http://www.w3.org/1998/Math/MathML')
+    ) {
+      let attributes = this.attributes.get(element);
+      if (!attributes) {
+        attributes = new Map();
+        this.attributes.set(element, attributes);
+      }
+      attributes.set(key, value);
+      element.setAttribute(name, '_self');
+      return false;
+    }
     if (
       ['object', 'embed'].includes(element.localName) &&
       ['data', 'src', 'codebase', 'classid', 'archive'].includes(key)
@@ -174,8 +230,20 @@ export class GuestDOM {
           element.localName === 'area' ||
           element.namespaceURI === 'http://www.w3.org/1998/Math/MathML')
       ) {
-        element.setAttribute(name, value.startsWith('#') ? value : '#');
-      } else element.setAttribute(name, this.options.resources.nativeURL(value));
+        // Even a fragment can open an HTTP tab through modifier activation.
+        // The host performs local link actions; native anchors cannot navigate.
+        element.removeAttribute('href');
+        element.removeAttributeNS('http://www.w3.org/1999/xlink', 'href');
+        // Native cloning preserves this untrusted destination. The host still
+        // validates every activation as a local fragment or an approved export.
+        element.setAttribute('data-pf-href', value);
+        if (!element.hasAttribute('tabindex')) element.setAttribute('tabindex', '0');
+        if (!element.hasAttribute('role')) element.setAttribute('role', 'link');
+      } else {
+        const physical = this.options.resources.nativeURL(value);
+        if (namespace) element.setAttributeNS(namespace, name, physical);
+        else element.setAttribute(name, physical);
+      }
       return false;
     }
     if (key === 'action' || key === 'formaction') return false;
@@ -200,14 +268,9 @@ export class GuestDOM {
         return;
       }
       if (
-        [
-          'base',
-          'applet',
-          'portal',
-          'fencedframe',
-          'frame',
-          'frameset',
-        ].includes(element.localName)
+        ['base', 'applet', 'portal', 'fencedframe', 'frame', 'frameset'].includes(
+          element.localName,
+        )
       )
         throw new DOMException(
           'Native context element is not available',
@@ -247,8 +310,11 @@ export class GuestDOM {
         if (attribute.name === 'type' && element.localName === 'script') continue;
         const value = attribute.value;
         element.removeAttributeNode(attribute);
-        if (this.attribute(element, attribute.name, value))
-          element.setAttribute(attribute.name, value);
+        if (this.attribute(element, attribute.name, value, attribute.namespaceURI)) {
+          if (attribute.namespaceURI)
+            element.setAttributeNS(attribute.namespaceURI, attribute.name, value);
+          else element.setAttribute(attribute.name, value);
+        }
       }
       if (element.localName === 'style')
         element.textContent = this.css(element.textContent || '');
@@ -306,10 +372,10 @@ export class GuestDOM {
         this.current = previous;
       }
       if (script.type === 'module') await completion;
-      queueMicrotask(() => element.dispatchEvent(new Event('load')));
+      queueMicrotask(() => element.dispatchEvent(new this.eventConstructor('load')));
     } catch (error) {
       this.options.error(error);
-      queueMicrotask(() => element.dispatchEvent(new Event('error')));
+      queueMicrotask(() => element.dispatchEvent(new this.eventConstructor('error')));
     }
   }
 
@@ -320,14 +386,9 @@ export class GuestDOM {
       return document.createComment(node.data);
     if (!('tagName' in node)) return null;
     if (
-      [
-        'base',
-        'applet',
-        'portal',
-        'fencedframe',
-        'frame',
-        'frameset',
-      ].includes(node.tagName)
+      ['base', 'applet', 'portal', 'fencedframe', 'frame', 'frameset'].includes(
+        node.tagName,
+      )
     )
       return null;
     if (
@@ -352,7 +413,10 @@ export class GuestDOM {
     for (const attribute of node.attrs) {
       if (node.tagName === 'script' && ['src', 'type', 'nonce'].includes(attribute.name))
         continue;
-      if (this.attribute(element, attribute.name, attribute.value)) {
+      const name = attribute.prefix
+        ? attribute.prefix + ':' + attribute.name
+        : attribute.name;
+      if (this.attribute(element, name, attribute.value, attribute.namespace)) {
         if (attribute.namespace)
           element.setAttributeNS(
             attribute.namespace,
@@ -412,6 +476,9 @@ export class GuestDOM {
       root.setAttribute('writingsuggestions', 'false');
       root.setAttribute('autocorrect', 'off');
     }
+    for (const attribute of root.attrs)
+      if (this.attribute(document.documentElement, attribute.name, attribute.value))
+        document.documentElement.setAttribute(attribute.name, attribute.value);
     for (const [source, destination] of [
       [head, document.head],
       [body, document.body],
@@ -438,9 +505,11 @@ export class GuestDOM {
       if (this.scripts.get(script)?.type !== 'module') void this.execute(script);
     this.readyState = 'interactive';
     await Promise.all(modules.map((script) => this.execute(script)));
-    document.dispatchEvent(new Event('DOMContentLoaded', { bubbles: true }));
+    document.dispatchEvent(
+      new this.eventConstructor('DOMContentLoaded', { bubbles: true }),
+    );
     this.readyState = 'complete';
-    document.defaultView?.dispatchEvent(new Event('load'));
+    document.defaultView?.dispatchEvent(new this.eventConstructor('load'));
   }
 
   css(text: string): string {

@@ -52,6 +52,9 @@ dynamically by an application. The entry and listed resources are mandatory;
 other unavailable dependencies fail locally. Installation limits are 100 MiB and
 1,000 resources.
 
+Downloads require a trusted host confirmation and release the supplied file from
+confinement. The browser may use network services to screen an approved download.
+
 Application-provided Wasm and service-worker execution are deferred. PhotoCraft
 and Squoosh therefore remain future compatibility targets. Storage APIs use
 application-scoped names, but applications share an origin and browser permission
@@ -79,7 +82,7 @@ Current evidence must come from the QuickJS implementation.
 `deployment/config.json` defines origins and catalog entries. The host repository
 publishes `dist-manager/`. The deployment repositories
 [privacy-frames/runtime](https://github.com/privacy-frames/runtime) and
-[privacy-frames/installer](https://github.com/privacy-frames/installer) build a
+[privacy-frames/installation](https://github.com/privacy-frames/installation) build a
 pinned host revision and publish only their respective role output.
 
 Unrestricted application files must never be published to a trusted host origin.

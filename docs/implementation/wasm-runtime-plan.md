@@ -95,3 +95,28 @@ Its nine changed manager files are reused from published main revision
 f64e2686cf3689fc0bdb621553df817162657a5d so the fork preserves the current UI
 and sharing behavior. The runtime summary includes captured additional resources
 for those links. The native execution implementation is not merged.
+
+## Implementation findings
+
+Application-triggered native HTTP requests can schedule browser service-worker
+maintenance even when the response is cached. Runtime rendering therefore uses
+Blob/data resource URLs, native workers use registry-owned Blob bootstraps,
+worklets load a local bootstrap, and child windows retain their initial blank
+document. The registry is contacted only during trusted root startup; children
+inherit prepared bootstrap URLs. HTTP resource/bootstrap fallbacks are removed.
+
+The QuickJS wrapper's cached Wasm output views became detached during memory
+growth. A minimal promise-job allocation reproduced the extra-context disposal
+failure. The pinned SDK patch and clean-install regression are documented in
+patches/README.md. Platform brand checks cache immutable internal-slot results;
+application prototype changes remain local to the guest.
+
+Functional qualification covers unchanged publisher sources. Objects and embeds
+remain inert DOM nodes with source attributes withheld, because deleting them
+breaks ordinary DOM queries. Hidden guest fields stay lazy at native dictionary
+boundaries; structured-clone operations read enumerable application data.
+
+Formal models and implementation checks from the native runtime are historical
+research evidence, with the source baseline linked from formal/README.md. They do
+not establish correctness of this implementation. Release qualification uses the
+new guest engine/context/policy/installation and application suites.

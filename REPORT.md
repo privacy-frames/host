@@ -20,9 +20,13 @@ We trust the browser, the host and its dependencies, and the origins hosting the
 manager, installer and runtime. Application code never runs on the manager or
 installer origin. Private input enters the application only after trusted setup
 has finished. Initial host startup may contact its origin; application code must
-not cause network traffic afterward.
+not cause network traffic during confined execution.
 
-Local display, audio, file processing and local downloads are intended. Browser
+Local display, audio and file processing are intended. Downloads require a trusted
+host confirmation. Approving an export releases the file supplied by the
+application; the browser may send download metadata for security checks. The
+[export boundary](https://github.com/privacy-frames/host/blob/main/docs/implementation/browser-exports.md)
+describes this browser-service behavior. Browser
 bugs, malicious extensions, developer tools, physical side channels and deliberate
 browser-menu exports are outside this demonstration. Applications share a runtime
 origin and browser permission grants. Storage namespacing supports ordinary apps;
@@ -89,7 +93,7 @@ with quiet controls, including Firefox's forced-age service-worker checks.
 
 The application corpus tests installation, a useful interaction and offline
 reopening. Current receipts and application-specific qualifications are recorded
-in [evaluation/compatibility.md](evaluation/compatibility.md). These observations
+in [evaluation/compatibility.md](https://github.com/privacy-frames/host/blob/main/evaluation/compatibility.md). These observations
 are implementation evidence; a complete browser confinement proof remains open.
 
 Application-provided Wasm and service-worker execution are deferred. PhotoCraft

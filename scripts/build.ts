@@ -29,6 +29,9 @@ for (const path of [
   'scripts/guest-bindings.ts',
 ])
   hash.update(await readFile(resolve(root, path)));
+for (const path of (await readdir(resolve(root, 'patches'))).sort())
+  if (path.endsWith('.patch'))
+    hash.update(await readFile(resolve(root, 'patches', path)));
 hash.update(JSON.stringify(config));
 const buildId = hash.digest('hex').slice(0, 16);
 const entries = {

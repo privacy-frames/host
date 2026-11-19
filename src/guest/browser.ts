@@ -269,6 +269,59 @@ const interfaceNames = new Set([
 ]);
 const interfaceFamily =
   /^(?:HTML|SVG|MathML|CSS|DOM|WebGL|Canvas|OffscreenCanvas|ImageBitmap|Audio|OfflineAudio|BaseAudio|MediaStream|IDB|FontFace|TextEncoder|TextDecoder|Performance)|Event$|Observer$/;
+const attributeArguments = new Map<string, readonly number[]>([
+  ['setAttribute', [0, 1]],
+  ['setAttributeNS', [0, 1, 2]],
+  ['getAttribute', [0]],
+  ['getAttributeNS', [0, 1]],
+  ['hasAttribute', [0]],
+  ['hasAttributeNS', [0, 1]],
+  ['getAttributeNode', [0]],
+  ['getAttributeNodeNS', [0, 1]],
+  ['removeAttribute', [0]],
+  ['removeAttributeNS', [0, 1]],
+  ['toggleAttribute', [0]],
+]);
+const domString = (value: unknown): string => {
+  if (typeof value === 'symbol') throw new TypeError('A Symbol is not a DOMString');
+  return String(value);
+};
+const localEditingCommands = new Set([
+  'backcolor',
+  'bold',
+  'defaultparagraphseparator',
+  'delete',
+  'fontname',
+  'fontsize',
+  'forecolor',
+  'formatblock',
+  'forwarddelete',
+  'heading',
+  'hilitecolor',
+  'indent',
+  'insertlinebreak',
+  'insertorderedlist',
+  'insertparagraph',
+  'inserttext',
+  'insertunorderedlist',
+  'italic',
+  'justifycenter',
+  'justifyfull',
+  'justifyleft',
+  'justifyright',
+  'outdent',
+  'redo',
+  'removeformat',
+  'selectall',
+  'strikethrough',
+  'stylewithcss',
+  'subscript',
+  'superscript',
+  'underline',
+  'undo',
+  'unlink',
+  'usecss',
+]);
 const own = (value: object, key: PropertyKey) =>
   Object.prototype.hasOwnProperty.call(value, key);
 
@@ -292,8 +345,10 @@ export class BrowserEnvironment {
   private namedSetters = new WeakSet<object>();
   private attributeOwners = new WeakMap<object, Element>();
   private animatedURLs = new WeakMap<object, Element>();
+  private animatedTargets = new WeakMap<object, Element>();
   private tokenOwners = new WeakMap<object, Element>();
   private windowsSeen = new WeakSet<object>();
+  private linkActions = new WeakMap<Event, () => void>();
   private disposed = false;
   private stopServices = () => {};
   private cleanups = new Set<() => void>();
@@ -538,31 +593,82 @@ export class BrowserEnvironment {
         targetOrigin: string | WindowPostMessageOptions = '/',
         transfer?: Transferable[],
       ) => this.windows?.postMessage(native, message, targetOrigin, transfer);
-      native.addEventListener(
-        'click',
-        (event) => {
-          const target = event.target;
-          const anchor = isElement(target) ? target.closest('a,area') : null;
-          if (!anchor) return;
-          const href = anchor.getAttribute('href') || '';
-          const logical = this.dom?.logicalAttribute(anchor, 'href') || href;
-          if (anchor.hasAttribute('download') && /^(?:blob:|data:)/i.test(logical)) {
-            event.preventDefault();
-            // Keep navigable URLs off application nodes. A detached host-owned
-            // link performs the local export without exposing a navigation route.
-            const download = native.document.createElement('a');
-            download.href = logical;
-            download.download = anchor.getAttribute('download') || '';
-            download.click();
-            return;
-          }
-          if (!href.startsWith('#')) event.preventDefault();
-        },
-        true,
-      );
+      const click = (event: MouseEvent) => {
+        const anchor = isElement(event.target) ? event.target.closest('a,area') : null;
+        if (anchor) this.followAnchor(anchor, event);
+      };
+      const keyboard = (event: KeyboardEvent) => {
+        const anchor = isElement(event.target) ? event.target.closest('a,area') : null;
+        if (
+          event.key !== 'Enter' ||
+          !anchor ||
+          this.dom?.logicalAttribute(anchor, 'href') === undefined
+        )
+          return;
+        queueMicrotask(() => {
+          if (this.disposed || event.defaultPrevented) return;
+          const MouseEventConstructor: typeof MouseEvent = Reflect.get(
+            native,
+            'MouseEvent',
+          );
+          anchor.dispatchEvent(
+            new MouseEventConstructor('click', { bubbles: true, cancelable: true }),
+          );
+        });
+      };
+      native.addEventListener('click', click, true);
+      native.addEventListener('keydown', keyboard, true);
+      this.cleanups.add(() => {
+        native.removeEventListener('click', click, true);
+        native.removeEventListener('keydown', keyboard, true);
+      });
       native.addEventListener('submit', (event) => event.preventDefault(), true);
     }
     for (const name of Object.keys(this.globals)) this.dynamic.delete(name);
+  }
+
+  private followAnchor(anchor: Element, event: Event): void {
+    this.dom?.prepare(anchor);
+    if (this.linkActions.has(event)) return;
+    const action = () => {
+      if (this.linkActions.get(event) !== action) return;
+      this.linkActions.delete(event);
+      if (this.disposed || event.defaultPrevented) return;
+      const native = this.options.global;
+      if (!('document' in native)) return;
+      const logical = this.dom?.logicalAttribute(anchor, 'href');
+      if (logical === undefined) return;
+      try {
+        if (anchor.hasAttribute('download')) {
+          const local = /^(?:blob:|data:)/i.test(logical)
+            ? logical
+            : this.resources.resource(logical)
+              ? this.resources.nativeURL(logical)
+              : null;
+          if (!local) return;
+          if (
+            !native.confirm(
+              'Allow this application to export a file? Exported data leaves confinement. Your browser may send download metadata for security checks.',
+            )
+          )
+            return;
+          const download = native.document.createElement('a');
+          download.href = local;
+          download.download = anchor.getAttribute('download') || '';
+          download.click();
+          return;
+        }
+        const url = new URL(logical, this.options.catalog.documentBase);
+        const resource = this.resources.resource(url.href);
+        const current = this.resources.resource(this.options.catalog.sourceURL);
+        if (logical.startsWith('#') || (resource && resource === current))
+          native.location.hash = url.hash;
+      } catch {
+        // Invalid and unavailable link destinations have no native fallback.
+      }
+    };
+    this.linkActions.set(event, action);
+    queueMicrotask(action);
   }
 
   private requireEngine(): GuestEngine {
@@ -660,6 +766,13 @@ export class BrowserEnvironment {
       const logical = this.dom?.logicalAttribute(element, 'href');
       if (logical !== undefined) return logical;
     }
+    if ((key === 'baseVal' || key === 'animVal') && this.animatedTargets.has(target)) {
+      const logical = this.dom?.logicalAttribute(
+        this.animatedTargets.get(target)!,
+        'target',
+      );
+      if (logical !== undefined) return logical;
+    }
     if (key === 'location' && isDocument(target))
       return target.defaultView
         ? environments.get(target.defaultView)?.globals.location
@@ -673,8 +786,18 @@ export class BrowserEnvironment {
       if (key === 'cookie') return '';
     }
     if (this.document && isElement(target)) {
-      if (['object', 'embed'].includes(target.localName) &&
-        ['data', 'src', 'codeBase', 'classid', 'archive'].includes(String(key))) {
+      if (
+        key === 'target' &&
+        target.namespaceURI === 'http://www.w3.org/1999/xhtml' &&
+        (target.localName === 'a' || target.localName === 'area')
+      ) {
+        const logical = this.dom?.logicalAttribute(target, 'target');
+        if (logical !== undefined) return logical;
+      }
+      if (
+        ['object', 'embed'].includes(target.localName) &&
+        ['data', 'src', 'codeBase', 'classid', 'archive'].includes(String(key))
+      ) {
         const logical = this.dom?.logicalAttribute(target, String(key));
         if (logical !== undefined) return logical;
       }
@@ -710,6 +833,8 @@ export class BrowserEnvironment {
       if (key === 'relList') this.tokenOwners.set(value, target);
       if (key === 'href' && target.namespaceURI === 'http://www.w3.org/2000/svg')
         this.animatedURLs.set(value, target);
+      if (key === 'target' && target.namespaceURI === 'http://www.w3.org/2000/svg')
+        this.animatedTargets.set(value, target);
     }
     if (
       key === 'name' &&
@@ -758,6 +883,17 @@ export class BrowserEnvironment {
     if (isDocument(target) && (key === 'cookie' || key === 'domain')) return false;
     if (key === 'baseVal' && this.animatedURLs.has(target))
       return !this.dom!.attribute(this.animatedURLs.get(target)!, 'href', String(value));
+    if (key === 'baseVal' && this.animatedTargets.has(target))
+      return !this.dom!.attribute(
+        this.animatedTargets.get(target)!,
+        'target',
+        domString(value),
+      );
+    if (key === 'value' && this.tokenOwners.has(target)) {
+      const rel = domString(value);
+      value = rel;
+      if (!this.dom!.attribute(this.tokenOwners.get(target)!, 'rel', rel)) return true;
+    }
     const foreign = environments.get(target);
     if (foreign && foreign !== this && foreign.engine && typeof key === 'string') {
       foreign.engine.set(key, value);
@@ -769,7 +905,14 @@ export class BrowserEnvironment {
       target.ownerElement &&
       ['value', 'nodeValue', 'textContent'].includes(String(key))
     ) {
-      if (!this.dom!.attribute(target.ownerElement, target.name, String(value)))
+      if (
+        !this.dom!.attribute(
+          target.ownerElement,
+          target.name,
+          String(value),
+          target.namespaceURI,
+        )
+      )
         return true;
     }
     if (
@@ -850,7 +993,19 @@ export class BrowserEnvironment {
       }
       if (
         typeof key === 'string' &&
-        ['src', 'href', 'srcset', 'poster', 'nonce', 'type', 'data', 'codeBase', 'classid', 'archive'].includes(key)
+        [
+          'src',
+          'href',
+          'srcset',
+          'poster',
+          'nonce',
+          'type',
+          'data',
+          'codeBase',
+          'classid',
+          'archive',
+          'target',
+        ].includes(key)
       ) {
         if (!this.dom!.attribute(target, key, String(value))) return true;
       }
@@ -943,6 +1098,72 @@ export class BrowserEnvironment {
     key: PropertyKey,
     args: unknown[],
   ): unknown {
+    if ((key === 'click' || key === 'dispatchEvent') && isNode(receiver)) {
+      const element = isElement(receiver) ? receiver : receiver.parentElement;
+      const anchor = element?.closest('a,area');
+      if (anchor) {
+        this.dom?.prepare(anchor);
+        let activated: Event | undefined;
+        const follow = (event: Event) => {
+          activated = event;
+          this.followAnchor(anchor, event);
+        };
+        anchor.addEventListener('click', follow, true);
+        try {
+          const result: unknown = Reflect.apply(target, receiver, args);
+          if (activated) this.linkActions.get(activated)?.();
+          return result;
+        } finally {
+          anchor.removeEventListener('click', follow, true);
+        }
+      }
+    }
+    // Web IDL conversion may run application code. Validate and forward the same
+    // captured primitives, rather than converting an untrusted object twice.
+    if (isElement(receiver) && typeof key === 'string') {
+      const indices = attributeArguments.get(key);
+      if (indices) {
+        if (args.length < target.length)
+          throw new TypeError('Missing attribute argument');
+        for (const index of indices)
+          if (index < args.length)
+            args[index] =
+              key.endsWith('NS') && index === 0 && args[index] == null
+                ? null
+                : domString(args[index]);
+      }
+    }
+    if (
+      receiver &&
+      typeof receiver === 'object' &&
+      this.attributeOwners.has(receiver) &&
+      (key === 'removeNamedItem' || key === 'removeNamedItemNS')
+    ) {
+      if (args.length < target.length) throw new TypeError('Missing attribute argument');
+      for (let index = 0; index < (key === 'removeNamedItemNS' ? 2 : 1); index++)
+        args[index] =
+          key === 'removeNamedItemNS' && index === 0 && args[index] == null
+            ? null
+            : domString(args[index]);
+    }
+    if (key === 'execCommand' && isDocument(receiver)) {
+      if (!args.length) throw new TypeError('Missing editing command');
+      const command = domString(args[0]).toLowerCase();
+      args[0] = command;
+      if (args.length > 2) args[2] = domString(args[2]);
+      if (!localEditingCommands.has(command))
+        throw new DOMException('This editing command is unavailable', 'SecurityError');
+      if (
+        (command === 'formatblock' || command === 'heading') &&
+        !/^<?(?:address|blockquote|div|h[1-6]|p|pre)>?$/i.test(String(args[2]))
+      )
+        throw new DOMException('Unsupported editing element', 'SecurityError');
+      if (
+        command === 'defaultparagraphseparator' &&
+        !/^(?:div|p)$/i.test(String(args[2]))
+      )
+        throw new DOMException('Unsupported paragraph element', 'SecurityError');
+    }
     if (
       key === 'submit' &&
       Object.prototype.toString.call(receiver) === '[object HTMLFormElement]'
@@ -1043,6 +1264,13 @@ export class BrowserEnvironment {
       this.tokenOwners.has(receiver) &&
       ['add', 'remove', 'toggle', 'replace'].includes(String(key))
     ) {
+      const count =
+        key === 'toggle'
+          ? Math.min(1, args.length)
+          : key === 'replace'
+            ? Math.min(2, args.length)
+            : args.length;
+      for (let index = 0; index < count; index++) args[index] = domString(args[index]);
       const owner = this.tokenOwners.get(receiver)!;
       const detached = owner.ownerDocument.createElement('link');
       detached.rel = owner.getAttribute('rel') || '';
@@ -1064,12 +1292,23 @@ export class BrowserEnvironment {
       return undefined;
     }
     if (this.document && isElement(receiver)) {
-      if (key === 'getAttribute' && typeof args[0] === 'string') {
-        const logical = this.dom?.logicalAttribute(receiver, args[0]);
-        if (logical !== undefined) return logical;
+      if (
+        ['getAttribute', 'getAttributeNS', 'hasAttribute', 'hasAttributeNS'].includes(
+          String(key),
+        )
+      ) {
+        const namespaced = key === 'getAttributeNS' || key === 'hasAttributeNS';
+        const name = String(args[namespaced ? 1 : 0]);
+        const logical = this.dom?.logicalAttribute(
+          receiver,
+          name,
+          namespaced && typeof args[0] === 'string' ? args[0] : null,
+        );
+        const presence = key === 'hasAttribute' || key === 'hasAttributeNS';
+        if (logical !== undefined) return presence ? true : logical;
         if (isHTMLIFrameElement(receiver)) {
-          const value = this.windows?.attributeValue(receiver, args[0]);
-          if (value !== undefined) return value;
+          const value = this.windows?.attributeValue(receiver, name);
+          if (value !== undefined) return presence ? value !== null : value;
         }
       }
       if (
@@ -1094,18 +1333,68 @@ export class BrowserEnvironment {
         )
       )
         return args[0];
+      if (key === 'toggleAttribute') {
+        const name = String(args[0]);
+        const mirror = receiver.ownerDocument.createElement('div');
+        const virtual =
+          this.dom!.logicalAttribute(receiver, name) !== undefined ||
+          (isHTMLIFrameElement(receiver) &&
+            typeof this.windows?.attributeValue(receiver, name) === 'string');
+        if (virtual || receiver.hasAttribute(name)) mirror.setAttribute(name, '');
+        const enabled = Boolean(Reflect.apply(target, mirror, args));
+        if (enabled) {
+          if (this.dom!.attribute(receiver, name, '')) receiver.setAttribute(name, '');
+        } else {
+          receiver.removeAttribute(name);
+          this.dom!.forgetAttribute(receiver, name);
+          if (isHTMLIFrameElement(receiver) && (name === 'src' || name === 'srcdoc'))
+            this.windows?.attribute(receiver, name, null);
+        }
+        return enabled;
+      }
+      if (
+        key === 'removeAttribute' ||
+        key === 'removeAttributeNS' ||
+        key === 'removeAttributeNode'
+      ) {
+        const attribute =
+          key === 'removeAttributeNode' && isAttr(args[0]) ? args[0] : undefined;
+        const name = attribute?.name || String(args[key === 'removeAttributeNS' ? 1 : 0]);
+        const namespace =
+          attribute?.namespaceURI ||
+          (key === 'removeAttributeNS' && typeof args[0] === 'string' ? args[0] : null);
+        const result: unknown = Reflect.apply(target, receiver, args);
+        this.dom!.forgetAttribute(receiver, name, namespace);
+        if (isHTMLIFrameElement(receiver) && (name === 'src' || name === 'srcdoc'))
+          this.windows?.attribute(receiver, name, null);
+        return result;
+      }
       if (
         (key === 'setAttributeNode' || key === 'setAttributeNodeNS') &&
         isAttr(args[0])
       ) {
         const attribute = args[0];
         const previous = receiver.getAttributeNode(attribute.name);
-        if (!this.dom!.attribute(receiver, attribute.name, attribute.value))
+        if (
+          !this.dom!.attribute(
+            receiver,
+            attribute.name,
+            attribute.value,
+            attribute.namespaceURI,
+          )
+        )
           return previous;
       }
       if (key === 'setAttribute' || key === 'setAttributeNS') {
         const index = key === 'setAttributeNS' ? 1 : 0;
-        if (!this.dom!.attribute(receiver, String(args[index]), String(args[index + 1])))
+        if (
+          !this.dom!.attribute(
+            receiver,
+            String(args[index]),
+            String(args[index + 1]),
+            key === 'setAttributeNS' && typeof args[0] === 'string' ? args[0] : null,
+          )
+        )
           return;
       }
       if (key === 'insertAdjacentHTML') {
@@ -1129,7 +1418,15 @@ export class BrowserEnvironment {
       const owner = this.attributeOwners.get(receiver)!;
       const attribute = args[0];
       const previous = owner.getAttributeNode(attribute.name);
-      if (!this.dom!.attribute(owner, attribute.name, attribute.value)) return previous;
+      if (
+        !this.dom!.attribute(
+          owner,
+          attribute.name,
+          attribute.value,
+          attribute.namespaceURI,
+        )
+      )
+        return previous;
     }
     if (
       (key === 'removeNamedItem' || key === 'removeNamedItemNS') &&
