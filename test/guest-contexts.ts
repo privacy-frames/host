@@ -120,7 +120,7 @@ try {
       assert.equal(result.sample, 0.25);
       assert.deepEqual(result.workletMessages, [
         { bytes: [4, 4] },
-        { detached: true, wasm: 'undefined' },
+        { detached: true, wasm: 'object' },
       ]);
       assert.equal(result.nativePortDetached, true);
       assert.equal(result.prepared, 1);
