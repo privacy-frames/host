@@ -1,6 +1,6 @@
 {
-  "revision": "0ff5bb37df4672d70f5e64d7d437bdf5371380a3",
-  "bundleHash": "8b2ff1484f982bb494527d17b418f0252c5e3fc77ad9309187f28aa73a53a958",
+  "revision": "50dddfa60c6108a94702388d51a23584975b1527",
+  "bundleHash": "9667ccaa721d71c38a33926d0ba53e1291b13754c5f9502f25fd54ad646246fb",
   "fixtures": {
     "/mixed-import.wasm": "2aab7417d3891f7fc72d7d46ee45226534570ec2d5bc0c73d4f6494e1025cabe",
     "/quickjs.wasm": "105c3bed22d457e43e3d1c3c1c6959fda62a8fe06f0fc8a985303c3a2be72232",
@@ -41,6 +41,10 @@
             "passed": true
           },
           {
+            "name": "fixed Wasm buffers refuse transfer and detach only on native growth",
+            "passed": true
+          },
+          {
             "name": "async compile and instantiate retain import callbacks",
             "passed": true
           }
@@ -68,6 +72,10 @@
           },
           {
             "name": "native function imports retain the owning host call policy",
+            "passed": true
+          },
+          {
+            "name": "fixed Wasm buffers refuse transfer and detach only on native growth",
             "passed": true
           },
           {
@@ -123,6 +131,10 @@
             "passed": true
           },
           {
+            "name": "fixed Wasm buffers refuse transfer and detach only on native growth",
+            "passed": true
+          },
+          {
             "name": "async compile and instantiate retain import callbacks",
             "passed": true
           }
@@ -150,6 +162,10 @@
           },
           {
             "name": "native function imports retain the owning host call policy",
+            "passed": true
+          },
+          {
+            "name": "fixed Wasm buffers refuse transfer and detach only on native growth",
             "passed": true
           },
           {

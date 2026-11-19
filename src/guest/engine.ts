@@ -34,6 +34,10 @@ const arrayBufferLength = Object.getOwnPropertyDescriptor(
   ArrayBuffer.prototype,
   'byteLength',
 )!.get!;
+const arrayBufferResizable = Object.getOwnPropertyDescriptor(
+  ArrayBuffer.prototype,
+  'resizable',
+)?.get;
 const arrayBufferKinds = new WeakMap<object, boolean>();
 const isArrayBuffer = (value: unknown): value is ArrayBuffer => {
   if (!value || typeof value !== 'object') return false;
@@ -130,6 +134,7 @@ export class GuestEngine {
   private readonly symbolHandles = new Map<symbol, QuickJSHandle>();
   private readonly guestSymbols = new Map<string, symbol>();
   private readonly buffers = new Map<ArrayBuffer, BufferMirror>();
+  private readonly fixedWasmBuffers = new WeakSet<ArrayBuffer>();
   private readonly promises = new Set<QuickJSDeferredPromise>();
   private readonly pendingPromises = new Set<(error: Error) => void>();
   private readonly disposers = new Set<() => void>();
@@ -286,7 +291,20 @@ export class GuestEngine {
     );
     this.installBinary();
     this.wasm = createNativeWasm({
-      retainBuffer: (buffer) => this.binary.retainBuffer(buffer),
+      retainBuffer: (buffer) => {
+        if (
+          isArrayBuffer(buffer) &&
+          !(arrayBufferResizable && Reflect.apply(arrayBufferResizable, buffer, []))
+        ) {
+          this.fixedWasmBuffers.add(buffer);
+          const mirror = this.buffers.get(buffer);
+          if (mirror) this.helper('markFixedWasmBuffer', [mirror.guest]).dispose();
+        } else {
+          // Shared and resizable stores need native views: copying cannot retain
+          // cross-agent visibility or in-place size changes.
+          this.binary.retainBuffer(buffer);
+        }
+      },
       captureImports: (imports, descriptors) => {
         const input = this.encode(imports);
         const description = this.encode(descriptors);
@@ -927,6 +945,8 @@ export class GuestEngine {
     const existing = this.buffers.get(value);
     if (existing) return existing.guest.dup();
     const result = this.context.newArrayBuffer(value);
+    if (this.fixedWasmBuffers.has(value))
+      this.helper('markFixedWasmBuffer', [result]).dispose();
     this.buffers.set(value, { native: value, guest: result.dup() });
     this.nativeHandles.set(value, result.dup());
     const id = this.helper('guestId', [result]);

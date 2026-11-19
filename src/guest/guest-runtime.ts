@@ -117,6 +117,7 @@ export function installGuestRuntime() {
     }
   }
   const hostIds = new InternalWeakMap<object, number>();
+  const fixedWasmBuffers = new InternalWeakMap<object, true>();
   const guestIds = new InternalWeakMap<object, number>();
   const proxies = new InternalMap<number, object>();
   const records = new InternalWeakMap<object, ProxyRecord>();
@@ -453,7 +454,9 @@ export function installGuestRuntime() {
   };
 
   return {
+    markFixedWasmBuffer: (value: ArrayBuffer) => fixedWasmBuffers.set(value, true),
     binaryHooks: () => ({
+      nonTransferable: (value: object) => fixedWasmBuffers.has(value),
       binaryKind: (value: unknown) =>
         value && (typeof value === 'object' || typeof value === 'function')
           ? (records.get(value)?.binary ?? '')

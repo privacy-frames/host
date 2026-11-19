@@ -195,6 +195,39 @@ const cases = [
     `,
   },
   {
+    name: 'fixed Wasm buffers refuse transfer and detach only on native growth',
+    source: `
+      const memory = new WebAssembly.Memory({initial:1,maximum:3});
+      const buffer = memory.buffer;
+      const bytes = new Uint8Array(buffer);
+      bytes[0]=71;
+      for(const key of ['transfer','transferToFixedLength']) {
+        const method=ArrayBuffer.prototype[key];
+        if(typeof method!=='function')continue;
+        let rejected=false;
+        try {method.call(buffer);} catch(error){rejected=error instanceof TypeError;}
+        check(rejected, 'Wasm buffer rejects '+key);
+        check(buffer.byteLength===65536 && bytes[0]===71,'failed '+key+' leaves bytes attached');
+      }
+      let cloneRejected=false;
+      try {transferNative(buffer);} catch(error){cloneRejected=error.name==='TypeError';}
+      check(cloneRejected,'native structured clone rejects Wasm transfer');
+      check(buffer.byteLength===65536 && bytes[0]===71,'failed native transfer does not detach guest');
+      check(memory.grow(0)===1,'zero growth returns previous pages');
+      check(buffer.byteLength===0 && bytes.length===0,'zero growth detaches old fixed buffer');
+      check(memory.buffer!==buffer && new Uint8Array(memory.buffer)[0]===71,'zero growth replaces buffer and preserves bytes');
+      if(typeof memory.toResizableBuffer==='function') {
+        const resizable=memory.toResizableBuffer();
+        const view=new Uint8Array(resizable);
+        view[0]=79;
+        check(resizable.resizable===true,'resizable Wasm buffer remains resizable');
+        memory.grow(1);
+        check(resizable.byteLength===131072 && view.length===131072,'resizable Wasm views track native growth');
+        check(view[0]===79,'resizable Wasm growth preserves writes');
+      }
+    `,
+  },
+  {
     name: 'async compile and instantiate retain import callbacks',
     source: `
       const memory = new WebAssembly.Memory({initial: 1, maximum: 3});
@@ -247,6 +280,8 @@ const workerRoundtrip = (memory: WebAssembly.Memory, module: WebAssembly.Module)
   });
 
 const nativePolicyCallback = (_value: number) => 1;
+const transferNative = (value: ArrayBuffer) =>
+  structuredClone(value, { transfer: [value] });
 const nativeKind = (value: unknown) => Object.prototype.toString.call(value).slice(8, -1);
 const host: GuestHost = {
   get: (target, key) => Reflect.get(target, key),
@@ -290,6 +325,7 @@ try {
       'expectedPolicyValue',
       'mixedBytes',
       'nativeKind',
+      'transferNative',
       `return ${source}`,
     )(
       plainBytes,
@@ -300,6 +336,7 @@ try {
       1,
       mixedBytes,
       nativeKind,
+      transferNative,
     ),
   );
   let outcome: NonNullable<typeof globalThis.guestWasmResults>;
@@ -314,6 +351,11 @@ try {
     engine.set('expectedPolicyValue', 2);
     engine.set('mixedBytes', mixedBytes);
     engine.set('nativeKind', nativeKind);
+    engine.set('transferNative', (buffer: ArrayBuffer) => {
+      const clone = transferNative(buffer);
+      engine.detachTransferred([buffer]);
+      return clone;
+    });
     engine.set('workerRoundtrip', workerRoundtrip);
     engine.set('TextDecoder', TextDecoder);
     const guest = await runCases((source) => engine.evaluate(source, 'wasm:fixture'));

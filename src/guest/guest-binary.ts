@@ -35,7 +35,7 @@ interface BinaryBindings {
 /** Executed inside QuickJS; native stores are reached only through private bindings. */
 export function installGuestBinary(
   native: BinaryBindings,
-  hooks: { binaryKind(value: unknown): string },
+  hooks: { binaryKind(value: unknown): string; nonTransferable(value: object): boolean },
 ) {
   const get = Reflect.get;
   const apply = Reflect.apply;
@@ -83,6 +83,14 @@ export function installGuestBinary(
         receiver: unknown,
         args: unknown[],
       ) => {
+        if (
+          description.name === 'ArrayBuffer' &&
+          (property.key === 'transfer' || property.key === 'transferToFixedLength') &&
+          receiver !== null &&
+          (typeof receiver === 'object' || typeof receiver === 'function') &&
+          hooks.nonTransferable(receiver)
+        )
+          throw new TypeError('WebAssembly memory buffers cannot be transferred');
         const method = original?.[kind];
         const mixedSet = property.key === 'set' && hooks.binaryKind(args[0]) === 'view';
         if (!hooks.binaryKind(receiver) && !mixedSet && typeof method === 'function')

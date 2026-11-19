@@ -128,8 +128,8 @@ for (const observation of observations) {
   assert.deepEqual(result.policy?.control, [true, true]);
   assert.deepEqual(result.policy?.guest, [false, false]);
   assert.deepEqual(observation.requests, ['/import-probe', '/constructor-probe']);
-  assert.equal(result.native.length, 7);
-  assert.equal(result.guest.length, 7);
+  assert.equal(result.native.length, 8);
+  assert.equal(result.guest.length, 8);
   for (const test of [...result.native, ...result.guest])
     assert(test.passed, JSON.stringify(test));
 }
