@@ -2,6 +2,7 @@ import { GuestEngine } from './engine.ts';
 import type { GuestHost } from './protocol.ts';
 import { GuestResources } from './resources.ts';
 import { GuestDOM } from './dom.ts';
+import { createGuestCustomElements } from './custom-elements.ts';
 import { createGuestDOMParser, parseGuestDocument } from './parser.ts';
 import { rewriteGuestCSS } from './css.ts';
 import { exposedInterfaces, globalInterfaceDefinitions } from './runtime-interfaces.ts';
@@ -214,6 +215,10 @@ const interfaceNames = new Set([
   'FileList',
   'FileReader',
   'FileReaderSync',
+  'ResizeObserverEntry',
+  'ResizeObserverSize',
+  'IntersectionObserverEntry',
+  'MutationRecord',
   'Headers',
   'Request',
   'Response',
@@ -334,6 +339,7 @@ export class BrowserEnvironment {
   readonly document?: Document;
   readonly dom?: GuestDOM;
   private engine?: GuestEngine;
+  private customElements?: ReturnType<typeof createGuestCustomElements>;
   private constructors = new Set<Function>();
   private methodWrappers = new WeakMap<Function, Function>();
   private accessorWrappers = new WeakMap<object, Map<PropertyKey, PropertyDescriptor>>();
@@ -358,6 +364,15 @@ export class BrowserEnvironment {
     this.resources = new GuestResources(catalog);
     this.document = 'document' in native ? native.document : undefined;
     environments.set(native, this);
+    if (this.document?.defaultView) {
+      this.customElements = createGuestCustomElements(this.document.defaultView, {
+        property: (value, key) => this.requireEngine().property(value, key),
+        construct: (constructor, args) =>
+          this.requireEngine().construct(constructor, args),
+        alias: (native, guest) => this.requireEngine().alias(native, guest),
+      });
+      this.globals.customElements = this.customElements.registry;
+    }
     const eventTarget: unknown = Reflect.get(native, 'EventTarget');
     const eventPrototype =
       typeof eventTarget === 'function' ? eventTarget.prototype : null;
@@ -406,10 +421,12 @@ export class BrowserEnvironment {
       commitTransfers: (transfer) => this.requireEngine().detachTransferred(transfer),
     });
     this.host = {
+      owns: (target) =>
+        typeof target !== 'function' && (isNode(target) || isWindow(target)),
       get: (target, key) => this.get(target, key),
       set: (target, key, value) => this.set(target, key, value),
       call: (target, receiver, args) => Reflect.apply(target, receiver, args),
-      construct: (target, args) => this.construct(target, args),
+      construct: (target, args, newTarget) => this.construct(target, args, newTarget),
       ownKeys: (target) =>
         target === native
           ? Reflect.ownKeys(this.globals)
@@ -1065,7 +1082,14 @@ export class BrowserEnvironment {
     return wrapped;
   }
 
-  private construct(target: Function, args: unknown[]): object {
+  private construct(target: Function, args: unknown[], newTarget?: Function): object {
+    const custom = this.customElements?.constructBase(target, args, newTarget);
+    if (custom) return custom;
+    if (target.name === 'CustomElementRegistry')
+      throw new DOMException(
+        'Scoped custom element registries are unavailable',
+        'NotSupportedError',
+      );
     if (!this.constructors.has(target) || forbidden.test(target.name))
       throw new DOMException(
         'Constructor is not available in this environment',
@@ -1626,6 +1650,7 @@ export class BrowserEnvironment {
       this.options.global.clearTimeout(timer);
       this.options.global.clearInterval(timer);
     }
+    this.customElements?.dispose();
     this.workers.dispose();
     this.windows?.dispose();
     this.audio?.dispose();
