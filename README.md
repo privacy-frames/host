@@ -62,8 +62,12 @@ other unavailable dependencies fail locally. Installation limits are 100 MiB and
 Downloads require a trusted host confirmation and release the supplied file from
 confinement. The browser may use network services to screen an approved download.
 
-Application-provided Wasm and service-worker execution are deferred. PhotoCraft
-and Squoosh therefore remain future compatibility targets. Storage APIs use
+Application Wasm executes natively with policy-mediated imports. Native memory,
+SharedArrayBuffer and Atomics retain the browser's actual storage and synchronization
+semantics across prepared dedicated workers. See
+[the Wasm bridge](docs/implementation/native-wasm.md) for its boundaries and known
+compatibility limits. Application service-worker execution remains deferred.
+Storage APIs use
 application-scoped names, but applications share an origin and browser permission
 grants; cross-application storage isolation is not claimed.
 

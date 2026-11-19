@@ -17,6 +17,8 @@ uses local Blob or data URLs; guest resource reads use admitted catalog bytes.
 | Local storage APIs and host record integrity                | `src/guest/storage.ts`, `src/runtime/storage.ts`                                    | `test/guest-lifecycle.ts`, `runtime-admission.test.ts`, `guest-installation.ts` |
 | Management authorization and installation publication       | `src/runtime/worker.ts`, `src/bridge/connect.ts`                                    | `test/guest-examples.ts`, `runtime-admission.test.ts`                           |
 | Startup CSP and browser service-worker maintenance          | `src/runtime/worker.ts`, `src/guest/window.ts`                                      | `test/guest-context-maintenance.ts`, `guest-policy.ts`                          |
+| Native Wasm imports, memory and shared binary operations    | `src/guest/native-wasm.ts`, `native-binary.ts`, `guest-binary.ts`                   | `test/guest-wasm.ts`, `guest-context-isolation.ts`                              |
+| Custom element construction and lifecycle callbacks         | `src/guest/custom-elements.ts`                                                      | `test/guest-custom-elements.ts`                                                 |
 
 The policy tests include native controls and observe an independent receiver.
 Context tests check that guest-created contexts receive the same restrictions,
@@ -28,7 +30,7 @@ Storage namespacing supports application compatibility. Host installation record
 bootstrap bytes and management channels still require integrity even though
 cross-application storage isolation is outside this demonstration.
 
-Application Wasm and application service-worker execution are deferred. Broader
+Application service-worker execution remains deferred. Broader
 browser coverage and a machine-checked correspondence between the implementation
 and its confinement requirements remain research work. Historical route inventories
 and formal models under `formal/` describe the earlier native runtime.

@@ -52,6 +52,11 @@ provides browser interfaces and forwards permitted operations to real DOM nodes,
 canvas contexts, audio graphs and storage. Callbacks can enter the interpreter
 synchronously, preserving event cancellation.
 
+Application Wasm executes in the browser and receives imports through the same
+guest policy. Its memory stays in native buffers, including real shared memory
+used by prepared workers. Guest typed-array operations address that storage
+directly; native Atomics coordinate access across workers.
+
 The host uses generated Webref metadata for browser interface names and
 inheritance. The browser performs native argument conversion and receiver checks.
 The host separately controls operations that can communicate, navigate, create a
@@ -96,6 +101,5 @@ reopening. Current receipts and application-specific qualifications are recorded
 in [evaluation/compatibility.md](https://github.com/privacy-frames/host/blob/main/evaluation/compatibility.md). These observations
 are implementation evidence; a complete browser confinement proof remains open.
 
-Application-provided Wasm and service-worker execution are deferred. PhotoCraft
-and Squoosh remain future targets. IFC and selective release of private
-information are separate research work.
+Application service-worker execution remains deferred. IFC and selective release
+of private information are separate research work.
