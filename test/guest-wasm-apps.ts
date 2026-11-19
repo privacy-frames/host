@@ -246,10 +246,12 @@ async function squoosh(page: Page, confined: boolean) {
   await page
     .locator('file-drop input[type=file]')
     .waitFor({ state: 'attached', timeout: 90000 });
+  console.log('Squoosh: guest-rendered input ready');
   const png = await image(page, true);
   await page
     .locator('file-drop input[type=file]')
     .setInputFiles({ name: 'synthetic-noise.png', mimeType: 'image/png', buffer: png });
+  console.log('Squoosh: PNG upload delivered');
   const link = page.locator('a[download="synthetic-noise.jpg"]');
   await link.waitFor({ timeout: 120000 });
   const before = await download(page, () => link.click(), confined);
@@ -279,9 +281,11 @@ async function squoosh(page: Page, confined: boolean) {
   const after = await download(page, () => link.click(), confined);
   assert.notEqual(before.sha256, after.sha256);
   assert(after.bytes.length < before.bytes.length);
+  console.log('Squoosh: MozJPEG quality verified; selecting AVIF');
   await page.locator('select').nth(1).selectOption('avif');
   const avifLink = page.locator('a[download="synthetic-noise.avif"]');
   await avifLink.waitFor({ timeout: 120000 });
+  console.log('Squoosh: AVIF output ready');
   const avif = await download(page, () => avifLink.click(), confined);
   assert.equal(avif.decoded.width, 256);
   assert.equal(avif.decoded.height, 256);
@@ -346,6 +350,7 @@ try {
             serviceWorkers: mode === 'native' ? 'block' : 'allow',
           });
           const errors: string[] = [];
+          const browserDiagnostics: string[] = [];
           const privateRequests: string[] = [];
           let privateTask = false;
           context.on('request', (request) => {
@@ -353,11 +358,20 @@ try {
               privateRequests.push(request.url());
           });
           const responses: { url: string; status: number }[] = [];
-          context.on('page', (page) =>
-            page.on('pageerror', (error) => errors.push(error.stack ?? error.message)),
-          );
+          context.on('page', (page) => {
+            page.on('pageerror', (error) => errors.push(error.stack ?? error.message));
+            page.on('crash', () => errors.push('Application renderer crashed'));
+          });
           context.on('console', (message) => {
-            if (message.type() === 'error') errors.push(message.text());
+            if (message.type() !== 'error') return;
+            const text = message.text();
+            if (
+              text.includes('resource:///modules/FaviconLoader.sys.mjs') &&
+              text.includes('/favicon.ico') &&
+              text.includes('img-src')
+            )
+              browserDiagnostics.push(text);
+            else errors.push(text);
           });
           context.on('response', (response) => {
             if (response.status() >= 400)
@@ -376,6 +390,7 @@ try {
             started: new Date().toISOString(),
             errors,
             responses,
+            browserDiagnostics,
             privateRequests,
           };
           console.log(`Starting ${name}/${target.id}/${mode}`);
@@ -451,6 +466,7 @@ try {
                 [],
                 'Private image task performs no HTTP requests',
               );
+            assert.deepEqual(errors, [], 'Image app emits no runtime errors');
             row.passed = !process.env.WASM_APPS_INSPECT;
           } catch (error) {
             row.passed = false;
@@ -485,6 +501,12 @@ try {
             await page
               .screenshot({ path: path.join(output, `${name}-${target.id}-${mode}.png`) })
               .catch(() => {});
+            await context.close();
+            if (errors.length) {
+              row.passed = false;
+              failed = true;
+              row.error ??= 'Image app emitted runtime errors; see errors.';
+            }
             await writeFile(
               path.join(output, `${name}-${target.id}-${mode}.json`),
               JSON.stringify(row, null, 2) + '\n',
@@ -499,7 +521,6 @@ try {
                 errors: errors.slice(0, 4),
               }),
             );
-            await context.close();
           }
         }
       }
