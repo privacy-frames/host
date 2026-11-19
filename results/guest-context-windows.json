@@ -239,6 +239,26 @@
         "nativeTrust": [
           false
         ],
+        "logicalOrigins": [
+          {
+            "kind": "origin-reply",
+            "id": "explicit",
+            "count": 1,
+            "sender": "https://fixture.invalid",
+            "target": "https://other.fixture.invalid",
+            "origin": "https://other.fixture.invalid",
+            "source": true
+          },
+          {
+            "kind": "origin-reply",
+            "id": "wildcard",
+            "count": 2,
+            "sender": "https://fixture.invalid",
+            "target": "https://other.fixture.invalid",
+            "origin": "https://other.fixture.invalid",
+            "source": true
+          }
+        ],
         "pendingWindow": true,
         "brands": {
           "node": true,
@@ -274,9 +294,9 @@
       }
     },
     "requests": [
-      "http://127.0.0.1:38123/",
-      "http://127.0.0.1:38123/browser.js",
-      "http://127.0.0.1:38123/quickjs.wasm"
+      "http://127.0.0.1:36299/",
+      "http://127.0.0.1:36299/browser.js",
+      "http://127.0.0.1:36299/quickjs.wasm"
     ],
     "approvals": [
       {
@@ -555,6 +575,26 @@
         "nativeTrust": [
           false
         ],
+        "logicalOrigins": [
+          {
+            "kind": "origin-reply",
+            "id": "explicit",
+            "count": 1,
+            "sender": "https://fixture.invalid",
+            "target": "https://other.fixture.invalid",
+            "origin": "https://other.fixture.invalid",
+            "source": true
+          },
+          {
+            "kind": "origin-reply",
+            "id": "wildcard",
+            "count": 2,
+            "sender": "https://fixture.invalid",
+            "target": "https://other.fixture.invalid",
+            "origin": "https://other.fixture.invalid",
+            "source": true
+          }
+        ],
         "pendingWindow": true,
         "brands": {
           "node": true,
@@ -590,9 +630,9 @@
       }
     },
     "requests": [
-      "http://127.0.0.1:38123/",
-      "http://127.0.0.1:38123/browser.js",
-      "http://127.0.0.1:38123/quickjs.wasm"
+      "http://127.0.0.1:36299/",
+      "http://127.0.0.1:36299/browser.js",
+      "http://127.0.0.1:36299/quickjs.wasm"
     ],
     "approvals": [
       {

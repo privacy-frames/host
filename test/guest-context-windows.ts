@@ -103,6 +103,26 @@ try {
         port: true,
         detached: true,
       });
+      assert.deepEqual(result.logicalOrigins, [
+        {
+          kind: 'origin-reply',
+          id: 'explicit',
+          count: 1,
+          sender: 'https://fixture.invalid',
+          target: 'https://other.fixture.invalid',
+          origin: 'https://other.fixture.invalid',
+          source: true,
+        },
+        {
+          kind: 'origin-reply',
+          id: 'wildcard',
+          count: 2,
+          sender: 'https://fixture.invalid',
+          target: 'https://other.fixture.invalid',
+          origin: 'https://other.fixture.invalid',
+          source: true,
+        },
+      ]);
       assert.equal(result.logicalLoadCount, 1);
       assert.deepEqual(result.anchors, {
         stayedInDocument: true,

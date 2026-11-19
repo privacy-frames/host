@@ -62,6 +62,18 @@ async function run() {
     },
     resources: [
       {
+        url: 'https://other.fixture.invalid/frame.html',
+        path: 'other-frame.html',
+        contentType: 'text/html',
+        bytes: new TextEncoder().encode(`<script>
+          let count=0;
+          addEventListener('message',event=>{
+            if(event.data.kind!=='origin-probe')return;
+            event.source.postMessage({kind:'origin-reply',id:event.data.id,count:++count,sender:event.origin,target:location.origin},event.origin);
+          });
+        </script>`).buffer,
+      },
+      {
         url: 'https://fixture.invalid/popup.html',
         path: 'popup.html',
         contentType: 'text/html',
@@ -222,6 +234,28 @@ globalThis.finished=new Promise(resolve=>{
     ),
   };
   removeEventListener('message', observeTrust);
+  const logicalOrigins = await session.engine.evaluate(`new Promise((resolve,reject)=>{
+    const frame=document.createElement('iframe');
+    frame.src='https://other.fixture.invalid/frame.html';
+    frame.onload=()=>{
+      const replies=[];
+      const receive=event=>{
+        if(event.data.kind!=='origin-reply')return;
+        replies.push({...event.data,origin:event.origin,source:event.source===frame.contentWindow});
+        if(event.data.id==='wildcard')setTimeout(()=>{
+          removeEventListener('message',receive);frame.remove();resolve(replies);
+        },50);
+      };
+      addEventListener('message',receive);
+      frame.contentWindow.postMessage({kind:'origin-probe',id:'wrong'},location.origin);
+      frame.contentWindow.postMessage({kind:'origin-probe',id:'default'});
+      frame.contentWindow.postMessage({kind:'origin-probe',id:'physical'},${JSON.stringify(location.origin)});
+      frame.contentWindow.postMessage({kind:'origin-probe',id:'explicit'},'https://other.fixture.invalid');
+      frame.contentWindow.postMessage({kind:'origin-probe',id:'wildcard'},'*');
+    };
+    document.body.append(frame);
+    setTimeout(()=>reject(new Error('Logical-origin messages timed out')),5000);
+  })`);
   const conversions = session.engine.evaluate(`(()=>{
     const results=[];
     const changing=(first,second)=>{let count=0;return {value:{toString(){return ++count===1?first:second}},count:()=>count}};
@@ -426,6 +460,7 @@ globalThis.finished=new Promise(resolve=>{
     messages,
     receiverRealm,
     nativeTrust,
+    logicalOrigins,
     pendingWindow,
     brands,
     nativeMarkers,

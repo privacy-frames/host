@@ -19,6 +19,8 @@ export interface GuestWindowContextsOptions {
   report(error: unknown): void;
   commitTransfers?(transfer: readonly Transferable[]): void;
   canMessage?(target: Window): boolean;
+  /** Logical publisher origin; native Window identity still authenticates ownership. */
+  logicalOrigin?(target: Window): string | undefined;
 }
 
 interface FrameSource {
@@ -96,7 +98,9 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
   const known = new WeakSet<Window>();
   const popups = new Map<Window, PopupState>();
   const names = new Map<string, Window>();
-  const securityOrigin = new URL(catalog.applicationURL).origin;
+  const sourceOrigin = new URL(catalog.sourceURL).origin;
+  const logicalOrigin = (window: Window) =>
+    options.logicalOrigin?.(window) ?? sourceOrigin;
   let disposed = false;
 
   async function prepareSource(source: GuestDocumentSource): Promise<PreparedDocument> {
@@ -341,6 +345,7 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
       if (disposed) throw new Error('Guest window environment is closed');
       if (target !== nativeWindow && !known.has(target) && !options.canMessage?.(target))
         throw new DOMException('Target is not an application window', 'SecurityError');
+      const senderOrigin = logicalOrigin(nativeWindow);
       const requestedOrigin =
         typeof targetOrigin === 'string'
           ? targetOrigin
@@ -350,7 +355,7 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
       try {
         origin =
           requestedOrigin === '/'
-            ? securityOrigin
+            ? senderOrigin
             : requestedOrigin === '*'
               ? '*'
               : new URL(requestedOrigin).origin;
@@ -364,7 +369,11 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
       ]) as { message: unknown; ports: MessagePort[] };
       options.commitTransfers?.(transfer);
       nativeWindow.setTimeout(() => {
-        if (disposed || target.closed || (origin !== '*' && origin !== securityOrigin))
+        if (
+          disposed ||
+          target.closed ||
+          (origin !== '*' && origin !== logicalOrigin(target))
+        )
           return;
         const EventConstructor = Reflect.get(
           target,
@@ -374,7 +383,7 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
           data: copied.message,
           ports: copied.ports,
           source: nativeWindow,
-          origin: securityOrigin,
+          origin: senderOrigin,
         });
         messageEvents.add(event);
         target.dispatchEvent(event);
