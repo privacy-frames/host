@@ -859,6 +859,22 @@ JSValue JS_JSONStringify(JSContext *ctx, JSValueConst obj,
                          JSValueConst replacer, JSValueConst space0);
 
 typedef void JSFreeArrayBufferDataFunc(JSRuntime *rt, void *opaque, void *ptr);
+/* Privacy Frames: trusted numeric-index acceleration for host-created proxies.
+   The host owns the access record and any borrowed view handle. Disable/remove
+   it before releasing the view or proxy. No application JavaScript API exists. */
+typedef struct JSIndexedProxyAccess JSIndexedProxyAccess;
+size_t JS_IndexedProxyAccessSize(void);
+JSIndexedProxyAccess *JS_NewIndexedProxyAccess(JSValueConst proxy, void *storage);
+int JS_SetIndexedProxyView(JSIndexedProxyAccess *access, JSValueConst *view,
+                            uint32_t length);
+void JS_SetIndexedProxyMemory(JSIndexedProxyAccess *access, uintptr_t read,
+                              uintptr_t write, uint32_t offset,
+                              uint32_t length, int kind);
+void JS_DisableIndexedProxyAccess(JSIndexedProxyAccess *access);
+void JS_MarkIndexedProxyDirty(JSIndexedProxyAccess *access);
+int JS_TakeIndexedProxyDirty(JSIndexedProxyAccess *access);
+void JS_FreeIndexedProxyAccess(JSValueConst proxy, JSIndexedProxyAccess *access);
+
 JSValue JS_NewArrayBuffer(JSContext *ctx, uint8_t *buf, size_t len,
                           JSFreeArrayBufferDataFunc *free_func, void *opaque,
                           JS_BOOL is_shared);

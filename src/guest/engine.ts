@@ -7,7 +7,9 @@ import {
   type QuickJSDeferredPromise,
   type QuickJSArrayBufferBacking,
 } from 'quickjs-emscripten-core';
-import { quickjsVariant } from './quickjs.ts';
+import { captureQuickJSVariant } from './quickjs.ts';
+import { IndexedAccess } from './indexed-access.ts';
+import type { IndexedEmscriptenModule } from '../../vendor/quickjs/generated/engine.mjs';
 import { installGuestRuntime } from './guest-runtime.ts';
 import { installGuestRegExpLegacy } from './legacy-regexp.ts';
 import resolveURI from '@jridgewell/resolve-uri';
@@ -23,11 +25,15 @@ interface RetainedGuest {
 }
 
 interface IndexShadow {
-  id: number;
   native: ArrayBuffer;
+  bytes: number;
   backing: QuickJSArrayBufferBacking;
-  valid: boolean;
+  epoch: number;
 }
+
+// This is a performance cache, not an application allocation limit. Stores that
+// do not fit retain native access; Wasm memory access never needs this cache.
+const indexShadowBudget = 128 * 1024 * 1024;
 
 interface BufferMirror {
   native: ArrayBuffer;
@@ -164,11 +170,9 @@ export class GuestEngine {
   private readonly symbolHandles = new Map<symbol, QuickJSHandle>();
   private readonly guestSymbols = new Map<string, symbol>();
   private readonly buffers = new Map<ArrayBuffer, BufferMirror>();
-  private readonly fixedWasmBuffers = new WeakSet<ArrayBuffer>();
   private readonly wasmBuffers = new WeakSet<ArrayBuffer>();
-  private readonly indexShadows = new WeakMap<ArrayBuffer, IndexShadow>();
-  private readonly indexShadowRecords = new Map<number, IndexShadow>();
-  private nextIndexShadow = 1;
+  private readonly indexShadows = new Map<ArrayBuffer, IndexShadow>();
+  private indexEpoch = 0;
   private wasmDepth = 0;
   private wasmDeferralAllowed = false;
   private readonly promises = new Set<QuickJSDeferredPromise>();
@@ -182,7 +186,11 @@ export class GuestEngine {
   private syncing = false;
   private closed = false;
 
-  private constructor(context: QuickJSContext, options: GuestEngineOptions) {
+  private constructor(
+    context: QuickJSContext,
+    options: GuestEngineOptions,
+    private readonly indexed: IndexedAccess,
+  ) {
     this.context = context;
     this.runtime = context.runtime;
     this.host = options.host;
@@ -205,11 +213,18 @@ export class GuestEngine {
       }
       module = await loading;
     }
+    let raw: IndexedEmscriptenModule | undefined;
     const wasm = await newQuickJSWASMModuleFromVariant(
-      newVariant(quickjsVariant, { wasmModule: module }),
+      newVariant(
+        captureQuickJSVariant((instance) => {
+          raw = instance;
+        }),
+        { wasmModule: module },
+      ),
     );
+    if (!raw) throw new Error('Trusted engine instance was not captured');
     const runtime = wasm.newRuntime();
-    const engine = new GuestEngine(runtime.newContext(), options);
+    const engine = new GuestEngine(runtime.newContext(), options, new IndexedAccess(raw));
     try {
       engine.initialize();
       return engine;
@@ -330,12 +345,28 @@ export class GuestEngine {
       runWasm: (action, deferOrdinary = false) => this.runWasm(action, deferOrdinary),
       retainBuffer: (buffer) => {
         if (isArrayBuffer(buffer)) this.wasmBuffers.add(buffer);
-        if (
-          isArrayBuffer(buffer) &&
-          !(arrayBufferResizable && Reflect.apply(arrayBufferResizable, buffer, []))
-        )
-          this.fixedWasmBuffers.add(buffer);
         this.binary.retainBuffer(buffer);
+      },
+      retainMemory: (memory, buffer) => {
+        if (this.indexed.hasMemory(buffer)) return;
+        this.flushIndexShadows();
+        this.invalidateIndexShadows();
+        this.indexed.rememberMemory(memory, buffer);
+        if (
+          !isArrayBuffer(buffer) ||
+          this.buffers.has(buffer) ||
+          (arrayBufferResizable && Reflect.apply(arrayBufferResizable, buffer, []))
+        )
+          return;
+        for (const [target, handle] of this.nativeHandles) {
+          let targetBuffer: unknown;
+          try {
+            targetBuffer = Reflect.apply(typedArrayBuffer, target, []);
+          } catch {
+            continue;
+          }
+          if (targetBuffer === buffer) this.indexed.attachMemory(target, handle, buffer);
+        }
       },
       captureImports: (imports, descriptors) => {
         const input = this.encode(imports);
@@ -618,6 +649,16 @@ export class GuestEngine {
     const key = this.propertyKey(encodedKey);
     const host = this.owner(target);
     if (operation === 'index-shadow') return this.prepareIndexShadow(target);
+    if (operation === 'index-dirty') {
+      this.indexed.dirty(target);
+      return this.context.undefined;
+    }
+    if (operation === 'index-attach') {
+      const buffer = this.indexedBuffer(target);
+      const proxy = this.nativeHandles.get(target);
+      if (buffer && proxy) this.indexed.attachShadow(target, proxy, input[0], buffer);
+      return this.context.undefined;
+    }
     this.flushIndexShadows();
     const copyWithin =
       this.canDeferOrdinary() && operation === 'call' && typeof target === 'function'
@@ -727,7 +768,7 @@ export class GuestEngine {
         this.flushIndexShadows();
         if (synchronize) this.syncBuffers('into-native');
       }
-      if (effects) this.invalidateIndexShadows();
+      this.invalidateIndexShadows();
       if (synchronize && nativeActionStarted) this.syncBuffers('into-guest');
     }
     return this.encode(result);
@@ -942,8 +983,21 @@ export class GuestEngine {
     ];
     try {
       const result = this.helper('createHost', arguments_);
-      this.nativeHandles.set(object, result.dup());
+      const retained = result.dup();
+      this.nativeHandles.set(object, retained);
       try {
+        if (this.binary.view(object)) {
+          let buffer: unknown;
+          try {
+            buffer = Reflect.apply(typedArrayBuffer, object, []);
+          } catch {}
+          if (
+            isArrayBuffer(buffer) &&
+            !this.buffers.has(buffer) &&
+            !(arrayBufferResizable && Reflect.apply(arrayBufferResizable, buffer, []))
+          )
+            this.indexed.attachMemory(object, retained, buffer);
+        }
         if (this.binary.view(object) || this.binary.buffer(object))
           this.binary.bindConstructor(
             object,
@@ -1484,10 +1538,12 @@ export class GuestEngine {
     input: QuickJSHandle[],
   ): { receiver: object; args: unknown[] } | undefined {
     if (!this.binary.owns(target)) return;
-    const receiver = this.hostReference(input[0]);
-    if (!receiver) return;
+    let receiver: object;
     let args: unknown[] | undefined;
     if (target === this.binary.bindings.invoke) {
+      // This captured arrow binding ignores its JS receiver. The actual native
+      // typed-array receiver is argument 3, not the private guest binding record.
+      receiver = this.binary.bindings;
       const length = this.context.getProp(input[1], 'length');
       const count = this.context.getNumber(length);
       length.dispose();
@@ -1513,6 +1569,9 @@ export class GuestEngine {
         for (const handle of handles) handle.dispose();
       }
     } else {
+      const view = this.hostReference(input[0]);
+      if (!view) return;
+      receiver = view;
       args = this.primitiveArguments(input[1]);
     }
     if (!args) return;
@@ -1525,7 +1584,9 @@ export class GuestEngine {
     try {
       const buffer: unknown = Reflect.apply(typedArrayBuffer, value, []);
       return isArrayBuffer(buffer) &&
-        this.fixedWasmBuffers.has(buffer) &&
+        this.binary.buffer(buffer) &&
+        !this.indexed.hasMemory(buffer) &&
+        !(arrayBufferResizable && Reflect.apply(arrayBufferResizable, buffer, [])) &&
         !this.buffers.has(buffer)
         ? buffer
         : undefined;
@@ -1535,32 +1596,40 @@ export class GuestEngine {
   }
 
   private prepareIndexShadow(target: object): QuickJSHandle {
+    this.flushIndexShadows();
     const buffer = this.indexedBuffer(target);
     if (!buffer) return this.context.undefined;
-    try {
-      new Uint8Array(buffer);
-    } catch {
-      return this.context.undefined;
-    }
+    const bytes: number = Reflect.apply(arrayBufferLength, buffer, []);
+    if (!bytes || bytes > indexShadowBudget) return this.context.undefined;
     let shadow = this.indexShadows.get(buffer);
     if (!shadow) {
+      let used = 0;
+      for (const cached of this.indexShadows.values()) used += cached.bytes;
+      for (const cached of this.indexShadows.values()) {
+        if (used + bytes <= indexShadowBudget) break;
+        if (cached.epoch === this.indexEpoch) continue;
+        this.indexed.releaseShadow(cached.native);
+        this.helper('detachBuffer', [cached.backing.handle]).dispose();
+        cached.backing.handle.dispose();
+        this.indexShadows.delete(cached.native);
+        used -= cached.bytes;
+      }
+      if (used + bytes > indexShadowBudget) return this.context.undefined;
       shadow = {
-        id: this.nextIndexShadow++,
         native: buffer,
+        bytes,
         backing: this.context.newArrayBufferBacking(buffer),
-        valid: true,
+        epoch: this.indexEpoch,
       };
       this.indexShadows.set(buffer, shadow);
-      this.indexShadowRecords.set(shadow.id, shadow);
-    } else if (!shadow.valid) {
+    } else if (shadow.epoch !== this.indexEpoch) {
       shadow.backing.writeFrom(new Uint8Array(buffer));
-      shadow.valid = true;
+      shadow.epoch = this.indexEpoch;
     }
     // No public prototype setter may intercept the private backing buffer.
     const result = this.context.newObject(this.context.null);
     this.context.setProp(result, 'buffer', shadow.backing.handle);
     const fields = {
-      key: shadow.id,
       name: Reflect.apply(typedArrayName, target, []),
       length: Reflect.apply(typedArrayLength, target, []),
       byteLength: Reflect.apply(typedArrayByteLength, target, []),
@@ -1580,44 +1649,25 @@ export class GuestEngine {
   /** Publish staged indexed writes before handing control to native code. */
   private flushIndexShadows(): void {
     if (!this.helpers.size || this.closed) return;
-    const dirty = this.helper('takeDirtyIndexShadows', []);
-    const length = this.context.getProp(dirty, 'length');
-    const count = this.context.getNumber(length);
-    length.dispose();
-    try {
-      for (let index = 0; index < count; index++) {
-        const id = this.context.getProp(dirty, index);
-        const shadow = this.indexShadowRecords.get(this.context.getNumber(id));
-        id.dispose();
-        if (!shadow) continue;
-        let target: Uint8Array;
-        try {
-          target = new Uint8Array(shadow.native);
-        } catch {
-          continue;
-        }
-        shadow.backing.readInto(target);
+    for (const buffer of this.indexed.dirtyBuffers()) {
+      const shadow = this.indexShadows.get(buffer);
+      if (!shadow) continue;
+      let target: Uint8Array;
+      try {
+        target = new Uint8Array(buffer);
+      } catch {
+        continue;
       }
-    } finally {
-      dirty.dispose();
+      shadow.backing.readInto(target);
     }
   }
 
   /** End an access epoch so later indexed reads observe native mutations. */
   private invalidateIndexShadows(): void {
     if (!this.helpers.size || this.closed) return;
+    this.indexed.invalidate();
     this.helper('invalidateIndexShadows', []).dispose();
-    for (const shadow of this.indexShadowRecords.values()) {
-      shadow.valid = false;
-      try {
-        new Uint8Array(shadow.native);
-      } catch {
-        this.helper('detachBuffer', [shadow.backing.handle]).dispose();
-        shadow.backing.handle.dispose();
-        this.indexShadows.delete(shadow.native);
-        this.indexShadowRecords.delete(shadow.id);
-      }
-    }
+    this.indexEpoch++;
   }
 
   private setIndexCacheEnabled(enabled: boolean): void {
@@ -1666,6 +1716,7 @@ export class GuestEngine {
 
   private syncBuffers(direction: 'into-guest' | 'into-native'): void {
     if (this.syncing || this.closed || !this.helpers.size) return;
+    if (direction === 'into-native') this.flushIndexShadows();
     this.syncing = true;
     try {
       for (const mirror of this.buffers.values()) {
@@ -1803,6 +1854,7 @@ export class GuestEngine {
         this.report(error instanceof Error ? error : new Error(String(error)));
       }
     }
+    this.indexed.dispose();
     for (const handle of this.helpers.values()) if (handle.alive) handle.dispose();
     for (const handle of this.nativeHandles.values()) if (handle.alive) handle.dispose();
     for (const { handle } of this.guestObjects.values())
@@ -1811,7 +1863,7 @@ export class GuestEngine {
       if (handle.alive) handle.dispose();
     for (const handle of this.symbolHandles.values()) if (handle.alive) handle.dispose();
     for (const { guest } of this.buffers.values()) if (guest.alive) guest.dispose();
-    for (const shadow of this.indexShadowRecords.values())
+    for (const shadow of this.indexShadows.values())
       if (shadow.backing.handle.alive) shadow.backing.handle.dispose();
     for (const promise of this.promises) promise.dispose();
     this.helpers.clear();
@@ -1821,7 +1873,7 @@ export class GuestEngine {
     this.importReferences.clear();
     this.symbolHandles.clear();
     this.buffers.clear();
-    this.indexShadowRecords.clear();
+    this.indexShadows.clear();
     this.promises.clear();
     this.context.dispose();
     this.runtime.dispose();

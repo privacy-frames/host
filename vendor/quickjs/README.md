@@ -35,6 +35,23 @@ Edit the C source here and rebuild. Keep the loader and Wasm binary from the sam
 build, and update the FFI bindings when changing the exported C interface. The
 existing TypeScript binding fixes remain in `patches/`.
 
-Vendoring does not change buffer semantics. QuickJS's private interpreter memory
-remains separate from application Wasm memory. Direct access to application memory
-requires further engine work; this build still uses the existing buffer bridge.
+## Indexed buffer access
+
+The engine can accelerate numeric indexing on trusted host-created Proxy objects.
+For fixed, non-shared Wasm buffers, small Wasm modules import application memory
+and provide typed reads and writes. Their native exports enter the interpreter's
+private function table. Application Wasm receives neither that table nor the
+interpreter heap. Other properties, methods and Proxy invariant checks keep their
+existing paths. Object coercion and unsupported view types use the ordinary
+bridge.
+
+Host-backed views of other fixed buffers can use a private QuickJS cache with C
+dirty tracking.
+The cache has a 128 MiB budget and reclaims inactive stores; buffers that do not fit
+retain native access. Pending writes publish before native consumers. Native
+calls invalidate private caches and disable access records for detached buffers.
+Shared and resizable buffers retain actual native views.
+
+Access records borrow a rooted QuickJS view handle or hold trusted accessor
+function pointers. `IndexedAccess` keeps the handles alive, unlinks records before
+freeing them, and releases table entries before disposing the interpreter.

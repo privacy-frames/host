@@ -1400,3 +1400,30 @@ JSValue *QTS_bjson_decode(JSContext *ctx, JSValueConst *data) {
   JSValue value = JS_ReadObject(ctx, buffer, length, 0);
   return jsvalue_to_heap(value);
 }
+/* Trusted host-only indexed access; pointers never enter guest JavaScript. */
+JSIndexedProxyAccess *QTS_NewIndexedProxyAccess(JSValueConst *proxy) {
+  void *storage = calloc(1, JS_IndexedProxyAccessSize());
+  JSIndexedProxyAccess *access = JS_NewIndexedProxyAccess(*proxy, storage);
+  if (!access) free(storage);
+  return access;
+}
+int QTS_SetIndexedProxyView(JSIndexedProxyAccess *access, JSValueConst *view, uint32_t length) {
+  return JS_SetIndexedProxyView(access, view, length);
+}
+void QTS_SetIndexedProxyMemory(JSIndexedProxyAccess *access, uintptr_t read, uintptr_t write, uint32_t offset, uint32_t length, int kind) {
+  JS_SetIndexedProxyMemory(access, read, write, offset, length, kind);
+}
+void QTS_DisableIndexedProxyAccess(JSIndexedProxyAccess *access) {
+  JS_DisableIndexedProxyAccess(access);
+}
+int QTS_TakeIndexedProxyDirty(JSIndexedProxyAccess *access) {
+  return JS_TakeIndexedProxyDirty(access);
+}
+void QTS_FreeIndexedProxyAccess(JSValueConst *proxy, JSIndexedProxyAccess *access) {
+  JS_FreeIndexedProxyAccess(*proxy, access);
+  free(access);
+}
+
+void QTS_MarkIndexedProxyDirty(JSIndexedProxyAccess *access) {
+  JS_MarkIndexedProxyDirty(access);
+}

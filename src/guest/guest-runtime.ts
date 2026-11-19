@@ -62,6 +62,7 @@ export function installGuestRuntime() {
   const weakHas = WeakMap.prototype.has;
   const MapConstructor = Map;
   const WeakMapConstructor = WeakMap;
+  const ProxyConstructor = Proxy;
   const PromiseConstructor = Promise;
   const promiseThen = Promise.prototype.then;
   const SetConstructor = Set;
@@ -139,8 +140,6 @@ export function installGuestRuntime() {
   }
   let indexEpoch = 0;
   let indexCacheEnabled = true;
-  let dirtyIndexShadows: number[] = [];
-  const dirtyIndexKeys = new InternalSet<number>();
   const guestIds = new InternalWeakMap<object, number>();
   const proxies = new InternalMap<number, object>();
   const records = new InternalWeakMap<object, ProxyRecord>();
@@ -162,8 +161,6 @@ export function installGuestRuntime() {
     indexed: boolean;
     index?: {
       epoch: number;
-      dirty: boolean;
-      key: number;
       view: object;
       length: number;
       byteLength: number;
@@ -205,7 +202,6 @@ export function installGuestRuntime() {
       | {
           buffer: ArrayBuffer;
           name: string;
-          key: number;
           byteOffset: number;
           byteLength: number;
           length: number;
@@ -225,8 +221,6 @@ export function installGuestRuntime() {
     }
     record.index = {
       epoch: indexEpoch,
-      dirty: false,
-      key: info.key,
       view: reflectConstruct(constructor, [info.buffer, info.byteOffset, info.length]),
       length: info.length,
       byteLength: info.byteLength,
@@ -235,6 +229,7 @@ export function installGuestRuntime() {
       byteLengthOwn: info.byteLengthOwn,
       byteOffsetOwn: info.byteOffsetOwn,
     };
+    native('index-attach', record.id, undefined, record.index.view);
     return record.index;
   };
   const validIndex = (property: PropertyKey): number | undefined => {
@@ -331,7 +326,7 @@ export function installGuestRuntime() {
       binary,
       indexed,
     };
-    const proxy = new Proxy(target, {
+    const proxy = new ProxyConstructor(target, {
       get(_target, property, receiver) {
         const index = validIndex(property);
         if (index !== undefined && record.indexed && indexCacheEnabled) {
@@ -391,13 +386,7 @@ export function installGuestRuntime() {
           const shadow = indexState(record);
           if (shadow && index < shadow.length) {
             const written = reflectSet(shadow.view, property, value, shadow.view);
-            if (written && !shadow.dirty) {
-              shadow.dirty = true;
-              if (!dirtyIndexKeys.has(shadow.key)) {
-                dirtyIndexKeys.add(shadow.key);
-                reflectApply(arrayPush, dirtyIndexShadows, [shadow.key]);
-              }
-            }
+            if (written) native('index-dirty', record.id);
             return written;
           }
         }
@@ -598,14 +587,6 @@ export function installGuestRuntime() {
     },
     invalidateIndexShadows: () => {
       indexEpoch++;
-    },
-    takeDirtyIndexShadows: () => {
-      const dirty = dirtyIndexShadows;
-      dirtyIndexShadows = [];
-      // Reset per-view dirty marks after a flush without walking every alias.
-      if (dirty.length) indexEpoch++;
-      for (let i = 0; i < dirty.length; i++) dirtyIndexKeys.delete(dirty[i]);
-      return dirty;
     },
     captureIndexGetters(aliases: { Uint8Array: { prototype: object } }) {
       const prototype = getPrototype(aliases.Uint8Array.prototype)!;

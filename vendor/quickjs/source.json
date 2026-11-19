@@ -21,6 +21,8 @@
     "-flto"
   ],
   "localChanges": [
-    "C wrapper includes use ../upstream/ instead of ../vendor/quickjs/."
+    "C wrapper includes use ../upstream/ instead of ../vendor/quickjs/.",
+    "Host-only indexed Proxy access records route fixed native memory reads and writes through typed Wasm functions; ordinary private caches use rooted QuickJS views and C dirty flags.",
+    "The C wrapper allocates and releases access records; no guest JavaScript API exposes pointers or function-table slots."
   ]
 }

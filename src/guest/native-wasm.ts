@@ -9,6 +9,8 @@ export interface NativeWasmOptions {
   ): object;
   /** Preserve actual native memory identity, including buffers imported from workers. */
   retainBuffer(buffer: ArrayBufferLike): void;
+  /** The Memory has passed the captured native brand check. */
+  retainMemory?(memory: object, buffer: ArrayBufferLike): void;
   /** Enter synchronous Wasm execution; imported guest callbacks reenter this scope. */
   runWasm<T>(action: () => T, deferOrdinary: boolean): T;
 }
@@ -37,6 +39,11 @@ const responseStatus =
     ? descriptor(Response.prototype, 'status')!.get!
     : undefined;
 const memoryBuffer = descriptor(native.Memory.prototype, 'buffer')!.get!;
+const memoryBufferMethods = new Set<Function>();
+for (const name of ['toFixedLengthBuffer', 'toResizableBuffer']) {
+  const method: unknown = descriptor(native.Memory.prototype, name)?.value;
+  if (typeof method === 'function') memoryBufferMethods.add(method);
+}
 const instanceExports = descriptor(native.Instance.prototype, 'exports')!.get!;
 const tableLength = descriptor(native.Table.prototype, 'length')!.get!;
 const globalValue = descriptor(native.Global.prototype, 'value')!.get!;
@@ -139,7 +146,10 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
   }
 
   function retainMemory(value: object): void {
-    if (kind(value) === 'Memory') options.retainBuffer(apply(memoryBuffer, value, []));
+    if (kind(value) !== 'Memory') return;
+    const buffer: ArrayBufferLike = apply(memoryBuffer, value, []);
+    options.retainBuffer(buffer);
+    options.retainMemory?.(value, buffer);
   }
 
   function buffer(value: unknown): value is ArrayBufferLike {
@@ -246,7 +256,10 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
           localFunctions.add(result);
         if (object(this) && kind(this) === 'Memory') {
           retainMemory(this);
-          if (buffer(result)) options.retainBuffer(result);
+          if (buffer(result)) {
+            options.retainBuffer(result);
+            if (memoryBufferMethods.has(original)) options.retainMemory?.(this, result);
+          }
         }
         return remember(result);
       },

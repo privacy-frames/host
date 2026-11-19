@@ -1,3 +1,4 @@
+import { QuickJSContext } from 'quickjs-emscripten-core';
 import { GuestEngine } from '../src/guest/engine.ts';
 import type { GuestHost } from '../src/guest/protocol.ts';
 import { createGuestWindow } from '../src/guest/session.ts';
@@ -12,6 +13,11 @@ declare global {
         error?: string;
         policy?: { control: boolean[]; guest: boolean[] };
         foreign?: string[];
+        copyElision?: {
+          baseline: { intoNative: number; intoGuest: number };
+          copying: { intoNative: number; intoGuest: number };
+          coercing: { intoNative: number; intoGuest: number };
+        };
       }
     | undefined;
 }
@@ -20,6 +26,55 @@ declare global {
 // Native callbacks below are fixture adapters, not the production DOM policy.
 const cases = [
   {
+    name: 'indexed copy loop and ordinary native copies preserve aliases',
+    source: `
+      const n = 4 * 1024 * 1024;
+      const memory = new WebAssembly.Memory({initial: 64});
+      const output = new Uint8Array(memory.buffer);
+      for (let i = 0; i < n; i++) output[i] = i & 255;
+      const input = output.slice();
+      const started = Date.now();
+      for (let i = 0; i < n; i++) output[i] = input[i] ^ 255;
+      check(output[n-1] === 0 && output[n-2] === 1, 'native indexed loop reads real bytes');
+      check(true, '4 MiB indexed copy milliseconds=' + (Date.now() - started));
+      input[0] = 73;
+      const alias = new Uint8Array(input.buffer);
+      check(alias[0] === 73 && new DataView(input.buffer).getUint8(0) === 73,
+        'staged ordinary native writes publish before alias access');
+      alias[1] = 93;
+      check(input[1] === 93, 'ordinary native aliases share their indexed cache');
+      input.fill(19, 0, 2);
+      check(alias[0] === 19 && alias[1] === 19, 'native methods invalidate cached input bytes');
+    `,
+  },
+  {
+    name: 'indexed coercion and numeric families retain native semantics',
+    source: `
+      const memory = new WebAssembly.Memory({initial: 1, maximum: 3});
+      for (const Constructor of [Int8Array, Uint8Array, Uint8ClampedArray,
+        Int16Array, Uint16Array, Int32Array, Uint32Array, Float32Array, Float64Array]) {
+        const view = new Constructor(memory.buffer, 64, 4);
+        view[0] = 1.5;
+        check(Object.getOwnPropertyDescriptor(view, '0').value === view[0],
+          Constructor.name + ' native descriptor matches indexed value');
+      }
+      const bytes = new Uint8Array(memory.buffer);
+      const big = new BigUint64Array(memory.buffer);
+      big[0] = 257n;
+      check(bytes[0] === 1 && bytes[1] === 1, 'BigInt and numeric views alias actual native bytes');
+      bytes[0] = 3;
+      check(big[0] === 259n, 'numeric indexed writes reach BigInt native views');
+      const previous = memory.buffer;
+      let conversions = 0;
+      const written = Reflect.set(bytes, '0', { valueOf() {
+        conversions++; memory.grow(0); return 9;
+      }});
+      check(written && conversions === 1 && previous.byteLength === 0 && bytes[0] === undefined,
+        'object coercion observes detachment before indexed store');
+      check(new Uint8Array(memory.buffer)[0] === 3, 'detached write leaves grown memory unchanged');
+    `,
+  },
+  {
     name: 'consecutive imports preserve ordinary bytes through native reentry and throw',
     source: `
       const ordinary = new Uint8Array(4);
@@ -27,6 +82,7 @@ const cases = [
       ordinary[0] = 1;
       const memory = new WebAssembly.Memory({initial: 1, maximum: 3});
       const words = new Int32Array(memory.buffer);
+      const heap = new Uint8Array(memory.buffer);
       const sentinel = new Error('second import');
       let calls = 0;
       const instance = new WebAssembly.Instance(new WebAssembly.Module(plainBytes), {
@@ -42,10 +98,12 @@ const cases = [
             check(result.before === 2 && result.written === 9, 'nested native consumer sees guest writes');
             check(ordinary[3] === 8, 'native continuation reaches imported callback');
             ordinary[0] = 3;
+            heap.copyWithin(128, 0, 4);
             return 22;
           }
           check(ordinary[0] === 3, 'second import retains preceding guest-only write');
           check(words[0] === 11, 'native continuation invalidates indexed heap reads');
+          check(new Int32Array(memory.buffer)[32] === 10, 'primitive native copyWithin preserves deferred ordinary writes');
           ordinary[0] = 4;
           throw sentinel;
         }},
@@ -413,6 +471,70 @@ try {
     console.log('Wasm fixture: disposing core engine');
     engine.dispose();
   }
+  // Compare whole-buffer transfers, not wall-clock timing: adding a pure native
+  // copy inside a Wasm import must not repeatedly synchronize unrelated input.
+  const originalBacking = QuickJSContext.prototype.newArrayBufferBacking;
+  const tracked = new ArrayBuffer(8);
+  let copies = { intoNative: 0, intoGuest: 0 };
+  QuickJSContext.prototype.newArrayBufferBacking = function (buffer) {
+    const backing = Reflect.apply(originalBacking, this, [buffer]);
+    if (buffer !== tracked) return backing;
+    return {
+      handle: backing.handle,
+      readInto(target) {
+        copies.intoNative++;
+        backing.readInto(target);
+      },
+      writeFrom(source) {
+        copies.intoGuest++;
+        backing.writeFrom(source);
+      },
+    };
+  };
+  const measured = [];
+  try {
+    for (const copy of ['none', 'primitive', 'coercing']) {
+      const probe = await GuestEngine.create({ host, wasmURL: '/quickjs.wasm' });
+      try {
+        probe.set('ordinary', new Uint8Array(tracked));
+        probe.set('plainBytes', plainBytes);
+        copies = { intoNative: 0, intoGuest: 0 };
+        const result = probe.evaluate(`(() => {
+          ordinary[0] = 1;
+          const memory = new WebAssembly.Memory({initial:1,maximum:3});
+          const heap = new Uint8Array(memory.buffer);
+          const instance = new WebAssembly.Instance(new WebAssembly.Module(plainBytes), {
+            env: {memory, callback() {
+              ordinary[0]++;
+              ${copy === 'primitive' ? 'heap.copyWithin(128, 0, 4);' : copy === 'coercing' ? 'heap.copyWithin({valueOf(){return 128}}, 0, 4);' : ''}
+              return 0;
+            }}
+          });
+          instance.exports.twice(0);
+          return ordinary[0];
+        })()`);
+        check(result === 3, 'both native imports retain deferred ordinary writes');
+        measured.push({ ...copies });
+      } finally {
+        probe.dispose();
+      }
+    }
+  } finally {
+    QuickJSContext.prototype.newArrayBufferBacking = originalBacking;
+  }
+  outcome.copyElision = {
+    baseline: measured[0],
+    copying: measured[1],
+    coercing: measured[2],
+  };
+  check(
+    JSON.stringify(measured[0]) === JSON.stringify(measured[1]),
+    'pure native copy imports add no unrelated whole-buffer transfers',
+  );
+  check(
+    measured[0].intoNative > 0 && measured[2].intoNative > measured[1].intoNative,
+    'object coercion retains synchronization as a positive control',
+  );
   const foreign: string[] = [];
   const tableStartBytes = new Uint8Array(
     await (await fetch('/table-start.wasm')).arrayBuffer(),

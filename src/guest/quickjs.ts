@@ -8,3 +8,23 @@ export const quickjsVariant: QuickJSSyncVariant = {
   importModuleLoader: () =>
     import('../../vendor/quickjs/generated/engine.mjs').then((module) => module.default),
 };
+
+/** Capture the trusted instance for our C extensions without exposing the SDK's
+ * protected internals or publishing the module to application JavaScript. */
+export function captureQuickJSVariant(
+  capture: (
+    module: import('../../vendor/quickjs/generated/engine.mjs').IndexedEmscriptenModule,
+  ) => void,
+): QuickJSSyncVariant {
+  return {
+    ...quickjsVariant,
+    importModuleLoader: async () => {
+      const { default: load } = await import('../../vendor/quickjs/generated/engine.mjs');
+      return async (options) => {
+        const module = await load(options);
+        capture(module);
+        return module;
+      };
+    },
+  };
+}

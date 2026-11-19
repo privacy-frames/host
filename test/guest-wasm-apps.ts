@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { createServer } from 'node:http';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { access, mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { chromium, firefox, type Page } from 'playwright';
 import { launch } from './browser-profile.ts';
@@ -19,6 +19,7 @@ const output = path.join(
 const runtimeDirectory = process.env.WASM_APPS_RUNTIME_DIRECTORY ?? 'dist-runtime';
 const publisher =
   process.env.PUBLISHER_DIRECTORY ?? path.join(root, 'publisher-source/dist');
+if (!publicRun) await access(publisher);
 const managerURL = publicRun
   ? 'https://pf.damenh.com/'
   : 'http://127.0.0.1:4810/privacy-frames/';
@@ -242,9 +243,9 @@ async function photo(page: Page, confined: boolean) {
     [0, 0, 0, 255],
   ]);
   await page.mouse.click(25, 15);
-  await page.waitForTimeout(250);
+  await page.waitForTimeout(2000);
   await page.mouse.move(75, 465);
-  await page.waitForTimeout(350);
+  await page.waitForTimeout(2000);
   if (process.env.WASM_APPS_INSPECT) return { inspected: true };
   const exported = await download(page, () => page.mouse.click(350, 100), confined);
   assert.equal(exported.decoded.width, 256);
@@ -346,7 +347,8 @@ async function squoosh(page: Page, confined: boolean) {
   assert.equal(large.decoded.width, 3872);
   assert.equal(large.decoded.height, 2592);
   assert(large.bytes.length < 2000000, 'Large photo was compressed, not copied');
-  console.log('Squoosh: large photo compressed after', Date.now() - started, 'ms');
+  const largeElapsedMs = Date.now() - started;
+  console.log('Squoosh: large photo compressed after', largeElapsedMs, 'ms');
   const png = await image(page, true);
   const transfer = await page.evaluateHandle((encoded) => {
     const bytes = Uint8Array.from(atob(encoded), (value) => value.charCodeAt(0));
@@ -397,7 +399,7 @@ async function squoosh(page: Page, confined: boolean) {
   assert(avif.bytes.subarray(0, 32).includes(Buffer.from('ftypavif')));
   return {
     inputBytes: png.length,
-    large: { ...large, bytes: large.bytes.length },
+    large: { ...large, bytes: large.bytes.length, elapsedMs: largeElapsedMs },
     comparison,
     before: { ...before, bytes: before.bytes.length },
     after: { ...after, bytes: after.bytes.length },

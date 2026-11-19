@@ -685,7 +685,23 @@ typedef struct JSRegExp {
     JSString *bytecode; /* also contains the flags */
 } JSRegExp;
 
+/* Only the trusted host installs these records. The optional view is rooted
+   by a host-owned JSValue handle; this record borrows that handle. External
+   accessors are native Wasm functions over application memory, not JS callbacks. */
+struct JSIndexedProxyAccess {
+    JSValueConst *view;
+    double (*read)(uint32_t);
+    void (*write)(uint32_t, double);
+    uint32_t offset;
+    uint32_t length;
+    uint8_t shift;
+    uint8_t kind; /* 0: integer, 1: Uint8Clamped, 2: floating point */
+    uint8_t enabled;
+    uint8_t dirty;
+};
+
 typedef struct JSProxyData {
+    JSIndexedProxyAccess *indexed;
     JSValue target;
     JSValue handler;
     uint8_t is_func;
@@ -49546,6 +49562,77 @@ static const JSCFunctionListEntry js_reflect_obj[] = {
 
 /* Proxy */
 
+size_t JS_IndexedProxyAccessSize(void)
+{
+    return sizeof(JSIndexedProxyAccess);
+}
+
+JSIndexedProxyAccess *JS_NewIndexedProxyAccess(JSValueConst proxy, void *storage)
+{
+    JSProxyData *s = JS_GetOpaque(proxy, JS_CLASS_PROXY);
+    JSIndexedProxyAccess *access;
+    if (!s || s->is_revoked || s->indexed)
+        return NULL;
+    access = storage;
+    if (access)
+        s->indexed = access;
+    return access;
+}
+
+int JS_SetIndexedProxyView(JSIndexedProxyAccess *access, JSValueConst *view,
+                           uint32_t length)
+{
+    JSObject *p;
+    if (JS_VALUE_GET_TAG(*view) != JS_TAG_OBJECT)
+        return -1;
+    p = JS_VALUE_GET_OBJ(*view);
+    if (p->class_id < JS_CLASS_UINT8C_ARRAY || p->class_id > JS_CLASS_FLOAT64_ARRAY ||
+        typed_array_is_oob(p) || length > p->u.array.count)
+        return -1;
+    access->view = view;
+    access->length = length;
+    access->enabled = TRUE;
+    return 0;
+}
+
+void JS_SetIndexedProxyMemory(JSIndexedProxyAccess *access, uintptr_t read,
+                              uintptr_t write, uint32_t offset,
+                              uint32_t length, int kind)
+{
+    access->view = NULL;
+    access->read = (double (*)(uint32_t))read;
+    access->write = (void (*)(uint32_t, double))write;
+    access->offset = offset;
+    access->length = length;
+    access->shift = kind & 3;
+    access->kind = kind >> 2;
+    access->enabled = TRUE;
+}
+
+void JS_DisableIndexedProxyAccess(JSIndexedProxyAccess *access)
+{
+    access->enabled = FALSE;
+}
+
+void JS_MarkIndexedProxyDirty(JSIndexedProxyAccess *access)
+{
+    access->dirty = TRUE;
+}
+
+int JS_TakeIndexedProxyDirty(JSIndexedProxyAccess *access)
+{
+    int dirty = access->dirty;
+    access->dirty = FALSE;
+    return dirty;
+}
+
+void JS_FreeIndexedProxyAccess(JSValueConst proxy, JSIndexedProxyAccess *access)
+{
+    JSProxyData *s = JS_GetOpaque(proxy, JS_CLASS_PROXY);
+    if (s && s->indexed == access)
+        s->indexed = NULL;
+}
+
 static void js_proxy_finalizer(JSRuntime *rt, JSValue val)
 {
     JSProxyData *s = JS_GetOpaque(val, JS_CLASS_PROXY);
@@ -49784,6 +49871,17 @@ static JSValue js_proxy_get(JSContext *ctx, JSValueConst obj, JSAtom atom,
     JSValueConst args[3];
     JSPropertyDescriptor desc;
 
+    s = JS_GetOpaque(obj, JS_CLASS_PROXY);
+    if (!s->is_revoked && s->indexed && s->indexed->enabled &&
+        __JS_AtomIsTaggedInt(atom) && __JS_AtomToUInt32(atom) < s->indexed->length) {
+        JSIndexedProxyAccess *access = s->indexed;
+        uint32_t index = __JS_AtomToUInt32(atom);
+        if (access->view)
+            ret = JS_GetPropertyInternal(ctx, *access->view, atom, *access->view, FALSE);
+        else
+            ret = JS_NewFloat64(ctx, access->read(access->offset + (index << access->shift)));
+        goto validate_result;
+    }
     s = get_proxy_method(ctx, &method, obj, JS_ATOM_get);
     if (!s)
         return JS_EXCEPTION;
@@ -49800,6 +49898,7 @@ static JSValue js_proxy_get(JSContext *ctx, JSValueConst obj, JSAtom atom,
     args[2] = receiver;
     ret = JS_CallFree(ctx, method, s->handler, 3, args);
     JS_FreeValue(ctx, atom_val);
+ validate_result:
     if (JS_IsException(ret))
         return JS_EXCEPTION;
     res = JS_GetOwnPropertyInternal(ctx, &desc, JS_VALUE_GET_OBJ(s->target), atom);
@@ -49833,6 +49932,43 @@ static int js_proxy_set(JSContext *ctx, JSValueConst obj, JSAtom atom,
     int ret, res;
     JSValueConst args[4];
 
+    s = JS_GetOpaque(obj, JS_CLASS_PROXY);
+    if (!s->is_revoked && s->indexed && s->indexed->enabled &&
+        JS_VALUE_GET_TAG(receiver) == JS_TAG_OBJECT &&
+        JS_VALUE_GET_PTR(receiver) == JS_VALUE_GET_PTR(obj) &&
+        !JS_IsObject(value) && !JS_IsSymbol(value) &&
+        __JS_AtomIsTaggedInt(atom) && __JS_AtomToUInt32(atom) < s->indexed->length) {
+        JSIndexedProxyAccess *access = s->indexed;
+        uint32_t index = __JS_AtomToUInt32(atom);
+        if (access->view) {
+            ret = JS_SetPropertyInternal(ctx, *access->view, atom,
+                                        JS_DupValue(ctx, value), *access->view, flags);
+            if (ret > 0)
+                access->dirty = TRUE;
+        } else if (!JS_IsBigInt(ctx, value)) {
+            double number;
+            int32_t integer;
+            if (access->kind == 2) {
+                if (JS_ToFloat64(ctx, &number, value))
+                    return -1;
+            } else {
+                int failed = access->kind == 1
+                    ? JS_ToUint8ClampFree(ctx, &integer, JS_DupValue(ctx, value))
+                    : JS_ToInt32(ctx, &integer, value);
+                if (failed)
+                    return -1;
+                number = integer;
+            }
+            access->write(access->offset + (index << access->shift), number);
+            ret = TRUE;
+        } else {
+            goto ordinary_set;
+        }
+        if (ret < 0)
+            return ret;
+        goto validate_result;
+    }
+ ordinary_set:
     s = get_proxy_method(ctx, &method, obj, JS_ATOM_set);
     if (!s)
         return -1;
@@ -49855,6 +49991,7 @@ static int js_proxy_set(JSContext *ctx, JSValueConst obj, JSAtom atom,
     if (JS_IsException(ret1))
         return -1;
     ret = JS_ToBoolFree(ctx, ret1);
+ validate_result:
     if (ret) {
         JSPropertyDescriptor desc;
         res = JS_GetOwnPropertyInternal(ctx, &desc, JS_VALUE_GET_OBJ(s->target), atom);
@@ -50442,6 +50579,7 @@ static JSValue js_proxy_constructor(JSContext *ctx, JSValueConst this_val,
     s->handler = JS_DupValue(ctx, handler);
     s->is_func = JS_IsFunction(ctx, target);
     s->is_revoked = FALSE;
+    s->indexed = NULL;
     JS_SetOpaque(obj, s);
     JS_SetConstructorBit(ctx, obj, JS_IsConstructor(ctx, target));
     return obj;

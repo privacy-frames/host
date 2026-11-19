@@ -46,17 +46,20 @@ sizes and SHA-256 digests before publishing an installation.
 
 ## Execution
 
-Application JavaScript runs in QuickJS compiled to WebAssembly. Its values,
+Application JavaScript runs in a vendored QuickJS build compiled to WebAssembly. Its values,
 functions and prototype extensions live in a separate heap. Trusted native code
 provides browser interfaces and forwards permitted operations to real DOM nodes,
 canvas contexts, audio graphs and storage. Callbacks can enter the interpreter
 synchronously, preserving event cancellation.
 
 Application Wasm executes in the browser and receives imports through the same
-guest policy. Memory retains its native browser identity. Indexed JavaScript
-access to fixed, non-shared memory uses a private cache, synchronized before native
-consumers and refreshed after native writes. Shared and resizable memory use
-native views; native Atomics coordinate access across prepared workers.
+guest policy. Memory retains its native browser identity. Numeric indexing of
+fixed, non-shared Wasm views calls small Wasm accessors from inside the interpreter.
+Each accessor imports only application memory; the interpreter heap stays private.
+Methods on host-backed views still use browser implementations. Ordinary fixed
+native buffers can use a bounded write-back cache, synchronized at native call
+boundaries. Shared and resizable buffers retain native views; native Atomics
+coordinate access across prepared workers.
 
 The host uses generated Webref metadata for browser interface names and
 inheritance. The browser performs native argument conversion and receiver checks.
