@@ -1,0 +1,26 @@
+{
+  "engine": "QuickJS",
+  "version": "2025-09-13",
+  "source": {
+    "repository": "https://github.com/justjake/quickjs-emscripten",
+    "revision": "df4efb9ef2cb25c417ecb57986da462d11b244ed",
+    "tag": "v0.32.0",
+    "paths": [
+      "vendor/quickjs",
+      "c/interface.c",
+      "templates/pre-extension.js",
+      "templates/pre-wasmMemory.js",
+      "exportedRuntimeMethods.json"
+    ]
+  },
+  "toolchain": {
+    "image": "emscripten/emsdk:5.0.1@sha256:c89732ef63a56de5a96395c5a8c1c7904f7420131a045406e6fedc4cbe1cc198"
+  },
+  "optimization": [
+    "-O3",
+    "-flto"
+  ],
+  "localChanges": [
+    "C wrapper includes use ../upstream/ instead of ../vendor/quickjs/."
+  ]
+}

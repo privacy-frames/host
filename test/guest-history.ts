@@ -1,7 +1,6 @@
 import assert from 'node:assert/strict';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { createServer } from 'node:http';
-import { createRequire } from 'node:module';
 import { createHash } from 'node:crypto';
 import { build } from 'esbuild';
 import { chromium, firefox } from 'playwright';
@@ -18,7 +17,7 @@ await build({
 });
 const bundle = await readFile(new URL('browser.js', output));
 const wasm = await readFile(
-  createRequire(import.meta.url).resolve('@jitl/quickjs-wasmfile-release-sync/wasm'),
+  new URL('../vendor/quickjs/generated/engine.wasm', import.meta.url),
 );
 const server = createServer((request, response) => {
   const pathname = new URL(request.url || '/', 'http://localhost').pathname;

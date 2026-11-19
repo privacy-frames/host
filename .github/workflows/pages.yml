@@ -51,6 +51,16 @@ jobs:
         with:
           name: browser-evidence
           path: results/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: quickjs-build
+          path: |
+            vendor/quickjs/source.json
+            vendor/quickjs/upstream/LICENSE
+            vendor/quickjs/BINDINGS-LICENSE
+            vendor/quickjs/generated/build.json
+            vendor/quickjs/generated/engine.mjs
+            vendor/quickjs/generated/engine.wasm
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:

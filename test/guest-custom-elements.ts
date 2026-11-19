@@ -1,6 +1,5 @@
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
-import { createRequire } from 'node:module';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { build } from 'esbuild';
 import { chromium, firefox } from 'playwright';
@@ -15,8 +14,9 @@ await build({
   target: 'es2022',
 });
 const source = await readFile(output);
-const require = createRequire(import.meta.url);
-const wasm = await readFile(require.resolve('@jitl/quickjs-wasmfile-release-sync/wasm'));
+const wasm = await readFile(
+  new URL('../vendor/quickjs/generated/engine.wasm', import.meta.url),
+);
 const server = createServer((request, response) => {
   const path = new URL(request.url || '/', 'http://fixture').pathname;
   response.setHeader(

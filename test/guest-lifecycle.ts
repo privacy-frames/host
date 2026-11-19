@@ -1,11 +1,9 @@
 import assert from 'node:assert/strict';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
-import { createRequire } from 'node:module';
 import { build } from 'esbuild';
 import { chromium, firefox } from 'playwright';
 
-const require = createRequire(import.meta.url);
 const output = new URL('../.tools/guest-lifecycle-test/', import.meta.url);
 await mkdir(output, { recursive: true });
 await build({
@@ -17,7 +15,9 @@ await build({
   target: 'es2022',
 });
 const bundle = await readFile(new URL('browser.js', output));
-const wasm = await readFile(require.resolve('@jitl/quickjs-wasmfile-release-sync/wasm'));
+const wasm = await readFile(
+  new URL('../vendor/quickjs/generated/engine.wasm', import.meta.url),
+);
 const server = createServer((request, response) => {
   const path = new URL(request.url || '/', 'http://localhost').pathname;
   response.setHeader(

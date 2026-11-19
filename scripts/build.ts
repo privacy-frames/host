@@ -7,11 +7,12 @@ import { appIcon } from './icons.ts';
 import { buildExamples } from './build-examples.ts';
 import { generateGuestBindings } from './guest-bindings.ts';
 import { guestWorkletLoaderPlugin } from '../src/guest/contexts/worklet-build.ts';
-import { createRequire } from 'node:module';
+import { buildQuickJS, quickjsWasm } from './quickjs.ts';
 
 const root = resolve(import.meta.dirname, '..');
 const configPath = process.env.HOST_CONFIG || resolve(root, 'deployment/config.json');
 const config = JSON.parse(await readFile(configPath, 'utf8'));
+await buildQuickJS();
 await generateGuestBindings(root);
 const sources = await readdir(resolve(root, 'src'), { recursive: true });
 const hash = createHash('sha256');
@@ -32,6 +33,15 @@ for (const path of [
 for (const path of (await readdir(resolve(root, 'patches'))).sort())
   if (path.endsWith('.patch'))
     hash.update(await readFile(resolve(root, 'patches', path)));
+hash.update(await readFile(resolve(root, 'vendor/quickjs/generated/build.json')));
+const engineLicense = (
+  await Promise.all(
+    ['upstream/LICENSE', 'BINDINGS-LICENSE'].map((path) =>
+      readFile(resolve(root, 'vendor/quickjs', path), 'utf8'),
+    ),
+  )
+).join('\n');
+hash.update(engineLicense);
 hash.update(JSON.stringify(config));
 const buildId = hash.digest('hex').slice(0, 16);
 const entries = {
@@ -84,11 +94,8 @@ for (const role of roles) {
     });
   }
   if (role === 'runtime') {
-    const require = createRequire(import.meta.url);
-    await cp(
-      require.resolve('@jitl/quickjs-wasmfile-release-sync/wasm'),
-      resolve(directory, 'engine.wasm'),
-    );
+    await cp(quickjsWasm, resolve(directory, 'engine.wasm'));
+    await writeFile(resolve(directory, 'engine-LICENSE.txt'), engineLicense);
   }
   await cp(
     resolve(

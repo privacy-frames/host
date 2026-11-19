@@ -1,13 +1,13 @@
 import {
   newQuickJSWASMModuleFromVariant,
   newVariant,
-  RELEASE_SYNC,
   type QuickJSContext,
   type QuickJSHandle,
   type QuickJSRuntime,
   type QuickJSDeferredPromise,
   type QuickJSArrayBufferBacking,
-} from 'quickjs-emscripten';
+} from 'quickjs-emscripten-core';
+import { quickjsVariant } from './quickjs.ts';
 import { installGuestRuntime } from './guest-runtime.ts';
 import { installGuestRegExpLegacy } from './legacy-regexp.ts';
 import resolveURI from '@jridgewell/resolve-uri';
@@ -206,7 +206,7 @@ export class GuestEngine {
       module = await loading;
     }
     const wasm = await newQuickJSWASMModuleFromVariant(
-      newVariant(RELEASE_SYNC, { wasmModule: module }),
+      newVariant(quickjsVariant, { wasmModule: module }),
     );
     const runtime = wasm.newRuntime();
     const engine = new GuestEngine(runtime.newContext(), options);

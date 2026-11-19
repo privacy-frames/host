@@ -1,6 +1,5 @@
 import assert from 'node:assert/strict';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
-import { createRequire } from 'node:module';
 import { createServer } from 'node:http';
 import { build } from 'esbuild';
 import { chromium, firefox } from 'playwright';
@@ -26,8 +25,9 @@ for (const [name, entry] of Object.entries(entries))
     target: 'es2022',
     plugins: name === 'worklet' ? [guestWorkletLoaderPlugin(root)] : [],
   });
-const require = createRequire(import.meta.url);
-const wasm = await readFile(require.resolve('@jitl/quickjs-wasmfile-release-sync/wasm'));
+const wasm = await readFile(
+  new URL('../vendor/quickjs/generated/engine.wasm', import.meta.url),
+);
 const bundles = new Map(
   await Promise.all(
     Object.keys(entries).map(

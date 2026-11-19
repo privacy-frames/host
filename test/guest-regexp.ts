@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { transform } from 'esbuild';
-import { getQuickJS } from 'quickjs-emscripten';
+import { newQuickJSWASMModuleFromVariant, newVariant } from 'quickjs-emscripten-core';
+import { quickjsVariant } from '../src/guest/quickjs.ts';
 import { chromium, firefox } from 'playwright';
 async function compile(path: string, globalName: string) {
   return (
@@ -18,7 +19,12 @@ const installer = await compile('src/guest/legacy-regexp.ts', 'LegacyInstaller')
 const cases = await compile('test/fixtures/guest-regexp-cases.ts', 'LegacyCases');
 const program = cases + ';JSON.stringify(LegacyCases.legacyRegExpCases())';
 
-const module = await getQuickJS();
+const wasm = await WebAssembly.compile(
+  await readFile(new URL('../vendor/quickjs/generated/engine.wasm', import.meta.url)),
+);
+const module = await newQuickJSWASMModuleFromVariant(
+  newVariant(quickjsVariant, { wasmModule: wasm }),
+);
 const context = module.newContext();
 const evaluate = (source: string) => {
   const value = context.unwrapResult(context.evalCode(source));

@@ -1,7 +1,6 @@
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { createRequire } from 'node:module';
 import { createServer, type Server } from 'node:http';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { build } from 'esbuild';
@@ -12,10 +11,11 @@ import {
   guestPolicyCases,
 } from './guest-policy-cases.ts';
 
-const require = createRequire(import.meta.url);
 const output = new URL('../.tools/guest-policy/', import.meta.url);
 await mkdir(output, { recursive: true });
-const wasm = await readFile(require.resolve('@jitl/quickjs-wasmfile-release-sync/wasm'));
+const wasm = await readFile(
+  new URL('../vendor/quickjs/generated/engine.wasm', import.meta.url),
+);
 await build({
   entryPoints: [new URL('../src/guest/worker-entry.ts', import.meta.url).pathname],
   outfile: new URL('worker.js', output).pathname,

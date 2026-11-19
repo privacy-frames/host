@@ -2,12 +2,10 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createServer } from 'node:http';
-import { createRequire } from 'node:module';
 import { execFileSync } from 'node:child_process';
 import { build } from 'esbuild';
 import { chromium, firefox } from 'playwright';
 
-const require = createRequire(import.meta.url);
 const directory = new URL('../.tools/guest-wasm-test/', import.meta.url);
 await mkdir(directory, { recursive: true });
 await build({
@@ -26,7 +24,7 @@ const files = new Map([
   ],
   [
     '/quickjs.wasm',
-    await readFile(require.resolve('@jitl/quickjs-wasmfile-release-sync/wasm')),
+    await readFile(new URL('../vendor/quickjs/generated/engine.wasm', import.meta.url)),
   ],
   ['/memory.wasm', await readFile(new URL('fixtures/wasm/memory.wasm', import.meta.url))],
   [
