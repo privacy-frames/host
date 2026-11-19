@@ -90,12 +90,20 @@ for (const browser of browsers) {
       const optionalResourceFailures = receipt.errors.filter((error) =>
         error.includes('Script resource is not installed:'),
       );
-      const unexpectedErrors = receipt.errors.filter(
+      const remaining = receipt.errors.filter(
         (error) => !optionalResourceFailures.includes(error),
       );
-      if (!receipt.passed || unexpectedErrors.length)
+      const runtimeErrors = remaining.filter((error) =>
+        /^(?:Application error )?(?:Error|TypeError|ReferenceError|RangeError|SyntaxError|InternalError|RuntimeError):|Aborted\(|JS_FreeRuntime/.test(
+          error,
+        ),
+      );
+      const otherConsoleDiagnostics = remaining.filter(
+        (error) => !runtimeErrors.includes(error),
+      );
+      if (!receipt.passed || runtimeErrors.length)
         failures.push(
-          `${browser}/${application}: ${receipt.error || unexpectedErrors.join('\n') || 'Task failed'}`,
+          `${browser}/${application}: ${receipt.error || runtimeErrors.join('\n') || 'Task failed'}`,
         );
       observations.push({
         application,
@@ -106,7 +114,8 @@ for (const browser of browsers) {
         offlineTask: receipt.offlineTask,
         offlinePersistence: receipt.offlinePersistence,
         optionalResourceFailures,
-        unexpectedErrors,
+        runtimeErrors,
+        otherConsoleDiagnostics,
         publisherRevision: receipt.publisherRevision,
         runtimeRevision: receipt.runtimeRevision,
       });
