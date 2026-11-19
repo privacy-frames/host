@@ -20,6 +20,9 @@ export function installGuestRuntime() {
   const ownKeys = Reflect.ownKeys;
   const arrayIsArray = Array.isArray;
   const bufferIsView = ArrayBuffer.isView;
+  const speciesSymbol = Symbol.species;
+  const StringValue = String;
+  const NumberValue = Number;
   const DataViewConstructor = DataView;
   const viewConstructors = {
     Int8Array,
@@ -119,9 +122,6 @@ export function installGuestRuntime() {
   const records = new InternalWeakMap<object, ProxyRecord>();
   const nativeSymbols = new InternalMap<symbol, number>();
   const guestSymbols = new InternalMap<symbol, number>();
-  const objectDefaults = new InternalMap<PropertyKey, PropertyDescriptor | undefined>();
-  for (const key of ownKeys(objectPrototype))
-    objectDefaults.set(key, getDescriptor(objectPrototype, key));
   let nextGuest = 1;
 
   interface ProxyRecord {
@@ -134,6 +134,7 @@ export function installGuestRuntime() {
     prototypeObject: boolean;
     parent: object | null | undefined;
     parentOverridden: boolean;
+    binary: string;
   }
 
   const key = (value: PropertyKey): string => {
@@ -190,11 +191,7 @@ export function installGuestRuntime() {
         current = parent(entry);
       } else {
         if (current === objectPrototype) {
-          const descriptor = getDescriptor(current, property);
-          const initial = objectDefaults.get(property);
-          if (descriptor?.value === initial?.value && descriptor?.get === initial?.get)
-            return undefined;
-          return descriptor;
+          return getDescriptor(current, property);
         }
         if (current === functionPrototype) return undefined;
         const descriptor = getDescriptor(current, property);
@@ -214,6 +211,7 @@ export function installGuestRuntime() {
     constructable: boolean,
     name: string,
     prototypeObject: boolean,
+    binary = '',
   ): object => {
     const existing = proxies.get(id);
     if (existing) return existing;
@@ -235,12 +233,21 @@ export function installGuestRuntime() {
       prototypeObject,
       parent: undefined,
       parentOverridden: false,
+      binary,
     };
     const proxy = new Proxy(target, {
       get(_target, property, receiver) {
+        if (
+          record.binary === 'view' &&
+          typeof property === 'string' &&
+          (StringValue(NumberValue(property)) === property || property === '-0')
+        )
+          return native('get', id, property);
         const own = getDescriptor(target, property);
         if (own && !own.configurable && 'value' in own && !own.writable) return own.value;
         if (record.local.has(property) && own) return readDescriptor(own, receiver);
+        if (record.binary && property === 'constructor')
+          return reflectGet(parent(record)!, property, receiver);
         if (property === '__proto__') return parent(record);
         if (
           callable &&
@@ -255,6 +262,12 @@ export function installGuestRuntime() {
         return native('get', id, property);
       },
       set(_target, property, value, receiver) {
+        if (
+          record.binary === 'view' &&
+          typeof property === 'string' &&
+          (StringValue(NumberValue(property)) === property || property === '-0')
+        )
+          return !!native('set', id, property, value);
         if (property === '__proto__') {
           if (
             value === null ||
@@ -291,6 +304,12 @@ export function installGuestRuntime() {
         return reflectSet(target, property, value, target);
       },
       defineProperty(_target, property, descriptor) {
+        if (
+          record.binary === 'view' &&
+          typeof property === 'string' &&
+          (StringValue(NumberValue(property)) === property || property === '-0')
+        )
+          return !!native('define', id, property, descriptor);
         record.local.add(property);
         return Reflect.defineProperty(target, property, descriptor);
       },
@@ -310,6 +329,12 @@ export function installGuestRuntime() {
         return !!native('delete', id, property);
       },
       has(_target, property) {
+        if (
+          record.binary === 'view' &&
+          typeof property === 'string' &&
+          (StringValue(NumberValue(property)) === property || property === '-0')
+        )
+          return !!native('own', id, property);
         const local = localDescriptor(record, property);
         return local !== undefined ? local !== null : !!native('has', id, property);
       },
@@ -353,7 +378,7 @@ export function installGuestRuntime() {
         return native('call', id, undefined, receiver, args);
       },
       construct(_target, args, newTarget) {
-        const value = native('construct', id, undefined, args) as object;
+        const value = native('construct', id, undefined, args, newTarget) as object;
         if (newTarget !== proxy) {
           const prototype = reflectGet(newTarget, 'prototype');
           if (
@@ -428,6 +453,59 @@ export function installGuestRuntime() {
   };
 
   return {
+    binaryHooks: () => ({
+      binaryKind: (value: unknown) =>
+        value && (typeof value === 'object' || typeof value === 'function')
+          ? (records.get(value)?.binary ?? '')
+          : '',
+      constructorOf: (value: object) => reflectGet(value, 'constructor'),
+      speciesOf: (value: object) => reflectGet(value, speciesSymbol),
+    }),
+    captureWasmImports(imports: object, descriptors: { module: string; name: string }[]) {
+      if (
+        imports !== undefined &&
+        (imports === null ||
+          (typeof imports !== 'object' && typeof imports !== 'function'))
+      )
+        throw new TypeError('Wasm imports must be an object');
+      const captured = ObjectConstructor.create(null);
+      const modules = new InternalMap<string, string[]>();
+      for (let index = 0; index < descriptors.length; index++) {
+        const item = descriptors[index];
+        let names = modules.get(item.module);
+        if (!names) {
+          names = [];
+          modules.set(item.module, names);
+        }
+        let included = false;
+        for (let nameIndex = 0; nameIndex < names.length; nameIndex++)
+          if (names[nameIndex] === item.name) included = true;
+        if (!included) reflectApply(arrayPush, names, [item.name]);
+      }
+      for (let index = 0; index < descriptors.length; index++) {
+        const item = descriptors[index];
+        if (getDescriptor(captured, item.module)) continue;
+        defineProperty(captured, item.module, {
+          // Hidden accessors are decoded lazily. The browser controls access
+          // order and validation; each read still executes through guest policy.
+          get() {
+            const namespace = reflectGet(imports, item.module);
+            const protectedNamespace = ObjectConstructor.create(null);
+            const names = modules.get(item.module)!;
+            for (let nameIndex = 0; nameIndex < names.length; nameIndex++) {
+              const name = names[nameIndex];
+              defineProperty(protectedNamespace, name, {
+                get: () => reflectGet(namespace, name),
+                configurable: true,
+              });
+            }
+            return protectedNamespace;
+          },
+          configurable: true,
+        });
+      }
+      return captured;
+    },
     defineGlobal(name: string, value: unknown) {
       defineProperty(guestGlobal, name, {
         value,

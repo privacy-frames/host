@@ -144,4 +144,4 @@ try {
 } catch(error) { postMessage({available:true,error:String(error)}); }
 `;
 
-export const borrowedWorkerImport = `postMessage({available:true,wasm:typeof WebAssembly});`;
+export const borrowedWorkerImport = `postMessage({available:true,wasm:typeof WebAssembly,nativeMarker:typeof __privacyNativePolicyWorker});`;

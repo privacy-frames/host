@@ -19,6 +19,7 @@ const wasm = await readFile(require.resolve('@jitl/quickjs-wasmfile-release-sync
 await build({
   entryPoints: [new URL('../src/guest/worker-entry.ts', import.meta.url).pathname],
   outfile: new URL('worker.js', output).pathname,
+  banner: { js: 'globalThis.__privacyNativePolicyWorker = true;' },
   bundle: true,
   format: 'iife',
   platform: 'browser',
@@ -67,7 +68,7 @@ const app = createServer((request, response) => {
     response.setHeader('Content-Type', 'text/javascript');
     response.end(
       url.pathname.endsWith('policy-worker.js')
-        ? borrowedWorkerSource
+        ? 'globalThis.__privacyNativePolicyWorker = true;\n' + borrowedWorkerSource
         : borrowedWorkerImport,
     );
     return;
@@ -259,7 +260,7 @@ try {
                 record.returned && typeof record.returned === 'object'
                   ? (record.returned as Record<string, unknown>)
                   : {};
-              if (returned.wasm !== 'undefined')
+              if (returned.wasm !== 'object' || returned.nativeMarker !== 'undefined')
                 failures.push(
                   `${browserName}/${fixture.name}: borrowed import did not run in guest: ${JSON.stringify(returned)}`,
                 );
@@ -311,7 +312,7 @@ try {
                 record.returned && typeof record.returned === 'object'
                   ? (record.returned as Record<string, unknown>)
                   : {};
-              if (returned.wasm !== 'object')
+              if (returned.wasm !== 'object' || returned.nativeMarker !== 'boolean')
                 failures.push(
                   `${browserName}/${fixture.name}: unrestricted worker control failed: ${JSON.stringify(returned)}`,
                 );

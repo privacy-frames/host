@@ -11,6 +11,9 @@ import { installGuestRuntime } from './guest-runtime.ts';
 import { installGuestRegExpLegacy } from './legacy-regexp.ts';
 import resolveURI from '@jridgewell/resolve-uri';
 import type { GuestEngineOptions, GuestEvaluationMode, GuestHost } from './protocol.ts';
+import { NativeBinary } from './native-binary.ts';
+import { installGuestBinary } from './guest-binary.ts';
+import { createNativeWasm } from './native-wasm.ts';
 
 interface RetainedGuest {
   id: number;
@@ -111,6 +114,9 @@ export class GuestEngine {
   readonly context: QuickJSContext;
   readonly runtime: QuickJSRuntime;
   private readonly host: GuestHost;
+  private readonly binary = new NativeBinary();
+  private readonly owners = new WeakMap<object, GuestHost>();
+  private wasm?: ReturnType<typeof createNativeWasm>;
   private readonly options: GuestEngineOptions;
   private readonly helpers = new Map<string, QuickJSHandle>();
   private readonly nativeIds = new WeakMap<object, number>();
@@ -277,14 +283,100 @@ export class GuestEngine {
         return resolved;
       },
     );
-    // No shared application memory is advertised until cross-engine storage is qualified.
-    this.context.setProp(
-      this.context.global,
-      'SharedArrayBuffer',
-      this.context.undefined,
+    this.installBinary();
+    this.wasm = createNativeWasm({
+      retainBuffer: (buffer) => this.binary.retainBuffer(buffer),
+      captureImports: (imports, descriptors) => {
+        const input = this.encode(imports);
+        const description = this.encode(descriptors);
+        try {
+          const result = this.helper('captureWasmImports', [input, description]);
+          try {
+            const captured = this.decode(result);
+            if (!captured || typeof captured !== 'object')
+              throw new TypeError('Wasm imports must form a namespace object');
+            return captured;
+          } finally {
+            result.dispose();
+          }
+        } finally {
+          input.dispose();
+          description.dispose();
+        }
+      },
+    });
+    this.set('WebAssembly', this.wasm.namespace);
+  }
+
+  private installBinary(): void {
+    const installer = this.unwrap(
+      this.context.evalCode(`(${installGuestBinary.toString()})`, 'privacy:binary'),
     );
-    this.context.setProp(this.context.global, 'Atomics', this.context.undefined);
-    this.context.setProp(this.context.global, 'WebAssembly', this.context.undefined);
+    const bindings = this.encode(this.binary.bindings);
+    const hooks = this.helper('binaryHooks', []);
+    this.helpers.set('binaryConstructorOf', this.context.getProp(hooks, 'constructorOf'));
+    this.helpers.set('binarySpeciesOf', this.context.getProp(hooks, 'speciesOf'));
+    try {
+      const aliases = this.unwrap(
+        this.context.callFunction(installer, this.context.undefined, bindings, hooks),
+      );
+      try {
+        for (const [name, native] of this.binary.aliases()) {
+          const constructor = this.context.getProp(aliases, name);
+          if (this.context.typeof(constructor) !== 'function') {
+            constructor.dispose();
+            continue;
+          }
+          this.nativeHandles.get(native)?.dispose();
+          this.nativeHandles.set(native, constructor.dup());
+          const prototype = this.context.getProp(constructor, 'prototype');
+          this.nativeHandles.get(native.prototype)?.dispose();
+          this.nativeHandles.set(native.prototype, prototype);
+          constructor.dispose();
+        }
+      } finally {
+        aliases.dispose();
+      }
+    } finally {
+      installer.dispose();
+      bindings.dispose();
+      hooks.dispose();
+    }
+  }
+
+  private owner(target: object): GuestHost {
+    const known = this.owners.get(target);
+    if (known) return known;
+    if (this.host.owns?.(target)) {
+      this.owners.set(target, this.host);
+      return this.host;
+    }
+    if (this.binary.owns(target)) {
+      this.owners.set(target, this.binary);
+      return this.binary;
+    }
+    const owner = this.wasm?.owns(target) ? this.wasm : this.host;
+    // Ordinary binary values can later be retained as external memory. Their
+    // ownership must be reconsidered; native DOM/Wasm brands remain immutable.
+    if (owner !== this.host || (!isArrayBuffer(target) && !ArrayBuffer.isView(target)))
+      this.owners.set(target, owner);
+    return owner;
+  }
+
+  private readBinaryProperty(name: string, value: unknown): unknown {
+    return this.enter(() => {
+      const encoded = this.encode(value);
+      try {
+        const result = this.helper(name, [encoded]);
+        try {
+          return this.decode(result);
+        } finally {
+          result.dispose();
+        }
+      } finally {
+        encoded.dispose();
+      }
+    });
   }
 
   private aliasGlobal(value: object): void {
@@ -351,6 +443,37 @@ export class GuestEngine {
 
   call(fn: Function, arguments_: unknown[] = [], receiver?: unknown): unknown {
     return Reflect.apply(fn, receiver, arguments_);
+  }
+
+  /** Read guest class metadata without bypassing guest property policies. */
+  property(value: unknown, key: PropertyKey): unknown {
+    return this.enter(() => {
+      const object = this.encode(value);
+      const property =
+        typeof key === 'symbol' ? this.encodeSymbol(key) : this.encodeString(String(key));
+      try {
+        const result = this.helper('objectGet', [object, property]);
+        try {
+          return this.decode(result);
+        } finally {
+          result.dispose();
+        }
+      } finally {
+        object.dispose();
+        property.dispose();
+      }
+    });
+  }
+
+  construct(constructor: Function, arguments_: unknown[] = []): object {
+    return Reflect.construct(constructor, arguments_);
+  }
+
+  /** Associate a trusted native platform wrapper with its existing guest identity. */
+  alias(native: object, guest: unknown): void {
+    const handle = this.encode(guest);
+    this.nativeHandles.get(native)?.dispose();
+    this.nativeHandles.set(native, handle);
   }
 
   /** Keep host listeners/resources alive until explicit realm disposal. */
@@ -431,6 +554,7 @@ export class GuestEngine {
     if (!target) throw new Error('Unknown native object');
     const encodedKey = this.readString(keyHandle);
     const key = this.propertyKey(encodedKey);
+    const host = this.owner(target);
     // Native reads only retrieve references/values. Flush binary mirrors where
     // native code can consume or mutate them, rather than at each property lookup.
     const effects =
@@ -438,36 +562,52 @@ export class GuestEngine {
       operation === 'construct' ||
       operation === 'set' ||
       operation === 'delete';
-    if (effects) this.syncBuffers('into-native');
+    const primitiveIndexWrite =
+      operation === 'set' &&
+      this.binary.view(target) &&
+      typeof key === 'string' &&
+      (String(Number(key)) === key || key === '-0') &&
+      !['object', 'function'].includes(this.context.typeof(input[0]));
+    const synchronize = effects && !primitiveIndexWrite;
+    if (synchronize) this.syncBuffers('into-native');
     let result: unknown;
     try {
       switch (operation) {
         case 'get':
-          result = this.host.get(target, key);
+          result = host.get(target, key);
           break;
         case 'set':
-          result = this.host.set(target, key, this.decode(input[0]));
+          result = host.set(target, key, this.decode(input[0]));
           break;
         case 'delete':
-          result = this.host.delete?.(target, key) ?? false;
+          result = host.delete?.(target, key) ?? false;
           break;
+        case 'define': {
+          if (!this.binary.view(target))
+            throw new TypeError('Only native view indices are delegated');
+          const value = this.decode(input[0]);
+          if (!value || typeof value !== 'object')
+            throw new TypeError('Invalid descriptor');
+          result = this.binary.define(target, key, value);
+          break;
+        }
         case 'has':
           result = this.has(target, key);
           break;
         case 'own':
-          result = this.host.descriptor(target, key) !== undefined;
+          result = host.descriptor(target, key) !== undefined;
           break;
         case 'settable':
-          result = this.host.settable?.(target, key) ?? false;
+          result = host.settable?.(target, key) ?? false;
           break;
         case 'keys':
-          result = this.host.ownKeys(target);
+          result = host.ownKeys(target);
           break;
         case 'prototype':
-          result = this.host.prototype(target);
+          result = host.prototype(target);
           break;
         case 'descriptor': {
-          const descriptor = this.host.descriptor(target, key);
+          const descriptor = host.descriptor(target, key);
           return descriptor ? this.encodeRecord(descriptor) : this.context.undefined;
         }
         case 'call': {
@@ -475,21 +615,26 @@ export class GuestEngine {
             throw new TypeError('Native object is not callable');
           const receiver = this.decode(input[0]);
           const args = this.decodeArguments(input[1]);
-          result = this.host.call(target, receiver, args);
+          result = host.call(target, receiver, args);
           break;
         }
         case 'construct': {
           if (typeof target !== 'function')
             throw new TypeError('Native object is not a constructor');
           const args = this.decodeArguments(input[0]);
-          result = this.host.construct(target, args);
+          const newTarget = input[1] ? this.decode(input[1]) : undefined;
+          result = host.construct(
+            target,
+            args,
+            typeof newTarget === 'function' ? newTarget : undefined,
+          );
           break;
         }
         default:
           throw new Error('Unknown guest operation');
       }
     } finally {
-      if (effects) this.syncBuffers('into-guest');
+      if (synchronize) this.syncBuffers('into-guest');
     }
     return this.encode(result);
   }
@@ -499,8 +644,9 @@ export class GuestEngine {
     let current: object | null = target;
     while (current && !visited.has(current)) {
       visited.add(current);
-      if (this.host.descriptor(current, key)) return true;
-      current = this.host.prototype(current);
+      const host = this.owner(current);
+      if (host.descriptor(current, key)) return true;
+      current = host.prototype(current);
     }
     return false;
   }
@@ -551,8 +697,10 @@ export class GuestEngine {
     if (original) return original.dup();
     const cached = this.nativeHandles.get(object) ?? seen.get(object);
     if (cached) return cached.dup();
-    if (isArrayBuffer(value)) return this.encodeBuffer(value);
-    if (ArrayBuffer.isView(value)) return this.encodeView(value);
+    if (isArrayBuffer(value) && !this.binary.buffer(value))
+      return this.encodeBuffer(value);
+    if (ArrayBuffer.isView(value) && !this.binary.view(value))
+      return this.encodeView(value);
     if (
       value instanceof Promise ||
       Object.prototype.toString.call(value) === '[object Promise]'
@@ -685,11 +833,27 @@ export class GuestEngine {
       constructable ? this.context.true : this.context.false,
       this.encodeString(typeof value === 'function' ? value.name : ''),
       prototypeObject ? this.context.true : this.context.false,
+      this.encodeString(
+        this.binary.buffer(value) ? 'buffer' : this.binary.view(value) ? 'view' : '',
+      ),
     ];
     try {
       const result = this.helper('createHost', arguments_);
       this.nativeHandles.set(object, result.dup());
-      return result;
+      try {
+        if (this.binary.view(object) || this.binary.buffer(object))
+          this.binary.bindConstructor(
+            object,
+            () => this.readBinaryProperty('binaryConstructorOf', object),
+            (constructor) => this.readBinaryProperty('binarySpeciesOf', constructor),
+          );
+        return result;
+      } catch (error) {
+        this.nativeHandles.get(object)?.dispose();
+        this.nativeHandles.delete(object);
+        result.dispose();
+        throw error;
+      }
     } finally {
       for (const argument of arguments_) argument.dispose();
     }

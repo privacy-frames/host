@@ -1,12 +1,14 @@
 /** Native operations are policy decisions supplied by the owning browser host. */
 export interface GuestHost {
+  /** Recognize host-specific native brands before probing unrelated builtins. */
+  owns?(target: object): boolean;
   get(target: object, key: PropertyKey): unknown;
   set(target: object, key: PropertyKey, value: unknown): boolean;
   delete?(target: object, key: PropertyKey): boolean;
   /** Web IDL named/indexed setters may accept keys not yet present on the object. */
   settable?(target: object, key: PropertyKey): boolean;
   call(target: Function, receiver: unknown, arguments_: unknown[]): unknown;
-  construct(target: Function, arguments_: unknown[]): object;
+  construct(target: Function, arguments_: unknown[], newTarget?: Function): object;
   ownKeys(target: object): (string | symbol)[];
   descriptor(target: object, key: PropertyKey): PropertyDescriptor | undefined;
   prototype(target: object): object | null;

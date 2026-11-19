@@ -255,6 +255,9 @@ try {
     await (await fetch('/transport.wasm')).arrayBuffer(),
   );
   const securitySource = `(async () => {
+    if (typeof toString !== 'function' || toString.call({}) !== '[object Object]' ||
+      !hasOwnProperty.call({sample: 1}, 'sample'))
+      throw new Error('Standard global Object methods are unavailable');
     const module = new WebAssembly.Module(transportBytes);
     const instance = new WebAssembly.Instance(module, {env: window});
     let importedFetch = false;
