@@ -304,7 +304,23 @@ try {
     ['firefox', firefox],
   ] as const) {
     if (process.env.WASM_APPS_BROWSER && name !== process.env.WASM_APPS_BROWSER) continue;
-    const browser = await launch(engine);
+    const softwareDisplay =
+      name === 'firefox' ? process.env.WASM_APPS_FIREFOX_DISPLAY : undefined;
+    const firefoxUserPrefs = {
+      'webgl.force-enabled': true,
+      'webgl.disabled': false,
+      'gfx.webrender.software': true,
+    };
+    const browser = await launch(
+      engine,
+      softwareDisplay
+        ? {
+            headless: false,
+            env: { ...process.env, DISPLAY: softwareDisplay, LIBGL_ALWAYS_SOFTWARE: '1' },
+            firefoxUserPrefs,
+          }
+        : {},
+    );
     try {
       for (const target of targets) {
         if (process.env.WASM_APPS_TARGET && target.id !== process.env.WASM_APPS_TARGET)
@@ -337,6 +353,9 @@ try {
             browser: name,
             version: browser.version(),
             application: target.id,
+            graphicsProfile: softwareDisplay
+              ? { display: softwareDisplay, softwareMesa: true, firefoxUserPrefs }
+              : { headless: true },
             mode,
             sourceURL: target.url,
             guardHash,
