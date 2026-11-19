@@ -241,10 +241,12 @@ async function photo(page: Page, confined: boolean) {
   };
 }
 async function squoosh(page: Page, confined: boolean) {
-  await page.locator('input[type=file]').waitFor({ state: 'attached', timeout: 90000 });
+  await page
+    .locator('file-drop input[type=file]')
+    .waitFor({ state: 'attached', timeout: 90000 });
   const png = await image(page, true);
   await page
-    .locator('input[type=file]')
+    .locator('file-drop input[type=file]')
     .setInputFiles({ name: 'synthetic-noise.png', mimeType: 'image/png', buffer: png });
   const link = page.locator('a[download="synthetic-noise.jpg"]');
   await link.waitFor({ timeout: 120000 });
@@ -439,6 +441,24 @@ try {
             failed = true;
             row.error = error instanceof Error ? error.stack : String(error);
           } finally {
+            row.inputs = await page
+              .locator('input[type=file]')
+              .evaluateAll((elements) =>
+                elements
+                  .filter(
+                    (element): element is HTMLInputElement =>
+                      element instanceof HTMLInputElement,
+                  )
+                  .map((element) => ({
+                    files: [...(element.files ?? [])].map((file) => ({
+                      name: file.name,
+                      size: file.size,
+                      type: file.type,
+                    })),
+                    value: element.value,
+                  })),
+              )
+              .catch(() => []);
             row.completed = new Date().toISOString();
             row.text = (
               await page
