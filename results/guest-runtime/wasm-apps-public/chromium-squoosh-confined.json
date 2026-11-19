@@ -8,15 +8,15 @@
   },
   "mode": "confined",
   "sourceURL": "https://privacy-frames.github.io/apps/squoosh/",
-  "guardHash": "779836652a4e0fc94188b66e3cdf2682c5880d2493163242622f2672164e479f",
-  "started": "2026-11-19T13:17:38.323Z",
+  "guardHash": "3d1d6f30a803548c813702944ad1706109d7b2d35d3346ae257d4c22c2e6f0bf",
+  "started": "2026-11-19T16:16:17.713Z",
   "errors": [],
   "responses": [],
   "failedResources": [],
   "browserDiagnostics": [],
   "resourceRefusals": [
-    "TypeError: Script resource is not installed: https://www.google-analytics.com/analytics.js\n    at GuestResources.source (https://apps.pf.damenh.com/guard.js:15594:15)\n    at GuestDOM.execute (https://apps.pf.damenh.com/guard.js:24577:65)\n    at GuestDOM.connected (https://apps.pf.damenh.com/guard.js:24513:37)\n    at BrowserEnvironment.invoke (https://apps.pf.damenh.com/guard.js:44576:76)\n    at HTMLHeadElement.appendChild (https://apps.pf.damenh.com/guard.js:44102:31)\n    at Object.call (https://apps.pf.damenh.com/guard.js:43715:51)\n    at _GuestEngine.dispatch (https://apps.pf.damenh.com/guard.js:46522:27)\n    at WeakLifetime.<anonymous> (https://apps.pf.damenh.com/guard.js:46146:23)\n    at QuickJSContext.<anonymous> (https://apps.pf.damenh.com/guard.js:3397:48)\n    at next (<anonymous>)",
-    "TypeError: Script resource is not installed: https://www.google-analytics.com/analytics.js\n    at GuestResources.source (https://apps.pf.damenh.com/guard.js:15594:15)\n    at GuestDOM.execute (https://apps.pf.damenh.com/guard.js:24577:65)\n    at GuestDOM.connected (https://apps.pf.damenh.com/guard.js:24513:37)\n    at BrowserEnvironment.invoke (https://apps.pf.damenh.com/guard.js:44576:76)\n    at HTMLHeadElement.appendChild (https://apps.pf.damenh.com/guard.js:44102:31)\n    at Object.call (https://apps.pf.damenh.com/guard.js:43715:51)\n    at _GuestEngine.dispatch (https://apps.pf.damenh.com/guard.js:46522:27)\n    at WeakLifetime.<anonymous> (https://apps.pf.damenh.com/guard.js:46146:23)\n    at QuickJSContext.<anonymous> (https://apps.pf.damenh.com/guard.js:3397:48)\n    at next (<anonymous>)"
+    "TypeError: Script resource is not installed: https://www.google-analytics.com/analytics.js\n    at GuestResources.source (https://apps.pf.damenh.com/guard.js:15647:15)\n    at GuestDOM.execute (https://apps.pf.damenh.com/guard.js:24630:65)\n    at GuestDOM.connected (https://apps.pf.damenh.com/guard.js:24566:37)\n    at BrowserEnvironment.invoke (https://apps.pf.damenh.com/guard.js:44629:76)\n    at HTMLHeadElement.appendChild (https://apps.pf.damenh.com/guard.js:44155:31)\n    at Object.call (https://apps.pf.damenh.com/guard.js:43768:51)\n    at _GuestEngine.dispatch (https://apps.pf.damenh.com/guard.js:46822:27)\n    at WeakLifetime.<anonymous> (https://apps.pf.damenh.com/guard.js:46413:23)\n    at QuickJSContext.<anonymous> (https://apps.pf.damenh.com/guard.js:3397:48)\n    at next (<anonymous>)",
+    "TypeError: Script resource is not installed: https://www.google-analytics.com/analytics.js\n    at GuestResources.source (https://apps.pf.damenh.com/guard.js:15647:15)\n    at GuestDOM.execute (https://apps.pf.damenh.com/guard.js:24630:65)\n    at GuestDOM.connected (https://apps.pf.damenh.com/guard.js:24566:37)\n    at BrowserEnvironment.invoke (https://apps.pf.damenh.com/guard.js:44629:76)\n    at HTMLHeadElement.appendChild (https://apps.pf.damenh.com/guard.js:44155:31)\n    at Object.call (https://apps.pf.damenh.com/guard.js:43768:51)\n    at _GuestEngine.dispatch (https://apps.pf.damenh.com/guard.js:46822:27)\n    at WeakLifetime.<anonymous> (https://apps.pf.damenh.com/guard.js:46413:23)\n    at QuickJSContext.<anonymous> (https://apps.pf.damenh.com/guard.js:3397:48)\n    at next (<anonymous>)"
   ],
   "resourceDiagnostics": [
     "Failed to load resource: net::ERR_INVALID_URL\n{\"url\":\"data:\",\"line\":0,\"column\":0,\"lineNumber\":0,\"columnNumber\":0}",
@@ -40,6 +40,34 @@
   },
   "task": {
     "inputBytes": 225924,
+    "large": {
+      "bytes": 862478,
+      "name": "photo.jpg",
+      "confirmations": 1,
+      "sha256": "29eac933475faf97308e3b60d1809c6b944ae49e1811fbc9a71810a21e14cf83",
+      "decoded": {
+        "width": 3872,
+        "height": 2592,
+        "red": 0,
+        "black": 11154
+      }
+    },
+    "comparison": {
+      "before": {
+        "x": 625,
+        "y": 0,
+        "width": 30,
+        "height": 800
+      },
+      "after": {
+        "x": 725,
+        "y": 0,
+        "width": 30,
+        "height": 800
+      },
+      "splitBefore": 640,
+      "changedPixels": 400
+    },
     "before": {
       "bytes": 31301,
       "name": "synthetic-noise.jpg",
@@ -112,6 +140,34 @@
   },
   "offlineTask": {
     "inputBytes": 225924,
+    "large": {
+      "bytes": 862478,
+      "name": "photo.jpg",
+      "confirmations": 1,
+      "sha256": "29eac933475faf97308e3b60d1809c6b944ae49e1811fbc9a71810a21e14cf83",
+      "decoded": {
+        "width": 3872,
+        "height": 2592,
+        "red": 0,
+        "black": 11154
+      }
+    },
+    "comparison": {
+      "before": {
+        "x": 625,
+        "y": 0,
+        "width": 30,
+        "height": 800
+      },
+      "after": {
+        "x": 725,
+        "y": 0,
+        "width": 30,
+        "height": 800
+      },
+      "splitBefore": 640,
+      "changedPixels": 400
+    },
     "before": {
       "bytes": 31301,
       "name": "synthetic-noise.jpg",
@@ -184,6 +240,6 @@
   },
   "passed": true,
   "inputs": [],
-  "completed": "2026-11-19T13:19:18.024Z",
+  "completed": "2026-11-19T16:22:42.932Z",
   "text": "100\n%\nCompress\nOriginal Image (synthetic-noise.png)\nAVIF\nBrowser JPEG\nBrowser PNG\nJPEG XL (beta)\nMozJPEG\nOxiPNG\nQOI\nWebP\nWebP v2 (unstable)\n226 kB\n0\n%\nEdit\nResize\nReduce palette\nCompress\nOriginal Image (synthetic-noise.png)\nAVIF\nBrowser JPEG\nBrowser PNG\nJPEG XL (beta)\nMozJPEG\nOxiPNG\nQOI\nWebP\nWebP v2 (unstable)\nLossless\nQuality:\n50\nAdvanced settings\nEffort:\n4\n35.8 kB\n↓\n84\n%"
 }
