@@ -121,6 +121,19 @@ const cases = [
     `,
   },
   {
+    name: 'Wasm shared-buffer slice copies into a separate shared block',
+    source: `
+      const memory = new WebAssembly.Memory({initial: 1, maximum: 3, shared: true});
+      const buffer = memory.buffer;
+      new Uint8Array(buffer)[0] = 71;
+      const result = SharedArrayBuffer.prototype.slice.call(buffer, 0, 4);
+      check(result instanceof SharedArrayBuffer, 'shared Wasm slice buffer brand');
+      check(result.byteLength === 4 && new Uint8Array(result)[0] === 71, 'shared Wasm slice copies bytes');
+      new Uint8Array(result)[0] = 19;
+      check(new Uint8Array(buffer)[0] === 71, 'shared Wasm slice owns a separate data block');
+    `,
+  },
+  {
     name: 'declared imports use inherited getters without traversing unused fields',
     source: `
       const trace = [];

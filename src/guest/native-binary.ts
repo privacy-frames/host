@@ -119,9 +119,9 @@ export class NativeBinary implements GuestHost {
       } catch {
         return;
       }
-      // Wasm exposes a non-extensible SAB wrapper. Native structured clone gives
-      // an extensible wrapper for the SAME data block, with no byte copy. Its
-      // private constructor getter lets native slice preserve guest species.
+      // Some browsers can clone a non-extensible Wasm SAB into an extensible
+      // wrapper for the same data block. When both wrappers are non-extensible,
+      // retain native default species handling; see native-binary-compatibility.md.
       const alias: unknown = clone(target);
       if (!alias || typeof alias !== 'object' || !extensible(alias)) return;
       target = alias;
@@ -264,7 +264,7 @@ export class NativeBinary implements GuestHost {
       const method = entry?.[kind];
       if (typeof method !== 'function')
         throw new TypeError('Binary operation is unavailable');
-      return this.retainResult(apply(method, receiver, arguments_));
+      return this.retainResult(apply(method, this.receiver(receiver), arguments_));
     },
   };
 

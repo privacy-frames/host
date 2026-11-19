@@ -1,0 +1,160 @@
+{
+  "revision": "da9ef26de32c5f993c0fba3107f3a1704652c63b",
+  "bundleHash": "39718f0ebb02bedbe615f42f57a1bce72133de22e5c110b483a4d5c3dfd937a6",
+  "fixtures": {
+    "/quickjs.wasm": "105c3bed22d457e43e3d1c3c1c6959fda62a8fe06f0fc8a985303c3a2be72232",
+    "/memory.wasm": "07a57cad5b1bb617def75d84982f16ccb9093ac385338ee658be377debea19c3",
+    "/transport.wasm": "5f469e5a729e2a1c4ff0d1d1a0363407e68539ce0cdb4480d97505d38efc7b93",
+    "/shared.wasm": "ade966b90c847d70a61f5e0b0adb9271075fc2609c4fb127296dfa0e6704fee7"
+  },
+  "observations": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "errors": [],
+      "result": {
+        "isolated": true,
+        "native": [
+          {
+            "name": "ordinary memory, reentrant import and alias writes",
+            "passed": true
+          },
+          {
+            "name": "local and native binary constructors, indexed descriptors and species",
+            "passed": true
+          },
+          {
+            "name": "shared Wasm memory, atomics and structured clone through dedicated worker",
+            "passed": true
+          },
+          {
+            "name": "Wasm shared-buffer slice copies into a separate shared block",
+            "passed": true
+          },
+          {
+            "name": "declared imports use inherited getters without traversing unused fields",
+            "passed": true
+          },
+          {
+            "name": "async compile and instantiate retain import callbacks",
+            "passed": true
+          }
+        ],
+        "guest": [
+          {
+            "name": "ordinary memory, reentrant import and alias writes",
+            "passed": true
+          },
+          {
+            "name": "local and native binary constructors, indexed descriptors and species",
+            "passed": true
+          },
+          {
+            "name": "shared Wasm memory, atomics and structured clone through dedicated worker",
+            "passed": true
+          },
+          {
+            "name": "Wasm shared-buffer slice copies into a separate shared block",
+            "passed": true
+          },
+          {
+            "name": "declared imports use inherited getters without traversing unused fields",
+            "passed": true
+          },
+          {
+            "name": "async compile and instantiate retain import callbacks",
+            "passed": true
+          }
+        ],
+        "policy": {
+          "control": [
+            true,
+            true
+          ],
+          "guest": [
+            false,
+            false
+          ]
+        }
+      },
+      "requests": [
+        "/import-probe",
+        "/constructor-probe"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "errors": [],
+      "result": {
+        "isolated": true,
+        "native": [
+          {
+            "name": "ordinary memory, reentrant import and alias writes",
+            "passed": true
+          },
+          {
+            "name": "local and native binary constructors, indexed descriptors and species",
+            "passed": true
+          },
+          {
+            "name": "shared Wasm memory, atomics and structured clone through dedicated worker",
+            "passed": true
+          },
+          {
+            "name": "Wasm shared-buffer slice copies into a separate shared block",
+            "passed": true
+          },
+          {
+            "name": "declared imports use inherited getters without traversing unused fields",
+            "passed": true
+          },
+          {
+            "name": "async compile and instantiate retain import callbacks",
+            "passed": true
+          }
+        ],
+        "guest": [
+          {
+            "name": "ordinary memory, reentrant import and alias writes",
+            "passed": true
+          },
+          {
+            "name": "local and native binary constructors, indexed descriptors and species",
+            "passed": true
+          },
+          {
+            "name": "shared Wasm memory, atomics and structured clone through dedicated worker",
+            "passed": true
+          },
+          {
+            "name": "Wasm shared-buffer slice copies into a separate shared block",
+            "passed": true
+          },
+          {
+            "name": "declared imports use inherited getters without traversing unused fields",
+            "passed": true
+          },
+          {
+            "name": "async compile and instantiate retain import callbacks",
+            "passed": true
+          }
+        ],
+        "policy": {
+          "control": [
+            true,
+            true
+          ],
+          "guest": [
+            false,
+            false
+          ]
+        }
+      },
+      "requests": [
+        "/import-probe",
+        "/constructor-probe"
+      ]
+    }
+  ]
+}
