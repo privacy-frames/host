@@ -5,7 +5,7 @@
     "src/guest/engine.ts": "c80de3696a72434396e9d882e724a218750a1962cced241399602e0212bdbb3d",
     "src/guest/guest-runtime.ts": "058930f5f581f18210f636c210c0dbba27e51a145826c2adcb95d3295436bc1d",
     "src/guest/native-policy.ts": "42cd5769cf3f445a49251e2945a7c391334e081d1931518d9a6a150c53cce9f4",
-    "src/guest/url-policy.ts": "ef2fffb14c83884ef1e44cc7bbdfac94c4db3961151119bd7af52f976ccafb07",
+    "src/guest/url-policy.ts": "e0e88fbc7f643d7c3042858cb670e9a3012a1c7057c6c49067fbbe56cee769b5",
     "src/guest/resources.ts": "fbb363fbe07bb3ea59ac7789afbe19b51099972282012daa69624789e3c90778",
     "src/guest/session.ts": "7d6566044cec86e7ee1bd8629cc05bbcf89c62915d8dc4e415a5eb5d5b413f55",
     "test/guest-url-bridge.browser.ts": "600cb1fd7a6177239607d52642e981e6acb3329aec8c41080b2ebc7c8bc5daea",
@@ -186,13 +186,14 @@
     "src/guest/dom.ts": "75a654d384521c8c7153bf55bfe71f19ed1eab3b27d1c60fa37241aa300e764a",
     "src/guest/engine.ts": "c80de3696a72434396e9d882e724a218750a1962cced241399602e0212bdbb3d",
     "src/guest/generated-runtime-interfaces.ts": "55fa35f2d27fe9b123c74f77a229a2a64b86ace4f2883e5fb70715d851117182",
-    "src/guest/guest-binary.ts": "57aa5c5a344b1ffe43e2a9c7f71842d02e3c1e5b8e6db7173ef04341bd66f8b3",
+    "src/guest/guest-binary.ts": "da8dbde72247dd7b85b52bac138ddafa14f778729ceec34cf11eca0b924dea32",
     "src/guest/guest-runtime.ts": "058930f5f581f18210f636c210c0dbba27e51a145826c2adcb95d3295436bc1d",
     "src/guest/identity.ts": "e067e5dea7a2b036ced0905abd77e6a40f187ec2a3231466b1825a2e84b8c748",
-    "src/guest/indexed-access.ts": "097b448a37394751a53adaed9640eead45575c7961fc750e9970e9508c7fcf79",
+    "src/guest/indexed-access.ts": "5ba66e4bd8e29240a4d3def4cc97eaef5007103b26f8121f5261d492bbc86e5d",
     "src/guest/legacy-regexp.ts": "bbfcdccb8fab7c9a1462d91c8237f6cbe8c90be1f331c2f5f6b3629b569231bb",
     "src/guest/location.ts": "c2a3a431be4e90823664b4bc444de40d292df821fabfff2c627c5fb750fd382a",
     "src/guest/native-binary.ts": "2d0c098fdd641cf9edc5f7f958acef0fa9995766bdcbe177f925cc21ad49afd4",
+    "src/guest/native-host.ts": "95bc1d790700a317893f930e322e10f29efb22f4ef75d34cec8e8e9af8431880",
     "src/guest/native-policy.ts": "42cd5769cf3f445a49251e2945a7c391334e081d1931518d9a6a150c53cce9f4",
     "src/guest/native-wasm.ts": "811e68270d799be50543109dec3d172a92ee3c07b2b6ac6d2e3f09a907e6369d",
     "src/guest/parser.ts": "cf041b9ade4752b4936d5b384b65b03e154d9c12d255f543fb628c2f21e9671e",
@@ -201,7 +202,7 @@
     "src/guest/runtime-interfaces.ts": "fd51bfa7d25ec78ecdd0d59adb198fe41c5119954237ee396ccee5bb6bb05103",
     "src/guest/session.ts": "7d6566044cec86e7ee1bd8629cc05bbcf89c62915d8dc4e415a5eb5d5b413f55",
     "src/guest/storage.ts": "de4d5f84f07c36f7e18a20ad30261279c49c49c31b5691da7d83e0259fe8d4d3",
-    "src/guest/url-policy.ts": "ef2fffb14c83884ef1e44cc7bbdfac94c4db3961151119bd7af52f976ccafb07",
+    "src/guest/url-policy.ts": "e0e88fbc7f643d7c3042858cb670e9a3012a1c7057c6c49067fbbe56cee769b5",
     "src/guest/wasm-accessors.ts": "7e03c8e70638d2d861392ec0b2ed40867c638bfcbb26774fbf1e240b2b18589b",
     "src/guest/web-services.ts": "429fa17d217a6f7a155b6e80e7ff8b062eb5077b78dd19bc635da9417147266d",
     "test/guest-url-bridge.browser.ts": "600cb1fd7a6177239607d52642e981e6acb3329aec8c41080b2ebc7c8bc5daea",
@@ -213,8 +214,8 @@
   },
   "engineSHA256": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
   "bundleHashes": {
-    "production": "c5b1d1cb34dafe059f7ac4126005a2a54d2a05617777caa3f3f0c26d9477f32b",
-    "urlGetRouteRemoved": "717da2e99353dc617cff64e8cbf431aea889ae4bde69e36b6bbf90b3232ca957"
+    "production": "9b5b85e6107198fece9b030d0b6e7e2fcc55c8ef23dd514fccc83f6fdffdd402",
+    "urlGetRouteRemoved": "982e995322ea3b8a8045d99c10aea9764f29150c0c70592e43b4933a08f4e629"
   },
   "fault": "Only the actual BrowserEnvironment private get URL-domain routing line is omitted from a temporary esbuild bundle. Production sources are unchanged.",
   "receipts": [
@@ -289,5 +290,5 @@
       "rejected": true
     }
   ],
-  "completedAt": "2026-11-20T10:17:11.488Z"
+  "completedAt": "2026-11-20T10:21:35.121Z"
 }
