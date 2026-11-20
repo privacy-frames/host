@@ -1,5 +1,9 @@
+import type { IdentityState } from './identity.ts';
+
 /** This function is compiled once as trusted code, then evaluated inside QuickJS. */
-export function installGuestRuntime() {
+export function installGuestRuntime(
+  allocateIdentity: (state: IdentityState) => number | undefined,
+) {
   const guestGlobal = globalThis;
   const dispatch: (...arguments_: unknown[]) => unknown = Reflect.get(
     globalThis,
@@ -7,10 +11,14 @@ export function installGuestRuntime() {
   );
   Reflect.deleteProperty(globalThis, '__privacyHostDispatch');
 
+  const createObject = Object.create;
+  const RangeErrorConstructor = RangeError;
   const objectPrototype = Object.prototype;
   const functionPrototype = Function.prototype;
   const reflectGet = Reflect.get;
   const reflectSet = Reflect.set;
+  const reflectDefine = Reflect.defineProperty;
+  const reflectDelete = Reflect.deleteProperty;
   const reflectApply = Reflect.apply;
   const reflectConstruct = Reflect.construct;
   const getDescriptor = Object.getOwnPropertyDescriptor;
@@ -21,6 +29,8 @@ export function installGuestRuntime() {
   const arrayIsArray = Array.isArray;
   const bufferIsView = ArrayBuffer.isView;
   const speciesSymbol = Symbol.species;
+  const hasInstanceSymbol = Symbol.hasInstance;
+  const ordinaryHasInstance = Function.prototype[Symbol.hasInstance];
   const StringValue = String;
   const NumberValue = Number;
   const DataViewConstructor = DataView;
@@ -56,6 +66,8 @@ export function installGuestRuntime() {
   const mapDelete = Map.prototype.delete;
   const mapForEach = Map.prototype.forEach;
   const setForEach = Set.prototype.forEach;
+  const setHas = Set.prototype.has;
+  const regexpSource = getDescriptor(RegExp.prototype, 'source')!.get!;
   const setAdd = Set.prototype.add;
   const weakGet = WeakMap.prototype.get;
   const weakSet = WeakMap.prototype.set;
@@ -68,7 +80,6 @@ export function installGuestRuntime() {
   const SetConstructor = Set;
   const RegExpConstructor = RegExp;
   const DateConstructor = Date;
-  const ObjectConstructor = Object;
   const SymbolConstructor = Symbol;
   const getNames = Object.getOwnPropertyNames;
   const symbolFor = Symbol.keyFor;
@@ -138,14 +149,20 @@ export function installGuestRuntime() {
     const constructor = reflectGet(guestGlobal, name);
     if (typeof constructor === 'function') indexConstructors.set(name, constructor);
   }
-  let indexEpoch = 0;
+  let indexEpoch: object = createObject(null);
   let indexCacheEnabled = true;
   const guestIds = new InternalWeakMap<object, number>();
   const proxies = new InternalMap<number, object>();
   const records = new InternalWeakMap<object, ProxyRecord>();
   const nativeSymbols = new InternalMap<symbol, number>();
   const guestSymbols = new InternalMap<symbol, number>();
-  let nextGuest = 1;
+  const guestIdentity: IdentityState = { next: 1 };
+  const nextGuestIdentity = (): number => {
+    const identity = allocateIdentity(guestIdentity);
+    if (identity === undefined)
+      throw new RangeErrorConstructor('Guest identities exhausted');
+    return identity;
+  };
 
   interface ProxyRecord {
     id: number;
@@ -160,7 +177,7 @@ export function installGuestRuntime() {
     binary: string;
     indexed: boolean;
     index?: {
-      epoch: number;
+      epoch: object;
       view: object;
       length: number;
       byteLength: number;
@@ -172,7 +189,7 @@ export function installGuestRuntime() {
   }
 
   const key = (value: PropertyKey): string => {
-    if (typeof value !== 'symbol') return 'string:' + String(value);
+    if (typeof value !== 'symbol') return 'string:' + StringValue(value);
     const native = nativeSymbols.get(value);
     if (native !== undefined) return 'native:' + native;
     for (const name of getNames(SymbolConstructor)) {
@@ -182,7 +199,7 @@ export function installGuestRuntime() {
     if (registry !== undefined) return 'registry:' + registry;
     let id = guestSymbols.get(value);
     if (id === undefined) {
-      id = nextGuest++;
+      id = nextGuestIdentity();
       guestSymbols.set(value, id);
     }
     return 'guest-symbol:' + id;
@@ -310,7 +327,7 @@ export function installGuestRuntime() {
       ? constructable
         ? function () {}
         : (..._arguments: unknown[]) => undefined
-      : ObjectConstructor.create(null);
+      : createObject(null);
     if (callable) defineProperty(target, 'name', { value: name, configurable: true });
 
     const record: ProxyRecord = {
@@ -325,8 +342,9 @@ export function installGuestRuntime() {
       parentOverridden: false,
       binary,
       indexed,
+      index: undefined,
     };
-    const proxy = new ProxyConstructor(target, {
+    const handler: ProxyHandler<object> = {
       get(_target, property, receiver) {
         const index = validIndex(property);
         if (index !== undefined && record.indexed && indexCacheEnabled) {
@@ -362,10 +380,13 @@ export function installGuestRuntime() {
         if (property === '__proto__') return parent(record);
         if (
           callable &&
-          ['call', 'apply', 'bind', 'constructor'].includes(String(property))
+          (property === 'call' ||
+            property === 'apply' ||
+            property === 'bind' ||
+            property === 'constructor')
         )
           return reflectGet(functionPrototype, property, receiver);
-        if (property === Symbol.hasInstance && callable)
+        if (property === hasInstanceSymbol && callable)
           return reflectGet(functionPrototype, property, receiver);
         const local = localDescriptor(record, property);
         if (local === null) return undefined;
@@ -439,18 +460,18 @@ export function installGuestRuntime() {
         )
           return !!native('define', id, property, descriptor);
         record.local.add(property);
-        return Reflect.defineProperty(target, property, descriptor);
+        return reflectDefine(target, property, descriptor);
       },
       deleteProperty(_target, property) {
         if (record.local.has(property)) {
-          const deleted = Reflect.deleteProperty(target, property);
+          const deleted = reflectDelete(target, property);
           if (deleted) record.local.delete(property);
           return deleted;
         }
         if (record.prototypeObject || callable) {
           const descriptor = getDescriptor(target, property);
           if (descriptor && !descriptor.configurable) return false;
-          Reflect.deleteProperty(target, property);
+          reflectDelete(target, property);
           record.local.add(property);
           return true;
         }
@@ -517,7 +538,9 @@ export function installGuestRuntime() {
         }
         return value;
       },
-    });
+    };
+    setPrototype(handler, null);
+    const proxy = new ProxyConstructor(target, handler);
     record.proxy = proxy;
     records.set(proxy, record);
     hostIds.set(proxy, id);
@@ -533,7 +556,7 @@ export function installGuestRuntime() {
   const guestId = (value: object): number => {
     let id = guestIds.get(value);
     if (id === undefined) {
-      id = nextGuest++;
+      id = nextGuestIdentity();
       guestIds.set(value, id);
     }
     return id;
@@ -550,10 +573,19 @@ export function installGuestRuntime() {
       reflectApply(bufferLength, value, []);
       return 'buffer';
     } catch {}
-    if (value instanceof PromiseConstructor) return 'promise';
-    if (value instanceof MapConstructor) return 'map';
-    if (value instanceof SetConstructor) return 'set';
-    if (value instanceof RegExpConstructor) return 'regexp';
+    if (reflectApply(ordinaryHasInstance, PromiseConstructor, [value])) return 'promise';
+    try {
+      reflectApply(mapHas, value, [undefined]);
+      return 'map';
+    } catch {}
+    try {
+      reflectApply(setHas, value, [undefined]);
+      return 'set';
+    } catch {}
+    try {
+      reflectApply(regexpSource, value, []);
+      return 'regexp';
+    } catch {}
     try {
       reflectApply(dateGetTime, value, []);
       return 'date';
@@ -586,7 +618,7 @@ export function installGuestRuntime() {
       indexCacheEnabled = enabled;
     },
     invalidateIndexShadows: () => {
-      indexEpoch++;
+      indexEpoch = createObject(null);
     },
     captureIndexGetters(aliases: { Uint8Array: { prototype: object } }) {
       const prototype = getPrototype(aliases.Uint8Array.prototype)!;
@@ -613,7 +645,7 @@ export function installGuestRuntime() {
           (typeof imports !== 'object' && typeof imports !== 'function'))
       )
         throw new TypeError('Wasm imports must be an object');
-      const captured = ObjectConstructor.create(null);
+      const captured = createObject(null);
       let next = 0;
       for (let index = 0; index < descriptors.length; index++) {
         const module = descriptors[index].module;
@@ -624,7 +656,7 @@ export function installGuestRuntime() {
           get() {
             const item = descriptors[next++];
             const namespace = reflectGet(imports, module);
-            const protectedNamespace = ObjectConstructor.create(null);
+            const protectedNamespace = createObject(null);
             defineProperty(protectedNamespace, item.name, {
               get() {
                 const value = reflectGet(namespace, item.name);
@@ -728,7 +760,7 @@ export function installGuestRuntime() {
       };
       let fallback = 'Guest execution failed';
       try {
-        fallback = String(value);
+        fallback = StringValue(value);
       } catch {}
       return {
         name: read('name') || 'Error',

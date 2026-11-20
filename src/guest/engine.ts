@@ -11,6 +11,7 @@ import { captureQuickJSVariant } from './quickjs.ts';
 import { IndexedAccess } from './indexed-access.ts';
 import type { IndexedEmscriptenModule } from '../../vendor/quickjs/generated/engine.mjs';
 import { installGuestRuntime } from './guest-runtime.ts';
+import { allocateIdentity, type IdentityState } from './identity.ts';
 import { installGuestRegExpLegacy } from './legacy-regexp.ts';
 import resolveURI from '@jridgewell/resolve-uri';
 import type { GuestEngineOptions, GuestEvaluationMode, GuestHost } from './protocol.ts';
@@ -28,7 +29,7 @@ interface IndexShadow {
   native: ArrayBuffer;
   bytes: number;
   backing: QuickJSArrayBufferBacking;
-  epoch: number;
+  epoch: object;
 }
 
 // This is a performance cache, not an application allocation limit. Stores that
@@ -172,14 +173,14 @@ export class GuestEngine {
   private readonly buffers = new Map<ArrayBuffer, BufferMirror>();
   private readonly wasmBuffers = new WeakSet<ArrayBuffer>();
   private readonly indexShadows = new Map<ArrayBuffer, IndexShadow>();
-  private indexEpoch = 0;
+  private indexEpoch: object = Object.create(null);
   private wasmDepth = 0;
   private wasmDeferralAllowed = false;
   private readonly promises = new Set<QuickJSDeferredPromise>();
   private readonly pendingPromises = new Set<(error: Error) => void>();
   private readonly disposers = new Set<() => void>();
-  private nextNative = 1;
-  private nextSymbol = 1;
+  private readonly nativeIdentity: IdentityState = { next: 1 };
+  private readonly symbolIdentity: IdentityState = { next: 1 };
   private depth = 0;
   private pumping = false;
   private scheduled = false;
@@ -253,7 +254,10 @@ export class GuestEngine {
     this.context.setProp(this.context.global, '__privacyHostDispatch', bridge);
     bridge.dispose();
     const helpers = this.unwrap(
-      this.context.evalCode(`(${installGuestRuntime.toString()})()`, 'privacy:bindings'),
+      this.context.evalCode(
+        `(${installGuestRuntime.toString()})(${allocateIdentity.toString()})`,
+        'privacy:bindings',
+      ),
     );
     try {
       const names = this.context.getOwnPropertyNames(helpers).unwrap();
@@ -789,7 +793,8 @@ export class GuestEngine {
   private registerNative(value: object): number {
     let id = this.nativeIds.get(value);
     if (!id) {
-      id = this.nextNative++;
+      id = allocateIdentity(this.nativeIdentity);
+      if (id === undefined) throw new RangeError('Native identities exhausted');
       this.nativeIds.set(value, id);
       this.nativeObjects.set(id, value);
     }
@@ -1066,7 +1071,8 @@ export class GuestEngine {
         key.dispose();
       }
     }
-    const id = this.nextSymbol++;
+    const id = allocateIdentity(this.symbolIdentity);
+    if (id === undefined) throw new RangeError('Symbol identities exhausted');
     this.symbolIds.set(value, id);
     this.symbols.set(id, value);
     const description = this.encode(value.description);
@@ -1667,7 +1673,7 @@ export class GuestEngine {
     if (!this.helpers.size || this.closed) return;
     this.indexed.invalidate();
     this.helper('invalidateIndexShadows', []).dispose();
-    this.indexEpoch++;
+    this.indexEpoch = Object.create(null);
   }
 
   private setIndexCacheEnabled(enabled: boolean): void {
