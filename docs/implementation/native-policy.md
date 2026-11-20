@@ -135,3 +135,44 @@ The native catalogue is imported only by the native-member resolver. Importing t
 existing global provisioning module does not include this additional table in its
 bundle. The catalogue describes which declarations exist; the separate reviewed
 operation registry still decides which operations may run.
+
+## Standalone URL family
+
+`createGuestURLPolicy` in `src/guest/url-policy.ts` supplies a `GuestHost` domain for
+one provided realm's native URL and URLSearchParams constructors. It classifies
+standalone URL data operations separately from browser navigation. Parsing or
+changing a URL can represent any scheme without granting authority to load it.
+The consuming DOM, resource or context adapter retains that decision.
+
+The family explicitly registers URL attributes, stringification, JSON serialization,
+parameter mutation, native iteration and forEach callbacks. Available canParse and
+parse static methods use captured native functions. Unknown members, changed
+accessors and unreviewed shadows are refused before invocation. A native URL brand
+with an unregistered prototype is claimed by the domain and refused, so it cannot
+silently fall through to another host's generic forwarding path.
+
+Object-URL creation and revocation call the resource owner's supplied adapters.
+Creation passes the original value unchanged; that adapter validates the accepted
+Blob and records its local resource authority. Revocation performs one DOMString
+conversion and passes the resulting string to its adapter. These operations do not
+call the unrestricted native object-URL functions merely because the functions
+appear in metadata.
+
+URLSearchParams iterators retain native state, methods and result records. The
+shared native Iterator prototype is projected through a private boundary object;
+the URL domain does not claim it for iterators belonging to unrelated families.
+Object and Function intrinsic prototypes are returned only at the boundary where
+GuestEngine maps them to the corresponding guest intrinsics. That mapping is an
+integration premise, not authority to expose native Function to an application.
+
+Native call and accessor tokens become private host wrappers. Wrapper identity is
+stable, including the entries/Symbol.iterator alias, and the domain accepts only
+registered wrappers and constructors. Callback invocation still depends on
+GuestEngine's conversion of the supplied guest callback into its owning engine.
+The URL family does not classify unrelated browser interfaces.
+
+Run its independent native controls and denial checks with:
+
+```sh
+node --import tsx --test test/guest-url-policy.test.ts
+```
