@@ -71,7 +71,7 @@ function erased(code: string): string {
     ),
     'Type erasure emitted runtime helpers or unknown statements',
   );
-  const bindings = new Set([procedure, 'undefined']);
+  const bindings = new Set([procedure]);
   for (const parameter of fn.parameters) {
     assert(ts.isIdentifier(parameter.name));
     bindings.add(parameter.name.text);
@@ -100,19 +100,15 @@ function erased(code: string): string {
 
 function fixture(kind: Case, mutate?: (code: string) => string): string {
   const precondition =
-    'UndefinedBinding(#globalProto) * (state == #state) * Counter(#state, #identity, #proto) * (is-int #identity) * ' +
+    '(state == #state) * Counter(#state, #identity, #proto) * (is-int #identity) * ' +
     (kind === 'available'
       ? '(1 <=# #identity) * (#identity <=# 9007199254740991)'
       : '(#identity == 9007199254740992)');
   const postcondition =
     kind === 'available'
-      ? 'UndefinedBinding(#globalProto) * Counter(#state, #identity + 1, #proto) * (ret == #identity)'
-      : 'UndefinedBinding(#globalProto) * Counter(#state, #identity, #proto) * (ret == undefined)';
+      ? 'Counter(#state, #identity + 1, #proto) * (ret == #identity)'
+      : 'Counter(#state, #identity, #proto) * (ret == undefined)';
   return `'use strict';
-/**
-@pred UndefinedBinding(proto):
-  JSObjWithProto($lg, proto) * DataPropGen($lg, "undefined", undefined, false, false, false);
-*/
 /**
 @pred Counter(o:Obj; identity:Num, proto):
   JSObjWithProto(o, proto) * DataProp(o, "next", identity);
@@ -143,7 +139,7 @@ const mutations = [
   {
     name: 'omitted-guard',
     kind: 'exhausted',
-    from: 'if (identity > 9007199254740991) return undefined;',
+    from: 'if (identity > 9007199254740991) return;',
     to: '',
   },
   {
@@ -197,7 +193,7 @@ await writeFile(
   JSON.stringify(
     {
       scope:
-        'Deductive checking of the extracted production allocateIdentity function under owned-counter and standard undefined-binding contracts. Private-state ownership, engine callers and browser effects require separate verification.',
+        'Deductive checking of the extracted production allocateIdentity function under owned-counter contracts. Private-state ownership, engine callers and browser effects require separate verification.',
       mode: 'verify',
       source: sourcePath,
       sourceSHA256: hash(source),
@@ -212,8 +208,6 @@ await writeFile(
           'Owned writable next field, arbitrary record prototype, integral counter in 1..9007199254740991; returns old counter, advances next exactly once, preserves prototype and framed heap.',
         exhausted:
           'Owned writable next field equal 9007199254740992; returns undefined, leaves counter/prototype and framed heap unchanged.',
-        globalUndefined:
-          'Standard immutable, non-enumerable, non-configurable global undefined data property, preserved by both paths.',
       },
       callerCorrespondence:
         'pending: establish initialization, private ownership, integral range preservation and use by every identity allocator',
@@ -238,7 +232,7 @@ await writeFile(
         changes:
           'Remove export and type annotations; TypeScript emits ES5 variable declarations. No allocation-body substitution in the production cases.',
         closedBody:
-          'Reject top-level runtime dependencies, compiler helpers and free runtime identifiers except standard undefined.',
+          'Reject top-level runtime dependencies, compiler helpers and free runtime identifiers.',
         trusted: [
           'TypeScript parser/type erasure',
           'source extractor',

@@ -9,7 +9,7 @@ export interface IdentityState {
  * The function has no free runtime dependencies so the same body runs in QuickJS. */
 export function allocateIdentity(state: IdentityState): number | undefined {
   const identity = state.next;
-  if (identity > 9007199254740991) return undefined;
+  if (identity > 9007199254740991) return;
   state.next = identity + 1;
   return identity;
 }
