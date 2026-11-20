@@ -6,9 +6,8 @@ import {
   isCurrentContextPublication,
   type ContextPublicationState,
 } from './lifecycle-kernel.ts';
-import type { GuestHost } from '../protocol.ts';
+import { createWorkletHost } from './worklet-policy.ts';
 import { installWorkletGuestRuntime } from './worklet-runtime.ts';
-import type { GuestAudioParamDescriptor } from './types.ts';
 
 interface NativeProcessor {
   readonly port: MessagePort;
@@ -65,38 +64,10 @@ function helpersFrom(value: unknown): GuestProcessorHelpers {
   return { construct: value.construct, process: value.process, release: value.release };
 }
 
-function createHost(state: WorkletState): GuestHost {
-  return {
-    get: (target, key) => Reflect.get(target, key),
-    set: (target, key, value) => Reflect.set(target, key, value),
-    ownKeys: (target) => Reflect.ownKeys(target),
-    descriptor: (target, key) => Reflect.getOwnPropertyDescriptor(target, key),
-    prototype: (target) => Reflect.getPrototypeOf(target),
-    construct: (target, args) => Reflect.construct(target, args),
-    call(target, receiver, args) {
-      const value = Reflect.apply(target, receiver, args);
-      if (
-        typeof MessagePort !== 'undefined' &&
-        receiver instanceof MessagePort &&
-        target === MessagePort.prototype.postMessage
-      ) {
-        const options = args[1];
-        const transfer = Array.isArray(options)
-          ? options
-          : options && typeof options === 'object' && 'transfer' in options
-            ? options.transfer
-            : [];
-        if (Array.isArray(transfer)) state.engine?.detachTransferred(transfer);
-      }
-      return value;
-    },
-  };
-}
-
 function registerGuestProcessor(
   state: WorkletState,
-  name: string,
-  parameters: GuestAudioParamDescriptor[],
+  name: unknown,
+  parameters: unknown,
 ): void {
   const logicalName = guestProcessorName(name);
   const token = state.token;
@@ -127,7 +98,7 @@ function registerGuestProcessor(
       }
     }
 
-    static get parameterDescriptors(): GuestAudioParamDescriptor[] {
+    static get parameterDescriptors(): unknown {
       return parameters;
     }
 
@@ -245,10 +216,24 @@ registerProcessor(
             });
         });
       };
+      const policy = createWorkletHost({
+        global: globalThis,
+        console,
+        controlPort: this.port,
+        isGuestValue: (value) => state.engine?.ownsGuestValue(value) ?? false,
+        registerProcessor: (name, parameters) =>
+          registerGuestProcessor(state, name, parameters),
+        takePort: () => {
+          if (!isCurrentContextPublication(state, token) || !state.constructingPort)
+            throw new TypeError('Audio processor construction is not active');
+          return state.constructingPort;
+        },
+        detachTransferred: (values) => state.engine?.detachTransferred(values),
+      });
       void GuestEngine.create({
         wasmModule: module,
         modules: state.modules,
-        host: createHost(state),
+        host: policy.host,
       })
         .then((created) => {
           if (!isCurrentContextPublication(state, token)) {
@@ -256,17 +241,9 @@ registerProcessor(
             return;
           }
           try {
-            created.set(
-              '__privacyRegisterProcessor',
-              (name: string, parameters: GuestAudioParamDescriptor[]) =>
-                registerGuestProcessor(state, name, parameters),
-            );
-            created.set('__privacyProcessorPort', () => {
-              if (!isCurrentContextPublication(state, token) || !state.constructingPort)
-                throw new TypeError('Audio processor construction is not active');
-              return state.constructingPort;
-            });
-            created.set('console', console);
+            created.set('__privacyRegisterProcessor', policy.registerProcessor);
+            created.set('__privacyProcessorPort', policy.takePort);
+            created.set('console', policy.console);
             for (const name of ['currentFrame', 'currentTime', 'sampleRate'])
               created.bind(name, globalThis);
             const helpers = helpersFrom(
