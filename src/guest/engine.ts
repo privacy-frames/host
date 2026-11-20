@@ -186,6 +186,7 @@ export class GuestEngine {
   private scheduled = false;
   private syncing = false;
   private closed = false;
+  private disposed = false;
 
   private constructor(
     context: QuickJSContext,
@@ -504,18 +505,19 @@ export class GuestEngine {
   }
 
   set(name: string, value: unknown): void {
-    this.assertOpen();
-    const handle = this.encode(value);
-    try {
-      const key = this.encodeString(name);
+    this.enter(() => {
+      const handle = this.encode(value);
       try {
-        this.helper('defineGlobal', [key, handle]).dispose();
+        const key = this.encodeString(name);
+        try {
+          this.helper('defineGlobal', [key, handle]).dispose();
+        } finally {
+          key.dispose();
+        }
       } finally {
-        key.dispose();
+        handle.dispose();
       }
-    } finally {
-      handle.dispose();
-    }
+    });
   }
 
   /** Install a dynamic native property without making the whole native global visible. */
@@ -523,8 +525,12 @@ export class GuestEngine {
     this.context.defineProp(this.context.global, name, {
       configurable: true,
       enumerable: true,
-      get: () => this.encode(this.host.get(target, key)),
+      get: () => {
+        this.assertOpen();
+        return this.encode(this.host.get(target, key));
+      },
       set: (value) => {
+        this.assertOpen();
         this.syncBuffers('into-native');
         try {
           if (!this.host.set(target, key, this.decode(value)))
@@ -603,16 +609,24 @@ export class GuestEngine {
       // See patches/quickjs-emscripten-core+0.32.0.patch and upstream issue #240.
       const jobs = this.runtime.executePendingJobs(1000);
       if (jobs.error) {
-        const error = this.guestError(jobs.error);
-        jobs.error.dispose();
+        let error: Error;
+        try {
+          error = this.guestError(jobs.error);
+        } finally {
+          jobs.error.dispose();
+        }
         this.report(error);
       }
       if (this.runtime.hasPendingJob()) this.scheduleJobs();
     } finally {
-      this.flushIndexShadows();
-      this.invalidateIndexShadows();
-      this.syncBuffers('into-native');
-      this.pumping = false;
+      try {
+        this.flushIndexShadows();
+        this.invalidateIndexShadows();
+        this.syncBuffers('into-native');
+      } finally {
+        this.pumping = false;
+        this.finishDisposalIfIdle();
+      }
     }
   }
 
@@ -641,11 +655,13 @@ export class GuestEngine {
       return action();
     } finally {
       this.depth--;
-      this.flushIndexShadows();
-      this.invalidateIndexShadows();
-      if (!skipOrdinary || !this.canDeferOrdinary()) this.syncBuffers('into-native');
-      if (!this.depth) {
-        this.scheduleJobs();
+      try {
+        this.flushIndexShadows();
+        this.invalidateIndexShadows();
+        if (!skipOrdinary || !this.canDeferOrdinary()) this.syncBuffers('into-native');
+        if (!this.depth) this.scheduleJobs();
+      } finally {
+        this.finishDisposalIfIdle();
       }
     }
   }
@@ -1722,8 +1738,12 @@ export class GuestEngine {
       } finally {
         this.wasmDepth--;
         this.wasmDeferralAllowed = previousAllowance;
-        this.invalidateIndexShadows();
-        if (outer) this.setIndexCacheEnabled(true);
+        try {
+          this.invalidateIndexShadows();
+          if (outer && !this.closed) this.setIndexCacheEnabled(true);
+        } finally {
+          this.finishDisposalIfIdle();
+        }
       }
     }
   }
@@ -1864,6 +1884,15 @@ export class GuestEngine {
   dispose(): void {
     if (this.closed) return;
     this.closed = true;
+    this.finishDisposalIfIdle();
+  }
+
+  /** Logical close rejects new entries immediately. Physical release waits until
+   * every engine-owned guest/job/Wasm stack has returned to its caller. */
+  private finishDisposalIfIdle(): void {
+    if (!this.closed || this.disposed) return;
+    if (this.depth || this.pumping || this.wasmDepth) return;
+    this.disposed = true;
     for (const reject of this.pendingPromises)
       reject(new Error('Application context is closed'));
     this.pendingPromises.clear();
