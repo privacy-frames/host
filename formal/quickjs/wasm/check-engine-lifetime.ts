@@ -46,6 +46,15 @@ const setControl =
     .replace('this.enter(() => {', '(() => {')
     .replace('    });\n  }\n', '    })();\n  }\n') +
   source.slice(setEnd);
+const reporterCleanup = `        try {
+          this.report(error instanceof Error ? error : new Error(String(error)));
+        } catch (failure) {
+          if (!reportingFailed) {
+            reportingFailed = true;
+            reportingFailure = failure;
+          }
+        }`;
+assert.equal(source.split(reporterCleanup).length, 2);
 const cases = [
   { name: 'production', source },
   {
@@ -62,6 +71,14 @@ const cases = [
     name: 'missing-set-entry',
     source: setControl,
     failure: 'physical indexed release waits for every engine-owned stack',
+  },
+  {
+    name: 'uncontained-cleanup-reporter',
+    source: source.replace(
+      reporterCleanup,
+      '        this.report(error instanceof Error ? error : new Error(String(error)));',
+    ),
+    failure: 'reporter failure cannot interrupt owned cleanup',
   },
   {
     name: 'missing-job-error-release',
@@ -147,7 +164,7 @@ try {
       assert(!failed, stdout + stderr);
       assert.equal(stderr, '');
       const result = JSON.parse(stdout.trim());
-      assert.equal(result.observations.length, 7);
+      assert.equal(result.observations.length, 10);
     }
     observations.push({
       name: item.name,
@@ -186,7 +203,7 @@ try {
       {
         checkedAt: new Date().toISOString(),
         scope:
-          'Actual engine SDK-stack quiescence, terminal native bindings and failed-job root release',
+          'Actual engine SDK-stack quiescence, terminal native bindings, reporter containment and failed-job root release',
         node: process.version,
         sourceHashes: inputs,
         observations,
@@ -204,5 +221,5 @@ try {
   await rm(directory, { recursive: true, force: true });
 }
 console.log(
-  'Seven actual engine lifecycle cases passed; eager release, terminal binding, set-entry and job-root controls failed as intended.',
+  'Ten actual engine lifecycle cases passed; eager release, terminal binding, set-entry, reporter and job-root controls failed as intended.',
 );

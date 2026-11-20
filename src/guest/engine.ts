@@ -1896,13 +1896,24 @@ export class GuestEngine {
     for (const reject of this.pendingPromises)
       reject(new Error('Application context is closed'));
     this.pendingPromises.clear();
+    // Diagnostics may throw any value; release owned resources before propagating it.
+    let reportingFailed = false;
+    let reportingFailure: unknown;
     for (const dispose of this.disposers) {
       try {
         dispose();
       } catch (error) {
-        this.report(error instanceof Error ? error : new Error(String(error)));
+        try {
+          this.report(error instanceof Error ? error : new Error(String(error)));
+        } catch (failure) {
+          if (!reportingFailed) {
+            reportingFailed = true;
+            reportingFailure = failure;
+          }
+        }
       }
     }
+    this.disposers.clear();
     this.indexed.dispose();
     for (const handle of this.helpers.values()) if (handle.alive) handle.dispose();
     for (const handle of this.nativeHandles.values()) if (handle.alive) handle.dispose();
@@ -1926,5 +1937,6 @@ export class GuestEngine {
     this.promises.clear();
     this.context.dispose();
     this.runtime.dispose();
+    if (reportingFailed) throw reportingFailure;
   }
 }

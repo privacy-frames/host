@@ -193,4 +193,63 @@ for (const mode of [
   finish('job-error-conversion');
 }
 
+for (const firstFailure of [{ reason: 'reporter failed' }, undefined, null]) {
+  let reports = 0;
+  let laterDisposers = 0;
+  const engine = await GuestEngine.create({
+    host,
+    wasmModule,
+    onError() {
+      reports++;
+      throw reports === 1 ? firstFailure : new Error('later reporter failed');
+    },
+  });
+  engine.onDispose(() => {
+    throw new Error('cleanup failed');
+  });
+  engine.onDispose(() => {
+    laterDisposers++;
+    throw new Error('later cleanup failed');
+  });
+  engine.onDispose(() => {
+    laterDisposers++;
+  });
+  let caught = false;
+  let failure: unknown;
+  try {
+    engine.dispose();
+  } catch (error) {
+    caught = true;
+    failure = error;
+  }
+  assert.equal(
+    engine.context.alive,
+    false,
+    'reporter failure cannot interrupt owned cleanup',
+  );
+  assert.equal(
+    engine.runtime.alive,
+    false,
+    'reporter failure cannot interrupt runtime cleanup',
+  );
+  assert.equal(laterDisposers, 2, 'all subsequent disposers run after reporter failure');
+  assert.equal(reports, 2);
+  assert(caught, 'a throwing reporter still propagates its failure');
+  assert.equal(
+    failure,
+    firstFailure,
+    'the first reporter failure preserves thrown-value identity',
+  );
+  engine.dispose();
+  assert.equal(laterDisposers, 2);
+  observations.push({
+    name: 'throwing-cleanup-reporter',
+    firstFailureKind: firstFailure === null ? 'null' : typeof firstFailure,
+    laterDisposers,
+    reports,
+    closed: true,
+    originalFailurePreserved: true,
+  });
+}
+
 console.log(JSON.stringify({ observations }));
