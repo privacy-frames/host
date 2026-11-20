@@ -1,10 +1,58 @@
+import { captureMessageTransfer } from '../src/guest/message-transfer.ts';
 import { createGuestWindow } from '../src/guest/session.ts';
 import type { GuestContextCatalog } from '../src/guest/contexts/types.ts';
 const check = (value: unknown, message: string) => {
   if (!value) throw new Error(message);
 };
 const workerCode = `onmessage = e => { if(e.data.kind==='privacy-frames:guest-worker')return; postMessage(e.data,[e.data.buffer]); };`;
+async function legacyDictionary(tracked: boolean) {
+  const channel = new MessageChannel();
+  const all = Reflect.get(document, 'all');
+  const iterator = Object.getOwnPropertyDescriptor(all, Symbol.iterator);
+  const dictionary = Object.getOwnPropertyDescriptor(all, 'transfer');
+  const buffer = new ArrayBuffer(4);
+  let getters = 0;
+  Object.defineProperty(all, Symbol.iterator, { configurable: true, value: undefined });
+  Object.defineProperty(all, 'transfer', {
+    configurable: true,
+    get() {
+      getters++;
+      return [buffer];
+    },
+  });
+  try {
+    const reply = new Promise<void>((resolve) => {
+      channel.port2.onmessage = () => resolve();
+    });
+    const options = tracked ? captureMessageTransfer(all) : all;
+    Reflect.apply(MessagePort.prototype.postMessage, channel.port1, [
+      { buffer },
+      options,
+    ]);
+    await reply;
+    return { getters, detached: buffer.byteLength === 0 };
+  } finally {
+    channel.port1.close();
+    channel.port2.close();
+    if (iterator) Object.defineProperty(all, Symbol.iterator, iterator);
+    else Reflect.deleteProperty(all, Symbol.iterator);
+    if (dictionary) Object.defineProperty(all, 'transfer', dictionary);
+    else Reflect.deleteProperty(all, 'transfer');
+  }
+}
 async function run() {
+  const legacy = {
+    native: await legacyDictionary(false),
+    captured: await legacyDictionary(true),
+  };
+  Reflect.set(window, '__transferLegacyObserved', legacy);
+  check(
+    legacy.native.getters === 1 &&
+      legacy.native.detached &&
+      legacy.captured.getters === 1 &&
+      legacy.captured.detached,
+    'Legacy dictionary transfer must match native MessagePort conversion',
+  );
   const bootstrap = URL.createObjectURL(
     new Blob([workerCode], { type: 'text/javascript' }),
   );
@@ -25,15 +73,15 @@ async function run() {
     native.onmessage = () => resolve();
     native.onerror = reject;
   });
-  native.postMessage(
+  Reflect.apply(Worker.prototype.postMessage, native, [
     { buffer },
     {
       get transfer() {
         getters++;
-        return sequence as unknown as Transferable[];
+        return sequence;
       },
     },
-  );
+  ]);
   await positive;
   native.terminate();
   check(
@@ -155,7 +203,12 @@ async function run() {
       failed === true && commits === before,
       'Failed native send must preserve buffer and skip detachment accounting',
     );
-    return { ...observed, failedSendPreserved: true, nativePositive: true };
+    return {
+      ...observed,
+      failedSendPreserved: true,
+      nativePositive: true,
+      legacyDictionary: true,
+    };
   } finally {
     session.close();
     URL.revokeObjectURL(bootstrap);

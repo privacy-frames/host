@@ -1,19 +1,20 @@
 const apply = Reflect.apply;
 const get = Reflect.get;
 const arrayFrom = Array.from;
-const object = (value: unknown): value is object =>
-  value !== null && (typeof value === 'object' || typeof value === 'function');
+const nativeObject = Object;
+const object = (value: unknown): value is object => nativeObject(value) === value;
 
 /** Capture the postMessage overload's transfer sequence before native execution.
  * Guest getters/iterators run once; native send and detachment share this array. */
 export function captureMessageTransfer(supplied: unknown): object[] {
-  if (supplied == null) return [];
+  if (supplied === undefined || supplied === null) return [];
   if (!object(supplied)) throw new TypeError('Transfer options must be an object');
   const iterator: unknown = get(supplied, Symbol.iterator);
-  const sequence: unknown = iterator == null ? get(supplied, 'transfer') : supplied;
+  const absentIterator = iterator === undefined || iterator === null;
+  const sequence: unknown = absentIterator ? get(supplied, 'transfer') : supplied;
   if (sequence === undefined) return [];
   if (!object(sequence)) throw new TypeError('Transfer sequence must be an object');
-  const method: unknown = iterator == null ? get(sequence, Symbol.iterator) : iterator;
+  const method: unknown = absentIterator ? get(sequence, Symbol.iterator) : iterator;
   if (typeof method !== 'function')
     throw new TypeError('Transfer sequence is not iterable');
   // Array.from supplies IteratorClose on conversion failure. The wrapper retains

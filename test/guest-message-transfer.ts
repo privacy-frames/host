@@ -8,8 +8,8 @@ import { chromium, firefox } from 'playwright';
 const root = new URL('../', import.meta.url);
 const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
 const inputs = new Set<string>();
-const bundles = new Map<boolean, Uint8Array>();
-for (const fault of [false, true]) {
+const bundles = new Map<string, Uint8Array>();
+for (const fault of ['production', 'reread', 'legacy-null']) {
   const result = await build({
     entryPoints: [new URL('test/guest-message-transfer.browser.ts', root).pathname],
     bundle: true,
@@ -18,44 +18,74 @@ for (const fault of [false, true]) {
     format: 'esm',
     platform: 'browser',
     target: 'es2022',
-    plugins: fault
-      ? [
-          {
-            name: 'restore-postmessage-reread-control',
-            setup(builder) {
-              builder.onLoad(
-                { filter: /\/src\/guest\/browser\.ts$/ },
-                async ({ path }) => {
-                  const source = await readFile(path, 'utf8');
-                  const before =
-                    /    const transfer =\n      key === 'postMessage'[\s\S]+?    const result: unknown = Reflect.apply\(target, receiver, invocation\);/;
-                  const after =
-                    '    if (transfer !== undefined) this.requireEngine().detachTransferred(transfer);';
-                  assert.equal(source.match(new RegExp(before.source, 'g'))?.length, 1);
-                  assert.equal(source.split(after).length, 2);
-                  return {
-                    loader: 'ts',
-                    contents: source
-                      .replace(
-                        before,
-                        '    const result: unknown = Reflect.apply(target, receiver, args);',
-                      )
-                      .replace(
-                        after,
-                        `
+    plugins:
+      fault === 'reread'
+        ? [
+            {
+              name: 'restore-postmessage-reread-control',
+              setup(builder) {
+                builder.onLoad(
+                  { filter: /\/src\/guest\/browser\.ts$/ },
+                  async ({ path }) => {
+                    const source = await readFile(path, 'utf8');
+                    const before =
+                      /    const transfer =\n      key === 'postMessage'[\s\S]+?    const result: unknown = Reflect.apply\(target, receiver, invocation\);/;
+                    const after =
+                      '    if (transfer !== undefined) this.requireEngine().detachTransferred(transfer);';
+                    assert.equal(source.match(new RegExp(before.source, 'g'))?.length, 1);
+                    assert.equal(source.split(after).length, 2);
+                    return {
+                      loader: 'ts',
+                      contents: source
+                        .replace(
+                          before,
+                          '    const result: unknown = Reflect.apply(target, receiver, listenerArguments?.arguments ?? args);',
+                        )
+                        .replace(
+                          after,
+                          `
     if (key === 'postMessage' && args.length > 1) {
       const options = args[1];
       const transfer = Array.isArray(options) ? options : options && typeof options === 'object' && 'transfer' in options && Array.isArray(options.transfer) ? options.transfer : [];
       this.requireEngine().detachTransferred(transfer);
     }`,
-                      ),
-                  };
-                },
-              );
+                        ),
+                    };
+                  },
+                );
+              },
             },
-          },
-        ]
-      : [],
+          ]
+        : fault === 'legacy-null'
+          ? [
+              {
+                name: 'restore-legacy-nullish-guards',
+                setup(builder) {
+                  builder.onLoad(
+                    { filter: /\/src\/guest\/message-transfer\.ts$/ },
+                    async ({ path }) => {
+                      const source = await readFile(path, 'utf8');
+                      const guard =
+                        'if (supplied === undefined || supplied === null) return [];';
+                      const identity =
+                        'const object = (value: unknown): value is object => nativeObject(value) === value;';
+                      assert.equal(source.split(guard).length, 2);
+                      assert.equal(source.split(identity).length, 2);
+                      return {
+                        loader: 'ts',
+                        contents: source
+                          .replace(guard, 'if (supplied == null) return [];')
+                          .replace(
+                            identity,
+                            "const object = (value: unknown): value is object => value !== null && (typeof value === 'object' || typeof value === 'function');",
+                          ),
+                      };
+                    },
+                  );
+                },
+              },
+            ]
+          : [],
   });
   for (const path of Object.keys(result.metafile.inputs)) inputs.add(path);
   bundles.set(fault, result.outputFiles[0].contents);
@@ -81,7 +111,7 @@ const server = createServer((request, response) => {
     url.pathname === '/engine.wasm'
       ? wasm
       : url.pathname === '/browser.js'
-        ? bundles.get(url.searchParams.has('fault'))
+        ? bundles.get(url.searchParams.get('variant') ?? 'production')
         : '<!doctype html><script type="module" src="/browser.js' +
           url.search +
           '"></script>',
@@ -98,10 +128,11 @@ try {
   ] as const) {
     const browser = await engine.launch({ headless: true });
     try {
-      for (const fault of [false, true]) {
+      for (const variant of ['production', 'reread', 'legacy-null']) {
+        const fault = variant === 'reread';
         const page = await browser.newPage();
         try {
-          await page.goto(`http://127.0.0.1:${address.port}/${fault ? '?fault' : ''}`);
+          await page.goto(`http://127.0.0.1:${address.port}/?variant=${variant}`);
           await page.waitForFunction(
             () =>
               Reflect.has(window, '__transferResult') ||
@@ -118,6 +149,34 @@ try {
           const direct = await page.evaluate(() =>
             Reflect.get(window, '__transferDirectObserved'),
           );
+          const legacy = await page.evaluate(() =>
+            Reflect.get(window, '__transferLegacyObserved'),
+          );
+          if (variant === 'legacy-null') {
+            assert.deepEqual(legacy, {
+              native: { getters: 1, detached: true },
+              captured: { getters: 0, detached: false },
+            });
+            assert.equal(typeof failure, 'string');
+            assert.match(
+              String(failure),
+              /Legacy dictionary transfer must match native MessagePort conversion/,
+            );
+            results.push({
+              browser: name,
+              version: browser.version(),
+              variant,
+              legacy,
+              faultRejected: true,
+              failure,
+            });
+            console.log(name, 'Legacy null/object guard regression detected');
+            continue;
+          }
+          assert.deepEqual(legacy, {
+            native: { getters: 1, detached: true },
+            captured: { getters: 1, detached: true },
+          });
           assert.deepEqual(
             direct,
             fault
@@ -142,6 +201,7 @@ try {
               commits: 2,
               failedSendPreserved: true,
               nativePositive: true,
+              legacyDictionary: true,
             });
           }
           results.push({
@@ -149,6 +209,7 @@ try {
             version: browser.version(),
             direct,
             variant: fault ? 'old-reread-restored' : 'production',
+            legacy,
             result,
             faultRejected: fault,
             failure,
@@ -182,12 +243,13 @@ await writeFile(
   JSON.stringify(
     {
       scope:
-        'Actual QuickJS/BrowserEnvironment/ConfinedWorker and MessagePort sends through native browsers, with native worker echo bootstrap controlled by this fixture. Verifies guest transfer conversion and detachment accounting, not worker bootstrap confinement.',
+        'Actual QuickJS/BrowserEnvironment/ConfinedWorker and MessagePort sends through native browsers, with native worker echo bootstrap controlled by this fixture. Verifies guest transfer conversion and detachment accounting, not worker bootstrap confinement. Local native MessagePort controls cover legacy HTMLAllCollection dictionary conversion; original null/object guards are independently restored in a temporary bundle.',
       inputHashes,
       engineSHA256: hash(wasm),
       bundleHashes: {
-        production: hash(bundles.get(false)!),
-        oldRereadRestored: hash(bundles.get(true)!),
+        production: hash(bundles.get('production')!),
+        oldRereadRestored: hash(bundles.get('reread')!),
+        legacyGuardsRestored: hash(bundles.get('legacy-null')!),
       },
       results,
     },
