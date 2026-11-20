@@ -20,6 +20,8 @@ export interface InterfaceAttribute extends InterfaceMemberBase {
   kind: 'attribute';
   type: string;
   readonly: boolean;
+  /** A stringifier attribute also declares an implicit toString operation. */
+  stringifier?: true;
   unforgeable: boolean;
   sameObject: boolean;
 }

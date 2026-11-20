@@ -22,6 +22,12 @@ import type {
   RuntimeInterfaceMember,
 } from '../src/guest/interface-definitions.ts';
 
+import type {
+  NativeInterfaceMembers,
+  NativeMemberIdentity,
+  NativeMemberManifest,
+} from '../src/guest/native-member-definitions.ts';
+
 const require = createRequire(import.meta.url);
 
 interface SourceDefinition {
@@ -120,6 +126,7 @@ function interfaceMember(
         name: member.name,
         type: typeName(member.idlType),
         readonly: member.readonly,
+        ...(member.special === 'stringifier' ? { stringifier: true as const } : {}),
         unforgeable: attributes.includes('LegacyUnforgeable'),
         sameObject: attributes.includes('SameObject'),
       };
@@ -323,6 +330,134 @@ export function runtimeInterfaceProjection(
   }));
 }
 
+/** Deduplicate declaration identities, retaining native exotic-property origins.
+ * Conversion schemas and effect authority remain outside this projection. */
+export function nativeMemberProjection(
+  definitions: readonly BrowserInterfaceDefinition[],
+): NativeInterfaceMembers[] {
+  return definitions.map((definition) => {
+    const members: NativeMemberIdentity[] = [];
+    const seen = new Set<string>();
+    const add = (member: NativeMemberIdentity) => {
+      const identity = JSON.stringify(member);
+      if (seen.has(identity)) return;
+      seen.add(identity);
+      members.push(member);
+    };
+    for (const member of definition.members) {
+      if (member.kind === 'attribute') {
+        add({
+          owner: member.owner,
+          name: member.name,
+          kind: 'attribute',
+          static: member.static,
+          readonly: member.readonly,
+          ...(member.unforgeable ? { unforgeable: true } : {}),
+        });
+        if (member.stringifier)
+          add({
+            owner: member.owner,
+            name: 'toString',
+            kind: 'operation',
+            static: false,
+            special: 'stringifier',
+            sourceAttribute: member.name,
+            ...(member.unforgeable ? { unforgeable: true } : {}),
+          });
+      } else if (member.kind === 'constant') {
+        add({
+          owner: member.owner,
+          name: member.name,
+          kind: 'constant',
+          static: true,
+          readonly: true,
+        });
+        if (definition.kind !== 'namespace')
+          add({
+            owner: member.owner,
+            name: member.name,
+            kind: 'constant',
+            static: false,
+            readonly: true,
+          });
+      } else if (member.kind === 'operation') {
+        const firstArgumentType = member.arguments[0]?.type;
+        const exotic = member.special && member.special !== 'stringifier';
+        add({
+          owner: member.owner,
+          name: member.name || (member.special === 'stringifier' ? 'toString' : null),
+          kind: 'operation',
+          static: member.static,
+          ...(member.attributes.includes('LegacyUnforgeable')
+            ? { unforgeable: true }
+            : {}),
+          ...(member.special ? { special: member.special } : {}),
+          ...(exotic
+            ? {
+                propertyKind:
+                  firstArgumentType === 'unsigned long'
+                    ? ('indexed' as const)
+                    : firstArgumentType === 'DOMString'
+                      ? ('named' as const)
+                      : ('unclassified' as const),
+                ...(firstArgumentType ? { firstArgumentType } : {}),
+              }
+            : {}),
+        });
+      } else {
+        const collection =
+          member.kind === 'iterable' && member.async ? 'async-iterable' : member.kind;
+        const operation = (name: string, symbol?: NativeMemberIdentity['symbol']) =>
+          add({
+            owner: member.owner,
+            name,
+            kind: 'operation',
+            static: false,
+            collection,
+            ...(symbol ? { symbol } : {}),
+          });
+        if (collection === 'async-iterable') {
+          operation('values');
+          if (member.types.length === 2) {
+            operation('entries');
+            operation('keys');
+          }
+          operation('@@asyncIterator', 'asyncIterator');
+        } else {
+          for (const name of ['entries', 'keys', 'values', 'forEach']) operation(name);
+          operation('@@iterator', 'iterator');
+          if (member.kind !== 'iterable') {
+            add({
+              owner: member.owner,
+              name: 'size',
+              kind: 'attribute',
+              static: false,
+              readonly: true,
+              collection,
+            });
+            operation('has');
+            if (member.kind === 'maplike') operation('get');
+            if (!member.readonly) {
+              for (const name of [
+                'clear',
+                'delete',
+                member.kind === 'maplike' ? 'set' : 'add',
+              ])
+                operation(name);
+            }
+          }
+        }
+      }
+    }
+    return {
+      name: definition.name,
+      kind: definition.kind,
+      parent: definition.parent,
+      members,
+    };
+  });
+}
+
 async function writeChanged(path: string, text: string): Promise<void> {
   const previous = await readFile(path, 'utf8').catch(() => null);
   if (previous !== text) await writeFile(path, text);
@@ -383,6 +518,23 @@ export async function generateGuestBindings(
   await writeChanged(
     resolve(root, 'src/guest/generated-runtime-interfaces.ts'),
     runtimeSource,
+  );
+  const nativeManifest: NativeMemberManifest = {
+    webrefVersion: manifest.webrefVersion,
+    parserVersion: manifest.parserVersion,
+    sourceHash: manifest.sourceHash,
+    interfaces: nativeMemberProjection(manifest.interfaces),
+  };
+  const nativeSource =
+    '// Generated native member identities from the pinned @webref/idl corpus.\n' +
+    '// Membership describes shape and never grants native effect authority.\n' +
+    "import type { NativeMemberManifest } from './native-member-definitions.ts';\n\n" +
+    '// prettier-ignore\nexport const nativeMemberManifest: NativeMemberManifest = ' +
+    JSON.stringify(nativeManifest, null, 2) +
+    ';\n';
+  await writeChanged(
+    resolve(root, 'src/guest/generated-native-members.ts'),
+    nativeSource,
   );
   return manifest;
 }

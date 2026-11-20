@@ -31310,6 +31310,7 @@ export const browserBindings: BrowserBindingManifest = {
           "name": "value",
           "type": "DOMString",
           "readonly": false,
+          "stringifier": true,
           "unforgeable": false,
           "sameObject": false
         },
@@ -48602,6 +48603,7 @@ export const browserBindings: BrowserBindingManifest = {
           "name": "href",
           "type": "USVString",
           "readonly": false,
+          "stringifier": true,
           "unforgeable": false,
           "sameObject": false
         },
@@ -48956,6 +48958,7 @@ export const browserBindings: BrowserBindingManifest = {
           "name": "href",
           "type": "USVString",
           "readonly": false,
+          "stringifier": true,
           "unforgeable": false,
           "sameObject": false
         },
@@ -68298,6 +68301,7 @@ export const browserBindings: BrowserBindingManifest = {
           "name": "href",
           "type": "USVString",
           "readonly": false,
+          "stringifier": true,
           "unforgeable": true,
           "sameObject": false
         },
@@ -71392,6 +71396,7 @@ export const browserBindings: BrowserBindingManifest = {
           "name": "mediaText",
           "type": "CSSOMString",
           "readonly": false,
+          "stringifier": true,
           "unforgeable": false,
           "sameObject": false
         },
@@ -125522,6 +125527,7 @@ export const browserBindings: BrowserBindingManifest = {
           "name": "href",
           "type": "USVString",
           "readonly": false,
+          "stringifier": true,
           "unforgeable": false,
           "sameObject": false
         },
@@ -159438,6 +159444,7 @@ export const browserBindings: BrowserBindingManifest = {
           "name": "href",
           "type": "USVString",
           "readonly": true,
+          "stringifier": true,
           "unforgeable": false,
           "sameObject": false
         },
