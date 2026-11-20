@@ -1,3 +1,4 @@
+import { allocateIdentity, type IdentityState } from '../identity.ts';
 import type { GuestContextCatalog } from './types.ts';
 
 export interface GuestAudioModule {
@@ -22,9 +23,14 @@ interface AudioController {
   pending: Map<number, PendingModule>;
   loaded: Set<string>;
   failed: Map<string, Error>;
-  owners: Set<object>;
+  identities: IdentityState;
   closed: boolean;
   fail(error: Error): void;
+}
+
+interface ContextOwnership {
+  owners: Set<object>;
+  controller?: AudioController;
 }
 
 const contexts = new WeakMap<
@@ -32,16 +38,16 @@ const contexts = new WeakMap<
   {
     application: string;
     generation: string;
+    ownership: ContextOwnership;
     loading: Promise<AudioController>;
   }
 >();
 
 /** Native worklets load only the trusted interpreter entry; guest modules use its port. */
 export function createGuestAudioWorklets(options: GuestAudioWorkletOptions) {
-  const active = new Set<AudioController>();
+  const owned = new Set<ContextOwnership>();
   const owner = {};
   let compiled: Promise<WebAssembly.Module> | undefined;
-  let nextModule = 1;
   let disposed = false;
 
   async function controller(context: BaseAudioContext): Promise<AudioController> {
@@ -56,12 +62,17 @@ export function createGuestAudioWorklets(options: GuestAudioWorkletOptions) {
           'Audio context belongs to another installation',
           'SecurityError',
         );
+      existing.ownership.owners.add(owner);
+      owned.add(existing.ownership);
       const value = await existing.loading;
-      if (value.closed) throw new Error('Guest audio environment is closed');
-      value.owners.add(owner);
-      active.add(value);
+      if (disposed || value.closed) throw new Error('Guest audio environment is closed');
       return value;
     }
+    const ownership: ContextOwnership = {
+      owners: new Set([owner]),
+      controller: undefined,
+    };
+    owned.add(ownership);
     const loading = (async () => {
       const address = URL.createObjectURL(
         new Blob([options.catalog.workerBootstrap.worklet], { type: 'text/javascript' }),
@@ -71,8 +82,11 @@ export function createGuestAudioWorklets(options: GuestAudioWorkletOptions) {
       } finally {
         URL.revokeObjectURL(address);
       }
+      if (!ownership.owners.size)
+        throw new Error('Guest audio worklet manager is closed');
       const module = await (compiled ||= WebAssembly.compile(options.catalog.engineWasm));
-      if (disposed) throw new Error('Guest audio worklet manager is closed');
+      if (!ownership.owners.size)
+        throw new Error('Guest audio worklet manager is closed');
       const node = new AudioWorkletNode(context, 'privacy-frames:bootstrap', {
         numberOfInputs: 0,
         numberOfOutputs: 1,
@@ -92,12 +106,20 @@ export function createGuestAudioWorklets(options: GuestAudioWorkletOptions) {
         pending: new Map(),
         loaded: new Set(),
         failed: new Map(),
-        owners: new Set([owner]),
+        identities: { next: 1 },
         closed: false,
         fail(error) {
+          if (value.closed) return;
+          value.closed = true;
           rejectReady(error);
           for (const pending of value.pending.values()) pending.reject(error);
           value.pending.clear();
+          try {
+            node.port.postMessage({ type: 'close' });
+          } finally {
+            node.port.close();
+            node.disconnect();
+          }
         },
       };
       const fail = value.fail;
@@ -106,6 +128,7 @@ export function createGuestAudioWorklets(options: GuestAudioWorkletOptions) {
       );
       node.port.onmessage = (event: MessageEvent<unknown>) => {
         const packet = event.data;
+        if (value.closed) return;
         if (typeof packet !== 'object' || packet === null || !('type' in packet)) return;
         if (packet.type === 'ready') {
           if ('ok' in packet && packet.ok === true) resolveReady();
@@ -130,19 +153,28 @@ export function createGuestAudioWorklets(options: GuestAudioWorkletOptions) {
             );
         }
       };
-      active.add(value);
+      ownership.controller = value;
+      if (!ownership.owners.size)
+        value.fail(new Error('Guest audio environment is closed'));
       await ready;
       return value;
     })();
     contexts.set(context, {
       application: options.catalog.application,
       generation: options.catalog.generation,
+      ownership,
       loading,
     });
     try {
-      return await loading;
+      const value = await loading;
+      if (disposed || value.closed) throw new Error('Guest audio environment is closed');
+      return value;
     } catch (error) {
-      contexts.delete(context);
+      if (
+        (!ownership.controller || ownership.controller.closed) &&
+        contexts.get(context)?.ownership === ownership
+      )
+        contexts.delete(context);
       throw error;
     }
   }
@@ -152,15 +184,17 @@ export function createGuestAudioWorklets(options: GuestAudioWorkletOptions) {
       const prepared = options.prepare(input);
       const target = await controller(context);
       const load = target.queue.then(() => {
+        if (disposed || target.closed)
+          throw new Error('Guest audio environment is closed');
         if (target.loaded.has(prepared.url)) return;
         const failed = target.failed.get(prepared.url);
         if (failed) throw failed;
         return new Promise<void>((resolve, reject) => {
-          if (disposed) {
-            reject(new Error('Guest audio worklet manager is closed'));
+          const id = allocateIdentity(target.identities);
+          if (id === undefined) {
+            reject(new RangeError('Audio module identities exhausted'));
             return;
           }
-          const id = nextModule++;
           target.pending.set(id, {
             resolve() {
               target.loaded.add(prepared.url);
@@ -189,16 +223,12 @@ export function createGuestAudioWorklets(options: GuestAudioWorkletOptions) {
     },
     dispose(): void {
       disposed = true;
-      for (const target of active) {
-        target.owners.delete(owner);
-        if (target.owners.size) continue;
-        target.closed = true;
-        target.fail(new Error('Guest audio worklet manager is closed'));
-        target.node.port.postMessage({ type: 'close' });
-        target.node.port.close();
-        target.node.disconnect();
+      for (const ownership of owned) {
+        ownership.owners.delete(owner);
+        if (!ownership.owners.size)
+          ownership.controller?.fail(new Error('Guest audio worklet manager is closed'));
       }
-      active.clear();
+      owned.clear();
     },
   };
 }

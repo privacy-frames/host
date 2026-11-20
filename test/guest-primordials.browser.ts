@@ -77,6 +77,15 @@ try {
     try { view[0] = 17; return view[0] === 17 && consulted === 0; }
     finally { delete Object.prototype.index; }
   `);
+  checks.thrownReference = await evaluate(`
+    const sentinel = new Proxy({}, {
+      getPrototypeOf() { throw new Error('Thrown prototype was inspected'); },
+    });
+    const input = new Proxy({}, { getPrototypeOf() { throw sentinel; } });
+    let caught;
+    try { echo(input); } catch (error) { caught = error; }
+    return caught === sentinel && makeBox().value === 7;
+  `);
   checks.classification = await evaluate(`
     let consulted = 0;
     const constructors = [Promise, Map, Set, RegExp];

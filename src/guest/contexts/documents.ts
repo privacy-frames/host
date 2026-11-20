@@ -1,3 +1,10 @@
+import {
+  beginContextPublication,
+  closeContextPublication,
+  isCurrentContextPublication,
+  type ContextPublicationState,
+} from './lifecycle-kernel.ts';
+
 export type GuestDocumentSource =
   { kind: 'resource'; url: string } | { kind: 'markup'; html: string; baseURL: string };
 
@@ -16,9 +23,8 @@ export interface GuestDocumentFactoryOptions {
   report(error: unknown): void;
 }
 
-interface DocumentState {
+interface DocumentState extends ContextPublicationState {
   source: GuestDocumentSource;
-  generation: number;
   session?: GuestDocumentSession;
   pending?: Promise<void>;
   ready: boolean;
@@ -50,7 +56,8 @@ export function createGuestDocuments(options: GuestDocumentFactoryOptions) {
           : address && address !== 'about:blank'
             ? { kind: 'resource', url: new URL(address, options.baseURL).href }
             : { kind: 'markup', html: '', baseURL: options.baseURL },
-      generation: 0,
+      token: {},
+      closed: true,
       ready: false,
     };
     frame.removeAttribute('srcdoc');
@@ -81,35 +88,39 @@ export function createGuestDocuments(options: GuestDocumentFactoryOptions) {
     return created;
   }
 
-  function close(current: DocumentState): void {
-    current.generation++;
-    current.preparation?.abort(
-      new DOMException('Document preparation changed', 'AbortError'),
-    );
+  function close(current: DocumentState): object {
+    const token = closeContextPublication(current);
+    const preparation = current.preparation;
+    const nativeLoad = current.nativeLoad;
+    const session = current.session;
+    // Release owned fields before callbacks can reenter with a new preparation.
     current.preparation = undefined;
-    current.ready = false;
-    current.nativeLoad?.reject(
-      new DOMException('Document preparation changed', 'AbortError'),
-    );
     current.nativeLoad = undefined;
-    if (current.session) {
-      sessions.delete(current.session);
-      current.session.close();
-      current.session = undefined;
-    }
+    current.session = undefined;
     current.pending = undefined;
+    current.ready = false;
+    if (session) sessions.delete(session);
+    const reason = new DOMException('Document preparation changed', 'AbortError');
+    preparation?.abort(reason);
+    nativeLoad?.reject(reason);
+    session?.close();
+    return token;
   }
 
   function prepare(frame: HTMLIFrameElement): Promise<void> {
     const current = state(frame);
     if (!frame.isConnected || current.ready) return Promise.resolve();
     if (current.pending) return current.pending;
-    const generation = current.generation;
+    const token = beginContextPublication(current);
     const controller = new AbortController();
     current.preparation = controller;
     const pending = (async () => {
       const prepared = await options.prepare(frame, current.source, controller.signal);
-      if (generation !== current.generation || !frame.isConnected) {
+      if (
+        disposed ||
+        !isCurrentContextPublication(current, token) ||
+        !frame.isConnected
+      ) {
         prepared.close();
         return;
       }
@@ -121,7 +132,8 @@ export function createGuestDocuments(options: GuestDocumentFactoryOptions) {
     })()
       .catch((error: unknown) => {
         if (
-          generation === current.generation &&
+          !disposed &&
+          isCurrentContextPublication(current, token) &&
           frame.isConnected &&
           !(error instanceof DOMException && error.name === 'AbortError')
         ) {
@@ -134,7 +146,7 @@ export function createGuestDocuments(options: GuestDocumentFactoryOptions) {
         if (current.preparation === controller) current.preparation = undefined;
         if (current.pending === pending) current.pending = undefined;
       });
-    current.pending = pending;
+    if (isCurrentContextPublication(current, token)) current.pending = pending;
     return pending;
   }
 
@@ -145,7 +157,8 @@ export function createGuestDocuments(options: GuestDocumentFactoryOptions) {
     },
     configure(frame: HTMLIFrameElement, source: GuestDocumentSource): Promise<void> {
       const current = state(frame);
-      close(current);
+      const invalidated = close(current);
+      if (current.token !== invalidated) return current.pending || Promise.resolve();
       current.source = source;
       return prepare(frame);
     },
@@ -170,15 +183,24 @@ export function createGuestDocuments(options: GuestDocumentFactoryOptions) {
     disconnected(frame: HTMLIFrameElement): void {
       const current = frames.get(frame);
       if (current) {
-        close(current);
         active.delete(current);
+        close(current);
       }
     },
     dispose(): void {
       disposed = true;
-      for (const current of active) close(current);
+      const failures: unknown[] = [];
+      for (const current of active) {
+        try {
+          close(current);
+        } catch (error) {
+          failures.push(error);
+        }
+      }
       active.clear();
       sessions.clear();
+      if (failures.length)
+        throw new AggregateError(failures, 'Guest document cleanup failed');
     },
   };
 }

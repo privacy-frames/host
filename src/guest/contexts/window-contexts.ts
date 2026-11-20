@@ -1,3 +1,9 @@
+import {
+  beginContextPublication,
+  closeContextPublication,
+  isCurrentContextPublication,
+  type ContextPublicationState,
+} from './lifecycle-kernel.ts';
 import type { GuestResources } from '../resources.ts';
 import type { GuestContextCatalog, GuestContextResource } from './types.ts';
 import { isHTMLIFrameElement, isMessagePort } from './brands.ts';
@@ -15,6 +21,7 @@ export interface GuestWindowContextsOptions {
     catalog: GuestContextCatalog,
     window: Window,
     html: string,
+    signal: AbortSignal,
   ): Promise<GuestDocumentSession>;
   report(error: unknown): void;
   commitTransfers?(transfer: readonly Transferable[]): void;
@@ -34,8 +41,8 @@ interface PreparedDocument {
   html: string;
 }
 
-interface PopupState {
-  generation: number;
+interface PopupState extends ContextPublicationState {
+  preparation?: AbortController;
   session?: GuestDocumentSession;
 }
 
@@ -184,7 +191,7 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
       const child = frame.contentWindow;
       if (!child) throw new Error('Child document window is unavailable');
       known.add(child);
-      return options.createSession(prepared.catalog, child, prepared.html);
+      return options.createSession(prepared.catalog, child, prepared.html, signal);
     },
     report: options.report,
   });
@@ -234,32 +241,59 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
     state: PopupState,
     documentSource: GuestDocumentSource,
   ): Promise<void> {
-    const generation = ++state.generation;
-    state.session?.close();
+    const token = beginContextPublication(state);
+    const previousPreparation = state.preparation;
+    const previousSession = state.session;
+    const preparation = new AbortController();
+    state.preparation = preparation;
     state.session = undefined;
-    const prepared = await prepareSource(documentSource);
-    if (disposed || popup.closed || state.generation !== generation) return;
-    // Initial about:blank listeners disappear when navigation replaces that
-    // global. Guest-dispatched load events must not establish host readiness.
-    while (
-      popup.location.href !== 'about:blank' ||
-      popup.document.readyState !== 'complete'
-    ) {
-      if (disposed || popup.closed || state.generation !== generation) return;
-      await new Promise<void>((resolve) => nativeWindow.setTimeout(resolve, 5));
-    }
-    if (disposed || popup.closed || state.generation !== generation) return;
-    const session = await options.createSession(prepared.catalog, popup, prepared.html);
-    if (disposed || popup.closed || state.generation !== generation) session.close();
-    else {
-      state.session = session;
-      const hidden = (event: PageTransitionEvent) => {
-        if (!event.isTrusted || event.persisted) return;
-        popup.removeEventListener('pagehide', hidden);
-        session.close();
-        if (state.session === session) state.session = undefined;
-      };
-      popup.addEventListener('pagehide', hidden);
+    const current = () =>
+      !disposed && !popup.closed && isCurrentContextPublication(state, token);
+    try {
+      previousPreparation?.abort(
+        new DOMException('Popup preparation changed', 'AbortError'),
+      );
+      previousSession?.close();
+      if (!current()) return;
+      const prepared = await prepareSource(documentSource);
+      if (!current()) return;
+      // Initial about:blank listeners disappear when navigation replaces that
+      // global. Guest-dispatched load events must not establish host readiness.
+      while (
+        popup.location.href !== 'about:blank' ||
+        popup.document.readyState !== 'complete'
+      ) {
+        if (!current()) return;
+        await new Promise<void>((resolve) => nativeWindow.setTimeout(resolve, 5));
+      }
+      if (!current()) return;
+      const session = await options.createSession(
+        prepared.catalog,
+        popup,
+        prepared.html,
+        preparation.signal,
+      );
+      if (!current()) session.close();
+      else {
+        state.session = session;
+        const hidden = (event: PageTransitionEvent) => {
+          if (!event.isTrusted || event.persisted) return;
+          popup.removeEventListener('pagehide', hidden);
+          if (state.session !== session) return;
+          closeContextPublication(state);
+          state.session = undefined;
+          session.close();
+        };
+        popup.addEventListener('pagehide', hidden);
+      }
+    } catch (error) {
+      if (current()) {
+        closeContextPublication(state);
+        preparation.abort(error);
+        throw error;
+      }
+    } finally {
+      if (state.preparation === preparation) state.preparation = undefined;
     }
   }
 
@@ -324,7 +358,7 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
       if (!popup || popup.closed) {
         popup = nativeWindow.open('', '_blank', parsed.features) || undefined;
         if (!popup) return null;
-        popups.set(popup, { generation: 0 });
+        popups.set(popup, { token: {}, closed: true });
         known.add(popup);
         if (target && target !== '_blank') names.set(target, popup);
       }
@@ -392,14 +426,39 @@ export function createGuestWindowContexts(options: GuestWindowContextsOptions) {
     dispose(): void {
       disposed = true;
       removals.disconnect();
-      documents.dispose();
+      const failures: unknown[] = [];
+      try {
+        documents.dispose();
+      } catch (error) {
+        failures.push(error);
+      }
       for (const [popup, state] of popups) {
-        state.generation++;
-        state.session?.close();
-        if (!popup.closed) popup.close();
+        closeContextPublication(state);
+        const preparation = state.preparation;
+        const session = state.session;
+        state.preparation = undefined;
+        state.session = undefined;
+        for (const cleanup of [
+          () =>
+            preparation?.abort(
+              new DOMException('Popup environment is closed', 'AbortError'),
+            ),
+          () => session?.close(),
+          () => {
+            if (!popup.closed) popup.close();
+          },
+        ]) {
+          try {
+            cleanup();
+          } catch (error) {
+            failures.push(error);
+          }
+        }
       }
       popups.clear();
       names.clear();
+      if (failures.length)
+        throw new AggregateError(failures, 'Guest popup cleanup failed');
     },
   };
 }
