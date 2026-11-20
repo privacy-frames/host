@@ -1,0 +1,59 @@
+{
+  "startedAt": "2026-11-20T08:51:55.208252+00:00",
+  "sourceRevision": "4d0601437edab175e792165c4ffbe8aef2c13eae",
+  "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
+  "buildInputs": {
+    "package.json": "79b8895b45e21f7dc4d62cde087bd8bec336a707c1a2fd6693481960c00c2107",
+    "package-lock.json": "501bfd0da3702e4cfc3b43d5a4ec3380cca9045e7959204e1460e53ed781422a",
+    "scripts/build.ts": "f80e99905be9b84a9cd4462f32976724bdb88a6ed281102c75a0382411d7c2b2",
+    "scripts/quickjs.ts": "ceb8c6868301ef0f93e656ce8521a315232ece8b5b3e8bdb49802715c708f490"
+  },
+  "engine": {
+    "sourceHash": "0896b28d94bb6c5bf658f17d50a56faafdf652eb7907d695f2429ab50fabf466",
+    "wasmHash": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
+    "loaderHash": "60147727aeb5c4441d54ad7b3c625e952bec7faa8db8531522eb71dd9ab9da2e",
+    "toolchain": "emscripten/emsdk:5.0.1@sha256:c89732ef63a56de5a96395c5a8c1c7904f7420131a045406e6fedc4cbe1cc198",
+    "optimization": [
+      "-O3",
+      "-flto"
+    ]
+  },
+  "artifacts": {
+    "dist-manager": {
+      ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "config.json": "256524d570702aa58f1bf52156db163211f98d32b9cc261c48216430e1206523",
+      "host.css": "5053a45ecaca74a28e8dd218fcc5f22463798d129d3034483bdceab4453fa22f",
+      "index.html": "1451fd63538fff9f0d23a4eb55efd770d312baa4f8d4421c0b26b9228011e12a",
+      "manager.js": "d206a0722c287cb0e96c192ad3c6a1c47a1ed1b531ec977d43f2a1c2a352da96",
+      "pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "report.html": "6147f97720e098f90487f029e9316d8ea5801c9f6fc1b336fc33af57797fcd51",
+      "sw.js": "ae6322e24b89a53abb156d49205ef6956779730126967c09e9b15724782aaff9"
+    },
+    "dist-runtime": {
+      ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "__guest_worker_registry__.js": "106b77a615aff3a3bdc0c29b349894b596006a01078a1d7f8c1a167bbce664fc",
+      "config.json": "256524d570702aa58f1bf52156db163211f98d32b9cc261c48216430e1206523",
+      "connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
+      "connect.js": "32a672be00cf28559a8d51f34d25b5f81eec6bbc17382d4ed0bd646d7d4a310b",
+      "engine-LICENSE.txt": "6c938bd1305d033a7eb25a33e79e62fc5d4cb27a8f60d17dadb43894689391ba",
+      "engine.wasm": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
+      "guard.js": "f6769502b39d2438e40dbf8ae05adbb772dba8c2841f2c265e8b4318ff3ca584",
+      "guest-shared-worker.js": "bc129376716d704f6027a88fe0ae142469c901b0e0dc60446ab12f8b49425281",
+      "guest-worker.js": "d5eb415874b6e708e5ad218667b2eeb43c997a3a6d234419dcf4d59f1471038e",
+      "guest-worklet.js": "fd0d007a6f5dde2bf5dde20dfc1bd7e7cafe3de0fe42f76861308d1455af4576",
+      "host.css": "5053a45ecaca74a28e8dd218fcc5f22463798d129d3034483bdceab4453fa22f",
+      "index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
+      "pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "report.html": "6147f97720e098f90487f029e9316d8ea5801c9f6fc1b336fc33af57797fcd51",
+      "sw.js": "37519f1880ede6705ef72afb210e98986b35e182ff59095758c3ff3b5d0e517c"
+    },
+    "dist-installation": {
+      ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "config.json": "256524d570702aa58f1bf52156db163211f98d32b9cc261c48216430e1206523",
+      "index.html": "3ca67c9966dd6eaaddb08a331c4c422a70d79bed1acecddada56764ba4ac8e5f",
+      "installation.js": "f1a44718ed7d218dbbc5b51e570badbe0619cbd41e14d5dbec72cbed4f5e5c6a"
+    }
+  }
+}

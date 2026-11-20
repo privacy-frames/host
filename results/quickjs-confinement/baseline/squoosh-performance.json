@@ -1,0 +1,255 @@
+{
+  "sourceRevision": "4d0601437edab175e792165c4ffbe8aef2c13eae",
+  "guardHash": "f6769502b39d2438e40dbf8ae05adbb772dba8c2841f2c265e8b4318ff3ca584",
+  "workload": "Squoosh built-in Panda compression through availability of exported JPEG; unchanged application, native and confined paired per run",
+  "selection": "All three consecutive measured runs retained; no sample discarded",
+  "regressionInvestigationThresholdPercent": 25,
+  "rows": [
+    {
+      "iteration": 1,
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "online",
+      "nativeMilliseconds": 2070,
+      "confinedMilliseconds": 9530,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    },
+    {
+      "iteration": 1,
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "offline",
+      "nativeMilliseconds": 2070,
+      "confinedMilliseconds": 9091,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    },
+    {
+      "iteration": 1,
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "online",
+      "nativeMilliseconds": 2116,
+      "confinedMilliseconds": 7848,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    },
+    {
+      "iteration": 1,
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "offline",
+      "nativeMilliseconds": 2116,
+      "confinedMilliseconds": 7846,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    },
+    {
+      "iteration": 2,
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "online",
+      "nativeMilliseconds": 2064,
+      "confinedMilliseconds": 8985,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    },
+    {
+      "iteration": 2,
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "offline",
+      "nativeMilliseconds": 2064,
+      "confinedMilliseconds": 8876,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    },
+    {
+      "iteration": 2,
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "online",
+      "nativeMilliseconds": 1777,
+      "confinedMilliseconds": 7836,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    },
+    {
+      "iteration": 2,
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "offline",
+      "nativeMilliseconds": 1777,
+      "confinedMilliseconds": 7850,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    },
+    {
+      "iteration": 3,
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "online",
+      "nativeMilliseconds": 2052,
+      "confinedMilliseconds": 8503,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    },
+    {
+      "iteration": 3,
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "offline",
+      "nativeMilliseconds": 2052,
+      "confinedMilliseconds": 8901,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    },
+    {
+      "iteration": 3,
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "online",
+      "nativeMilliseconds": 2175,
+      "confinedMilliseconds": 8023,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    },
+    {
+      "iteration": 3,
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "offline",
+      "nativeMilliseconds": 2175,
+      "confinedMilliseconds": 7857,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    }
+  ],
+  "summary": [
+    {
+      "browser": "chromium",
+      "mode": "online",
+      "nativeSamples": [
+        2070,
+        2064,
+        2052
+      ],
+      "confinedSamples": [
+        9530,
+        8985,
+        8503
+      ],
+      "nativeMedianMilliseconds": 2064,
+      "confinedMedianMilliseconds": 8985
+    },
+    {
+      "browser": "chromium",
+      "mode": "offline",
+      "nativeSamples": [
+        2070,
+        2064,
+        2052
+      ],
+      "confinedSamples": [
+        9091,
+        8876,
+        8901
+      ],
+      "nativeMedianMilliseconds": 2064,
+      "confinedMedianMilliseconds": 8901
+    },
+    {
+      "browser": "firefox",
+      "mode": "online",
+      "nativeSamples": [
+        2116,
+        1777,
+        2175
+      ],
+      "confinedSamples": [
+        7848,
+        7836,
+        8023
+      ],
+      "nativeMedianMilliseconds": 2116,
+      "confinedMedianMilliseconds": 7848
+    },
+    {
+      "browser": "firefox",
+      "mode": "offline",
+      "nativeSamples": [
+        2116,
+        1777,
+        2175
+      ],
+      "confinedSamples": [
+        7846,
+        7850,
+        7857
+      ],
+      "nativeMedianMilliseconds": 2116,
+      "confinedMedianMilliseconds": 7850
+    }
+  ]
+}

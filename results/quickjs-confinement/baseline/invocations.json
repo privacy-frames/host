@@ -1,0 +1,94 @@
+{
+  "sourceRevision": "4d0601437edab175e792165c4ffbe8aef2c13eae",
+  "nodeVersion": "v24.18.0",
+  "commands": [
+    {
+      "command": "npm test",
+      "log": "logs/npm-test.log",
+      "logCreatedAt": "2026-11-20 09:51:11.276223189 +0100",
+      "logSHA256": "8378ae420d8b8385ad7220f6d3d8142fc68969b85e9dd64dc76f8d20a2aece59",
+      "status": "passed",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run typecheck",
+      "log": "logs/typecheck.log",
+      "logCreatedAt": "2026-11-20 09:51:39.748266160 +0100",
+      "logSHA256": "68cb0b20525a13da4bf6b8f94caa5bf55291c9e69682e7a69895238e218b53e1",
+      "status": "passed",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run format:check",
+      "log": "logs/format.log",
+      "logCreatedAt": "2026-11-20 09:51:50.134281834 +0100",
+      "logSHA256": "668cf14b3cfb9a567d3f11fce3789ded3041a51c48b2a9860b1f23153f9eb8e7",
+      "status": "passed",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run test:compatibility",
+      "log": "logs/compatibility.log",
+      "logCreatedAt": "2026-11-20 09:51:38.586264406 +0100",
+      "logSHA256": "d3120ae348f6d084b53334a60c6bc21d5620f163067f9069aa12d0fbbb58e605",
+      "status": "failed",
+      "exitCode": 1
+    },
+    {
+      "command": "DISPLAY=:119 LIBGL_ALWAYS_SOFTWARE=1 npm run test:wasm-apps",
+      "log": "logs/image-matrix-run-1.log",
+      "logCreatedAt": "2026-11-20 09:56:37.991716273 +0100",
+      "logSHA256": "e2baa7690c9f82fbd8582fd89031bde4ea4e9b09439d8f4dd14850d6088ac89b",
+      "status": "passed",
+      "exitCode": 0
+    },
+    {
+      "command": "DISPLAY=:119 LIBGL_ALWAYS_SOFTWARE=1 WASM_APPS_TARGET=squoosh npm run test:wasm-apps",
+      "log": "logs/squoosh-run-2.log",
+      "logCreatedAt": "2026-11-20 10:04:02.815385148 +0100",
+      "logSHA256": "d10d2be5bcebb43b29d3e2486685c104efaab28754d081124365b24217c7dcb1",
+      "status": "passed",
+      "exitCode": 0
+    },
+    {
+      "command": "DISPLAY=:119 LIBGL_ALWAYS_SOFTWARE=1 WASM_APPS_TARGET=squoosh npm run test:wasm-apps",
+      "log": "logs/squoosh-run-3.log",
+      "logCreatedAt": "2026-11-20 10:07:19.319598364 +0100",
+      "logSHA256": "a3cb7e92a2ad295f7962ab20e436abd6d3341a2d9dffac3cb3783d03bdf39fc7",
+      "status": "passed",
+      "exitCode": 0
+    },
+    {
+      "command": "CORPUS_BROWSER=chromium CORPUS_TARGET=drawio node --import tsx test/guest-corpus.ts",
+      "log": "logs/drawio-retry.log",
+      "logCreatedAt": "2026-11-20 10:02:05.994994995 +0100",
+      "logSHA256": "cbab5dff6cc12c454e56c60f6c86a5b1d26aa1a5f74b20126c46c8392f0217f5",
+      "status": "passed",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run test:pitch",
+      "log": "logs/pitch.log",
+      "logCreatedAt": "2026-11-20 10:13:05.390194422 +0100",
+      "logSHA256": "a54d6fb7564f81a7baa3afb6018379c3f8770af89e0084790c265abc49d87a36",
+      "status": "passed",
+      "exitCode": 0
+    },
+    {
+      "command": "npm run test:assets",
+      "log": "logs/assets.log",
+      "logCreatedAt": "2026-11-20 09:56:57.022744995 +0100",
+      "logSHA256": "c63940b74e484b2993b94256e2fcfbb43fef5a3e4e08b55ee7533b377398e7ca",
+      "status": "passed",
+      "exitCode": 0
+    },
+    {
+      "command": "DISPLAY=:119 node --import tsx .tools/verify-existing-squoosh.ts",
+      "log": "logs/existing-helium.log",
+      "logCreatedAt": "2026-11-20 09:52:32.842346290 +0100",
+      "logSHA256": "d0df8c3c492f811b1f0902a352dc21c4eddd1d0b92fef4bb8a0a648142f610b5",
+      "status": "passed",
+      "exitCode": 0
+    }
+  ]
+}
