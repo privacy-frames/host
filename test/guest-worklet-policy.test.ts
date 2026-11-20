@@ -42,6 +42,9 @@ function fixture(create = createWorkletHost) {
     useControl() {
       currentPort = control.port1;
     },
+    revoke(value: object) {
+      guest.delete(value);
+    },
     close() {
       control.port1.close();
       control.port2.close();
@@ -192,6 +195,35 @@ test('listener adapters preserve removal and transferred endpoint producer owner
   }
 });
 
+test('queued delivery after ownership revocation neither admits endpoints nor calls guest', async () => {
+  const f = fixture();
+  const transfer = new MessageChannel();
+  try {
+    let calls = 0;
+    const callback = f.callback(() => {
+      calls++;
+    });
+    f.host.set(f.port, 'onmessage', callback);
+    let resolve!: (event: MessageEvent) => void;
+    const received = new Promise<MessageEvent>((done) => {
+      resolve = done;
+    });
+    f.port.addEventListener('message', resolve, { once: true });
+    f.channel.port2.postMessage({ endpoint: transfer.port1 }, [transfer.port1]);
+    f.revoke(callback);
+    const event = await timeout(received);
+    assert.equal(calls, 0);
+    assert.equal(f.host.owns!(event), false);
+    assert.equal(event.ports.length, 1);
+    assert.equal(f.host.owns!(event.ports[0]), false);
+    event.ports[0].close();
+  } finally {
+    transfer.port1.close();
+    transfer.port2.close();
+    f.close();
+  }
+});
+
 test('transfer options are consumed once and detachment is committed after native success', async () => {
   const f = fixture();
   try {
@@ -207,8 +239,22 @@ test('transfer options are consumed once and detachment is committed after nativ
     assert.equal(reads, 1);
     assert.equal(bytes.byteLength, 0);
     assert.deepEqual(f.transfers, [[bytes]]);
+    const next = new ArrayBuffer(1);
+    let iteratorReads = 0;
+    const sequence = {
+      get [Symbol.iterator]() {
+        iteratorReads++;
+        return function* () {
+          yield next;
+        };
+      },
+    };
+    f.call(f.port, 'postMessage', { next }, sequence);
+    assert.equal(iteratorReads, 1);
+    assert.equal(next.byteLength, 0);
+    assert.deepEqual(f.transfers, [[bytes], [next]]);
     assert.throws(() => f.call(f.port, 'postMessage', { bad: () => {} }, []));
-    assert.equal(f.transfers.length, 1);
+    assert.equal(f.transfers.length, 2);
   } finally {
     f.close();
   }

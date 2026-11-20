@@ -1,3 +1,4 @@
+import { captureMessageTransfer } from './message-transfer.ts';
 import {
   NativePolicy,
   NativePolicyError,
@@ -202,6 +203,7 @@ export function registerMessagePortPolicy(options: MessagePortPolicyOptions) {
     let wrapper = callbacks.get(callback);
     if (!wrapper) {
       wrapper = function (event: Event) {
+        if (!options.isGuestValue(callback)) return;
         admitEvent(event);
         if (typeof callback === 'function') apply(callback, port, [event]);
         else {
@@ -257,15 +259,7 @@ export function registerMessagePortPolicy(options: MessagePortPolicyOptions) {
             // Consume a guest transfer getter/iterator once, then give the platform
             // and detachment accounting the same captured sequence.
             if (!args.length) throw new TypeError('Missing message argument');
-            const supplied = args[1];
-            if (supplied != null && !object(supplied))
-              throw new TypeError('Transfer options must be an object');
-            const sequence = Array.isArray(supplied)
-              ? supplied
-              : supplied == null
-                ? []
-                : (Reflect.get(Object(supplied), 'transfer') ?? []);
-            const transfer = [...(sequence as Iterable<Transferable>)];
+            const transfer = captureMessageTransfer(args[1]);
             const result = apply(target, receiver, [args[0], transfer]);
             options.detachTransferred(transfer);
             return result;
