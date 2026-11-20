@@ -3,169 +3,141 @@ import test from 'node:test';
 import { createNativeHost } from '../src/guest/native-host.ts';
 import {
   NativePolicy,
-  NativePolicyError,
   type NativeContract,
+  NativePolicyError,
 } from '../src/guest/native-policy.ts';
-
 const contract = (
   id: string,
   result: NativeContract['result'] = 'data',
 ): NativeContract => ({ id, result, effect: 'local-data', callbacks: 'none' });
-
 function fixture() {
   const registry = new NativePolicy();
-  const prototype = {
-    get value() {
-      return 11;
-    },
-    method(value: number) {
-      return value + 1;
-    },
-  };
-  const target = Object.create(prototype) as object;
-  let unknownReads = 0;
-  Object.defineProperty(prototype, 'unknown', {
-    configurable: true,
-    get() {
-      unknownReads++;
-      return 'unreviewed';
-    },
+  const owned = new WeakSet<object>();
+  const published: { target: Function; contract: NativeContract }[] = [];
+  const host = createNativeHost({
+    registry,
+    name: 'Fixture',
+    owns: (value) => owned.has(value),
+    admit: (value) => owned.has(value),
+    result: (value) => value,
+    prototype: (value) => registry.prototype(value),
+    functionPrototype: Function.prototype,
+    callablePublished: (target, contract) => published.push({ target, contract }),
   });
-  const invoke = ({
-    target,
-    receiver,
-    arguments: args,
-  }: {
-    target: Function;
-    receiver: unknown;
-    arguments: readonly unknown[];
-  }) => Reflect.apply(target, receiver, args);
-  registry.registerPrototype(prototype, {
-    name: 'Local',
+  return { registry, owned, published, host };
+}
+test('only an explicit native call contract permits a registered constructor without new', () => {
+  const { registry, owned, host, published } = fixture();
+  const ctor = WebAssembly.CompileError;
+  host.registerConstructor(
+    ctor,
+    registry.registerConstructor(ctor, {
+      contract: contract('error.new', 'reference'),
+      construct: (target, args) => Reflect.construct(target, args),
+    }),
+  );
+  const namespace = { ctor };
+  registry.registerFacade(namespace, {
+    name: 'Namespace',
     members: [
       {
-        key: 'value',
-        read: {
-          contract: contract('Local.value'),
-          read: ({ receiver, descriptor }) =>
-            Reflect.apply(descriptor.get!, receiver, []),
+        key: 'ctor',
+        call: {
+          contract: contract('error.call', 'reference'),
+          receiver: 'ignored',
+          call: ({ target, arguments: args }) => Reflect.apply(target, undefined, args),
         },
       },
-      { key: 'method', call: { contract: contract('Local.method'), call: invoke } },
     ],
   });
-  registry.admitObject(target);
-  const admitted = new WeakSet<object>([prototype, target]);
-  const observed: string[] = [];
-  const host = createNativeHost({
-    name: 'Local',
-    registry,
-    owns: (target) => admitted.has(target),
-    admit: (target) => admitted.has(target),
-    result(value, contract) {
-      observed.push(contract.id);
-      return value;
-    },
-    functionPrototype: Function.prototype,
-    prototype: (target) =>
-      target === prototype ? Object.prototype : registry.prototype(target),
-  });
-  host.captureCallableShape('Local.method', prototype.method);
-  host.captureCallableShape(
-    'Local.value',
-    Object.getOwnPropertyDescriptor(prototype, 'value')!.get!,
-  );
-  return {
-    registry,
-    host,
-    target,
-    prototype,
-    admitted,
-    observed,
-    reads: () => unknownReads,
-  };
-}
-
-test('codec preserves stable callable and descriptor identity without exposing native functions', () => {
-  const { host, target, prototype, observed } = fixture();
-  const method = host.get(target, 'method');
-  assert.equal(typeof method, 'function');
-  assert.notEqual(method, prototype.method);
-  assert.equal(host.get(target, 'method'), method);
-  assert.equal(host.descriptor(prototype, 'method')?.value, method);
-  assert.equal(host.get(method as Function, 'name'), 'method');
-  assert.equal(host.get(method as Function, 'length'), 1);
-  assert.equal(host.prototype(method as Function), Function.prototype);
-  assert.deepEqual(host.ownKeys(method as Function), ['length', 'name']);
-  assert.equal(host.call(method as Function, target, [3]), 4);
-  assert.equal(Reflect.apply(method as Function, target, [6]), 7);
-  assert(observed.includes('Local.method'));
-  assert.throws(() => host.call(prototype.method, target, [3]), NativePolicyError);
-  assert.throws(() => host.construct(method as Function, []), NativePolicyError);
-});
-
-test('codec rejects unknown getters and foreign receivers before invoking them', () => {
-  const { host, target, prototype, reads } = fixture();
-  assert.throws(() => host.get(target, 'unknown'), NativePolicyError);
-  assert.equal(reads(), 0);
-  assert.equal(Reflect.get(target, 'unknown'), 'unreviewed');
-  assert.equal(reads(), 1);
-  const getter = host.descriptor(prototype, 'value')?.get;
-  assert(getter);
-  assert.equal(host.call(getter, target, []), 11);
-  assert.throws(() => host.call(getter, {}, []), NativePolicyError);
-  assert.throws(() => host.get({}, 'value'), NativePolicyError);
-  Object.defineProperty(target, 'late', {
-    get() {
-      throw new Error('must not run');
-    },
-  });
-  assert.throws(() => host.get(target, 'late'), NativePolicyError);
-});
-
-test('codec keeps wrapper shape immutable and refuses inherited callable authority', () => {
-  const { host, target } = fixture();
-  const method = host.get(target, 'method') as Function;
-  Object.defineProperty(method, 'name', { value: 'changed outside codec' });
-  assert.equal(host.get(method, 'name'), 'method');
-  assert.equal(host.descriptor(method, 'name')?.value, 'method');
-  assert.equal(host.set(method, 'name', 'guest'), false);
-  assert.throws(() => host.get(method, 'constructor'), NativePolicyError);
-  assert.equal(host.descriptor(method, 'constructor'), undefined);
-  assert.equal(host.get(method, Symbol.toPrimitive), undefined);
-  assert.equal(host.delete!(target, 'method'), false);
-  assert.equal(host.settable!(target, 'new'), false);
-});
-
-test('codec maps only registered constructor tokens and forwards results through admission', () => {
-  const { registry, host, prototype, admitted, observed } = fixture();
-  function Local() {
-    return Object.create(prototype) as object;
-  }
-  const token = registry.registerConstructor(Local, {
-    contract: contract('Local.constructor', 'reference'),
-    construct: (target, args) => Reflect.construct(target, args),
-  });
-  host.registerConstructor(Local, token);
-  const holder = { constructor: Local };
-  registry.registerFacade(holder, {
-    name: 'Constructor holder',
+  registry.registerFacade(ctor, {
+    name: 'Error constructor',
     members: [
       {
-        key: 'constructor',
+        key: 'prototype',
         read: {
-          contract: contract('Local.constructor.read', 'callable'),
+          contract: contract('error.prototype', 'reference'),
           read: ({ descriptor }) => descriptor.value,
         },
       },
     ],
   });
-  admitted.add(holder);
-  assert.equal(host.get(holder, 'constructor'), Local);
-  assert.equal(host.owns!(Local), true);
-  assert.equal(Object.getPrototypeOf(host.construct(Local, [])), prototype);
-  assert(observed.includes('Local.constructor'));
-  assert.throws(() => host.call(Local, undefined, []), /require new/);
-  assert.throws(() => host.registerConstructor(Local, token), /already belongs/);
-  assert.throws(() => host.construct(function Local() {}, []), NativePolicyError);
+  owned.add(namespace);
+  owned.add(ctor);
+  assert.throws(() => host.call(ctor, undefined, []), /require new/);
+  assert.equal(host.get(namespace, 'ctor'), ctor);
+  assert.equal(host.descriptor(namespace, 'ctor')?.value, ctor);
+  assert.equal(host.get(ctor, 'prototype'), ctor.prototype);
+  const called = host.call(ctor, undefined, ['called', { cause: 19 }]);
+  assert(called instanceof ctor);
+  assert.equal(called.message, 'called');
+  assert.equal(called.cause, 19);
+  const built = host.construct(ctor, ['constructed']);
+  assert(built instanceof ctor);
+  assert.equal(built.message, 'constructed');
+  assert.equal(published.length, 1);
+  assert.equal(published[0].target, ctor);
+});
+test('published wrapper identity is stable and usable for private argument-decoding metadata', () => {
+  const { registry, owned, host, published } = fixture();
+  const namespace = { invoke: (value: number) => value + 1 };
+  registry.registerFacade(namespace, {
+    name: 'Namespace',
+    members: [
+      {
+        key: 'invoke',
+        call: {
+          contract: contract('invoke'),
+          receiver: 'ignored',
+          call: ({ target, arguments: args }) => Reflect.apply(target, undefined, args),
+        },
+      },
+    ],
+  });
+  owned.add(namespace);
+  host.captureCallableShape('invoke', namespace.invoke);
+  const fn = host.get(namespace, 'invoke') as Function;
+  assert.notEqual(fn, namespace.invoke);
+  assert.equal(host.get(namespace, 'invoke'), fn);
+  assert.equal(published.length, 1);
+  assert.equal(published[0].target, fn);
+  assert.equal(published[0].contract.id, 'invoke');
+  assert.equal(host.call(fn, undefined, [3]), 4);
+});
+test('trusted native callable producer retains the original funcref identity', () => {
+  const { registry, owned, host } = fixture();
+  const module = new WebAssembly.Module(
+    new Uint8Array([
+      0, 97, 115, 109, 1, 0, 0, 0, 1, 5, 1, 96, 0, 1, 127, 3, 2, 1, 0, 7, 5, 1, 1, 102, 0,
+      0, 10, 6, 1, 4, 0, 65, 7, 11,
+    ]),
+  );
+  const fn = new WebAssembly.Instance(module).exports.f as Function;
+  const producer = { fn };
+  registry.registerFacade(producer, {
+    name: 'Native producer',
+    members: [
+      {
+        key: 'fn',
+        call: {
+          contract: contract('funcref'),
+          receiver: 'ignored',
+          call: ({ target, arguments: args }) => Reflect.apply(target, undefined, args),
+        },
+      },
+    ],
+  });
+  owned.add(producer);
+  const result = registry.read(producer, 'fn');
+  assert.equal(result.kind, 'callable');
+  if (result.kind !== 'callable') assert.fail();
+  host.registerCallable(fn, result.callable);
+  assert.equal(host.get(producer, 'fn'), fn);
+  assert.equal(host.call(fn, undefined, []), 7);
+  const table = new WebAssembly.Table({ element: 'anyfunc', initial: 1 });
+  table.set(0, fn);
+  assert.equal(table.get(0), fn);
+  assert.equal(host.get(fn, 'length'), 0);
+  assert.throws(() => host.call(function f() {}, undefined, []), NativePolicyError);
+  assert.throws(() => host.construct(fn, []), NativePolicyError);
 });

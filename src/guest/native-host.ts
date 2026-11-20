@@ -21,10 +21,14 @@ export interface NativeHostOptions {
   /** Translate a private prototype boundary to its reviewed physical declaration. */
   propertyTarget?(target: object): object;
   isAbsent?(target: object, key: PropertyKey): boolean;
+  /** Trusted adapters may associate argument decoding with the exposed identity. */
+  callablePublished?(target: Function, contract: NativeContract): void;
 }
 export interface NativeHost extends GuestHost {
   captureCallableShape(id: string, target: Function): void;
   registerConstructor(target: Function, token: NativeConstructor): void;
+  /** The trusted producer retains this exact native identity (for example a funcref). */
+  registerCallable(target: Function, token: NativeCallable): void;
 }
 
 const descriptor = Object.getOwnPropertyDescriptor;
@@ -45,6 +49,7 @@ export function createNativeHost(options: NativeHostOptions): NativeHost {
   >();
   const constructors = new Map<Function, NativeConstructor>();
   const constructorTargets = new Map<NativeConstructor, Function>();
+  const constructorCalls = new WeakMap<Function, NativeCallable>();
   const isWrapper = (target: object) =>
     typeof target === 'function' && tokens.has(target);
   const isConstructor = (target: object) =>
@@ -60,6 +65,22 @@ export function createNativeHost(options: NativeHostOptions): NativeHost {
         'unclassified native object',
       );
   }
+  function publish(target: Function, token: NativeCallable): void {
+    if (tokens.has(target) || wrappers.has(token))
+      throw new TypeError('Callable already belongs to ' + name);
+    wrapperDescriptors.set(
+      target,
+      new Map(
+        ['name', 'length'].map((key) => [
+          key,
+          Object.freeze({ ...descriptor(target, key) }),
+        ]),
+      ),
+    );
+    tokens.set(target, token);
+    wrappers.set(token, target);
+    options.callablePublished?.(target, token.contract);
+  }
   function unwrap(result: NativeResult): unknown {
     if (result.kind === 'constructor') {
       const target = constructorTargets.get(result.construct);
@@ -67,6 +88,18 @@ export function createNativeHost(options: NativeHostOptions): NativeHost {
       return target;
     }
     if (result.kind === 'value') return options.result(result.value, result.contract);
+    if (result.construct) {
+      const target = constructorTargets.get(result.construct);
+      if (!target) throw new TypeError(name + ' callable constructor has no owner');
+      const previous = constructorCalls.get(target);
+      if (previous && previous !== result.callable)
+        throw new TypeError(name + ' constructor has multiple call contracts');
+      if (!previous) {
+        constructorCalls.set(target, result.callable);
+        options.callablePublished?.(target, result.callable.contract);
+      }
+      return target;
+    }
     let wrapper = wrappers.get(result.callable);
     if (!wrapper) {
       const token = result.callable;
@@ -84,22 +117,13 @@ export function createNativeHost(options: NativeHostOptions): NativeHost {
           configurable: true,
         });
       }
-      wrapperDescriptors.set(
-        wrapper,
-        new Map(
-          ['name', 'length'].map((key) => [
-            key,
-            Object.freeze({ ...descriptor(wrapper!, key) }),
-          ]),
-        ),
-      );
-      wrappers.set(token, wrapper);
-      tokens.set(wrapper, token);
+      publish(wrapper, token);
     }
     return wrapper;
   }
 
   return {
+    registerCallable: publish,
     captureCallableShape(id, target) {
       const name: unknown = descriptor(target, 'name')?.value;
       const length: unknown = descriptor(target, 'length')?.value;
@@ -139,9 +163,11 @@ export function createNativeHost(options: NativeHostOptions): NativeHost {
       return isWrapper(target) ? false : registry.write(target, key, value);
     },
     call(target, receiver, args) {
-      if (constructors.has(target))
+      const token = constructors.has(target)
+        ? constructorCalls.get(target)
+        : tokens.get(target);
+      if (constructors.has(target) && !token)
         throw new TypeError(name + ' constructors require new');
-      const token = tokens.get(target);
       if (!token)
         throw new NativePolicyError('call', name, undefined, 'unregistered callable');
       if (object(receiver)) options.admit(receiver);
