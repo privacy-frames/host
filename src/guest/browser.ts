@@ -2,6 +2,7 @@ import { GuestLocation } from './location.ts';
 import { GuestEngine } from './engine.ts';
 import type { GuestHost } from './protocol.ts';
 import { GuestResources } from './resources.ts';
+import { createGuestURLPolicy, type GuestURLPolicy } from './url-policy.ts';
 import { GuestDOM } from './dom.ts';
 import { createGuestCustomElements } from './custom-elements.ts';
 import { createGuestDOMParser, parseGuestDocument } from './parser.ts';
@@ -343,6 +344,7 @@ export class BrowserEnvironment {
   readonly document?: Document;
   readonly dom?: GuestDOM;
   private engine?: GuestEngine;
+  private readonly urls: GuestURLPolicy;
   private customElements?: ReturnType<typeof createGuestCustomElements>;
   private constructors = new Set<Function>();
   private audioWorkletNodeConstructor?: Function;
@@ -367,6 +369,15 @@ export class BrowserEnvironment {
   constructor(readonly options: BrowserEnvironmentOptions) {
     const { catalog, global: native } = options;
     this.resources = new GuestResources(catalog);
+    this.urls = createGuestURLPolicy({
+      URL: Reflect.get(native, 'URL'),
+      URLSearchParams: Reflect.get(native, 'URLSearchParams'),
+      createObjectURL: (value) => {
+        if (!isBlob(value)) throw new TypeError('Object URLs require a Blob');
+        return this.resources.createObjectURL(value);
+      },
+      revokeObjectURL: (value) => this.resources.revokeObjectURL(value),
+    });
     this.document = 'document' in native ? native.document : undefined;
     environments.set(native, this);
     if (this.document?.defaultView) {
@@ -437,22 +448,35 @@ export class BrowserEnvironment {
     });
     this.host = {
       owns: (target) =>
-        typeof target !== 'function' && (isNode(target) || isWindow(target)),
+        this.urls.owns!(target) ||
+        (typeof target !== 'function' && (isNode(target) || isWindow(target))),
       get: (target, key) => this.get(target, key),
       set: (target, key, value) => this.set(target, key, value),
-      call: (target, receiver, args) => Reflect.apply(target, receiver, args),
+      call: (target, receiver, args) =>
+        this.urls.owns!(target)
+          ? this.urls.call(target, receiver, args)
+          : Reflect.apply(target, receiver, args),
       construct: (target, args, newTarget) => this.construct(target, args, newTarget),
       ownKeys: (target) =>
-        target === native
-          ? Reflect.ownKeys(this.globals)
-          : Reflect.ownKeys(target).filter((key) => this.scopeProperty(target, key)),
+        this.urls.owns!(target)
+          ? this.urls.ownKeys(target)
+          : target === native
+            ? Reflect.ownKeys(this.globals)
+            : Reflect.ownKeys(target).filter((key) => this.scopeProperty(target, key)),
       descriptor: (target, key) => this.descriptor(target, key),
-      prototype: (target) => Reflect.getPrototypeOf(target),
+      prototype: (target) =>
+        this.urls.owns!(target)
+          ? this.urls.prototype(target)
+          : Reflect.getPrototypeOf(target),
       settable: (target, key) =>
+        !this.urls.owns!(target) &&
         typeof key === 'string' &&
         (this.namedSetters.has(target) ||
           Object.prototype.toString.call(target) === '[object DOMStringMap]'),
-      delete: (target, key) => Reflect.deleteProperty(target, key),
+      delete: (target, key) =>
+        this.urls.owns!(target)
+          ? this.urls.delete!(target, key)
+          : Reflect.deleteProperty(target, key),
     };
     const exposures = this.document
       ? ['Window']
@@ -756,6 +780,7 @@ export class BrowserEnvironment {
   }
 
   private get(target: object, key: PropertyKey): unknown {
+    if (this.urls.owns!(target)) return this.urls.get(target, key);
     if (!this.scopeProperty(target, key)) return undefined;
     const scope = globalPrototypes.get(target);
     if (scope && typeof key === 'string' && own(scope.globals, key))
@@ -926,6 +951,7 @@ export class BrowserEnvironment {
   }
 
   private set(target: object, key: PropertyKey, value: unknown): boolean {
+    if (this.urls.owns!(target)) return this.urls.set(target, key, value);
     if (key === '__proto__' || key === 'prototype' || key === 'constructor') return false;
     const constructor = Reflect.getOwnPropertyDescriptor(target, 'constructor')?.value;
     if (typeof constructor === 'function' && constructor.prototype === target)
@@ -1084,6 +1110,7 @@ export class BrowserEnvironment {
   }
 
   private descriptor(target: object, key: PropertyKey): PropertyDescriptor | undefined {
+    if (this.urls.owns!(target)) return this.urls.descriptor(target, key);
     if (!this.scopeProperty(target, key)) return;
     const descriptor = Reflect.getOwnPropertyDescriptor(target, key);
     if (!descriptor) return;
@@ -1123,6 +1150,7 @@ export class BrowserEnvironment {
   }
 
   private construct(target: Function, args: unknown[], newTarget?: Function): object {
+    if (this.urls.owns!(target)) return this.urls.construct(target, args, newTarget);
     const custom = this.customElements?.constructBase(target, args, newTarget);
     if (custom) return custom;
     if (target.name === 'CustomElementRegistry')
@@ -1350,9 +1378,6 @@ export class BrowserEnvironment {
       if (!this.dom!.attribute(owner, 'rel', detached.rel))
         return key === 'toggle' ? false : undefined;
     }
-    if (key === 'createObjectURL' && isBlob(args[0]))
-      return this.resources.createObjectURL(args[0]);
-    if (key === 'revokeObjectURL') return this.resources.revokeObjectURL(String(args[0]));
     if (key === '__lookupGetter__' || key === '__lookupSetter__') {
       let object = receiver;
       while (object && (typeof object === 'object' || typeof object === 'function')) {

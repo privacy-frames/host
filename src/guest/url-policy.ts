@@ -59,6 +59,7 @@ export function createGuestURLPolicy(options: GuestURLPolicyOptions): GuestURLPo
     urlPrototype,
     paramsPrototype,
   ]);
+  const otherBrands = new WeakSet<object>();
   const iteratorPrototypes = new Set<object>();
   const iteratorContracts = new Set<string>();
   const wrappers = new WeakMap<NativeCallable, Function>();
@@ -429,9 +430,14 @@ export function createGuestURLPolicy(options: GuestURLPolicyOptions): GuestURLPo
     URLSearchParams: nativeParams,
     admit,
     owns(target) {
-      return (
-        owned.has(target) || branded(target, href) || branded(target, size ?? paramsText)
-      );
+      if (owned.has(target)) return true;
+      // Native URL slots cannot be acquired by changing a prototype. Remember
+      // other brands without repeating throwing native brand checks per access.
+      // Private wrappers admitted later still win through the owned check above.
+      if (otherBrands.has(target)) return false;
+      if (branded(target, href) || branded(target, size ?? paramsText)) return true;
+      otherBrands.add(target);
+      return false;
     },
     get(target, key) {
       ensure(target);
