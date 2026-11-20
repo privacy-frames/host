@@ -141,3 +141,36 @@ test('trusted native callable producer retains the original funcref identity', (
   assert.throws(() => host.call(function f() {}, undefined, []), NativePolicyError);
   assert.throws(() => host.construct(fn, []), NativePolicyError);
 });
+
+test('exact callable publication refuses metadata accessors without executing them', () => {
+  const { registry, host } = fixture();
+  function fn() {
+    return 1;
+  }
+  const producer = { fn };
+  registry.registerFacade(producer, {
+    name: 'Producer',
+    members: [
+      {
+        key: 'fn',
+        call: { contract: contract('metadata'), receiver: 'ignored', call: () => 1 },
+      },
+    ],
+  });
+  const result = registry.read(producer, 'fn');
+  if (result.kind !== 'callable') assert.fail();
+  let reads = 0;
+  Object.defineProperty(fn, 'name', {
+    configurable: true,
+    get() {
+      reads++;
+      return 'unsafe';
+    },
+  });
+  assert.throws(
+    () => host.registerCallable(fn, result.callable),
+    /native data descriptor/,
+  );
+  assert.equal(reads, 0);
+  assert.equal(host.owns!(fn), false);
+});

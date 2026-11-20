@@ -16,7 +16,7 @@ export interface NativeContract {
   /** Aliases may share an ID only when they implement the same reviewed contract. */
   readonly id: string;
   readonly effect: NativeEffect;
-  readonly result: 'data' | 'reference' | 'callable' | 'guest' | 'none';
+  readonly result: 'data' | 'reference' | 'callable' | 'guest' | 'delegated' | 'none';
   readonly callbacks: 'none' | 'guest' | 'prepared-context';
 }
 
@@ -180,6 +180,7 @@ export class NativePolicy {
   private readonly prototypes = new Map<object, Registration>();
   private readonly facades = new WeakMap<object, Registration>();
   private readonly admitted = new WeakMap<object, readonly Registration[]>();
+  private readonly anchors = new WeakMap<object, Registration>();
   private readonly callables = new WeakMap<NativeCallable, CallableRecord>();
   private readonly functions = new WeakMap<Function, NativeCallable>();
   private readonly constructors = new WeakMap<NativeConstructor, ConstructorRecord>();
@@ -212,7 +213,8 @@ export class NativePolicy {
       );
     const registration = this.capture(target, schema, true);
     this.facades.set(target, registration);
-    this.admitted.set(target, [registration]);
+    const anchored = this.anchors.has(target) ? (this.admitted.get(target) ?? []) : [];
+    this.admitted.set(target, [registration, ...anchored]);
   }
 
   registerConstructor(target: Function, rule: NativeConstructRule): NativeConstructor {
@@ -267,8 +269,31 @@ export class NativePolicy {
   }
 
   /** Called only for values supplied by a reviewed native producer. Structural
-   * prototype matching alone does not establish that producer's authority. */
-  admitObject(target: object): void {
+   * prototype matching alone does not establish that producer's authority. An
+   * explicit semantic anchor uses only its registered native brand and reviewed
+   * lineage; foreign physical ancestors supply no declarations. */
+  admitObject(target: object, reviewedPrototype?: object): void {
+    if (reviewedPrototype) {
+      const anchor = this.prototypes.get(reviewedPrototype);
+      if (!anchor?.accepts)
+        throw new NativePolicyError(
+          'admit',
+          'unknown anchor',
+          undefined,
+          'semantic anchor requires a registered native brand guard',
+        );
+      if (!anchor.accepts(target))
+        this.refuse('admit', anchor, undefined, 'receiver brand rejected');
+      const existing = this.admitted.get(target);
+      if (existing) {
+        if (!existing.includes(anchor))
+          this.refuse('admit', anchor, undefined, 'receiver already has another family');
+        return;
+      }
+      this.anchors.set(target, anchor);
+      this.admitted.set(target, [anchor, ...this.parentRegistrations(reviewedPrototype)]);
+      return;
+    }
     if (this.admitted.has(target)) return;
     const immediate = Object.getPrototypeOf(target);
     if (!immediate || !this.prototypes.has(immediate))
@@ -421,6 +446,8 @@ export class NativePolicy {
 
   prototype(target: object): object | null {
     this.requireAdmission(target, 'prototype');
+    const anchor = this.anchors.get(target);
+    if (anchor) return anchor.target;
     const prototype = Object.getPrototypeOf(target);
     return prototype && this.prototypes.has(prototype) ? prototype : null;
   }
@@ -569,6 +596,7 @@ export class NativePolicy {
   }
 
   private result(value: unknown, contract: NativeContract): NativeResult {
+    if (contract.result === 'delegated') return { kind: 'value', value, contract };
     if (contract.result === 'guest') {
       if (object(value) && !this.isGuestValue?.(value))
         throw new NativePolicyError(
@@ -675,7 +703,15 @@ export class NativePolicy {
     for (const registration of lineage) {
       const member = registration.members.get(key);
       if (!member) continue;
-      if (!registration.exact) {
+      if (this.anchors.has(target)) {
+        if (target !== member.owner && Object.hasOwn(target, key))
+          this.refuse(
+            operation,
+            registration,
+            key,
+            'unreviewed own descriptor shadows anchored native member',
+          );
+      } else if (!registration.exact) {
         for (
           let current: object | null = target;
           current && current !== member.owner;

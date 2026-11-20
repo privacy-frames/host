@@ -1,4 +1,12 @@
 import type { GuestHost } from './protocol.ts';
+import { createNativeHost } from './native-host.ts';
+import {
+  NativePolicy,
+  NativePolicyError,
+  type NativeContract,
+  type NativeMemberRule,
+  type NativeReadOperation,
+} from './native-policy.ts';
 
 export interface NativeWasmOptions {
   /** Read only declared imports through the guest's property policy. The decoded
@@ -29,7 +37,6 @@ const native = WebAssembly;
 const apply = Reflect.apply;
 const construct: (target: Function, args: unknown[]) => object = Reflect.construct;
 const get = Reflect.get;
-const set = Reflect.set;
 const ownKeys = Reflect.ownKeys;
 const descriptor = Object.getOwnPropertyDescriptor;
 const define = Object.defineProperty;
@@ -62,19 +69,15 @@ const sharedBufferLength =
 const object = (value: unknown): value is object =>
   value !== null && (typeof value === 'object' || typeof value === 'function');
 
-/** Native execution has only the import capabilities captured by the owner.
- * Every constructor reference and borrowed descriptor stays in this domain. */
+/** Native Wasm retains native function/memory identity; only declared local
+ * descriptors and trusted native producers grant member/call authority. */
 export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
   const namespace: Record<PropertyKey, unknown> = Object.create(prototype(native));
+  const registry = new NativePolicy();
   const owned = new WeakSet<object>([namespace]);
-  const prototypes = new WeakSet<object>();
+  const declarations = new Set<object>();
   const kinds = new WeakMap<object, WasmKind | false>();
-  const replacements = new Map<Function, Function>();
-  const methods = new Map<Function, Function>();
   const importArguments = new WeakMap<Function, number>();
-  // A native funcref table distinguishes exported Wasm functions from arbitrary
-  // externrefs. Marking an arbitrary returned JS constructor domain-owned would
-  // bypass the browser host's constructor policy.
   const functionProbe = new native.Table({ element: 'anyfunc', initial: 1 });
   const probeSet = native.Table.prototype.set;
   const functionKinds = new WeakMap<Function, boolean>();
@@ -89,9 +92,66 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
     typeof native.Tag === 'function' ? new native.Tag({ parameters: [] }) : undefined;
   const probeException =
     probeTag && typeof native.Exception === 'function'
-      ? new native.Exception(probeTag, [])
+      ? new native.Exception(probeTag, [], { traceStack: true })
       : undefined;
-
+  const ownExceptionStack = probeException && descriptor(probeException, 'stack');
+  const absent = new WeakMap<object, Set<PropertyKey>>();
+  const kindPrototypes = new Map<WasmKind, object>();
+  const presence = new WeakMap<object, Set<PropertyKey>>();
+  const functionKeys = ownKeys(Function.prototype);
+  function declarationPresence(target: object): void {
+    const keys = new Set<PropertyKey>();
+    for (let current: object | null = target; current; current = prototype(current))
+      for (const key of ownKeys(current)) keys.add(key);
+    presence.set(target, keys);
+  }
+  const contract = (
+    id: string,
+    result: NativeContract['result'] = 'data',
+    callbacks: NativeContract['callbacks'] = 'none',
+  ): NativeContract => ({ id, result, callbacks, effect: 'local-data' });
+  const host = createNativeHost({
+    registry,
+    name: 'WebAssembly',
+    functionPrototype: Function.prototype,
+    owns: (target) => owned.has(target),
+    admit(target) {
+      remember(target);
+      return owned.has(target);
+    },
+    result: (value) => remember(value),
+    isAbsent: (target, key) => {
+      if (absent.get(target)?.has(key)) return true;
+      const type = kind(target);
+      const anchor = type && kindPrototypes.get(type);
+      return !!anchor && (absent.get(anchor)?.has(key) ?? false);
+    },
+    // A branded foreign object's physical prototype is not an authority source.
+    // Presence comes from captured local declarations, never a foreign has/get trap.
+    hasProperty(target, key) {
+      const known = presence.get(target);
+      if (known) return known.has(key);
+      const type = kind(target);
+      const anchor = type && kindPrototypes.get(type);
+      return !!anchor && (presence.get(anchor)?.has(key) ?? false);
+    },
+    prototype(target) {
+      return declarations.has(target)
+        ? target === native.CompileError.prototype ||
+          target === native.LinkError.prototype ||
+          target === native.RuntimeError.prototype
+          ? Error.prototype
+          : Object.prototype
+        : registry.prototype(target);
+    },
+    callablePublished(target, rule) {
+      if (
+        rule.id === 'WebAssembly.instantiate' ||
+        rule.id === 'WebAssembly.instantiateStreaming'
+      )
+        importArguments.set(target, 1);
+    },
+  });
   function accepts(value: object, check: Function): boolean {
     try {
       apply(check, value, []);
@@ -160,41 +220,134 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
     );
   }
 
+  function publishFunction(target: Function): void {
+    const producer = { invoke: target };
+    const rule = contract('WebAssembly.exported-function', 'delegated', 'guest');
+    registry.registerFacade(producer, {
+      name: 'Wasm native function producer',
+      members: [
+        {
+          key: 'invoke',
+          call: {
+            contract: rule,
+            receiver: 'ignored',
+            call: ({ target, arguments: args }) =>
+              options.runWasm(
+                () => remember(apply(target, undefined, args)),
+                localFunctions.has(target) && !foreignCode,
+              ),
+          },
+        },
+      ],
+    });
+    const result = registry.read(producer, 'invoke');
+    if (result.kind !== 'callable')
+      throw new TypeError('Wasm producer did not publish a callable');
+    presence.set(target, new Set([...ownKeys(target), ...functionKeys]));
+    host.registerCallable(target, result.callable);
+    owned.add(target);
+  }
   function remember(value: object): object;
   function remember(value: unknown): unknown;
   function remember(value: unknown): unknown {
-    if (!object(value)) return value;
+    if (!object(value) || owned.has(value)) return value;
     if (typeof value === 'function') {
-      const replacement = replacements.get(value) || methods.get(value);
-      if (replacement) return replacement;
-      if (!owned.has(value) && wasmFunction(value)) {
-        owned.add(value);
+      if (wasmFunction(value)) {
         if (!localFunctions.has(value)) foreignCode = true;
+        publishFunction(value);
       }
       return value;
     }
-    if (owned.has(value)) return value;
     const type = kind(value);
     if (!type) return value;
+    const anchor = kindPrototypes.get(type);
+    if (!anchor)
+      throw new NativePolicyError(
+        'admit',
+        'WebAssembly.' + type,
+        undefined,
+        'native family unavailable',
+      );
+    registry.admitObject(value, anchor);
     owned.add(value);
     if (type === 'Table' && !localTables.has(value)) foreignCode = true;
     if (type === 'Memory') retainMemory(value);
+    if (type === 'Exception') {
+      const stack = descriptor(value, 'stack');
+      if (
+        stack &&
+        ownExceptionStack &&
+        stack.get === ownExceptionStack.get &&
+        stack.set === ownExceptionStack.set &&
+        stack.configurable === ownExceptionStack.configurable &&
+        stack.enumerable === ownExceptionStack.enumerable &&
+        stack.writable === ownExceptionStack.writable
+      ) {
+        const id = 'WebAssembly.Exception.ownStack';
+        if (stack.get) host.captureCallableShape(id + '.get', stack.get);
+        if (stack.set) host.captureCallableShape(id + '.set', stack.set);
+        registry.registerFacade(value, {
+          name: 'Native Exception stack producer',
+          members: [
+            {
+              key: 'stack',
+              read: {
+                contract: contract(id + '.get', 'delegated'),
+                read: ({ receiver, descriptor }) =>
+                  descriptor.get ? apply(descriptor.get, receiver, []) : descriptor.value,
+              },
+              ...(stack.set
+                ? {
+                    write: {
+                      contract: contract(id + '.set', 'none'),
+                      write: ({
+                        receiver,
+                        value,
+                        descriptor,
+                      }: {
+                        receiver: object;
+                        value: unknown;
+                        descriptor: Readonly<PropertyDescriptor>;
+                      }) => {
+                        apply(descriptor.set!, receiver, [value]);
+                        return true;
+                      },
+                    },
+                  }
+                : {}),
+            },
+          ],
+        });
+      }
+    }
     if (type === 'Instance') {
       const exports: WebAssembly.Exports = apply(instanceExports, value, []);
-      owned.add(exports);
-      if (createdInstances.has(value)) {
-        for (const key of ownKeys(exports)) {
-          const exported = get(exports, key);
+      const members: NativeMemberRule[] = [];
+      for (const key of ownKeys(exports)) {
+        const field = descriptor(exports, key);
+        if (!field || !('value' in field))
+          throw new TypeError('Native Wasm export is not a data descriptor');
+        const exported: unknown = field.value;
+        if (createdInstances.has(value)) {
           if (typeof exported === 'function') localFunctions.add(exported);
           else if (object(exported) && kind(exported) === 'Table')
             localTables.add(exported);
         }
+        members.push({
+          key,
+          read: {
+            contract: contract('WebAssembly.export', 'delegated'),
+            read: ({ descriptor }) => descriptor.value,
+          },
+        });
       }
-      for (const key of ownKeys(exports)) remember(get(exports, key));
+      presence.set(exports, new Set(ownKeys(exports)));
+      registry.registerFacade(exports, { name: 'WebAssembly native exports', members });
+      owned.add(exports);
+      for (const key of ownKeys(exports)) remember(descriptor(exports, key)?.value);
     }
     return value;
   }
-
   function capture(module: unknown, imports: unknown): object {
     // This native static method validates the Module brand before any import
     // property is read. The owner performs all subsequent reads inside QuickJS.
@@ -239,39 +392,109 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
     }
   }
 
-  function method(original: Function): Function {
-    const previous = methods.get(original);
-    if (previous) return previous;
-    const wrapped = {
-      invoke(this: unknown, ...args: unknown[]) {
-        const result: unknown = apply(original, this, args);
-        if (
-          original === tableGet &&
-          object(this) &&
-          localTables.has(this) &&
-          !foreignCode &&
-          typeof result === 'function' &&
-          wasmFunction(result)
-        )
-          localFunctions.add(result);
-        if (object(this) && kind(this) === 'Memory') {
-          retainMemory(this);
-          if (buffer(result)) {
-            options.retainBuffer(result);
-            if (memoryBufferMethods.has(original)) options.retainMemory?.(this, result);
-          }
-        }
-        return remember(result);
-      },
-    }.invoke;
-    copiedName(wrapped, original);
-    methods.set(original, wrapped);
-    owned.add(original);
-    owned.add(wrapped);
-    return wrapped;
+  const read = ({ receiver, descriptor }: NativeReadOperation): unknown =>
+    descriptor.get ? apply(descriptor.get, receiver, []) : descriptor.value;
+  function data(
+    owner: object,
+    id: string,
+    key: PropertyKey,
+    result: NativeContract['result'] = 'data',
+  ): NativeMemberRule {
+    if (!descriptor(owner, key))
+      throw new TypeError('Native Wasm data member unavailable: ' + String(key));
+    return { key, read: { contract: contract(id + '.' + String(key), result), read } };
   }
-
-  const constructors = [
+  function optional(owner: object, key: PropertyKey): PropertyDescriptor | undefined {
+    const found = descriptor(owner, key);
+    if (!found) {
+      let keys = absent.get(owner);
+      if (!keys) absent.set(owner, (keys = new Set()));
+      keys.add(key);
+    }
+    return found;
+  }
+  function method(owner: object, family: string, key: string): NativeMemberRule[] {
+    const field = optional(owner, key);
+    if (!field) return [];
+    if (typeof field.value !== 'function')
+      throw new TypeError('Native Wasm method unavailable: ' + key);
+    const rule = contract(family + '.' + key, 'delegated');
+    host.captureCallableShape(rule.id, field.value);
+    return [
+      {
+        key,
+        call: {
+          contract: rule,
+          receiver: typeof owner === 'function' ? 'ignored' : 'family',
+          call: ({ target, receiver, arguments: args }) => {
+            const result: unknown = apply(target, receiver, args);
+            if (
+              target === tableGet &&
+              object(receiver) &&
+              localTables.has(receiver) &&
+              !foreignCode &&
+              typeof result === 'function' &&
+              wasmFunction(result)
+            )
+              localFunctions.add(result);
+            if (object(receiver) && kind(receiver) === 'Memory') {
+              retainMemory(receiver);
+              if (buffer(result)) {
+                options.retainBuffer(result);
+                if (memoryBufferMethods.has(target))
+                  options.retainMemory?.(receiver, result);
+              }
+            }
+            return remember(result);
+          },
+        },
+      },
+    ];
+  }
+  function attribute(owner: object, family: string, key: string): NativeMemberRule[] {
+    const field = optional(owner, key);
+    if (!field) return [];
+    if (!field.get) throw new TypeError('Native Wasm getter unavailable: ' + key);
+    const rule = contract(family + '.' + key + '.get', 'delegated');
+    host.captureCallableShape(rule.id, field.get);
+    if (field.set) host.captureCallableShape(family + '.' + key + '.set', field.set);
+    return [
+      {
+        key,
+        read: {
+          contract: rule,
+          read: (operation) => {
+            const result = read(operation);
+            if (kind(operation.receiver) === 'Memory') {
+              retainMemory(operation.receiver);
+              if (buffer(result)) options.retainBuffer(result);
+            }
+            return result;
+          },
+        },
+        ...(field.set
+          ? {
+              write: {
+                contract: contract(family + '.' + key + '.set', 'none'),
+                write: ({
+                  receiver,
+                  value,
+                  descriptor,
+                }: {
+                  receiver: object;
+                  value: unknown;
+                  descriptor: Readonly<PropertyDescriptor>;
+                }) => {
+                  apply(descriptor.set!, receiver, [value]);
+                  return true;
+                },
+              },
+            }
+          : {}),
+      },
+    ];
+  }
+  const constructorNames = [
     'Module',
     'Instance',
     'Memory',
@@ -283,66 +506,108 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
     'LinkError',
     'RuntimeError',
   ] as const;
-  for (const name of constructors) {
+  const namespaceMembers: NativeMemberRule[] = [];
+  for (const name of constructorNames) {
     const original: unknown = get(native, name);
-    if (typeof original !== 'function') continue;
-    const replacement = function (this: unknown, ...args: unknown[]) {
-      if (!new.target) return remember(apply(original, this, args));
-      if (name === 'Instance') return createInstance(args[0], args[1]);
-      const value = construct(original, args);
-      if (name === 'Table') localTables.add(value);
-      if (name === 'Tag' || name === 'Exception') kinds.set(value, name);
-      return remember(value);
-    };
-    copiedName(replacement, original);
-    replacements.set(original, replacement);
-    if (name === 'Instance') {
-      importArguments.set(original, 1);
-      importArguments.set(replacement, 1);
+    if (typeof original !== 'function') {
+      optional(namespace, name);
+      continue;
     }
+    const nativePrototype: object = original.prototype;
+    declarationPresence(nativePrototype);
+    declarationPresence(original);
+    declarations.add(nativePrototype);
+    owned.add(nativePrototype);
     owned.add(original);
-    owned.add(replacement);
-    const nativePrototype: unknown = get(original, 'prototype');
-    if (object(nativePrototype)) {
-      prototypes.add(nativePrototype);
-      owned.add(nativePrototype);
-      const property = descriptor(original, 'prototype');
-      define(replacement, 'prototype', { ...property, value: nativePrototype });
-      for (const key of ownKeys(nativePrototype)) {
-        const member = descriptor(nativePrototype, key);
-        for (const candidate of [member?.value, member?.get, member?.set])
-          if (typeof candidate === 'function' && candidate !== original)
-            method(candidate);
-      }
-    }
-    for (const key of ownKeys(original)) {
-      if (['prototype', 'name', 'length', 'arguments', 'caller'].includes(String(key)))
-        continue;
-      const property = descriptor(original, key);
-      if (property)
-        define(
-          replacement,
-          key,
-          'value' in property
-            ? {
-                ...property,
-                value:
-                  typeof property.value === 'function'
-                    ? method(property.value)
-                    : property.value,
-              }
-            : {
-                ...property,
-                get: property.get ? (method(property.get) as () => unknown) : undefined,
-                set: property.set
-                  ? (method(property.set) as (value: unknown) => void)
-                  : undefined,
-              },
-        );
-    }
-    define(namespace, name, { ...descriptor(native, name), value: replacement });
+    const errorConstructor =
+      name === 'CompileError' || name === 'LinkError' || name === 'RuntimeError';
+    if (!errorConstructor) kindPrototypes.set(name, nativePrototype);
+    const family = 'WebAssembly.' + name;
+    registry.registerPrototype(nativePrototype, {
+      name: family,
+      accepts: (value) => value === nativePrototype || kind(value) === name,
+      members: [
+        data(nativePrototype, family, 'constructor', 'callable'),
+        ...(descriptor(nativePrototype, Symbol.toStringTag)
+          ? [data(nativePrototype, family, Symbol.toStringTag)]
+          : []),
+        ...(name === 'Instance' ? attribute(nativePrototype, family, 'exports') : []),
+        ...(name === 'Memory'
+          ? [
+              ...attribute(nativePrototype, family, 'buffer'),
+              ...['grow', 'toFixedLengthBuffer', 'toResizableBuffer'].flatMap((key) =>
+                method(nativePrototype, family, key),
+              ),
+            ]
+          : []),
+        ...(name === 'Table'
+          ? [
+              ...attribute(nativePrototype, family, 'length'),
+              ...['get', 'set', 'grow'].flatMap((key) =>
+                method(nativePrototype, family, key),
+              ),
+            ]
+          : []),
+        ...(name === 'Global'
+          ? [
+              ...attribute(nativePrototype, family, 'value'),
+              ...method(nativePrototype, family, 'valueOf'),
+            ]
+          : []),
+        ...(name === 'Exception'
+          ? [
+              ...attribute(nativePrototype, family, 'stack'),
+              ...['is', 'getArg'].flatMap((key) => method(nativePrototype, family, key)),
+            ]
+          : []),
+        ...(errorConstructor
+          ? [
+              data(nativePrototype, family, 'name'),
+              data(nativePrototype, family, 'message'),
+            ]
+          : []),
+      ],
+    });
+    host.registerConstructor(
+      original,
+      registry.registerConstructor(original, {
+        contract: contract(
+          family + '.constructor',
+          errorConstructor ? 'delegated' : 'reference',
+        ),
+        construct: (target, args) => {
+          if (name === 'Instance') return createInstance(args[0], args[1]);
+          const value = construct(target, [...args]);
+          if (name === 'Table') localTables.add(value);
+          if (name === 'Tag' || name === 'Exception') kinds.set(value, name);
+          return remember(value);
+        },
+      }),
+    );
+    if (name === 'Instance') importArguments.set(original, 1);
+    const members = [
+      data(original, family, 'name'),
+      data(original, family, 'length'),
+      data(original, family, 'prototype', 'reference'),
+    ];
+    if (name === 'Module')
+      for (const key of ['imports', 'exports', 'customSections'])
+        members.push(...method(original, family, key));
+    registry.registerFacade(original, { name: family + ' constructor', members });
+    define(namespace, name, { ...descriptor(native, name), value: original });
+    namespaceMembers.push(
+      errorConstructor
+        ? {
+            key: name,
+            call: {
+              contract: contract(family + '.call', 'delegated'),
+              receiver: 'ignored',
+              call: ({ target, arguments: args }) => apply(target, undefined, args),
+            },
+          }
+        : data(namespace, 'WebAssembly', name, 'callable'),
+    );
   }
-
   const functions = {
     async compile(...args: unknown[]) {
       return remember(await apply(compile, native, args));
@@ -394,95 +659,64 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
       return { module, instance };
     },
   };
+
   for (const [name, fn] of Object.entries(functions)) {
     const original: unknown = get(native, name);
-    if (typeof original !== 'function' || (name.endsWith('Streaming') && !responseStatus))
+    if (
+      typeof original !== 'function' ||
+      (name.endsWith('Streaming') && !responseStatus)
+    ) {
+      optional(namespace, name);
       continue;
-    copiedName(fn, original);
-    if (name === 'instantiate' || name === 'instantiateStreaming') {
-      importArguments.set(original, 1);
-      importArguments.set(fn, 1);
     }
-    owned.add(fn);
+    copiedName(fn, original);
+    const rule = contract(
+      'WebAssembly.' + name,
+      'delegated',
+      name.startsWith('instantiate') ? 'guest' : 'none',
+    );
+    host.captureCallableShape(rule.id, original);
     define(namespace, name, { ...descriptor(native, name), value: fn });
+    namespaceMembers.push({
+      key: name,
+      call: {
+        contract: rule,
+        receiver: 'ignored',
+        call: ({ target, arguments: args }) => apply(target, undefined, args),
+      },
+    });
   }
   const tag: unknown = get(native, 'JSTag');
   if (object(tag)) {
     kinds.set(tag, 'Tag');
-    owned.add(tag);
+    remember(tag);
     define(namespace, 'JSTag', { ...descriptor(native, 'JSTag'), value: tag });
-  }
+    namespaceMembers.push(data(namespace, 'WebAssembly', 'JSTag', 'reference'));
+  } else optional(namespace, 'JSTag');
   const label = descriptor(native, Symbol.toStringTag);
-  if (label) define(namespace, Symbol.toStringTag, label);
-
+  if (label) {
+    define(namespace, Symbol.toStringTag, label);
+    namespaceMembers.push(data(namespace, 'WebAssembly', Symbol.toStringTag));
+  }
+  for (const name of ['Function', 'Suspending', 'promising', 'SuspendError'])
+    optional(namespace, name);
+  declarationPresence(namespace);
+  registry.registerFacade(namespace, {
+    name: 'WebAssembly namespace',
+    members: namespaceMembers,
+  });
   return {
+    ...host,
     namespace,
     importsArgument: (target) => importArguments.get(target),
     canDeferOrdinary: () => !foreignCode,
     owns(target) {
-      if (owned.has(target)) return true;
-      if (typeof target === 'function' && !wasmFunction(target)) return false;
-      const type = typeof target === 'function' || kind(target);
-      if (type) {
+      if (host.owns!(target)) return true;
+      if (typeof target === 'function' ? wasmFunction(target) : kind(target)) {
         remember(target);
         return owned.has(target);
       }
       return false;
-    },
-    get(target, key) {
-      const result = remember(get(target, key));
-      if (kind(target) === 'Memory') {
-        retainMemory(target);
-        if (buffer(result)) options.retainBuffer(result);
-      }
-      return result;
-    },
-    set(target, key, value) {
-      if (
-        prototypes.has(target) ||
-        key === '__proto__' ||
-        key === 'constructor' ||
-        key === 'prototype'
-      )
-        return false;
-      return set(target, key, value);
-    },
-    delete(target, key) {
-      return !prototypes.has(target) && Reflect.deleteProperty(target, key);
-    },
-    settable() {
-      return false;
-    },
-    call(target, receiver, args) {
-      const replacement = replacements.get(target) || methods.get(target) || target;
-      const invoke = () => remember(apply(replacement, receiver, args));
-      return wasmFunction(target)
-        ? options.runWasm(invoke, localFunctions.has(target) && !foreignCode)
-        : invoke();
-    },
-    construct(target, args) {
-      const replacement = replacements.get(target) || target;
-      // Constructor closures, including Instance, perform their own capture even
-      // when passed around as native callable values rather than namespace fields.
-      return construct(replacement, args);
-    },
-    ownKeys,
-    descriptor(target, key) {
-      const property = descriptor(target, key);
-      if (!property) return;
-      return 'value' in property
-        ? { ...property, value: remember(property.value) }
-        : {
-            ...property,
-            get: property.get ? (method(property.get) as () => unknown) : undefined,
-            set: property.set
-              ? (method(property.set) as (value: unknown) => void)
-              : undefined,
-          };
-    },
-    prototype(target) {
-      const parent: object | null = prototype(target);
-      return parent === null ? null : remember(parent);
     },
   };
 }

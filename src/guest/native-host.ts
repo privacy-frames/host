@@ -21,6 +21,8 @@ export interface NativeHostOptions {
   /** Translate a private prototype boundary to its reviewed physical declaration. */
   propertyTarget?(target: object): object;
   isAbsent?(target: object, key: PropertyKey): boolean;
+  /** Reviewed families can avoid traversing untrusted physical prototype chains. */
+  hasProperty?(target: object, key: PropertyKey): boolean;
   /** Trusted adapters may associate argument decoding with the exposed identity. */
   callablePublished?(target: Function, contract: NativeContract): void;
 }
@@ -56,6 +58,9 @@ export function createNativeHost(options: NativeHostOptions): NativeHost {
     typeof target === 'function' && constructors.has(target);
   const physical = (target: object) => options.propertyTarget?.(target) ?? target;
 
+  const has = (target: object, key: PropertyKey) =>
+    options.hasProperty?.(target, key) ?? Reflect.has(target, key);
+
   function ensure(target: object): void {
     if (!isWrapper(target) && !isConstructor(target) && !options.admit(target))
       throw new NativePolicyError(
@@ -68,15 +73,23 @@ export function createNativeHost(options: NativeHostOptions): NativeHost {
   function publish(target: Function, token: NativeCallable): void {
     if (tokens.has(target) || wrappers.has(token))
       throw new TypeError('Callable already belongs to ' + name);
-    wrapperDescriptors.set(
-      target,
-      new Map(
-        ['name', 'length'].map((key) => [
+    const metadata = new Map<PropertyKey, PropertyDescriptor>();
+    for (const key of ['name', 'length']) {
+      const captured = descriptor(target, key);
+      if (
+        !captured ||
+        !('value' in captured) ||
+        typeof captured.value !== (key === 'name' ? 'string' : 'number')
+      )
+        throw new NativePolicyError(
+          'publish',
+          name + ' callable',
           key,
-          Object.freeze({ ...descriptor(target, key) }),
-        ]),
-      ),
-    );
+          'metadata is not a native data descriptor',
+        );
+      metadata.set(key, Object.freeze({ ...captured }));
+    }
+    wrapperDescriptors.set(target, metadata);
     tokens.set(target, token);
     wrappers.set(token, target);
     options.callablePublished?.(target, token.contract);
@@ -146,7 +159,7 @@ export function createNativeHost(options: NativeHostOptions): NativeHost {
       if (isWrapper(target)) {
         if (key === 'name' || key === 'length')
           return wrapperDescriptors.get(target as Function)?.get(key)?.value;
-        if (!Reflect.has(target, key)) return undefined;
+        if (!has(target, key)) return undefined;
         throw new NativePolicyError(
           'get',
           name + ' callable',
@@ -155,7 +168,7 @@ export function createNativeHost(options: NativeHostOptions): NativeHost {
         );
       }
       const owner = physical(target);
-      if (options.isAbsent?.(owner, key) || !Reflect.has(owner, key)) return undefined;
+      if (options.isAbsent?.(owner, key) || !has(owner, key)) return undefined;
       return unwrap(registry.read(owner, key));
     },
     set(target, key, value) {
