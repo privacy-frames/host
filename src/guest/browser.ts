@@ -1,3 +1,4 @@
+import { captureEventListenerArguments } from './event-listener-arguments.ts';
 import { captureMessageTransfer } from './message-transfer.ts';
 import { GuestLocation } from './location.ts';
 import { GuestEngine } from './engine.ts';
@@ -1582,29 +1583,24 @@ export class BrowserEnvironment {
         }),
       ).then(() => undefined);
     }
+    const listenerArguments =
+      (key === 'addEventListener' || key === 'removeEventListener') &&
+      receiver &&
+      typeof receiver === 'object'
+        ? captureEventListenerArguments(args)
+        : undefined;
     const transfer =
       key === 'postMessage' && args.length > 0 && !this.workers.commitsTransfers(target)
         ? captureMessageTransfer(args[1])
         : undefined;
-    const invocation = transfer === undefined ? args : [args[0], transfer];
+    const invocation =
+      listenerArguments?.arguments ??
+      (transfer === undefined ? args : [args[0], transfer]);
     const result: unknown = Reflect.apply(target, receiver, invocation);
-    if (key === 'addEventListener' && receiver && typeof receiver === 'object') {
-      const [type, listener, options] = args;
-      const capture =
-        typeof options === 'boolean'
-          ? options
-          : !!(
-              options &&
-              typeof options === 'object' &&
-              'capture' in options &&
-              options.capture
-            );
+    if (key === 'addEventListener' && listenerArguments) {
+      const cleanup = listenerArguments.cleanup();
       this.cleanups.add(() =>
-        Reflect.apply(EventTarget.prototype.removeEventListener, receiver, [
-          String(type),
-          listener,
-          capture,
-        ]),
+        Reflect.apply(EventTarget.prototype.removeEventListener, receiver, cleanup),
       );
     }
     if (this.document && isElement(result)) this.prepareNode(result);
@@ -1621,23 +1617,37 @@ export class BrowserEnvironment {
   }
 
   dispose(): void {
-    this.navigation?.dispose();
     if (this.disposed) return;
     this.disposed = true;
-    this.stopServices();
-    for (const cleanup of this.cleanups) cleanup();
+    let failed = false;
+    let failure: unknown;
+    const attempt = (cleanup: () => void) => {
+      try {
+        cleanup();
+      } catch (error) {
+        if (!failed) {
+          failed = true;
+          failure = error;
+        }
+      }
+    };
+    attempt(() => this.navigation?.dispose());
+    attempt(this.stopServices);
+    for (const cleanup of this.cleanups) attempt(cleanup);
     this.cleanups.clear();
     for (const timer of this.timers) {
-      this.options.global.clearTimeout(timer);
-      this.options.global.clearInterval(timer);
+      attempt(() => this.options.global.clearTimeout(timer));
+      attempt(() => this.options.global.clearInterval(timer));
     }
-    this.customElements?.dispose();
-    this.workers.dispose();
-    this.windows?.dispose();
-    this.audio?.dispose();
-    this.dom?.dispose();
-    this.resources.dispose();
+    this.timers.clear();
+    attempt(() => this.customElements?.dispose());
+    attempt(() => this.workers.dispose());
+    attempt(() => this.windows?.dispose());
+    attempt(() => this.audio?.dispose());
+    attempt(() => this.dom?.dispose());
+    attempt(() => this.resources.dispose());
     if (environments.get(this.options.global) === this)
       environments.delete(this.options.global);
+    if (failed) throw failure;
   }
 }
