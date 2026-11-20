@@ -1,5 +1,23 @@
 # QuickJS confinement implementation handoff
 
+## Resumption planning checkpoint
+
+Use the [resumption plan](../../docs/implementation/confinement-verification-resumption.md)
+for the inspected state and remaining execution order. The earlier checkpoint
+below predates the auxiliary branch's context, worklet and native-policy commits.
+This planning turn changed no executable source or deployment.
+
+At inspection, the integration branch remained at `4fb6e91` and the auxiliary
+branch at `bea54db`. The auxiliary tree also contains uncommitted reference-owner,
+exception-cleanup and management-authority work. Preserve and review those changes
+before merging. Latest helper fixtures passed their intended prepared and fault
+cases in Chromium and Firefox; those logs do not replace source-qualified receipts.
+
+The management agent stopped safely with changes in `src/runtime/authority.ts`,
+`src/runtime/worker.ts` and `src/bridge/connect.ts`. It reported a passing typecheck;
+direct predicate verification, actual-adapter lifecycle tests and controls remain.
+No management proof or release qualification was completed by that work.
+
 ## Active objective
 
 Execute every stage of the autonomous confinement verification plan, preserving

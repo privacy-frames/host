@@ -3,6 +3,8 @@
 This directory contains verification work for the guest-engine architecture.
 The execution plan is
 [confinement-verification-plan.md](../../docs/implementation/confinement-verification-plan.md).
+The current checkpoint and remaining order are in the
+[resumption plan](../../docs/implementation/confinement-verification-resumption.md).
 The native-runtime models elsewhere under `formal/` remain historical evidence.
 
 The target is no application-caused remote request or connection during confined

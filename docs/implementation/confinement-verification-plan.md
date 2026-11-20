@@ -1,5 +1,9 @@
 # QuickJS confinement verification plan
 
+For the inspected implementation state and remaining execution order, use the
+[resumption plan](confinement-verification-resumption.md). The contract and stages
+below remain the scope of the work.
+
 Establish a confinement argument for the deployed QuickJS host, connected to its
 implementation and the browser operations it permits. Use verification to simplify
 the enforcement code while preserving the existing applications and native rendering.
