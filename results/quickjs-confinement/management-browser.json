@@ -1,0 +1,83 @@
+{
+  "scope": "Actual production connect and service-worker bundles in Chromium/Firefox, native cross-origin MessageEvent/ports and Clients.get, actual IndexedDB list. Trusted asset placeholders never execute guest code. Origin removal is a temporary bundle only.",
+  "inputHashes": {
+    "src/runtime/authority.ts": "3eb88cd705e1a3a04c362b53128f2a5c37592cd8d90527b3af961d6830a551d8",
+    "src/runtime/worker.ts": "ebbba71d21df235712f7d120e89899f732e7fafe2a9288c8d61f79f5c92c2ad5",
+    "src/bridge/connect.ts": "6cb3fd68e9b934679b89b5feeae83fc40c78ebcff1e27c67b24684733a73d2fa",
+    "test/guest-management-authority.ts": "6d1f9ab4f461babaa47b877680aca8378d0b4884bf2dcdbfbe68018afd4d656b"
+  },
+  "bundleHashes": {
+    "worker": "88d6d0cf1c2a9f31ffbc16d9bcb68bdfa29d255897e6483204107616cd3da706",
+    "connect": "65a956831fd4a3af084ae84e8de344044b2175847a3fcb67f0c35a6c1b2b7fde",
+    "originRemoved": "1477c2a9301d6786a727a3791458bcc42e384c20c80c518b8f0a885f16bb7550"
+  },
+  "results": [
+    {
+      "browser": "chromium",
+      "parentOrigin": "http://127.0.0.1:38415",
+      "originGuardRemoved": false,
+      "nativeEventObserved": {
+        "trusted": true,
+        "origin": "http://127.0.0.1:38415"
+      },
+      "accepted": true,
+      "applicationClientDenied": true
+    },
+    {
+      "browser": "chromium",
+      "parentOrigin": "http://127.0.0.1:44973",
+      "originGuardRemoved": false,
+      "nativeEventObserved": {
+        "trusted": true,
+        "origin": "http://127.0.0.1:44973"
+      },
+      "accepted": false,
+      "applicationClientDenied": true
+    },
+    {
+      "browser": "chromium",
+      "parentOrigin": "http://127.0.0.1:44973",
+      "originGuardRemoved": true,
+      "nativeEventObserved": {
+        "trusted": true,
+        "origin": "http://127.0.0.1:44973"
+      },
+      "accepted": true,
+      "applicationClientDenied": true
+    },
+    {
+      "browser": "firefox",
+      "parentOrigin": "http://127.0.0.1:38415",
+      "originGuardRemoved": false,
+      "nativeEventObserved": {
+        "trusted": true,
+        "origin": "http://127.0.0.1:38415"
+      },
+      "accepted": true,
+      "applicationClientDenied": true
+    },
+    {
+      "browser": "firefox",
+      "parentOrigin": "http://127.0.0.1:44973",
+      "originGuardRemoved": false,
+      "nativeEventObserved": {
+        "trusted": true,
+        "origin": "http://127.0.0.1:44973"
+      },
+      "accepted": false,
+      "applicationClientDenied": true
+    },
+    {
+      "browser": "firefox",
+      "parentOrigin": "http://127.0.0.1:44973",
+      "originGuardRemoved": true,
+      "nativeEventObserved": {
+        "trusted": true,
+        "origin": "http://127.0.0.1:44973"
+      },
+      "accepted": true,
+      "applicationClientDenied": true
+    }
+  ],
+  "completedAt": "2026-11-20T10:18:36.624Z"
+}

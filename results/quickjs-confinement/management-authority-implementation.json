@@ -1,0 +1,344 @@
+{
+  "scope": "Direct deductive verification of the actual three management authorization predicates after TypeScript erasure. Caller hashes identify reviewed integration; they are not caller correctness proofs.",
+  "source": "src/runtime/authority.ts",
+  "sourceSHA256": "3eb88cd705e1a3a04c362b53128f2a5c37592cd8d90527b3af961d6830a551d8",
+  "runnerSHA256": "a109fec1dcf36af3eb8f8d93def6635bac7c710aa34154cae066957da3e2ead6",
+  "toolchain": {
+    "gillianImage": "ghcr.io/gillianplatform/gillian@sha256:ce41de968aba0964774e1929416ce60b9c3b770d2e58f96e63990b629cfe2ed6",
+    "typescript": "6.0.3",
+    "mode": "verify"
+  },
+  "assumptions": [
+    "Claims and client snapshots are owned native data-property records. Actual callers derive them from browser observations; peer payload claims never establish identity.",
+    "JavaScript fresh object identity, TypeScript erasure, parser/extractor, Gillian semantics, verifier and solver are trusted.",
+    "Browser event/client/port authenticity, fixed trusted bridge bytes, physical client URL integrity, async rechecks and storage transaction semantics require separate caller/platform contracts."
+  ],
+  "callerHashes": {
+    "src/runtime/worker.ts": "ebbba71d21df235712f7d120e89899f732e7fafe2a9288c8d61f79f5c92c2ad5",
+    "src/bridge/connect.ts": "6cb3fd68e9b934679b89b5feeae83fc40c78ebcff1e27c67b24684733a73d2fa"
+  },
+  "results": [
+    {
+      "name": "sender-accepted",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "acceptsManagerSender",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "9295b01d6798b669dd40d5f7806566c22ec2925df3bbd6393af6d3ce424ed5d3",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "1fea151b3ddd7f25ab2743f6cae09a83b0c6fbf3737c0b9169c5141fca9c5b96",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.047359\nVerifying one spec of procedure acceptsManagerSender... s Success\nAll specs succeeded: 0.125715"
+    },
+    {
+      "name": "sender-reject-closed",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "acceptsManagerSender",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "38bcf47dbfc5d71274eeada25d1212f0223b0452334a98937c2e03c56efcabc6",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "25e441d9248730a6f27d9f3f7c451d97880ac3651b75b8cadec2693f7caf2416",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.047912\nVerifying one spec of procedure acceptsManagerSender... s Success\nAll specs succeeded: 0.087410"
+    },
+    {
+      "name": "sender-reject-bound",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "acceptsManagerSender",
+          "paths": 2,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "50e72b5c4e25b82f9ed033568815d6d32a6203ce6195dbb24dd6ee1c954a1563",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "5a56143c0ae9a7197a944ebdf4bdcaaaaba6586c380f637fd69c3fea169cd4b5",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.052749\nVerifying one spec of procedure acceptsManagerSender... s s Success\nAll specs succeeded: 0.141281"
+    },
+    {
+      "name": "sender-reject-trusted",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "acceptsManagerSender",
+          "paths": 3,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "232fac43243976a22066c2536426910337e8c26c13c4a608d5664b56e8e6edfb",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "1f54c5ee4779903fba571568bdd2f279d5fa33a3edf339254ec1b19c3a8131fc",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.047040\nVerifying one spec of procedure acceptsManagerSender... s s s Success\nAll specs succeeded: 0.178835"
+    },
+    {
+      "name": "sender-reject-embedded",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "acceptsManagerSender",
+          "paths": 4,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "183cd731e8d5e37830f23aaf3981f06c27d826d4a01e1c7a339294088d02d463",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "961b9580ff10e051873d9e8d55d610005127787c24512632aaf06cf77b3b2c86",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.047851\nVerifying one spec of procedure acceptsManagerSender... s s s s Success\nAll specs succeeded: 0.231675"
+    },
+    {
+      "name": "sender-reject-parentsource",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "acceptsManagerSender",
+          "paths": 5,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "31dc3f3c7ab3d12fab552c45fdda51e099a37413e176a3adacaa9d1f1f060f5b",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "84476ca6897641d92686cf9bbb9d20ffd0406fb3b898ed079f79c5ac15527ba7",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.049967\nVerifying one spec of procedure acceptsManagerSender... s s s s s Success\nAll specs succeeded: 0.274125"
+    },
+    {
+      "name": "sender-reject-allowedorigin",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "acceptsManagerSender",
+          "paths": 6,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "6b6684e59581a1ff86424e5dfbbfcb4e7e6de3bc407e76035240f19968852e2e",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "d69dc19bd94d6bc5877b22d21640fe2dd4e98888d02720f0f9cae2cd54588e0a",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.050438\nVerifying one spec of procedure acceptsManagerSender... s s s s s s Success\nAll specs succeeded: 0.322137"
+    },
+    {
+      "name": "client-accepted",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "clientCanManage",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "ee23472a085cc2e486b6a77dc8ef874b5c3b169b601c15075753aabfae38d352",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "bf72ac65c0508cf0615a4bdeec168ba53644ce65b44e62a8b918fa8390e53a19",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.053357\nVerifying one spec of procedure clientCanManage... s Success\nAll specs succeeded: 0.119354"
+    },
+    {
+      "name": "client-reject-0",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "clientCanManage",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "f016bbe2e4f66b2a5eaca34421db5980ae9ae688abb79bcf3bb5e7bc1338c27b",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "064d32535547e5cee01fe5e81e90c111459d6b33627a14b67825d44f9925db77",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.053894\nVerifying one spec of procedure clientCanManage... s Success\nAll specs succeeded: 0.099148"
+    },
+    {
+      "name": "client-reject-1",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "clientCanManage",
+          "paths": 2,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "493e2b8be8d94b60bf245ba153ac463601ed65db3699e6185c9639a48a6bfec9",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "dcd5f2733bf112c8771500460bbaf5d178c6d313f5108c188d31cb4c0614407f",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.048543\nVerifying one spec of procedure clientCanManage... s s Success\nAll specs succeeded: 0.123389"
+    },
+    {
+      "name": "client-reject-2",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "clientCanManage",
+          "paths": 3,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "fec991f27daca54d969fe9f95187e408b35a24362c972492a6be0592af07c127",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "db567d2162436a4b0714fd7d18334b1af57c5b68fe99857e707653ca550e0a0d",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.052360\nVerifying one spec of procedure clientCanManage... s s s Success\nAll specs succeeded: 0.161760"
+    },
+    {
+      "name": "endpoint-current-false",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "managementPortIsCurrent",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "2ffcee92eaa932fdce488d75cc0fe3f62df56dfc2e658dce9a7b86088681737f",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "445df8b117af3388729db230785535e293838c5d5710f66f9b67e6119b7cb033",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.053973\nVerifying one spec of procedure managementPortIsCurrent... s Success\nAll specs succeeded: 0.084269"
+    },
+    {
+      "name": "endpoint-stale-false",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "managementPortIsCurrent",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "a190f91fa7e413fb88587117ded48f69cd4451d39def3ca56a50e3bb3b49d0d5",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "1758c166308fcdd2d22fd43df8fab41f216bb1c1dab7a6cb51550c102528bcf7",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.049612\nVerifying one spec of procedure managementPortIsCurrent... s Success\nAll specs succeeded: 0.087082"
+    },
+    {
+      "name": "endpoint-current-true",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "managementPortIsCurrent",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "0ef1592eae51bf210723309f845f81e9119c156752847bc6c169775ba1b9ac3f",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "7096582553f609ad022cbf5e4ef0aad57d33b565e5844a377c4ef281cad07e6d",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.049647\nVerifying one spec of procedure managementPortIsCurrent... s Success\nAll specs succeeded: 0.074248"
+    },
+    {
+      "name": "endpoint-stale-true",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "managementPortIsCurrent",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "5e34daa7eaa2ea6b47605e04a4204f112edf48c59012c070ae81d5dcd8ed4bee",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "957a7afd7ce814d180f24990807d6d5502883bdb059c83458694c30352a484b2",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.046880\nVerifying one spec of procedure managementPortIsCurrent... s Success\nAll specs succeeded: 0.073341"
+    },
+    {
+      "name": "endpoint-unbound",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "managementPortIsCurrent",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "405f6ccd2b0090f8e4d4a8b1ce115a0f3a8b58d34d8e5bbd5c7fb8a692e7322a",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "b0c356ac463fd1c9ee1de985e2b0778704c2b185aa581ebf5018bec226990e84",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.047435\nVerifying one spec of procedure managementPortIsCurrent... s Success\nAll specs succeeded: 0.080537"
+    },
+    {
+      "name": "ignores-sender-origin",
+      "expectedSuccess": false,
+      "checkedProcedures": [
+        {
+          "procedure": "acceptsManagerSender",
+          "paths": 5,
+          "failedPaths": 1
+        }
+      ],
+      "exitCode": 1,
+      "inputSHA256": "2b5b975fd5fc730682ac5a6b6dae1c4685d1967ce92f634d6f8822a4ffe67ce1",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "5c352a93120220b6575bf18e3fc3dd8c0f11ef3395a1af304937a38c09fec495",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.054094\nVerifying one spec of procedure acceptsManagerSender... s s s s f Failure\nThere were failures: 0.286699\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+    },
+    {
+      "name": "ignores-client-url",
+      "expectedSuccess": false,
+      "checkedProcedures": [
+        {
+          "procedure": "clientCanManage",
+          "paths": 2,
+          "failedPaths": 1
+        }
+      ],
+      "exitCode": 1,
+      "inputSHA256": "9bcf9a2d3a606236c38136b45daebe506da6b506ab48835ec8396584cb5ea5ef",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "5c75b16f9f4eb398a63c667cd1f47bce107c85bc8f496d38c2942eb658650be1",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.052930\nVerifying one spec of procedure clientCanManage... s f Failure\nThere were failures: 0.135784\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+    },
+    {
+      "name": "ignores-endpoint-close",
+      "expectedSuccess": false,
+      "checkedProcedures": [
+        {
+          "procedure": "managementPortIsCurrent",
+          "paths": 1,
+          "failedPaths": 1
+        }
+      ],
+      "exitCode": 1,
+      "inputSHA256": "2efd8f87dc2ccd8f42f9ceec6161934add49aad5cac555a546028d92af4fabde",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "0dbd0d21d2d66a2cd8a7bd7c9ca18696b734ae6187b2d2992f8dd51ba63c4fba",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.048058\nVerifying one spec of procedure managementPortIsCurrent... f Failure\nThere were failures: 0.067716\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+    },
+    {
+      "name": "ignores-endpoint-identity",
+      "expectedSuccess": false,
+      "checkedProcedures": [
+        {
+          "procedure": "managementPortIsCurrent",
+          "paths": 1,
+          "failedPaths": 1
+        }
+      ],
+      "exitCode": 1,
+      "inputSHA256": "078d6996b65ab04f75a0936f27e6e36a6f3c3461f33b8847d0cd2efd987d7972",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "968e7ee3fc5305b4b506348943bbe939191a23a7d2a3490681ca14f4a1add869",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.050995\nVerifying one spec of procedure managementPortIsCurrent... f Failure\nThere were failures: 0.069867\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+    }
+  ],
+  "missingContractControl": "rejected",
+  "completedAt": "2026-11-20T10:19:03.779Z"
+}
