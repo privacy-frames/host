@@ -6,7 +6,7 @@
     "Browser event/structured-clone semantics and QuickJS remain trusted; storage namespace isolation is not claimed."
   ],
   "sourceHashes": {
-    "src/guest/browser.ts": "28844910784379f99a0caeb81182f191abb3d0518b7fb86481521c5c88c51dcb",
+    "src/guest/browser.ts": "29bfc02e08dc78491e189c77efd4cf04506c88e2a2bd5fb4892b9f539d544250",
     "src/guest/catalog.ts": "eedf4c12a469b8f7fc00b641d235a90cd1c563aebf38fdb20c433b8470d62429",
     "src/guest/contexts/audio-worklet.ts": "8706554251c0020af6599b599e306b3e0e9cffceebd31ce739c825071e789577",
     "src/guest/contexts/brands.ts": "fc87c235cf08fd6ab8dce72d81ca95ad2a94b86da06cc5438d1f1c8bbd6320d6",
@@ -17,7 +17,7 @@
     "src/guest/contexts/utf8.ts": "377a09eab40a71a79625ff80ef8b6f9ea72cd880f742ce1ead72778cffbb257e",
     "src/guest/contexts/window-contexts.ts": "b38d44e2dd955c36894abb587b9e28dc82397e0845924077e940c8b7c656ec7a",
     "src/guest/contexts/worker-bootstrap.ts": "1bb28454f52dc32dc4237fd373c80898adb70aead4bab2d6ea10f33171a9c7b2",
-    "src/guest/contexts/worker-factory.ts": "b8c554311eb6281d27c7a7b11c7b7df6b329068e0ef4eef3af0ab752282db2f4",
+    "src/guest/contexts/worker-factory.ts": "2adfc9bcbeb86328ed549f8b86fa5ce821c4d8b1c3357a4ffe2f3583f79c1634",
     "src/guest/contexts/worker-registry-entry.ts": "03e70810b9caa13e341eeff8c00e57402738261bb19535755674d56fa2c5d0de",
     "src/guest/contexts/worker-registry.ts": "457548fc51ae94be777435da460037fad0acb49a8d262e8f480fc10ecd548e42",
     "src/guest/contexts/worklet-build.ts": "03a05c0ebcbca4d49820d4a87bdb3956f926a782541df002d7a22d94bc463f2f",
@@ -39,7 +39,8 @@
     "src/guest/interfaces.ts": "dcdab9868caa5295328fa64d3b73b9f8bcc935e19f21d24f2289893682b552c7",
     "src/guest/legacy-regexp.ts": "bbfcdccb8fab7c9a1462d91c8237f6cbe8c90be1f331c2f5f6b3629b569231bb",
     "src/guest/location.ts": "c2a3a431be4e90823664b4bc444de40d292df821fabfff2c627c5fb750fd382a",
-    "src/guest/message-port-policy.ts": "f3e89228f68c143523459fb375e44f69be5bbbe752a84a41abb769a974b5cc4a",
+    "src/guest/message-port-policy.ts": "359b9889201b4204dfc1b42eef21e2ea59bc5f775254ded7ff036d3fdd352044",
+    "src/guest/message-transfer.ts": "8b00f53fccb0a60938585573aae2d484eb3a6b86b2dd6b40d2eec21e6bd72005",
     "src/guest/native-binary.ts": "2d0c098fdd641cf9edc5f7f958acef0fa9995766bdcbe177f925cc21ad49afd4",
     "src/guest/native-host.ts": "95bc1d790700a317893f930e322e10f29efb22f4ef75d34cec8e8e9af8431880",
     "src/guest/native-member-definitions.ts": "839bb0fd1a0d639619c44ccf3030217cc163c1de7a478b60d4b331c3de7933f1",
@@ -64,17 +65,17 @@
     "test/guest-contexts.ts": "cb7610733c1baf87d6f6ce9d0b97b285a29de5717a9490eec252f39a7bbc16e1",
     "test/guest-contexts.worker.ts": "d584334ac037ca54c068e2553e494c81a69e5aaf7105f91a8fa555b58823f41d",
     "test/guest-worklet-bootstrap.test.ts": "4b85f1013912ad6b9b4519ac5e6799e715d36634b772e46c98647016af9dc2ab",
-    "test/guest-worklet-policy.test.ts": "ab90251100d98fbb7565c6f86f6884f145351960df46d047921bd6feca5e5e9d",
+    "test/guest-worklet-policy.test.ts": "2030b38d7aabd9efacacf002bbb993c14f45473e0717f597335e0a673b0a3901",
     "test/guest-worklet-policy.ts": "3c844128222a3a9fc816780b7959e22c5e32c40eff3e8a471f96539dc4bf49dd",
     "test/guest-worklet-runtime.test.ts": "3068e90294dd95f092315d021c56ca22fff23eba88f3c344199007c1b82c4394",
     "vendor/quickjs/generated/engine.mjs": "60147727aeb5c4441d54ad7b3c625e952bec7faa8db8531522eb71dd9ab9da2e",
     "vendor/quickjs/generated/engine.wasm": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8"
   },
   "bundleHashes": {
-    "browser": "18af10dca178aa46c0d9debd68c2cf185700f7c51f93f8a7c0f18779659baff4",
-    "worker": "1cfc42be514495ce13877b700a883dde02a8b75089843bc6f05d8fa5c9d8b0e9",
+    "browser": "813f438e28b0cd469e681b678141be16b41dc5eb920bb928675ceda5247a3fb2",
+    "worker": "15f72af18937a247afcd44cda10c3fb660425d4409422e105096ee5ba3c41c69",
     "registry": "f7ae9e28bd9d5e5d74d796be03697d7ade87bad98c0f4847fc1d749fe8977f24",
-    "worklet": "51ab33a86f1a6ca36782c48771d9e47e1278ad006f7ffc22e3a7d91df64b16fc"
+    "worklet": "f0b59f535555fb75c2477376af6dcfeb3441b8a1ae19cdb5d7a8525fdc3149ce"
   },
   "browserExecutables": {
     "chromium": {
@@ -103,7 +104,7 @@
       ],
       "exitCode": 0,
       "log": "/home/damen/Projects/privacy-frames-quickjs-kernel/.tools/quickjs-proof/worklet-policy/unit.log",
-      "sha256": "b0d0289f5cfd56d584f643cbc6f95ddf90b30d04c8ea384249ddae4fdf3c26c4"
+      "sha256": "bb7676e973415099cf64ddb22f0fb54db08d95b36862ad7ba326778b65f4d0d6"
     },
     {
       "command": [
@@ -114,7 +115,7 @@
       ],
       "exitCode": 0,
       "log": "/home/damen/Projects/privacy-frames-quickjs-kernel/.tools/quickjs-proof/worklet-policy/browser.log",
-      "sha256": "95dc82d7fb323ddf58a5f7a3c62bce36c348036de9daaebe9670adf27b986d39"
+      "sha256": "be82bc37833f0f9878d201ea68ef46ec9a421ca16b53db2eb602b48f36ae25e9"
     }
   ],
   "contexts": {
@@ -173,38 +174,38 @@
           }
         },
         "requestURLs": [
-          "http://127.0.0.1:45767/",
-          "http://127.0.0.1:45767/browser.js",
-          "http://127.0.0.1:45767/quickjs.wasm",
-          "http://127.0.0.1:45767/worker.js",
-          "http://127.0.0.1:45767/guest-worklet.js",
-          "http://127.0.0.1:45767/__guest_worker_registry__.js",
-          "blob:http://127.0.0.1:45767/8978e020-2618-47ac-946b-772811c82c49",
-          "blob:http://127.0.0.1:45767/8978e020-2618-47ac-946b-772811c82c49",
-          "blob:http://127.0.0.1:45767/8978e020-2618-47ac-946b-772811c82c49",
-          "blob:http://127.0.0.1:45767/8978e020-2618-47ac-946b-772811c82c49",
-          "blob:http://127.0.0.1:45767/8978e020-2618-47ac-946b-772811c82c49",
-          "blob:http://127.0.0.1:45767/6268b52c-5e3b-4468-afa6-a035769a0ecf",
-          "http://127.0.0.1:45767/",
-          "http://127.0.0.1:45767/browser.js",
-          "http://127.0.0.1:45767/quickjs.wasm",
-          "http://127.0.0.1:45767/worker.js",
-          "http://127.0.0.1:45767/guest-worklet.js",
-          "blob:http://127.0.0.1:45767/8978e020-2618-47ac-946b-772811c82c49",
-          "blob:http://127.0.0.1:45767/8978e020-2618-47ac-946b-772811c82c49",
-          "blob:http://127.0.0.1:45767/8978e020-2618-47ac-946b-772811c82c49",
-          "blob:http://127.0.0.1:45767/8978e020-2618-47ac-946b-772811c82c49",
-          "blob:http://127.0.0.1:45767/8978e020-2618-47ac-946b-772811c82c49",
-          "http://127.0.0.1:45767/",
-          "http://127.0.0.1:45767/browser.js",
-          "http://127.0.0.1:45767/quickjs.wasm",
-          "http://127.0.0.1:45767/worker.js",
-          "http://127.0.0.1:45767/guest-worklet.js",
-          "blob:http://127.0.0.1:45767/1186a170-00c5-4452-90b1-3bed836d3da1",
-          "blob:http://127.0.0.1:45767/1186a170-00c5-4452-90b1-3bed836d3da1",
-          "blob:http://127.0.0.1:45767/1186a170-00c5-4452-90b1-3bed836d3da1",
-          "blob:http://127.0.0.1:45767/1186a170-00c5-4452-90b1-3bed836d3da1",
-          "blob:http://127.0.0.1:45767/1186a170-00c5-4452-90b1-3bed836d3da1"
+          "http://127.0.0.1:42641/",
+          "http://127.0.0.1:42641/browser.js",
+          "http://127.0.0.1:42641/quickjs.wasm",
+          "http://127.0.0.1:42641/worker.js",
+          "http://127.0.0.1:42641/guest-worklet.js",
+          "http://127.0.0.1:42641/__guest_worker_registry__.js",
+          "blob:http://127.0.0.1:42641/1b576902-e5c0-4340-96eb-33e4b9c3b00e",
+          "blob:http://127.0.0.1:42641/1b576902-e5c0-4340-96eb-33e4b9c3b00e",
+          "blob:http://127.0.0.1:42641/1b576902-e5c0-4340-96eb-33e4b9c3b00e",
+          "blob:http://127.0.0.1:42641/1b576902-e5c0-4340-96eb-33e4b9c3b00e",
+          "blob:http://127.0.0.1:42641/1b576902-e5c0-4340-96eb-33e4b9c3b00e",
+          "blob:http://127.0.0.1:42641/ba3ecd29-4708-4cee-a29a-575f70597f9b",
+          "http://127.0.0.1:42641/",
+          "http://127.0.0.1:42641/browser.js",
+          "http://127.0.0.1:42641/quickjs.wasm",
+          "http://127.0.0.1:42641/worker.js",
+          "http://127.0.0.1:42641/guest-worklet.js",
+          "blob:http://127.0.0.1:42641/1b576902-e5c0-4340-96eb-33e4b9c3b00e",
+          "blob:http://127.0.0.1:42641/1b576902-e5c0-4340-96eb-33e4b9c3b00e",
+          "blob:http://127.0.0.1:42641/1b576902-e5c0-4340-96eb-33e4b9c3b00e",
+          "blob:http://127.0.0.1:42641/1b576902-e5c0-4340-96eb-33e4b9c3b00e",
+          "blob:http://127.0.0.1:42641/1b576902-e5c0-4340-96eb-33e4b9c3b00e",
+          "http://127.0.0.1:42641/",
+          "http://127.0.0.1:42641/browser.js",
+          "http://127.0.0.1:42641/quickjs.wasm",
+          "http://127.0.0.1:42641/worker.js",
+          "http://127.0.0.1:42641/guest-worklet.js",
+          "blob:http://127.0.0.1:42641/94ddbca7-0a64-4e14-a96e-b527a7eb9a5f",
+          "blob:http://127.0.0.1:42641/94ddbca7-0a64-4e14-a96e-b527a7eb9a5f",
+          "blob:http://127.0.0.1:42641/94ddbca7-0a64-4e14-a96e-b527a7eb9a5f",
+          "blob:http://127.0.0.1:42641/94ddbca7-0a64-4e14-a96e-b527a7eb9a5f",
+          "blob:http://127.0.0.1:42641/94ddbca7-0a64-4e14-a96e-b527a7eb9a5f"
         ],
         "withoutNativeSharedWorker": {
           "dedicated": true,
@@ -274,21 +275,21 @@
           }
         },
         "requestURLs": [
-          "http://127.0.0.1:45767/",
-          "http://127.0.0.1:45767/browser.js",
-          "http://127.0.0.1:45767/quickjs.wasm",
-          "http://127.0.0.1:45767/worker.js",
-          "http://127.0.0.1:45767/guest-worklet.js",
-          "http://127.0.0.1:45767/",
-          "http://127.0.0.1:45767/browser.js",
-          "http://127.0.0.1:45767/quickjs.wasm",
-          "http://127.0.0.1:45767/worker.js",
-          "http://127.0.0.1:45767/guest-worklet.js",
-          "http://127.0.0.1:45767/",
-          "http://127.0.0.1:45767/browser.js",
-          "http://127.0.0.1:45767/quickjs.wasm",
-          "http://127.0.0.1:45767/worker.js",
-          "http://127.0.0.1:45767/guest-worklet.js"
+          "http://127.0.0.1:42641/",
+          "http://127.0.0.1:42641/browser.js",
+          "http://127.0.0.1:42641/quickjs.wasm",
+          "http://127.0.0.1:42641/worker.js",
+          "http://127.0.0.1:42641/guest-worklet.js",
+          "http://127.0.0.1:42641/",
+          "http://127.0.0.1:42641/browser.js",
+          "http://127.0.0.1:42641/quickjs.wasm",
+          "http://127.0.0.1:42641/worker.js",
+          "http://127.0.0.1:42641/guest-worklet.js",
+          "http://127.0.0.1:42641/",
+          "http://127.0.0.1:42641/browser.js",
+          "http://127.0.0.1:42641/quickjs.wasm",
+          "http://127.0.0.1:42641/worker.js",
+          "http://127.0.0.1:42641/guest-worklet.js"
         ],
         "withoutNativeSharedWorker": {
           "dedicated": true,
@@ -341,5 +342,5 @@
       "/guest-worklet.js"
     ]
   },
-  "completedAt": "2026-11-20T10:34:03.502Z"
+  "completedAt": "2026-11-20T10:36:38.145Z"
 }
