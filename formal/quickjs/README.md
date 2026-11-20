@@ -20,6 +20,20 @@ The implementation is being reviewed against eight obligations. The
 that still require implementation correspondence. This is an inventory, not an
 assertion that those obligations are proved.
 
+Current component contracts and executable checks are documented separately:
+
+- [Context publication](context-publication.md): preparation tokens and actual
+  child-session cancellation before guest execution.
+- [Management authority](management-authority.md): actual sender/client/endpoint
+  predicates and their asynchronous receiver obligations.
+- [Native Wasm](wasm/README.md): accessor-module authority and indexed bounds.
+- [Audio worklets](worklets/README.md): bootstrap ownership and lifecycle.
+- [Native operation registry](../../docs/implementation/native-policy.md):
+  pre-operation authorization and the integrated standalone URL family.
+
+The [handoff](handoff.md) records active implementation and current gaps. Component
+receipts identify their checked inputs; they do not qualify a combined release.
+
 Run the existing pinned Gillian verifier against a stateful fixture and a failed
 state-update control:
 
