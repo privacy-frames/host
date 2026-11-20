@@ -1,0 +1,85 @@
+{
+  "scope": "Independent preparation/cancellation/reentry/queued-message controls and real QuickJS child-session replacement with actual cancellation-removal controls. This is not a complete browser confinement proof.",
+  "sourceHashes": {
+    "src/guest/contexts/lifecycle-kernel.ts": "93a3711767ee0e6071ed0a3ebdebf3231179fd54671c639ed382243c13aa3179",
+    "src/guest/contexts/documents.ts": "02ce86f6e8ef962eb48eb84c88b012613d91728fffe752f4a600f3cd8d8746f0",
+    "src/guest/contexts/window-contexts.ts": "b38d44e2dd955c36894abb587b9e28dc82397e0845924077e940c8b7c656ec7a",
+    "src/guest/session.ts": "7d6566044cec86e7ee1bd8629cc05bbcf89c62915d8dc4e415a5eb5d5b413f55",
+    "src/guest/browser.ts": "ccfb401c0019cecbf8ec2d5c794dfc520419f3515d4d27ba795ba1dccad1d639",
+    "test/guest-context-publication.browser.ts": "9e0afa7d95c607cdd2042d6d9c9b1f8167f0d2a2c616312be75fb7f090e8d353",
+    "test/guest-context-publication.ts": "a42fb25191387a0cc56823c353b034b10ce7ea885e4944d658aad5da9a8e7eeb"
+  },
+  "engineSHA256": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
+  "bundleHashes": {
+    "production": "1f9829f4d4578f6b997834488c764d00ffa0cbdcaa5e81c9ac067f8ec2f8b9b1",
+    "sessionCancellationRemoved": "3186a208451a6d55b62a26d6984698cba01885fb584d3a475801f438a3914364"
+  },
+  "fault": "Only the actual session caller signal forwarding and its before/after-render abort checks are removed from a temporary bundle; frame factory postchecks remain.",
+  "receipts": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "production",
+      "result": {
+        "staleClosed": 1,
+        "publishedClosed": 1,
+        "logicalLoads": 1,
+        "pendingClosed": 1,
+        "pendingLoads": 0,
+        "reentrantSources": [
+          "",
+          "inner"
+        ],
+        "queuedDeliveries": 1,
+        "cancelledRealChildExecutions": 0,
+        "liveRealChildExecutions": 1,
+        "popupFirstClosed": 1,
+        "popupSecondClosed": 1,
+        "cleanupCalls": 2,
+        "cleanupErrors": 1
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "variant": "session-cancellation-removed",
+      "observed": [
+        1
+      ],
+      "rejected": true
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "production",
+      "result": {
+        "staleClosed": 1,
+        "publishedClosed": 1,
+        "logicalLoads": 1,
+        "pendingClosed": 1,
+        "pendingLoads": 0,
+        "reentrantSources": [
+          "",
+          "inner"
+        ],
+        "queuedDeliveries": 1,
+        "cancelledRealChildExecutions": 0,
+        "liveRealChildExecutions": 1,
+        "popupFirstClosed": 1,
+        "popupSecondClosed": 1,
+        "cleanupCalls": 2,
+        "cleanupErrors": 1
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "variant": "session-cancellation-removed",
+      "observed": [
+        1
+      ],
+      "rejected": true
+    }
+  ],
+  "completedAt": "2026-11-20T09:55:31.417Z"
+}
