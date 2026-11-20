@@ -1,3 +1,4 @@
+import { acceptsManagerSender, managementPortIsCurrent } from '../runtime/authority.ts';
 import type { ManagementOperation } from '../shared/types.ts';
 
 interface ManagementRequest {
@@ -82,6 +83,8 @@ const base = new URL('./', location.href);
 const status = requiredStatus();
 let controller: ServiceWorker | null = null;
 let port: MessagePort | null = null;
+let closed = false;
+const replies = new Set<MessagePort>();
 let storageRequired = false;
 
 async function initializeStorage(): Promise<void> {
@@ -145,6 +148,7 @@ async function initializeStorage(): Promise<void> {
 }
 
 function forwardRequest(candidate: MessagePort, data: unknown): void {
+  if (!managementPortIsCurrent(closed, port, candidate)) return;
   const request = managementRequest(data);
   if (!request) {
     candidate.postMessage({
@@ -156,8 +160,11 @@ function forwardRequest(candidate: MessagePort, data: unknown): void {
   }
 
   const reply = new MessageChannel();
+  replies.add(reply.port1);
   reply.port1.onmessage = (event: MessageEvent<unknown>) => {
+    replies.delete(reply.port1);
     reply.port1.close();
+    if (!event.isTrusted || !managementPortIsCurrent(closed, port, candidate)) return;
     try {
       const result = workerReply(event.data);
       if (result.ok && request.operation === 'remove') {
@@ -179,6 +186,7 @@ function forwardRequest(candidate: MessagePort, data: unknown): void {
       reply.port2,
     ]);
   } catch (error) {
+    replies.delete(reply.port1);
     reply.port1.close();
     reply.port2.close();
     candidate.postMessage({ id: request.id, ok: false, error: errorMessage(error) });
@@ -194,12 +202,16 @@ async function initialize(): Promise<void> {
   // This document is trusted host code. Neither URL parameters nor claimed
   // message roles can authorize an application window as the manager.
   window.addEventListener('message', async (event: MessageEvent<unknown>) => {
+    const sender = {
+      closed,
+      bound: port !== null,
+      trusted: event.isTrusted,
+      embedded: window.parent !== window,
+      parentSource: event.source === window.parent,
+      allowedOrigin: allowed.has(event.origin),
+    };
     if (
-      !event.isTrusted ||
-      port ||
-      window.parent === window ||
-      event.source !== window.parent ||
-      !allowed.has(event.origin) ||
+      !acceptsManagerSender(sender) ||
       !isRecord(event.data) ||
       event.data.type !== 'pf-connect' ||
       event.ports.length !== 1
@@ -212,17 +224,32 @@ async function initialize(): Promise<void> {
     try {
       if (storageRequired) candidate.postMessage({ type: 'pf-storage-required' });
       await ready;
+      if (!managementPortIsCurrent(closed, port, candidate)) {
+        candidate.close();
+        return;
+      }
       candidate.onmessage = (message: MessageEvent<unknown>) => {
-        forwardRequest(candidate, message.data);
+        if (message.isTrusted) forwardRequest(candidate, message.data);
       };
       candidate.start();
       candidate.postMessage({ type: 'pf-ready', base: base.href });
       status.textContent = 'Application storage ready.';
     } catch (error) {
-      candidate.postMessage({ type: 'pf-error', error: errorMessage(error) });
+      if (managementPortIsCurrent(closed, port, candidate))
+        candidate.postMessage({ type: 'pf-error', error: errorMessage(error) });
       candidate.close();
-      port = null;
+      if (port === candidate) port = null;
     }
+  });
+
+  window.addEventListener('pagehide', (event) => {
+    if (!event.isTrusted || event.persisted) return;
+    closed = true;
+    const candidate = port;
+    port = null;
+    candidate?.close();
+    for (const reply of replies) reply.close();
+    replies.clear();
   });
 
   const ready = initializeStorage();

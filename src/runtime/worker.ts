@@ -1,3 +1,4 @@
+import { clientCanManage } from './authority.ts';
 import { getApp, listApps, putApp, deleteApp, getResource } from './storage.ts';
 import { admitInstallation } from './admission.ts';
 import {
@@ -99,10 +100,34 @@ worker.addEventListener('activate', (event) => {
   );
 });
 
+async function requireManagementClient(sourceID: string): Promise<Client> {
+  const client = await worker.clients.get(sourceID);
+  if (
+    !client ||
+    !clientCanManage(
+      { id: client.id, type: client.type, url: client.url },
+      sourceID,
+      controlURL,
+    )
+  )
+    throw new Error('Trusted manager bridge required');
+  return client;
+}
+
 let managementQueue = Promise.resolve();
 worker.addEventListener('message', (event) => {
   const port = event.ports[0];
-  if (!port || !event.source || !('id' in event.source)) return;
+  if (
+    !event.isTrusted ||
+    !port ||
+    !event.source ||
+    !('id' in event.source) ||
+    typeof event.source.id !== 'string' ||
+    !event.source.id
+  ) {
+    port?.close();
+    return;
+  }
   const sourceID = event.source.id;
   const operation = async () => {
     try {
@@ -134,6 +159,14 @@ worker.addEventListener('message', (event) => {
         const current = await getApp(app.id);
         if (current?.generation !== app.generation)
           throw new Error('Installation changed');
+        const recipient = await worker.clients.get(sourceID);
+        if (
+          !recipient ||
+          recipient.id !== sourceID ||
+          recipient.type !== 'window' ||
+          applicationIdentity(recipient.url, base) !== publicAlias(app.id)
+        )
+          throw new Error('Application client changed');
         port.postMessage({ ok: true, value }, [
           value.engineWasm,
           value.workerBootstrap.dedicated,
@@ -143,7 +176,13 @@ worker.addEventListener('message', (event) => {
         ]);
         return;
       }
-      if (client.url !== controlURL || client.type !== 'window')
+      if (
+        !clientCanManage(
+          { id: client.id, type: client.type, url: client.url },
+          sourceID,
+          controlURL,
+        )
+      )
         throw new Error('Trusted manager bridge required');
       if (!('operation' in message)) throw new Error('Management operation required');
       const payload = 'payload' in message ? message.payload : undefined;
@@ -159,6 +198,7 @@ worker.addEventListener('message', (event) => {
         )
           throw new Error('Close application windows before replacing an installation');
         app.installedAt = new Date().toISOString();
+        await requireManagementClient(sourceID);
         await putApp(app);
         value = { id: app.id };
       } else if (message.operation === 'list') {
@@ -181,10 +221,12 @@ worker.addEventListener('message', (event) => {
           )
         )
           throw new Error('Close application windows before uninstalling');
+        await requireManagementClient(sourceID);
         await deleteApp(payload);
         value = true;
       } else if (message.operation === 'events') value = events;
       else throw new Error('Unknown management operation');
+      await requireManagementClient(sourceID);
       port.postMessage({ ok: true, value });
     } catch (error) {
       port.postMessage({
