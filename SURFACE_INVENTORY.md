@@ -34,3 +34,6 @@ Application service-worker execution remains deferred. Broader
 browser coverage and a machine-checked correspondence between the implementation
 and its confinement requirements remain research work. Historical route inventories
 and formal models under `formal/` describe the earlier native runtime.
+
+The [QuickJS confinement verification plan](docs/implementation/confinement-verification-plan.md)
+sets the implementation, proof and release stages for the current architecture.
