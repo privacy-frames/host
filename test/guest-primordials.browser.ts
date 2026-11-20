@@ -77,6 +77,18 @@ try {
     try { view[0] = 17; return view[0] === 17 && consulted === 0; }
     finally { delete Object.prototype.index; }
   `);
+  checks.binaryConstructorHandler = await evaluate(`
+    let consulted = 0;
+    Object.defineProperty(Object.prototype, 'get', {
+      get() { consulted++; throw new Error('inherited binary constructor handler'); },
+      configurable: true,
+    });
+    try {
+      const bytes = new Uint8Array(4);
+      bytes[0] = 11;
+      return bytes.length === 4 && bytes[0] === 11 && consulted === 0;
+    } finally { delete Object.prototype.get; }
+  `);
   checks.thrownReference = await evaluate(`
     const sentinel = new Proxy({}, {
       getPrototypeOf() { throw new Error('Thrown prototype was inspected'); },

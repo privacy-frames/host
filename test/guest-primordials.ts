@@ -10,6 +10,8 @@ const directory = new URL('../.tools/guest-primordials/', import.meta.url);
 await mkdir(directory, { recursive: true });
 const helperPath = new URL('../src/guest/guest-runtime.ts', import.meta.url);
 const helper = await readFile(helperPath, 'utf8');
+const binaryPath = new URL('../src/guest/guest-binary.ts', import.meta.url);
+const binary = await readFile(binaryPath, 'utf8');
 const variants = [
   { name: 'prepared' },
   {
@@ -42,9 +44,18 @@ const variants = [
     failed: 'classification',
     diagnostic: 'application hasInstance',
   },
+  {
+    name: 'inherited-binary-handler',
+    file: 'guest-binary',
+    anchor: 'const handler: ProxyHandler<Function> = create(null);',
+    replacement: 'const handler: ProxyHandler<Function> = {};',
+    failed: 'binaryConstructorHandler',
+    diagnostic: 'inherited binary constructor handler',
+  },
 ] as const;
 async function compile(variant: (typeof variants)[number]): Promise<Buffer<ArrayBuffer>> {
-  let source = helper;
+  const file = 'file' in variant ? variant.file : 'guest-runtime';
+  let source = file === 'guest-binary' ? binary : helper;
   if ('anchor' in variant) {
     assert.equal(source.split(variant.anchor).length, 2, 'Fault anchor changed');
     source = source.replace(variant.anchor, variant.replacement);
@@ -60,7 +71,7 @@ async function compile(variant: (typeof variants)[number]): Promise<Buffer<Array
       {
         name: 'private-helper-control',
         setup(build) {
-          build.onLoad({ filter: /guest-runtime\.ts$/ }, (args) => ({
+          build.onLoad({ filter: new RegExp('/' + file + '\\.ts$') }, (args) => ({
             contents: source,
             loader: 'ts',
             resolveDir: dirname(args.path),
@@ -119,6 +130,7 @@ try {
           'privateIndexRecord',
           'classification',
           'thrownReference',
+          'binaryConstructorHandler',
         ]) {
           const value: unknown = result.checks[key];
           if ('failed' in variant && key === variant.failed) {
@@ -141,6 +153,7 @@ try {
     JSON.stringify(
       {
         helperSHA256: createHash('sha256').update(helper).digest('hex'),
+        binaryHelperSHA256: createHash('sha256').update(binary).digest('hex'),
         engineSHA256: createHash('sha256').update(wasm).digest('hex'),
         observations,
       },

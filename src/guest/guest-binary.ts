@@ -43,6 +43,7 @@ export function installGuestBinary(
   const define = Object.defineProperty;
   const getDescriptor = Object.getOwnPropertyDescriptor;
   const setPrototype = Object.setPrototypeOf;
+  const create = Object.create;
   const localBuffer = ArrayBuffer;
   const localIsView = ArrayBuffer.isView;
   const typedPrototype = Object.getPrototypeOf(Uint8Array.prototype);
@@ -152,8 +153,9 @@ export function installGuestBinary(
             writable: true,
           });
     }
-    const constructor = new Proxy(target, {
-      construct(_target, args, newTarget) {
+    const handler: ProxyHandler<Function> = create(null);
+    define(handler, 'construct', {
+      value(_target: Function, args: unknown[], newTarget: Function) {
         const first = hooks.binaryKind(args[0]);
         const external =
           !original ||
@@ -168,6 +170,7 @@ export function installGuestBinary(
         return value;
       },
     });
+    const constructor = new Proxy(target, handler);
     define(publicPrototype, 'constructor', {
       value: constructor,
       writable: true,
