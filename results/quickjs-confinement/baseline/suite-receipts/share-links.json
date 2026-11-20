@@ -1,0 +1,82 @@
+{
+  "provenance": {
+    "capturedAt": "2026-11-20T09:11:28.766Z",
+    "revision": "4d0601437edab175e792165c4ffbe8aef2c13eae",
+    "dirty": true,
+    "sourceSHA256": "09a2471be47f40bbb1708ca44901ed6587d2f072e23148a16f9f57d505618f94",
+    "runner": "test/share-links.ts",
+    "runnerSHA256": "6ca0dcd9a9232e2f63ba14f86b44ca791942fa0602e2e91661dea8893c9fb8e1",
+    "publisherRevision": "8db931d2833e5d86202574d554d0bea79c33342f",
+    "artifacts": {
+      "dist-manager/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-manager/config.json": "256524d570702aa58f1bf52156db163211f98d32b9cc261c48216430e1206523",
+      "dist-manager/host.css": "5053a45ecaca74a28e8dd218fcc5f22463798d129d3034483bdceab4453fa22f",
+      "dist-manager/index.html": "1451fd63538fff9f0d23a4eb55efd770d312baa4f8d4421c0b26b9228011e12a",
+      "dist-manager/manager.js": "d206a0722c287cb0e96c192ad3c6a1c47a1ed1b531ec977d43f2a1c2a352da96",
+      "dist-manager/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-manager/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-manager/report.html": "6147f97720e098f90487f029e9316d8ea5801c9f6fc1b336fc33af57797fcd51",
+      "dist-manager/sw.js": "ae6322e24b89a53abb156d49205ef6956779730126967c09e9b15724782aaff9",
+      "dist-runtime/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-runtime/__guest_worker_registry__.js": "106b77a615aff3a3bdc0c29b349894b596006a01078a1d7f8c1a167bbce664fc",
+      "dist-runtime/config.json": "256524d570702aa58f1bf52156db163211f98d32b9cc261c48216430e1206523",
+      "dist-runtime/connect.html": "53fe49a35d07ee283a95f95e6de857bfea8f7f289fe535fe3bf8d60ff8ba479f",
+      "dist-runtime/connect.js": "32a672be00cf28559a8d51f34d25b5f81eec6bbc17382d4ed0bd646d7d4a310b",
+      "dist-runtime/engine-LICENSE.txt": "6c938bd1305d033a7eb25a33e79e62fc5d4cb27a8f60d17dadb43894689391ba",
+      "dist-runtime/engine.wasm": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
+      "dist-runtime/guard.js": "f6769502b39d2438e40dbf8ae05adbb772dba8c2841f2c265e8b4318ff3ca584",
+      "dist-runtime/guest-shared-worker.js": "bc129376716d704f6027a88fe0ae142469c901b0e0dc60446ab12f8b49425281",
+      "dist-runtime/guest-worker.js": "d5eb415874b6e708e5ad218667b2eeb43c997a3a6d234419dcf4d59f1471038e",
+      "dist-runtime/guest-worklet.js": "fd0d007a6f5dde2bf5dde20dfc1bd7e7cafe3de0fe42f76861308d1455af4576",
+      "dist-runtime/host.css": "5053a45ecaca74a28e8dd218fcc5f22463798d129d3034483bdceab4453fa22f",
+      "dist-runtime/index.html": "9c38d53b82a15ef794b7d8ee871954812880c69dc392287c8698ecd3c214d489",
+      "dist-runtime/pwa-192.png": "12edb0db945f8517426cc9c2d5ef70f1499c782084fc87746f4ebb48946c36aa",
+      "dist-runtime/pwa-512.png": "1af533c31c8d5b48449f4366e7cdc3fc464d63ce1a1be9631e02f24e77a6eb95",
+      "dist-runtime/report.html": "6147f97720e098f90487f029e9316d8ea5801c9f6fc1b336fc33af57797fcd51",
+      "dist-runtime/sw.js": "37519f1880ede6705ef72afb210e98986b35e182ff59095758c3ff3b5d0e517c",
+      "dist-installation/.nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "dist-installation/config.json": "256524d570702aa58f1bf52156db163211f98d32b9cc261c48216430e1206523",
+      "dist-installation/index.html": "3ca67c9966dd6eaaddb08a331c4c422a70d79bed1acecddada56764ba4ac8e5f",
+      "dist-installation/installation.js": "f1a44718ed7d218dbbc5b51e570badbe0619cbd41e14d5dbec72cbed4f5e5c6a"
+    }
+  },
+  "scope": "Local built manager, installer and runtime on separate origins; no public deployment, PWA installation or real-device testing",
+  "browsers": [
+    {
+      "name": "chromium",
+      "version": "153.0.8010.12",
+      "checks": [
+        "Malformed, authority-spoofing and decompression-bomb links reject before publisher or receiver requests",
+        "A minimal spinner and progress text automatically install once and open in the same tab, preserving launch queries",
+        "Server traffic and a working unrestricted control confirm that the automatically opened application remains confined",
+        "An existing source opens immediately without fetching even a missing remote list or a changed embedded list, preserving private storage",
+        "Application sharing preserves resolved resource lists with clipboard feedback and a selectable fallback",
+        "An application link automatically installs and opens in fresh browser storage without transferring private data",
+        "Hash navigation opens automatically and Back returns to applications without a redirect loop",
+        "Form sharing embeds uploaded lists; compressed browser-generated links decode and automatically open the installed copy",
+        "A new application URL without a resource list automatically installs and opens",
+        "A remote resource list is automatically installed and the Notes application opens",
+        "An unavailable required resource stops automatic installation once and shows an error with only an applications link",
+        "Changing links during installation cannot redirect to the previous link’s app"
+      ]
+    },
+    {
+      "name": "firefox",
+      "version": "155.0",
+      "checks": [
+        "Malformed, authority-spoofing and decompression-bomb links reject before publisher or receiver requests",
+        "A minimal spinner and progress text automatically install once and open in the same tab, preserving launch queries",
+        "Server traffic and a working unrestricted control confirm that the automatically opened application remains confined",
+        "An existing source opens immediately without fetching even a missing remote list or a changed embedded list, preserving private storage",
+        "Application sharing preserves resolved resource lists with clipboard feedback and a selectable fallback",
+        "An application link automatically installs and opens in fresh browser storage without transferring private data",
+        "Hash navigation opens automatically and Back returns to applications without a redirect loop",
+        "Form sharing embeds uploaded lists; compressed browser-generated links decode and automatically open the installed copy",
+        "A new application URL without a resource list automatically installs and opens",
+        "A remote resource list is automatically installed and the Notes application opens",
+        "An unavailable required resource stops automatic installation once and shows an error with only an applications link",
+        "Changing links during installation cannot redirect to the previous link’s app"
+      ]
+    }
+  ]
+}

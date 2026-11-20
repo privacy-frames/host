@@ -1,0 +1,36 @@
+[
+  {
+    "iteration": 2,
+    "command": [
+      "npm",
+      "run",
+      "test:wasm-apps"
+    ],
+    "environment": {
+      "DISPLAY": ":119",
+      "LIBGL_ALWAYS_SOFTWARE": "1",
+      "WASM_APPS_TARGET": "squoosh"
+    },
+    "startedAt": "2026-11-20T09:04:02.816484+00:00",
+    "completedAt": "2026-11-20T09:07:19.318381+00:00",
+    "exitCode": 0,
+    "log": ".tools/baseline/squoosh-run-2.log"
+  },
+  {
+    "iteration": 3,
+    "command": [
+      "npm",
+      "run",
+      "test:wasm-apps"
+    ],
+    "environment": {
+      "DISPLAY": ":119",
+      "LIBGL_ALWAYS_SOFTWARE": "1",
+      "WASM_APPS_TARGET": "squoosh"
+    },
+    "startedAt": "2026-11-20T09:07:19.319620+00:00",
+    "completedAt": "2026-11-20T09:10:37.208254+00:00",
+    "exitCode": 0,
+    "log": ".tools/baseline/squoosh-run-3.log"
+  }
+]

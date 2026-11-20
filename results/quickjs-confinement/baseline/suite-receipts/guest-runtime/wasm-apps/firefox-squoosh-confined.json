@@ -1,0 +1,249 @@
+{
+  "browser": "firefox",
+  "deployment": "local",
+  "version": "155.0",
+  "application": "squoosh",
+  "graphicsProfile": {
+    "display": ":119",
+    "softwareMesa": true,
+    "firefoxUserPrefs": {
+      "webgl.force-enabled": true,
+      "webgl.disabled": false,
+      "gfx.webrender.software": true
+    }
+  },
+  "mode": "confined",
+  "sourceURL": "http://127.0.0.1:4812/apps/squoosh/",
+  "guardHash": "f6769502b39d2438e40dbf8ae05adbb772dba8c2841f2c265e8b4318ff3ca584",
+  "started": "2026-11-20T09:09:09.557Z",
+  "errors": [],
+  "responses": [],
+  "failedResources": [],
+  "browserDiagnostics": [
+    "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4811/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]",
+    "[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4811/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]"
+  ],
+  "resourceRefusals": [
+    "TypeError: Script resource is not installed: https://www.google-analytics.com/analytics.js\nsource@http://127.0.0.1:4811/runtime/guard.js:15970:15\nexecute@http://127.0.0.1:4811/runtime/guard.js:24953:65\nconnected@http://127.0.0.1:4811/runtime/guard.js:24889:37\ninvoke@http://127.0.0.1:4811/runtime/guard.js:44952:85\nwrapper@http://127.0.0.1:4811/runtime/guard.js:44478:31\ncall@http://127.0.0.1:4811/runtime/guard.js:44091:51\ndispatch@http://127.0.0.1:4811/runtime/guard.js:47465:27\ninitialize/bridge<@http://127.0.0.1:4811/runtime/guard.js:47031:23\nnode_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs/QuickJSContext/callFunction/<@http://127.0.0.1:4811/runtime/guard.js:3397:48\nawaitEachYieldedPromise@http://127.0.0.1:4811/runtime/guard.js:2866:31\nawaitYieldOf@http://127.0.0.1:4811/runtime/guard.js:2850:23\nnode_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs/withScopeMaybeAsync/<@http://127.0.0.1:4811/runtime/guard.js:3119:37\nawaitEachYieldedPromise@http://127.0.0.1:4811/runtime/guard.js:2866:31\nmaybeAsync@http://127.0.0.1:4811/runtime/guard.js:2860:12\nwithScopeMaybeAsync@http://127.0.0.1:4811/runtime/guard.js:3116:18\ncallFunction@http://127.0.0.1:4811/runtime/guard.js:3390:26\nnode_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs/QuickJSModuleCallbacks/callFunction/<@http://127.0.0.1:4811/runtime/guard.js:3893:25\nhandleAsyncify@http://127.0.0.1:4811/runtime/guard.js:3959:23\ncallFunction@http://127.0.0.1:4811/runtime/guard.js:3889:81\nqts_host_call_function@http://127.0.0.1:4811/runtime/guard.js:4797:34\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[1000]:0xbb9af\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[799]:0xa5497\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[29]:0x2c1f\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[292]:0x4b834\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[292]:0x4b788\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[29]:0x4b95\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[29]:0x4984\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[29]:0x46f2\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[29]:0x405b\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[874]:0xaeac6\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[29]:0x2c1f\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[29]:0x486a\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[29]:0x405b\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[292]:0x4b834\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[292]:0x4b788\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[697]:0x9527b\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[788]:0xa4d18\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[29]:0x2c1f\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[29]:0x46f2\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[29]:0x405b\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[1014]:0xbc9ab\nnode_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs/callFunction/resultPtr<@http://127.0.0.1:4811/runtime/guard.js:3678:95\nconsume@http://127.0.0.1:4811/runtime/guard.js:3060:27\ncallFunction@http://127.0.0.1:4811/runtime/guard.js:3678:60\nhelper@http://127.0.0.1:4811/runtime/guard.js:48394:22\ninvoke/<@http://127.0.0.1:4811/runtime/guard.js:48139:86\nenter@http://127.0.0.1:4811/runtime/guard.js:47369:16\ninvoke@http://127.0.0.1:4811/runtime/guard.js:48135:19\ncallable@http://127.0.0.1:4811/runtime/guard.js:47855:25\nrender@http://127.0.0.1:4811/runtime/guard.js:25090:43\nasync*render@http://127.0.0.1:4811/runtime/guard.js:48537:32\nstart2@http://127.0.0.1:4811/runtime/guard.js:48674:21\nasync*@http://127.0.0.1:4811/runtime/guard.js:48690:8\n@http://127.0.0.1:4811/runtime/guard.js:48700:3\n",
+    "TypeError: Script resource is not installed: https://www.google-analytics.com/analytics.js\nsource@http://127.0.0.1:4811/runtime/guard.js:15970:15\nexecute@http://127.0.0.1:4811/runtime/guard.js:24953:65\nconnected@http://127.0.0.1:4811/runtime/guard.js:24889:37\ninvoke@http://127.0.0.1:4811/runtime/guard.js:44952:85\nwrapper@http://127.0.0.1:4811/runtime/guard.js:44478:31\ncall@http://127.0.0.1:4811/runtime/guard.js:44091:51\ndispatch@http://127.0.0.1:4811/runtime/guard.js:47465:27\ninitialize/bridge<@http://127.0.0.1:4811/runtime/guard.js:47031:23\nnode_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs/QuickJSContext/callFunction/<@http://127.0.0.1:4811/runtime/guard.js:3397:48\nawaitEachYieldedPromise@http://127.0.0.1:4811/runtime/guard.js:2866:31\nawaitYieldOf@http://127.0.0.1:4811/runtime/guard.js:2850:23\nnode_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs/withScopeMaybeAsync/<@http://127.0.0.1:4811/runtime/guard.js:3119:37\nawaitEachYieldedPromise@http://127.0.0.1:4811/runtime/guard.js:2866:31\nmaybeAsync@http://127.0.0.1:4811/runtime/guard.js:2860:12\nwithScopeMaybeAsync@http://127.0.0.1:4811/runtime/guard.js:3116:18\ncallFunction@http://127.0.0.1:4811/runtime/guard.js:3390:26\nnode_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs/QuickJSModuleCallbacks/callFunction/<@http://127.0.0.1:4811/runtime/guard.js:3893:25\nhandleAsyncify@http://127.0.0.1:4811/runtime/guard.js:3959:23\ncallFunction@http://127.0.0.1:4811/runtime/guard.js:3889:81\nqts_host_call_function@http://127.0.0.1:4811/runtime/guard.js:4797:34\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[1000]:0xbb9af\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[799]:0xa5497\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[29]:0x2c1f\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[292]:0x4b834\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[292]:0x4b788\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[29]:0x4b95\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[29]:0x4984\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[29]:0x46f2\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[29]:0x405b\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[874]:0xaeac6\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[29]:0x2c1f\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[29]:0x486a\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[29]:0x405b\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[292]:0x4b834\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[292]:0x4b788\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[697]:0x9527b\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[788]:0xa4d18\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[29]:0x2c1f\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[29]:0x46f2\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[29]:0x405b\n@http://127.0.0.1:4811/runtime/guard.js line 48509 > WebAssembly.compile:wasm-function[1014]:0xbc9ab\nnode_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs/callFunction/resultPtr<@http://127.0.0.1:4811/runtime/guard.js:3678:95\nconsume@http://127.0.0.1:4811/runtime/guard.js:3060:27\ncallFunction@http://127.0.0.1:4811/runtime/guard.js:3678:60\nhelper@http://127.0.0.1:4811/runtime/guard.js:48394:22\ninvoke/<@http://127.0.0.1:4811/runtime/guard.js:48139:86\nenter@http://127.0.0.1:4811/runtime/guard.js:47369:16\ninvoke@http://127.0.0.1:4811/runtime/guard.js:48135:19\ncallable@http://127.0.0.1:4811/runtime/guard.js:47855:25\nrender@http://127.0.0.1:4811/runtime/guard.js:25090:43\nasync*render@http://127.0.0.1:4811/runtime/guard.js:48537:32\nstart2@http://127.0.0.1:4811/runtime/guard.js:48674:21\nasync*@http://127.0.0.1:4811/runtime/guard.js:48690:8\n@http://127.0.0.1:4811/runtime/guard.js:48700:3\n"
+  ],
+  "resourceDiagnostics": [],
+  "privateRequests": [],
+  "installation": "Installed Squoosh.",
+  "url": "http://127.0.0.1:4811/runtime/hUVEQ-1CfqM/squoosh/",
+  "nativeCapabilities": {
+    "crossOriginIsolated": true,
+    "sharedArrayBuffer": "function",
+    "webgl2": {
+      "version": "WebGL 2.0",
+      "vendor": "Mesa",
+      "renderer": "llvmpipe, or similar"
+    }
+  },
+  "task": {
+    "inputBytes": 225062,
+    "large": {
+      "bytes": 862478,
+      "name": "photo.jpg",
+      "confirmations": 1,
+      "sha256": "29eac933475faf97308e3b60d1809c6b944ae49e1811fbc9a71810a21e14cf83",
+      "decoded": {
+        "width": 3872,
+        "height": 2592,
+        "red": 0,
+        "black": 11154
+      },
+      "elapsedMs": 8023
+    },
+    "comparison": {
+      "before": {
+        "x": 625,
+        "y": 0,
+        "width": 30,
+        "height": 800
+      },
+      "after": {
+        "x": 725,
+        "y": 0,
+        "width": 30,
+        "height": 800
+      },
+      "splitBefore": 640,
+      "changedPixels": 400
+    },
+    "before": {
+      "bytes": 31301,
+      "name": "synthetic-noise.jpg",
+      "confirmations": 1,
+      "sha256": "f1fa17c3c5dfbc06feaea2a6ca755e36c8fd393c643456db408ea764ad283c0f",
+      "decoded": {
+        "width": 256,
+        "height": 256,
+        "red": 0,
+        "black": 0
+      }
+    },
+    "after": {
+      "bytes": 18879,
+      "name": "synthetic-noise.jpg",
+      "confirmations": 1,
+      "sha256": "3f7cb69eeb3b4200526297df99e00f42df2dde164217c2117efdb54118b8f211",
+      "decoded": {
+        "width": 256,
+        "height": 256,
+        "red": 0,
+        "black": 0
+      }
+    },
+    "avif": {
+      "bytes": 35762,
+      "name": "synthetic-noise.avif",
+      "confirmations": 1,
+      "sha256": "4ccd40ec38f2601668784764912b829568d8a9ce76d9b56ac62689a4150a90de",
+      "decoded": {
+        "width": 256,
+        "height": 256,
+        "red": 0,
+        "black": 0
+      }
+    },
+    "workers": 17,
+    "controls": [
+      {
+        "value": "identity",
+        "options": [
+          "Original Image (synthetic-noise.png)",
+          "AVIF",
+          "Browser JPEG",
+          "Browser PNG",
+          "JPEG XL (beta)",
+          "MozJPEG",
+          "OxiPNG",
+          "QOI",
+          "WebP",
+          "WebP v2 (unstable)"
+        ]
+      },
+      {
+        "value": "avif",
+        "options": [
+          "Original Image (synthetic-noise.png)",
+          "AVIF",
+          "Browser JPEG",
+          "Browser PNG",
+          "JPEG XL (beta)",
+          "MozJPEG",
+          "OxiPNG",
+          "QOI",
+          "WebP",
+          "WebP v2 (unstable)"
+        ]
+      }
+    ]
+  },
+  "offlineTask": {
+    "inputBytes": 225062,
+    "large": {
+      "bytes": 862478,
+      "name": "photo.jpg",
+      "confirmations": 1,
+      "sha256": "29eac933475faf97308e3b60d1809c6b944ae49e1811fbc9a71810a21e14cf83",
+      "decoded": {
+        "width": 3872,
+        "height": 2592,
+        "red": 0,
+        "black": 11154
+      },
+      "elapsedMs": 7857
+    },
+    "comparison": {
+      "before": {
+        "x": 625,
+        "y": 0,
+        "width": 30,
+        "height": 800
+      },
+      "after": {
+        "x": 725,
+        "y": 0,
+        "width": 30,
+        "height": 800
+      },
+      "splitBefore": 640,
+      "changedPixels": 400
+    },
+    "before": {
+      "bytes": 31301,
+      "name": "synthetic-noise.jpg",
+      "confirmations": 1,
+      "sha256": "f1fa17c3c5dfbc06feaea2a6ca755e36c8fd393c643456db408ea764ad283c0f",
+      "decoded": {
+        "width": 256,
+        "height": 256,
+        "red": 0,
+        "black": 0
+      }
+    },
+    "after": {
+      "bytes": 18879,
+      "name": "synthetic-noise.jpg",
+      "confirmations": 1,
+      "sha256": "3f7cb69eeb3b4200526297df99e00f42df2dde164217c2117efdb54118b8f211",
+      "decoded": {
+        "width": 256,
+        "height": 256,
+        "red": 0,
+        "black": 0
+      }
+    },
+    "avif": {
+      "bytes": 35762,
+      "name": "synthetic-noise.avif",
+      "confirmations": 1,
+      "sha256": "4ccd40ec38f2601668784764912b829568d8a9ce76d9b56ac62689a4150a90de",
+      "decoded": {
+        "width": 256,
+        "height": 256,
+        "red": 0,
+        "black": 0
+      }
+    },
+    "workers": 17,
+    "controls": [
+      {
+        "value": "identity",
+        "options": [
+          "Original Image (synthetic-noise.png)",
+          "AVIF",
+          "Browser JPEG",
+          "Browser PNG",
+          "JPEG XL (beta)",
+          "MozJPEG",
+          "OxiPNG",
+          "QOI",
+          "WebP",
+          "WebP v2 (unstable)"
+        ]
+      },
+      {
+        "value": "avif",
+        "options": [
+          "Original Image (synthetic-noise.png)",
+          "AVIF",
+          "Browser JPEG",
+          "Browser PNG",
+          "JPEG XL (beta)",
+          "MozJPEG",
+          "OxiPNG",
+          "QOI",
+          "WebP",
+          "WebP v2 (unstable)"
+        ]
+      }
+    ]
+  },
+  "passed": true,
+  "inputs": [],
+  "completed": "2026-11-20T09:10:36.920Z",
+  "text": "100\n%\nCompress\n225 kB\n0\n%\nEdit\nResize\nReduce palette\nCompress\nLossless\nQuality:\n50\nAdvanced settings\nEffort:\n4\n35.8 kB\n↓\n84\n%"
+}

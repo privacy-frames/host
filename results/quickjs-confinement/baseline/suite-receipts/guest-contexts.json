@@ -1,0 +1,224 @@
+{
+  "receipts": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "observation": {
+        "result": {
+          "worker": {
+            "count": 1,
+            "same": true,
+            "bytes": [
+              1,
+              7,
+              3,
+              4
+            ],
+            "denied": true,
+            "buffer": {},
+            "binaryText": "\u0000ÿ\ud800Z",
+            "keyed": "correct",
+            "normal": "decoy",
+            "detached": true,
+            "persistentCount": 2
+          },
+          "nested": 9,
+          "moduleWorker": 11,
+          "failedTransfer": {
+            "rejected": true,
+            "retained": true
+          },
+          "denied": true,
+          "shared": [
+            1,
+            2
+          ],
+          "sample": 0.25,
+          "workletMessages": [
+            {
+              "bytes": [
+                4,
+                4
+              ]
+            },
+            {
+              "detached": true,
+              "wasm": "object"
+            }
+          ],
+          "nativePortDetached": true,
+          "prepared": 1,
+          "closed": 1,
+          "stripped": true,
+          "childText": "prepared child"
+        }
+      },
+      "requestURLs": [
+        "http://127.0.0.1:39489/",
+        "http://127.0.0.1:39489/browser.js",
+        "http://127.0.0.1:39489/quickjs.wasm",
+        "http://127.0.0.1:39489/worker.js",
+        "http://127.0.0.1:39489/guest-worklet.js",
+        "http://127.0.0.1:39489/__guest_worker_registry__.js",
+        "blob:http://127.0.0.1:39489/aec87f96-9338-425a-9ef3-61976e07607e",
+        "blob:http://127.0.0.1:39489/aec87f96-9338-425a-9ef3-61976e07607e",
+        "blob:http://127.0.0.1:39489/aec87f96-9338-425a-9ef3-61976e07607e",
+        "blob:http://127.0.0.1:39489/aec87f96-9338-425a-9ef3-61976e07607e",
+        "blob:http://127.0.0.1:39489/aec87f96-9338-425a-9ef3-61976e07607e",
+        "blob:http://127.0.0.1:39489/21ccb6ac-0940-4362-b22f-e6f580246436",
+        "http://127.0.0.1:39489/",
+        "http://127.0.0.1:39489/browser.js",
+        "http://127.0.0.1:39489/quickjs.wasm",
+        "http://127.0.0.1:39489/worker.js",
+        "http://127.0.0.1:39489/guest-worklet.js",
+        "blob:http://127.0.0.1:39489/aec87f96-9338-425a-9ef3-61976e07607e",
+        "blob:http://127.0.0.1:39489/aec87f96-9338-425a-9ef3-61976e07607e",
+        "blob:http://127.0.0.1:39489/aec87f96-9338-425a-9ef3-61976e07607e",
+        "blob:http://127.0.0.1:39489/aec87f96-9338-425a-9ef3-61976e07607e",
+        "blob:http://127.0.0.1:39489/aec87f96-9338-425a-9ef3-61976e07607e",
+        "http://127.0.0.1:39489/",
+        "http://127.0.0.1:39489/browser.js",
+        "http://127.0.0.1:39489/quickjs.wasm",
+        "http://127.0.0.1:39489/worker.js",
+        "http://127.0.0.1:39489/guest-worklet.js",
+        "blob:http://127.0.0.1:39489/5127e57c-7e5a-4708-8986-460dbb7d8e89",
+        "blob:http://127.0.0.1:39489/5127e57c-7e5a-4708-8986-460dbb7d8e89",
+        "blob:http://127.0.0.1:39489/5127e57c-7e5a-4708-8986-460dbb7d8e89",
+        "blob:http://127.0.0.1:39489/5127e57c-7e5a-4708-8986-460dbb7d8e89",
+        "blob:http://127.0.0.1:39489/5127e57c-7e5a-4708-8986-460dbb7d8e89"
+      ],
+      "withoutNativeSharedWorker": {
+        "dedicated": true,
+        "nested": true,
+        "module": true,
+        "registryHTTP": 0
+      },
+      "crossRootShared": {
+        "second": [
+          3,
+          4
+        ],
+        "afterFirstRootClose": 5
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "observation": {
+        "result": {
+          "worker": {
+            "count": 1,
+            "same": true,
+            "bytes": [
+              1,
+              7,
+              3,
+              4
+            ],
+            "denied": true,
+            "buffer": {},
+            "binaryText": "\u0000ÿ\ud800Z",
+            "keyed": "correct",
+            "normal": "decoy",
+            "detached": true,
+            "persistentCount": 2
+          },
+          "nested": 9,
+          "moduleWorker": 11,
+          "failedTransfer": {
+            "rejected": true,
+            "retained": true
+          },
+          "denied": true,
+          "shared": [
+            1,
+            2
+          ],
+          "sample": 0.25,
+          "workletMessages": [
+            {
+              "bytes": [
+                4,
+                4
+              ]
+            },
+            {
+              "detached": true,
+              "wasm": "object"
+            }
+          ],
+          "nativePortDetached": true,
+          "prepared": 1,
+          "closed": 1,
+          "stripped": true,
+          "childText": "prepared child"
+        }
+      },
+      "requestURLs": [
+        "http://127.0.0.1:39489/",
+        "http://127.0.0.1:39489/browser.js",
+        "http://127.0.0.1:39489/quickjs.wasm",
+        "http://127.0.0.1:39489/worker.js",
+        "http://127.0.0.1:39489/guest-worklet.js",
+        "http://127.0.0.1:39489/",
+        "http://127.0.0.1:39489/browser.js",
+        "http://127.0.0.1:39489/quickjs.wasm",
+        "http://127.0.0.1:39489/worker.js",
+        "http://127.0.0.1:39489/guest-worklet.js",
+        "http://127.0.0.1:39489/",
+        "http://127.0.0.1:39489/browser.js",
+        "http://127.0.0.1:39489/quickjs.wasm",
+        "http://127.0.0.1:39489/worker.js",
+        "http://127.0.0.1:39489/guest-worklet.js"
+      ],
+      "withoutNativeSharedWorker": {
+        "dedicated": true,
+        "nested": true,
+        "module": true,
+        "registryHTTP": 0
+      },
+      "crossRootShared": {
+        "second": [
+          3,
+          4
+        ],
+        "afterFirstRootClose": 5
+      }
+    }
+  ],
+  "requests": [
+    "/",
+    "/browser.js",
+    "/quickjs.wasm",
+    "/worker.js",
+    "/guest-worklet.js",
+    "/__guest_worker_registry__.js",
+    "/",
+    "/browser.js",
+    "/quickjs.wasm",
+    "/worker.js",
+    "/guest-worklet.js",
+    "/",
+    "/browser.js",
+    "/quickjs.wasm",
+    "/worker.js",
+    "/guest-worklet.js",
+    "/",
+    "/browser.js",
+    "/quickjs.wasm",
+    "/favicon.ico",
+    "/worker.js",
+    "/guest-worklet.js",
+    "/__guest_worker_registry__.js",
+    "/",
+    "/browser.js",
+    "/quickjs.wasm",
+    "/worker.js",
+    "/guest-worklet.js",
+    "/",
+    "/browser.js",
+    "/quickjs.wasm",
+    "/worker.js",
+    "/guest-worklet.js"
+  ]
+}

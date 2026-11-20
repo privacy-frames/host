@@ -1,4 +1,8 @@
-# Earlier native-runtime verification work
+# Confinement verification
+
+Current implementation-connected work is under [quickjs/](quickjs/README.md).
+
+## Earlier native-runtime verification work
 
 These models, implementation checks and browser experiments describe the native
 JavaScript runtime that preceded the QuickJS fork. Its source is preserved at
