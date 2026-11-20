@@ -258,3 +258,41 @@ test('Exception methods survive own stack composition while custom fields remain
     assert.equal(reads, 0);
   }
 });
+
+test('repeated Exception traceStack producers share adapters while retaining exact receivers', () => {
+  if (
+    typeof WebAssembly.Tag !== 'function' ||
+    typeof WebAssembly.Exception !== 'function'
+  )
+    return;
+  const { domain, constructor, invoke } = fixture();
+  const nativeTag = new WebAssembly.Tag({ parameters: ['externref'] });
+  const tag = domain.construct(constructor('Tag'), [{ parameters: ['externref'] }]);
+  const payload = { marker: 29 };
+  let previousGetter: Function | undefined;
+  for (const traceStack of [true, true, false, true, false, true]) {
+    const native = new WebAssembly.Exception(nativeTag, [payload], { traceStack });
+    const exception = domain.construct(constructor('Exception'), [
+      tag,
+      [payload],
+      { traceStack },
+    ]);
+    assert.equal(typeof domain.get(exception, 'stack'), typeof native.stack);
+    assert.equal(invoke(exception, 'is', tag), true);
+    assert.equal(invoke(exception, 'getArg', tag, 0), payload);
+    assert.equal(domain.prototype(exception), WebAssembly.Exception.prototype);
+    const nativeDescriptor = Object.getOwnPropertyDescriptor(native, 'stack');
+    if (nativeDescriptor?.get) {
+      const getter = domain.descriptor(exception, 'stack')?.get;
+      assert(getter);
+      if (previousGetter) assert.equal(getter, previousGetter);
+      previousGetter = getter;
+      assert.equal(typeof domain.call(getter, exception, []), typeof native.stack);
+      assert.throws(() => domain.call(getter, {}, []), NativePolicyError);
+      assert.throws(
+        () => domain.call(getter, new Error('unowned'), []),
+        NativePolicyError,
+      );
+    }
+  }
+});

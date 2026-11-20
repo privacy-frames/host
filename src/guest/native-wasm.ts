@@ -6,6 +6,7 @@ import {
   type NativeContract,
   type NativeMemberRule,
   type NativeReadOperation,
+  type NativeWriteOperation,
 } from './native-policy.ts';
 
 export interface NativeWasmOptions {
@@ -110,6 +111,16 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
     result: NativeContract['result'] = 'data',
     callbacks: NativeContract['callbacks'] = 'none',
   ): NativeContract => ({ id, result, callbacks, effect: 'local-data' });
+  const readExceptionStack = ({ receiver, descriptor }: NativeReadOperation): unknown =>
+    descriptor.get ? apply(descriptor.get, receiver, []) : descriptor.value;
+  const writeExceptionStack = ({
+    receiver,
+    value,
+    descriptor,
+  }: NativeWriteOperation): boolean => {
+    apply(descriptor.set!, receiver, [value]);
+    return true;
+  };
   const host = createNativeHost({
     registry,
     name: 'WebAssembly',
@@ -293,25 +304,13 @@ export function createNativeWasm(options: NativeWasmOptions): NativeWasmDomain {
               key: 'stack',
               read: {
                 contract: contract(id + '.get', 'delegated'),
-                read: ({ receiver, descriptor }) =>
-                  descriptor.get ? apply(descriptor.get, receiver, []) : descriptor.value,
+                read: readExceptionStack,
               },
               ...(stack.set
                 ? {
                     write: {
                       contract: contract(id + '.set', 'none'),
-                      write: ({
-                        receiver,
-                        value,
-                        descriptor,
-                      }: {
-                        receiver: object;
-                        value: unknown;
-                        descriptor: Readonly<PropertyDescriptor>;
-                      }) => {
-                        apply(descriptor.set!, receiver, [value]);
-                        return true;
-                      },
+                      write: writeExceptionStack,
                     },
                   }
                 : {}),

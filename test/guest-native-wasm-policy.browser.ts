@@ -85,8 +85,14 @@ async function run() {
     },
     resources: [],
   };
+  const nativeTag = new WebAssembly.Tag({ parameters: ['externref'] });
+  const nativeStackTypes = [true, true, false, true, false, true].map(
+    (traceStack) =>
+      typeof new WebAssembly.Exception(nativeTag, [null], { traceStack }).stack,
+  );
   const session = await createGuestWindow(catalog, window);
   try {
+    session.engine.set('nativeStackTypes', nativeStackTypes);
     session.engine.set('foreignMemory', memory);
     session.engine.set('foreignModule', module);
     session.engine.set('foreignTable', table);
@@ -108,9 +114,11 @@ async function run() {
       extern.set(0,callback);check(extern.get(0)===callback&&extern.get(0)(4)===5, 'Guest externref callback ownership');
       if(typeof WebAssembly.Tag==='function'){
         const tag=new WebAssembly.Tag({parameters:['externref']});
-        const ex=new WebAssembly.Exception(tag,[callback],{traceStack:true});
-        check(typeof ex.stack==='string','Optional native exception stack');
-        check(ex.is(tag)&&ex.getArg(tag,0)===callback,'Exception externref ownership');
+        for(const [index,traceStack] of [true,true,false,true,false,true].entries()){
+          const ex=new WebAssembly.Exception(tag,[callback],{traceStack});
+          check(typeof ex.stack===nativeStackTypes[index],'Repeated native exception stack');
+          check(ex.is(tag)&&ex.getArg(tag,0)===callback,'Exception externref ownership');
+        }
       }
       for(const name of ['CompileError','LinkError','RuntimeError']){
         let calls=0;const C=WebAssembly[name],error=C({toString(){calls++;return 'marker';}},{cause:19});

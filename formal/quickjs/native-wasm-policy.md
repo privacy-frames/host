@@ -42,6 +42,11 @@ registration. An own stack accessor is admitted only when its descriptor matches
 that native producer sample; its exact per-instance facade precedes the already
 reviewed anchored lineage. Exception is/getArg remain available after composition.
 A foreign own stack accessor that does not match the sample remains refused.
+Repeated traced exceptions share native getter/setter functions. Their producer
+facades therefore reuse one pair of domain adapters, preserving the registry's
+canonical function/adapter identity checks across instances. A repeated native/
+policy traceStack sequence checks this, along with shared getter identity and
+rejection of borrowed getters on ordinary Error objects or other unowned receivers.
 Native memory buffers retain their identity and pass to the existing buffer/memory
 retention callbacks and NativeBinary owner.
 
