@@ -11,6 +11,11 @@ const byteLength = Object.getOwnPropertyDescriptor(
   'byteLength',
 )!.get!;
 
+type IndexedModule = Pick<
+  IndexedEmscriptenModule,
+  'cwrap' | 'addFunction' | 'removeFunction'
+>;
+
 interface IndexedView {
   pointer: number;
   proxy: QuickJSHandle;
@@ -48,7 +53,7 @@ export class IndexedAccess {
   private readonly takeDirty: (access: number) => number;
   private readonly free: (proxy: number, access: number) => void;
 
-  constructor(private readonly module: IndexedEmscriptenModule) {
+  constructor(private readonly module: IndexedModule) {
     this.create = module.cwrap('QTS_NewIndexedProxyAccess', 'number', ['number']);
     this.setView = module.cwrap('QTS_SetIndexedProxyView', 'number', [
       'number',
@@ -78,14 +83,31 @@ export class IndexedAccess {
   }
 
   private entry(target: object, proxy: QuickJSHandle, buffer: ArrayBuffer): IndexedView {
-    let entry = this.views.get(target);
-    if (!entry) {
-      const pointer = this.create(proxy.value);
+    const previous = this.views.get(target);
+    if (previous) return previous;
+    // Root first: a failing duplicate must not leave an attached C allocation.
+    const retained = proxy.dup();
+    let pointer = 0;
+    let entry: IndexedView | undefined;
+    try {
+      pointer = this.create(retained.value);
       if (!pointer) throw new Error('Cannot allocate indexed proxy access');
-      entry = { pointer, proxy: proxy.dup(), buffer, direct: false, active: false };
+      entry = {
+        pointer,
+        proxy: retained,
+        buffer,
+        owner: undefined,
+        direct: false,
+        active: false,
+      };
       this.views.set(target, entry);
+      return entry;
+    } catch (error) {
+      if (entry && this.views.get(target) === entry) this.views.delete(target);
+      if (pointer) this.free(retained.value, pointer);
+      retained.dispose();
+      throw error;
     }
-    return entry;
   }
 
   attachMemory(target: object, proxy: QuickJSHandle, buffer: ArrayBuffer): void {
@@ -101,11 +123,21 @@ export class IndexedAccess {
     if (!access) {
       const native = memoryAccessors(memory, name);
       if (!native) return;
+      const previousSlots = this.slots.length;
       const read = this.module.addFunction(native.read, 'di');
-      const write = this.module.addFunction(native.write, 'vid');
-      this.slots.push(read, write);
-      access = { read, write, kind: native.kind };
-      types.set(name, access);
+      let write: number | undefined;
+      try {
+        write = this.module.addFunction(native.write, 'vid');
+        access = { read, write, kind: native.kind };
+        this.slots.push(read, write);
+        types.set(name, access);
+      } catch (error) {
+        types.delete(name);
+        this.slots.length = previousSlots;
+        if (write !== undefined) this.module.removeFunction(write);
+        this.module.removeFunction(read);
+        throw error;
+      }
     }
     const entry = this.entry(target, proxy, buffer);
     this.deactivate(entry);
@@ -125,19 +157,30 @@ export class IndexedAccess {
     view: QuickJSHandle,
     buffer: ArrayBuffer,
   ): void {
-    const entry = this.entry(target, proxy, buffer);
-    this.deactivate(entry);
-    entry.owner?.dispose();
-    entry.owner = view.dup();
-    entry.direct = false;
-    const length: number = Reflect.apply(lengthOf, target, []);
-    if (this.setView(entry.pointer, entry.owner.value, length) < 0) {
-      entry.owner.dispose();
-      entry.owner = undefined;
-      throw new TypeError('Indexed cache requires a real typed-array view');
+    const owner = view.dup();
+    let entry: IndexedView | undefined;
+    try {
+      entry = this.entry(target, proxy, buffer);
+      this.deactivate(entry);
+      const length: number = Reflect.apply(lengthOf, target, []);
+      // Acquire tracking before enabling the borrowed pointer in C.
+      this.activeShadows.add(entry);
+      if (this.setView(entry.pointer, owner.value, length) < 0)
+        throw new TypeError('Indexed cache requires a real typed-array view');
+    } catch (error) {
+      if (entry) {
+        this.disable(entry.pointer);
+        entry.active = false;
+        this.activeShadows.delete(entry);
+      }
+      owner.dispose();
+      throw error;
     }
+    const previous = entry.owner;
+    entry.owner = owner;
+    entry.direct = false;
     entry.active = true;
-    this.activeShadows.add(entry);
+    previous?.dispose();
   }
 
   dirty(target: object): void {
