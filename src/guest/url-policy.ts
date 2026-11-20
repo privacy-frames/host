@@ -1,13 +1,11 @@
 import {
   NativePolicy,
   NativePolicyError,
-  type NativeCallable,
-  type NativeConstructor,
   type NativeContract,
   type NativeMemberRule,
   type NativeReadOperation,
-  type NativeResult,
 } from './native-policy.ts';
+import { createNativeHost } from './native-host.ts';
 import type { GuestHost } from './protocol.ts';
 
 export interface GuestURLPolicyOptions {
@@ -62,15 +60,6 @@ export function createGuestURLPolicy(options: GuestURLPolicyOptions): GuestURLPo
   const otherBrands = new WeakSet<object>();
   const iteratorPrototypes = new Set<object>();
   const iteratorContracts = new Set<string>();
-  const wrappers = new WeakMap<NativeCallable, Function>();
-  const wrapperTokens = new WeakMap<Function, NativeCallable>();
-  const wrapperDescriptors = new WeakMap<
-    Function,
-    ReadonlyMap<PropertyKey, PropertyDescriptor>
-  >();
-  const constructors = new Map<Function, NativeConstructor>();
-  const constructorTargets = new Map<NativeConstructor, Function>();
-  const metadata = new Map<string, { name: string; length: number }>();
   const knownAbsent = new WeakMap<object, Set<PropertyKey>>();
 
   function contract(
@@ -108,85 +97,52 @@ export function createGuestURLPolicy(options: GuestURLPolicyOptions): GuestURLPo
     return true;
   }
 
-  function ensure(target: object): void {
-    if (!admit(target))
-      throw new NativePolicyError(
-        'access',
-        'URL',
-        undefined,
-        'unclassified native object',
-      );
-  }
-
-  function metadataFor(id: string, target: Function): void {
-    const name: unknown = descriptor(target, 'name')?.value;
-    const length: unknown = descriptor(target, 'length')?.value;
-    metadata.set(id, {
-      name: typeof name === 'string' ? name : '',
-      length: typeof length === 'number' ? length : 0,
-    });
-  }
-
-  function unwrap(result: NativeResult): unknown {
-    if (result.kind === 'constructor') {
-      const target = constructorTargets.get(result.construct);
-      if (!target) throw new TypeError('URL constructor token has no owner');
-      return target;
-    }
-    if (result.kind === 'callable') {
-      let wrapper = wrappers.get(result.callable);
-      if (!wrapper) {
-        const token = result.callable;
-        wrapper = {
-          invoke(this: unknown, ...args: unknown[]) {
-            return unwrap(registry.call(token, this, args));
-          },
-        }.invoke;
-        const shape = metadata.get(token.contract.id);
-        if (shape) {
-          Object.defineProperty(wrapper, 'name', {
-            value: shape.name,
-            configurable: true,
-          });
-          Object.defineProperty(wrapper, 'length', {
-            value: shape.length,
-            configurable: true,
-          });
+  const host = createNativeHost({
+    registry,
+    name: 'URL',
+    functionPrototype,
+    owns(target) {
+      if (owned.has(target)) return true;
+      if (otherBrands.has(target)) return false;
+      if (branded(target, href) || branded(target, size ?? paramsText)) return true;
+      otherBrands.add(target);
+      return false;
+    },
+    admit,
+    result(value, contract) {
+      if (contract.result === 'reference' && object(value) && !owned.has(value)) {
+        if (
+          iteratorContracts.has(contract.id) &&
+          iteratorPrototypes.has(prototype(value))
+        ) {
+          registry.admitObject(value);
+          owned.add(value);
+        } else if (!admit(value)) {
+          throw new NativePolicyError(
+            'return',
+            contract.id,
+            undefined,
+            'unexpected reference result',
+          );
         }
-        wrapperDescriptors.set(
-          wrapper,
-          new Map(
-            ['name', 'length'].map((key) => [
-              key,
-              Object.freeze({ ...descriptor(wrapper!, key) }),
-            ]),
-          ),
-        );
-        wrappers.set(token, wrapper);
-        wrapperTokens.set(wrapper, token);
-        owned.add(wrapper);
       }
-      return wrapper;
-    }
-    const value = result.value;
-    if (result.contract.result === 'reference' && object(value) && !owned.has(value)) {
+      return value;
+    },
+    propertyTarget: (target) => (target === iteratorBoundary ? iteratorBase : target),
+    isAbsent: (target, key) => knownAbsent.get(target)?.has(key) ?? false,
+    prototype(target) {
       if (
-        iteratorContracts.has(result.contract.id) &&
-        iteratorPrototypes.has(prototype(value))
-      ) {
-        registry.admitObject(value);
-        owned.add(value);
-      } else if (!admit(value)) {
-        throw new NativePolicyError(
-          'return',
-          result.contract.id,
-          undefined,
-          'unexpected reference result',
-        );
-      }
-    }
-    return value;
-  }
+        target === urlPrototype ||
+        target === paramsPrototype ||
+        target === iteratorBoundary
+      )
+        return objectPrototype;
+      if (target === iteratorPrototype) return iteratorBoundary;
+      return registry.prototype(target);
+    },
+  });
+  const metadataFor = (id: string, target: Function) =>
+    host.captureCallableShape(id, target);
 
   const absent = (owner: object, key: PropertyKey) => {
     let keys = knownAbsent.get(owner);
@@ -377,8 +333,7 @@ export function createGuestURLPolicy(options: GuestURLPolicyOptions): GuestURLPo
       contract: contract(`${family}.constructor`, 'reference'),
       construct: (constructor, args) => construct(constructor, args),
     });
-    constructors.set(target, token);
-    constructorTargets.set(token, target);
+    host.registerConstructor(target, token);
     const members = ['name', 'length'].flatMap((key) => dataMember(target, family, key));
     members.push(...dataMember(target, family, 'prototype', 'reference'));
     if (target === nativeURL) {
@@ -425,114 +380,5 @@ export function createGuestURLPolicy(options: GuestURLPolicyOptions): GuestURLPo
     registry.registerFacade(target, { name: family + ' constructor', members });
   }
 
-  return {
-    URL: nativeURL,
-    URLSearchParams: nativeParams,
-    admit,
-    owns(target) {
-      if (owned.has(target)) return true;
-      // Native URL slots cannot be acquired by changing a prototype. Remember
-      // other brands without repeating throwing native brand checks per access.
-      // Private wrappers admitted later still win through the owned check above.
-      if (otherBrands.has(target)) return false;
-      if (branded(target, href) || branded(target, size ?? paramsText)) return true;
-      otherBrands.add(target);
-      return false;
-    },
-    get(target, key) {
-      ensure(target);
-      if (wrapperTokens.has(target as Function)) {
-        if (key === 'name' || key === 'length')
-          return wrapperDescriptors.get(target as Function)?.get(key)?.value;
-        if (!Reflect.has(target, key)) return undefined;
-        throw new NativePolicyError(
-          'get',
-          'URL callable',
-          key,
-          'unreviewed callable member',
-        );
-      }
-      const physical = target === iteratorBoundary ? iteratorBase : target;
-      if (knownAbsent.get(physical)?.has(key) || !Reflect.has(physical, key))
-        return undefined;
-      return unwrap(registry.read(physical, key));
-    },
-    set(target, key, value) {
-      ensure(target);
-      if (wrapperTokens.has(target as Function)) return false;
-      return registry.write(target, key, value);
-    },
-    call(target, receiver, args) {
-      const token = wrapperTokens.get(target);
-      if (constructors.has(target)) throw new TypeError('URL constructors require new');
-      if (!token)
-        throw new NativePolicyError('call', 'URL', undefined, 'unregistered callable');
-      if (object(receiver)) admit(receiver);
-      return unwrap(registry.call(token, receiver, args));
-    },
-    construct(target, args) {
-      const token = constructors.get(target);
-      if (!token)
-        throw new NativePolicyError(
-          'construct',
-          'URL',
-          undefined,
-          'unregistered constructor',
-        );
-      const value = unwrap(registry.construct(token, args));
-      if (!object(value)) throw new TypeError('URL constructor returned no object');
-      return value;
-    },
-    delete: () => false,
-    settable: () => false,
-    ownKeys(target) {
-      ensure(target);
-      return wrapperTokens.has(target as Function)
-        ? Reflect.ownKeys(target).filter((key) => key === 'name' || key === 'length')
-        : registry
-            .keys(target === iteratorBoundary ? iteratorBase : target)
-            .map((key) => (typeof key === 'number' ? String(key) : key));
-    },
-    descriptor(target, key) {
-      ensure(target);
-      if (wrapperTokens.has(target as Function))
-        return key === 'name' || key === 'length'
-          ? wrapperDescriptors.get(target as Function)?.get(key)
-          : undefined;
-      const result = registry.descriptor(
-        target === iteratorBoundary ? iteratorBase : target,
-        key,
-      );
-      if (!result) return;
-      return {
-        configurable: result.configurable,
-        enumerable: result.enumerable,
-        ...('value' in result
-          ? { writable: result.writable, value: unwrap(result.value!) }
-          : {
-              get: result.get
-                ? (unwrap({ kind: 'callable', callable: result.get }) as () => unknown)
-                : undefined,
-              set: result.set
-                ? (unwrap({ kind: 'callable', callable: result.set }) as (
-                    value: unknown,
-                  ) => void)
-                : undefined,
-            }),
-      };
-    },
-    prototype(target) {
-      ensure(target);
-      if (constructors.has(target as Function) || wrapperTokens.has(target as Function))
-        return functionPrototype;
-      if (
-        target === urlPrototype ||
-        target === paramsPrototype ||
-        target === iteratorBoundary
-      )
-        return objectPrototype;
-      if (target === iteratorPrototype) return iteratorBoundary;
-      return registry.prototype(target);
-    },
-  };
+  return { ...host, URL: nativeURL, URLSearchParams: nativeParams, admit };
 }
