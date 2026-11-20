@@ -416,3 +416,36 @@ test('constructor function identity and prototype are captured independently of 
   assert.throws(() => policy.construct(token, []), /prototype changed/);
   assert.equal(count, 0);
 });
+
+test('guest result rules preserve only exact owned guest references', () => {
+  const guest = () => 7;
+  const native = () => 9;
+  const owned = new WeakSet<object>([guest]);
+  let current: unknown = guest;
+  const facade = {
+    get callback() {
+      return current;
+    },
+  };
+  const policy = new NativePolicy({ isGuestValue: (value) => owned.has(value) });
+  const read = {
+    contract: { ...contract('Facade.callback'), result: 'guest' as const },
+    read: readNative,
+  };
+  policy.registerFacade(facade, {
+    name: 'Callbacks',
+    members: [{ key: 'callback', read }],
+  });
+  assert.equal(data(policy.read(facade, 'callback')), guest);
+  current = native;
+  assert.throws(() => policy.read(facade, 'callback'), /no recorded guest owner/);
+  current = null;
+  assert.equal(data(policy.read(facade, 'callback')), null);
+  current = guest;
+  const other = new NativePolicy();
+  other.registerFacade(facade, {
+    name: 'Callbacks',
+    members: [{ key: 'callback', read }],
+  });
+  assert.throws(() => other.read(facade, 'callback'), /no recorded guest owner/);
+});

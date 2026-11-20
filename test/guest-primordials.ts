@@ -118,6 +118,7 @@ try {
           'privateProxyHandler',
           'privateIndexRecord',
           'classification',
+          'thrownReference',
         ]) {
           const value: unknown = result.checks[key];
           if ('failed' in variant && key === variant.failed) {

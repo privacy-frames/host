@@ -119,6 +119,7 @@ try {
       assert.deepEqual(advanced.binaryKeys, ['field', 'field\0suffix']);
       assert.equal(advanced.capturedViewConstructor, true);
       assert.equal(advanced.guestFunctionPrototype, true);
+      assert.deepEqual(advanced.guestOwnership, [true, true, false]);
       assert.deepEqual(advanced.domException, [true, 'SecurityError', 'denied', 18]);
       assert.deepEqual(advanced.nativeException, [true, 'SecurityError', 18]);
       assert.equal(advanced.map, true);

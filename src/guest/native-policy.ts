@@ -7,6 +7,11 @@ export type NativeEffect =
   | 'export'
   | 'management';
 
+export interface NativePolicyOptions {
+  /** Exact ownership check supplied by the engine, never a structural guess. */
+  isGuestValue?(value: object): boolean;
+}
+
 export interface NativeContract {
   /** Aliases may share an ID only when they implement the same reviewed contract. */
   readonly id: string;
@@ -171,6 +176,7 @@ const sameContract = (left: NativeContract, right: NativeContract): boolean =>
 /** Registers reviewed native authority. Adapters and brand guards are trusted
  * production code with separate effect contracts; metadata does not authorize them. */
 export class NativePolicy {
+  private readonly isGuestValue?: (value: object) => boolean;
   private readonly prototypes = new Map<object, Registration>();
   private readonly facades = new WeakMap<object, Registration>();
   private readonly admitted = new WeakMap<object, readonly Registration[]>();
@@ -178,6 +184,10 @@ export class NativePolicy {
   private readonly functions = new WeakMap<Function, NativeCallable>();
   private readonly constructors = new WeakMap<NativeConstructor, ConstructorRecord>();
   private readonly constructorFunctions = new WeakMap<Function, NativeConstructor>();
+
+  constructor(options: NativePolicyOptions = {}) {
+    this.isGuestValue = options.isGuestValue;
+  }
 
   registerPrototype(prototype: object, schema: NativeSchema): void {
     if (this.prototypes.has(prototype) || this.facades.has(prototype))
@@ -559,6 +569,16 @@ export class NativePolicy {
   }
 
   private result(value: unknown, contract: NativeContract): NativeResult {
+    if (contract.result === 'guest') {
+      if (object(value) && !this.isGuestValue?.(value))
+        throw new NativePolicyError(
+          'return',
+          contract.id,
+          undefined,
+          'value has no recorded guest owner',
+        );
+      return { kind: 'value', value, contract };
+    }
     if (typeof value === 'function') {
       const callable = this.functions.get(value);
       const construct = this.constructorFunctions.get(value);

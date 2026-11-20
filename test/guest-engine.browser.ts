@@ -50,6 +50,7 @@ try {
   engine.set('nativeFloats', () => new Float32Array([0.25, 0.5]));
   engine.set('nativeBinaryString', () => '\0\xff\ud800Z');
   engine.set('echoNativeString', (value: string) => value);
+  engine.set('hasGuestOwner', (value: object) => engine.ownsGuestValue(value));
   engine.set('nativeLoneSurrogate', () => 'prefix\ud800suffix');
   engine.set('binaryRecord', { 'key\0suffix': '\0value\udfff' });
   engine.set('nativeSymbolForBinary', () => Symbol.for('registry\0suffix'));
@@ -189,6 +190,7 @@ try {
       binaryRegistry: Symbol.keyFor(nativeSymbolForBinary()),
       binaryKeys: Object.keys(opaqueStrings),
       capturedViewConstructor,
+      guestOwnership: [hasGuestOwner(() => 1), hasGuestOwner({ value: 1 }), hasGuestOwner(document)],
       guestFunctionPrototype: Object.getPrototypeOf(fillBytes) === Function.prototype,
       domException: [exception instanceof DOMException, exception.name, exception.message, exception.code],
       nativeException,

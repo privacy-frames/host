@@ -434,6 +434,11 @@ export class GuestEngine {
     }
   }
 
+  /** Identify a previously decoded guest reference without invoking guest code. */
+  ownsGuestValue(value: object): boolean {
+    return !this.closed && this.guestHandles.has(value);
+  }
+
   private owner(target: object): GuestHost {
     const known = this.owners.get(target);
     if (known) return known;
@@ -1788,8 +1793,12 @@ export class GuestEngine {
     error?: QuickJSHandle;
   }): QuickJSHandle {
     if (result.error) {
-      const error = this.guestError(result.error);
-      result.error.dispose();
+      let error: Error;
+      try {
+        error = this.guestError(result.error);
+      } finally {
+        result.error.dispose();
+      }
       throw error;
     }
     if (!result.value) throw new Error('Missing guest result');
@@ -1814,15 +1823,17 @@ export class GuestEngine {
     if (stack) error.stack = stack;
     info.dispose();
     if (
-      this.helpers.has('guestId') &&
-      ['object', 'function'].includes(this.context.typeof(handle))
+      this.helpers.has('tryGuestId') &&
+      ['object', 'function'].includes(this.context.typeof(handle)) &&
+      !this.context.eq(handle, this.context.null)
     ) {
-      const kind = this.helper('kind', [handle]);
-      const isObject = this.context.getString(kind) !== 'null';
-      kind.dispose();
-      if (isObject) {
-        const id = this.helper('guestId', [handle]);
-        this.retainGuest(this.context.getNumber(id), handle.dup(), error);
+      // Error conversion must not inspect a thrown object's prototype or require
+      // another identity after exhaustion. Both operations can throw recursively.
+      const id = this.helper('tryGuestId', [handle]);
+      try {
+        if (this.context.typeof(id) === 'number')
+          this.retainGuest(this.context.getNumber(id), handle.dup(), error);
+      } finally {
         id.dispose();
       }
     }

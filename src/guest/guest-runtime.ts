@@ -553,12 +553,17 @@ export function installGuestRuntime(
     return proxy;
   };
 
-  const guestId = (value: object): number => {
+  const tryGuestId = (value: object): number | undefined => {
     let id = guestIds.get(value);
     if (id === undefined) {
-      id = nextGuestIdentity();
-      guestIds.set(value, id);
+      id = allocateIdentity(guestIdentity);
+      if (id !== undefined) guestIds.set(value, id);
     }
+    return id;
+  };
+  const guestId = (value: object): number => {
+    const id = tryGuestId(value);
+    if (id === undefined) throw new RangeErrorConstructor('Guest identities exhausted');
     return id;
   };
 
@@ -693,6 +698,7 @@ export function installGuestRuntime(
     kind,
     key,
     guestId,
+    tryGuestId,
     hostId: (value: object) => hostIds.get(value),
     registerHost(value: object, id: number) {
       hostIds.set(value, id);
