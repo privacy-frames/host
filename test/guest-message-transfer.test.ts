@@ -27,7 +27,7 @@ test('postMessage options getter and sequence iterator are each captured once', 
   assert.notEqual(transfer, sequence);
 });
 test('iterable overload reads its iterator once and does not inspect transfer options', () => {
-  const port = {} as Transferable;
+  const port = {};
   let iterators = 0;
   const sequence = {
     get transfer() {

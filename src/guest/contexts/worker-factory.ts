@@ -1,3 +1,4 @@
+import { captureMessageTransfer } from '../message-transfer.ts';
 import type {
   GuestScriptType,
   GuestWorkerFactoryOptions,
@@ -7,6 +8,7 @@ import type {
 interface WorkerConstructors {
   Worker?: typeof Worker;
   SharedWorker?: typeof SharedWorker;
+  commitsTransfers(target: Function): boolean;
   dispose(): void;
 }
 
@@ -43,6 +45,7 @@ export function createGuestWorkers(
   options: GuestWorkerFactoryOptions,
 ): WorkerConstructors {
   const NativeWorker = globalThis.Worker;
+  const apply = Reflect.apply;
   const NativeSharedWorker = globalThis.SharedWorker;
   const workers = new Set<Worker>();
   const ports = new Set<MessagePort>();
@@ -87,6 +90,7 @@ export function createGuestWorkers(
   }
 
   let Dedicated: typeof Worker | undefined;
+  let sending: Function | undefined;
   if (typeof NativeWorker === 'function') {
     class ConfinedWorker extends NativeWorker {
       constructor(input: string | URL, suppliedOptions: WorkerOptions = {}) {
@@ -104,10 +108,9 @@ export function createGuestWorkers(
         message: unknown,
         transferOrOptions: Transferable[] | StructuredSerializeOptions = [],
       ): void {
-        const transfer = Array.isArray(transferOrOptions)
-          ? transferOrOptions
-          : transferOrOptions?.transfer || [];
-        NativeWorker.prototype.postMessage.call(this, message, { transfer });
+        if (!arguments.length) throw new TypeError('Missing message argument');
+        const transfer = captureMessageTransfer(transferOrOptions);
+        apply(NativeWorker.prototype.postMessage, this, [message, transfer]);
         options.commitTransfers(transfer);
       }
 
@@ -117,6 +120,7 @@ export function createGuestWorkers(
       }
     }
     Object.defineProperty(ConfinedWorker, 'name', { value: 'Worker' });
+    sending = ConfinedWorker.prototype.postMessage;
     Dedicated = ConfinedWorker;
   }
 
@@ -145,6 +149,7 @@ export function createGuestWorkers(
   return {
     Worker: Dedicated,
     SharedWorker: Shared,
+    commitsTransfers: (target) => target === sending,
     dispose() {
       for (const worker of workers) NativeWorker.prototype.terminate.call(worker);
       for (const port of ports) port.close();

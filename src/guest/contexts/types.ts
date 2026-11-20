@@ -55,5 +55,5 @@ export interface GuestWorkerFactoryOptions {
   /** Maps an admitted resource or a host-created Blob URL to guest source. */
   prepare(entryURL: string, type: GuestScriptType): GuestWorkerInitialization;
   /** Called only after the browser accepts the transfer operation. */
-  commitTransfers(transfer: readonly Transferable[]): void;
+  commitTransfers(transfer: readonly object[]): void;
 }

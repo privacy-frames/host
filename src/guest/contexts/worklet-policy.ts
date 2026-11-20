@@ -14,7 +14,7 @@ export interface WorkletHostOptions {
   isGuestValue(value: object): boolean;
   registerProcessor(name: unknown, parameters: unknown): void;
   takePort(): MessagePort;
-  detachTransferred(values: readonly Transferable[]): void;
+  detachTransferred(values: readonly object[]): void;
 }
 
 const apply = Reflect.apply;

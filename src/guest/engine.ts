@@ -578,7 +578,7 @@ export class GuestEngine {
   }
 
   /** Native transfer validation must succeed before detaching the guest source. */
-  detachTransferred(transfer: readonly Transferable[]): void {
+  detachTransferred(transfer: readonly unknown[]): void {
     for (const value of transfer) {
       if (!isArrayBuffer(value)) continue;
       const mirror = this.buffers.get(value);

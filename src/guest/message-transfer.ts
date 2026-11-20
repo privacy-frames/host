@@ -6,7 +6,7 @@ const object = (value: unknown): value is object =>
 
 /** Capture the postMessage overload's transfer sequence before native execution.
  * Guest getters/iterators run once; native send and detachment share this array. */
-export function captureMessageTransfer(supplied: unknown): Transferable[] {
+export function captureMessageTransfer(supplied: unknown): object[] {
   if (supplied == null) return [];
   if (!object(supplied)) throw new TypeError('Transfer options must be an object');
   const iterator: unknown = get(supplied, Symbol.iterator);
@@ -21,12 +21,14 @@ export function captureMessageTransfer(supplied: unknown): Transferable[] {
   return arrayFrom(
     {
       [Symbol.iterator]() {
-        return apply(method, sequence, []) as Iterator<unknown>;
+        const iterator: unknown = apply(method, sequence, []);
+        if (!object(iterator)) throw new TypeError('Transfer iterator must be an object');
+        return iterator as Iterator<unknown>;
       },
     },
     (value) => {
       if (!object(value)) throw new TypeError('Transfer entries must be objects');
-      return value as Transferable;
+      return value;
     },
   );
 }

@@ -1,3 +1,4 @@
+import { captureMessageTransfer } from './message-transfer.ts';
 import { GuestLocation } from './location.ts';
 import { GuestEngine } from './engine.ts';
 import type { GuestHost } from './protocol.ts';
@@ -1581,7 +1582,12 @@ export class BrowserEnvironment {
         }),
       ).then(() => undefined);
     }
-    const result: unknown = Reflect.apply(target, receiver, args);
+    const transfer =
+      key === 'postMessage' && args.length > 0 && !this.workers.commitsTransfers(target)
+        ? captureMessageTransfer(args[1])
+        : undefined;
+    const invocation = transfer === undefined ? args : [args[0], transfer];
+    const result: unknown = Reflect.apply(target, receiver, invocation);
     if (key === 'addEventListener' && receiver && typeof receiver === 'object') {
       const [type, listener, options] = args;
       const capture =
@@ -1604,18 +1610,7 @@ export class BrowserEnvironment {
     if (this.document && isElement(result)) this.prepareNode(result);
     for (const value of args)
       if (this.document && isNode(value) && value.isConnected) this.dom?.connected(value);
-    if (key === 'postMessage' && args.length > 1) {
-      const options = args[1];
-      const transfer = Array.isArray(options)
-        ? options
-        : options &&
-            typeof options === 'object' &&
-            'transfer' in options &&
-            Array.isArray(options.transfer)
-          ? options.transfer
-          : [];
-      this.requireEngine().detachTransferred(transfer);
-    }
+    if (transfer !== undefined) this.requireEngine().detachTransferred(transfer);
     return result;
   }
 

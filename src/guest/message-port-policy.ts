@@ -14,7 +14,7 @@ export interface MessagePortPolicyOptions {
   owned: WeakSet<object>;
   isGuestValue(value: object): boolean;
   captureCallableShape(id: string, target: Function): void;
-  detachTransferred(values: readonly Transferable[]): void;
+  detachTransferred(values: readonly object[]): void;
 }
 
 const apply = Reflect.apply;
