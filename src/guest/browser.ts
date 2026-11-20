@@ -11,6 +11,7 @@ import { guestCaches, guestIndexedDB, guestStorage } from './storage.ts';
 import { createGuestWebServices } from './web-services.ts';
 import { createGuestWorkers } from './contexts/worker-factory.ts';
 import { createGuestAudioWorklets } from './contexts/audio-worklet.ts';
+import { guestProcessorName } from './contexts/processor-name.ts';
 import {
   createGuestWindowContexts,
   isGuestWindowMessage,
@@ -344,6 +345,7 @@ export class BrowserEnvironment {
   private engine?: GuestEngine;
   private customElements?: ReturnType<typeof createGuestCustomElements>;
   private constructors = new Set<Function>();
+  private audioWorkletNodeConstructor?: Function;
   private methodWrappers = new WeakMap<Function, Function>();
   private accessorWrappers = new WeakMap<object, Map<PropertyKey, PropertyDescriptor>>();
   private timers = new Set<number>();
@@ -466,7 +468,10 @@ export class BrowserEnvironment {
         continue;
       const value: unknown = Reflect.get(native, name);
       if (value !== undefined) this.globals[name] = value;
-      if (typeof value === 'function') this.constructors.add(value);
+      if (typeof value === 'function') {
+        this.constructors.add(value);
+        if (name === 'AudioWorkletNode') this.audioWorkletNodeConstructor = value;
+      }
     }
     for (const definition of globalInterfaceDefinitions(exposures)) {
       for (const member of definition.members) {
@@ -1130,6 +1135,8 @@ export class BrowserEnvironment {
         'Constructor is not available in this environment',
         'SecurityError',
       );
+    if (target === this.audioWorkletNodeConstructor && args.length >= 2)
+      args[1] = guestProcessorName(args[1]);
     if (target.name === 'Audio' && typeof args[0] === 'string')
       args[0] = this.resources.nativeURL(args[0]);
     if (target.name === 'FontFace' && typeof args[1] === 'string')
