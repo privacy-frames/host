@@ -83,7 +83,53 @@ require implementation proofs and caller contracts. The module grammar and
 arithmetic proofs do not establish C pointer lifetime, allocation-failure cleanup,
 function-table lifetime or every reentrant invalidation path.
 
-A C program verifier has not been calibrated for this work, and the entire
-indexed-access C extension has not been proved. Existing indexed
-buffer tests remain executable evidence for numeric conversion, aliasing, growth,
-reflection, revocation and disposal; they are separate from the proofs above.
+The record-control checks below discharge selected C obligations under explicit
+ABI projections. The full indexed-access C extension and its callers remain
+partially verified.
+
+## C control records and exception-safe ownership
+
+Run the actual-source record checks with Docker:
+
+```sh
+python3 formal/quickjs/wasm/check-records.py
+node --import tsx --test test/quickjs-indexed-lifetime.test.ts test/quickjs-indexed.test.ts
+```
+
+The record runner extracts eight control functions and seven interface wrappers
+from `quickjs.c` and `interface.c`, together with their actual record definitions
+and class enumeration. CBMC 6.11.0 is pinned by container digest. With wasm32-width
+integers and pointers, it checks allocation failure, pointer validity, bounds,
+cleanup and the harness assertions. The receipt contains every checked property
+and the hashes of the extracted translation unit and its inputs.
+
+The checked contracts cover rejected and successful record creation, borrowed-view
+brand and length admission, exact memory-accessor configuration, disable/dirty
+operations, and paired unlink/free. A four-operation harness also checks arbitrary
+choices of view mode, native-memory mode, disable and proxy revocation before
+terminal free. The harness keeps the proxy and borrowed handle live throughout.
+Removing the production unlink operation in a temporary translation unit fails
+the two expected ownership assertions. Calling the unchanged free wrapper with a
+different live proxy also fails terminal unlink, demonstrating why correct proxy
+pairing is a caller obligation.
+
+`record-model.h` supplies reviewed projections of QuickJS's tagged value/object
+ABI, `JS_GetOpaque` and `typed_array_is_oob`. These projections are assumptions,
+not verified QuickJS implementations. CBMC does not check the numeric proxy fast
+paths, the Emscripten function-table representation, C-to-Wasm compilation, or
+arbitrary TypeScript caller histories. Its pointer results apply to the extracted
+functions with these projections and live-handle premises.
+
+The TypeScript owner now acquires a proxy root before attaching a C allocation,
+rolls back the first native function slot if the second allocation fails, and
+roots a replacement shadow before releasing its predecessor. Focused tests use
+actual SDK handles and the compiled engine, with injected acquisition failures.
+They check retry, continued use of the previous view, cleanup, rejected native
+view admission and unlink-before-root-release. The existing indexed tests exercise
+numeric conversions, memory growth, revocation and Proxy invariants.
+
+The remaining implementation proof is the caller composition: every enabled
+borrowed pointer must retain its root, every table entry must outlive its records,
+and every guest entry or reentry after detachment/growth must encounter the
+necessary invalidation barrier. The C results and failure tests narrow these
+obligations; they do not discharge that composition.
