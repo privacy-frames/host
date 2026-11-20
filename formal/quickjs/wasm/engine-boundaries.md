@@ -12,16 +12,19 @@ node --import tsx formal/quickjs/wasm/check-engine-lifetime.ts
 ```
 
 The runner bundles production source with esbuild and runs it against the SDK and
-compiled engine. Its seven cases cover close during evaluation, decoded callbacks,
+compiled engine. Its ten cases cover close during evaluation, decoded callbacks,
 array encoding, jobs, Wasm-import reentry, jobs with Wasm reentry, and failed-job
-error conversion. The last case supplies a real SDK error handle through the
-runtime's failure-result interface and deliberately throws during conversion.
+error conversion. The conversion case supplies a real SDK error handle through
+the runtime's failure-result interface and deliberately throws during conversion.
+Three further cases make disposal callbacks and their error reporter throw. They
+check that later disposers still run, both SDK lifetimes close, and the first
+reporter failure is rethrown unchanged, including `undefined` and `null`.
 An independent observer around SDK `setProp` detects cleanup during array encoding,
 even if the engine's entry counter is missing.
 
-Four temporary bundles remove the idle gate, bound-property terminal guards,
-`set` entry wrapper or failed-job root release. Each fails its intended lifetime
-assertion. They leave production files unchanged. The receipt records actual
+Five temporary bundles remove the idle gate, bound-property terminal guards,
+`set` entry wrapper, reporter containment or failed-job root release. Each fails
+its intended lifetime assertion. They leave production files unchanged. The receipt records actual
 loaded source hashes, bundles, observations and failure output.
 
 ## Entry inventory
@@ -61,7 +64,10 @@ backing. The C borrowed view retains its own duplicated root through enabled use
 `finishDisposalIfIdle` releases indexed records before borrowed/native roots and
 context/runtime disposal. The indexed owner releases function-table slots after
 unlinking all records. The idle gate also covers nested Wasm imports and jobs;
-checking guest-entry depth alone would miss those stacks.
+checking guest-entry depth alone would miss those stacks. If a disposer fails,
+its reporter may also fail. Cleanup retains that first diagnostic failure,
+continues later disposers and releases owned resources before rethrowing the
+original value.
 
 ## Caller contracts still requiring composition
 
