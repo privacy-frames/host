@@ -47,8 +47,7 @@ for (const fault of [false, true]) {
                 { filter: /\/src\/guest\/browser\.ts$/ },
                 async ({ path }) => {
                   const source = await readFile(path, 'utf8');
-                  const route =
-                    'if (this.urls.owns!(target)) return this.urls.get(target, key);';
+                  const route = 'if (owner) return owner.get(target, key);';
                   assert.equal(source.split(route).length, 2, 'URL getter route changed');
                   return { loader: 'ts', contents: source.replace(route, '') };
                 },
