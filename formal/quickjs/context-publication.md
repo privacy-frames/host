@@ -71,9 +71,12 @@ Closing the session is idempotent, and rendering a closed session fails locally.
 `test/guest-context-publication.ts` runs independent browser fixtures in Chromium
 and Firefox. They cover out-of-order frame/popup completion, close while pending,
 reentrant cleanup and queued Window messages after producer disposal. A real child
-session is held at native engine compilation, removed, then allowed to continue;
-its first guest script must not execute. An uncancelled child runs the corresponding
-script, establishing that the fixture reaches actual guest execution.
+session is held at native engine compilation, its logical document is replaced,
+and compilation is then allowed to continue; its old guest script must not execute.
+An uncancelled child runs the corresponding script. Removing the real caller's
+signal forwarding and abort checks from a temporary bundle lets the stale script
+execute despite the factory's remaining postcheck, and the fixture rejects that
+variant in both browsers.
 
 These tests exercise current callers. They are not deductive proofs of the full
 factories. Remaining caller obligations include private record ownership across all

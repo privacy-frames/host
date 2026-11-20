@@ -299,10 +299,13 @@ async function run() {
   } finally {
     WebAssembly.compile = originalCompile;
   }
-  root.engine.evaluate('pendingChild.remove()');
+  root.engine.evaluate("pendingChild.srcdoc = '<p>replacement</p>'");
   await tick();
   held.resolve(compiled);
-  await new Promise<void>((resolve) => setTimeout(resolve, 100));
+  if (new URL(location.href).searchParams.has('cancelFault'))
+    await until(() => notifications.includes(1));
+  else await new Promise<void>((resolve) => setTimeout(resolve, 500));
+  Reflect.set(window, '__publicationObserved', notifications.slice());
   check(
     notifications.length === 0,
     'Cancelled real child must not execute its first script',
@@ -338,6 +341,6 @@ run()
     Reflect.set(
       window,
       '__publicationFailure',
-      error instanceof Error ? error.stack : String(error),
+      String(error) + (error instanceof Error && error.stack ? '\n' + error.stack : ''),
     );
   });

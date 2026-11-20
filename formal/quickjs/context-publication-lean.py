@@ -7,6 +7,9 @@ from pathlib import Path
 import subprocess
 import tempfile
 
+if not __debug__:
+    raise SystemExit('Verification requires Python assertions enabled')
+
 root = Path(__file__).resolve().parents[2]
 lean = os.environ.get('PF_LEAN', str(root / '.tools/lean-4.35.0-linux/bin/lean'))
 version = subprocess.check_output([lean, '--version'], text=True)
@@ -20,7 +23,7 @@ names = ['initial_well_formed', 'step_well_formed', 'begin_accepts_current',
          'invalidation_never_revives_retained', 'history_well_formed',
          'reused_token_counterexample']
 expected = {f"'ContextPublication.{name}' does not depend on any axioms" for name in names}
-assert set(run.stdout.splitlines()) == expected and not run.stderr, run.stdout + run.stderr
+assert len(run.stdout.splitlines()) == len(names) and set(run.stdout.splitlines()) == expected and not run.stderr, run.stdout + run.stderr
 anchor = '| .invalidate => advance state true'
 assert source.count(anchor) == 1
 fault = source.replace(anchor, '| .invalidate => advance state false')
