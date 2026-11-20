@@ -133,3 +133,60 @@ borrowed pointer must retain its root, every table entry must outlive its record
 and every guest entry or reentry after detachment/growth must encounter the
 necessary invalidation barrier. The C results and failure tests narrow these
 obligations; they do not discharge that composition.
+
+## Indexed proxy admission and invalidation
+
+Run:
+
+```sh
+python3 formal/quickjs/wasm/check-fastpaths.py
+node --import tsx formal/quickjs/wasm/check-invalidation.ts
+```
+
+The fast-path runner extracts the initial indexed branches of the actual
+`js_proxy_get` and `js_proxy_set`, together with the actual atom-tag helpers and
+value-category predicates. Verification-only continuations replace the later
+ordinary Proxy and descriptor-validation paths. Those continuations perform no
+indexed access and are outside this check.
+
+CBMC checks that an indexed effect requires a non-revoked proxy, an enabled
+registered record, a canonical numeric atom and an index below the recorded
+length. Writes also require the original receiver and a primitive value;
+native-memory writes require successful conversion and exclude BigInt. It checks
+that the selected mode uses exactly the registered native address or rooted view,
+and that a successful shadow write is required before marking the record dirty.
+Removing either numeric bound or enabled guard in a temporary translation unit
+fails both native and shadow admission assertions.
+
+The internal typed-array calls and primitive conversions have modeled effects.
+Their numeric semantics, QuickJS allocation behavior and absence of application
+reentry are premises. Native read/write functions are represented by traced
+functions with the same signatures; their application-memory authority is checked
+separately by the accessor grammar. These branch checks do not establish the
+behavior of the excluded general Proxy continuations.
+
+The invalidation runner erases the actual `IndexedAccess` source and executes it
+against real SDK handles and the compiled engine. It checks shadow-epoch
+invalidation and native-memory invalidation after growth detaches the previous
+buffer. Omitting the actual C disable call in a verification-only VM leaves both
+access paths active, which the probes detect. Roots remain live until real cleanup
+in every control. The runner also checks that free uses the original proxy/control
+pair and that every record is released before its function-table slots.
+
+### Reviewed caller boundaries
+
+| Production path                                            | Relationship reviewed                                                                                                                         | Outstanding obligation                                                         |
+| ---------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `native-wasm.ts`: `retainMemory`, `method`, `get`          | A captured native memory getter associates each buffer with its actual Memory; growth wrappers retain the replacement buffer.                 | Every exposed growth method must pass through the wrapper.                     |
+| `engine.ts`: `retainMemory` callback and `encode`          | Only actual native views whose captured buffer equals a remembered, nonshared, nonresizable ArrayBuffer receive direct indexing.              | Prove this object/buffer correspondence for every native-handle creation path. |
+| `engine.ts`: `enter`, `drainJobs`, `dispatch`, `runWasm`   | Entry, exit and native-operation barriers flush shadows and invalidate indexed epochs; nested Wasm calls retain separate deferral conditions. | Prove coverage and ordering across all reentrant calls and exceptional exits.  |
+| `engine.ts`: `flushIndexShadows`, `invalidateIndexShadows` | Dirty guest shadows are published before their epoch is revoked.                                                                              | Compose helper-handle ownership with the C borrowed-view lifetime.             |
+| `engine.ts`: `dispose`                                     | Terminal close precedes indexed disposal; indexed records are released before helpers, native handles, context and runtime.                   | Establish that no outstanding native callback can resume a disposed engine.    |
+| `indexed-access.ts`: `dispose`                             | Every stored pair is unlinked/freed before borrowed roots; table entries are released after the record loop.                                  | Extend the bounded probes to an inductive proof of all owner histories.        |
+
+Growth can leave a native accessor capable of addressing the same application's
+new memory, even when the original JavaScript view has detached. Invalidation is
+therefore needed for view semantics. The accessor grammar supplies a separate
+authority bound: that accessor still has only its imported application memory.
+Borrowed QuickJS pointers and private table entries depend on the stronger owner
+lifetime contracts above.

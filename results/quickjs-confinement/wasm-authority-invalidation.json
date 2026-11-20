@@ -1,0 +1,38 @@
+{
+  "checkedAt": "2026-11-20T10:31:53.858Z",
+  "scope": "Actual TypeScript IndexedAccess invalidation executed with SDK roots and compiled C",
+  "node": "v24.18.0",
+  "sourceHashes": {
+    "src/guest/indexed-access.ts": "5ba66e4bd8e29240a4d3def4cc97eaef5007103b26f8121f5261d492bbc86e5d",
+    "src/guest/quickjs.ts": "ab4b6912ca399f3fa56a4a6f252b13e69561fe626e8dcf956f8ffff59a2b9d3b",
+    "src/guest/wasm-accessors.ts": "7e03c8e70638d2d861392ec0b2ed40867c638bfcbb26774fbf1e240b2b18589b",
+    "vendor/quickjs/upstream/quickjs.c": "78874f652f90453ef6398f5b7f79f789dc9b8937c30184e5d1d64263d28097a6",
+    "vendor/quickjs/c/interface.c": "53b219444387a65b270ee91bcc21389aab8717f11aba205b72f43499f6f21c89",
+    "vendor/quickjs/generated/engine.wasm": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
+    "vendor/quickjs/generated/engine.mjs": "60147727aeb5c4441d54ad7b3c625e952bec7faa8db8531522eb71dd9ab9da2e",
+    "vendor/quickjs/generated/build.json": "2366677bac28dda0928190af20df7c7a842cad752593ae4f3cc9b81525caf789",
+    "package-lock.json": "501bfd0da3702e4cfc3b43d5a4ec3380cca9045e7959204e1460e53ed781422a",
+    "formal/quickjs/wasm/check-invalidation.ts": "11c1aecad52d0608fe8711161858bc436296924b3d25e644319c2f11e017df1a"
+  },
+  "control": {
+    "name": "omit actual deactivate disable call in verification-only VM",
+    "sourceHash": "9ddd0e48b59ae4fc0ef5f6bf9848f68c4bd16a9d1ec1b6c04074cc762f1de6b5"
+  },
+  "observations": [
+    {
+      "mode": "shadow",
+      "productionRevoked": true,
+      "omittedDisableRevoked": false
+    },
+    {
+      "mode": "native",
+      "productionRevoked": true,
+      "omittedDisableRevoked": false
+    }
+  ],
+  "remainingPremises": [
+    "TypeScript erasure, Node VM instrumentation, SDK and C-to-Wasm compilation are trusted",
+    "The engine must call invalidation at each necessary entry/exit/reentry barrier",
+    "These two execution traces do not establish arbitrary caller histories or every detach mechanism"
+  ]
+}
