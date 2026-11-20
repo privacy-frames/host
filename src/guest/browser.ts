@@ -45,6 +45,7 @@ interface BrowserEnvironmentOptions {
     catalog: GuestContextCatalog,
     window: Window,
     html: string,
+    signal: AbortSignal,
   ): Promise<{ close(): void }>;
 }
 

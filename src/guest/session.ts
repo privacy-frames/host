@@ -16,14 +16,18 @@ export interface GuestWindowSession {
 export async function createGuestWindow(
   catalog: GuestContextCatalog,
   window: Window,
+  signal?: AbortSignal,
 ): Promise<GuestWindowSession> {
+  signal?.throwIfAborted();
   const environment = new BrowserEnvironment({
     catalog,
     global: window,
-    createWindow: async (childCatalog, childWindow, html) => {
-      const session = await createGuestWindow(childCatalog, childWindow);
+    createWindow: async (childCatalog, childWindow, html, preparation) => {
+      const session = await createGuestWindow(childCatalog, childWindow, preparation);
       try {
+        preparation.throwIfAborted();
         await session.render(html);
+        preparation.throwIfAborted();
         return session;
       } catch (error) {
         session.close();
@@ -31,28 +35,45 @@ export async function createGuestWindow(
       }
     },
   });
-  const engine = await GuestEngine.create({
-    host: environment.host,
-    globalObject: window,
-    wasmModule: await WebAssembly.compile(catalog.engineWasm),
-    modules: environment.resources.modules,
-    memoryLimit: 512 * 1024 * 1024,
-    onError: (error) => console.error('Application error', error),
-  }).catch((error: unknown) => {
-    environment.dispose();
-    throw error;
-  });
+  let engine: GuestEngine;
   try {
-    environment.attach(engine);
+    const wasmModule = await WebAssembly.compile(catalog.engineWasm);
+    signal?.throwIfAborted();
+    engine = await GuestEngine.create({
+      host: environment.host,
+      globalObject: window,
+      wasmModule,
+      modules: environment.resources.modules,
+      memoryLimit: 512 * 1024 * 1024,
+      onError: (error) => console.error('Application error', error),
+    });
   } catch (error) {
-    engine.dispose();
     environment.dispose();
     throw error;
   }
+  let closed = false;
   const close = () => {
-    engine.dispose();
-    environment.dispose();
+    if (closed) return;
+    closed = true;
+    signal?.removeEventListener('abort', close);
+    try {
+      engine.dispose();
+    } finally {
+      environment.dispose();
+    }
   };
+  signal?.addEventListener('abort', close, { once: true });
+  if (signal?.aborted) {
+    close();
+    signal.throwIfAborted();
+  }
+  try {
+    environment.attach(engine);
+    signal?.throwIfAborted();
+  } catch (error) {
+    close();
+    throw error;
+  }
   const pagehide = (event: PageTransitionEvent) => {
     if (event.isTrusted && !event.persisted) close();
   };
@@ -62,6 +83,8 @@ export async function createGuestWindow(
     engine,
     environment,
     render(html) {
+      if (closed) throw new Error('Guest window session is closed');
+      signal?.throwIfAborted();
       return environment.dom!.render(html);
     },
     close,
