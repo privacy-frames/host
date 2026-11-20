@@ -181,7 +181,7 @@ pair and that every record is released before its function-table slots.
 | `engine.ts`: `retainMemory` callback and `encode`          | Only actual native views whose captured buffer equals a remembered, nonshared, nonresizable ArrayBuffer receive direct indexing.              | Prove this object/buffer correspondence for every native-handle creation path. |
 | `engine.ts`: `enter`, `drainJobs`, `dispatch`, `runWasm`   | Entry, exit and native-operation barriers flush shadows and invalidate indexed epochs; nested Wasm calls retain separate deferral conditions. | Prove coverage and ordering across all reentrant calls and exceptional exits.  |
 | `engine.ts`: `flushIndexShadows`, `invalidateIndexShadows` | Dirty guest shadows are published before their epoch is revoked.                                                                              | Compose helper-handle ownership with the C borrowed-view lifetime.             |
-| `engine.ts`: `dispose`                                     | Terminal close precedes indexed disposal; indexed records are released before helpers, native handles, context and runtime.                   | Establish that no outstanding native callback can resume a disposed engine.    |
+| `engine.ts`: `dispose`, `finishDisposalIfIdle`             | Terminal close precedes indexed disposal; indexed records are released before helpers, native handles, context and runtime.                   | Establish that no outstanding native callback can resume a disposed engine.    |
 | `indexed-access.ts`: `dispose`                             | Every stored pair is unlinked/freed before borrowed roots; table entries are released after the record loop.                                  | Extend the bounded probes to an inductive proof of all owner histories.        |
 
 Growth can leave a native accessor capable of addressing the same application's
@@ -190,3 +190,7 @@ therefore needed for view semantics. The accessor grammar supplies a separate
 authority bound: that accessor still has only its imported application memory.
 Borrowed QuickJS pointers and private table entries depend on the stronger owner
 lifetime contracts above.
+
+The current engine entry inventory, deferred terminal cleanup and actual-source
+lifetime controls are documented in [Engine entry barriers and terminal
+lifetime](engine-boundaries.md).
