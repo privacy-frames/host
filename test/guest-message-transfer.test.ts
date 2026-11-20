@@ -31,7 +31,7 @@ test('iterable overload reads its iterator once and does not inspect transfer op
   let iterators = 0;
   const sequence = {
     get transfer() {
-      assert.fail('Sequence overload is not a dictionary');
+      return assert.fail('Sequence overload is not a dictionary');
     },
     get [Symbol.iterator]() {
       iterators++;
