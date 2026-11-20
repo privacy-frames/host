@@ -1,6 +1,6 @@
 {
-  "scope": "Existing complete native/confined Wasm regression recompiled byte-for-byte after execution to establish exact transitive input provenance. This verifies the listed functional/coherence controls, not a performance or complete confinement theorem.",
-  "sourceCommit": "9d0f456",
+  "scope": "Existing complete native/confined Wasm regression recompiled byte-for-byte after execution to establish exact transitive input provenance. Functional/coherence controls, not performance or complete confinement.",
+  "sourceCommit": "f745a6b1e836199d76bfe8680653e312eeaa0d34",
   "inputHashes": {
     "../privacy-frames-quickjs-kernel/node_modules/@jitl/quickjs-ffi-types/dist/index.mjs": "5b6ccfe50a0d0066411135c66964b0c15c05167f5324df2e8066493da807efbe",
     "../privacy-frames-quickjs-kernel/node_modules/@jitl/quickjs-wasmfile-release-sync/dist/ffi.mjs": "ccf8b3aa066c2be5755e3ea49d81b01dff5a671deb34b7ec3a1c983dd52e9335",
@@ -186,7 +186,7 @@
     "src/guest/native-binary.ts": "2d0c098fdd641cf9edc5f7f958acef0fa9995766bdcbe177f925cc21ad49afd4",
     "src/guest/native-host.ts": "0420675d80bbc038b3c8cfbe8d8bb53e3d322ecb856613870de0405b553a8ff9",
     "src/guest/native-policy.ts": "ba0fb4f746bc472c480f0dbeff9e83a629c74e81ba832a3bd8019a6f1e2b1ce8",
-    "src/guest/native-wasm.ts": "7168cb240883786ed96e9eddfad20fb15f3fa00ae57412d38bac63d03385f531",
+    "src/guest/native-wasm.ts": "670c8a4e9cfd50ca037aa7d2596ea4716b3b35f70d05c2cefc33c27e3db61852",
     "src/guest/parser.ts": "cf041b9ade4752b4936d5b384b65b03e154d9c12d255f543fb628c2f21e9671e",
     "src/guest/quickjs.ts": "ab4b6912ca399f3fa56a4a6f252b13e69561fe626e8dcf956f8ffff59a2b9d3b",
     "src/guest/resources.ts": "fbb363fbe07bb3ea59ac7789afbe19b51099972282012daa69624789e3c90778",
@@ -201,10 +201,10 @@
     "test/guest-wasm.ts": "48d625c68196032e0811c581f9f349a7df643d6ee7624a6005f13c48a9764be6",
     "vendor/quickjs/generated/engine.mjs": "60147727aeb5c4441d54ad7b3c625e952bec7faa8db8531522eb71dd9ab9da2e"
   },
-  "qualification": "The browser driver recorded its base git revision while candidate source was uncommitted. The source now committed in sourceCommit reconstructs exactly the executed bundle; inputHashes qualify that source independently of the recorded base revision.",
+  "qualification": "Driver recorded its base revision with candidate source uncommitted; exact input hashes and reconstructed executed bundle qualify the committed runtime source.",
   "execution": {
-    "revision": "670d5ad41fb6e07ed3e7e5f9f7787d3cebe10696",
-    "bundleHash": "95daa3f7e05ef44da1980466fc5f2aedadb3ecdd7b82b70019fb017b9b796cc9",
+    "revision": "8a82017e1145d792c6ddc54b32e9bf424ae86b2a",
+    "bundleHash": "7f54a5ea2d21f9f2e7031a29308efb8614e8a1b7b1141d7b14536d109ea6ad9d",
     "fixtures": {
       "/mixed-import.wasm": "2aab7417d3891f7fc72d7d46ee45226534570ec2d5bc0c73d4f6494e1025cabe",
       "/quickjs.wasm": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",

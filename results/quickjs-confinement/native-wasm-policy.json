@@ -1,12 +1,12 @@
 {
   "scope": "Actual BrowserEnvironment/QuickJS native-Wasm policy: genuine iframe memory/module/table/funcref, local semantic anchors, externref callback ownership, callable errors, optional native memory methods and asynchronous instantiation. Temporary raw-get restoration executes the unknown foreign getter and must fail. This does not prove confinement of foreign function hidden imports.",
   "sourceHashes": {
-    "src/guest/native-wasm.ts": "7168cb240883786ed96e9eddfad20fb15f3fa00ae57412d38bac63d03385f531",
+    "src/guest/native-wasm.ts": "670c8a4e9cfd50ca037aa7d2596ea4716b3b35f70d05c2cefc33c27e3db61852",
     "src/guest/native-policy.ts": "ba0fb4f746bc472c480f0dbeff9e83a629c74e81ba832a3bd8019a6f1e2b1ce8",
     "src/guest/native-host.ts": "0420675d80bbc038b3c8cfbe8d8bb53e3d322ecb856613870de0405b553a8ff9",
     "src/guest/engine.ts": "87b60c2414721f5dffade4fbf27b2a9fbc02044ff0b2c50427456f09a2764c19",
     "src/guest/browser.ts": "29bfc02e08dc78491e189c77efd4cf04506c88e2a2bd5fb4892b9f539d544250",
-    "test/guest-native-wasm-policy.browser.ts": "652cbb6f5fe468e5dc4e105896ae56d6e04f4de0cb7bb1806a99db8173916b6b",
+    "test/guest-native-wasm-policy.browser.ts": "e1f68f8d3aa29f38403610bd386259cbcfae992a6dda7eca774cd7ce33af8495",
     "test/guest-native-wasm-policy.ts": "6fcab377df60937612102ea8f42710e9b128623de135b9026104a552acf2cd29"
   },
   "transitiveInputHashes": {
@@ -194,7 +194,7 @@
     "src/guest/native-binary.ts": "2d0c098fdd641cf9edc5f7f958acef0fa9995766bdcbe177f925cc21ad49afd4",
     "src/guest/native-host.ts": "0420675d80bbc038b3c8cfbe8d8bb53e3d322ecb856613870de0405b553a8ff9",
     "src/guest/native-policy.ts": "ba0fb4f746bc472c480f0dbeff9e83a629c74e81ba832a3bd8019a6f1e2b1ce8",
-    "src/guest/native-wasm.ts": "7168cb240883786ed96e9eddfad20fb15f3fa00ae57412d38bac63d03385f531",
+    "src/guest/native-wasm.ts": "670c8a4e9cfd50ca037aa7d2596ea4716b3b35f70d05c2cefc33c27e3db61852",
     "src/guest/parser.ts": "cf041b9ade4752b4936d5b384b65b03e154d9c12d255f543fb628c2f21e9671e",
     "src/guest/quickjs.ts": "ab4b6912ca399f3fa56a4a6f252b13e69561fe626e8dcf956f8ffff59a2b9d3b",
     "src/guest/resources.ts": "fbb363fbe07bb3ea59ac7789afbe19b51099972282012daa69624789e3c90778",
@@ -205,7 +205,7 @@
     "src/guest/url-policy.ts": "e0e88fbc7f643d7c3042858cb670e9a3012a1c7057c6c49067fbbe56cee769b5",
     "src/guest/wasm-accessors.ts": "7e03c8e70638d2d861392ec0b2ed40867c638bfcbb26774fbf1e240b2b18589b",
     "src/guest/web-services.ts": "429fa17d217a6f7a155b6e80e7ff8b062eb5077b78dd19bc635da9417147266d",
-    "test/guest-native-wasm-policy.browser.ts": "652cbb6f5fe468e5dc4e105896ae56d6e04f4de0cb7bb1806a99db8173916b6b",
+    "test/guest-native-wasm-policy.browser.ts": "e1f68f8d3aa29f38403610bd386259cbcfae992a6dda7eca774cd7ce33af8495",
     "vendor/quickjs/generated/engine.mjs": "60147727aeb5c4441d54ad7b3c625e952bec7faa8db8531522eb71dd9ab9da2e"
   },
   "toolchain": {
@@ -214,8 +214,8 @@
   },
   "engineSHA256": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
   "bundleHashes": {
-    "production": "2926c4a02916d83d808424ad52ae29ad535a9d0af61833b5b663eaabd0d43bf4",
-    "textGetRouteRemoved": "58a7931a683a7b82da1c1c28ac7dc079883987307cb996d9716b0a40be4ff865"
+    "production": "29f80e090103d9596bb1030db25a09cfac0509678ca1d0475942e4f4e164db49",
+    "textGetRouteRemoved": "4a4abc6a9bf21bf1354fa69ddaa364e29893b6ead4668d2d35da4b4929288ceb"
   },
   "fault": "Only native-Wasm get is replaced with the former raw Reflect.get in a temporary bundle. Production source is unchanged.",
   "receipts": [
@@ -294,5 +294,5 @@
       "rejected": true
     }
   ],
-  "completedAt": "2026-11-20T11:09:38.239Z"
+  "completedAt": "2026-11-20T11:22:31.676Z"
 }
