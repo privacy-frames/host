@@ -1,7 +1,7 @@
 {
   "scope": "Actual BrowserEnvironment and QuickJS URL/URLSearchParams bridge: local conversion, callbacks, iteration, reflection, owner-routed object URLs, and pre-getter rejection. The omitted-route control calls the real BrowserEnvironment.host.get directly because guest descriptor inspection independently rejects the unknown getter even if only get routing is absent. The temporary route omission control demonstrates this fixture detects that mediation failure; other native families remain outside this fixture.",
   "sourceHashes": {
-    "src/guest/browser.ts": "5e58093ab53e5dae1c126dc09968f7a8acb4b0f9c10d1aa95350c08018f21431",
+    "src/guest/browser.ts": "28844910784379f99a0caeb81182f191abb3d0518b7fb86481521c5c88c51dcb",
     "src/guest/engine.ts": "c80de3696a72434396e9d882e724a218750a1962cced241399602e0212bdbb3d",
     "src/guest/guest-runtime.ts": "058930f5f581f18210f636c210c0dbba27e51a145826c2adcb95d3295436bc1d",
     "src/guest/native-policy.ts": "42cd5769cf3f445a49251e2945a7c391334e081d1931518d9a6a150c53cce9f4",
@@ -9,7 +9,7 @@
     "src/guest/resources.ts": "fbb363fbe07bb3ea59ac7789afbe19b51099972282012daa69624789e3c90778",
     "src/guest/session.ts": "7d6566044cec86e7ee1bd8629cc05bbcf89c62915d8dc4e415a5eb5d5b413f55",
     "test/guest-url-bridge.browser.ts": "600cb1fd7a6177239607d52642e981e6acb3329aec8c41080b2ebc7c8bc5daea",
-    "test/guest-url-bridge.ts": "b852d9d9191b2a3065c8dfc9dd00f33a4bafe62d61a3f1c6ef2a77d53a322cba"
+    "test/guest-url-bridge.ts": "ccc4364609cf1876873593c2ec4b486b3e06f83379e02730cdc3309863a383c3"
   },
   "transitiveInputHashes": {
     "node_modules/@jitl/quickjs-ffi-types/dist/index.mjs": "5b6ccfe50a0d0066411135c66964b0c15c05167f5324df2e8066493da807efbe",
@@ -173,7 +173,7 @@
     "node_modules/xmlchars/xml/1.0/ed5.js": "ea350479ab6f6553c0c3395c30ec440fb39821f6902081939831ddf1b5e8fd0f",
     "node_modules/xmlchars/xml/1.1/ed2.js": "461d5c71cc6076dc16aebbfd2d3c506481df5a74f43631d82372a6ffdc239d69",
     "node_modules/xmlchars/xmlns/1.0/ed3.js": "ff14ffa3a2cdfdd1b6077c4a8443dc949f53d5bb56de5ed89d4dbc5d9fdf08f7",
-    "src/guest/browser.ts": "5e58093ab53e5dae1c126dc09968f7a8acb4b0f9c10d1aa95350c08018f21431",
+    "src/guest/browser.ts": "28844910784379f99a0caeb81182f191abb3d0518b7fb86481521c5c88c51dcb",
     "src/guest/contexts/audio-worklet.ts": "8706554251c0020af6599b599e306b3e0e9cffceebd31ce739c825071e789577",
     "src/guest/contexts/brands.ts": "fc87c235cf08fd6ab8dce72d81ca95ad2a94b86da06cc5438d1f1c8bbd6320d6",
     "src/guest/contexts/documents.ts": "02ce86f6e8ef962eb48eb84c88b012613d91728fffe752f4a600f3cd8d8746f0",
@@ -202,6 +202,7 @@
     "src/guest/runtime-interfaces.ts": "fd51bfa7d25ec78ecdd0d59adb198fe41c5119954237ee396ccee5bb6bb05103",
     "src/guest/session.ts": "7d6566044cec86e7ee1bd8629cc05bbcf89c62915d8dc4e415a5eb5d5b413f55",
     "src/guest/storage.ts": "de4d5f84f07c36f7e18a20ad30261279c49c49c31b5691da7d83e0259fe8d4d3",
+    "src/guest/text-policy.ts": "4b6341120905c42380d48854b78ffadc2a8e3ee05a801b847095c5b09c333fdf",
     "src/guest/url-policy.ts": "e0e88fbc7f643d7c3042858cb670e9a3012a1c7057c6c49067fbbe56cee769b5",
     "src/guest/wasm-accessors.ts": "7e03c8e70638d2d861392ec0b2ed40867c638bfcbb26774fbf1e240b2b18589b",
     "src/guest/web-services.ts": "429fa17d217a6f7a155b6e80e7ff8b062eb5077b78dd19bc635da9417147266d",
@@ -214,8 +215,8 @@
   },
   "engineSHA256": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
   "bundleHashes": {
-    "production": "9b5b85e6107198fece9b030d0b6e7e2fcc55c8ef23dd514fccc83f6fdffdd402",
-    "urlGetRouteRemoved": "982e995322ea3b8a8045d99c10aea9764f29150c0c70592e43b4933a08f4e629"
+    "production": "4f7957bfc5dec766029e31ffc515afe47722f473129fbf806ae74d06da193520",
+    "urlGetRouteRemoved": "8f46bb5b85bd4efd0dd295cee1b2fc0249063e04fe26b2857c61d133459ef7cb"
   },
   "fault": "Only the actual BrowserEnvironment private get URL-domain routing line is omitted from a temporary esbuild bundle. Production sources are unchanged.",
   "receipts": [
@@ -290,5 +291,5 @@
       "rejected": true
     }
   ],
-  "completedAt": "2026-11-20T10:21:35.121Z"
+  "completedAt": "2026-11-20T10:30:45.986Z"
 }
