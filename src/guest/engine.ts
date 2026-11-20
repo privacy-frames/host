@@ -285,7 +285,10 @@ export class GuestEngine {
         ) {
           this.nativeHandles.set(native, guest.dup());
           const nativePrototype: unknown = Reflect.get(native, 'prototype');
-          if (nativePrototype && typeof nativePrototype === 'object') {
+          if (
+            nativePrototype &&
+            (typeof nativePrototype === 'object' || typeof nativePrototype === 'function')
+          ) {
             const prototype = this.context.getProp(guest, 'prototype');
             this.nativeHandles.set(nativePrototype, prototype);
           }

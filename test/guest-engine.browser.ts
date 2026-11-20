@@ -189,6 +189,7 @@ try {
       binaryRegistry: Symbol.keyFor(nativeSymbolForBinary()),
       binaryKeys: Object.keys(opaqueStrings),
       capturedViewConstructor,
+      guestFunctionPrototype: Object.getPrototypeOf(fillBytes) === Function.prototype,
       domException: [exception instanceof DOMException, exception.name, exception.message, exception.code],
       nativeException,
       map: copiedMap instanceof Map && copiedKey === copiedKey.self && copiedMap.get(copiedKey) instanceof Set,

@@ -118,6 +118,7 @@ try {
       assert.equal(advanced.binaryRegistry, 'registry\0suffix');
       assert.deepEqual(advanced.binaryKeys, ['field', 'field\0suffix']);
       assert.equal(advanced.capturedViewConstructor, true);
+      assert.equal(advanced.guestFunctionPrototype, true);
       assert.deepEqual(advanced.domException, [true, 'SecurityError', 'denied', 18]);
       assert.deepEqual(advanced.nativeException, [true, 'SecurityError', 18]);
       assert.equal(advanced.map, true);
