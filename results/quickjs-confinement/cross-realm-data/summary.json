@@ -1,0 +1,80 @@
+{
+  "sourceRevision": "1601edf4c1ff149bf0cae1b42082e6ae15ac0275",
+  "baseRevision": "0340ea976cb648e1fd13b2071043870939850bd9",
+  "scope": "Existing ordinary data codec paths for prepared-child Date/Map/Set/RegExp, per-encoding graph identity and local handle cleanup. No new callable ownership, native Wasm routing, WeakMap/WeakSet copying, live mirroring or persistent data-cache policy.",
+  "baseline": {
+    "receipt": "baseline.json",
+    "log": "baseline.log",
+    "fixtureSnapshot": "baseline-fixture.ts",
+    "snapshotOriginalPath": "test/guest-cross-realm-data.browser.ts",
+    "outcome": "Both browsers rejected methods on all four foreign data kinds with missing-slot errors. The separate own-realm Date\u2192Map-key/Set-value graph also lost shared identity in baseline source.",
+    "command": "PF_DATA_BASELINE=1 tsx test/guest-cross-realm-data.ts"
+  },
+  "implementation": [
+    "Memoize only immutable internal-slot membership through captured harmless native Date/Map/Set/RegExp operations. Read current values and flags with captured native operations; iterate stored entries via captured native forEach.",
+    "Reuse existing data-copy branches before public-prototype plain-record classification. Known intrinsic ctor/proto mapping remains earlier.",
+    "One encoding owns duplicated memo handles until all sibling references are encoded. Argument encoding shares one scoped graph; Date/RegExp decoding reuses its existing local seen table.",
+    "Original container, property, entry/key, earlier argument and receiver handles are released on failed child encoding. Existing persistent plain-record/array caches are not rolled back or otherwise redesigned."
+  ],
+  "checks": [
+    {
+      "command": "tsx test/guest-cross-realm-data.ts",
+      "exitCode": 0,
+      "receipt": "result.json",
+      "log": "focused.log",
+      "browsers": [
+        "Chromium",
+        "Firefox"
+      ],
+      "variants": [
+        "production",
+        "restore module instanceof omission"
+      ]
+    },
+    {
+      "command": "tsx test/guest-realm-intrinsics.ts",
+      "exitCode": 0,
+      "receipt": "intrinsics.json",
+      "log": "intrinsics.log",
+      "variants": 8
+    },
+    {
+      "command": "tsx test/guest-engine.ts",
+      "exitCode": 0,
+      "receipt": "engine.json",
+      "log": "engine.log"
+    },
+    {
+      "command": "tsx --test test/guest-engine-initialization.test.ts test/native-intrinsics.test.ts test/guest-native-policy.test.ts test/native-binary-policy.test.ts",
+      "exitCode": 0,
+      "tests": 28,
+      "log": "units.log"
+    },
+    {
+      "command": "tsc --noEmit",
+      "exitCode": 0,
+      "log": "types.log"
+    },
+    {
+      "command": "Scoped Prettier",
+      "exitCode": 0,
+      "log": "format.log"
+    }
+  ],
+  "controls": [
+    "Native methods accept the actual child-realm instances before guest projection.",
+    "Foreign and own Date keys/Set membership, repeated Map/Set/RegExp references, self/cross cycles and decoded graph identity are preserved.",
+    "Changing public prototypes to null and overriding size/iterator/forEach/getTime/source/flags does not determine data kind or extraction.",
+    "Date value changes and NaN are read fresh; a public Map tag does not grant Map slots.",
+    "Controlled map entry-copy, array-copy, record-copy and argument-copy failures preserve the error and dispose cleanly; registered native callee remains uncalled.",
+    "Restoring module instanceof predicates reproduces foreign slot failures while the own graph remains fixed."
+  ],
+  "sourceHashes": {
+    "src/guest/engine.ts": "8f62cd622a3e3a8067e46de5d9af1a4d9796762b2f9d14df51f20f211076ef4c",
+    "src/guest/native-brand.ts": "ebb96efef406a05debada5a3a3117ff0a3954e7eb706712871cb6290a2b13b00",
+    "src/guest/native-intrinsics.ts": "4cac286927ee1197a4025161c5798b038e284e5c3292280cd8966ac438a92623",
+    "test/guest-cross-realm-data.browser.ts": "18b3b70ce1665256cecb6eebfa14d7fb7a71c3974337ff3d7a820a3febe7309d",
+    "test/guest-cross-realm-data.ts": "761a6808d4cbd2a0476de37c189c1fe608ed30db133b5419a5d54ee3c0137e72"
+  },
+  "limits": "Browser fixtures use synthetic local data and native prepared-child constructors; no code-generation invocation or outside connections. Full application/performance and complete confinement qualification remain with the integrating branch."
+}

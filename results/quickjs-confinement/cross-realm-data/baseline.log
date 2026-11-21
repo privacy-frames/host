@@ -1,0 +1,70 @@
+{"browser":"chromium","version":"153.0.8010.12","executablePath":"/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome","executableSHA256":"8c599d43aec53f2460a31ae2f4af6bd863f8258b34ff519564bc5d4726bfaa1e","variant":"production","failure":"Error: Cross-realm data methods and shared graph identity: {\"observations\":[{\"name\":\"Date\",\"error\":\"TypeError: not a Date object\"},{\"name\":\"Map\",\"error\":\"TypeError: Map object expected\"},{\"name\":\"Set\",\"error\":\"TypeError: Set object expected\"},{\"name\":\"RegExp\",\"error\":\"TypeError: RegExp object expected\"}],\"ownGraphIdentity\":false}\nError: Cross-realm data methods and shared graph identity: {\"observations\":[{\"name\":\"Date\",\"error\":\"TypeError: not a Date object\"},{\"name\":\"Map\",\"error\":\"TypeError: Map object expected\"},{\"name\":\"Set\",\"error\":\"TypeError: Set object expected\"},{\"name\":\"RegExp\",\"error\":\"TypeError: RegExp object expected\"}],\"ownGraphIdentity\":false}\n    at check (http://127.0.0.1:37687/browser.js?variant=production:51426:21)\n    at run (http://127.0.0.1:37687/browser.js?variant=production:51499:5)","observed":{"observations":[{"name":"Date","error":"TypeError: not a Date object"},{"name":"Map","error":"TypeError: Map object expected"},{"name":"Set","error":"TypeError: Set object expected"},{"name":"RegExp","error":"TypeError: RegExp object expected"}],"ownGraphIdentity":false}}
+{"browser":"firefox","version":"155.0","executablePath":"/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox","executableSHA256":"062272ac4d851eade5b75db2dc7c14569d96cb3ca38f949337cdc1b74367e35b","variant":"production","failure":"Error: Cross-realm data methods and shared graph identity: {\"observations\":[{\"name\":\"Date\",\"error\":\"TypeError: not a Date object\"},{\"name\":\"Map\",\"error\":\"TypeError: Map object expected\"},{\"name\":\"Set\",\"error\":\"TypeError: Set object expected\"},{\"name\":\"RegExp\",\"error\":\"TypeError: RegExp object expected\"}],\"ownGraphIdentity\":false}\ncheck@http://127.0.0.1:37687/browser.js?variant=production:51426:21\nrun@http://127.0.0.1:37687/browser.js?variant=production:51499:10\nasync*@http://127.0.0.1:37687/browser.js?variant=production:51510:1\n","observed":{"observations":[{"name":"Date","error":"TypeError: not a Date object"},{"name":"Map","error":"TypeError: Map object expected"},{"name":"Set","error":"TypeError: Set object expected"},{"name":"RegExp","error":"TypeError: RegExp object expected"}],"ownGraphIdentity":false}}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
++ [
++   'chromium production: AssertionError [ERR_ASSERTION]: Error: Cross-realm data methods and shared graph identity: {"observations":[{"name":"Date","error":"TypeError: not a Date object"},{"name":"Map","error":"TypeError: Map object expected"},{"name":"Set","error":"TypeError: Set object expected"},{"name":"RegExp","error":"TypeError: RegExp object expected"}],"ownGraphIdentity":false}\n' +
++     'Error: Cross-realm data methods and shared graph identity: {"observations":[{"name":"Date","error":"TypeError: not a Date object"},{"name":"Map","error":"TypeError: Map object expected"},{"name":"Set","error":"TypeError: Set object expected"},{"name":"RegExp","error":"TypeError: RegExp object expected"}],"ownGraphIdentity":false}\n' +
++     '    at check (http://127.0.0.1:37687/browser.js?variant=production:51426:21)\n' +
++     '    at run (http://127.0.0.1:37687/browser.js?variant=production:51499:5)\n' +
++     '+ actual - expected\n' +
++     '\n' +
++     `+ 'Error: Cross-realm data methods and shared graph identity: {"observations":[{"name":"Date","error":"TypeError: not a Date object"},{"name":"Map","error":"TypeError: Map object expected"},{"name":"Set","error":"TypeError: Set object expected"},{"name":"RegExp","error":"TypeError: RegExp object expected"}],"ownGraphIdentity":false}\\n' +\n` +
++     `+   'Error: Cross-realm data methods and shared graph identity: {"observations":[{"name":"Date","error":"TypeError: not a Date object"},{"name":"Map","error":"TypeError: Map object expected"},{"name":"Set","error":"TypeError: Set object expected"},{"name":"RegExp","error":"TypeError: RegExp object expected"}],"ownGraphIdentity":false}\\n' +\n` +
++     "+   '    at check (http://127.0.0.1:37687/browser.js?variant=production:51426:21)\\n' +\n" +
++     "+   '    at run (http://127.0.0.1:37687/browser.js?variant=production:51499:5)'\n" +
++     '- undefined\n',
++   'firefox production: AssertionError [ERR_ASSERTION]: Error: Cross-realm data methods and shared graph identity: {"observations":[{"name":"Date","error":"TypeError: not a Date object"},{"name":"Map","error":"TypeError: Map object expected"},{"name":"Set","error":"TypeError: Set object expected"},{"name":"RegExp","error":"TypeError: RegExp object expected"}],"ownGraphIdentity":false}\n' +
++     'check@http://127.0.0.1:37687/browser.js?variant=production:51426:21\n' +
++     'run@http://127.0.0.1:37687/browser.js?variant=production:51499:10\n' +
++     'async*@http://127.0.0.1:37687/browser.js?variant=production:51510:1\n' +
++     '\n' +
++     '+ actual - expected\n' +
++     '\n' +
++     `+ 'Error: Cross-realm data methods and shared graph identity: {"observations":[{"name":"Date","error":"TypeError: not a Date object"},{"name":"Map","error":"TypeError: Map object expected"},{"name":"Set","error":"TypeError: Set object expected"},{"name":"RegExp","error":"TypeError: RegExp object expected"}],"ownGraphIdentity":false}\\n' +\n` +
++     "+   'check@http://127.0.0.1:37687/browser.js?variant=production:51426:21\\n' +\n" +
++     "+   'run@http://127.0.0.1:37687/browser.js?variant=production:51499:10\\n' +\n" +
++     "+   'async*@http://127.0.0.1:37687/browser.js?variant=production:51510:1\\n'\n" +
++     '- undefined\n'
++ ]
+- []
+
+    at <anonymous> (/home/damen/Projects/privacy-frames-realm-intrinsics/test/guest-cross-realm-data.ts:169:8) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: [
+    'chromium production: AssertionError [ERR_ASSERTION]: Error: Cross-realm data methods and shared graph identity: {"observations":[{"name":"Date","error":"TypeError: not a Date object"},{"name":"Map","error":"TypeError: Map object expected"},{"name":"Set","error":"TypeError: Set object expected"},{"name":"RegExp","error":"TypeError: RegExp object expected"}],"ownGraphIdentity":false}\n' +
+      'Error: Cross-realm data methods and shared graph identity: {"observations":[{"name":"Date","error":"TypeError: not a Date object"},{"name":"Map","error":"TypeError: Map object expected"},{"name":"Set","error":"TypeError: Set object expected"},{"name":"RegExp","error":"TypeError: RegExp object expected"}],"ownGraphIdentity":false}\n' +
+      '    at check (http://127.0.0.1:37687/browser.js?variant=production:51426:21)\n' +
+      '    at run (http://127.0.0.1:37687/browser.js?variant=production:51499:5)\n' +
+      '+ actual - expected\n' +
+      '\n' +
+      `+ 'Error: Cross-realm data methods and shared graph identity: {"observations":[{"name":"Date","error":"TypeError: not a Date object"},{"name":"Map","error":"TypeError: Map object expected"},{"name":"Set","error":"TypeError: Set object expected"},{"name":"RegExp","error":"TypeError: RegExp object expected"}],"ownGraphIdentity":false}\\n' +\n` +
+      `+   'Error: Cross-realm data methods and shared graph identity: {"observations":[{"name":"Date","error":"TypeError: not a Date object"},{"name":"Map","error":"TypeError: Map object expected"},{"name":"Set","error":"TypeError: Set object expected"},{"name":"RegExp","error":"TypeError: RegExp object expected"}],"ownGraphIdentity":false}\\n' +\n` +
+      "+   '    at check (http://127.0.0.1:37687/browser.js?variant=production:51426:21)\\n' +\n" +
+      "+   '    at run (http://127.0.0.1:37687/browser.js?variant=production:51499:5)'\n" +
+      '- undefined\n',
+    'firefox production: AssertionError [ERR_ASSERTION]: Error: Cross-realm data methods and shared graph identity: {"observations":[{"name":"Date","error":"TypeError: not a Date object"},{"name":"Map","error":"TypeError: Map object expected"},{"name":"Set","error":"TypeError: Set object expected"},{"name":"RegExp","error":"TypeError: RegExp object expected"}],"ownGraphIdentity":false}\n' +
+      'check@http://127.0.0.1:37687/browser.js?variant=production:51426:21\n' +
+      'run@http://127.0.0.1:37687/browser.js?variant=production:51499:10\n' +
+      'async*@http://127.0.0.1:37687/browser.js?variant=production:51510:1\n' +
+      '\n' +
+      '+ actual - expected\n' +
+      '\n' +
+      `+ 'Error: Cross-realm data methods and shared graph identity: {"observations":[{"name":"Date","error":"TypeError: not a Date object"},{"name":"Map","error":"TypeError: Map object expected"},{"name":"Set","error":"TypeError: Set object expected"},{"name":"RegExp","error":"TypeError: RegExp object expected"}],"ownGraphIdentity":false}\\n' +\n` +
+      "+   'check@http://127.0.0.1:37687/browser.js?variant=production:51426:21\\n' +\n" +
+      "+   'run@http://127.0.0.1:37687/browser.js?variant=production:51499:10\\n' +\n" +
+      "+   'async*@http://127.0.0.1:37687/browser.js?variant=production:51510:1\\n'\n" +
+      '- undefined\n'
+  ],
+  expected: [],
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.18.0
