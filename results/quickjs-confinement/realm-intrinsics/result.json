@@ -175,7 +175,7 @@
     "src/guest/css.ts": "ef01e1e37e18deb526344717219399160394fd5d190f471535ff5fd10dfdecb9",
     "src/guest/custom-elements.ts": "ff3cf0ab9c85bee1f74d6198431c01615e1c6e9cf198dd4b9fc68d78a045cb0d",
     "src/guest/dom.ts": "75a654d384521c8c7153bf55bfe71f19ed1eab3b27d1c60fa37241aa300e764a",
-    "src/guest/engine.ts": "c3bf69da6514cf54e0474b7dcab34f38cafc8db4cd3b86ae0b97788cd16cb1cc",
+    "src/guest/engine.ts": "75d05ffb0ee9c436adeb5ac619de8d69842c86a449123bc77dbab109ef0c5fab",
     "src/guest/event-listener-arguments.ts": "f5219d8d8da8d9f5d67f0afb46756a2e7ef55003b64fc846dafccf134c27a080",
     "src/guest/event-policy.ts": "13543ed303ec876ff179bfcb9ced225347ddc1f404e13f392fc3ecf417c8bac6",
     "src/guest/generated-runtime-interfaces.ts": "55fa35f2d27fe9b123c74f77a229a2a64b86ace4f2883e5fb70715d851117182",
@@ -203,16 +203,16 @@
     "src/guest/url-policy.ts": "cd9c54875cac49c55634b910e723abe0fc5c402f429107eefbb910ce79d54d7a",
     "src/guest/wasm-accessors.ts": "7e03c8e70638d2d861392ec0b2ed40867c638bfcbb26774fbf1e240b2b18589b",
     "src/guest/web-services.ts": "429fa17d217a6f7a155b6e80e7ff8b062eb5077b78dd19bc635da9417147266d",
-    "test/guest-realm-intrinsics.browser.ts": "0e15292b9a37e6abea1279f9fecac8cd4c950a719a5e9c9fef47b829990a3e7b",
+    "test/guest-realm-intrinsics.browser.ts": "9bfbee5404b412d5a9dc31eb0ec9a7d4627aa5bd058c7e31788d26856a91cfca",
     "vendor/quickjs/generated/engine.mjs": "60147727aeb5c4441d54ad7b3c625e952bec7faa8db8531522eb71dd9ab9da2e"
   },
   "driverHash": "30fc2b64a961468406e897bec93ee4ad56af61ded43d528d21f1e609f59eb38e",
   "engineSHA256": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
   "bundleHashes": {
-    "production": "0a067298f0fd8a6d80fd854b449849033f9a923b28028dc38b6936acaabd05ec",
-    "omit-boundary": "c8b55400e862ea03dab2cddcb4fe2398955479d05c9c628f025e16900d359f3f",
-    "omit-function-role": "51e81e37a98911a8f4b749667b31e548fe0440517af9d44640fb8920d2986602",
-    "coi-production": "0a067298f0fd8a6d80fd854b449849033f9a923b28028dc38b6936acaabd05ec"
+    "production": "13f669ddc081baef6ec16b221835ba6f9ce687a0cb56adc6c91cb623818901a8",
+    "omit-boundary": "e54d240ff657583fdb6179ab351e1af21b53bdbd9ff841e73bc0bd1d87699712",
+    "omit-function-role": "79705f0cad88ad480ccd2ed933cec71f4aef61b2ee3cd5f3a3cdd04639594d58",
+    "coi-production": "13f669ddc081baef6ec16b221835ba6f9ce687a0cb56adc6c91cb623818901a8"
   },
   "toolchain": {
     "node": "v24.18.0",
@@ -275,6 +275,7 @@
         "foreignCallbacks": true,
         "lateCaptureRefused": true,
         "explicitAlias": true,
+        "oldProxyAfterAliasRefused": true,
         "disposal": true
       }
     },
@@ -292,7 +293,7 @@
       "version": "153.0.8010.12",
       "executablePath": "/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
       "executableSHA256": "8c599d43aec53f2460a31ae2f4af6bd863f8258b34ff519564bc5d4726bfaa1e",
-      "failure": "TypeError: Native intrinsic has no supported guest counterpart: Function\nTypeError: Native intrinsic has no supported guest counterpart: Function\n    at _GuestEngine.encode (http://127.0.0.1:34287/browser.js?variant=omit-function-role:50366:15)\n    at http://127.0.0.1:34287/browser.js?variant=omit-function-role:50041:27\n    at _GuestEngine.enter (http://127.0.0.1:34287/browser.js?variant=omit-function-role:50175:14)\n    at _GuestEngine.set (http://127.0.0.1:34287/browser.js?variant=omit-function-role:50040:10)\n    at run (http://127.0.0.1:34287/browser.js?variant=omit-function-role:51496:21)"
+      "failure": "TypeError: Native intrinsic has no supported guest counterpart: Function\nTypeError: Native intrinsic has no supported guest counterpart: Function\n    at _GuestEngine.encode (http://127.0.0.1:35631/browser.js?variant=omit-function-role:50366:15)\n    at http://127.0.0.1:35631/browser.js?variant=omit-function-role:50041:27\n    at _GuestEngine.enter (http://127.0.0.1:35631/browser.js?variant=omit-function-role:50175:14)\n    at _GuestEngine.set (http://127.0.0.1:35631/browser.js?variant=omit-function-role:50040:10)\n    at run (http://127.0.0.1:35631/browser.js?variant=omit-function-role:51496:21)"
     },
     {
       "browser": "chromium",
@@ -351,6 +352,7 @@
         "foreignCallbacks": true,
         "lateCaptureRefused": true,
         "explicitAlias": true,
+        "oldProxyAfterAliasRefused": true,
         "disposal": true
       }
     },
@@ -410,6 +412,7 @@
         "foreignCallbacks": true,
         "lateCaptureRefused": true,
         "explicitAlias": true,
+        "oldProxyAfterAliasRefused": true,
         "disposal": true
       }
     },
@@ -427,7 +430,7 @@
       "version": "155.0",
       "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
       "executableSHA256": "062272ac4d851eade5b75db2dc7c14569d96cb3ca38f949337cdc1b74367e35b",
-      "failure": "TypeError: Native intrinsic has no supported guest counterpart: Function\nencode@http://127.0.0.1:34287/browser.js?variant=omit-function-role:50366:15\nset/<@http://127.0.0.1:34287/browser.js?variant=omit-function-role:50041:27\nenter@http://127.0.0.1:34287/browser.js?variant=omit-function-role:50175:14\nset@http://127.0.0.1:34287/browser.js?variant=omit-function-role:50040:10\nrun@http://127.0.0.1:34287/browser.js?variant=omit-function-role:51496:21\nasync*@http://127.0.0.1:34287/browser.js?variant=omit-function-role:51650:1\n"
+      "failure": "TypeError: Native intrinsic has no supported guest counterpart: Function\nencode@http://127.0.0.1:35631/browser.js?variant=omit-function-role:50366:15\nset/<@http://127.0.0.1:35631/browser.js?variant=omit-function-role:50041:27\nenter@http://127.0.0.1:35631/browser.js?variant=omit-function-role:50175:14\nset@http://127.0.0.1:35631/browser.js?variant=omit-function-role:50040:10\nrun@http://127.0.0.1:35631/browser.js?variant=omit-function-role:51496:21\nasync*@http://127.0.0.1:35631/browser.js?variant=omit-function-role:51668:1\n"
     },
     {
       "browser": "firefox",
@@ -486,9 +489,10 @@
         "foreignCallbacks": true,
         "lateCaptureRefused": true,
         "explicitAlias": true,
+        "oldProxyAfterAliasRefused": true,
         "disposal": true
       }
     }
   ],
-  "completedAt": "2026-11-21T19:40:51.351Z"
+  "completedAt": "2026-11-21T19:46:30.195Z"
 }

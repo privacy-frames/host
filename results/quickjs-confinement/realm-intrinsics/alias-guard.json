@@ -1,0 +1,38 @@
+{
+  "sourceRevision": "37b3677c8b6ec4e7629476f5de252dbe0689fcf5",
+  "sourceHashes": {
+    "src/guest/engine.ts": "75d05ffb0ee9c436adeb5ac619de8d69842c86a449123bc77dbab109ef0c5fab",
+    "src/guest/native-intrinsics.ts": "4cac286927ee1197a4025161c5798b038e284e5c3292280cd8966ac438a92623",
+    "src/guest/browser.ts": "af4c0b9bc02b9af95a31bccf4abb63fac892e1f4ab829ec0f69bdf0febf5568b",
+    "test/guest-realm-intrinsics.browser.ts": "9bfbee5404b412d5a9dc31eb0ec9a7d4627aa5bd058c7e31788d26856a91cfca",
+    "test/guest-realm-intrinsics.ts": "30fc2b64a961468406e897bec93ee4ad56af61ded43d528d21f1e609f59eb38e",
+    "docs/implementation/native-intrinsics.md": "625ee6d7c9cd199669befce5601a6b4d1e7a08af33757d278994f0f58fddd13a"
+  },
+  "scope": "Old generic proxy metadata remains refused after a later explicit trusted alias; new encodings retain explicit alias precedence. No code-generation invocation.",
+  "initial": {
+    "log": "alias-guard-initial.log",
+    "inputs": "alias-guard-initial-inputs.json",
+    "testPatch": "alias-guard-initial.patch",
+    "patchApplyFlags": [
+      "--unidiff-zero"
+    ],
+    "outcome": "Actual Chromium benign metadata check exposed dispatch exemption after explicit alias"
+  },
+  "fix": "Remove explicitAliases exception only from dispatch refusal. Existing real custom-element alias callers use nonordinary platform identities.",
+  "verification": {
+    "browser": "result.json",
+    "log": "alias-guard-fixed.log",
+    "variants": 8,
+    "browsers": [
+      "Chromium",
+      "Firefox"
+    ],
+    "units": "alias-guard-units.log",
+    "tests": 28,
+    "types": "alias-guard-types.log",
+    "format": "alias-guard-format.log",
+    "allExitCode": 0
+  },
+  "previousCandidate": "before-alias-guard.json",
+  "limits": "Existing engine/text artifacts qualify prior source 0a7a667; this follow-up qualified the focused identity/buffer modes, units, types and formatting. Full application qualification belongs to the integrating branch."
+}

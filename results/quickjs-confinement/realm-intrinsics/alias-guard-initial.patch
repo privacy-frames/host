@@ -1,0 +1,24 @@
+diff --git a/test/guest-realm-intrinsics.browser.ts b/test/guest-realm-intrinsics.browser.ts
+index baab8af..677bba9 100644
+--- a/test/guest-realm-intrinsics.browser.ts
++++ b/test/guest-realm-intrinsics.browser.ts
+@@ -185,0 +186,17 @@ async function run() {
++    const explicitIntrinsicAlias = await parent.engine.evaluate(
++      '({explicitIntrinsicAlias:true})',
++    );
++    parent.engine.alias(earlyConstructor, explicitIntrinsicAlias);
++    parent.engine.set('afterExplicitAlias', earlyConstructor);
++    check(
++      await parent.engine.evaluate('afterExplicitAlias.explicitIntrinsicAlias === true'),
++      'Explicit alias still controls new encoding of the native identity',
++    );
++    check(
++      await parent.engine.evaluate(`(() => {
++      try { savedIntrinsics.Object.ctor.getPrototypeOf(prematureReference); }
++      catch(error) { return String(error).includes('exposed before realm capture'); }
++      return false;
++    })()`),
++      'Old generic proxy remains refused after explicit alias',
++    );
+@@ -224,0 +242 @@ async function run() {
++      oldProxyAfterAliasRefused: true,
