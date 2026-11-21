@@ -1,0 +1,280 @@
+{
+  "revision": "81967aa8df547dcc3e965a55ef7d0330d2cf2509",
+  "bundleHash": "2ceb74e7d5125860787fb1928db822ce3cece2423048581ba0180213071c344d",
+  "fixtures": {
+    "/mixed-import.wasm": "2aab7417d3891f7fc72d7d46ee45226534570ec2d5bc0c73d4f6494e1025cabe",
+    "/quickjs.wasm": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
+    "/memory.wasm": "f5579291e0798dc7674eba5a525023fca073a63a42dc3154c150e5e2b0dfe917",
+    "/transport.wasm": "5f469e5a729e2a1c4ff0d1d1a0363407e68539ce0cdb4480d97505d38efc7b93",
+    "/shared.wasm": "ade966b90c847d70a61f5e0b0adb9271075fc2609c4fb127296dfa0e6704fee7",
+    "/table-start.wasm": "b839e4419d5134668580bf0642fb0f13c0425b49688d4c76b5b0389d8dee5c67"
+  },
+  "observations": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "errors": [],
+      "result": {
+        "isolated": true,
+        "native": [
+          {
+            "name": "indexed copy loop and ordinary native copies preserve aliases",
+            "passed": true
+          },
+          {
+            "name": "indexed coercion and numeric families retain native semantics",
+            "passed": true
+          },
+          {
+            "name": "consecutive imports preserve ordinary bytes through native reentry and throw",
+            "passed": true
+          },
+          {
+            "name": "ordinary memory, reentrant import and alias writes",
+            "passed": true
+          },
+          {
+            "name": "local and native binary constructors, indexed descriptors and species",
+            "passed": true
+          },
+          {
+            "name": "shared Wasm memory, atomics and structured clone through dedicated worker",
+            "passed": true
+          },
+          {
+            "name": "Wasm shared-buffer slice copies into a separate shared block",
+            "passed": true
+          },
+          {
+            "name": "declared imports use inherited getters without traversing unused fields",
+            "passed": true
+          },
+          {
+            "name": "native function imports retain the owning host call policy",
+            "passed": true
+          },
+          {
+            "name": "fixed Wasm buffers refuse transfer and detach only on native growth",
+            "passed": true
+          },
+          {
+            "name": "async compile and instantiate retain import callbacks",
+            "passed": true
+          }
+        ],
+        "guest": [
+          {
+            "name": "indexed copy loop and ordinary native copies preserve aliases",
+            "passed": true
+          },
+          {
+            "name": "indexed coercion and numeric families retain native semantics",
+            "passed": true
+          },
+          {
+            "name": "consecutive imports preserve ordinary bytes through native reentry and throw",
+            "passed": true
+          },
+          {
+            "name": "ordinary memory, reentrant import and alias writes",
+            "passed": true
+          },
+          {
+            "name": "local and native binary constructors, indexed descriptors and species",
+            "passed": true
+          },
+          {
+            "name": "shared Wasm memory, atomics and structured clone through dedicated worker",
+            "passed": true
+          },
+          {
+            "name": "Wasm shared-buffer slice copies into a separate shared block",
+            "passed": true
+          },
+          {
+            "name": "declared imports use inherited getters without traversing unused fields",
+            "passed": true
+          },
+          {
+            "name": "native function imports retain the owning host call policy",
+            "passed": true
+          },
+          {
+            "name": "fixed Wasm buffers refuse transfer and detach only on native growth",
+            "passed": true
+          },
+          {
+            "name": "async compile and instantiate retain import callbacks",
+            "passed": true
+          }
+        ],
+        "copyElision": {
+          "baseline": {
+            "intoNative": 19,
+            "intoGuest": 10
+          },
+          "copying": {
+            "intoNative": 19,
+            "intoGuest": 10
+          },
+          "coercing": {
+            "intoNative": 25,
+            "intoGuest": 14
+          }
+        },
+        "foreign": [
+          "raw export",
+          "late imported memory",
+          "late imported table start"
+        ],
+        "policy": {
+          "control": [
+            true,
+            true
+          ],
+          "guest": [
+            false,
+            false
+          ]
+        }
+      },
+      "requests": [
+        "/import-probe",
+        "/constructor-probe"
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "errors": [],
+      "result": {
+        "isolated": true,
+        "native": [
+          {
+            "name": "indexed copy loop and ordinary native copies preserve aliases",
+            "passed": true
+          },
+          {
+            "name": "indexed coercion and numeric families retain native semantics",
+            "passed": true
+          },
+          {
+            "name": "consecutive imports preserve ordinary bytes through native reentry and throw",
+            "passed": true
+          },
+          {
+            "name": "ordinary memory, reentrant import and alias writes",
+            "passed": true
+          },
+          {
+            "name": "local and native binary constructors, indexed descriptors and species",
+            "passed": true
+          },
+          {
+            "name": "shared Wasm memory, atomics and structured clone through dedicated worker",
+            "passed": true
+          },
+          {
+            "name": "Wasm shared-buffer slice copies into a separate shared block",
+            "passed": true
+          },
+          {
+            "name": "declared imports use inherited getters without traversing unused fields",
+            "passed": true
+          },
+          {
+            "name": "native function imports retain the owning host call policy",
+            "passed": true
+          },
+          {
+            "name": "fixed Wasm buffers refuse transfer and detach only on native growth",
+            "passed": true
+          },
+          {
+            "name": "async compile and instantiate retain import callbacks",
+            "passed": true
+          }
+        ],
+        "guest": [
+          {
+            "name": "indexed copy loop and ordinary native copies preserve aliases",
+            "passed": true
+          },
+          {
+            "name": "indexed coercion and numeric families retain native semantics",
+            "passed": true
+          },
+          {
+            "name": "consecutive imports preserve ordinary bytes through native reentry and throw",
+            "passed": true
+          },
+          {
+            "name": "ordinary memory, reentrant import and alias writes",
+            "passed": true
+          },
+          {
+            "name": "local and native binary constructors, indexed descriptors and species",
+            "passed": true
+          },
+          {
+            "name": "shared Wasm memory, atomics and structured clone through dedicated worker",
+            "passed": true
+          },
+          {
+            "name": "Wasm shared-buffer slice copies into a separate shared block",
+            "passed": true
+          },
+          {
+            "name": "declared imports use inherited getters without traversing unused fields",
+            "passed": true
+          },
+          {
+            "name": "native function imports retain the owning host call policy",
+            "passed": true
+          },
+          {
+            "name": "fixed Wasm buffers refuse transfer and detach only on native growth",
+            "passed": true
+          },
+          {
+            "name": "async compile and instantiate retain import callbacks",
+            "passed": true
+          }
+        ],
+        "copyElision": {
+          "baseline": {
+            "intoNative": 19,
+            "intoGuest": 10
+          },
+          "copying": {
+            "intoNative": 19,
+            "intoGuest": 10
+          },
+          "coercing": {
+            "intoNative": 25,
+            "intoGuest": 14
+          }
+        },
+        "foreign": [
+          "raw export",
+          "late imported memory",
+          "late imported table start"
+        ],
+        "policy": {
+          "control": [
+            true,
+            true
+          ],
+          "guest": [
+            false,
+            false
+          ]
+        }
+      },
+      "requests": [
+        "/import-probe",
+        "/constructor-probe"
+      ]
+    }
+  ]
+}

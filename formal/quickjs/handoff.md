@@ -17,8 +17,8 @@ No new candidate has been deployed.
 
 Main development checkout: `/home/damen/Projects/privacy-frames-quickjs-kernel`,
 branch `quickjs-confinement-kernel`. Latest executable source is `81967aa`. The
-remote development backup was at `16b281e` before this checkpoint; the next push
-includes the binary policy and CI evidence follow-up `86260c3`. `ffca4da`
+remote development branch is backed up through `afe426a`, including the binary
+policy and CI evidence follow-up `86260c3`. `ffca4da`
 preserves the stabilization receipts, including failed and unqualified diagnostics.
 
 `ef9af40` repairs CyberChef startup overhead by caching immutable native brand
@@ -71,12 +71,61 @@ Firefox; primitive geometry shadows, growth and synchronization checks still pas
 An independent read-only review identified no concrete confinement defect, while
 retaining the engine ownership/composition premises.
 
-Session 91701 is running the full suite, followed by the twelve-case compatibility
-matrix and Pitch. Logs are `/tmp/pf-binary-full-suite.log`,
-`/tmp/pf-binary-corpus.log` and `/tmp/pf-binary-pitch.log`. All executable inputs
-and built artifacts remain frozen. Do not start competing image measurements or
-rebuild while that sequence is running. Session 20459 is terminal with all focused
-checks passed. Paired image/performance qualification is still pending.
+Session 91701 is terminal: full npm test, all twelve Chromium/Firefox application
+cases including offline tasks, and Pitch in both browsers passed. Maintenance
+recorded 122 observations, 60 confined cases and zero confined receiver hits.
+The matrix has no new runtime-error or console-object counts relative to
+`0195a96`; optional analytics/cloud resources remain refused locally.
+Full-suite, matrix and Pitch receipts/logs are archived under
+`integrated-81967aa/`.
+
+Session 50883 is terminal: all three paired native/confined image rounds passed
+all 24 cases, including offline confined exports. All 48 Squoosh export hashes
+matched native. The original 25% median investigation threshold was unchanged:
+Chromium online/offline medians were 9721/10686 ms (+8.19%/+20.05%); Firefox was
+7894/8567 ms (+0.59%/+9.13%). Raw outliers, including an 18006 ms Chromium offline
+sample, remain in the archive. Results are under `images-81967aa/`; matrix/Pitch
+and full-suite evidence are under `integrated-81967aa/`. The owned Xvfb :119 was
+cleaned up; only unrelated :99 remains. The performance command freeze is cleared.
+
+Two isolated follow-up worktrees are based on `afe426a`, share installed
+node_modules and have copied matching engine artifacts:
+
+- `/home/damen/Projects/privacy-frames-browser-policy`, branch
+  `quickjs-browser-policy`: uncommitted composed event policy, prepared-target
+  delivery rechecks, existing-handle callable recognition/dispatch, and three
+  strict trusted-factory eval sites. Thirty-six focused Node checks, type/format,
+  and actual BrowserEnvironment/QuickJS fixtures passed in Chromium and Firefox
+  (pre-strict 43274, final-strict 95511). Other EventTarget families remain
+  unclaimed; explicit borrowed operations need qualification before widening
+  producers. Brand owns engine/browser source. The C5 agent owns only new
+  `formal/quickjs/bootstrap-mode/` calibration files; refresh their hashes after
+  the final engine repair. Root authorized readString to read primitive UTF-16
+  length via getProp, since actual SDK getLength returns undefined, and
+  finally-dispose guestError info without weakening NUL/surrogate recovery.
+  That repair and its tests are still in progress. The earlier Node smoke GC
+  assertion is preserved: direct-TSX baseline/current controls both failed;
+  equivalent esbuild controls both passed. Actual SDK evaluation observed
+  ReferenceError `__name` in TSX-polluted factory source. Complete diagnostics
+  and pre-change input snapshots are retained; error-cleanup masking is separate
+  from that first initialization failure. Do not grant unknown callback authority
+  through default owner/encode, or edit NativePolicy/NativeHost/Wasm modules.
+- `/home/damen/Projects/privacy-frames-resource-publication`, branch
+  `quickjs-resource-publication`: coherent commit
+  `25b882e3c64c6a77275c994a8d0344e518befb04` is ready for root cherry-pick after
+  saving this binary checkpoint. The small storage helper uses upper-open
+  `[id, []]` after lower `[id, '']`, covering all string paths including U+FFFF
+  suffixes. Twelve actual completion cases and twenty-four bounded transaction
+  schedules passed. Native IndexedDB production and two omission variants passed
+  in both browsers, including refined provenance run 1135 with exact binary
+  hashes. No package/shared API changes. The full asynchronous/caller argument
+  and production UUID freshness remain premises; no deductive callback proof is
+  claimed. Current worker/catalog callers select paths from metadata. Captured
+  admitted local bytes may finish after removal. The cleanup bug established no
+  new network communication route.
+
+Root integrates and qualifies these worktrees; neither has changed the frozen
+kernel candidate. No production deployment has occurred.
 
 The management-composition task is integrated at `16b281e`: actual bundled
 receivers passed 143 bounded schedules and four omitted-recheck controls. Its
@@ -89,9 +138,10 @@ The component-verification command and GitHub workflow are also integrated at
 `16b281e`. All fourteen drivers passed on that revision in run `44924608486`.
 Hash-matched CI receipts and logs are archived under
 `results/quickjs-confinement/ci-16b281e/`. This is the pre-NativeBinary source,
-not qualification of the pending runtime changes. The aggregate runner now also
-clears its old summary before input collection and records each receipt path;
-that small follow-up awaits its own run at the new revision.
+not qualification of later runtime changes. The follow-up passed all fourteen
+drivers again at `afe426a` in run `44927181816`; hash-matched receipts are archived
+under `ci-afe426a/`. The aggregate runner clears its old summary before input
+collection and records each receipt path.
 
 The integration checkout `/home/damen/Projects/privacy-frames-quickjs-proof` remains
 on `quickjs-confinement-proof` at `9d9e401`. Preserve its untracked identity and

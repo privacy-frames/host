@@ -1,0 +1,64 @@
+{
+  "scope": "Fresh verifier calibration, not verification of the QuickJS runtime.",
+  "mode": "verify",
+  "image": "ghcr.io/gillianplatform/gillian@sha256:ce41de968aba0964774e1929416ce60b9c3b770d2e58f96e63990b629cfe2ed6",
+  "upstreamRevision": "469aa5c134ba7790c40669bd4bc50483aff36d7b",
+  "sourceURL": "https://raw.githubusercontent.com/GillianPlatform/Gillian/469aa5c134ba7790c40669bd4bc50483aff36d7b/Gillian-JS/Examples/JaVerT/IDGen.js",
+  "sourceSHA256": "32b1829ee190fbf535ab2d4748f1567e039e796fa18e9effeafc2c17651cf308",
+  "runnerSHA256": "e29dd7da539408e2381b7b2c582eb8cacce9a56f43fab5e42745a8faa3b1054c",
+  "results": [
+    {
+      "name": "closure",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "getId",
+          "paths": 1,
+          "failedPaths": 0
+        },
+        {
+          "procedure": "reset",
+          "paths": 1,
+          "failedPaths": 0
+        },
+        {
+          "procedure": "makeIdGen",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "32b1829ee190fbf535ab2d4748f1567e039e796fa18e9effeafc2c17651cf308",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "4327b0f7ccd61c12d8648d14bcde564a8c732d706fbaccdc0b5264908873efce",
+      "outputSummary": "Parsing and compiling...\nSorting:\n\tmakeIdGen : 2\n\tgetId : 3\n\treset : 3Adjusted:\n\tmakeIdGen : 2\n\tgetId : 2\n\treset : 2Preprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 3 symbolic tests in total\nRunning symbolic tests: 0.064628\nVerifying one spec of procedure getId... s Success\nVerifying one spec of procedure reset... s Success\nVerifying one spec of procedure makeIdGen... s Success\nAll specs succeeded: 0.195601\nUnable to find image 'ghcr.io/gillianplatform/gillian@sha256:ce41de968aba0964774e1929416ce60b9c3b770d2e58f96e63990b629cfe2ed6' locally\nghcr.io/gillianplatform/gillian@sha256:ce41de968aba0964774e1929416ce60b9c3b770d2e58f96e63990b629cfe2ed6: Pulling from gillianplatform/gillian\na60ef8ec184e: Pulling fs layer\na025d54289e1: Pulling fs layer\n35a8ab3a4e3b: Pulling fs layer\nf8d6ca89a1fa: Pulling fs layer\na60ef8ec184e: Verifying Checksum\na60ef8ec184e: Download complete\na60ef8ec184e: Pull complete\na025d54289e1: Verifying Checksum\na025d54289e1: Download complete\nf8d6ca89a1fa: Verifying Checksum\nf8d6ca89a1fa: Download complete\na025d54289e1: Pull complete\n35a8ab3a4e3b: Verifying Checksum\n35a8ab3a4e3b: Download complete\n35a8ab3a4e3b: Pull complete\nf8d6ca89a1fa: Pull complete\nDigest: sha256:ce41de968aba0964774e1929416ce60b9c3b770d2e58f96e63990b629cfe2ed6\nStatus: Downloaded newer image for ghcr.io/gillianplatform/gillian@sha256:ce41de968aba0964774e1929416ce60b9c3b770d2e58f96e63990b629cfe2ed6"
+    },
+    {
+      "name": "missing-increment",
+      "expectedSuccess": false,
+      "checkedProcedures": [
+        {
+          "procedure": "getId",
+          "paths": 1,
+          "failedPaths": 1
+        },
+        {
+          "procedure": "reset",
+          "paths": 1,
+          "failedPaths": 0
+        },
+        {
+          "procedure": "makeIdGen",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 1,
+      "inputSHA256": "d2b825e94997099c291c5bdcf9291ff4d124ad1833e9574af3742d3f82ed11cd",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "6db7697d5f482471832d8c08a6fb8f40796a0d6ffb5a9529a2a167966ad6ae53",
+      "outputSummary": "Parsing and compiling...\nSorting:\n\tmakeIdGen : 2\n\tgetId : 3\n\treset : 3Adjusted:\n\tmakeIdGen : 2\n\tgetId : 2\n\treset : 2Preprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 3 symbolic tests in total\nRunning symbolic tests: 0.064846\nVerifying one spec of procedure getId... f Failure\nVerifying one spec of procedure reset... s Success\nVerifying one spec of procedure makeIdGen... s Success\nThere were failures: 0.190765\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+    }
+  ],
+  "completed": "2026-11-21T16:56:38.083Z"
+}

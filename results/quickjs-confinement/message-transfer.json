@@ -183,7 +183,7 @@
     "src/guest/legacy-regexp.ts": "bbfcdccb8fab7c9a1462d91c8237f6cbe8c90be1f331c2f5f6b3629b569231bb",
     "src/guest/location.ts": "c2a3a431be4e90823664b4bc444de40d292df821fabfff2c627c5fb750fd382a",
     "src/guest/message-transfer.ts": "b126fa4cf88d3434b73160c9adce0a17b7441a34c642eef7fb982b540ed79c1a",
-    "src/guest/native-binary.ts": "2d0c098fdd641cf9edc5f7f958acef0fa9995766bdcbe177f925cc21ad49afd4",
+    "src/guest/native-binary.ts": "ed0665a76a4c4fb2e35e5acc180b4d4e50e8c1c3fc3762de389362b380e5d637",
     "src/guest/native-brand.ts": "ebb96efef406a05debada5a3a3117ff0a3954e7eb706712871cb6290a2b13b00",
     "src/guest/native-host.ts": "0420675d80bbc038b3c8cfbe8d8bb53e3d322ecb856613870de0405b553a8ff9",
     "src/guest/native-policy.ts": "ba0fb4f746bc472c480f0dbeff9e83a629c74e81ba832a3bd8019a6f1e2b1ce8",
@@ -204,9 +204,9 @@
   },
   "engineSHA256": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
   "bundleHashes": {
-    "production": "c42bdb474946bfd9146d0e3fc85b08a7e8ab2de0595219757f89d4424417fd44",
-    "oldRereadRestored": "28b4cff8fb8732d7666500bba2126dd0f7bf861697d2310606b8b86f4914e017",
-    "legacyGuardsRestored": "2440929bd93e60b62a5bd466acec3caa505ae1e0bc4758cbae392354c6cbe945"
+    "production": "f9b3df287abe8dbbb48a11359de8037e1d4d601d2c9e56d49f59d1705b026d89",
+    "oldRereadRestored": "e07ab7eba8edff009c41c47d1656d15a430ca24f470b9c86758c7ecf85c42c4b",
+    "legacyGuardsRestored": "49575a6dd9a92ffc0737afb109a87ea5285a916a138655fb3be64742e320e546"
   },
   "results": [
     {
@@ -262,7 +262,7 @@
         }
       },
       "faultRejected": true,
-      "failure": "Error: Native adapter transfer conversion must run once\nError: Native adapter transfer conversion must run once\n    at check (http://127.0.0.1:40749/browser.js?variant=reread:50021:21)\n    at run (http://127.0.0.1:40749/browser.js?variant=reread:50165:5)"
+      "failure": "Error: Native adapter transfer conversion must run once\nError: Native adapter transfer conversion must run once\n    at check (http://127.0.0.1:41559/browser.js?variant=reread:50496:21)\n    at run (http://127.0.0.1:41559/browser.js?variant=reread:50640:5)"
     },
     {
       "browser": "chromium",
@@ -279,7 +279,7 @@
         }
       },
       "faultRejected": true,
-      "failure": "Error: Legacy dictionary transfer must match native MessagePort conversion\nError: Legacy dictionary transfer must match native MessagePort conversion\n    at check (http://127.0.0.1:40749/browser.js?variant=legacy-null:50018:21)\n    at run (http://127.0.0.1:40749/browser.js?variant=legacy-null:50062:3)"
+      "failure": "Error: Legacy dictionary transfer must match native MessagePort conversion\nError: Legacy dictionary transfer must match native MessagePort conversion\n    at check (http://127.0.0.1:41559/browser.js?variant=legacy-null:50493:21)\n    at run (http://127.0.0.1:41559/browser.js?variant=legacy-null:50537:3)"
     },
     {
       "browser": "firefox",
@@ -334,7 +334,7 @@
         }
       },
       "faultRejected": true,
-      "failure": "Error: Native adapter transfer conversion must run once\ncheck@http://127.0.0.1:40749/browser.js?variant=reread:50021:21\nrun@http://127.0.0.1:40749/browser.js?variant=reread:50165:10\nasync*@http://127.0.0.1:40749/browser.js?variant=reread:50227:1\n"
+      "failure": "Error: Native adapter transfer conversion must run once\ncheck@http://127.0.0.1:41559/browser.js?variant=reread:50496:21\nrun@http://127.0.0.1:41559/browser.js?variant=reread:50640:10\nasync*@http://127.0.0.1:41559/browser.js?variant=reread:50702:1\n"
     },
     {
       "browser": "firefox",
@@ -351,7 +351,7 @@
         }
       },
       "faultRejected": true,
-      "failure": "Error: Legacy dictionary transfer must match native MessagePort conversion\ncheck@http://127.0.0.1:40749/browser.js?variant=legacy-null:50018:21\nrun@http://127.0.0.1:40749/browser.js?variant=legacy-null:50062:8\nasync*@http://127.0.0.1:40749/browser.js?variant=legacy-null:50224:1\n"
+      "failure": "Error: Legacy dictionary transfer must match native MessagePort conversion\ncheck@http://127.0.0.1:41559/browser.js?variant=legacy-null:50493:21\nrun@http://127.0.0.1:41559/browser.js?variant=legacy-null:50537:8\nasync*@http://127.0.0.1:41559/browser.js?variant=legacy-null:50699:1\n"
     }
   ]
 }

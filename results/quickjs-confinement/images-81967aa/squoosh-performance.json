@@ -1,0 +1,268 @@
+{
+  "sourceRevision": "afe426ada8a69a982cd0b805029939b27324f3e0",
+  "runtimeCommit": "81967aa",
+  "workload": "Squoosh built-in Panda compression through availability of exported JPEG; unchanged application, native and confined paired per run",
+  "selection": "All3 consecutive complete native/confined rounds retained; all24 application cases passed, with offline confined repeats. No sample discarded.",
+  "regressionInvestigationThresholdPercent": 25,
+  "scope": "Compatibility/performance only, not complete confinement. HTTP observations use browser-context instrumentation; browser-integrated services are trusted.",
+  "rows": [
+    {
+      "iteration": 1,
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "online",
+      "nativeMilliseconds": 2051,
+      "confinedMilliseconds": 8921,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    },
+    {
+      "iteration": 1,
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "offline",
+      "nativeMilliseconds": 2051,
+      "confinedMilliseconds": 8829,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    },
+    {
+      "iteration": 1,
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "online",
+      "nativeMilliseconds": 1701,
+      "confinedMilliseconds": 7885,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    },
+    {
+      "iteration": 1,
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "offline",
+      "nativeMilliseconds": 1701,
+      "confinedMilliseconds": 11753,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    },
+    {
+      "iteration": 2,
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "online",
+      "nativeMilliseconds": 2073,
+      "confinedMilliseconds": 9721,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    },
+    {
+      "iteration": 2,
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "offline",
+      "nativeMilliseconds": 2073,
+      "confinedMilliseconds": 10686,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    },
+    {
+      "iteration": 2,
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "online",
+      "nativeMilliseconds": 2134,
+      "confinedMilliseconds": 8606,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    },
+    {
+      "iteration": 2,
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "offline",
+      "nativeMilliseconds": 2134,
+      "confinedMilliseconds": 8567,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    },
+    {
+      "iteration": 3,
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "online",
+      "nativeMilliseconds": 2209,
+      "confinedMilliseconds": 10946,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    },
+    {
+      "iteration": 3,
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "offline",
+      "nativeMilliseconds": 2209,
+      "confinedMilliseconds": 18006,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    },
+    {
+      "iteration": 3,
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "online",
+      "nativeMilliseconds": 1741,
+      "confinedMilliseconds": 7894,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    },
+    {
+      "iteration": 3,
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "offline",
+      "nativeMilliseconds": 1741,
+      "confinedMilliseconds": 7980,
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "privateHTTPRequests": []
+    }
+  ],
+  "summary": [
+    {
+      "browser": "chromium",
+      "mode": "online",
+      "nativeSamples": [
+        2051,
+        2073,
+        2209
+      ],
+      "confinedSamples": [
+        8921,
+        9721,
+        10946
+      ],
+      "nativeMedianMilliseconds": 2073,
+      "confinedMedianMilliseconds": 9721,
+      "baselineConfinedMedianMilliseconds": 8985,
+      "changePercent": 8.19,
+      "requiresInvestigation": false
+    },
+    {
+      "browser": "chromium",
+      "mode": "offline",
+      "nativeSamples": [
+        2051,
+        2073,
+        2209
+      ],
+      "confinedSamples": [
+        8829,
+        10686,
+        18006
+      ],
+      "nativeMedianMilliseconds": 2073,
+      "confinedMedianMilliseconds": 10686,
+      "baselineConfinedMedianMilliseconds": 8901,
+      "changePercent": 20.05,
+      "requiresInvestigation": false
+    },
+    {
+      "browser": "firefox",
+      "mode": "online",
+      "nativeSamples": [
+        1701,
+        2134,
+        1741
+      ],
+      "confinedSamples": [
+        7885,
+        8606,
+        7894
+      ],
+      "nativeMedianMilliseconds": 1741,
+      "confinedMedianMilliseconds": 7894,
+      "baselineConfinedMedianMilliseconds": 7848,
+      "changePercent": 0.59,
+      "requiresInvestigation": false
+    },
+    {
+      "browser": "firefox",
+      "mode": "offline",
+      "nativeSamples": [
+        1701,
+        2134,
+        1741
+      ],
+      "confinedSamples": [
+        11753,
+        8567,
+        7980
+      ],
+      "nativeMedianMilliseconds": 1741,
+      "confinedMedianMilliseconds": 8567,
+      "baselineConfinedMedianMilliseconds": 7850,
+      "changePercent": 9.13,
+      "requiresInvestigation": false
+    }
+  ]
+}

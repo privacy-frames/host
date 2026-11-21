@@ -1,0 +1,65 @@
+{
+  "completed": "2026-11-21T16:44:14.503Z",
+  "receipts": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "result": {
+        "native": {
+          "display": "grid",
+          "width": "30px",
+          "height": "11px",
+          "border": "3px",
+          "background": "url(\"http://127.0.0.1:40815/image.svg\")"
+        },
+        "protected": {
+          "display": "grid",
+          "width": "30px",
+          "height": "11px",
+          "border": "3px",
+          "background": "url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyIiBoZWlnaHQ9IjIiPjxwYXRoIGZpbGw9ImdyZWVuIiBkPSJNMCAwaDJ2MkgweiIvPjwvc3ZnPg==\")"
+        },
+        "mapped": [
+          "http://127.0.0.1:40815/theme.css",
+          "http://127.0.0.1:40815/image.svg"
+        ],
+        "rewritten": "@import url(data:text/css;base64,LmltcG9ydGVke2JvcmRlcjozcHggc29saWQgcmdiKDEsMiwzKX0=);@supports not ((unsupported-one:1) or (unsupported-two:2)){.comparison{display:grid;width:30px;background:url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyIiBoZWlnaHQ9IjIiPjxwYXRoIGZpbGw9ImdyZWVuIiBkPSJNMCAwaDJ2MkgweiIvPjwvc3ZnPg==\")}}@supports (background:url(\"http://127.0.0.1:40815/condition-only.png\")){.comparison{height:11px}}"
+      },
+      "requests": [
+        "/theme.css",
+        "/image.svg"
+      ],
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "result": {
+        "native": {
+          "display": "grid",
+          "width": "30px",
+          "height": "11px",
+          "border": "3px",
+          "background": "url(\"http://127.0.0.1:40815/image.svg\")"
+        },
+        "protected": {
+          "display": "grid",
+          "width": "30px",
+          "height": "11px",
+          "border": "3px",
+          "background": "url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyIiBoZWlnaHQ9IjIiPjxwYXRoIGZpbGw9ImdyZWVuIiBkPSJNMCAwaDJ2MkgweiIvPjwvc3ZnPg==\")"
+        },
+        "mapped": [
+          "http://127.0.0.1:40815/theme.css",
+          "http://127.0.0.1:40815/image.svg"
+        ],
+        "rewritten": "@import url(data:text/css;base64,LmltcG9ydGVke2JvcmRlcjozcHggc29saWQgcmdiKDEsMiwzKX0=);@supports not ((unsupported-one:1) or (unsupported-two:2)){.comparison{display:grid;width:30px;background:url(\"data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyIiBoZWlnaHQ9IjIiPjxwYXRoIGZpbGw9ImdyZWVuIiBkPSJNMCAwaDJ2MkgweiIvPjwvc3ZnPg==\")}}@supports (background:url(\"http://127.0.0.1:40815/condition-only.png\")){.comparison{height:11px}}"
+      },
+      "requests": [
+        "/theme.css",
+        "/image.svg"
+      ],
+      "errors": []
+    }
+  ]
+}

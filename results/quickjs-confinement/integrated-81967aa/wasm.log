@@ -1,0 +1,508 @@
+[chromium] log: Wasm fixture: indexed copy loop and ordinary native copies preserve aliases
+[chromium] log: Wasm check: native indexed loop reads real bytes
+[chromium] log: Wasm check: 4 MiB indexed copy milliseconds=5
+[chromium] log: Wasm check: staged ordinary native writes publish before alias access
+[chromium] log: Wasm check: ordinary native aliases share their indexed cache
+[chromium] log: Wasm check: native methods invalidate cached input bytes
+[chromium] log: Wasm fixture: indexed coercion and numeric families retain native semantics
+[chromium] log: Wasm check: Int8Array native descriptor matches indexed value
+[chromium] log: Wasm check: Uint8Array native descriptor matches indexed value
+[chromium] log: Wasm check: Uint8ClampedArray native descriptor matches indexed value
+[chromium] log: Wasm check: Int16Array native descriptor matches indexed value
+[chromium] log: Wasm check: Uint16Array native descriptor matches indexed value
+[chromium] log: Wasm check: Int32Array native descriptor matches indexed value
+[chromium] log: Wasm check: Uint32Array native descriptor matches indexed value
+[chromium] log: Wasm check: Float32Array native descriptor matches indexed value
+[chromium] log: Wasm check: Float64Array native descriptor matches indexed value
+[chromium] log: Wasm check: BigInt and numeric views alias actual native bytes
+[chromium] log: Wasm check: numeric indexed writes reach BigInt native views
+[chromium] log: Wasm check: object coercion observes detachment before indexed store
+[chromium] log: Wasm check: detached write leaves grown memory unchanged
+[chromium] log: Wasm fixture: consecutive imports preserve ordinary bytes through native reentry and throw
+[chromium] log: Wasm check: first import sees current bytes
+[chromium] log: Wasm check: nested native mutation reaches ordinary callback
+[chromium] log: Wasm check: nested native consumer sees guest writes
+[chromium] log: Wasm check: native continuation reaches imported callback
+[chromium] log: Wasm check: second import retains preceding guest-only write
+[chromium] log: Wasm check: native continuation invalidates indexed heap reads
+[chromium] log: Wasm check: primitive native copyWithin preserves deferred ordinary writes
+[chromium] log: Wasm check: exception crosses the outer Wasm scope
+[chromium] log: Wasm check: exceptional scope exit preserves all ordinary bytes
+[chromium] log: Wasm fixture: ordinary memory, reentrant import and alias writes
+[chromium] log: Wasm check: native Wasm write visible inside guest callback
+[chromium] log: Wasm check: nested callback return/write
+[chromium] log: Wasm check: native buffer identity
+[chromium] log: Wasm check: subarray aliases native memory
+[chromium] log: Wasm check: DataView native brand
+[chromium] log: Wasm check: native view brands
+[chromium] log: Wasm check: native callback typed map
+[chromium] log: Wasm check: Wasm memory growth return
+[chromium] log: Wasm check: growth detaches old views
+[chromium] log: Wasm check: new memory size
+[chromium] log: Wasm check: growth preserves bytes
+[chromium] log: Wasm check: native Wasm runtime error brand
+[chromium] log: Wasm check: guest callback exception survives native Wasm boundary
+[chromium] log: Wasm fixture: local and native binary constructors, indexed descriptors and species
+[chromium] log: Wasm check: indexed defineProperty writes bytes
+[chromium] log: Wasm check: indexed descriptor
+[chromium] log: Wasm check: out of bounds definition
+[chromium] log: Wasm check: set and iteration
+[chromium] log: Wasm check: indexed defineProperty writes bytes
+[chromium] log: Wasm check: indexed descriptor
+[chromium] log: Wasm check: out of bounds definition
+[chromium] log: Wasm check: set and iteration
+[chromium] log: Wasm check: local subclass identity
+[chromium] log: Wasm check: local subclass species
+[chromium] log: Wasm check: native-backed subclass identity
+[chromium] log: Wasm check: native-backed subclass species
+[chromium] log: Wasm check: native decoder local view
+[chromium] log: Wasm check: native decoder native view
+[chromium] log: Wasm check: native to local constructor copies
+[chromium] log: Wasm check: local to native set copies
+[chromium] log: Wasm check: native typed iterator
+[chromium] log: Wasm check: mixed native-to-local set preserves raw NaN payload
+[chromium] log: Wasm check: borrowed mixed set preserves raw NaN payload
+[chromium] log: Wasm fixture: shared Wasm memory, atomics and structured clone through dedicated worker
+[chromium] log: Wasm check: shared buffer brand
+[chromium] log: Wasm check: worker native Wasm atomic write
+[chromium] log: Wasm check: guest immediately observes worker write
+[chromium] log: Wasm check: worker structured clone brands
+[chromium] log: Wasm check: shared old buffer remains attached
+[chromium] log: Wasm check: shared growth
+[chromium] log: Wasm check: shared growth aliases bytes
+[chromium] log: Wasm check: Atomics proxy arguments
+[chromium] log: Wasm fixture: Wasm shared-buffer slice copies into a separate shared block
+[chromium] log: Wasm check: shared Wasm slice buffer brand
+[chromium] log: Wasm check: shared Wasm slice copies bytes
+[chromium] log: Wasm check: shared Wasm slice owns a separate data block
+[chromium] log: Wasm fixture: declared imports use inherited getters without traversing unused fields
+[chromium] log: Wasm check: declaration-order import getters: env,memory,env,callback
+[chromium] log: Wasm check: inherited import fields
+[chromium] log: Wasm check: declared import getter preserves guest exception identity
+[chromium] log: Wasm fixture: native function imports retain the owning host call policy
+[chromium] log: Wasm check: direct native call uses fixture policy
+[chromium] log: Wasm check: native Wasm import uses fixture policy
+[chromium] log: Wasm check: mixed-kind import getter order
+[chromium] log: Wasm check: mixed-kind function import uses fixture policy
+[chromium] log: Wasm check: externref import preserves original object identity
+[chromium] log: Wasm check: returned externref function keeps fixture policy
+[chromium] log: Wasm check: opaque import reference preserves subsequent native Array conversion
+[chromium] log: Wasm check: opaque import reference preserves subsequent native Uint8Array conversion
+[chromium] log: Wasm check: opaque import reference preserves subsequent native ArrayBuffer conversion
+[chromium] log: Wasm check: opaque import reference preserves subsequent native Map conversion
+[chromium] log: Wasm check: async compile does not eagerly read imports
+[chromium] log: Wasm check: async imports read in declaration order
+[chromium] log: Wasm check: async native function import uses fixture policy
+[chromium] log: Wasm fixture: fixed Wasm buffers refuse transfer and detach only on native growth
+[chromium] log: Wasm check: Wasm buffer rejects transfer
+[chromium] log: Wasm check: failed transfer leaves bytes attached
+[chromium] log: Wasm check: Wasm buffer rejects transferToFixedLength
+[chromium] log: Wasm check: failed transferToFixedLength leaves bytes attached
+[chromium] log: Wasm check: native structured clone rejects Wasm transfer
+[chromium] log: Wasm check: failed native transfer does not detach guest
+[chromium] log: Wasm check: zero growth returns previous pages
+[chromium] log: Wasm check: zero growth detaches old fixed buffer
+[chromium] log: Wasm check: zero growth replaces buffer and preserves bytes
+[chromium] log: Wasm check: resizable Wasm buffer remains resizable
+[chromium] log: Wasm check: resizable Wasm views track native growth
+[chromium] log: Wasm check: resizable Wasm growth preserves writes
+[chromium] log: Wasm fixture: async compile and instantiate retain import callbacks
+[chromium] log: Wasm check: compile module brand
+[chromium] log: Wasm check: instantiate result brand
+[chromium] log: Wasm check: instantiate module brand
+[chromium] log: Wasm check: async imported callback
+[chromium] log: Wasm check: validate native buffer source
+[chromium] log: Wasm fixture: creating guest engine
+[chromium] log: Wasm fixture: registering guest fixtures
+[chromium] log: Wasm fixture: indexed copy loop and ordinary native copies preserve aliases
+[chromium] log: Wasm check: native indexed loop reads real bytes
+[chromium] log: Wasm check: 4 MiB indexed copy milliseconds=382
+[chromium] log: Wasm check: staged ordinary native writes publish before alias access
+[chromium] log: Wasm check: ordinary native aliases share their indexed cache
+[chromium] log: Wasm check: native methods invalidate cached input bytes
+[chromium] log: Wasm fixture: indexed coercion and numeric families retain native semantics
+[chromium] log: Wasm check: Int8Array native descriptor matches indexed value
+[chromium] log: Wasm check: Uint8Array native descriptor matches indexed value
+[chromium] log: Wasm check: Uint8ClampedArray native descriptor matches indexed value
+[chromium] log: Wasm check: Int16Array native descriptor matches indexed value
+[chromium] log: Wasm check: Uint16Array native descriptor matches indexed value
+[chromium] log: Wasm check: Int32Array native descriptor matches indexed value
+[chromium] log: Wasm check: Uint32Array native descriptor matches indexed value
+[chromium] log: Wasm check: Float32Array native descriptor matches indexed value
+[chromium] log: Wasm check: Float64Array native descriptor matches indexed value
+[chromium] log: Wasm check: BigInt and numeric views alias actual native bytes
+[chromium] log: Wasm check: numeric indexed writes reach BigInt native views
+[chromium] log: Wasm check: object coercion observes detachment before indexed store
+[chromium] log: Wasm check: detached write leaves grown memory unchanged
+[chromium] log: Wasm fixture: consecutive imports preserve ordinary bytes through native reentry and throw
+[chromium] log: Wasm check: first import sees current bytes
+[chromium] log: Wasm check: nested native mutation reaches ordinary callback
+[chromium] log: Wasm check: nested native consumer sees guest writes
+[chromium] log: Wasm check: native continuation reaches imported callback
+[chromium] log: Wasm check: second import retains preceding guest-only write
+[chromium] log: Wasm check: native continuation invalidates indexed heap reads
+[chromium] log: Wasm check: primitive native copyWithin preserves deferred ordinary writes
+[chromium] log: Wasm check: exception crosses the outer Wasm scope
+[chromium] log: Wasm check: exceptional scope exit preserves all ordinary bytes
+[chromium] log: Wasm fixture: ordinary memory, reentrant import and alias writes
+[chromium] log: Wasm check: native Wasm write visible inside guest callback
+[chromium] log: Wasm check: nested callback return/write
+[chromium] log: Wasm check: native buffer identity
+[chromium] log: Wasm check: subarray aliases native memory
+[chromium] log: Wasm check: DataView native brand
+[chromium] log: Wasm check: native view brands
+[chromium] log: Wasm check: native callback typed map
+[chromium] log: Wasm check: Wasm memory growth return
+[chromium] log: Wasm check: growth detaches old views
+[chromium] log: Wasm check: new memory size
+[chromium] log: Wasm check: growth preserves bytes
+[chromium] log: Wasm check: native Wasm runtime error brand
+[chromium] log: Wasm check: guest callback exception survives native Wasm boundary
+[chromium] log: Wasm fixture: local and native binary constructors, indexed descriptors and species
+[chromium] log: Wasm check: indexed defineProperty writes bytes
+[chromium] log: Wasm check: indexed descriptor
+[chromium] log: Wasm check: out of bounds definition
+[chromium] log: Wasm check: set and iteration
+[chromium] log: Wasm check: indexed defineProperty writes bytes
+[chromium] log: Wasm check: indexed descriptor
+[chromium] log: Wasm check: out of bounds definition
+[chromium] log: Wasm check: set and iteration
+[chromium] log: Wasm check: local subclass identity
+[chromium] log: Wasm check: local subclass species
+[chromium] log: Wasm check: native-backed subclass identity
+[chromium] log: Wasm check: native-backed subclass species
+[chromium] log: Wasm check: native decoder local view
+[chromium] log: Wasm check: native decoder native view
+[chromium] log: Wasm check: native to local constructor copies
+[chromium] log: Wasm check: local to native set copies
+[chromium] log: Wasm check: native typed iterator
+[chromium] log: Wasm check: mixed native-to-local set preserves raw NaN payload
+[chromium] log: Wasm check: borrowed mixed set preserves raw NaN payload
+[chromium] log: Wasm fixture: shared Wasm memory, atomics and structured clone through dedicated worker
+[chromium] log: Wasm check: shared buffer brand
+[chromium] log: Wasm check: worker native Wasm atomic write
+[chromium] log: Wasm check: guest immediately observes worker write
+[chromium] log: Wasm check: worker structured clone brands
+[chromium] log: Wasm check: shared old buffer remains attached
+[chromium] log: Wasm check: shared growth
+[chromium] log: Wasm check: shared growth aliases bytes
+[chromium] log: Wasm check: Atomics proxy arguments
+[chromium] log: Wasm fixture: Wasm shared-buffer slice copies into a separate shared block
+[chromium] log: Wasm check: shared Wasm slice buffer brand
+[chromium] log: Wasm check: shared Wasm slice copies bytes
+[chromium] log: Wasm check: shared Wasm slice owns a separate data block
+[chromium] log: Wasm fixture: declared imports use inherited getters without traversing unused fields
+[chromium] log: Wasm check: declaration-order import getters: env,memory,env,callback
+[chromium] log: Wasm check: inherited import fields
+[chromium] log: Wasm check: declared import getter preserves guest exception identity
+[chromium] log: Wasm fixture: native function imports retain the owning host call policy
+[chromium] log: Wasm check: direct native call uses fixture policy
+[chromium] log: Wasm check: native Wasm import uses fixture policy
+[chromium] log: Wasm check: mixed-kind import getter order
+[chromium] log: Wasm check: mixed-kind function import uses fixture policy
+[chromium] log: Wasm check: externref import preserves original object identity
+[chromium] log: Wasm check: returned externref function keeps fixture policy
+[chromium] log: Wasm check: opaque import reference preserves subsequent native Array conversion
+[chromium] log: Wasm check: opaque import reference preserves subsequent native Uint8Array conversion
+[chromium] log: Wasm check: opaque import reference preserves subsequent native ArrayBuffer conversion
+[chromium] log: Wasm check: opaque import reference preserves subsequent native Map conversion
+[chromium] log: Wasm check: async compile does not eagerly read imports
+[chromium] log: Wasm check: async imports read in declaration order
+[chromium] log: Wasm check: async native function import uses fixture policy
+[chromium] log: Wasm fixture: fixed Wasm buffers refuse transfer and detach only on native growth
+[chromium] log: Wasm check: Wasm buffer rejects transfer
+[chromium] log: Wasm check: failed transfer leaves bytes attached
+[chromium] log: Wasm check: Wasm buffer rejects transferToFixedLength
+[chromium] log: Wasm check: failed transferToFixedLength leaves bytes attached
+[chromium] log: Wasm check: native structured clone rejects Wasm transfer
+[chromium] log: Wasm check: failed native transfer does not detach guest
+[chromium] log: Wasm check: zero growth returns previous pages
+[chromium] log: Wasm check: zero growth detaches old fixed buffer
+[chromium] log: Wasm check: zero growth replaces buffer and preserves bytes
+[chromium] log: Wasm check: resizable Wasm buffer remains resizable
+[chromium] log: Wasm check: resizable Wasm views track native growth
+[chromium] log: Wasm check: resizable Wasm growth preserves writes
+[chromium] log: Wasm fixture: async compile and instantiate retain import callbacks
+[chromium] log: Wasm check: compile module brand
+[chromium] log: Wasm check: instantiate result brand
+[chromium] log: Wasm check: instantiate module brand
+[chromium] log: Wasm check: async imported callback
+[chromium] log: Wasm check: validate native buffer source
+[chromium] log: Wasm fixture: disposing core engine
+[chromium] log: Wasm check: both native imports retain deferred ordinary writes
+[chromium] log: Wasm check: both native imports retain deferred ordinary writes
+[chromium] log: Wasm check: both native imports retain deferred ordinary writes
+[chromium] log: Wasm check: pure native copy imports add no unrelated whole-buffer transfers
+[chromium] log: Wasm check: object coercion retains synchronization as a positive control
+[chromium] log: Wasm check: foreign native export return value
+[chromium] log: Wasm check: unrecognized native Wasm memory refreshes ordinary mirror
+[chromium] log: Wasm check: foreign native bytes
+[chromium] log: Wasm check: memory provenance observes the actual import Get once
+[chromium] log: Wasm check: late recognized memory reaches imported callback
+[chromium] log: Wasm check: late imported memory preserves callback writes
+[chromium] log: Wasm check: ordinary mirror retains native callback result
+[chromium] log: Wasm check: foreign native bytes
+[chromium] log: Wasm check: table provenance observes the actual import Get once
+[chromium] log: Wasm check: foreign indirect start writes refresh the ordinary mirror
+[chromium] log: Wasm check: foreign native bytes
+[chromium] error: Application error TypeError: Resource is not installed: http://127.0.0.1:41457/import-probe
+    at GuestResources.fetch (http://127.0.0.1:41457/browser.js:20829:26)
+    at http://127.0.0.1:41457/browser.js:48289:22
+    at new Promise (<anonymous>)
+    at localFetch (http://127.0.0.1:41457/browser.js:48286:12)
+    at Object.call (http://127.0.0.1:41457/browser.js:49487:69)
+    at _GuestEngine.dispatch (http://127.0.0.1:41457/browser.js:9066:26)
+    at WeakLifetime.<anonymous> (http://127.0.0.1:41457/browser.js:8610:21)
+    at QuickJSContext.<anonymous> (http://127.0.0.1:41457/browser.js:610:46)
+    at next (<anonymous>)
+    at awaitEachYieldedPromise (http://127.0.0.1:41457/browser.js:79:29)
+{"browser":"chromium","version":"153.0.8010.12","errors":[],"result":{"isolated":true,"native":[{"name":"indexed copy loop and ordinary native copies preserve aliases","passed":true},{"name":"indexed coercion and numeric families retain native semantics","passed":true},{"name":"consecutive imports preserve ordinary bytes through native reentry and throw","passed":true},{"name":"ordinary memory, reentrant import and alias writes","passed":true},{"name":"local and native binary constructors, indexed descriptors and species","passed":true},{"name":"shared Wasm memory, atomics and structured clone through dedicated worker","passed":true},{"name":"Wasm shared-buffer slice copies into a separate shared block","passed":true},{"name":"declared imports use inherited getters without traversing unused fields","passed":true},{"name":"native function imports retain the owning host call policy","passed":true},{"name":"fixed Wasm buffers refuse transfer and detach only on native growth","passed":true},{"name":"async compile and instantiate retain import callbacks","passed":true}],"guest":[{"name":"indexed copy loop and ordinary native copies preserve aliases","passed":true},{"name":"indexed coercion and numeric families retain native semantics","passed":true},{"name":"consecutive imports preserve ordinary bytes through native reentry and throw","passed":true},{"name":"ordinary memory, reentrant import and alias writes","passed":true},{"name":"local and native binary constructors, indexed descriptors and species","passed":true},{"name":"shared Wasm memory, atomics and structured clone through dedicated worker","passed":true},{"name":"Wasm shared-buffer slice copies into a separate shared block","passed":true},{"name":"declared imports use inherited getters without traversing unused fields","passed":true},{"name":"native function imports retain the owning host call policy","passed":true},{"name":"fixed Wasm buffers refuse transfer and detach only on native growth","passed":true},{"name":"async compile and instantiate retain import callbacks","passed":true}],"copyElision":{"baseline":{"intoNative":19,"intoGuest":10},"copying":{"intoNative":19,"intoGuest":10},"coercing":{"intoNative":25,"intoGuest":14}},"foreign":["raw export","late imported memory","late imported table start"],"policy":{"control":[true,true],"guest":[false,false]}},"requests":["/import-probe","/constructor-probe"]}
+[firefox] log: Wasm fixture: indexed copy loop and ordinary native copies preserve aliases
+[firefox] log: Wasm check: native indexed loop reads real bytes
+[firefox] log: Wasm check: 4 MiB indexed copy milliseconds=2
+[firefox] log: Wasm check: staged ordinary native writes publish before alias access
+[firefox] log: Wasm check: ordinary native aliases share their indexed cache
+[firefox] log: Wasm check: native methods invalidate cached input bytes
+[firefox] log: Wasm fixture: indexed coercion and numeric families retain native semantics
+[firefox] log: Wasm check: Int8Array native descriptor matches indexed value
+[firefox] log: Wasm check: Uint8Array native descriptor matches indexed value
+[firefox] log: Wasm check: Uint8ClampedArray native descriptor matches indexed value
+[firefox] log: Wasm check: Int16Array native descriptor matches indexed value
+[firefox] log: Wasm check: Uint16Array native descriptor matches indexed value
+[firefox] log: Wasm check: Int32Array native descriptor matches indexed value
+[firefox] log: Wasm check: Uint32Array native descriptor matches indexed value
+[firefox] log: Wasm check: Float32Array native descriptor matches indexed value
+[firefox] log: Wasm check: Float64Array native descriptor matches indexed value
+[firefox] log: Wasm check: BigInt and numeric views alias actual native bytes
+[firefox] log: Wasm check: numeric indexed writes reach BigInt native views
+[firefox] log: Wasm check: object coercion observes detachment before indexed store
+[firefox] log: Wasm check: detached write leaves grown memory unchanged
+[firefox] log: Wasm fixture: consecutive imports preserve ordinary bytes through native reentry and throw
+[firefox] log: Wasm check: first import sees current bytes
+[firefox] log: Wasm check: nested native mutation reaches ordinary callback
+[firefox] log: Wasm check: nested native consumer sees guest writes
+[firefox] log: Wasm check: native continuation reaches imported callback
+[firefox] log: Wasm check: second import retains preceding guest-only write
+[firefox] log: Wasm check: native continuation invalidates indexed heap reads
+[firefox] log: Wasm check: primitive native copyWithin preserves deferred ordinary writes
+[firefox] log: Wasm check: exception crosses the outer Wasm scope
+[firefox] log: Wasm check: exceptional scope exit preserves all ordinary bytes
+[firefox] log: Wasm fixture: ordinary memory, reentrant import and alias writes
+[firefox] log: Wasm check: native Wasm write visible inside guest callback
+[firefox] log: Wasm check: nested callback return/write
+[firefox] log: Wasm check: native buffer identity
+[firefox] log: Wasm check: subarray aliases native memory
+[firefox] log: Wasm check: DataView native brand
+[firefox] log: Wasm check: native view brands
+[firefox] log: Wasm check: native callback typed map
+[firefox] log: Wasm check: Wasm memory growth return
+[firefox] log: Wasm check: growth detaches old views
+[firefox] log: Wasm check: new memory size
+[firefox] log: Wasm check: growth preserves bytes
+[firefox] log: Wasm check: native Wasm runtime error brand
+[firefox] log: Wasm check: guest callback exception survives native Wasm boundary
+[firefox] log: Wasm fixture: local and native binary constructors, indexed descriptors and species
+[firefox] log: Wasm check: indexed defineProperty writes bytes
+[firefox] log: Wasm check: indexed descriptor
+[firefox] log: Wasm check: out of bounds definition
+[firefox] log: Wasm check: set and iteration
+[firefox] log: Wasm check: indexed defineProperty writes bytes
+[firefox] log: Wasm check: indexed descriptor
+[firefox] log: Wasm check: out of bounds definition
+[firefox] log: Wasm check: set and iteration
+[firefox] log: Wasm check: local subclass identity
+[firefox] log: Wasm check: local subclass species
+[firefox] log: Wasm check: native-backed subclass identity
+[firefox] log: Wasm check: native-backed subclass species
+[firefox] log: Wasm check: native decoder local view
+[firefox] log: Wasm check: native decoder native view
+[firefox] log: Wasm check: native to local constructor copies
+[firefox] log: Wasm check: local to native set copies
+[firefox] log: Wasm check: native typed iterator
+[firefox] log: Wasm check: mixed native-to-local set preserves raw NaN payload
+[firefox] log: Wasm check: borrowed mixed set preserves raw NaN payload
+[firefox] log: Wasm fixture: shared Wasm memory, atomics and structured clone through dedicated worker
+[firefox] log: Wasm check: shared buffer brand
+[firefox] log: Wasm check: worker native Wasm atomic write
+[firefox] log: Wasm check: guest immediately observes worker write
+[firefox] log: Wasm check: worker structured clone brands
+[firefox] log: Wasm check: shared old buffer remains attached
+[firefox] log: Wasm check: shared growth
+[firefox] log: Wasm check: shared growth aliases bytes
+[firefox] log: Wasm check: Atomics proxy arguments
+[firefox] log: Wasm fixture: Wasm shared-buffer slice copies into a separate shared block
+[firefox] log: Wasm check: shared Wasm slice buffer brand
+[firefox] log: Wasm check: shared Wasm slice copies bytes
+[firefox] log: Wasm check: shared Wasm slice owns a separate data block
+[firefox] log: Wasm fixture: declared imports use inherited getters without traversing unused fields
+[firefox] log: Wasm check: declaration-order import getters: env,memory,env,callback
+[firefox] log: Wasm check: inherited import fields
+[firefox] log: Wasm check: declared import getter preserves guest exception identity
+[firefox] log: Wasm fixture: native function imports retain the owning host call policy
+[firefox] log: Wasm check: direct native call uses fixture policy
+[firefox] log: Wasm check: native Wasm import uses fixture policy
+[firefox] log: Wasm check: mixed-kind import getter order
+[firefox] log: Wasm check: mixed-kind function import uses fixture policy
+[firefox] log: Wasm check: externref import preserves original object identity
+[firefox] log: Wasm check: returned externref function keeps fixture policy
+[firefox] log: Wasm check: opaque import reference preserves subsequent native Array conversion
+[firefox] log: Wasm check: opaque import reference preserves subsequent native Uint8Array conversion
+[firefox] log: Wasm check: opaque import reference preserves subsequent native ArrayBuffer conversion
+[firefox] log: Wasm check: opaque import reference preserves subsequent native Map conversion
+[firefox] log: Wasm check: async compile does not eagerly read imports
+[firefox] log: Wasm check: async imports read in declaration order
+[firefox] log: Wasm check: async native function import uses fixture policy
+[firefox] log: Wasm fixture: fixed Wasm buffers refuse transfer and detach only on native growth
+[firefox] log: Wasm check: Wasm buffer rejects transfer
+[firefox] log: Wasm check: failed transfer leaves bytes attached
+[firefox] log: Wasm check: Wasm buffer rejects transferToFixedLength
+[firefox] log: Wasm check: failed transferToFixedLength leaves bytes attached
+[firefox] log: Wasm check: native structured clone rejects Wasm transfer
+[firefox] log: Wasm check: failed native transfer does not detach guest
+[firefox] log: Wasm check: zero growth returns previous pages
+[firefox] log: Wasm check: zero growth detaches old fixed buffer
+[firefox] log: Wasm check: zero growth replaces buffer and preserves bytes
+[firefox] log: Wasm check: resizable Wasm buffer remains resizable
+[firefox] log: Wasm check: resizable Wasm views track native growth
+[firefox] log: Wasm check: resizable Wasm growth preserves writes
+[firefox] log: Wasm fixture: async compile and instantiate retain import callbacks
+[firefox] log: Wasm check: compile module brand
+[firefox] log: Wasm check: instantiate result brand
+[firefox] log: Wasm check: instantiate module brand
+[firefox] log: Wasm check: async imported callback
+[firefox] log: Wasm check: validate native buffer source
+[firefox] log: Wasm fixture: creating guest engine
+[firefox] log: Wasm fixture: registering guest fixtures
+[firefox] log: Wasm fixture: indexed copy loop and ordinary native copies preserve aliases
+[firefox] log: Wasm check: native indexed loop reads real bytes
+[firefox] log: Wasm check: 4 MiB indexed copy milliseconds=374
+[firefox] log: Wasm check: staged ordinary native writes publish before alias access
+[firefox] log: Wasm check: ordinary native aliases share their indexed cache
+[firefox] log: Wasm check: native methods invalidate cached input bytes
+[firefox] log: Wasm fixture: indexed coercion and numeric families retain native semantics
+[firefox] log: Wasm check: Int8Array native descriptor matches indexed value
+[firefox] log: Wasm check: Uint8Array native descriptor matches indexed value
+[firefox] log: Wasm check: Uint8ClampedArray native descriptor matches indexed value
+[firefox] log: Wasm check: Int16Array native descriptor matches indexed value
+[firefox] log: Wasm check: Uint16Array native descriptor matches indexed value
+[firefox] log: Wasm check: Int32Array native descriptor matches indexed value
+[firefox] log: Wasm check: Uint32Array native descriptor matches indexed value
+[firefox] log: Wasm check: Float32Array native descriptor matches indexed value
+[firefox] log: Wasm check: Float64Array native descriptor matches indexed value
+[firefox] log: Wasm check: BigInt and numeric views alias actual native bytes
+[firefox] log: Wasm check: numeric indexed writes reach BigInt native views
+[firefox] log: Wasm check: object coercion observes detachment before indexed store
+[firefox] log: Wasm check: detached write leaves grown memory unchanged
+[firefox] log: Wasm fixture: consecutive imports preserve ordinary bytes through native reentry and throw
+[firefox] log: Wasm check: first import sees current bytes
+[firefox] log: Wasm check: nested native mutation reaches ordinary callback
+[firefox] log: Wasm check: nested native consumer sees guest writes
+[firefox] log: Wasm check: native continuation reaches imported callback
+[firefox] log: Wasm check: second import retains preceding guest-only write
+[firefox] log: Wasm check: native continuation invalidates indexed heap reads
+[firefox] log: Wasm check: primitive native copyWithin preserves deferred ordinary writes
+[firefox] log: Wasm check: exception crosses the outer Wasm scope
+[firefox] log: Wasm check: exceptional scope exit preserves all ordinary bytes
+[firefox] log: Wasm fixture: ordinary memory, reentrant import and alias writes
+[firefox] log: Wasm check: native Wasm write visible inside guest callback
+[firefox] log: Wasm check: nested callback return/write
+[firefox] log: Wasm check: native buffer identity
+[firefox] log: Wasm check: subarray aliases native memory
+[firefox] log: Wasm check: DataView native brand
+[firefox] log: Wasm check: native view brands
+[firefox] log: Wasm check: native callback typed map
+[firefox] log: Wasm check: Wasm memory growth return
+[firefox] log: Wasm check: growth detaches old views
+[firefox] log: Wasm check: new memory size
+[firefox] log: Wasm check: growth preserves bytes
+[firefox] log: Wasm check: native Wasm runtime error brand
+[firefox] log: Wasm check: guest callback exception survives native Wasm boundary
+[firefox] log: Wasm fixture: local and native binary constructors, indexed descriptors and species
+[firefox] log: Wasm check: indexed defineProperty writes bytes
+[firefox] log: Wasm check: indexed descriptor
+[firefox] log: Wasm check: out of bounds definition
+[firefox] log: Wasm check: set and iteration
+[firefox] log: Wasm check: indexed defineProperty writes bytes
+[firefox] log: Wasm check: indexed descriptor
+[firefox] log: Wasm check: out of bounds definition
+[firefox] log: Wasm check: set and iteration
+[firefox] log: Wasm check: local subclass identity
+[firefox] log: Wasm check: local subclass species
+[firefox] log: Wasm check: native-backed subclass identity
+[firefox] log: Wasm check: native-backed subclass species
+[firefox] log: Wasm check: native decoder local view
+[firefox] log: Wasm check: native decoder native view
+[firefox] log: Wasm check: native to local constructor copies
+[firefox] log: Wasm check: local to native set copies
+[firefox] log: Wasm check: native typed iterator
+[firefox] log: Wasm check: mixed native-to-local set preserves raw NaN payload
+[firefox] log: Wasm check: borrowed mixed set preserves raw NaN payload
+[firefox] log: Wasm fixture: shared Wasm memory, atomics and structured clone through dedicated worker
+[firefox] log: Wasm check: shared buffer brand
+[firefox] log: Wasm check: worker native Wasm atomic write
+[firefox] log: Wasm check: guest immediately observes worker write
+[firefox] log: Wasm check: worker structured clone brands
+[firefox] log: Wasm check: shared old buffer remains attached
+[firefox] log: Wasm check: shared growth
+[firefox] log: Wasm check: shared growth aliases bytes
+[firefox] log: Wasm check: Atomics proxy arguments
+[firefox] log: Wasm fixture: Wasm shared-buffer slice copies into a separate shared block
+[firefox] log: Wasm check: shared Wasm slice buffer brand
+[firefox] log: Wasm check: shared Wasm slice copies bytes
+[firefox] log: Wasm check: shared Wasm slice owns a separate data block
+[firefox] log: Wasm fixture: declared imports use inherited getters without traversing unused fields
+[firefox] log: Wasm check: declaration-order import getters: env,memory,env,callback
+[firefox] log: Wasm check: inherited import fields
+[firefox] log: Wasm check: declared import getter preserves guest exception identity
+[firefox] log: Wasm fixture: native function imports retain the owning host call policy
+[firefox] log: Wasm check: direct native call uses fixture policy
+[firefox] log: Wasm check: native Wasm import uses fixture policy
+[firefox] log: Wasm check: mixed-kind import getter order
+[firefox] log: Wasm check: mixed-kind function import uses fixture policy
+[firefox] log: Wasm check: externref import preserves original object identity
+[firefox] log: Wasm check: returned externref function keeps fixture policy
+[firefox] log: Wasm check: opaque import reference preserves subsequent native Array conversion
+[firefox] log: Wasm check: opaque import reference preserves subsequent native Uint8Array conversion
+[firefox] log: Wasm check: opaque import reference preserves subsequent native ArrayBuffer conversion
+[firefox] log: Wasm check: opaque import reference preserves subsequent native Map conversion
+[firefox] log: Wasm check: async compile does not eagerly read imports
+[firefox] log: Wasm check: async imports read in declaration order
+[firefox] log: Wasm check: async native function import uses fixture policy
+[firefox] log: Wasm fixture: fixed Wasm buffers refuse transfer and detach only on native growth
+[firefox] log: Wasm check: Wasm buffer rejects transfer
+[firefox] log: Wasm check: failed transfer leaves bytes attached
+[firefox] log: Wasm check: Wasm buffer rejects transferToFixedLength
+[firefox] log: Wasm check: failed transferToFixedLength leaves bytes attached
+[firefox] log: Wasm check: native structured clone rejects Wasm transfer
+[firefox] log: Wasm check: failed native transfer does not detach guest
+[firefox] log: Wasm check: zero growth returns previous pages
+[firefox] log: Wasm check: zero growth detaches old fixed buffer
+[firefox] log: Wasm check: zero growth replaces buffer and preserves bytes
+[firefox] log: Wasm check: resizable Wasm buffer remains resizable
+[firefox] log: Wasm check: resizable Wasm views track native growth
+[firefox] log: Wasm check: resizable Wasm growth preserves writes
+[firefox] log: Wasm fixture: async compile and instantiate retain import callbacks
+[firefox] log: Wasm check: compile module brand
+[firefox] log: Wasm check: instantiate result brand
+[firefox] log: Wasm check: instantiate module brand
+[firefox] log: Wasm check: async imported callback
+[firefox] log: Wasm check: validate native buffer source
+[firefox] log: Wasm fixture: disposing core engine
+[firefox] log: Wasm check: both native imports retain deferred ordinary writes
+[firefox] log: Wasm check: both native imports retain deferred ordinary writes
+[firefox] log: Wasm check: both native imports retain deferred ordinary writes
+[firefox] log: Wasm check: pure native copy imports add no unrelated whole-buffer transfers
+[firefox] log: Wasm check: object coercion retains synchronization as a positive control
+[firefox] log: Wasm check: foreign native export return value
+[firefox] log: Wasm check: unrecognized native Wasm memory refreshes ordinary mirror
+[firefox] log: Wasm check: foreign native bytes
+[firefox] log: Wasm check: memory provenance observes the actual import Get once
+[firefox] log: Wasm check: late recognized memory reaches imported callback
+[firefox] log: Wasm check: late imported memory preserves callback writes
+[firefox] log: Wasm check: ordinary mirror retains native callback result
+[firefox] log: Wasm check: foreign native bytes
+[firefox] log: Wasm check: table provenance observes the actual import Get once
+[firefox] log: Wasm check: foreign indirect start writes refresh the ordinary mirror
+[firefox] log: Wasm check: foreign native bytes
+[firefox] error: Application error Error
+{"browser":"firefox","version":"155.0","errors":[],"result":{"isolated":true,"native":[{"name":"indexed copy loop and ordinary native copies preserve aliases","passed":true},{"name":"indexed coercion and numeric families retain native semantics","passed":true},{"name":"consecutive imports preserve ordinary bytes through native reentry and throw","passed":true},{"name":"ordinary memory, reentrant import and alias writes","passed":true},{"name":"local and native binary constructors, indexed descriptors and species","passed":true},{"name":"shared Wasm memory, atomics and structured clone through dedicated worker","passed":true},{"name":"Wasm shared-buffer slice copies into a separate shared block","passed":true},{"name":"declared imports use inherited getters without traversing unused fields","passed":true},{"name":"native function imports retain the owning host call policy","passed":true},{"name":"fixed Wasm buffers refuse transfer and detach only on native growth","passed":true},{"name":"async compile and instantiate retain import callbacks","passed":true}],"guest":[{"name":"indexed copy loop and ordinary native copies preserve aliases","passed":true},{"name":"indexed coercion and numeric families retain native semantics","passed":true},{"name":"consecutive imports preserve ordinary bytes through native reentry and throw","passed":true},{"name":"ordinary memory, reentrant import and alias writes","passed":true},{"name":"local and native binary constructors, indexed descriptors and species","passed":true},{"name":"shared Wasm memory, atomics and structured clone through dedicated worker","passed":true},{"name":"Wasm shared-buffer slice copies into a separate shared block","passed":true},{"name":"declared imports use inherited getters without traversing unused fields","passed":true},{"name":"native function imports retain the owning host call policy","passed":true},{"name":"fixed Wasm buffers refuse transfer and detach only on native growth","passed":true},{"name":"async compile and instantiate retain import callbacks","passed":true}],"copyElision":{"baseline":{"intoNative":19,"intoGuest":10},"copying":{"intoNative":19,"intoGuest":10},"coercing":{"intoNative":25,"intoGuest":14}},"foreign":["raw export","late imported memory","late imported table start"],"policy":{"control":[true,true],"guest":[false,false]}},"requests":["/import-probe","/constructor-probe"]}

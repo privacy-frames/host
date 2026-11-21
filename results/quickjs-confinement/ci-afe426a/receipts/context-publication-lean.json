@@ -1,0 +1,27 @@
+{
+  "scope": "Unbounded begin/invalidate histories over ghost names for fresh private object identities. This proves epoch preservation, not complete browser/context confinement.",
+  "leanVersion": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+  "trust": 0,
+  "theorems": [
+    "initial_well_formed",
+    "step_well_formed",
+    "begin_accepts_current",
+    "close_denies_every_token",
+    "step_rejects_retained",
+    "run_preserves_safe",
+    "invalidation_never_revives_retained",
+    "history_well_formed",
+    "reused_token_counterexample"
+  ],
+  "axioms": [],
+  "sourceSHA256": "ced0b1c0c18c127f45352edda51cce39462460df59881ec66c61a60c4c481672",
+  "runnerSHA256": "26a4eb4a924614cfb5d25128560a5550013ed2ca0627140905ee83b1bf9d94b4",
+  "productionOutputSHA256": "1099e45eeb4659863707bb1527a5f065acb4052d47339516f94d8d71a057d785",
+  "fault": {
+    "mutation": "Invalidation leaves the epoch live",
+    "sourceSHA256": "47365650317aa4dfd426beedd573c1511a1c952910981b4a9ecb31eb42df9d3a",
+    "exitCode": 1,
+    "outputSHA256": "8f7ec7514b3a3d15b47785890e5e22a965a257b6f79b305fe968d0f751a697cd",
+    "rejectedTheorem": "ContextPublication.close_denies_every_token"
+  }
+}
