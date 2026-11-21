@@ -46,6 +46,7 @@ const modules = new Map<string, Promise<WebAssembly.Module>>();
 const requiresStringEncoding = /\0|[\ud800-\udfff]/u;
 const requiresStringRecovery = /\ufffd|[\ud800-\udfff]/u;
 const wellKnownSymbols = new Map<symbol, string>();
+const arrayBufferIsView = ArrayBuffer.isView;
 const arrayBufferLength = Object.getOwnPropertyDescriptor(
   ArrayBuffer.prototype,
   'byteLength',
@@ -454,7 +455,7 @@ export class GuestEngine {
     const owner = this.wasm?.owns(target) ? this.wasm : this.host;
     // Ordinary binary values can later be retained as external memory. Their
     // ownership must be reconsidered; native DOM/Wasm brands remain immutable.
-    if (owner !== this.host || (!isArrayBuffer(target) && !ArrayBuffer.isView(target)))
+    if (owner !== this.host || (!isArrayBuffer(target) && !arrayBufferIsView(target)))
       this.owners.set(target, owner);
     return owner;
   }
@@ -863,7 +864,7 @@ export class GuestEngine {
     if (cached) return cached.dup();
     if (isArrayBuffer(value) && !this.binary.buffer(value))
       return this.encodeBuffer(value);
-    if (ArrayBuffer.isView(value) && !this.binary.view(value))
+    if (arrayBufferIsView(value) && !this.binary.view(value))
       return this.encodeView(value);
     if (
       value instanceof Promise ||
@@ -1367,7 +1368,7 @@ export class GuestEngine {
     seen: Map<number, unknown>,
   ): ArrayBufferView {
     const previous = this.guestObjects.get(id);
-    if (previous && ArrayBuffer.isView(previous.value)) return previous.value;
+    if (previous && arrayBufferIsView(previous.value)) return previous.value;
     const info = this.helper('viewInfo', [value]);
     const bufferHandle = this.context.getProp(info, 'buffer');
     const buffer = this.decode(bufferHandle, seen);
@@ -1392,7 +1393,7 @@ export class GuestEngine {
     const Constructor = viewConstructors.get(name);
     if (!Constructor) throw new TypeError('Unknown binary view');
     const view: unknown = Reflect.construct(Constructor, [buffer, offset, length]);
-    if (!ArrayBuffer.isView(view)) throw new TypeError('Invalid binary view');
+    if (!arrayBufferIsView(view)) throw new TypeError('Invalid binary view');
     this.retainGuest(id, value.dup(), view);
     return view;
   }
@@ -1611,7 +1612,7 @@ export class GuestEngine {
   }
 
   private indexedBuffer(value: object): ArrayBuffer | undefined {
-    if (!ArrayBuffer.isView(value)) return;
+    if (!arrayBufferIsView(value)) return;
     try {
       const buffer: unknown = Reflect.apply(typedArrayBuffer, value, []);
       return isArrayBuffer(buffer) &&
