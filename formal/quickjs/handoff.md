@@ -1,75 +1,129 @@
 # QuickJS confinement implementation handoff
 
-## Implementation resumed
+## Current checkpoint
 
-The planning checkpoint below is historical. Implementation has resumed under
-the existing goal; every stage of the resumption plan remains in scope. Production
-is unchanged. The integration branch was backed up remotely at `c4dd9fb`; the
-auxiliary branch has since advanced and must be merged and pushed again after
-the current component checkpoints.
+The browser and its normal built-in services are trusted. On 21 November the user
+confirmed the static web-only deployment and this trust boundary after reviewing
+the autofill diagnostic. Explicit application transports, resource requests and
+navigation remain subject to confinement. The diagnostic receipts retain their
+original broader zero-browser-communication outcome; they are not relabeled as
+passing tests under the current scope.
 
-Root committed exact guest-reference ownership and exception-handle cleanup in
-`eca627a`. URL routing through every BrowserEnvironment host operation is in
-`ff23763`; its independent actual-engine fixture and receipt are `65001ed` and
-`eb01025`. The shared native-token codec and URL refactor are `07d93ac`, with
-fresh browser evidence in `ce391f6`. Other native operation families still retain
-general forwarding and prevent a complete mediation claim.
+The goal remains active. The stabilization checkpoint is finished; the
+[resumption plan](../../docs/implementation/confinement-verification-resumption.md)
+still requires implementation correspondence, composition, upgrade checks, CI
+and release qualification. Production remains on executable source `5f62e61`.
+No new candidate has been deployed.
 
-The binary helper audit confirmed that its private Map reads happen during setup.
-It also found a private constructor Proxy handler with a mutable inherited trap.
-The regression failed before repair. `02bd8b4` gives that handler a null prototype;
-the prepared fixture and five isolated defense controls pass in Chromium 153 and
-Firefox 155, recorded separately in `2fd214d`. These are helper-integrity checks,
-not network-confinement tests. New URL, management and publication browser fixtures
-are now included in the normal test scripts.
+Main development checkout: `/home/damen/Projects/privacy-frames-quickjs-kernel`,
+branch `quickjs-confinement-kernel`. Latest committed source is `9017a34`; the
+remote development backup is at `0195a96` before this checkpoint is saved.
 
-Management source and verification are committed in `7b01403` and `91a48cf`.
-Sixteen actual predicate contracts, four failing predicate mutations, seven
-controlled adapter cases and the native browser fixtures passed. The asynchronous
-receivers remain tested and reviewed rather than deductively verified. Their
-browser identity, trusted physical URL, channel and concurrency premises are in
-`management-authority.md`.
+`ef9af40` repairs CyberChef startup overhead by caching immutable native brand
+membership for URL/text objects and skipping indexed-buffer probes for non-views.
+Live attributes, prototype admission and descriptor checks remain enforced.
+`45aa056` captures ArrayBuffer.isView before guest setup. CyberChef's focused
+Chromium check passed Base64 and offline tasks at 63811 ms and 63534 ms, within
+the unchanged 90-second limit. Both subsequent full compatibility matrices passed
+all twelve Chromium/Firefox cases. Earlier failures and the CPU diagnostic are
+preserved with their original scope.
 
-Current independent work in the auxiliary checkout:
+The full suite at `973b1aa` passed 211 units, core/context/policy/installation
+checks, Pitch and formatting. Its maintenance checks recorded 122 observations:
+60 confined cases had no runtime/publisher/update receiver requests; native
+controls recorded 52. The later `0195a96` checkpoint passed units, typecheck,
+core checks, the twelve-case matrix, Pitch and formatting. These results have
+separate source manifests under `results/quickjs-confinement/`.
 
-- The native-policy agent owns a new explicit audio-worklet host policy and
-  `contexts/worklet-entry.ts` integration. The shared codec is available; no raw
-  reflective fallback remains in its replacement. Its focused and actual-browser
-  checks pass, committed in `b9a0bee` and `4344af0`. The current scoped receipt is
-  `d9308d9`. Processor ports are
-  admitted by trusted producer, while bootstrap control ports remain private.
-- The Wasm agent owns exception-safe acquisition in `indexed-access.ts`, real
-  SDK/compiled-C failure fixtures and selected actual-C record/control checks,
-  committed in `9650617`, `bef0f49` and `ac1d80d`. Eight indexed tests, 243 record
-  properties and 214 indexed-branch properties pass, with failing controls. C ABI
-  projections, live-handle premises and excluded general Proxy continuations are
-  explicit. The agent's engine lifetime repair is isolated on
-  `quickjs-terminal-lifetime` at `/home/damen/Projects/privacy-frames-indexed-lifetime`.
-  Its initial source/fixture commits are `7866829` and `2be7451`; a reproduced
-  throwing-error-reporter cleanup gap is being repaired before integration.
-- The management agent completed the standalone text-codec domain and its Node
-  and actual-browser fixtures in `bc6e47a` and `d73d86a`. Browser routing for URL
-  and text now shares owner selection (`0220644`); refreshed URL controls pass
-  in both browsers (`20b4eb4`). One-time worker transfer-list conversion is
-  committed in `4ca5fea`, with evidence in `5a037da`. The agent now owns the
-  isolated `quickjs-wasm-policy` branch at
-  `/home/damen/Projects/privacy-frames-wasm-policy`. Native funcref identity,
-  protected import decoding, externref delegation and genuine cross-realm values
-  must survive removal of that domain's raw forwarding.
-- Root owns integration, package wiring, broader native-policy migration and
-  release qualification. The complete `npm test` run finished successfully as
-  session 54644 on frozen source `5a037da`: 189 units, core/context/policy/install
-  suites, and 122 maintenance observations including 60 confined samples with no
-  observed runtime/publisher/update requests. Formatting passed. Evidence and
-  296 source hashes plus 30 build-artifact hashes are archived under
-  `results/quickjs-confinement/integrated-5a037da/`. Neither isolated engine nor
-  native-Wasm changes were part of this development checkpoint.
+Three paired native/confined image runs retained all Squoosh measurements. All
+48 native/confined export hashes matched. Chromium confined median export time
+was 9259 ms online and 9365 ms offline; Firefox was 9617 ms and 9766 ms. Changes
+from the original baseline were +3.05%, +5.21%, +22.54% and +24.41%, respectively,
+within the preselected 25% investigation threshold.
 
-Do not label these components a complete confinement proof or deploy them as a
-qualified release. Next: integrate the reviewed engine lifetime checkpoint after
-its cleanup fix,
-run the affected suites, then continue replacing browser forwarding families and
-connecting their effect contracts to implementation proofs and browser coverage.
+The third image run had a Firefox PhotoCraft offline download timeout. Its failed
+receipt is preserved; an unchanged targeted retry passed. `9017a34` then replaced
+blind canvas-menu sleeps in the test with visible-menu readiness checks and added
+host-confirmation diagnostics. Two complete PhotoCraft rounds subsequently passed
+in both browsers, native and confined, including offline confined exports. This
+changes test interaction only; it does not establish the original timeout's cause.
+
+`4cba8a3` makes `README.md` the canonical C1–C8 enforcement and evidence map.
+The current threat-model/report edits record the user-confirmed browser trust
+boundary. REPORT.md is a build input: its revision changes build hashes even
+though runtime source is unchanged. Formatting, typecheck, build and actual
+example smoke checks in Chromium/Firefox passed after these documentation edits.
+
+## Active work and process state
+
+All qualification sessions through 25524 are terminal. No browser qualification
+job is currently running. Preserve failures before any future retry. The owned
+Xvfb :119 was cleaned up; never stop the unrelated existing Xvfb :99 (PID 12947).
+
+The next implementation work replaces generic NativeBinary forwarding with
+explicit reviewed members using the existing NativePolicy/NativeHost codec.
+The assigned implementation owns `src/guest/native-binary.ts` and focused binary
+policy tests. It must preserve species hooks, native buffer identity, mixed
+buffer set operations, DataView expandos and iterator ownership.
+
+An independent management-composition task owns
+`formal/quickjs/management-composition/`. It checks asynchronous caller schedules
+and distinguishes authorization at the accepted operation from a stronger
+current-generation-at-transfer property. Three synchronous predicates have
+sixteen contracts; those contracts do not prove every asynchronous caller.
+Neither task owns shared interfaces, build scripts or this handoff.
+
+The integration checkout `/home/damen/Projects/privacy-frames-quickjs-proof` remains
+on `quickjs-confinement-proof` at `9d9e401`. Preserve its untracked identity and
+calibration receipts before merging. Publisher inputs remain the pinned
+`8db931d` checkout there at `publisher-source`; set PUBLISHER_DIRECTORY to its
+dist directory when using the development checkout.
+
+## Integrated components
+
+- Management predicates/receivers: `7b01403` with evidence `91a48cf`.
+  Sixteen contracts for three production predicates and controlled/native browser cases pass;
+  asynchronous receiver composition remains tested/reviewed rather than proved.
+- Reviewed NativePolicy/NativeHost and URL/text families are integrated. Genuine
+  native Wasm functions and buffers retain identity. The new Wasm family uses
+  reviewed declarations, native-brand semantic anchors and explicit externref
+  delegation. Repeated Exception stack adapters were repaired after independent
+  review. Unknown native operations receive no implicit callable authority.
+- Worklet host and MessagePort producer policy are integrated. Bootstrap control
+  endpoints stay private. Queued delivery rechecks exact owner liveness before
+  admitting an event or transferred endpoint.
+- Indexed acquisition fixes are `9650617`; record/branch verification is in
+  `bef0f49`/`ac1d80d`. The calibrated checks cover 243 record properties and 214
+  selected indexed-branch properties. C ABI projections, live roots and excluded
+  general Proxy continuations remain explicit premises.
+- Engine logical close precedes idle-gated physical release. `set` encoding has
+  an entry boundary; bound properties reject closed contexts. Error reporting
+  cannot skip owned cleanup. Ten actual cases and five omission controls pass.
+- Native listener conversion tracking preserves platform argument conversion
+  and stores primitive cleanup arguments. Browser disposal attempts every owned
+  cleanup. Transfer normalization runs once; failed sends do not detach sources.
+  The legacy document.all dictionary regression and both conversion controls pass.
+
+## Open reviews and coverage
+
+The callback-routing review agent was stopped by cybersecurity screening. Its
+review is incomplete and must not be counted as passed. Preserve this gap; do not
+retry the rejected task by disguising its purpose or treating preliminary source
+observations as a complete result.
+
+`reviews/browser-owned-services.md` began as a static review in `e5b82bd` and now
+includes source-linked suppression candidates, actual installed-runtime controls
+and the native document-type exploration. The latest experiment is at `0195a96`.
+It pins Chromium revision `971a7443b0c9b0a9b2860529b33331b76077ec62` and its
+actual response headers/launch settings. Default-feature native and confined
+requests are observed; ordinary user-profile prevalence and all browser families
+are separate coverage obligations. The original namespace creation failure was
+superseded by verified Docker network-none isolation.
+
+Remaining work includes native browser/binary forwarding, source-linked caller
+and protocol composition, complete application-effect coverage, upgrade
+verification, CI and qualified deployment. Continue the work
+without marking the goal complete from these component results.
 
 ## Resumption planning checkpoint
 
@@ -89,9 +143,9 @@ The management agent stopped safely with changes in `src/runtime/authority.ts`,
 direct predicate verification, actual-adapter lifecycle tests and controls remain.
 No management proof or release qualification was completed by that work.
 
-## Active objective
+## Previous objective (20 November)
 
-Execute every stage of the autonomous confinement verification plan, preserving
+The earlier goal was to execute every stage of the autonomous confinement verification plan, preserving
 the existing applications, native Wasm performance and GitHub Pages deployment.
 Do not mark the goal complete from component results or test counts.
 

@@ -34,6 +34,13 @@ bytes, and repeats the confined task after an offline reload. Squoosh exercises
 real shared memory and a 17-worker threaded AVIF path. The private image tasks
 must produce no HTTP requests; every download requires host confirmation.
 
+These HTTP assertions use browser-context request events. They do not establish
+coverage of every browser-owned service. A separate
+[installed-runtime experiment](../formal/quickjs/reviews/browser-owned-services.md)
+recorded a form-classification request at an independent loopback receiver after
+confinement had started. Built-in browser services remain trusted under the
+[current threat model](../formal/threat-model.md).
+
 The Squoosh check includes its 3,872 × 2,592 sample photo. It waits for the compressed
 output rather than the original-image download and checks that dragging the
 comparison handle changes the visible preview.

@@ -8,9 +8,16 @@ The host, its installation and controller code, its dependencies, the browser an
 the operating system are trusted. Browser defects and malicious extensions are
 outside this argument.
 
+The browser's normal built-in services, including autofill, spelling, translation
+and security checks, are part of that trusted platform. They may inspect displayed
+content and communicate independently of the host. On 21 November 2026, the project
+confirmed that these services remain trusted and that the host stays web-only.
+The host's claim concerns application network calls and resource requests, rather
+than making the entire browser or device offline.
+
 The target property is stricter than testing whether a particular payload contains
 a secret: while an untrusted application executes in confinement, an
-application-caused remote request or connection must not occur. This includes the
+application transport request or connection must not occur. This includes the
 runtime origin. The property covers URL, body and header channels without requiring
 value-level taint tracking. Explicitly authorized exports require a separate policy.
 
@@ -32,10 +39,12 @@ The policy covers application-caused explicit network effects, including ordinar
 HTTP, resource loads, navigation, DNS names influenced by the application,
 WebSockets, WebTransport and WebRTC. It does not claim protection against physical
 side channels, denial of service, developer tools, malicious extensions or
-intentional browser-menu exports. Browser housekeeping and trusted host updates may
-use the network only under an explicit assumption that application-controlled
-private data cannot influence those requests. That assumption requires evidence;
-merely calling a request browser housekeeping does not establish it.
+intentional browser-menu exports. The trusted browser-service behavior described
+above is outside this application-transport claim. Host startup, updates and
+resource-loading machinery still require an account of their network effects.
+The distinction concerns the operation, not which browser process implements it:
+application calls to fetch, sockets, navigation or other communication APIs remain
+subject to confinement.
 
 The first models abstract each effect into a boolean and do not model bytes,
 timing, DNS, individual browser APIs, malicious browser behavior or the complete
@@ -56,8 +65,9 @@ destination, method, URL, headers and body, and its occurrence and order. Where
 application execution can determine when such an effect occurs, that timing is
 also observable. The inventory must include browser operations that transmit
 without producing a service-worker fetch event and local handoffs to actors
-that can transmit on the application's behalf. The physical and operating-system
-exclusions above do not exempt browser APIs that request remote communication.
+that can transmit on the application's behalf. Explicit browser APIs for requesting
+remote communication remain within scope. Automatic built-in services remain
+within the trusted-browser boundary above.
 
 The initial state includes existing registrations, permissions, policies, pending
 operations and other retained browser state. A newly installed application does
@@ -66,7 +76,7 @@ be established by setup, enforced as a supported-environment prerequisite, or
 remain an explicit unresolved obligation. Lack of a browser API for inspecting
 a state does not establish that the state is absent.
 
-Trusted maintenance is permitted only when its observable behavior is independent
+Host maintenance is permitted only when its observable behavior is independent
 of application-controlled private execution under the declared observation
 model. A fixed URL does not establish independence: choosing whether or when to
 contact it may disclose information. The proof must identify which maintenance
@@ -83,7 +93,7 @@ implementation has satisfied them.
 | C1  | No application code or markup executes before its local context preparation succeeds.                                                                               |
 | C2  | Every usable authority exposed to an application is harmless under this policy or mediated by an adapter that preserves confinement.                                |
 | C3  | Returned objects, getters, callbacks, promises, messages and new contexts preserve the authority boundary, including asynchronous and reentrant execution.          |
-| C4  | Every external effect and pending browser-owned operation reachable from application execution is covered by the effect policy.                                     |
+| C4  | Every application transport and deferred operation within the policy's scope is covered, including implicit resource and navigation effects.                        |
 | C5  | Application mutation of permitted prototypes and state cannot modify enforcement state or invalidate the captured operations used to enforce the policy.            |
 | C6  | Management, admission and context authority come from authenticated browser actors and validated host state; application assertions of identity grant no authority. |
 | C7  | Replacement, closure and revocation deny new unauthorized grants; operations already in flight preserve confinement through completion or cancellation.             |

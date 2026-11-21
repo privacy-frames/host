@@ -21,12 +21,18 @@ The adversary controls the application and its dependencies, including JavaScrip
 Wasm, HTML, CSS, asynchronous work and supported child contexts. Private data may
 already exist in browser storage when an application starts.
 
-After confinement starts, application execution must cause no remote request or
+After confinement starts, application transports must cause no remote request or
 connection, including to the runtime origin. The occurrence of a fixed-URL request
 counts: selecting whether to contact a server can disclose information. Trusted
 installation and startup may use the network before application execution. The
 transition must also protect private state retained from previous executions.
 Explicitly authorized file exports retain their existing separate policy.
+
+The [current threat model](../../formal/threat-model.md) incorporates the
+21 November decision to trust normal browser-integrated services, such as autofill
+and spelling, and retain web-only hosting. Their own communication is outside this
+application-transport property. Application-requested network operations remain
+within scope regardless of which browser process implements them.
 
 Keep the current threat model: trust the browser, operating system, QuickJS,
 host origins and declared dependencies. Record exactly which engine and native

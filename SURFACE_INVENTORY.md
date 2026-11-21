@@ -19,12 +19,19 @@ uses local Blob or data URLs; guest resource reads use admitted catalog bytes.
 | Startup CSP and browser service-worker maintenance          | `src/runtime/worker.ts`, `src/guest/window.ts`                                      | `test/guest-context-maintenance.ts`, `guest-policy.ts`                          |
 | Native Wasm imports, memory and shared binary operations    | `src/guest/native-wasm.ts`, `native-binary.ts`, `guest-binary.ts`                   | `test/guest-wasm.ts`, `guest-context-isolation.ts`                              |
 | Custom element construction and lifecycle callbacks         | `src/guest/custom-elements.ts`                                                      | `test/guest-custom-elements.ts`                                                 |
+| Browser-owned form classification                           | Trusted browser service, outside application-transport enforcement                  | `test/browser-owned-services.ts`: platform characterization                     |
 
 The policy tests include native controls and observe an independent receiver.
 Context tests check that guest-created contexts receive the same restrictions,
 including synchronous callbacks and transferred objects. The maintenance fixture
 compares private-bit inputs with quiet controls under fresh and forced-age
 service-worker registrations.
+
+Chromium's browser process can issue classification requests after an app renders
+a form, bypassing the page's JavaScript transports and service worker. The
+[controlled experiment](formal/quickjs/reviews/browser-owned-services.md) reproduces
+this in an installed app. These built-in services remain trusted under the
+[current threat model](formal/threat-model.md).
 
 Storage namespacing supports application compatibility. Host installation records,
 bootstrap bytes and management channels still require integrity even though

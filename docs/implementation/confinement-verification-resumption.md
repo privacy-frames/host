@@ -7,12 +7,18 @@ or treat the existing component proofs as a proof of the complete host.
 
 ## Contract
 
-After confinement starts, application execution must cause no remote request or
+After confinement starts, application transports must cause no remote request or
 connection, including to the runtime origin. The occurrence or timing of a request
 can disclose data even without a private payload. Installation and trusted startup
 may use the network before application execution; previously stored private data
 must remain protected through that transition. Authorized file exports retain
 their existing separate policy.
+
+On 21 November, the project confirmed that normal browser-integrated services
+remain trusted and the host stays web-only. Apply the
+[current threat model](../../formal/threat-model.md): browser-owned autofill and
+similar services are platform behavior, while application network calls, resource
+loads and navigation remain within the enforcement property.
 
 Applications and their dependencies are malicious. Trust the browser, OS, host
 origins and declared engine/dependency contracts. Our bridge and local QuickJS

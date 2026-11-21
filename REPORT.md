@@ -19,8 +19,10 @@ create an unrestricted execution context.
 We trust the browser, the host and its dependencies, and the origins hosting the
 manager, installer and runtime. Application code never runs on the manager or
 installer origin. Private input enters the application only after trusted setup
-has finished. Initial host startup may contact its origin; application code must
-not cause network traffic during confined execution.
+has finished. Initial host startup may contact its origin. During confined
+execution, application network calls and resource requests must be blocked or
+answered locally. The browser's own autofill, spelling and other built-in services
+remain trusted; their communication is outside the host's enforcement claim.
 
 Local display, audio and file processing are intended. Downloads require a trusted
 host confirmation. Approving an export releases the file supplied by the
@@ -104,6 +106,11 @@ The application corpus tests installation, a useful interaction and offline
 reopening. Current receipts and application-specific qualifications are recorded
 in [evaluation/compatibility.md](https://github.com/privacy-frames/host/blob/main/evaluation/compatibility.md). These observations
 are implementation evidence; a complete browser confinement proof remains open.
+
+A [controlled experiment](https://github.com/privacy-frames/host/blob/quickjs-confinement-kernel/formal/quickjs/reviews/browser-owned-services.md)
+confirmed that Chrome's trusted autofill service can communicate after an installed
+app displays a form. It used blank fields and a local receiver, without outside
+networking.
 
 Application service-worker execution remains deferred. IFC and selective release
 of private information are separate research work.
