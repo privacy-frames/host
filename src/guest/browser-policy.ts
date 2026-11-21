@@ -1,3 +1,4 @@
+import { registerAbortFamily } from './abort-policy.ts';
 import { createNativeHost } from './native-host.ts';
 import { NativePolicy, NativePolicyError, type NativeContract } from './native-policy.ts';
 import { registerEventFamily, type EventFamilyOptions } from './event-policy.ts';
@@ -18,9 +19,13 @@ export function createBrowserPolicy(options: BrowserPolicyOptions) {
     name: 'Browser',
     registry,
     owns: (target) => owned.has(target),
-    admit: (target) => events.admitReceiver(target),
+    admit: (target) => aborts.admitReceiver(target) || events.admitReceiver(target),
     result(value, contract) {
-      if (contract.result === 'reference' && !events.admitProduced(value))
+      if (
+        contract.result === 'reference' &&
+        !aborts.admitProduced(value) &&
+        !events.admitProduced(value)
+      )
         throw new NativePolicyError(
           'return',
           contract.id,
@@ -48,18 +53,25 @@ export function createBrowserPolicy(options: BrowserPolicyOptions) {
         : receiver;
     },
   });
-  const events = registerEventFamily({
+  const captureMethod = (target: Function, owner: object, key: PropertyKey) => {
+    const previous = methods.get(target);
+    if (previous && (previous.owner !== owner || previous.key !== key))
+      throw new TypeError('Browser native method has another declaration');
+    methods.set(target, { owner, key });
+  };
+  const registration = {
     ...options,
     registry,
     owned,
     captureCallableShape: host.captureCallableShape,
     registerConstructor: host.registerConstructor,
-    captureMethod(target, owner, key) {
-      const previous = methods.get(target);
-      if (previous && (previous.owner !== owner || previous.key !== key))
-        throw new TypeError('Browser native method has another declaration');
-      methods.set(target, { owner, key });
-    },
+    captureMethod,
+  };
+  const events = registerEventFamily(registration);
+  const aborts = registerAbortFamily({
+    ...registration,
+    registerTarget: events.registerTarget,
+    listener: events.listener,
   });
 
   return {

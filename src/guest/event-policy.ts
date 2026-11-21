@@ -21,7 +21,7 @@ export interface EventFamilyOptions {
   isWindowMessage(value: object): boolean;
 }
 
-interface EventRegistrationOptions extends EventFamilyOptions {
+export interface EventRegistrationOptions extends EventFamilyOptions {
   global: object;
   registry: NativePolicy;
   owned: WeakSet<object>;
@@ -395,6 +395,11 @@ export function registerEventFamily(options: EventRegistrationOptions) {
   }
 
   return {
+    /** Trusted family producers call this only after choosing their full lineage. */
+    registerTarget(value: object): void {
+      targets.add(value);
+    },
+    listener,
     admitEvent,
     admitReceiver,
     methodReceiver(owner: object, receiver: object): boolean {
