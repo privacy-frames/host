@@ -242,6 +242,7 @@ export class GuestEngine {
       this.context.evalCode(
         `(${installGuestRegExpLegacy.toString()})();`,
         'privacy:legacy-regexp',
+        { type: 'global', strict: true },
       ),
     ).dispose();
     for (const [native, name] of wellKnownSymbols)
@@ -259,6 +260,7 @@ export class GuestEngine {
       this.context.evalCode(
         `(${installGuestRuntime.toString()})(${allocateIdentity.toString()})`,
         'privacy:bindings',
+        { type: 'global', strict: true },
       ),
     );
     try {
@@ -401,7 +403,10 @@ export class GuestEngine {
 
   private installBinary(): void {
     const installer = this.unwrap(
-      this.context.evalCode(`(${installGuestBinary.toString()})`, 'privacy:binary'),
+      this.context.evalCode(`(${installGuestBinary.toString()})`, 'privacy:binary', {
+        type: 'global',
+        strict: true,
+      }),
     );
     const bindings = this.encode(this.binary.bindings);
     const hooks = this.helper('binaryHooks', []);
@@ -439,6 +444,16 @@ export class GuestEngine {
   /** Identify a previously decoded guest reference without invoking guest code. */
   ownsGuestValue(value: object): boolean {
     return !this.closed && this.guestHandles.has(value);
+  }
+
+  /** Only identities already crossing this engine's reference boundary qualify.
+   * Recognition must not encode a new value or ask a default native owner. */
+  recognizesCallable(value: unknown): value is Function {
+    return (
+      !this.closed &&
+      typeof value === 'function' &&
+      (this.guestHandles.has(value) || this.nativeHandles.has(value))
+    );
   }
 
   private owner(target: object): GuestHost {
@@ -544,7 +559,11 @@ export class GuestEngine {
   }
 
   call(fn: Function, arguments_: unknown[] = [], receiver?: unknown): unknown {
-    return Reflect.apply(fn, receiver, arguments_);
+    if (!this.recognizesCallable(fn))
+      throw new TypeError('Callable has no recorded engine owner');
+    // Decoded guest wrappers retain their existing entry and deferral behavior.
+    if (this.guestHandles.has(fn)) return Reflect.apply(fn, receiver, arguments_);
+    return this.invoke(this.nativeHandles.get(fn)!, receiver, arguments_, false);
   }
 
   /** Read guest class metadata without bypassing guest property policies. */
@@ -1068,11 +1087,14 @@ export class GuestEngine {
 
   private readString(value: QuickJSHandle): string {
     const result = this.context.getString(value);
-    if (
-      result.length === this.context.getLength(value) &&
-      !requiresStringRecovery.test(result)
-    )
-      return result;
+    const property = this.context.getProp(value, 'length');
+    let length: number;
+    try {
+      length = this.context.getNumber(property);
+    } finally {
+      property.dispose();
+    }
+    if (result.length === length && !requiresStringRecovery.test(result)) return result;
     // The SDK's C-string API terminates at NUL and may normalize lone surrogates.
     const json = this.helper('stringifyString', [value]);
     try {
@@ -1831,35 +1853,38 @@ export class GuestEngine {
     const info = this.helpers.has('errorInfo')
       ? this.helper('errorInfo', [handle])
       : handle.dup();
-    const read = (key: string) => {
-      const value = this.context.getProp(info, key);
-      try {
-        return this.context.typeof(value) === 'string' ? this.readString(value) : '';
-      } finally {
-        value.dispose();
+    try {
+      const read = (key: string) => {
+        const value = this.context.getProp(info, key);
+        try {
+          return this.context.typeof(value) === 'string' ? this.readString(value) : '';
+        } finally {
+          value.dispose();
+        }
+      };
+      const error = new Error(read('message') || 'Guest execution failed');
+      error.name = read('name') || 'Error';
+      const stack = read('stack');
+      if (stack) error.stack = stack;
+      if (
+        this.helpers.has('tryGuestId') &&
+        ['object', 'function'].includes(this.context.typeof(handle)) &&
+        !this.context.eq(handle, this.context.null)
+      ) {
+        // Error conversion must not inspect a thrown object's prototype or require
+        // another identity after exhaustion. Both operations can throw recursively.
+        const id = this.helper('tryGuestId', [handle]);
+        try {
+          if (this.context.typeof(id) === 'number')
+            this.retainGuest(this.context.getNumber(id), handle.dup(), error);
+        } finally {
+          id.dispose();
+        }
       }
-    };
-    const error = new Error(read('message') || 'Guest execution failed');
-    error.name = read('name') || 'Error';
-    const stack = read('stack');
-    if (stack) error.stack = stack;
-    info.dispose();
-    if (
-      this.helpers.has('tryGuestId') &&
-      ['object', 'function'].includes(this.context.typeof(handle)) &&
-      !this.context.eq(handle, this.context.null)
-    ) {
-      // Error conversion must not inspect a thrown object's prototype or require
-      // another identity after exhaustion. Both operations can throw recursively.
-      const id = this.helper('tryGuestId', [handle]);
-      try {
-        if (this.context.typeof(id) === 'number')
-          this.retainGuest(this.context.getNumber(id), handle.dup(), error);
-      } finally {
-        id.dispose();
-      }
+      return error;
+    } finally {
+      info.dispose();
     }
-    return error;
   }
 
   private exception(error: unknown): QuickJSHandle {

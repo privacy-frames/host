@@ -8,9 +8,10 @@ are refused before a native getter, setter or method runs.
 
 The registry is integrated with the standalone URL and text families, native Wasm,
 the [native buffer policy](../../formal/quickjs/binary-policy.md), and the
-worklet/MessagePort host. BrowserEnvironment routes claimed URL and text objects
-to their reviewed owners. Browser forwarding and cross-family producer/callback
-composition remain open obligations. The [security argument](../../formal/quickjs/README.md#security-argument)
+worklet/MessagePort host. The composed [browser event policy](browser-policy.md)
+adds selected local EventTarget and event instances. BrowserEnvironment routes
+claimed objects to their reviewed owners. Other browser forwarding and cross-family
+producer/callback composition remain open obligations. The [security argument](../../formal/quickjs/README.md#security-argument)
 locates the remaining implementation and browser obligations.
 
 ## Registration and ownership

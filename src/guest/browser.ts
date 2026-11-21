@@ -6,6 +6,7 @@ import type { GuestHost } from './protocol.ts';
 import { GuestResources } from './resources.ts';
 import { createGuestURLPolicy } from './url-policy.ts';
 import { createGuestTextPolicy } from './text-policy.ts';
+import { createBrowserPolicy } from './browser-policy.ts';
 import { GuestDOM } from './dom.ts';
 import { createGuestCustomElements } from './custom-elements.ts';
 import { createGuestDOMParser, parseGuestDocument } from './parser.ts';
@@ -348,6 +349,7 @@ export class BrowserEnvironment {
   readonly dom?: GuestDOM;
   private engine?: GuestEngine;
   private readonly nativePolicies: readonly GuestHost[];
+  private readonly browserPolicy: ReturnType<typeof createBrowserPolicy>;
   private customElements?: ReturnType<typeof createGuestCustomElements>;
   private constructors = new Set<Function>();
   private audioWorkletNodeConstructor?: Function;
@@ -372,7 +374,23 @@ export class BrowserEnvironment {
   constructor(readonly options: BrowserEnvironmentOptions) {
     const { catalog, global: native } = options;
     this.resources = new GuestResources(catalog);
+    this.document = 'document' in native ? native.document : undefined;
+    this.browserPolicy = createBrowserPolicy({
+      global: native,
+      isGuestValue: (value) => this.engine?.ownsGuestValue(value) ?? false,
+      recognizesCallable: (value): value is Function =>
+        this.engine?.recognizesCallable(value) ?? false,
+      call: (callback, receiver, args) =>
+        this.requireEngine().call(callback, [...args], receiver),
+      property: (value, key) => this.requireEngine().property(value, key),
+      isTargetReceiver: (value) => this.eventTargetReceiver(value),
+      addCleanup: (cleanup) => this.cleanups.add(cleanup),
+      dispatch: (target, receiver, args) =>
+        this.invoke(target, receiver, 'dispatchEvent', [...args]),
+      isWindowMessage: isGuestWindowMessage,
+    });
     this.nativePolicies = [
+      this.browserPolicy.host,
       createGuestURLPolicy({
         URL: Reflect.get(native, 'URL'),
         URLSearchParams: Reflect.get(native, 'URLSearchParams'),
@@ -387,7 +405,6 @@ export class BrowserEnvironment {
         TextDecoder: Reflect.get(native, 'TextDecoder'),
       }),
     ];
-    this.document = 'document' in native ? native.document : undefined;
     environments.set(native, this);
     if (this.document?.defaultView) {
       this.customElements = createGuestCustomElements(
@@ -797,6 +814,22 @@ export class BrowserEnvironment {
     return this.nativePolicies.find((policy) => policy.owns?.(target));
   }
 
+  private eventTargetReceiver(target: object): boolean {
+    if (this.disposed) return false;
+    if (target === this.options.global) return true;
+    const sameApplication = (environment: BrowserEnvironment | undefined) =>
+      !!environment &&
+      !environment.disposed &&
+      environment.options.catalog.application === this.options.catalog.application;
+    if (isWindow(target)) return sameApplication(environments.get(target));
+    if (!isNode(target)) return false;
+    const document = isDocument(target) ? target : target.ownerDocument;
+    if (document === this.document) return true;
+    return (
+      !!document?.defaultView && sameApplication(environments.get(document.defaultView))
+    );
+  }
+
   private get(target: object, key: PropertyKey): unknown {
     const owner = this.nativeOwner(target);
     if (owner) return owner.get(target, key);
@@ -957,6 +990,8 @@ export class BrowserEnvironment {
       this.constructors.has(value)
     )
       return value;
+    const reviewed = this.browserPolicy.callable(value, target);
+    if (reviewed) return reviewed;
     let wrapper = this.methodWrappers.get(value);
     if (!wrapper) {
       const environment = this;
