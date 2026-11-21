@@ -4,8 +4,8 @@
     "src/guest/native-wasm.ts": "670c8a4e9cfd50ca037aa7d2596ea4716b3b35f70d05c2cefc33c27e3db61852",
     "src/guest/native-policy.ts": "ba0fb4f746bc472c480f0dbeff9e83a629c74e81ba832a3bd8019a6f1e2b1ce8",
     "src/guest/native-host.ts": "0420675d80bbc038b3c8cfbe8d8bb53e3d322ecb856613870de0405b553a8ff9",
-    "src/guest/engine.ts": "1ac27fbec1bd3d9a83c91f410830c845039663df47a05b70f8748bfcc11ae78b",
-    "src/guest/browser.ts": "bf056d51e99ded19d87adb42f8ba58261f8a85112ad945e9ffad54b465ff6ad6",
+    "src/guest/engine.ts": "f47d9f29180bf54561025352567648768dcb0cfc2b01519ee218ac7e447f6027",
+    "src/guest/browser.ts": "c598247101e98649562ad847a51e3db618d1b29039cf001682e19d9a9ee1e8d1",
     "test/guest-native-wasm-policy.browser.ts": "e1f68f8d3aa29f38403610bd386259cbcfae992a6dda7eca774cd7ce33af8495",
     "test/guest-native-wasm-policy.ts": "6fcab377df60937612102ea8f42710e9b128623de135b9026104a552acf2cd29"
   },
@@ -171,7 +171,8 @@
     "node_modules/xmlchars/xml/1.0/ed5.js": "ea350479ab6f6553c0c3395c30ec440fb39821f6902081939831ddf1b5e8fd0f",
     "node_modules/xmlchars/xml/1.1/ed2.js": "461d5c71cc6076dc16aebbfd2d3c506481df5a74f43631d82372a6ffdc239d69",
     "node_modules/xmlchars/xmlns/1.0/ed3.js": "ff14ffa3a2cdfdd1b6077c4a8443dc949f53d5bb56de5ed89d4dbc5d9fdf08f7",
-    "src/guest/browser.ts": "bf056d51e99ded19d87adb42f8ba58261f8a85112ad945e9ffad54b465ff6ad6",
+    "src/guest/browser-policy.ts": "1a33de5c6a021e3618ecd9d7847a6fa1749b2e0497f964b1c6f19b0d96d9a8c7",
+    "src/guest/browser.ts": "c598247101e98649562ad847a51e3db618d1b29039cf001682e19d9a9ee1e8d1",
     "src/guest/contexts/audio-worklet.ts": "8706554251c0020af6599b599e306b3e0e9cffceebd31ce739c825071e789577",
     "src/guest/contexts/brands.ts": "d0b5d97c4e97a71e13408adb1bc0b46c00e2d2c13cf3bb1320fbe9d1bf4a94e5",
     "src/guest/contexts/documents.ts": "02ce86f6e8ef962eb48eb84c88b012613d91728fffe752f4a600f3cd8d8746f0",
@@ -182,8 +183,9 @@
     "src/guest/css.ts": "b68e6cc3d240974a17510cef30dbe5bed5a5b4e50eb1639286c601d81db633e3",
     "src/guest/custom-elements.ts": "ff3cf0ab9c85bee1f74d6198431c01615e1c6e9cf198dd4b9fc68d78a045cb0d",
     "src/guest/dom.ts": "75a654d384521c8c7153bf55bfe71f19ed1eab3b27d1c60fa37241aa300e764a",
-    "src/guest/engine.ts": "1ac27fbec1bd3d9a83c91f410830c845039663df47a05b70f8748bfcc11ae78b",
+    "src/guest/engine.ts": "f47d9f29180bf54561025352567648768dcb0cfc2b01519ee218ac7e447f6027",
     "src/guest/event-listener-arguments.ts": "f5219d8d8da8d9f5d67f0afb46756a2e7ef55003b64fc846dafccf134c27a080",
+    "src/guest/event-policy.ts": "04b6c5c11b185b3359931505b50fc147ea0e6195d2acf7cc1792260bf7387c82",
     "src/guest/generated-runtime-interfaces.ts": "55fa35f2d27fe9b123c74f77a229a2a64b86ace4f2883e5fb70715d851117182",
     "src/guest/guest-binary.ts": "da8dbde72247dd7b85b52bac138ddafa14f778729ceec34cf11eca0b924dea32",
     "src/guest/guest-runtime.ts": "058930f5f581f18210f636c210c0dbba27e51a145826c2adcb95d3295436bc1d",
@@ -216,8 +218,8 @@
   },
   "engineSHA256": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
   "bundleHashes": {
-    "production": "792adb9da25af461d7f6b2fd8ec25f358febee201c2aa9958f37dd2af8598e20",
-    "textGetRouteRemoved": "0ff83cf2ebb5ac6d10702f4ba151352572fde6d52e3f1cfa3c14c17e6fa8e709"
+    "production": "7c137adba0cf3ffc7739b1254db8758606bcf99632a5099873598ef7998b034d",
+    "textGetRouteRemoved": "c8359452bd7fca5bcf804f104f8a8ee992f08a9fb828fbbf22e6ba4e6aae116a"
   },
   "fault": "Only native-Wasm get is replaced with the former raw Reflect.get in a temporary bundle. Production source is unchanged.",
   "receipts": [
@@ -296,5 +298,5 @@
       "rejected": true
     }
   ],
-  "completedAt": "2026-11-21T16:43:32.393Z"
+  "completedAt": "2026-11-21T18:51:11.753Z"
 }

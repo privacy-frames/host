@@ -1,0 +1,384 @@
+
+> pretest
+> npm run build
+
+
+> build
+> tsx scripts/build.ts
+
+≈ tailwindcss v4.3.3
+
+Done in 33ms
+Built manager in dist-manager
+▲ [WARNING] "import.meta" is not available with the "iife" output format and will be empty [empty-import-meta]
+
+    vendor/quickjs/generated/engine.mjs:1:796:
+      1 │ ...w toThrow};var _scriptName=import.meta.url;var scriptDirectory="...
+        ╵                               ~~~~~~~~~~~
+
+  You need to set the output format to "esm" for "import.meta" to work correctly.
+
+▲ [WARNING] "import.meta" is not available with the "iife" output format and will be empty [empty-import-meta]
+
+    vendor/quickjs/generated/engine.mjs:1:3172:
+      1 │ ...turn new URL("engine.wasm",import.meta.url).href}function getBin...
+        ╵                               ~~~~~~~~~~~
+
+  You need to set the output format to "esm" for "import.meta" to work correctly.
+
+▲ [WARNING] "import.meta" is not available with the "iife" output format and will be empty [empty-import-meta]
+
+    vendor/quickjs/generated/engine.mjs:1:796:
+      1 │ ...w toThrow};var _scriptName=import.meta.url;var scriptDirectory="...
+        ╵                               ~~~~~~~~~~~
+
+  You need to set the output format to "esm" for "import.meta" to work correctly.
+
+▲ [WARNING] "import.meta" is not available with the "iife" output format and will be empty [empty-import-meta]
+
+    vendor/quickjs/generated/engine.mjs:1:3172:
+      1 │ ...turn new URL("engine.wasm",import.meta.url).href}function getBin...
+        ╵                               ~~~~~~~~~~~
+
+  You need to set the output format to "esm" for "import.meta" to work correctly.
+
+▲ [WARNING] "import.meta" is not available with the "iife" output format and will be empty [empty-import-meta]
+
+    vendor/quickjs/generated/engine.mjs:1:796:
+      1 │ ...w toThrow};var _scriptName=import.meta.url;var scriptDirectory="...
+        ╵                               ~~~~~~~~~~~
+
+  You need to set the output format to "esm" for "import.meta" to work correctly.
+
+▲ [WARNING] "import.meta" is not available with the "iife" output format and will be empty [empty-import-meta]
+
+    vendor/quickjs/generated/engine.mjs:1:3172:
+      1 │ ...turn new URL("engine.wasm",import.meta.url).href}function getBin...
+        ╵                               ~~~~~~~~~~~
+
+  You need to set the output format to "esm" for "import.meta" to work correctly.
+
+≈ tailwindcss v4.3.3
+
+Done in 36ms
+Built runtime in dist-runtime
+Built installation in dist-installation
+
+> build:examples
+> node scripts/build-examples.ts --output /home/damen/Projects/privacy-frames-quickjs-kernel/dist-examples
+
+Built independent publisher websites in /home/damen/Projects/privacy-frames-quickjs-kernel/dist-examples.
+
+> test
+> npm run test:unit && npm run test:guest
+
+
+> test:unit
+> tsx --test test/*.test.ts
+
+✔ configuration changes invalidate bootstrap and role builds expose only their entry points (3426.423213ms)
+✔ private transport survives changed browser accessors and application iterators (3.865527ms)
+✔ malformed or rejected replies fail instead of yielding host data (5.965845ms)
+✔ missing controller, send failure and timeout reject and close local ports (5.246142ms)
+✔ CSS resource syntax excludes comments, content strings, selectors and conditions (5.333734ms)
+✔ imports, escaped URLs, nested values and custom properties share extraction and relocation (3.719588ms)
+✔ malformed declarations preserve later valid CSS resources (1.299203ms)
+✔ style attributes use declaration context while style blocks preserve quoted text (6.359614ms)
+✔ installation requests only parsed CSS resource declarations (97.082024ms)
+✔ disposing the last pending owner prevents creating a native controller (5.413564ms)
+✔ pending ownership survives disposal of the controller creator and IDs share one domain (11.914483ms)
+✔ closing before readiness rejects pending work and ignores late ready messages (3.563962ms)
+✔ standard corpus preserves DOM inheritance, mixins and global declarations (2.839477ms)
+✔ global exposure is separate from effect authorization (2.279325ms)
+✔ collection declarations expose native iteration contracts (0.480278ms)
+✔ the generated corpus has complete parent links and stable package provenance (3.025781ms)
+✔ compiler joins out-of-order partials, included mixins and operation overloads (6.188898ms)
+✔ compiler preserves stringifiers, static operations and nonfinite constants (1.104943ms)
+✔ compiler refuses unresolved includes and incomplete interface definitions (10.307807ms)
+✔ overload lookup retains every standard native operation signature (0.274667ms)
+✔ callback interfaces expose a legacy object only when they declare constants (2.719541ms)
+✔ native brands check each receiver once, including failed receivers (2.234915ms)
+✔ functions can be checked, while primitive inputs never invoke a getter (0.337112ms)
+✔ selected native event constructors preserve identity, conversion and cancellation (49.35982ms)
+✔ native dispatch and cleanup retain guest callback and object-listener semantics (2.706774ms)
+✔ listener conversions match native order and failures do not register cleanup (1.997176ms)
+✔ callback ownership is checked before registration and again on delivery (1.312535ms)
+✔ registered native callables use the provided invocation route as listeners (1.180322ms)
+✔ native delivery rechecks receiver provenance without revoking detached local targets (0.981721ms)
+✔ unknown getters and reflected access are denied before execution (1.964881ms)
+✔ native descriptor changes invalidate cached callable and accessor authority (1.129273ms)
+✔ canonical methods and borrowed receivers do not claim unrelated whole objects (2.624977ms)
+✔ unreviewed aliases do not become local-family members (1.193344ms)
+✔ method publication does not capture unclaimed native target families (0.75408ms)
+✔ inactive update scheduling remains explicit when another profile supplies the mechanism control (2.433323ms)
+✔ a quiet implementation does not pass without a positive native mechanism control (0.355031ms)
+✔ a fixed trusted URL still fails the no-HTTP gate (0.368931ms)
+✔ missing private-bit comparison fails despite active controls (0.217266ms)
+✔ one profile cannot borrow another profile physical HTTP sensor (0.397216ms)
+✔ object epochs invalidate retained continuations after numeric counters stop advancing (2.042652ms)
+✔ engine UTF-8 fallback matches native decoding at invalid sequence boundaries (135.561692ms)
+✔ engine UTF-8 fallback preserves valid strings and randomized malformed data (21.906166ms)
+✔ CSS parsing maps URLs, escaped URL functions and escaped imports (6.31061ms)
+✔ image-set string candidates map while MIME and font-family strings remain data (1.216353ms)
+✔ inline declarations and SVG value grammars use the same resource mapping (2.105254ms)
+✔ namespace and supports URLs do not acquire resource semantics (0.611668ms)
+✔ invalid CSS is withheld and an invalid individual URL becomes inert data (1.968382ms)
+✔ nested supports conditions survive while enclosed resources remain mediated (0.854581ms)
+✔ import URLs remain parsed and rewritten alongside raw conditional preludes (1.44753ms)
+✔ a trusted-factory initializer error is reported without a runtime disposal assertion (333.36702ms)
+✔ private conversion tracking preserves native getters, receivers and primitive options (6.86688ms)
+✔ a frozen options object retains proxy invariants and capture identity (0.75242ms)
+✔ native failed conversion does not install a listener or permit cleanup rereads (0.56457ms)
+✔ missing arguments and symbol types preserve native rejection before effect (0.4378ms)
+✔ identity exhaustion rejects without rounding, repetition or record mutation (1.104338ms)
+✔ private identity domains advance independently without inherited setters (0.321224ms)
+✔ manager sender requires every native observation and a live unbound receiver (3.733322ms)
+✔ actual worker adapter denies synthetic, claimed and changed client identities (211.116494ms)
+✔ actual worker adapter rechecks after asynchronous admission and before reply (25.632843ms)
+✔ actual catalog publication rechecks recipient identity after preparation (28.161209ms)
+✔ actual worker adapter evaluates captured source at dequeue and isolates instance queues (16.42ms)
+✔ actual bridge binds only a genuine allowed parent, with an origin removal control (18.757192ms)
+✔ actual bridge closes pending ready and queued request/reply continuations (12.425408ms)
+✔ postMessage options getter and sequence iterator are each captured once (2.052363ms)
+✔ iterable overload reads its iterator once and does not inspect transfer options (0.346216ms)
+✔ invalid transfer conversion closes the iterator and preserves the thrown error (0.725072ms)
+✔ semantic anchoring requires a registered brand and rejects wrong brands or changed families (3.906749ms)
+✔ delegated function results do not mint callable or constructor tokens (0.556246ms)
+✔ an exact own-field facade composes only reviewed anchored lineage (0.951512ms)
+✔ only an explicit native call contract permits a registered constructor without new (2.723666ms)
+✔ published wrapper identity is stable and usable for private argument-decoding metadata (0.625855ms)
+✔ trusted native callable producer retains the original funcref identity (1.314772ms)
+✔ exact callable publication refuses metadata accessors without executing them (0.700571ms)
+✔ codec preserves stable callable and descriptor identity without exposing native functions (4.555519ms)
+✔ codec rejects unknown getters and foreign receivers before invoking them (1.095791ms)
+✔ codec keeps wrapper shape immutable and refuses inherited callable authority (0.527745ms)
+✔ codec maps only registered constructor tokens and forwards results through admission (1.043059ms)
+✔ native projection covers every pinned declaration and retains matching provenance (197.67203ms)
+✔ inheritance, mixin owners, static placement and overload deduplication retain identity (0.522326ms)
+✔ anonymous named/indexed operations never become empty-name properties (0.273006ms)
+✔ stringifier attributes preserve the source member and add an implicit toString identity (26.045861ms)
+✔ implicit collection methods preserve readonly rules and actual symbol identity (0.505724ms)
+✔ ambiguous mixin declarations refuse lookup rather than choosing their input order (1.831881ms)
+✔ native member presence cannot create an effect permission (10.930487ms)
+✔ global provisioning projection does not import the new identity catalogue (53.134152ms)
+✔ unreviewed native getters never execute, including additions before and after setup (4.935163ms)
+✔ reviewed getters, setters and methods execute after receiver admission (1.653507ms)
+✔ borrowed accessor tokens retain their declaring contract on a derived receiver (0.622767ms)
+✔ canonical function aliases share a token; differing contracts or adapters refuse registration (0.653617ms)
+✔ the same canonical callable supports each explicitly registered receiver family (0.339841ms)
+✔ changed getter and callable identities are refused before their replacement runs (0.38751ms)
+✔ an unreviewed shadow descriptor cannot replace a reviewed inherited operation (0.313027ms)
+✔ facade schemas accept only the registered instance and preserve writable data changes (0.402188ms)
+✔ explicit named families support reviewed data without a generic getter fallback (0.986541ms)
+✔ returned native functions and forged tokens never gain implicit call authority (0.786209ms)
+✔ free-function contracts discard guest receivers and constructors require explicit tokens (0.576786ms)
+✔ constructor function identity and prototype are captured independently of names (0.259671ms)
+✔ guest result rules preserve only exact owned guest references (0.991607ms)
+✔ native constructors, exports, funcref tables/globals and retained buffers preserve identity (12.461723ms)
+✔ native static wrappers publish import decoder identity, while brand validation precedes capture (8.374824ms)
+✔ Wasm error constructors preserve native no-new semantics and prototype aliases (3.894911ms)
+✔ externref functions retain their original owner and never gain Wasm call/construct authority (1.846286ms)
+✔ branded cross-realm values use local semantic anchors without foreign getters or has traps (2.696885ms)
+✔ unknown getters and descriptor replacements cannot enter the reviewed native Wasm surface (1.045212ms)
+✔ optional Exception stack uses reviewed native own descriptors without losing family methods (11.652158ms)
+✔ Exception methods survive own stack composition while custom fields remain unreviewed (1.146414ms)
+✔ repeated Exception traceStack producers share adapters while retaining exact receivers (5.276679ms)
+✔ application processor names exclude the host namespace after one conversion (1.691492ms)
+✔ native rendering receives local resources, including nested CSS and import cycles (49.72559ms)
+✔ runtime projection is generated from the complete pinned corpus (14.225696ms)
+✔ runtime exposure queries preserve interface provisioning in each context (8.354932ms)
+✔ only global provisioning members are present in runtime data (1.930178ms)
+✔ runtime metadata still does not grant native effect authority (4.277195ms)
+✔ text brand checks are cached without caching reads or prototype admission (9.678194ms)
+✔ text constructors and native codec operations preserve conversion and buffer behavior (4.143308ms)
+✔ native streaming decode retains state and resets on a final call (0.839682ms)
+✔ codec wrappers and descriptors preserve exact identities and guest intrinsic boundaries (4.788814ms)
+✔ unreviewed native getter is rejected before execution, including reflected access (1.12227ms)
+✔ real text brands with foreign prototypes are claimed and refused instead of falling through (0.561734ms)
+✔ changed reviewed native descriptors and foreign callable identities cannot acquire authority (0.631206ms)
+✔ URL membership is cached while URL attributes and descriptor checks remain live (7.399675ms)
+✔ standalone URL constructors, attributes and serialization retain native behavior (2.104008ms)
+✔ URL setters and constructors perform application conversion once (1.09325ms)
+✔ linked URLSearchParams mutation is local and supports native methods and callbacks (1.779749ms)
+✔ reviewed iterator methods preserve aliases and ordinary iterator results (2.130392ms)
+✔ borrowed descriptors and methods retain their native receiver checks (0.725148ms)
+✔ unreviewed native getters are denied before execution at setup, late and own shadows (1.132709ms)
+✔ static parsing is local and object URL effects use only the supplied resource adapters (0.692948ms)
+✔ constructor and wrapper authority cannot be acquired from names or unreviewed functions (0.541316ms)
+✔ URL iterator boundaries do not claim the shared native Iterator prototype (0.682473ms)
+✔ optional static API absence is captured without enabling a later native addition (0.438058ms)
+✔ valid URL brands with an unreviewed prototype cannot fall through to another native host (0.593543ms)
+✔ asynchronous local XHR preserves ready-state, handlers, headers and response identity (59.545211ms)
+✔ synchronous catalog reads complete before send returns (1.856252ms)
+✔ XHR constants, upload identity and event-target ancestry match native interface shape (0.914465ms)
+✔ missing local resources fail without a network fallback (1.791168ms)
+✔ response types use catalog bytes and invalid JSON becomes null (1.76916ms)
+✔ abort prevents queued resource completion and resets request state (9.032554ms)
+✔ request timeout ends a stalled local read (6.716513ms)
+✔ local fetch exposes logical URL, native Response brand, clone and cancellation (3.927317ms)
+✔ navigator exposes facts and denied permissions without native authority records (1.419357ms)
+✔ microphone capture delegates audio only and stops tracks on context disposal (1.454022ms)
+✔ a microphone request resolving after disposal stops its tracks before rejection (0.773878ms)
+✔ closing during engine initialization disposes its late result without guest setup (7.751228ms)
+✔ initialization rejection after closure does not publish a failure message (2.214828ms)
+✔ closing during asynchronous module evaluation suppresses late publication (2.542819ms)
+✔ native worklet registration independently refuses host-reserved processor names (3.977768ms)
+✔ removing the actual late-close guard makes the controlled engine result remain live (6.183355ms)
+✔ worklet host exposes exact callbacks, numeric timing and reviewed console operations (5.732506ms)
+✔ unknown port getters and unadmitted same-brand endpoints are rejected before access (1.526711ms)
+✔ native port delivery admits events before guest callbacks and preserves callback identity (42.148296ms)
+✔ listener adapters preserve removal and transferred endpoint producer ownership (3.169848ms)
+✔ queued delivery after ownership revocation neither admits endpoints nor calls guest (3.147448ms)
+✔ transfer options are consumed once and detachment is committed after native success (2.041245ms)
+✔ omitting actual token mediation for the fixture getter is detected by its counter (51.222096ms)
+✔ worklet registration captures name checks and refuses reserved names (1.870653ms)
+✔ worklet maps, reflection and audio copies retain captured operations (0.906034ms)
+✔ worklet allocation exhaustion rejects before invoking application construction (0.655678ms)
+✔ worklet parameter names remain data rather than private-record prototypes (0.657125ms)
+✔ initial JSON data blocks stay inert rather than becoming executable resources (7.1278ms)
+✔ short alias is source-derived and label does not select identity (0.864394ms)
+✔ generic document base is resolved once and removed before admission (15.996651ms)
+✔ CSS dependency discovery handles imports, relative resources and cycles without following data (2.232201ms)
+✔ manifest adapts identity, hash launch and presentation without granting handlers (0.875441ms)
+✔ invalid bases fall back to the document and base targets cannot open new contexts (1.141737ms)
+✔ unreadable or malformed optional publisher manifests preserve a valid document installation (122.022731ms)
+✔ a small publisher icon keeps its identity and gains installable fallback sizes (0.691382ms)
+✔ inline bootstraps and preload declarations become installation inputs (1.280096ms)
+✔ module discovery follows literal imports without treating comments or strings as imports (25.251757ms)
+✔ installation policy admits up to 100 MiB and serves Wasm with its native media type (0.423298ms)
+✔ relocated module imports preserve fragments and both static quote styles (5.196226ms)
+✔ publisher scripts cannot be overwritten by generated inline resource names (3.400445ms)
+✔ secondary captured HTML collects its inline module and that module dependencies (3.426497ms)
+✔ a standard webpage can install a streamed asset larger than the former 20 MiB limit (46.237816ms)
+✔ streamed installation bytes crossing 100 MiB abort even when content-length understates them (1.737707ms)
+✔ publisher query configuration survives launch and PWA metadata without changing resource bases (0.289169ms)
+✔ installation requires three distinct configured origins (1.919286ms)
+✔ session messages reject wrong identities, malformed commands and oversized text (1.311859ms)
+✔ structured installation requests retain a URL or UTF-8-bounded text list (1.445189ms)
+✔ catalog metadata survives validation and exact URL selection is generic (2.558904ms)
+✔ resource list choices can remove or replace a catalog default (0.990718ms)
+✔ actual syntax nodes and arrays do not inherit application optional-field hooks (132.710017ms)
+✔ syntax detachment ignores accessors and inherited descriptor value fields (55.370556ms)
+✔ reviewed binary bindings preserve native identity, geometry and mixed local set (12.634374ms)
+✔ unknown getters and changed native callable descriptors are rejected before access (5.388587ms)
+✔ reviewed iteration owns produced iterators without claiming shared iterator declarations (3.158917ms)
+✔ private constructor hooks retain inherited native operations and species behavior (2.219164ms)
+✔ canonical typed indices and DataView numeric properties preserve distinct semantics (3.043673ms)
+✔ native constructors, generic static receivers, reducers and atomics retain compatibility (3.000953ms)
+✔ immutable brand memoization retains live geometry and ignores foreign prototype getters (4.270366ms)
+✔ own primitive data shadows remain live without authorizing own getters or functions (5.183451ms)
+✔ constructor metadata snapshots avoid late getters and unreviewed statics fail before access (9.500202ms)
+✔ copyWithin effects are confined to a branded receiver with primitive indices (10.031497ms)
+✔ callback-capable coercions and same-named replacements keep full barriers (1.830551ms)
+✔ partial capture retains the successful dependency graph and records transport failures (44.271422ms)
+✔ the entry document remains mandatory even though dependencies are best effort (0.909916ms)
+✔ capture retains markup as data without executing application code (1.805331ms)
+✔ partial capture does not swallow unsupported script or module analysis errors (7.971793ms)
+✔ asynchronous false results do not satisfy a readiness condition (5.263616ms)
+✔ a permanently false condition fails the observation deadline (21.047234ms)
+✔ a pending observation cannot bypass its deadline (20.167976ms)
+✔ an observation error propagates without becoming a successful wait (0.479674ms)
+✔ private ports correlate concurrent replies and carry transferred request ports (11.108488ms)
+✔ server closure rejects pending work and suppresses its later successful result (2.865751ms)
+✔ local closure rejects current and future requests without starting another send (1.422812ms)
+✔ closing reentrantly while reading transfers prevents dispatch (0.437336ms)
+✔ handler failures, hostile thrown values and uncloneable replies fail locally (5.149139ms)
+✔ a private peer that never replies times out (25.598372ms)
+✔ failed proxy retention allocates no C record and the same proxy can retry (42.917117ms)
+✔ failed replacement duplication leaves the old rooted view usable and cleanup valid (4.777977ms)
+✔ failed second function-slot allocation releases the first and permits retry (12.938567ms)
+✔ C rejects a non-view replacement, disables access, and releases the paired record once (10.547994ms)
+✔ terminal disposal unlinks C records before releasing borrowed roots and table entries (7.799822ms)
+✔ native memory indexes use Wasm functions and preserve numeric conversions (133.035896ms)
+✔ private index caches report writes without exposing their backing (28.569031ms)
+✔ acceleration retains Proxy invariants and does not affect application proxies (9.572569ms)
+✔ automatic discovery follows explicit HTML, CSS and literal module references only (62.815642ms)
+✔ supplemental resources are captured without executing or interpreting their code (2.758672ms)
+✔ a remotely supplied list is data and does not become an application resource (1.981391ms)
+✔ missing entry and explicitly listed resources refuse installation (1.180093ms)
+✔ dynamic imports and data-selected filenames are never guessed (1.354833ms)
+✔ each JavaScript resource is lexed once and cycles download once (1.378997ms)
+✔ URI lists normalize absolute URLs, comments, whitespace and duplicates (1.95543ms)
+✔ URI lists reject ambiguous and non-downloadable entries with line numbers (1.006455ms)
+✔ URI-list work is bounded before any requests are made (9.411782ms)
+✔ runtime admission requires explicit captured resources and separates new metadata from private app data (1430.137896ms)
+✔ share recipes preserve launch queries and URL or embedded resource lists (7.156898ms)
+✔ long resource lists compress and round-trip without a file or list server (42.457998ms)
+✔ malformed and ambiguous share links fail before installation (5.470046ms)
+✔ compressed lists enforce decoded byte and resource count limits (18.53722ms)
+✔ unshareably large recipes produce an actionable error (9.96614ms)
+✔ library shares include resolved resources and source URLs select existing local copies (0.496819ms)
+ℹ tests 232
+ℹ suites 0
+ℹ pass 232
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3541.402804
+
+> test:guest
+> npm run test:guest:core && npm run test:contexts && npm run test:policy && npm run test:installation
+
+
+> test:guest:core
+> tsx test/guest-engine.ts && tsx formal/quickjs/wasm/check-engine-lifetime.ts && tsx test/guest-primordials.ts && tsx test/guest-url-bridge.ts && tsx test/guest-text-bridge.ts && tsx test/guest-message-transfer.ts && tsx test/guest-eventtarget-cleanup.ts && tsx test/guest-browser-policy.ts && tsx test/guest-native-wasm-policy.ts && tsx test/guest-wasm.ts && tsx test/guest-regexp.ts && tsx test/guest-parser-browser.ts && tsx test/guest-web-services-browser.ts && tsx test/guest-lifecycle.ts && tsx test/guest-history.ts && tsx test/guest-resource-hints.ts && tsx test/guest-css-browser.ts
+
+{"browser":"chromium","version":"153.0.8010.12","result":{"binaryPolicy":{"binaryGetterDenied":true,"binaryGetterReads":0},"result":{"globalIdentity":true,"ownGlobal":true,"globalPrototype":true,"identity":true,"cancellation":false,"trace":["outer","inner",false],"prototype":"BUTTON","prototypeIdentity":true,"expando":7,"list":[true],"bytes":[9,9,9],"nativeBuffer":[8,2,3,4],"constructor":"undefined","url":"https://example.test/hello","error":"native failure"},"additional":{"promise":42,"asyncCompilerRealm":"undefined","generatorCompilerRealm":"undefined","module":42,"nativePrototype":false,"errors":[]},"advanced":{"sameError":true,"getterError":true,"binaryString":"\u0000ÿ\ud800Z","binaryKey":2,"binaryWrite":[3,1],"loneSurrogate":"prefix\ud800suffix","binaryRecord":"\u0000value\udfff","binaryRegistry":"registry\u0000suffix","binaryKeys":["field","field\u0000suffix"],"capturedViewConstructor":true,"guestOwnership":[true,true,false],"guestFunctionPrototype":true,"domException":[true,"SecurityError","denied",18],"nativeException":[true,"SecurityError",18],"map":true,"symbol":"symbol data","dataset":[false,"value",false],"detailIdentity":true,"binaryBrand":[9,9],"nestedBytes":[3,4,3,4,5],"throwingWrite":8,"sender":true,"receiver":true,"bytes":[1,2,3,4]},"cache":{"alias":true,"descriptor":11,"descriptorThenWrite":22,"defined":33,"subRead":44,"subWrite":55,"coercion":true,"argument":43,"throwPreserved":true,"canonical":true,"prototypeLength":123,"nativeLength":19,"bufferIdentity":true,"noPrivateKeys":true,"grown":true},"asyncCache":{"argument":43,"thrown":47,"resumed":91,"thenable":93},"disposal":{"rejectedMessage":"Error: expected rejection","closedMessage":"Error: Application context is closed","lateErrors":[],"capturedNativeSymbol":true,"reflectedAfterGrowth":true,"lengthAfterGrowth":3,"backing":{"grewBackingHeap":true,"backingAfterGrowth":[9,8,7,6],"mirroredAfterGrowth":[31,0,0,0],"mirrorNativeWrite":32,"mirrorNativeDetached":0,"backingAfterTamper":[9,8,7,6],"backingGuestShape":{"length":4,"keys":[]},"backingWrongLength":"RangeError","backingDetachedRead":"TypeError","backingDetachedWrite":"TypeError","zeroBackingDetached":"TypeError","backingTransferDestination":[9,8,7,6],"backingDisposed":"Error","backingContextDisposed":"Error"}}}}
+{"browser":"firefox","version":"155.0","result":{"binaryPolicy":{"binaryGetterDenied":true,"binaryGetterReads":0},"result":{"globalIdentity":true,"ownGlobal":true,"globalPrototype":true,"identity":true,"cancellation":false,"trace":["outer","inner",false],"prototype":"BUTTON","prototypeIdentity":true,"expando":7,"list":[true],"bytes":[9,9,9],"nativeBuffer":[8,2,3,4],"constructor":"undefined","url":"https://example.test/hello","error":"native failure"},"additional":{"promise":42,"asyncCompilerRealm":"undefined","generatorCompilerRealm":"undefined","module":42,"nativePrototype":false,"errors":[]},"advanced":{"sameError":true,"getterError":true,"binaryString":"\u0000ÿ\ud800Z","binaryKey":2,"binaryWrite":[3,1],"loneSurrogate":"prefix\ud800suffix","binaryRecord":"\u0000value\udfff","binaryRegistry":"registry\u0000suffix","binaryKeys":["field","field\u0000suffix"],"capturedViewConstructor":true,"guestOwnership":[true,true,false],"guestFunctionPrototype":true,"domException":[true,"SecurityError","denied",18],"nativeException":[true,"SecurityError",18],"map":true,"symbol":"symbol data","dataset":[false,"value",false],"detailIdentity":true,"binaryBrand":[9,9],"nestedBytes":[3,4,3,4,5],"throwingWrite":8,"sender":true,"receiver":true,"bytes":[1,2,3,4]},"cache":{"alias":true,"descriptor":11,"descriptorThenWrite":22,"defined":33,"subRead":44,"subWrite":55,"coercion":true,"argument":43,"throwPreserved":true,"canonical":true,"prototypeLength":123,"nativeLength":19,"bufferIdentity":true,"noPrivateKeys":true,"grown":true},"asyncCache":{"argument":43,"thrown":47,"resumed":91,"thenable":93},"disposal":{"rejectedMessage":"Error: expected rejection","closedMessage":"Error: Application context is closed","lateErrors":[],"capturedNativeSymbol":true,"reflectedAfterGrowth":true,"lengthAfterGrowth":3,"backing":{"grewBackingHeap":true,"backingAfterGrowth":[9,8,7,6],"mirroredAfterGrowth":[31,0,0,0],"mirrorNativeWrite":32,"mirrorNativeDetached":0,"backingAfterTamper":[9,8,7,6],"backingGuestShape":{"length":4,"keys":[]},"backingWrongLength":"RangeError","backingDetachedRead":"TypeError","backingDetachedWrite":"TypeError","zeroBackingDetached":"TypeError","backingTransferDestination":[9,8,7,6],"backingDisposed":"Error","backingContextDisposed":"Error"}}}}
+Ten actual engine lifecycle cases passed; eager release, terminal binding, set-entry, reporter and job-root controls failed as intended.
+{"variant":"prepared","browser":"chromium","version":"153.0.8010.12","bundleSHA256":"7f8491f36cb4ab928ab87a94b9e57589af790ddef885074ac538903946a978cf","result":{"checks":{"capturedOperations":true,"privateProxyHandler":true,"privateIndexRecord":true,"binaryConstructorHandler":true,"thrownReference":true,"classification":true}},"errors":[]}
+{"variant":"prepared","browser":"firefox","version":"155.0","bundleSHA256":"7f8491f36cb4ab928ab87a94b9e57589af790ddef885074ac538903946a978cf","result":{"checks":{"capturedOperations":true,"privateProxyHandler":true,"privateIndexRecord":true,"binaryConstructorHandler":true,"thrownReference":true,"classification":true}},"errors":[]}
+{"variant":"dynamic-object-create","browser":"chromium","version":"153.0.8010.12","bundleSHA256":"f7269e403e42618427d5b17ac2bc64119221a5923a4da6758195a0b189a3d326","result":{"checks":{"capturedOperations":{"error":"Error: mutable operation was invoked"},"privateProxyHandler":true,"privateIndexRecord":true,"binaryConstructorHandler":true,"thrownReference":true,"classification":true}},"errors":[]}
+{"variant":"dynamic-object-create","browser":"firefox","version":"155.0","bundleSHA256":"f7269e403e42618427d5b17ac2bc64119221a5923a4da6758195a0b189a3d326","result":{"checks":{"capturedOperations":{"error":"Error: mutable operation was invoked"},"privateProxyHandler":true,"privateIndexRecord":true,"binaryConstructorHandler":true,"thrownReference":true,"classification":true}},"errors":[]}
+{"variant":"inherited-handler","browser":"chromium","version":"153.0.8010.12","bundleSHA256":"57bf0a68e9617d3645a4ee2ea7c4def5bbc6172cd4a39d13713df73de5ab158f","result":{"checks":{"capturedOperations":true,"privateProxyHandler":{"error":"Error: inherited proxy handler"},"privateIndexRecord":true,"binaryConstructorHandler":true,"thrownReference":true,"classification":true}},"errors":[]}
+{"variant":"inherited-handler","browser":"firefox","version":"155.0","bundleSHA256":"57bf0a68e9617d3645a4ee2ea7c4def5bbc6172cd4a39d13713df73de5ab158f","result":{"checks":{"capturedOperations":true,"privateProxyHandler":{"error":"Error: inherited proxy handler"},"privateIndexRecord":true,"binaryConstructorHandler":true,"thrownReference":true,"classification":true}},"errors":[]}
+{"variant":"inherited-index","browser":"chromium","version":"153.0.8010.12","bundleSHA256":"e746c2a661498eb41a72047bce828e5009a164a7db28384a9c31b4b283026d5d","result":{"checks":{"capturedOperations":true,"privateProxyHandler":true,"privateIndexRecord":{"error":"Error: inherited private index read"},"binaryConstructorHandler":true,"thrownReference":true,"classification":true}},"errors":[]}
+{"variant":"inherited-index","browser":"firefox","version":"155.0","bundleSHA256":"e746c2a661498eb41a72047bce828e5009a164a7db28384a9c31b4b283026d5d","result":{"checks":{"capturedOperations":true,"privateProxyHandler":true,"privateIndexRecord":{"error":"Error: inherited private index read"},"binaryConstructorHandler":true,"thrownReference":true,"classification":true}},"errors":[]}
+{"variant":"mutable-classifier","browser":"chromium","version":"153.0.8010.12","bundleSHA256":"4130add5e3bf799c94b271ee811798485b94be398c79c813b26d7f59ad839d38","result":{"checks":{"capturedOperations":true,"privateProxyHandler":true,"privateIndexRecord":true,"binaryConstructorHandler":true,"thrownReference":true,"classification":{"error":"Error: application hasInstance"}}},"errors":[]}
+{"variant":"mutable-classifier","browser":"firefox","version":"155.0","bundleSHA256":"4130add5e3bf799c94b271ee811798485b94be398c79c813b26d7f59ad839d38","result":{"checks":{"capturedOperations":true,"privateProxyHandler":true,"privateIndexRecord":true,"binaryConstructorHandler":true,"thrownReference":true,"classification":{"error":"Error: application hasInstance"}}},"errors":[]}
+{"variant":"inherited-binary-handler","browser":"chromium","version":"153.0.8010.12","bundleSHA256":"b741b67b1da102f9ffd2954799c505137a1979d426051332d346d3327d1a5738","result":{"checks":{"capturedOperations":true,"privateProxyHandler":true,"privateIndexRecord":true,"binaryConstructorHandler":{"error":"Error: inherited binary constructor handler"},"thrownReference":true,"classification":true}},"errors":[]}
+{"variant":"inherited-binary-handler","browser":"firefox","version":"155.0","bundleSHA256":"b741b67b1da102f9ffd2954799c505137a1979d426051332d346d3327d1a5738","result":{"checks":{"capturedOperations":true,"privateProxyHandler":true,"privateIndexRecord":true,"binaryConstructorHandler":{"error":"Error: inherited binary constructor handler"},"thrownReference":true,"classification":true}},"errors":[]}
+chromium {"construction":true,"coercion":true,"linkedParams":true,"callbacks":true,"iterators":true,"borrowedDescriptors":true,"stableAliases":true,"reflection":true,"objectURLOwner":true,"unknownGetterDenied":true}
+chromium URL getter route removal detected
+firefox {"construction":true,"coercion":true,"linkedParams":true,"callbacks":true,"iterators":true,"borrowedDescriptors":true,"stableAliases":true,"reflection":true,"objectURLOwner":true,"unknownGetterDenied":true}
+firefox URL getter route removal detected
+chromium {"construction":true,"conversion":true,"encoding":true,"encodeInto":true,"streamingDecode":true,"fatalDecode":true,"reflection":true,"binaryHandoff":true,"foreignBrandsDenied":true,"unknownGetterDenied":true}
+chromium Text getter route removal detected
+firefox {"construction":true,"conversion":true,"encoding":true,"encodeInto":true,"streamingDecode":true,"fatalDecode":true,"reflection":true,"binaryHandoff":true,"foreignBrandsDenied":true,"unknownGetterDenied":true}
+firefox Text getter route removal detected
+chromium One-time transfer conversion and native failed-send preservation passed
+chromium Old transfer reread detected
+chromium Legacy null/object guard regression detected
+firefox One-time transfer conversion and native failed-send preservation passed
+firefox Old transfer reread detected
+firefox Legacy null/object guard regression detected
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Error: Primitive listener cleanup must release every owned subsystem
+Error: Primitive listener cleanup must release every owned subsystem
+    at check (http://127.0.0.1:37345/browser.js?variant=production:50940:21)
+    at run (http://127.0.0.1:37345/browser.js?variant=production:51145:7)
++ actual - expected
+
++ 'Error: Primitive listener cleanup must release every owned subsystem\n' +
++   'Error: Primitive listener cleanup must release every owned subsystem\n' +
++   '    at check (http://127.0.0.1:37345/browser.js?variant=production:50940:21)\n' +
++   '    at run (http://127.0.0.1:37345/browser.js?variant=production:51145:7)'
+- undefined
+
+    at <anonymous> (/home/damen/Projects/privacy-frames-quickjs-kernel/test/guest-eventtarget-cleanup.ts:169:18) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'Error: Primitive listener cleanup must release every owned subsystem\n' +
+    'Error: Primitive listener cleanup must release every owned subsystem\n' +
+    '    at check (http://127.0.0.1:37345/browser.js?variant=production:50940:21)\n' +
+    '    at run (http://127.0.0.1:37345/browser.js?variant=production:51145:7)',
+  expected: undefined,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.18.0

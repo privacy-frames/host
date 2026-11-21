@@ -1,0 +1,130 @@
+{
+  "scope": "Deductive checking of the extracted production allocateIdentity function under owned-counter contracts. Private-state ownership, engine callers and browser effects require separate verification.",
+  "mode": "verify",
+  "source": "src/guest/identity.ts",
+  "sourceSHA256": "e067e5dea7a2b036ced0905abd77e6a40f187ec2a3231466b1825a2e84b8c748",
+  "extractedFunctionSHA256": "29ad55bc1f63866c9d51d84b50d2ed7aa8704aff32b16cd708b9738dc03798fe",
+  "erasedFunctionSHA256": "21dc7b0c5078c3365a47edb7f217f49acf36c794c84d869d80edc20c2aaa6022",
+  "runnerSHA256": "9b2e7cfcf373b864f545e0ea65df0f217de063065977e64b20eb25cf29857ed1",
+  "typescriptVersion": "6.0.3",
+  "image": "ghcr.io/gillianplatform/gillian@sha256:ce41de968aba0964774e1929416ce60b9c3b770d2e58f96e63990b629cfe2ed6",
+  "imageSourceRevision": "not-identified",
+  "contracts": {
+    "available": "Owned writable next field, arbitrary record prototype, integral counter in 1..9007199254740991; returns old counter, advances next exactly once, preserves prototype and framed heap.",
+    "exhausted": "Owned writable next field equal 9007199254740992; returns undefined, leaves counter/prototype and framed heap unchanged."
+  },
+  "callerCorrespondence": "pending: establish initialization, private ownership, integral range preservation and use by every identity allocator",
+  "numericModel": {
+    "integerPrecondition": "Gillian is-int predicate with explicit bounded numeric conditions",
+    "arithmetic": "Mathematical-number arithmetic; this is not an IEEE-754 bit-level proof.",
+    "requiredJavaScriptContract": "Integers 1..9007199254740992 are exactly representable; adding 1 to an integer at most 9007199254740991 is exact. These properties of trusted JavaScript arithmetic connect bounded integral states to the model.",
+    "referenceSource": {
+      "repository": "https://github.com/GillianPlatform/Gillian",
+      "revision": "469aa5c134ba7790c40669bd4bc50483aff36d7b",
+      "path": "GillianCore/smt/smt.ml",
+      "url": "https://github.com/GillianPlatform/Gillian/blob/469aa5c134ba7790c40669bd4bc50483aff36d7b/GillianCore/smt/smt.ml#L994",
+      "correspondence": "Reference source shows real-valued Num arithmetic; the pinned container source revision remains unidentified."
+    }
+  },
+  "extraction": {
+    "sourceBodyCopied": true,
+    "changes": "Remove export and type annotations; TypeScript emits ES5 variable declarations. No allocation-body substitution in the production cases.",
+    "closedBody": "Reject top-level runtime dependencies, compiler helpers and free runtime identifiers.",
+    "trusted": [
+      "TypeScript parser/type erasure",
+      "source extractor",
+      "Gillian JavaScript semantics/compiler/verifier",
+      "solver",
+      "pinned container"
+    ]
+  },
+  "results": [
+    {
+      "name": "production-available",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "allocateIdentity",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "7651990160d9af1042d1345f9c973607fbfa8f661dd1710ef58f7628fae09507",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "f926ab3dae23ea767407d73b2dc95d07bed6df597db00d17a0768ed02cc7acb1",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.046484\nVerifying one spec of procedure allocateIdentity... s Success\nAll specs succeeded: 0.119854"
+    },
+    {
+      "name": "production-exhausted",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "allocateIdentity",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "7ec8440d9fd5666d29c1da5bdb087da9b14904b2872566ff44dc9a33b4ee50ef",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "73596b5972d6fe40ed84d2041d4b255573833d7ccc9371cf19a3a257c8d6a35e",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.046046\nVerifying one spec of procedure allocateIdentity... s Success\nAll specs succeeded: 0.071669"
+    },
+    {
+      "name": "omitted-guard",
+      "expectedSuccess": false,
+      "checkedProcedures": [
+        {
+          "procedure": "allocateIdentity",
+          "paths": 1,
+          "failedPaths": 1
+        }
+      ],
+      "exitCode": 1,
+      "inputSHA256": "e169b6df37ee9c7cc7fc345d0ee37a1fe257cb952b743909c2363a5fd5eaced7",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "e4755e012dfbe36ac2f6a2fb366af41964dc80ebba0e8b6844c10ad462da8225",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.045180\nVerifying one spec of procedure allocateIdentity... f Failure\nThere were failures: 0.090035\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+    },
+    {
+      "name": "omitted-increment",
+      "expectedSuccess": false,
+      "checkedProcedures": [
+        {
+          "procedure": "allocateIdentity",
+          "paths": 1,
+          "failedPaths": 1
+        }
+      ],
+      "exitCode": 1,
+      "inputSHA256": "a1d127d8bdb9d255eab67c089a56e085551520430498ab9bf69c94bf6e532187",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "dab18bb4d3638f0a3f50949351322b8257240588afff7f3a6964f2d81822da8f",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.046896\nVerifying one spec of procedure allocateIdentity... f Failure\nThere were failures: 0.117538\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+    },
+    {
+      "name": "wrap-to-one",
+      "expectedSuccess": false,
+      "checkedProcedures": [
+        {
+          "procedure": "allocateIdentity",
+          "paths": 2,
+          "failedPaths": 1
+        }
+      ],
+      "exitCode": 1,
+      "inputSHA256": "90695b0c70f8a89a5fe2f6ee83908c95366b981d2fe52211b4778c32ac2cd534",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "6e49419f20016af2228c224400184983e4f1ef4b0e4c564febd4377d2e7edc5b",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.046162\nVerifying one spec of procedure allocateIdentity... s f Failure\nThere were failures: 0.150073\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+    }
+  ],
+  "zeroContractControl": {
+    "refused": true,
+    "verifierReportedContracts": 0,
+    "inputSHA256": "765d6e845739f0e8e8420251e8a00f0938713ead1d10d76a4483d93dfacaea7c",
+    "outputSHA256": "197626793a4be6725feebf3dcb3ab9adf362be91afcfb03b2f766115a4eb8df2"
+  },
+  "completedAt": "2026-11-21T18:09:05.998Z"
+}

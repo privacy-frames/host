@@ -1,0 +1,98 @@
+{
+  "scope": "Natural-number model of the private bounded identity allocator. Production JavaScript, private-state ownership and caller correspondence require separate verification.",
+  "productionCorrespondence": "pending",
+  "maximumIdentity": 9007199254740991,
+  "exhaustedSentinel": 9007199254740992,
+  "callerPrecondition": "The private next counter is an integer in 1..9007199254740992.",
+  "source": "formal/quickjs/Identity.lean",
+  "sourceSHA256": "69628f9cb1c6cebbd3e4e4177e5624421f1926387b0a298d3f6129d54be36c7a",
+  "runnerSHA256": "2d81ea024bbc951b400ea796c2b5a2bc4824717c116ed79e86364d649dcbaed3",
+  "toolchain": {
+    "version": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+    "executableSHA256": "bf8d54e4714cc4b03d3f6bb34c83b7202b87e49c8bfcbff6895c085bb90ceb38",
+    "arguments": [
+      "--trust=0"
+    ]
+  },
+  "theorems": [
+    {
+      "name": "PrivacyFrames.Identity.initial_valid",
+      "axioms": []
+    },
+    {
+      "name": "PrivacyFrames.Identity.success_exact",
+      "axioms": []
+    },
+    {
+      "name": "PrivacyFrames.Identity.success_bounded",
+      "axioms": []
+    },
+    {
+      "name": "PrivacyFrames.Identity.preserves_valid",
+      "axioms": []
+    },
+    {
+      "name": "PrivacyFrames.Identity.rejection_unchanged",
+      "axioms": []
+    },
+    {
+      "name": "PrivacyFrames.Identity.exhausted_rejects",
+      "axioms": []
+    },
+    {
+      "name": "PrivacyFrames.Identity.valid_rejection_exhausted",
+      "axioms": []
+    },
+    {
+      "name": "PrivacyFrames.Identity.trace_final_valid",
+      "axioms": []
+    },
+    {
+      "name": "PrivacyFrames.Identity.trace_counter_matches_outputs",
+      "axioms": []
+    },
+    {
+      "name": "PrivacyFrames.Identity.trace_identity_bounds",
+      "axioms": []
+    },
+    {
+      "name": "PrivacyFrames.Identity.trace_strictly_increasing",
+      "axioms": []
+    },
+    {
+      "name": "PrivacyFrames.Identity.trace_unique",
+      "axioms": []
+    },
+    {
+      "name": "PrivacyFrames.Identity.trace_exhaustion_stable",
+      "axioms": []
+    },
+    {
+      "name": "PrivacyFrames.Identity.distinct_scopes_distinct_identities",
+      "axioms": []
+    }
+  ],
+  "productionExitCode": 0,
+  "productionOutputSHA256": "a1d78b7320b1e015990ec0d9b1f57b29ed45778abc423c2495044c5d98692feb",
+  "controls": [
+    {
+      "name": "omitted-increment",
+      "exitCode": 1,
+      "failedTheorem": "PrivacyFrames.Identity.success_exact",
+      "reason": "Allocator advancement no longer satisfies the theorem",
+      "inputSHA256": "f38fb1f70009533d7c235726dab9a51bfa20485fd393b60525e326c3182ef7bb",
+      "outputSHA256": "6aafecbbb6c64f2918b1c2d3955cf6e72040eb1ff1651eb4dd5404aa4ae771e6",
+      "output": "Identity.lean:26:16: error: Application type mismatch: The argument\n  rfl\nhas type\n  ?m.100 = ?m.100\nbut is expected to have type\n  next = next + 1\nin the application\n  And.intro rfl\nIdentity.lean:40:32: error: Application type mismatch: The argument\n  Nat.le_succ next\nhas type\n  next \u2264 next.succ\nbut is expected to have type\n  next \u2264 (next, some next).fst\nin the application\n  Nat.le_trans valid.left (Nat.le_succ next)\n'PrivacyFrames.Identity.initial_valid' does not depend on any axioms\n'PrivacyFrames.Identity.success_exact' depends on axioms: [sorryAx]\n'PrivacyFrames.Identity.success_bounded' depends on axioms: [sorryAx]\n'PrivacyFrames.Identity.preserves_valid' depends on axioms: [sorryAx]\n'PrivacyFrames.Identity.rejection_unchanged' does not depend on any axioms\n'PrivacyFrames.Identity.exhausted_rejects' does not depend on any axioms\n'PrivacyFrames.Identity.valid_rejection_exhausted' does not depend on any axioms\n'PrivacyFrames.Identity.trace_final_valid' depends on axioms: [sorryAx]\n'PrivacyFrames.Identity.trace_counter_matches_outputs' depends on axioms: [sorryAx]\n'PrivacyFrames.Identity.trace_identity_bounds' depends on axioms: [sorryAx]\n'PrivacyFrames.Identity.trace_strictly_increasing' depends on axioms: [sorryAx]\n'PrivacyFrames.Identity.trace_unique' depends on axioms: [sorryAx]\n'PrivacyFrames.Identity.trace_exhaustion_stable' depends on axioms: [sorryAx]\n'PrivacyFrames.Identity.distinct_scopes_distinct_identities' does not depend on any axioms\n"
+    },
+    {
+      "name": "wrap-to-one",
+      "exitCode": 1,
+      "failedTheorem": "PrivacyFrames.Identity.success_exact",
+      "reason": "Allocator advancement no longer satisfies the theorem",
+      "inputSHA256": "a6a076330310791ecf6dd83c38697daad23b3c734a2bcdf8a318e36d9647784a",
+      "outputSHA256": "518d508fd001714cba9b8936b1a7fceb97542f492489595d3d19ab1022d3bdcf",
+      "output": "Identity.lean:26:16: error: Application type mismatch: The argument\n  rfl\nhas type\n  ?m.100 = ?m.100\nbut is expected to have type\n  (if next = maximum then 1 else next + 1) = next + 1\nin the application\n  And.intro rfl\nIdentity.lean:40:32: error: Application type mismatch: The argument\n  Nat.le_succ next\nhas type\n  next \u2264 next.succ\nbut is expected to have type\n  next \u2264 (if next = maximum then 1 else next + 1, some next).fst\nin the application\n  Nat.le_trans valid.left (Nat.le_succ next)\n'PrivacyFrames.Identity.initial_valid' does not depend on any axioms\n'PrivacyFrames.Identity.success_exact' depends on axioms: [sorryAx]\n'PrivacyFrames.Identity.success_bounded' depends on axioms: [sorryAx]\n'PrivacyFrames.Identity.preserves_valid' depends on axioms: [sorryAx]\n'PrivacyFrames.Identity.rejection_unchanged' does not depend on any axioms\n'PrivacyFrames.Identity.exhausted_rejects' does not depend on any axioms\n'PrivacyFrames.Identity.valid_rejection_exhausted' does not depend on any axioms\n'PrivacyFrames.Identity.trace_final_valid' depends on axioms: [sorryAx]\n'PrivacyFrames.Identity.trace_counter_matches_outputs' depends on axioms: [sorryAx]\n'PrivacyFrames.Identity.trace_identity_bounds' depends on axioms: [sorryAx]\n'PrivacyFrames.Identity.trace_strictly_increasing' depends on axioms: [sorryAx]\n'PrivacyFrames.Identity.trace_unique' depends on axioms: [sorryAx]\n'PrivacyFrames.Identity.trace_exhaustion_stable' depends on axioms: [sorryAx]\n'PrivacyFrames.Identity.distinct_scopes_distinct_identities' does not depend on any axioms\n"
+    }
+  ],
+  "completedAt": "2026-11-21T18:09:06.709693+00:00"
+}

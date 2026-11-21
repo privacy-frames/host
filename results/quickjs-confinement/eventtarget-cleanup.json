@@ -2,12 +2,13 @@
   "scope": "Actual BrowserEnvironment and GuestEngine listener cleanup, native EventTarget conversion-trace comparison and isolated restoration of original conversion/early-abort cleanup behavior. No network escape claim.",
   "baselineListenerBlockSHA256": "19b219ed9182a1eec30ef625e139b2d9ac0d064eb751917cd1ca72ffeb7d3eb3",
   "sourceHashes": {
-    "src/guest/browser.ts": "bf056d51e99ded19d87adb42f8ba58261f8a85112ad945e9ffad54b465ff6ad6",
-    "src/guest/engine.ts": "1ac27fbec1bd3d9a83c91f410830c845039663df47a05b70f8748bfcc11ae78b",
+    "src/guest/browser.ts": "c598247101e98649562ad847a51e3db618d1b29039cf001682e19d9a9ee1e8d1",
+    "src/guest/event-policy.ts": "04b6c5c11b185b3359931505b50fc147ea0e6195d2acf7cc1792260bf7387c82",
+    "src/guest/engine.ts": "f47d9f29180bf54561025352567648768dcb0cfc2b01519ee218ac7e447f6027",
     "src/guest/session.ts": "7d6566044cec86e7ee1bd8629cc05bbcf89c62915d8dc4e415a5eb5d5b413f55",
     "src/guest/event-listener-arguments.ts": "f5219d8d8da8d9f5d67f0afb46756a2e7ef55003b64fc846dafccf134c27a080",
-    "test/guest-eventtarget-cleanup.browser.ts": "30731e26a0b39089fa2d9d662c94ea289bb2af379de2f48ea29678eb28c26d19",
-    "test/guest-eventtarget-cleanup.ts": "c06588014717683a64a7ca7adac36f1d94393609aa55df64f9bc97a658aece78"
+    "test/guest-eventtarget-cleanup.browser.ts": "5615bb85d55df6121c904eb059359c9f8a505999974eae9a69f7b6ee65736ce0",
+    "test/guest-eventtarget-cleanup.ts": "3a1c5869c4815ff2f0de39298ddf848a743d3a2584781fd4ebfa783428355f70"
   },
   "transitiveInputHashes": {
     "node_modules/@jitl/quickjs-ffi-types/dist/index.mjs": "5b6ccfe50a0d0066411135c66964b0c15c05167f5324df2e8066493da807efbe",
@@ -171,7 +172,8 @@
     "node_modules/xmlchars/xml/1.0/ed5.js": "ea350479ab6f6553c0c3395c30ec440fb39821f6902081939831ddf1b5e8fd0f",
     "node_modules/xmlchars/xml/1.1/ed2.js": "461d5c71cc6076dc16aebbfd2d3c506481df5a74f43631d82372a6ffdc239d69",
     "node_modules/xmlchars/xmlns/1.0/ed3.js": "ff14ffa3a2cdfdd1b6077c4a8443dc949f53d5bb56de5ed89d4dbc5d9fdf08f7",
-    "src/guest/browser.ts": "bf056d51e99ded19d87adb42f8ba58261f8a85112ad945e9ffad54b465ff6ad6",
+    "src/guest/browser-policy.ts": "1a33de5c6a021e3618ecd9d7847a6fa1749b2e0497f964b1c6f19b0d96d9a8c7",
+    "src/guest/browser.ts": "c598247101e98649562ad847a51e3db618d1b29039cf001682e19d9a9ee1e8d1",
     "src/guest/contexts/audio-worklet.ts": "8706554251c0020af6599b599e306b3e0e9cffceebd31ce739c825071e789577",
     "src/guest/contexts/brands.ts": "d0b5d97c4e97a71e13408adb1bc0b46c00e2d2c13cf3bb1320fbe9d1bf4a94e5",
     "src/guest/contexts/documents.ts": "02ce86f6e8ef962eb48eb84c88b012613d91728fffe752f4a600f3cd8d8746f0",
@@ -182,8 +184,9 @@
     "src/guest/css.ts": "b68e6cc3d240974a17510cef30dbe5bed5a5b4e50eb1639286c601d81db633e3",
     "src/guest/custom-elements.ts": "ff3cf0ab9c85bee1f74d6198431c01615e1c6e9cf198dd4b9fc68d78a045cb0d",
     "src/guest/dom.ts": "75a654d384521c8c7153bf55bfe71f19ed1eab3b27d1c60fa37241aa300e764a",
-    "src/guest/engine.ts": "1ac27fbec1bd3d9a83c91f410830c845039663df47a05b70f8748bfcc11ae78b",
+    "src/guest/engine.ts": "f47d9f29180bf54561025352567648768dcb0cfc2b01519ee218ac7e447f6027",
     "src/guest/event-listener-arguments.ts": "f5219d8d8da8d9f5d67f0afb46756a2e7ef55003b64fc846dafccf134c27a080",
+    "src/guest/event-policy.ts": "04b6c5c11b185b3359931505b50fc147ea0e6195d2acf7cc1792260bf7387c82",
     "src/guest/generated-runtime-interfaces.ts": "55fa35f2d27fe9b123c74f77a229a2a64b86ace4f2883e5fb70715d851117182",
     "src/guest/guest-binary.ts": "da8dbde72247dd7b85b52bac138ddafa14f778729ceec34cf11eca0b924dea32",
     "src/guest/guest-runtime.ts": "058930f5f581f18210f636c210c0dbba27e51a145826c2adcb95d3295436bc1d",
@@ -207,7 +210,7 @@
     "src/guest/url-policy.ts": "cd9c54875cac49c55634b910e723abe0fc5c402f429107eefbb910ce79d54d7a",
     "src/guest/wasm-accessors.ts": "7e03c8e70638d2d861392ec0b2ed40867c638bfcbb26774fbf1e240b2b18589b",
     "src/guest/web-services.ts": "429fa17d217a6f7a155b6e80e7ff8b062eb5077b78dd19bc635da9417147266d",
-    "test/guest-eventtarget-cleanup.browser.ts": "30731e26a0b39089fa2d9d662c94ea289bb2af379de2f48ea29678eb28c26d19",
+    "test/guest-eventtarget-cleanup.browser.ts": "5615bb85d55df6121c904eb059359c9f8a505999974eae9a69f7b6ee65736ce0",
     "vendor/quickjs/generated/engine.mjs": "60147727aeb5c4441d54ad7b3c625e952bec7faa8db8531522eb71dd9ab9da2e"
   },
   "toolchain": {
@@ -216,12 +219,12 @@
   },
   "engineSHA256": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
   "bundleHashes": {
-    "production": "07febf9628b19ef7a0085d37b8c6293742baa4a9a190d3d509d295ae36aef849",
-    "conversion": "c4c507518abd2357373732d2b2ccc21bd77dc3482df9da9b41af9b83018bb85a",
-    "cleanup": "0bfb39b58cccc0d790b01c1aeeafd03b24a53bf61e7498111cce3a62a273c055"
+    "production": "97b0618ae540af8f24c59e0a795dcd2539392a6724a6953edaace7b4780a91b6",
+    "conversion": "44557f6b69bae70ba84f8994df81845aee1da822f3747c89f15e0b8431aea3e3",
+    "cleanup": "6a0a00f78e8e40f809ed90543ef0ce3c69acb94003428f5a9638c5c6bb640d57"
   },
   "controls": [
-    "Restore original listener conversion/bookkeeping block from48a97d6",
+    "Restore post-registration conversion/bookkeeping in generic and selected EventTarget adapters (historical block from 48a97d6)",
     "Omit BrowserEnvironment local cleanup error containment"
   ],
   "receipts": [
@@ -440,5 +443,5 @@
       "rejected": true
     }
   ],
-  "completedAt": "2026-11-21T16:43:28.032Z"
+  "completedAt": "2026-11-21T18:51:02.903Z"
 }

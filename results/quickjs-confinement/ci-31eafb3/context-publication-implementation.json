@@ -1,0 +1,218 @@
+{
+  "scope": "Direct deductive verification of the actual three context publication kernel functions after TypeScript erasure. Caller hashes identify reviewed integration; they are not caller correctness proofs.",
+  "source": "src/guest/contexts/lifecycle-kernel.ts",
+  "sourceSHA256": "93a3711767ee0e6071ed0a3ebdebf3231179fd54671c639ed382243c13aa3179",
+  "runnerSHA256": "de7af5dfe9bb13da024467bae19ac3d0e1faba3099302892710b791ec39593a0",
+  "toolchain": {
+    "gillianImage": "ghcr.io/gillianplatform/gillian@sha256:ce41de968aba0964774e1929416ce60b9c3b770d2e58f96e63990b629cfe2ed6",
+    "typescript": "6.0.3",
+    "mode": "verify"
+  },
+  "assumptions": [
+    "The native private state owns writable token and closed data properties; old and retained tokens remain ordinary live objects.",
+    "JavaScript fresh object identity, TypeScript erasure, parser/extractor, Gillian semantics, verifier and solver are trusted.",
+    "Browser lifecycle, AbortSignal behavior, caller ownership and native callbacks require separate integration contracts."
+  ],
+  "callerHashes": {
+    "src/guest/contexts/documents.ts": "02ce86f6e8ef962eb48eb84c88b012613d91728fffe752f4a600f3cd8d8746f0",
+    "src/guest/contexts/window-contexts.ts": "b38d44e2dd955c36894abb587b9e28dc82397e0845924077e940c8b7c656ec7a",
+    "src/guest/session.ts": "7d6566044cec86e7ee1bd8629cc05bbcf89c62915d8dc4e415a5eb5d5b413f55",
+    "src/guest/browser.ts": "bf056d51e99ded19d87adb42f8ba58261f8a85112ad945e9ffad54b465ff6ad6"
+  },
+  "results": [
+    {
+      "name": "begin",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "beginContextPublication",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "00805be1b30f7dad6bb9e040883cf0cae68029ced7473c447fc029eeb8fa7297",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "99c6193e49951c6c7b323c559af24c83d4812815cbd15290b230a2a16939e86a",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.045863\nVerifying one spec of procedure beginContextPublication... s Success\nAll specs succeeded: 0.110822"
+    },
+    {
+      "name": "close",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "closeContextPublication",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "842287176a849fd319f2d73ff3600b7a2e53322f8960f428352466b21dc377d5",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "f59aa78dc6871d7b3e17b8e2b7b1365091075306ecc8beb0b73fed6d3b2573d4",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.046626\nVerifying one spec of procedure closeContextPublication... s Success\nAll specs succeeded: 0.111677"
+    },
+    {
+      "name": "begin-retained",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "beginContextPublication",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "40fa2a0791c962c2c055d7852c2baf9a29b5933da9de9d305342e669b7e695de",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "fe5cf701c42be574f01f8152e22a8d9c140ef3140d9cc919b72afd91aaa723bc",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.046300\nVerifying one spec of procedure beginContextPublication... s Success\nAll specs succeeded: 0.119653"
+    },
+    {
+      "name": "close-retained",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "closeContextPublication",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "934e018bedb73439e75524284b8d3d73b24807b8fd04b46d0da61333ddd7fd25",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "32120d7b7c38583b8c39a8a84d8663db7db377d69b03a18c5d4cc915d24fc29a",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.047068\nVerifying one spec of procedure closeContextPublication... s Success\nAll specs succeeded: 0.121490"
+    },
+    {
+      "name": "current-live",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "isCurrentContextPublication",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "56a1e8b657934a4ada05e9ed4911004702c219c0007c7698dcb342a3537102fa",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "927f7a336402ed3611efc934be1d1c1a7719eb01e9ee41d7d7f8faaf3d3f5ad7",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.045881\nVerifying one spec of procedure isCurrentContextPublication... s Success\nAll specs succeeded: 0.078369"
+    },
+    {
+      "name": "current-closed",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "isCurrentContextPublication",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "63b8cd1ef3a2b77f55236b33dbd4e28d456e703f4ec17f684ba62f066cebbde7",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "d003e9d41f1ebef31e52ea7ef07466e9121b92abb2da4c35daf212646ff721e9",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.045900\nVerifying one spec of procedure isCurrentContextPublication... s Success\nAll specs succeeded: 0.070139"
+    },
+    {
+      "name": "stale-live",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "isCurrentContextPublication",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "c2ffc08cd9f2a30b2d97feea98b7c292694d16751f1963314bd8c6650a3d77c3",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "1319f04f5e039b054d63bd820749a3706dd77d91c58de2bf63700e5dad3c0209",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.046381\nVerifying one spec of procedure isCurrentContextPublication... s Success\nAll specs succeeded: 0.083094"
+    },
+    {
+      "name": "stale-closed",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "isCurrentContextPublication",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "f4cdb0b68b73d096906109bc806ac9cd1e38f1577069c973bfb457d3f6031a3b",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "dce1a99df5f2ed795fa3e5821185250ef5cc1d6097fef685763edbd31a100e08",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.045973\nVerifying one spec of procedure isCurrentContextPublication... s Success\nAll specs succeeded: 0.072414"
+    },
+    {
+      "name": "begin-reuses-token",
+      "expectedSuccess": false,
+      "checkedProcedures": [
+        {
+          "procedure": "beginContextPublication",
+          "paths": 1,
+          "failedPaths": 1
+        }
+      ],
+      "exitCode": 1,
+      "inputSHA256": "9f344d0856886006024514639e204664356d5829cd9dbbc64d7981fef22686d1",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "46e92ad496d8bdb09776c32bf8470cb9f491442443ef95b8d25b775a9f7994d1",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.046446\nVerifying one spec of procedure beginContextPublication... f Failure\nThere were failures: 0.111703\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+    },
+    {
+      "name": "close-stays-live",
+      "expectedSuccess": false,
+      "checkedProcedures": [
+        {
+          "procedure": "closeContextPublication",
+          "paths": 1,
+          "failedPaths": 1
+        }
+      ],
+      "exitCode": 1,
+      "inputSHA256": "682f203d261e585ee2a690e80b4903238acd1e53c92da243a9eb9e5b4b9b11f9",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "b95d098dcca08ca64e9cba756aafb70e1414498ddf754529a2dbf26fa98310bf",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.045926\nVerifying one spec of procedure closeContextPublication... f Failure\nThere were failures: 0.110462\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+    },
+    {
+      "name": "ignores-closed",
+      "expectedSuccess": false,
+      "checkedProcedures": [
+        {
+          "procedure": "isCurrentContextPublication",
+          "paths": 1,
+          "failedPaths": 1
+        }
+      ],
+      "exitCode": 1,
+      "inputSHA256": "8c6c9759728c798afefed61c9ea61d9e0d2261d57f6e86a0c3dfc0f67972672b",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "e447a1e1e71dd728d8029b91b80e59e3526f40035bf498b6b68f96432bfa2ba5",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.046783\nVerifying one spec of procedure isCurrentContextPublication... f Failure\nThere were failures: 0.071028\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+    },
+    {
+      "name": "ignores-identity",
+      "expectedSuccess": false,
+      "checkedProcedures": [
+        {
+          "procedure": "isCurrentContextPublication",
+          "paths": 1,
+          "failedPaths": 1
+        }
+      ],
+      "exitCode": 1,
+      "inputSHA256": "ae347e56f5049518dd0574440e434d1b1984d52ad0e2876c973327e7f40166fb",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "7ce25eee85dbe8d7b5de003c72627c4385fb925f7422f10a9782e8089ca63379",
+      "outputSummary": "Parsing and compiling...\nPreprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 1 symbolic tests in total\nRunning symbolic tests: 0.047181\nVerifying one spec of procedure isCurrentContextPublication... f Failure\nThere were failures: 0.070983\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+    }
+  ],
+  "missingContractControl": "rejected",
+  "completedAt": "2026-11-21T18:09:17.453Z"
+}

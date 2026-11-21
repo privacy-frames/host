@@ -1,0 +1,35 @@
+{
+  "scope": "Controlled tests of actual audio-worklet source and helper bookkeeping; selected browser integration when requested. Not a complete worklet confinement proof.",
+  "sourceRevision": "31eafb3e36b30c81dfd65d27e166af4e63104900",
+  "node": "v24.22.3",
+  "sourceHashes": {
+    "src/guest/contexts/audio-worklet.ts": "8706554251c0020af6599b599e306b3e0e9cffceebd31ce739c825071e789577",
+    "src/guest/contexts/worklet-entry.ts": "77c5ce4f0c7eef3322bf288ca9aa491c98e4b81237845bc42c42187cac2ada75",
+    "src/guest/contexts/worklet-runtime.ts": "e43316cbdfaf8720a96457975ce02c426056ba64449646be7f5f28b7669458cd",
+    "src/guest/contexts/lifecycle-kernel.ts": "93a3711767ee0e6071ed0a3ebdebf3231179fd54671c639ed382243c13aa3179",
+    "src/guest/contexts/processor-name.ts": "0f90b774357d6b8c5279d6a887f4f279282bee68d682002c535e40763adef5e2",
+    "src/guest/identity.ts": "e067e5dea7a2b036ced0905abd77e6a40f187ec2a3231466b1825a2e84b8c748",
+    "test/guest-audio-worklet.test.ts": "e490aeb07996a9a35150faf9a84dcd895170475825f90c131bd8ad63b4adacf4",
+    "test/guest-worklet-bootstrap.test.ts": "4b85f1013912ad6b9b4519ac5e6799e715d36634b772e46c98647016af9dc2ab",
+    "test/guest-worklet-runtime.test.ts": "3068e90294dd95f092315d021c56ca22fff23eba88f3c344199007c1b82c4394"
+  },
+  "runnerSHA256": "2732c59f613db731f7cbfc578926515b4865cae485818650c6216a8ad55e4e09",
+  "unit": {
+    "tests": 12,
+    "passed": 12,
+    "failed": 0,
+    "outputSHA256": "e50b722310b54b056033b884330d6f08bd550f412ebc933a5c6500f1b43fee7f",
+    "actualLateCloseGuardRemovalDetected": true
+  },
+  "browser": {
+    "checked": false,
+    "observations": [],
+    "artifacts": {}
+  },
+  "remaining": [
+    "Native worklet host operation mediation.",
+    "Caller ownership/private-port authentication and browser worklet/message lifetime contracts.",
+    "Composition with the verified shared publication kernel and the full guest boundary."
+  ],
+  "completed": "2026-11-21T18:09:30.585Z"
+}
