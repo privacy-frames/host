@@ -54,6 +54,12 @@ provides browser interfaces and forwards permitted operations to real DOM nodes,
 canvas contexts, audio graphs and storage. Callbacks can enter the interpreter
 synchronously, preserving event cancellation.
 
+The verification work replaces general native forwarding with explicit operation
+rules. URL handling, text codecs, buffers, selected events, abort signals and Wasm
+have reviewed receiver and member contracts. Browser families still using general
+forwarding remain part of the unfinished
+[confinement argument](https://github.com/privacy-frames/host/blob/quickjs-confinement-kernel/formal/quickjs/README.md).
+
 Application Wasm executes in the browser and receives imports through the same
 guest policy. Memory retains its native browser identity. Numeric indexing of
 fixed, non-shared Wasm views calls small Wasm accessors from inside the interpreter.
