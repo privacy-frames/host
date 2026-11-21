@@ -1,9 +1,10 @@
-# Ownership and effects in the QuickJS runtime
+# Baseline ownership and effects in the QuickJS runtime
 
 Baseline source: `4d0601437edab175e792165c4ffbe8aef2c13eae`.
-Qualified executable source: `5f62e61d6599904fad7c7ad56822e40e76c024c9`.
-This inventory identifies proof obligations in the current implementation. It
-records source ownership separately from a proof that an owner enforces a contract.
+This is a historical inventory of the starting architecture at that source
+revision. It is retained to explain the original proof obligations, not to describe
+the current integration. Use the [current security argument](README.md#security-argument)
+for the C1–C8 enforcement, premises, evidence and remaining gaps.
 
 | Obligation                        | Implementation owners                                                                                                     | Required contract                                                                                                                                  |
 | --------------------------------- | ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -39,8 +40,8 @@ invalidation and disposal paths.
 ## Native operation crossings
 
 The browser host exposes get, set, call, construct, delete, ownKeys, descriptor and
-prototype operations. Current get/set/invoke paths contain general native
-reflection after specific adapters. The new policy must cover those fallbacks,
+prototype operations. At the baseline, get/set/invoke paths contained general native
+reflection after specific adapters. Complete mediation must cover those fallbacks,
 not merely constructor exposure. Getter execution itself requires authorization.
 
 A reflected native method is wrapped with a remembered property key. Its contract
@@ -56,8 +57,7 @@ code consumes, including when conversion executes a guest callback.
 
 ## Verification status
 
-Fresh baseline and verifier-calibration results are being collected under
-`results/quickjs-confinement/`. No combined implementation confinement proof has
-been established for this architecture. Component proofs will name their actual
-production functions, native contracts and caller obligations before being used
-in the composition theorem.
+This inventory predates the integrated native-family policies and later lifecycle
+checks. Baseline receipts remain under `results/quickjs-confinement/baseline/`.
+Current component evidence and qualification limits are linked from the
+[security argument](README.md#security-argument).

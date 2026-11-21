@@ -1,11 +1,19 @@
-# Confinement claim ledger
+# Historical native-runtime claim ledger
+
+This ledger records the earlier native-JavaScript architecture at source baseline
+`0f0d43cda8bdfbeccfc5846cea7af1d4bba69e7b`. It does not cover the current QuickJS
+implementation. Some referenced implementation paths have since been removed;
+running its drift checker against the current tree cannot qualify this build.
+Use the [current security argument](../quickjs/README.md#security-argument) for the
+active invariant, enforcement, premise, evidence and gap map. Preserve these
+historical hashes rather than refreshing them to imply a new review.
 
 [`ledger.json`](ledger.json) links a bounded set of communication routes and
 authority decisions to the code, tests, model results and open obligations that
 bear on each one. It records native controls, confined tests, actual fault
 controls, abstract model faults and trace comparisons as different evidence.
 An older vulnerable build is recorded separately from an isolated mutation of
-the current defense.
+the defense at its recorded revision.
 `deductive_verification` records a program verifier's result under its supplied
 preconditions and toolchain assumptions. It does not imply an independently
 kernel-checked certificate. Read the source correspondence and heap assumptions
@@ -14,7 +22,7 @@ before applying that result to a caller.
 reviewed; it is not a claim of complete mediation. `unverified` identifies a
 route for which the ledger records no established mitigation.
 
-Run the offline structural and drift check from the repository root:
+For the historical snapshot, the offline structural and drift check is:
 
 ```sh
 python3 formal/claims/check.py

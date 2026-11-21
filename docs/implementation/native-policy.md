@@ -6,18 +6,25 @@ It records their effect, result and callback contracts and captures the exact
 accessor or function that implements each operation. Members absent from the schema
 are refused before a native getter, setter or method runs.
 
-The registry is a component for the confinement implementation. Its tests establish
-selected registry properties. The browser bridge, worklet host, native-binary and
-native-Wasm domains still need their own integration and semantic contracts.
+The registry is integrated with the standalone URL and text families, native Wasm,
+and the worklet/MessagePort host. BrowserEnvironment routes claimed URL and text
+objects to their reviewed owners. Browser and NativeBinary still contain generic
+native forwarding; these integrations do not establish complete mediation of those
+domains. The [security argument](../../formal/quickjs/README.md#security-argument)
+locates the remaining implementation and browser obligations.
 
 ## Registration and ownership
 
 Register base prototypes before derived prototypes. A prototype schema captures
 only explicitly named own descriptors. Call `admitObject` only on values produced
-by a reviewed native operation. Admission requires a registered immediate prototype,
-records its registered ancestry and checks any supplied brand guards. Structural
-prototype matching does not establish that an arbitrary object is a legitimate
-native result; the producer's contract establishes that premise.
+by a reviewed native operation. Ordinary admission requires a registered immediate
+prototype, records its registered ancestry and checks any supplied brand guards. A producer may instead
+supply a reviewed semantic anchor with a registered native brand guard. Anchored
+admission uses that reviewed lineage and checks own shadows; it neither walks nor
+enrolls foreign physical ancestors. Prototype traversal returns the reviewed
+anchor. This supports cross-realm Wasm brands without trusting foreign methods or
+getters. In both forms, the producer's contract must establish that the value is a
+legitimate result with the required authority provenance.
 
 `registerFacade` admits one exact host-created instance. Its explicit members may
 be inherited from the facade's private implementation prototype. The same schema
@@ -28,8 +35,11 @@ can also serve worker and worklet adapters.
 
 The registry and its tokens remain private to trusted host code. A token contains
 contract metadata, not its native function. Calls accept only tokens minted by that
-registry. The host must wrap tokens for guest use and must never expose registry
-methods or native function references as guest authority.
+registry. The shared host codec normally wraps tokens for guest use. It may also
+bind an explicit call token to an original native Wasm funcref, preserving its native
+identity for tables, globals and imports. Publication of that reference still
+requires mediated call dispatch; the native reference alone grants no registry
+permission. Registry methods remain private.
 
 ## Reading, calling and construction
 
@@ -37,7 +47,10 @@ methods or native function references as guest authority.
 callable token, or a constructor token. Registered methods become callable tokens
 without executing their bodies. Accessors run their reviewed read adapter after
 receiver and descriptor checks. A returned function receives no implicit authority:
-it must already have an explicit callable or constructor registration.
+it must already have an explicit callable or constructor registration. A
+`delegated` result passes the value unchanged without minting either token. Its
+existing owner remains responsible for any subsequent use; the producer must not
+use delegation to bypass ownership classification.
 
 `call` checks token ownership, the registered receiver family, current brand guards
 and the captured descriptor before invoking its adapter. Standard borrowed methods
@@ -49,8 +62,11 @@ receiver and may use a native global captured in its own closure when required.
 descriptor. `construct` requires its token and rejects changed prototype identity
 before running the constructor adapter. A function can have both a call token and
 a construct token; the callable result includes both permissions when registered.
-The constructor adapter must implement any required argument conversion, resource
-rewriting or guest execution policy before using native construction.
+The shared codec preserves both permissions and stable constructor identity;
+construction alone never authorizes an ordinary call. This matters for Wasm error
+constructors, which support both forms. The constructor adapter must implement any
+required argument conversion, resource rewriting or guest execution policy before
+using native construction.
 
 A callable's canonical contract includes its ID, effect, result and callback rules,
 adapter function identity and receiver mode. Equivalent aliases share a token and
@@ -176,3 +192,19 @@ Run its independent native controls and denial checks with:
 ```sh
 node --import tsx --test test/guest-url-policy.test.ts
 ```
+
+## Integrated families
+
+The [text family](../../formal/quickjs/text-policy.md) classifies native encoders
+and decoders. Its buffer results return to NativeBinary; text ownership does not
+establish buffer ownership or lifetime.
+
+The [native Wasm family](../../formal/quickjs/native-wasm-policy.md) records its
+explicit members, semantic anchors, delegated externrefs and exact native funcref
+publication. Wasm function branding does not prove that hidden imports are confined;
+that requires the reviewed instantiation/import producer contract.
+
+The [worklet/MessagePort family](worklet-policy.md) classifies its native operations,
+message delivery and transfer conversion. Native callback ordering and engine
+ownership remain caller and browser obligations. The linked fixtures exercise
+production routes and include controls that remove selected enforcement steps.

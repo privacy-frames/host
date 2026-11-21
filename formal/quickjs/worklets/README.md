@@ -83,7 +83,9 @@ The current Chromium and Firefox checks retain the expected 0.25 offline-audio
 sample, processor messages, transferred-buffer detachment and native Wasm availability.
 Results are candidate-source evidence, not deployed-upgrade verification.
 
-The worklet host still has general native get/set/call/construct forwarding.
-Complete mediation of that host belongs to the native-operation policy work.
+The worklet host now routes native operations through an explicit
+[worklet and MessagePort policy](../../../docs/implementation/worklet-policy.md).
+That policy classifies operations before execution; its family contracts and
+producer registrations still require composition with the guest engine.
 Private bootstrap delivery, engine-module provenance, MessagePort ordering and
 browser worklet lifetime require their own contracts and browser evidence.
