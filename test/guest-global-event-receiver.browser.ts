@@ -8,7 +8,7 @@ const source = `(() => {
     const remove = source === 'global' ? removeEventListener : EventTarget.prototype.removeEventListener;
     const dispatch = source === 'global' ? dispatchEvent : EventTarget.prototype.dispatchEvent;
     for (const [kind, receiver] of [['undefined', undefined], ['null', null],
-        ['plain', {}], ['window', window], ['target', new EventTarget()]]) {
+        ['html-dda', document.all], ['plain', {}], ['window', window], ['target', new EventTarget()]]) {
       let count = 0, error, cancelled, removed;
       const callback = event => { count++; event.preventDefault(); };
       try {
@@ -77,14 +77,21 @@ async function run() {
     check(typeof method === 'function', 'Canonical global method published');
     const foreign = foreignFrame.contentWindow;
     check(foreign, 'Unprepared window exists');
-    for (const receiver of [{}, foreign, foreign.document.body]) {
+    for (const receiver of [document.all, {}, foreign, foreign.document.body]) {
       let refused = false;
       try {
         session.environment.host.call(method, receiver, ['foreign', callback]);
       } catch {
         refused = true;
       }
-      check(refused, 'Plain and unprepared receivers remain refused');
+      check(refused, 'Non-null objects and unprepared receivers remain refused');
+      let directRefused = false;
+      try {
+        Reflect.apply(method, receiver, ['foreign-direct', callback]);
+      } catch {
+        directRefused = true;
+      }
+      check(directRefused, 'Direct wrapper preserves non-null receiver refusal');
     }
     // A native consumer can invoke the decoded canonical method directly.
     await new Promise<void>((resolve, reject) =>

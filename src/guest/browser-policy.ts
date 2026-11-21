@@ -48,7 +48,8 @@ export function createBrowserPolicy(options: BrowserPolicyOptions) {
         globalReceiverContracts.add(contract);
     },
     normalizeReceiver(receiver, contract) {
-      return receiver == null && globalReceiverContracts.has(contract)
+      return (receiver === null || receiver === undefined) &&
+        globalReceiverContracts.has(contract)
         ? options.global
         : receiver;
     },

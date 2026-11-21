@@ -49,7 +49,9 @@ test('reviewed receiver normalization precedes admission on codec and direct wra
     functionPrototype: Function.prototype,
     callablePublished: (_target, contract) => contracts.add(contract),
     normalizeReceiver: (receiver, contract) =>
-      receiver == null && contracts.has(contract) ? target : receiver,
+      (receiver === null || receiver === undefined) && contracts.has(contract)
+        ? target
+        : receiver,
   });
   host.captureCallableShape('Local.method', prototype.method);
   const method = host.get(target, 'method');
