@@ -21,6 +21,14 @@ async function run() {
   document.body.append(foreignFrame);
   const foreignWindow = foreignFrame.contentWindow;
   check(foreignWindow, 'Unprepared native window exists');
+  // Manual preparation owns this frame; insert it before the parent's DOM observer.
+  const childFrame = document.createElement('iframe');
+  await new Promise<void>((resolve) => {
+    childFrame.addEventListener('load', () => resolve(), { once: true });
+    document.body.append(childFrame);
+  });
+  const childWindow = childFrame.contentWindow;
+  check(childWindow, 'Prepared child native window exists');
   const catalog: GuestContextCatalog = {
     application: 'browser-policy-fixture',
     generation: 'fixture-generation',
@@ -141,10 +149,6 @@ async function run() {
     );
     check(unknownReads === 0, 'Unknown native event getters never execute');
 
-    const childFrame = document.createElement('iframe');
-    document.body.append(childFrame);
-    const childWindow = childFrame.contentWindow;
-    check(childWindow, 'Prepared child native window exists');
     const child = await createGuestWindow(catalog, childWindow);
     try {
       await child.engine.evaluate(
@@ -336,6 +340,7 @@ async function run() {
   } finally {
     session.close();
     foreignFrame.remove();
+    childFrame.remove();
     for (const name of [early, late, '__pf_event_alias__'])
       Reflect.deleteProperty(EventTarget.prototype, name);
   }
