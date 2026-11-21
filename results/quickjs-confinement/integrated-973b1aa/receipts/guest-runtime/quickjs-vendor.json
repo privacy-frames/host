@@ -1,0 +1,49 @@
+{
+  "sourceCommit": "0cfa0ad656e13f5c5c36cc4c269ab87c4eaed422",
+  "engine": {
+    "version": "2025-09-13",
+    "bindings": "0.32.0",
+    "sourceHash": "0333d06bb2c9e09dae2e7ee6cd77b1a11988ff1642a6e4e428fd99ce42f7f840",
+    "wasmHash": "4f006f23e7ab871b55ef367a4e58cba65eb36c54eb2ce9b83b168fcc309b786a",
+    "loaderHash": "ab11301f9864827be21e47898b87d97e3e7fd99843f6645526f54578ba14225c",
+    "toolchain": "emscripten/emsdk:5.0.1@sha256:c89732ef63a56de5a96395c5a8c1c7904f7420131a045406e6fedc4cbe1cc198",
+    "optimization": [
+      "-O3",
+      "-flto"
+    ]
+  },
+  "checks": {
+    "npm test": "passed",
+    "npm run typecheck": "passed",
+    "npm run format:check": "passed",
+    "npm run build": "passed (npm test preparation)",
+    "unitTests": 106,
+    "freshDependencyInstall": "passed, including patched ArrayBuffer backing API",
+    "repeatedCleanCompilation": "byte-identical Wasm and loader"
+  },
+  "maintenance": {
+    "passed": true,
+    "samples": 122,
+    "confinedSamples": 60,
+    "confinedHTTPRequests": 0,
+    "profiles": {
+      "chromium": "153.0.8010.12",
+      "firefox": "155.0",
+      "firefox-forced-age": "155.0"
+    },
+    "artifactHashes": {
+      "guard.js": "b16561b5cad48bfc507919be3a5c67a90ee9976ee980b77f5f0a39f250aba4e7",
+      "sw.js": "452e663dc00e1e2c63cd6d8d6a4939abcedd7691be890afc072c7d1c64654ce1",
+      "guest-worker.js": "6dd3c13d9c4d1b9727b70718423031379288a1a7c3db20014e3d6463d3aa5ed8",
+      "guest-shared-worker.js": "9783575464f7b94a4668b5a62c3c68f0197afdcf731372423f1314c810136b01",
+      "__guest_worker_registry__.js": "106b77a615aff3a3bdc0c29b349894b596006a01078a1d7f8c1a167bbce664fc",
+      "engine.wasm": "4f006f23e7ab871b55ef367a4e58cba65eb36c54eb2ce9b83b168fcc309b786a"
+    }
+  },
+  "scope": {
+    "runtimeUsesVendoredEngine": true,
+    "directExternalMemoryAccessImplemented": false,
+    "publicDeploymentPerformed": false,
+    "squooshPerformanceMeasured": false
+  }
+}

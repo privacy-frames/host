@@ -1,0 +1,346 @@
+{
+  "scope": "Reviewed audio worklet host and MessagePort producer family. Actual QuickJS audio sample/transfer/nativeWasm compatibility in two browsers, scoped native capability tests, omitted registry getter mediation control, and existing actual bootstrap cancellation control. Other browser families remain outside this claim.",
+  "premises": [
+    "Processor endpoints are supplied only by host-created confined AudioWorkletNodes.",
+    "Native delivered event.ports contains confined producer endpoints; management endpoints are never transferred into application channels.",
+    "Browser event/structured-clone semantics and QuickJS remain trusted; storage namespace isolation is not claimed."
+  ],
+  "sourceHashes": {
+    "src/guest/browser.ts": "29bfc02e08dc78491e189c77efd4cf04506c88e2a2bd5fb4892b9f539d544250",
+    "src/guest/catalog.ts": "eedf4c12a469b8f7fc00b641d235a90cd1c563aebf38fdb20c433b8470d62429",
+    "src/guest/contexts/audio-worklet.ts": "8706554251c0020af6599b599e306b3e0e9cffceebd31ce739c825071e789577",
+    "src/guest/contexts/brands.ts": "fc87c235cf08fd6ab8dce72d81ca95ad2a94b86da06cc5438d1f1c8bbd6320d6",
+    "src/guest/contexts/documents.ts": "02ce86f6e8ef962eb48eb84c88b012613d91728fffe752f4a600f3cd8d8746f0",
+    "src/guest/contexts/lifecycle-kernel.ts": "93a3711767ee0e6071ed0a3ebdebf3231179fd54671c639ed382243c13aa3179",
+    "src/guest/contexts/processor-name.ts": "0f90b774357d6b8c5279d6a887f4f279282bee68d682002c535e40763adef5e2",
+    "src/guest/contexts/types.ts": "32101be0f8add2fcdea4e47085e6b206a3c254a870248f78ef33aad0a33526c6",
+    "src/guest/contexts/utf8.ts": "377a09eab40a71a79625ff80ef8b6f9ea72cd880f742ce1ead72778cffbb257e",
+    "src/guest/contexts/window-contexts.ts": "b38d44e2dd955c36894abb587b9e28dc82397e0845924077e940c8b7c656ec7a",
+    "src/guest/contexts/worker-bootstrap.ts": "1bb28454f52dc32dc4237fd373c80898adb70aead4bab2d6ea10f33171a9c7b2",
+    "src/guest/contexts/worker-factory.ts": "2adfc9bcbeb86328ed549f8b86fa5ce821c4d8b1c3357a4ffe2f3583f79c1634",
+    "src/guest/contexts/worker-registry-entry.ts": "03e70810b9caa13e341eeff8c00e57402738261bb19535755674d56fa2c5d0de",
+    "src/guest/contexts/worker-registry.ts": "457548fc51ae94be777435da460037fad0acb49a8d262e8f480fc10ecd548e42",
+    "src/guest/contexts/worklet-build.ts": "03a05c0ebcbca4d49820d4a87bdb3956f926a782541df002d7a22d94bc463f2f",
+    "src/guest/contexts/worklet-entry.ts": "77c5ce4f0c7eef3322bf288ca9aa491c98e4b81237845bc42c42187cac2ada75",
+    "src/guest/contexts/worklet-policy.ts": "4dce8ed1dcc0633e1672bd72bb4d88ee3f316bc7317ef0bd1421c8616357e18e",
+    "src/guest/contexts/worklet-runtime.ts": "e43316cbdfaf8720a96457975ce02c426056ba64449646be7f5f28b7669458cd",
+    "src/guest/css.ts": "b68e6cc3d240974a17510cef30dbe5bed5a5b4e50eb1639286c601d81db633e3",
+    "src/guest/custom-elements.ts": "ff3cf0ab9c85bee1f74d6198431c01615e1c6e9cf198dd4b9fc68d78a045cb0d",
+    "src/guest/dom.ts": "75a654d384521c8c7153bf55bfe71f19ed1eab3b27d1c60fa37241aa300e764a",
+    "src/guest/engine.ts": "c80de3696a72434396e9d882e724a218750a1962cced241399602e0212bdbb3d",
+    "src/guest/generated-interfaces.ts": "5613b84ceffa52881fa6345afbd60421d8117f1aa7803719fd469899982308d4",
+    "src/guest/generated-native-members.ts": "4c40bdc3dc918fafdd3c91a215044990b99442be3a3aad735d88105390366047",
+    "src/guest/generated-runtime-interfaces.ts": "55fa35f2d27fe9b123c74f77a229a2a64b86ace4f2883e5fb70715d851117182",
+    "src/guest/guest-binary.ts": "da8dbde72247dd7b85b52bac138ddafa14f778729ceec34cf11eca0b924dea32",
+    "src/guest/guest-runtime.ts": "058930f5f581f18210f636c210c0dbba27e51a145826c2adcb95d3295436bc1d",
+    "src/guest/identity.ts": "e067e5dea7a2b036ced0905abd77e6a40f187ec2a3231466b1825a2e84b8c748",
+    "src/guest/indexed-access.ts": "5ba66e4bd8e29240a4d3def4cc97eaef5007103b26f8121f5261d492bbc86e5d",
+    "src/guest/interface-definitions.ts": "891918e1dc7086c0647d28aabaef12e65da85b344655e9e8e1f8d8565a46b179",
+    "src/guest/interfaces.ts": "dcdab9868caa5295328fa64d3b73b9f8bcc935e19f21d24f2289893682b552c7",
+    "src/guest/legacy-regexp.ts": "bbfcdccb8fab7c9a1462d91c8237f6cbe8c90be1f331c2f5f6b3629b569231bb",
+    "src/guest/location.ts": "c2a3a431be4e90823664b4bc444de40d292df821fabfff2c627c5fb750fd382a",
+    "src/guest/message-port-policy.ts": "359b9889201b4204dfc1b42eef21e2ea59bc5f775254ded7ff036d3fdd352044",
+    "src/guest/message-transfer.ts": "8b00f53fccb0a60938585573aae2d484eb3a6b86b2dd6b40d2eec21e6bd72005",
+    "src/guest/native-binary.ts": "2d0c098fdd641cf9edc5f7f958acef0fa9995766bdcbe177f925cc21ad49afd4",
+    "src/guest/native-host.ts": "95bc1d790700a317893f930e322e10f29efb22f4ef75d34cec8e8e9af8431880",
+    "src/guest/native-member-definitions.ts": "839bb0fd1a0d639619c44ccf3030217cc163c1de7a478b60d4b331c3de7933f1",
+    "src/guest/native-members.ts": "3adceade8402dd67a22ad6a410257d859e60dbe9cf36d8c9e665ccdeb19e5f0c",
+    "src/guest/native-policy.ts": "42cd5769cf3f445a49251e2945a7c391334e081d1931518d9a6a150c53cce9f4",
+    "src/guest/native-wasm.ts": "811e68270d799be50543109dec3d172a92ee3c07b2b6ac6d2e3f09a907e6369d",
+    "src/guest/parser.ts": "cf041b9ade4752b4936d5b384b65b03e154d9c12d255f543fb628c2f21e9671e",
+    "src/guest/protocol.ts": "7fd5b655bb3af74d61c345fdd3337a3f8d0185648e6452f3233df3602a95c5b8",
+    "src/guest/quickjs.ts": "ab4b6912ca399f3fa56a4a6f252b13e69561fe626e8dcf956f8ffff59a2b9d3b",
+    "src/guest/resources.ts": "fbb363fbe07bb3ea59ac7789afbe19b51099972282012daa69624789e3c90778",
+    "src/guest/runtime-interfaces.ts": "fd51bfa7d25ec78ecdd0d59adb198fe41c5119954237ee396ccee5bb6bb05103",
+    "src/guest/session.ts": "7d6566044cec86e7ee1bd8629cc05bbcf89c62915d8dc4e415a5eb5d5b413f55",
+    "src/guest/shared-worker-entry.ts": "fd591e68c5aeff07f67e7a29af738c6f433fc87fc29ff42792a0590cf09cecce",
+    "src/guest/storage.ts": "de4d5f84f07c36f7e18a20ad30261279c49c49c31b5691da7d83e0259fe8d4d3",
+    "src/guest/text-policy.ts": "4b6341120905c42380d48854b78ffadc2a8e3ee05a801b847095c5b09c333fdf",
+    "src/guest/url-policy.ts": "e0e88fbc7f643d7c3042858cb670e9a3012a1c7057c6c49067fbbe56cee769b5",
+    "src/guest/wasm-accessors.ts": "7e03c8e70638d2d861392ec0b2ed40867c638bfcbb26774fbf1e240b2b18589b",
+    "src/guest/web-services.ts": "429fa17d217a6f7a155b6e80e7ff8b062eb5077b78dd19bc635da9417147266d",
+    "src/guest/window.ts": "cd107304d556683cf7708c61dacf1c3dcce3bcbdabf82daeedcccd10c3e25106",
+    "src/guest/worker-entry.ts": "30e5d4856cb2c95c94bf7d895b9fa57e76e4d28251b2dadf5d2b549c8c80da8f",
+    "test/guest-contexts.browser.ts": "abab29e9140d9dc273dc5b50329e2957f4b8927de36b3981c09419e91a638010",
+    "test/guest-contexts.ts": "cb7610733c1baf87d6f6ce9d0b97b285a29de5717a9490eec252f39a7bbc16e1",
+    "test/guest-contexts.worker.ts": "d584334ac037ca54c068e2553e494c81a69e5aaf7105f91a8fa555b58823f41d",
+    "test/guest-worklet-bootstrap.test.ts": "4b85f1013912ad6b9b4519ac5e6799e715d36634b772e46c98647016af9dc2ab",
+    "test/guest-worklet-policy.test.ts": "2030b38d7aabd9efacacf002bbb993c14f45473e0717f597335e0a673b0a3901",
+    "test/guest-worklet-policy.ts": "3c844128222a3a9fc816780b7959e22c5e32c40eff3e8a471f96539dc4bf49dd",
+    "test/guest-worklet-runtime.test.ts": "3068e90294dd95f092315d021c56ca22fff23eba88f3c344199007c1b82c4394",
+    "vendor/quickjs/generated/engine.mjs": "60147727aeb5c4441d54ad7b3c625e952bec7faa8db8531522eb71dd9ab9da2e",
+    "vendor/quickjs/generated/engine.wasm": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8"
+  },
+  "bundleHashes": {
+    "browser": "813f438e28b0cd469e681b678141be16b41dc5eb920bb928675ceda5247a3fb2",
+    "worker": "15f72af18937a247afcd44cda10c3fb660425d4409422e105096ee5ba3c41c69",
+    "registry": "f7ae9e28bd9d5e5d74d796be03697d7ade87bad98c0f4847fc1d749fe8977f24",
+    "worklet": "f0b59f535555fb75c2477376af6dcfeb3441b8a1ae19cdb5d7a8525fdc3149ce"
+  },
+  "browserExecutables": {
+    "chromium": {
+      "path": "/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+      "sha256": "8c599d43aec53f2460a31ae2f4af6bd863f8258b34ff519564bc5d4726bfaa1e"
+    },
+    "firefox": {
+      "path": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
+      "sha256": "062272ac4d851eade5b75db2dc7c14569d96cb3ca38f949337cdc1b74367e35b"
+    }
+  },
+  "toolchain": {
+    "node": "v24.18.0",
+    "esbuild": "0.28.2"
+  },
+  "outputs": [
+    {
+      "command": [
+        "/home/damen/.local/share/mise/installs/node/24.18.0/bin/node",
+        "--import",
+        "tsx",
+        "--test",
+        "test/guest-worklet-policy.test.ts",
+        "test/guest-worklet-bootstrap.test.ts",
+        "test/guest-worklet-runtime.test.ts"
+      ],
+      "exitCode": 0,
+      "log": "/home/damen/Projects/privacy-frames-quickjs-kernel/.tools/quickjs-proof/worklet-policy/unit.log",
+      "sha256": "bb7676e973415099cf64ddb22f0fb54db08d95b36862ad7ba326778b65f4d0d6"
+    },
+    {
+      "command": [
+        "/home/damen/.local/share/mise/installs/node/24.18.0/bin/node",
+        "--import",
+        "tsx",
+        "test/guest-contexts.ts"
+      ],
+      "exitCode": 0,
+      "log": "/home/damen/Projects/privacy-frames-quickjs-kernel/.tools/quickjs-proof/worklet-policy/browser.log",
+      "sha256": "be82bc37833f0f9878d201ea68ef46ec9a421ca16b53db2eb602b48f36ae25e9"
+    }
+  ],
+  "contexts": {
+    "receipts": [
+      {
+        "browser": "chromium",
+        "version": "153.0.8010.12",
+        "observation": {
+          "result": {
+            "worker": {
+              "count": 1,
+              "same": true,
+              "bytes": [
+                1,
+                7,
+                3,
+                4
+              ],
+              "denied": true,
+              "buffer": {},
+              "binaryText": "\u0000ÿ\ud800Z",
+              "keyed": "correct",
+              "normal": "decoy",
+              "detached": true,
+              "persistentCount": 2
+            },
+            "nested": 9,
+            "moduleWorker": 11,
+            "failedTransfer": {
+              "rejected": true,
+              "retained": true
+            },
+            "denied": true,
+            "shared": [
+              1,
+              2
+            ],
+            "sample": 0.25,
+            "workletMessages": [
+              {
+                "bytes": [
+                  4,
+                  4
+                ]
+              },
+              {
+                "detached": true,
+                "wasm": "object"
+              }
+            ],
+            "nativePortDetached": true,
+            "prepared": 1,
+            "closed": 1,
+            "stripped": true,
+            "childText": "prepared child"
+          }
+        },
+        "requestURLs": [
+          "http://127.0.0.1:42641/",
+          "http://127.0.0.1:42641/browser.js",
+          "http://127.0.0.1:42641/quickjs.wasm",
+          "http://127.0.0.1:42641/worker.js",
+          "http://127.0.0.1:42641/guest-worklet.js",
+          "http://127.0.0.1:42641/__guest_worker_registry__.js",
+          "blob:http://127.0.0.1:42641/1b576902-e5c0-4340-96eb-33e4b9c3b00e",
+          "blob:http://127.0.0.1:42641/1b576902-e5c0-4340-96eb-33e4b9c3b00e",
+          "blob:http://127.0.0.1:42641/1b576902-e5c0-4340-96eb-33e4b9c3b00e",
+          "blob:http://127.0.0.1:42641/1b576902-e5c0-4340-96eb-33e4b9c3b00e",
+          "blob:http://127.0.0.1:42641/1b576902-e5c0-4340-96eb-33e4b9c3b00e",
+          "blob:http://127.0.0.1:42641/ba3ecd29-4708-4cee-a29a-575f70597f9b",
+          "http://127.0.0.1:42641/",
+          "http://127.0.0.1:42641/browser.js",
+          "http://127.0.0.1:42641/quickjs.wasm",
+          "http://127.0.0.1:42641/worker.js",
+          "http://127.0.0.1:42641/guest-worklet.js",
+          "blob:http://127.0.0.1:42641/1b576902-e5c0-4340-96eb-33e4b9c3b00e",
+          "blob:http://127.0.0.1:42641/1b576902-e5c0-4340-96eb-33e4b9c3b00e",
+          "blob:http://127.0.0.1:42641/1b576902-e5c0-4340-96eb-33e4b9c3b00e",
+          "blob:http://127.0.0.1:42641/1b576902-e5c0-4340-96eb-33e4b9c3b00e",
+          "blob:http://127.0.0.1:42641/1b576902-e5c0-4340-96eb-33e4b9c3b00e",
+          "http://127.0.0.1:42641/",
+          "http://127.0.0.1:42641/browser.js",
+          "http://127.0.0.1:42641/quickjs.wasm",
+          "http://127.0.0.1:42641/worker.js",
+          "http://127.0.0.1:42641/guest-worklet.js",
+          "blob:http://127.0.0.1:42641/94ddbca7-0a64-4e14-a96e-b527a7eb9a5f",
+          "blob:http://127.0.0.1:42641/94ddbca7-0a64-4e14-a96e-b527a7eb9a5f",
+          "blob:http://127.0.0.1:42641/94ddbca7-0a64-4e14-a96e-b527a7eb9a5f",
+          "blob:http://127.0.0.1:42641/94ddbca7-0a64-4e14-a96e-b527a7eb9a5f",
+          "blob:http://127.0.0.1:42641/94ddbca7-0a64-4e14-a96e-b527a7eb9a5f"
+        ],
+        "withoutNativeSharedWorker": {
+          "dedicated": true,
+          "nested": true,
+          "module": true,
+          "registryHTTP": 0
+        },
+        "crossRootShared": {
+          "second": [
+            3,
+            4
+          ],
+          "afterFirstRootClose": 5
+        }
+      },
+      {
+        "browser": "firefox",
+        "version": "155.0",
+        "observation": {
+          "result": {
+            "worker": {
+              "count": 1,
+              "same": true,
+              "bytes": [
+                1,
+                7,
+                3,
+                4
+              ],
+              "denied": true,
+              "buffer": {},
+              "binaryText": "\u0000ÿ\ud800Z",
+              "keyed": "correct",
+              "normal": "decoy",
+              "detached": true,
+              "persistentCount": 2
+            },
+            "nested": 9,
+            "moduleWorker": 11,
+            "failedTransfer": {
+              "rejected": true,
+              "retained": true
+            },
+            "denied": true,
+            "shared": [
+              1,
+              2
+            ],
+            "sample": 0.25,
+            "workletMessages": [
+              {
+                "bytes": [
+                  4,
+                  4
+                ]
+              },
+              {
+                "detached": true,
+                "wasm": "object"
+              }
+            ],
+            "nativePortDetached": true,
+            "prepared": 1,
+            "closed": 1,
+            "stripped": true,
+            "childText": "prepared child"
+          }
+        },
+        "requestURLs": [
+          "http://127.0.0.1:42641/",
+          "http://127.0.0.1:42641/browser.js",
+          "http://127.0.0.1:42641/quickjs.wasm",
+          "http://127.0.0.1:42641/worker.js",
+          "http://127.0.0.1:42641/guest-worklet.js",
+          "http://127.0.0.1:42641/",
+          "http://127.0.0.1:42641/browser.js",
+          "http://127.0.0.1:42641/quickjs.wasm",
+          "http://127.0.0.1:42641/worker.js",
+          "http://127.0.0.1:42641/guest-worklet.js",
+          "http://127.0.0.1:42641/",
+          "http://127.0.0.1:42641/browser.js",
+          "http://127.0.0.1:42641/quickjs.wasm",
+          "http://127.0.0.1:42641/worker.js",
+          "http://127.0.0.1:42641/guest-worklet.js"
+        ],
+        "withoutNativeSharedWorker": {
+          "dedicated": true,
+          "nested": true,
+          "module": true,
+          "registryHTTP": 0
+        },
+        "crossRootShared": {
+          "second": [
+            3,
+            4
+          ],
+          "afterFirstRootClose": 5
+        }
+      }
+    ],
+    "requests": [
+      "/",
+      "/browser.js",
+      "/quickjs.wasm",
+      "/worker.js",
+      "/guest-worklet.js",
+      "/__guest_worker_registry__.js",
+      "/",
+      "/browser.js",
+      "/quickjs.wasm",
+      "/worker.js",
+      "/guest-worklet.js",
+      "/",
+      "/browser.js",
+      "/quickjs.wasm",
+      "/worker.js",
+      "/guest-worklet.js",
+      "/",
+      "/browser.js",
+      "/quickjs.wasm",
+      "/favicon.ico",
+      "/worker.js",
+      "/guest-worklet.js",
+      "/__guest_worker_registry__.js",
+      "/",
+      "/browser.js",
+      "/quickjs.wasm",
+      "/worker.js",
+      "/guest-worklet.js",
+      "/",
+      "/browser.js",
+      "/quickjs.wasm",
+      "/worker.js",
+      "/guest-worklet.js"
+    ]
+  },
+  "completedAt": "2026-11-20T10:36:38.145Z"
+}

@@ -1,0 +1,234 @@
+{
+  "completed": "2026-11-19T19:45:57.289249+00:00",
+  "sourceCommit": "5f62e61d6599904fad7c7ad56822e40e76c024c9",
+  "guardHash": "f6769502b39d2438e40dbf8ae05adbb772dba8c2841f2c265e8b4318ff3ca584",
+  "engine": {
+    "sourceHash": "0896b28d94bb6c5bf658f17d50a56faafdf652eb7907d695f2429ab50fabf466",
+    "wasmHash": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
+    "loaderHash": "60147727aeb5c4441d54ad7b3c625e952bec7faa8db8531522eb71dd9ab9da2e",
+    "toolchain": "emscripten/emsdk:5.0.1@sha256:c89732ef63a56de5a96395c5a8c1c7904f7420131a045406e6fedc4cbe1cc198",
+    "optimization": [
+      "-O3",
+      "-flto"
+    ]
+  },
+  "mechanism": {
+    "nativeWasmMemory": "Typed Wasm accessor exports installed in the private interpreter function table; application memory is their only import.",
+    "ordinaryNativeBuffers": "Bounded private QuickJS write-back cache with C dirty tracking.",
+    "sharedAndResizableMemory": "Native views; no copied shared-memory replacement.",
+    "privateInterpreterHeapExposed": false,
+    "applicationSourcesModified": false
+  },
+  "checks": {
+    "unitTests": 109,
+    "typecheck": "passed",
+    "format": "passed",
+    "fullLocalSuite": "passed",
+    "maintenanceObservations": 122,
+    "confinedMaintenanceSamples": 60,
+    "corpusObservations": 12,
+    "localImageChecks": 8,
+    "publicImageChecks": [
+      {
+        "receipt": "results/guest-runtime/wasm-apps-public/chromium-photocraft-confined.json",
+        "browser": "chromium",
+        "version": "153.0.8010.12",
+        "application": "photocraft",
+        "privateHTTPRequests": 0
+      },
+      {
+        "receipt": "results/guest-runtime/wasm-apps-public/chromium-squoosh-confined.json",
+        "browser": "chromium",
+        "version": "153.0.8010.12",
+        "application": "squoosh",
+        "privateHTTPRequests": 0
+      },
+      {
+        "receipt": "results/guest-runtime/wasm-apps-public/firefox-photocraft-confined.json",
+        "browser": "firefox",
+        "version": "155.0",
+        "application": "photocraft",
+        "privateHTTPRequests": 0
+      },
+      {
+        "receipt": "results/guest-runtime/wasm-apps-public/firefox-squoosh-confined.json",
+        "browser": "firefox",
+        "version": "155.0",
+        "application": "squoosh",
+        "privateHTTPRequests": 0
+      }
+    ],
+    "publicAssetHashes": 72
+  },
+  "squooshEquivalence": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "online",
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "largeBytes": 862478,
+      "privateHTTPRequests": [],
+      "comparison": {
+        "before": {
+          "x": 625,
+          "y": 0,
+          "width": 30,
+          "height": 800
+        },
+        "after": {
+          "x": 725,
+          "y": 0,
+          "width": 30,
+          "height": 800
+        },
+        "splitBefore": 640,
+        "changedPixels": 400
+      },
+      "nativeLargeMilliseconds": 2070,
+      "confinedLargeMilliseconds": 8434
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "mode": "offline",
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "largeBytes": 862478,
+      "privateHTTPRequests": [],
+      "comparison": {
+        "before": {
+          "x": 625,
+          "y": 0,
+          "width": 30,
+          "height": 800
+        },
+        "after": {
+          "x": 725,
+          "y": 0,
+          "width": 30,
+          "height": 800
+        },
+        "splitBefore": 640,
+        "changedPixels": 400
+      },
+      "nativeLargeMilliseconds": 2070,
+      "confinedLargeMilliseconds": 8939
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "online",
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "largeBytes": 862478,
+      "privateHTTPRequests": [],
+      "comparison": {
+        "before": {
+          "x": 625,
+          "y": 0,
+          "width": 30,
+          "height": 800
+        },
+        "after": {
+          "x": 725,
+          "y": 0,
+          "width": 30,
+          "height": 800
+        },
+        "splitBefore": 640,
+        "changedPixels": 400
+      },
+      "nativeLargeMilliseconds": 1744,
+      "confinedLargeMilliseconds": 8405
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "mode": "offline",
+      "identicalExports": {
+        "large": true,
+        "before": true,
+        "after": true,
+        "avif": true
+      },
+      "largeBytes": 862478,
+      "privateHTTPRequests": [],
+      "comparison": {
+        "before": {
+          "x": 625,
+          "y": 0,
+          "width": 30,
+          "height": 800
+        },
+        "after": {
+          "x": 725,
+          "y": 0,
+          "width": 30,
+          "height": 800
+        },
+        "splitBefore": 640,
+        "changedPixels": 400
+      },
+      "nativeLargeMilliseconds": 1744,
+      "confinedLargeMilliseconds": 8043
+    }
+  ],
+  "heliumExistingInstallation": {
+    "passed": true,
+    "product": "Helium 0.22.1.1",
+    "version": "158.0.8127.36",
+    "guardHash": "f6769502b39d2438e40dbf8ae05adbb772dba8c2841f2c265e8b4318ff3ca584",
+    "url": "https://apps.pf.damenh.com/M9ZmK57S0Bs/squoosh/",
+    "reinstalled": false,
+    "generationUnchanged": true,
+    "resourcesUnchanged": true,
+    "localStoragePreserved": true,
+    "large": {
+      "elapsedMs": 10631,
+      "bytes": 878258,
+      "sha256": "2b935ded98566fe577ad0109ba4ed3067cd0fa63fb22a7a6a410196c723fa94d",
+      "dimensions": [
+        3872,
+        2592
+      ]
+    },
+    "comparison": {
+      "before": {
+        "x": 625,
+        "y": 0,
+        "width": 30,
+        "height": 800
+      },
+      "after": {
+        "x": 725,
+        "y": 0,
+        "width": 30,
+        "height": 800
+      }
+    },
+    "privateHTTPRequests": [],
+    "baselineGuardHash": "779836652a4e0fc94188b66e3cdf2682c5880d2493163242622f2672164e479f",
+    "previousQualifiedGuardHash": "3d1d6f30a803548c813702944ad1706109d7b2d35d3346ae257d4c22c2e6f0bf"
+  },
+  "qualification": {
+    "url": "https://github.com/privacy-frames/host/actions/runs/44596872088",
+    "conclusion": "success",
+    "artifact": {
+      "digest": "sha256:2f7435f39be759186b426c03559019f7bc227fc330f50519a19ff2010658988d",
+      "id": 14569111881
+    }
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "checkedAt": "2026-11-21T14:37:54.166Z",
+  "scope": "Actual engine SDK-stack quiescence, terminal native bindings, reporter containment and failed-job root release",
+  "node": "v24.18.0",
+  "sourceHashes": {
+    "node_modules/@jitl/quickjs-ffi-types/dist/index.mjs": "5b6ccfe50a0d0066411135c66964b0c15c05167f5324df2e8066493da807efbe",
+    "node_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs": "5c58b732a4c6c5d097eb9366cafc08212867ff80e5b1dea24ed54e640ac71843",
+    "node_modules/quickjs-emscripten-core/dist/chunk-TAV5CUKK.mjs": "b423c720a9deef215b404e4ee212533bcef9de785a11f44aacf1ad8266ae6769",
+    "node_modules/quickjs-emscripten-core/dist/module-ES6BEMUI.mjs": "289a200ab91f855ed79f75147eb674b81cea7adf032f9344bd8b29ff5e7a7d43",
+    "node_modules/quickjs-emscripten-core/dist/module-asyncify-2EFITU5U.mjs": "c8cec04532f68af9aa436ad117defdc686d36a1670691d98cea9263345ba7b2b",
+    "node_modules/quickjs-emscripten-core/dist/index.mjs": "5f7a507ca71ffbff0ec0bad88a9c38f717d34fd8ab9222b58deacc9de5644a3e",
+    "node_modules/@jitl/quickjs-wasmfile-release-sync/dist/ffi.mjs": "ccf8b3aa066c2be5755e3ea49d81b01dff5a671deb34b7ec3a1c983dd52e9335",
+    "vendor/quickjs/generated/engine.mjs": "60147727aeb5c4441d54ad7b3c625e952bec7faa8db8531522eb71dd9ab9da2e",
+    "src/guest/quickjs.ts": "ab4b6912ca399f3fa56a4a6f252b13e69561fe626e8dcf956f8ffff59a2b9d3b",
+    "src/guest/wasm-accessors.ts": "7e03c8e70638d2d861392ec0b2ed40867c638bfcbb26774fbf1e240b2b18589b",
+    "src/guest/indexed-access.ts": "5ba66e4bd8e29240a4d3def4cc97eaef5007103b26f8121f5261d492bbc86e5d",
+    "src/guest/guest-runtime.ts": "058930f5f581f18210f636c210c0dbba27e51a145826c2adcb95d3295436bc1d",
+    "src/guest/identity.ts": "e067e5dea7a2b036ced0905abd77e6a40f187ec2a3231466b1825a2e84b8c748",
+    "src/guest/legacy-regexp.ts": "bbfcdccb8fab7c9a1462d91c8237f6cbe8c90be1f331c2f5f6b3629b569231bb",
+    "node_modules/@jridgewell/resolve-uri/dist/resolve-uri.mjs": "a363be70b71dbaf1b3e6fd25c35e45e3cd8993104bc4d9551c0568b6fd76963b",
+    "src/guest/native-binary.ts": "2d0c098fdd641cf9edc5f7f958acef0fa9995766bdcbe177f925cc21ad49afd4",
+    "src/guest/guest-binary.ts": "da8dbde72247dd7b85b52bac138ddafa14f778729ceec34cf11eca0b924dea32",
+    "src/guest/native-policy.ts": "ba0fb4f746bc472c480f0dbeff9e83a629c74e81ba832a3bd8019a6f1e2b1ce8",
+    "src/guest/native-host.ts": "0420675d80bbc038b3c8cfbe8d8bb53e3d322ecb856613870de0405b553a8ff9",
+    "src/guest/native-wasm.ts": "670c8a4e9cfd50ca037aa7d2596ea4716b3b35f70d05c2cefc33c27e3db61852",
+    "src/guest/engine.ts": "1ac27fbec1bd3d9a83c91f410830c845039663df47a05b70f8748bfcc11ae78b",
+    "test/guest-engine-lifetime.fixture.ts": "e365fe09bd5773eab13740ea0a66a0a1ed6b61b85a364832057ef2326d9434f1",
+    "vendor/quickjs/generated/engine.wasm": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
+    "vendor/quickjs/generated/build.json": "2366677bac28dda0928190af20df7c7a842cad752593ae4f3cc9b81525caf789",
+    "test/fixtures/wasm/memory.wasm": "f5579291e0798dc7674eba5a525023fca073a63a42dc3154c150e5e2b0dfe917",
+    "formal/quickjs/wasm/check-engine-lifetime.ts": "e2c38e65ad29dcc9e4660e7601dda947bfe1a30cc66b9ecf1e789ebe73bc6f62",
+    "package-lock.json": "501bfd0da3702e4cfc3b43d5a4ec3380cca9045e7959204e1460e53ed781422a"
+  },
+  "observations": [
+    {
+      "name": "production",
+      "sourceHash": "1ac27fbec1bd3d9a83c91f410830c845039663df47a05b70f8748bfcc11ae78b",
+      "bundleHash": "3687602598a16db61e3cebbbddee215a28a11de8ee3743cb5c6819c782120836",
+      "failed": false,
+      "stdout": "{\"observations\":[{\"name\":\"evaluate\",\"stopStates\":[{\"depth\":1,\"pumping\":false,\"wasmDepth\":0}],\"releaseStates\":[{\"depth\":0,\"pumping\":false,\"wasmDepth\":0,\"sdkPropertyDepth\":0}],\"nativeEffects\":0,\"callbackRejected\":true},{\"name\":\"set-encoding\",\"stopStates\":[{\"depth\":1,\"pumping\":false,\"wasmDepth\":0}],\"releaseStates\":[{\"depth\":0,\"pumping\":false,\"wasmDepth\":0,\"sdkPropertyDepth\":0}],\"nativeEffects\":0,\"callbackRejected\":true},{\"name\":\"callback\",\"stopStates\":[{\"depth\":1,\"pumping\":false,\"wasmDepth\":0}],\"releaseStates\":[{\"depth\":0,\"pumping\":false,\"wasmDepth\":0,\"sdkPropertyDepth\":0}],\"nativeEffects\":0,\"callbackRejected\":true},{\"name\":\"job\",\"stopStates\":[{\"depth\":0,\"pumping\":true,\"wasmDepth\":0}],\"releaseStates\":[{\"depth\":0,\"pumping\":false,\"wasmDepth\":0,\"sdkPropertyDepth\":0}],\"nativeEffects\":0,\"callbackRejected\":true},{\"name\":\"wasm-import\",\"stopStates\":[{\"depth\":2,\"pumping\":false,\"wasmDepth\":1}],\"releaseStates\":[{\"depth\":0,\"pumping\":false,\"wasmDepth\":0,\"sdkPropertyDepth\":0}],\"nativeEffects\":0,\"callbackRejected\":true},{\"name\":\"job-wasm-import\",\"stopStates\":[{\"depth\":1,\"pumping\":true,\"wasmDepth\":1}],\"releaseStates\":[{\"depth\":0,\"pumping\":false,\"wasmDepth\":0,\"sdkPropertyDepth\":0}],\"nativeEffects\":0,\"callbackRejected\":true},{\"name\":\"job-error-conversion\",\"stopStates\":[],\"releaseStates\":[{\"depth\":0,\"pumping\":false,\"wasmDepth\":0,\"sdkPropertyDepth\":0}],\"nativeEffects\":0,\"callbackRejected\":true},{\"name\":\"throwing-cleanup-reporter\",\"firstFailureKind\":\"object\",\"laterDisposers\":2,\"reports\":2,\"closed\":true,\"originalFailurePreserved\":true},{\"name\":\"throwing-cleanup-reporter\",\"firstFailureKind\":\"undefined\",\"laterDisposers\":2,\"reports\":2,\"closed\":true,\"originalFailurePreserved\":true},{\"name\":\"throwing-cleanup-reporter\",\"firstFailureKind\":\"null\",\"laterDisposers\":2,\"reports\":2,\"closed\":true,\"originalFailurePreserved\":true}]}\n",
+      "stderr": ""
+    },
+    {
+      "name": "eager-cleanup",
+      "sourceHash": "14f0dfbaec9b5f9f2ade916644946363733323336e8d6d9cec1c1f8b9b8e2fef",
+      "bundleHash": "c2f38903f6024b9810f24b55844b142750220f5e736661e2ad5ccf17f35915ee",
+      "failed": true,
+      "expectedFailure": "physical indexed release waits for every engine-owned stack",
+      "stdout": "",
+      "stderr": "physical indexed release waits for every engine-owned stack\nfile:///tmp/pf-engine-lifetime-aHlxwf/eager-cleanup.mjs:6733\n    const error = new Error(read(\"message\") || \"Guest execution failed\");\n                  ^\n\nError: Guest execution failed\n    at _GuestEngine.guestError (file:///tmp/pf-engine-lifetime-aHlxwf/eager-cleanup.mjs:6733:19)\n    at _GuestEngine.unwrap (file:///tmp/pf-engine-lifetime-aHlxwf/eager-cleanup.mjs:6714:22)\n    at file:///tmp/pf-engine-lifetime-aHlxwf/eager-cleanup.mjs:5530:27\n    at _GuestEngine.enter (file:///tmp/pf-engine-lifetime-aHlxwf/eager-cleanup.mjs:5673:14)\n    at _GuestEngine.evaluate (file:///tmp/pf-engine-lifetime-aHlxwf/eager-cleanup.mjs:5529:17)\n    at file:///tmp/pf-engine-lifetime-aHlxwf/eager-cleanup.mjs:6970:14\n\nNode.js v24.18.0\n"
+    },
+    {
+      "name": "missing-terminal-bind-guards",
+      "sourceHash": "0c5b27a94d8039ab737f5219746f68f7b2f87a7e810747542263227883275538",
+      "bundleHash": "9ac13d0cb654454b6a840f4b259cfc519bad1de04308ece6795e91d6a3478424",
+      "failed": true,
+      "expectedFailure": "bound native operations are denied after logical close",
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: bound native operations are denied after logical close\n+ actual - expected\n\n  [\n+   false,\n+   false\n-   true,\n-   true\n  ]\n\n    at file:///tmp/pf-engine-lifetime-aHlxwf/missing-terminal-bind-guards.mjs:6968:12 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: [ false, false ],\n  expected: [ true, true ],\n  operator: 'deepStrictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.18.0\n"
+    },
+    {
+      "name": "missing-set-entry",
+      "sourceHash": "cb3793a38559c9c4b3e9e41382951255afc5ed1e8e7cf13ac423bb734cbae2b4",
+      "bundleHash": "d1ca2a369d7f708dc00f6ea8be897845d36280294089d1c4a46fd8da187ca4ed",
+      "failed": true,
+      "expectedFailure": "physical indexed release waits for every engine-owned stack",
+      "stdout": "",
+      "stderr": "physical indexed release waits for every engine-owned stack\nnode:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: one terminal cleanup releases indexed records\n\n0 !== 1\n\n    at finish (file:///tmp/pf-engine-lifetime-aHlxwf/missing-set-entry.mjs:6917:14)\n    at file:///tmp/pf-engine-lifetime-aHlxwf/missing-set-entry.mjs:6989:3 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: 0,\n  expected: 1,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.18.0\n"
+    },
+    {
+      "name": "uncontained-cleanup-reporter",
+      "sourceHash": "326ad2cc90b27407d2a21b2fd747e6c1b6e7efa7dedfcce80b661087d0fe6a7f",
+      "bundleHash": "7141c5f8e8fd17979c5f621e0eddf9b249b9103724330e7fba1043128e5045e8",
+      "failed": true,
+      "expectedFailure": "reporter failure cannot interrupt owned cleanup",
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: reporter failure cannot interrupt owned cleanup\n\ntrue !== false\n\n    at file:///tmp/pf-engine-lifetime-aHlxwf/uncontained-cleanup-reporter.mjs:7031:10 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: true,\n  expected: false,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.18.0\n"
+    },
+    {
+      "name": "missing-job-error-release",
+      "sourceHash": "1be66b3efe2c681061fa66be1093eaee5a2662170f3bfd351818038b65eb4b36",
+      "bundleHash": "303e34d70e996fa2d5e16b6b950024d1402f208ae5e0ea3ad1747c5c16bc9d95",
+      "failed": true,
+      "expectedFailure": "failed job error conversion releases its SDK root",
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: failed job error conversion releases its SDK root\n\ntrue !== false\n\n    at file:///tmp/pf-engine-lifetime-aHlxwf/missing-job-error-release.mjs:7002:10 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: true,\n  expected: false,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.18.0\n"
+    }
+  ],
+  "remainingPremises": [
+    "esbuild, the SDK and C-to-Wasm compilation are trusted",
+    "All guest application execution uses engine-owned entry/job/Wasm paths; raw public SDK context calls are outside this contract",
+    "The probes check selected actual synchronous and asynchronous paths, not an inductive proof of every caller history"
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "completed": "2026-11-19T13:24:03.251080+00:00",
+  "qualifiedSource": "0ff5bb37df4672d70f5e64d7d437bdf5371380a3",
+  "sourceTag": "native-wasm-2026-11-19",
+  "recoveryTag": "pre-native-wasm-2026-11-19",
+  "qualification": {
+    "url": "https://github.com/privacy-frames/host/actions/runs/44524049891",
+    "conclusion": "success",
+    "artifact": {
+      "id": 14533114265,
+      "digest": "sha256:d5037046cd250cc987ecaba91850bd4b157905dcf9742ea4af848acbe17781f0"
+    }
+  },
+  "deployments": [
+    {
+      "role": "manager",
+      "url": "https://pf.damenh.com/",
+      "workflow": "https://github.com/privacy-frames/host/actions/runs/44524049891",
+      "source": "0ff5bb37df4672d70f5e64d7d437bdf5371380a3"
+    },
+    {
+      "role": "runtime",
+      "url": "https://apps.pf.damenh.com/",
+      "workflow": "https://github.com/privacy-frames/runtime/actions/runs/44531450143",
+      "revision": "1e841fab9747cbda34b7a5563fa337396b490717",
+      "source": "0ff5bb37df4672d70f5e64d7d437bdf5371380a3"
+    },
+    {
+      "role": "installation",
+      "url": "https://install.pf.damenh.com/",
+      "workflow": "https://github.com/privacy-frames/installation/actions/runs/44531456723",
+      "revision": "9d48474d0f2089db75dabfd00f3e1107817a1c7a",
+      "source": "0ff5bb37df4672d70f5e64d7d437bdf5371380a3"
+    }
+  ],
+  "publisherSource": "8db931d2833e5d86202574d554d0bea79c33342f",
+  "unitTests": 102,
+  "corpusObservations": 12,
+  "maintenanceObservations": 122,
+  "confinedMaintenanceSamples": 60,
+  "confinedMaintenanceHTTPRequests": 0,
+  "wasmGroups": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "native": 7,
+      "guest": 7
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "native": 7,
+      "guest": 7
+    }
+  ],
+  "imageControlReceipts": "results/guest-runtime/wasm-apps/",
+  "publicImageReceipts": "results/guest-runtime/wasm-apps-public/",
+  "publicImages": [
+    {
+      "browser": "chromium",
+      "application": "photocraft",
+      "version": "153.0.8010.12",
+      "passed": true,
+      "privateHTTPRequests": 0,
+      "workers": null
+    },
+    {
+      "browser": "chromium",
+      "application": "squoosh",
+      "version": "153.0.8010.12",
+      "passed": true,
+      "privateHTTPRequests": 0,
+      "workers": 17
+    },
+    {
+      "browser": "firefox",
+      "application": "photocraft",
+      "version": "155.0",
+      "passed": true,
+      "privateHTTPRequests": 0,
+      "workers": null
+    },
+    {
+      "browser": "firefox",
+      "application": "squoosh",
+      "version": "155.0",
+      "passed": true,
+      "privateHTTPRequests": 0,
+      "workers": 17
+    }
+  ],
+  "publishedFilesCompared": 71,
+  "unpublishedPathResponses": {
+    "404": 15
+  },
+  "postDeploymentVerifier": {
+    "path": "test/assets.ts",
+    "sha256": "de071a82a6a74764ad1dcd1753ec5b24889bf3a3f847ef6a09c422c27f142339",
+    "scope": "Exact published-file hashes; unpublished paths return 404 or the identified script-free GitHub Varnish 503 template."
+  },
+  "publicBrowserEvidence": "results/public-quickjs-smoke.json",
+  "assetEvidence": "results/assets.json",
+  "runtimeHashes": {
+    "__guest_worker_registry__.js": "106b77a615aff3a3bdc0c29b349894b596006a01078a1d7f8c1a167bbce664fc",
+    "guest-worklet.js": "1bfc5a98bbad14f8757364a2df4636fb0ccb5ffa0c885d1a38738d214efbbd9c",
+    "guest-worker.js": "0bba3c5696c62e885dcf384f033c5f3e8a9e92aafad108d00a0d52aa6f0739da",
+    "guest-shared-worker.js": "6f244960b9969b280405b30b4f2589957739b91e5b65f39a0884116369b1a627",
+    "guard.js": "779836652a4e0fc94188b66e3cdf2682c5880d2493163242622f2672164e479f",
+    "sw.js": "6938054585f3091acb070bedd8fdff39961952b7219ea27793966f8a9381c134",
+    "engine.wasm": "105c3bed22d457e43e3d1c3c1c6959fda62a8fe06f0fc8a985303c3a2be72232"
+  },
+  "limitations": [
+    "Application service-worker execution remains deferred.",
+    "Chromium ignores a custom guest species on a non-extensible Wasm shared-buffer slice; native storage and default slice behavior remain intact.",
+    "Native custom-element definitions persist when a logical child-document navigation reuses its Window.",
+    "The existing srcset comma parser misparses data URLs; local resource diagnostics are retained.",
+    "Browser receiver observations and implementation tests do not establish a complete confinement proof."
+  ]
+}

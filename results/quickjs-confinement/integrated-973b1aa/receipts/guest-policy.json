@@ -1,0 +1,1564 @@
+{
+  "provenance": {
+    "head": "973b1aa75aa63136db208d9f3d35252e915c7445",
+    "dirty": true,
+    "kernelSha256": "8d05c03e5b7035efb7b4363b7a25e562b85f69336546608c5e16bfeafd7df01d",
+    "workerSha256": "aa20101a87741dd81c9085abae6c485c1a0120db28a2c09acc0bbd5954cf9411",
+    "engineSha256": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8"
+  },
+  "observations": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "paint-worklet-module",
+      "mode": "control",
+      "result": {
+        "returned": {
+          "available": true,
+          "error": "AbortError"
+        },
+        "native": null
+      },
+      "receiverRequests": [
+        {
+          "url": "/chromium/control/paint-worklet-module",
+          "method": "GET"
+        }
+      ],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=control&case=paint-worklet-module&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fcontrol%2Fpaint-worklet-module",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "paint-worklet-module",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "available": true,
+          "error": "SecurityError"
+        },
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=paint-worklet-module&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fprotected%2Fpaint-worklet-module",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "location-reload",
+      "mode": "control",
+      "result": {
+        "returned": {
+          "reloaded": true
+        },
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 2,
+      "url": "http://127.0.0.1:39441/?mode=control&case=location-reload&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fcontrol%2Flocation-reload",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "location-reload",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "blocked": "SecurityError"
+        },
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=location-reload&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fprotected%2Flocation-reload",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "anchor-noncancelable",
+      "mode": "control",
+      "interrupted": "TimeoutError: page.waitForFunction: Timeout 2000ms exceeded.",
+      "receiverRequests": [
+        {
+          "url": "/chromium/control/anchor-noncancelable",
+          "method": "GET"
+        }
+      ],
+      "navigations": 2,
+      "url": "http://127.0.0.1:45665/chromium/control/anchor-noncancelable",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "anchor-noncancelable",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "href": "http://127.0.0.1:45665/chromium/protected/anchor-noncancelable"
+        },
+        "native": {
+          "tag": "a",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingSuggestions": "false",
+          "writingAttribute": "false"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=anchor-noncancelable&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fprotected%2Fanchor-noncancelable",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "anchor-components",
+      "mode": "control",
+      "interrupted": "TimeoutError: page.waitForFunction: Timeout 2000ms exceeded.",
+      "receiverRequests": [
+        {
+          "url": "/chromium/control/anchor-components",
+          "method": "GET"
+        }
+      ],
+      "navigations": 2,
+      "url": "http://127.0.0.1:45665/chromium/control/anchor-components",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "anchor-components",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "href": "http://127.0.0.1:45665/chromium/protected/anchor-components"
+        },
+        "native": {
+          "tag": "a",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingSuggestions": "false",
+          "writingAttribute": "false"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=anchor-components&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fprotected%2Fanchor-components",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "meta-properties",
+      "mode": "control",
+      "interrupted": "TimeoutError: page.waitForFunction: Timeout 2000ms exceeded.",
+      "receiverRequests": [
+        {
+          "url": "/chromium/control/meta-properties",
+          "method": "GET"
+        }
+      ],
+      "navigations": 2,
+      "url": "http://127.0.0.1:45665/chromium/control/meta-properties",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "meta-properties",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "equiv": ""
+        },
+        "native": {
+          "tag": "meta",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingSuggestions": "false",
+          "writingAttribute": "false"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=meta-properties&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fprotected%2Fmeta-properties",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "meta-attribute-node",
+      "mode": "control",
+      "interrupted": "TimeoutError: page.waitForFunction: Timeout 2000ms exceeded.",
+      "receiverRequests": [
+        {
+          "url": "/chromium/control/meta-attribute-node",
+          "method": "GET"
+        }
+      ],
+      "navigations": 2,
+      "url": "http://127.0.0.1:45665/chromium/control/meta-attribute-node",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "meta-attribute-node",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "equiv": ""
+        },
+        "native": {
+          "tag": "meta",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingSuggestions": "false",
+          "writingAttribute": "false"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=meta-attribute-node&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fprotected%2Fmeta-attribute-node",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "meta-named-map",
+      "mode": "control",
+      "interrupted": "TimeoutError: page.waitForFunction: Timeout 2000ms exceeded.",
+      "receiverRequests": [
+        {
+          "url": "/chromium/control/meta-named-map",
+          "method": "GET"
+        }
+      ],
+      "navigations": 2,
+      "url": "http://127.0.0.1:45665/chromium/control/meta-named-map",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "meta-named-map",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "equiv": ""
+        },
+        "native": {
+          "tag": "meta",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingSuggestions": "false",
+          "writingAttribute": "false"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=meta-named-map&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fprotected%2Fmeta-named-map",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "meta-attr-value",
+      "mode": "control",
+      "interrupted": "TimeoutError: page.waitForFunction: Timeout 2000ms exceeded.",
+      "receiverRequests": [
+        {
+          "url": "/chromium/control/meta-attr-value",
+          "method": "GET"
+        }
+      ],
+      "navigations": 2,
+      "url": "http://127.0.0.1:45665/chromium/control/meta-attr-value",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "meta-attr-value",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "equiv": ""
+        },
+        "native": {
+          "tag": "meta",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingSuggestions": "false",
+          "writingAttribute": "false"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=meta-attr-value&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fprotected%2Fmeta-attr-value",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "script-text",
+      "mode": "control",
+      "result": {
+        "returned": {
+          "type": ""
+        },
+        "nativeMarker": "script-text",
+        "native": {
+          "tag": "script",
+          "href": null,
+          "equiv": null,
+          "spellcheck": true,
+          "writingSuggestions": "true",
+          "writingAttribute": null
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=control&case=script-text&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fcontrol%2Fscript-text",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "script-text",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "type": ""
+        },
+        "guestMarker": "script-text",
+        "native": {
+          "tag": "script",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingSuggestions": "false",
+          "writingAttribute": "false"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=script-text&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fprotected%2Fscript-text",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "inline-handler",
+      "mode": "control",
+      "result": {
+        "returned": {},
+        "nativeMarker": "inline-handler",
+        "native": {
+          "tag": "button",
+          "href": null,
+          "equiv": null,
+          "spellcheck": true,
+          "writingSuggestions": "true",
+          "writingAttribute": null
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=control&case=inline-handler&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fcontrol%2Finline-handler",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "inline-handler",
+      "mode": "protected",
+      "result": {
+        "returned": {},
+        "guestMarker": "inline-handler",
+        "native": {
+          "tag": "button",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingSuggestions": "false",
+          "writingAttribute": "false"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=inline-handler&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fprotected%2Finline-handler",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "borrowed-innerhtml-setter",
+      "mode": "control",
+      "result": {
+        "returned": {},
+        "native": {
+          "tag": "div",
+          "href": null,
+          "equiv": null,
+          "spellcheck": true,
+          "writingSuggestions": "true",
+          "writingAttribute": null
+        }
+      },
+      "receiverRequests": [
+        {
+          "url": "/chromium/control/borrowed-innerhtml-setter",
+          "method": "GET"
+        }
+      ],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=control&case=borrowed-innerhtml-setter&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fcontrol%2Fborrowed-innerhtml-setter",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "borrowed-innerhtml-setter",
+      "mode": "protected",
+      "result": {
+        "returned": {},
+        "native": {
+          "tag": "div",
+          "href": null,
+          "equiv": null,
+          "src": "data:application/octet-stream,",
+          "spellcheck": false,
+          "writingSuggestions": "false",
+          "writingAttribute": "false"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=borrowed-innerhtml-setter&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fprotected%2Fborrowed-innerhtml-setter",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "document-location",
+      "mode": "control",
+      "interrupted": "TimeoutError: page.waitForFunction: Timeout 2000ms exceeded.",
+      "receiverRequests": [
+        {
+          "url": "/chromium/control/document-location",
+          "method": "GET"
+        }
+      ],
+      "navigations": 2,
+      "url": "http://127.0.0.1:45665/chromium/control/document-location",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "document-location",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "blocked": "SecurityError"
+        },
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=document-location&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fprotected%2Fdocument-location",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "window-navigation",
+      "mode": "control",
+      "interrupted": "TimeoutError: page.waitForFunction: Timeout 2000ms exceeded.",
+      "receiverRequests": [
+        {
+          "url": "/chromium/control/window-navigation",
+          "method": "GET"
+        }
+      ],
+      "navigations": 2,
+      "url": "http://127.0.0.1:45665/chromium/control/window-navigation",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "window-navigation",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "available": false
+        },
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=window-navigation&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fprotected%2Fwindow-navigation",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "foreign-window-source",
+      "mode": "control",
+      "result": {
+        "returned": {
+          "blocked": false
+        },
+        "native": null
+      },
+      "receiverRequests": [
+        {
+          "url": "/chromium/control/foreign-window-source",
+          "method": "GET"
+        }
+      ],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=control&case=foreign-window-source&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fcontrol%2Fforeign-window-source",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "foreign-window-source",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "blocked": true,
+          "error": "TypeError: not a function"
+        },
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=foreign-window-source&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fprotected%2Fforeign-window-source",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "client-information",
+      "mode": "control",
+      "result": {
+        "returned": {
+          "beacon": "function",
+          "serviceWorker": "object"
+        },
+        "native": null
+      },
+      "receiverRequests": [
+        {
+          "url": "/chromium/control/client-information",
+          "method": "POST"
+        }
+      ],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=control&case=client-information&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fcontrol%2Fclient-information",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "client-information",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "beacon": "function",
+          "serviceWorker": "undefined"
+        },
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=client-information&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fprotected%2Fclient-information",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "spellcheck-property",
+      "mode": "control",
+      "result": {
+        "returned": {},
+        "native": {
+          "tag": "textarea",
+          "href": null,
+          "equiv": null,
+          "spellcheck": true,
+          "writingSuggestions": "true",
+          "writingAttribute": null
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=control&case=spellcheck-property&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fcontrol%2Fspellcheck-property",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "spellcheck-property",
+      "mode": "protected",
+      "result": {
+        "returned": {},
+        "native": {
+          "tag": "textarea",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingSuggestions": "false",
+          "writingAttribute": "false"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=spellcheck-property&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fprotected%2Fspellcheck-property",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "writing-suggestions",
+      "mode": "control",
+      "result": {
+        "returned": {},
+        "native": {
+          "tag": "textarea",
+          "href": null,
+          "equiv": null,
+          "spellcheck": true,
+          "writingSuggestions": "true",
+          "writingAttribute": "true"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=control&case=writing-suggestions&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fcontrol%2Fwriting-suggestions",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "writing-suggestions",
+      "mode": "protected",
+      "result": {
+        "returned": {},
+        "native": {
+          "tag": "textarea",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingSuggestions": "false",
+          "writingAttribute": "false"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=writing-suggestions&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fprotected%2Fwriting-suggestions",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "svg-href",
+      "mode": "control",
+      "interrupted": "TimeoutError: page.waitForFunction: Timeout 2000ms exceeded.",
+      "receiverRequests": [
+        {
+          "url": "/chromium/control/svg-href",
+          "method": "GET"
+        }
+      ],
+      "navigations": 2,
+      "url": "http://127.0.0.1:45665/chromium/control/svg-href",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "svg-href",
+      "mode": "protected",
+      "result": {
+        "returned": {},
+        "native": {
+          "tag": "a",
+          "href": null,
+          "equiv": null,
+          "writingAttribute": null,
+          "animatedHref": ""
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=svg-href&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fprotected%2Fsvg-href",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "smil-href",
+      "mode": "control",
+      "interrupted": "TimeoutError: page.waitForFunction: Timeout 2000ms exceeded.",
+      "receiverRequests": [
+        {
+          "url": "/chromium/control/smil-href",
+          "method": "GET"
+        }
+      ],
+      "navigations": 2,
+      "url": "http://127.0.0.1:45665/chromium/control/smil-href",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "smil-href",
+      "mode": "protected",
+      "result": {
+        "failure": "SecurityError: Declarative native effect changes are unavailable",
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=smil-href&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fprotected%2Fsmil-href",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "worker-borrowed-import",
+      "mode": "control",
+      "result": {
+        "returned": {
+          "available": true,
+          "wasm": "object",
+          "nativeMarker": "boolean"
+        },
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=control&case=worker-borrowed-import&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fcontrol%2Fworker-borrowed-import",
+      "errors": []
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "case": "worker-borrowed-import",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "available": true,
+          "wasm": "object",
+          "nativeMarker": "undefined"
+        },
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=worker-borrowed-import&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Fchromium%2Fprotected%2Fworker-borrowed-import",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "paint-worklet-module",
+      "mode": "control",
+      "result": {
+        "returned": {
+          "available": false
+        },
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=control&case=paint-worklet-module&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fcontrol%2Fpaint-worklet-module",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "paint-worklet-module",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "available": false
+        },
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=paint-worklet-module&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fprotected%2Fpaint-worklet-module",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "location-reload",
+      "mode": "control",
+      "result": {
+        "returned": {
+          "reloaded": true
+        },
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 2,
+      "url": "http://127.0.0.1:39441/?mode=control&case=location-reload&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fcontrol%2Flocation-reload",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "location-reload",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "blocked": "SecurityError"
+        },
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=location-reload&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fprotected%2Flocation-reload",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "anchor-noncancelable",
+      "mode": "control",
+      "interrupted": "TimeoutError: page.waitForFunction: Timeout 2000ms exceeded.",
+      "receiverRequests": [
+        {
+          "url": "/firefox/control/anchor-noncancelable",
+          "method": "GET"
+        }
+      ],
+      "navigations": 2,
+      "url": "http://127.0.0.1:45665/firefox/control/anchor-noncancelable",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "anchor-noncancelable",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "href": "http://127.0.0.1:45665/firefox/protected/anchor-noncancelable"
+        },
+        "native": {
+          "tag": "a",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingAttribute": "false"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=anchor-noncancelable&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fprotected%2Fanchor-noncancelable",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "anchor-components",
+      "mode": "control",
+      "interrupted": "TimeoutError: page.waitForFunction: Timeout 2000ms exceeded.",
+      "receiverRequests": [
+        {
+          "url": "/firefox/control/anchor-components",
+          "method": "GET"
+        }
+      ],
+      "navigations": 2,
+      "url": "http://127.0.0.1:45665/firefox/control/anchor-components",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "anchor-components",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "href": "http://127.0.0.1:45665/firefox/protected/anchor-components"
+        },
+        "native": {
+          "tag": "a",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingAttribute": "false"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=anchor-components&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fprotected%2Fanchor-components",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "meta-properties",
+      "mode": "control",
+      "result": {
+        "returned": {
+          "equiv": "refresh"
+        },
+        "native": {
+          "tag": "meta",
+          "href": null,
+          "equiv": "refresh",
+          "spellcheck": false,
+          "writingAttribute": null
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=control&case=meta-properties&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fcontrol%2Fmeta-properties",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "meta-properties",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "equiv": ""
+        },
+        "native": {
+          "tag": "meta",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingAttribute": "false"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=meta-properties&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fprotected%2Fmeta-properties",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "meta-attribute-node",
+      "mode": "control",
+      "result": {
+        "returned": {
+          "equiv": "refresh"
+        },
+        "native": {
+          "tag": "meta",
+          "href": null,
+          "equiv": "refresh",
+          "spellcheck": false,
+          "writingAttribute": null
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=control&case=meta-attribute-node&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fcontrol%2Fmeta-attribute-node",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "meta-attribute-node",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "equiv": ""
+        },
+        "native": {
+          "tag": "meta",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingAttribute": "false"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=meta-attribute-node&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fprotected%2Fmeta-attribute-node",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "meta-named-map",
+      "mode": "control",
+      "result": {
+        "returned": {
+          "equiv": "refresh"
+        },
+        "native": {
+          "tag": "meta",
+          "href": null,
+          "equiv": "refresh",
+          "spellcheck": false,
+          "writingAttribute": null
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=control&case=meta-named-map&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fcontrol%2Fmeta-named-map",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "meta-named-map",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "equiv": ""
+        },
+        "native": {
+          "tag": "meta",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingAttribute": "false"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=meta-named-map&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fprotected%2Fmeta-named-map",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "meta-attr-value",
+      "mode": "control",
+      "result": {
+        "returned": {
+          "equiv": "refresh"
+        },
+        "native": {
+          "tag": "meta",
+          "href": null,
+          "equiv": "refresh",
+          "spellcheck": false,
+          "writingAttribute": null
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=control&case=meta-attr-value&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fcontrol%2Fmeta-attr-value",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "meta-attr-value",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "equiv": ""
+        },
+        "native": {
+          "tag": "meta",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingAttribute": "false"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=meta-attr-value&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fprotected%2Fmeta-attr-value",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "script-text",
+      "mode": "control",
+      "result": {
+        "returned": {
+          "type": ""
+        },
+        "nativeMarker": "script-text",
+        "native": {
+          "tag": "script",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingAttribute": null
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=control&case=script-text&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fcontrol%2Fscript-text",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "script-text",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "type": ""
+        },
+        "guestMarker": "script-text",
+        "native": {
+          "tag": "script",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingAttribute": "false"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=script-text&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fprotected%2Fscript-text",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "inline-handler",
+      "mode": "control",
+      "result": {
+        "returned": {},
+        "nativeMarker": "inline-handler",
+        "native": {
+          "tag": "button",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingAttribute": null
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=control&case=inline-handler&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fcontrol%2Finline-handler",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "inline-handler",
+      "mode": "protected",
+      "result": {
+        "returned": {},
+        "guestMarker": "inline-handler",
+        "native": {
+          "tag": "button",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingAttribute": "false"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=inline-handler&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fprotected%2Finline-handler",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "borrowed-innerhtml-setter",
+      "mode": "control",
+      "result": {
+        "returned": {},
+        "native": {
+          "tag": "div",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingAttribute": null
+        }
+      },
+      "receiverRequests": [
+        {
+          "url": "/firefox/control/borrowed-innerhtml-setter",
+          "method": "GET"
+        }
+      ],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=control&case=borrowed-innerhtml-setter&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fcontrol%2Fborrowed-innerhtml-setter",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "borrowed-innerhtml-setter",
+      "mode": "protected",
+      "result": {
+        "returned": {},
+        "native": {
+          "tag": "div",
+          "href": null,
+          "equiv": null,
+          "src": "data:application/octet-stream,",
+          "spellcheck": false,
+          "writingAttribute": "false"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=borrowed-innerhtml-setter&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fprotected%2Fborrowed-innerhtml-setter",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "document-location",
+      "mode": "control",
+      "interrupted": "TimeoutError: page.waitForFunction: Timeout 2000ms exceeded.",
+      "receiverRequests": [
+        {
+          "url": "/firefox/control/document-location",
+          "method": "GET"
+        }
+      ],
+      "navigations": 2,
+      "url": "http://127.0.0.1:45665/firefox/control/document-location",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "document-location",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "blocked": "SecurityError"
+        },
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=document-location&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fprotected%2Fdocument-location",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "window-navigation",
+      "mode": "control",
+      "interrupted": "TimeoutError: page.waitForFunction: Timeout 2000ms exceeded.",
+      "receiverRequests": [
+        {
+          "url": "/firefox/control/window-navigation",
+          "method": "GET"
+        }
+      ],
+      "navigations": 2,
+      "url": "http://127.0.0.1:45665/firefox/control/window-navigation",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "window-navigation",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "available": false
+        },
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=window-navigation&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fprotected%2Fwindow-navigation",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "foreign-window-source",
+      "mode": "control",
+      "result": {
+        "returned": {
+          "blocked": false
+        },
+        "native": null
+      },
+      "receiverRequests": [
+        {
+          "url": "/firefox/control/foreign-window-source",
+          "method": "GET"
+        }
+      ],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=control&case=foreign-window-source&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fcontrol%2Fforeign-window-source",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "foreign-window-source",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "blocked": true,
+          "error": "TypeError: not a function"
+        },
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=foreign-window-source&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fprotected%2Fforeign-window-source",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "client-information",
+      "mode": "control",
+      "result": {
+        "returned": {
+          "beacon": "function",
+          "serviceWorker": "object"
+        },
+        "native": null
+      },
+      "receiverRequests": [
+        {
+          "url": "/firefox/control/client-information",
+          "method": "POST"
+        }
+      ],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=control&case=client-information&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fcontrol%2Fclient-information",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "client-information",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "beacon": "function",
+          "serviceWorker": "undefined"
+        },
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=client-information&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fprotected%2Fclient-information",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "spellcheck-property",
+      "mode": "control",
+      "result": {
+        "returned": {},
+        "native": {
+          "tag": "textarea",
+          "href": null,
+          "equiv": null,
+          "spellcheck": true,
+          "writingAttribute": null
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=control&case=spellcheck-property&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fcontrol%2Fspellcheck-property",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "spellcheck-property",
+      "mode": "protected",
+      "result": {
+        "returned": {},
+        "native": {
+          "tag": "textarea",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingAttribute": "false"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=spellcheck-property&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fprotected%2Fspellcheck-property",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "writing-suggestions",
+      "mode": "control",
+      "result": {
+        "returned": {},
+        "native": {
+          "tag": "textarea",
+          "href": null,
+          "equiv": null,
+          "spellcheck": true,
+          "writingAttribute": "true"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=control&case=writing-suggestions&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fcontrol%2Fwriting-suggestions",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "writing-suggestions",
+      "mode": "protected",
+      "result": {
+        "returned": {},
+        "native": {
+          "tag": "textarea",
+          "href": null,
+          "equiv": null,
+          "spellcheck": false,
+          "writingAttribute": "false"
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=writing-suggestions&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fprotected%2Fwriting-suggestions",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "svg-href",
+      "mode": "control",
+      "interrupted": "TimeoutError: page.waitForFunction: Timeout 2000ms exceeded.",
+      "receiverRequests": [
+        {
+          "url": "/firefox/control/svg-href",
+          "method": "GET"
+        }
+      ],
+      "navigations": 2,
+      "url": "http://127.0.0.1:45665/firefox/control/svg-href",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "svg-href",
+      "mode": "protected",
+      "result": {
+        "returned": {},
+        "native": {
+          "tag": "a",
+          "href": null,
+          "equiv": null,
+          "writingAttribute": null,
+          "animatedHref": ""
+        }
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=svg-href&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fprotected%2Fsvg-href",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "smil-href",
+      "mode": "control",
+      "interrupted": "TimeoutError: page.waitForFunction: Timeout 2000ms exceeded.",
+      "receiverRequests": [
+        {
+          "url": "/firefox/control/smil-href",
+          "method": "GET"
+        }
+      ],
+      "navigations": 2,
+      "url": "http://127.0.0.1:45665/firefox/control/smil-href",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "smil-href",
+      "mode": "protected",
+      "result": {
+        "failure": "SecurityError: Declarative native effect changes are unavailable",
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=smil-href&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fprotected%2Fsmil-href",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "worker-borrowed-import",
+      "mode": "control",
+      "result": {
+        "returned": {
+          "available": true,
+          "wasm": "object",
+          "nativeMarker": "boolean"
+        },
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=control&case=worker-borrowed-import&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fcontrol%2Fworker-borrowed-import",
+      "errors": []
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "case": "worker-borrowed-import",
+      "mode": "protected",
+      "result": {
+        "returned": {
+          "available": true,
+          "wasm": "object",
+          "nativeMarker": "undefined"
+        },
+        "native": null
+      },
+      "receiverRequests": [],
+      "navigations": 1,
+      "url": "http://127.0.0.1:39441/?mode=protected&case=worker-borrowed-import&receiver=http%3A%2F%2F127.0.0.1%3A45665%2Ffirefox%2Fprotected%2Fworker-borrowed-import",
+      "errors": []
+    }
+  ],
+  "failures": [],
+  "inactiveControls": [
+    "firefox/paint-worklet-module: Paint Worklet is unavailable",
+    "firefox/meta-properties: native reflected-attribute mutation succeeded, but no automatic navigation occurred during observation",
+    "firefox/meta-attribute-node: native reflected-attribute mutation succeeded, but no automatic navigation occurred during observation",
+    "firefox/meta-named-map: native reflected-attribute mutation succeeded, but no automatic navigation occurred during observation",
+    "firefox/meta-attr-value: native reflected-attribute mutation succeeded, but no automatic navigation occurred during observation"
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "completed": "2026-11-19T19:55:56.560838+00:00",
+  "qualifiedSource": "5f62e61d6599904fad7c7ad56822e40e76c024c9",
+  "sourceTag": "native-wasm-indexed-2026-11-19",
+  "recoveryTag": "native-wasm-squoosh-2026-11-19",
+  "guardHash": "f6769502b39d2438e40dbf8ae05adbb772dba8c2841f2c265e8b4318ff3ca584",
+  "engineReceipt": "results/guest-runtime/indexed-access.json",
+  "qualification": {
+    "url": "https://github.com/privacy-frames/host/actions/runs/44596872088",
+    "conclusion": "success",
+    "artifact": {
+      "digest": "sha256:2f7435f39be759186b426c03559019f7bc227fc330f50519a19ff2010658988d",
+      "id": 14569111881
+    }
+  },
+  "deployments": [
+    {
+      "role": "manager",
+      "url": "https://pf.damenh.com/",
+      "workflow": "https://github.com/privacy-frames/host/actions/runs/44596872088",
+      "source": "5f62e61d6599904fad7c7ad56822e40e76c024c9"
+    },
+    {
+      "role": "runtime",
+      "url": "https://apps.pf.damenh.com/",
+      "workflow": "https://github.com/privacy-frames/runtime/actions/runs/44600245458",
+      "revision": "5976e61f78e324b11771c93d3c074fbfb42e57fa",
+      "source": "5f62e61d6599904fad7c7ad56822e40e76c024c9"
+    },
+    {
+      "role": "installation",
+      "url": "https://install.pf.damenh.com/",
+      "workflow": "https://github.com/privacy-frames/installation/actions/runs/44600250354",
+      "revision": "46a9ffd8997363437bde02333cbe4cc9c485cd57",
+      "source": "5f62e61d6599904fad7c7ad56822e40e76c024c9"
+    }
+  ],
+  "publisherSource": "8db931d2833e5d86202574d554d0bea79c33342f",
+  "unitTests": 109,
+  "corpusObservations": 12,
+  "maintenanceObservations": 122,
+  "confinedMaintenanceSamples": 60,
+  "localImageChecks": 8,
+  "publicImageChecks": [
+    {
+      "receipt": "results/guest-runtime/wasm-apps-public/chromium-photocraft-confined.json",
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "application": "photocraft",
+      "privateHTTPRequests": 0
+    },
+    {
+      "receipt": "results/guest-runtime/wasm-apps-public/chromium-squoosh-confined.json",
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "application": "squoosh",
+      "privateHTTPRequests": 0
+    },
+    {
+      "receipt": "results/guest-runtime/wasm-apps-public/firefox-photocraft-confined.json",
+      "browser": "firefox",
+      "version": "155.0",
+      "application": "photocraft",
+      "privateHTTPRequests": 0
+    },
+    {
+      "receipt": "results/guest-runtime/wasm-apps-public/firefox-squoosh-confined.json",
+      "browser": "firefox",
+      "version": "155.0",
+      "application": "squoosh",
+      "privateHTTPRequests": 0
+    }
+  ],
+  "publicAssets": 72,
+  "nativeExportEquivalence": "results/guest-runtime/wasm-image-equivalence.json",
+  "heliumExistingInstallation": {
+    "receipt": "results/guest-runtime/wasm-apps-public/helium-existing-squoosh.json",
+    "reinstalled": false,
+    "localStoragePreserved": true,
+    "generationUnchanged": true,
+    "largeMilliseconds": 10631
+  }
+}

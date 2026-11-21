@@ -1,0 +1,64 @@
+{
+  "scope": "Fresh verifier calibration, not verification of the QuickJS runtime.",
+  "mode": "verify",
+  "image": "ghcr.io/gillianplatform/gillian@sha256:ce41de968aba0964774e1929416ce60b9c3b770d2e58f96e63990b629cfe2ed6",
+  "upstreamRevision": "469aa5c134ba7790c40669bd4bc50483aff36d7b",
+  "sourceURL": "https://raw.githubusercontent.com/GillianPlatform/Gillian/469aa5c134ba7790c40669bd4bc50483aff36d7b/Gillian-JS/Examples/JaVerT/IDGen.js",
+  "sourceSHA256": "32b1829ee190fbf535ab2d4748f1567e039e796fa18e9effeafc2c17651cf308",
+  "runnerSHA256": "e29dd7da539408e2381b7b2c582eb8cacce9a56f43fab5e42745a8faa3b1054c",
+  "results": [
+    {
+      "name": "closure",
+      "expectedSuccess": true,
+      "checkedProcedures": [
+        {
+          "procedure": "getId",
+          "paths": 1,
+          "failedPaths": 0
+        },
+        {
+          "procedure": "reset",
+          "paths": 1,
+          "failedPaths": 0
+        },
+        {
+          "procedure": "makeIdGen",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 0,
+      "inputSHA256": "32b1829ee190fbf535ab2d4748f1567e039e796fa18e9effeafc2c17651cf308",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "b820cffb55bff4162f4666fac7ac8b470ccd99b74694ba49642854f4e3209633",
+      "outputSummary": "Parsing and compiling...\nSorting:\n\tmakeIdGen : 2\n\tgetId : 3\n\treset : 3Adjusted:\n\tmakeIdGen : 2\n\tgetId : 2\n\treset : 2Preprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 3 symbolic tests in total\nRunning symbolic tests: 0.080402\nVerifying one spec of procedure getId... s Success\nVerifying one spec of procedure reset... s Success\nVerifying one spec of procedure makeIdGen... s Success\nAll specs succeeded: 0.268902"
+    },
+    {
+      "name": "missing-increment",
+      "expectedSuccess": false,
+      "checkedProcedures": [
+        {
+          "procedure": "getId",
+          "paths": 1,
+          "failedPaths": 1
+        },
+        {
+          "procedure": "reset",
+          "paths": 1,
+          "failedPaths": 0
+        },
+        {
+          "procedure": "makeIdGen",
+          "paths": 1,
+          "failedPaths": 0
+        }
+      ],
+      "exitCode": 1,
+      "inputSHA256": "d2b825e94997099c291c5bdcf9291ff4d124ad1833e9574af3742d3f82ed11cd",
+      "driverSHA256": "89fca3cbfc83c2383622977d3e46882626872be45eb0f89617d8656e2e0510cb",
+      "outputSHA256": "6ae3f3cc39c63d8879edb3bd981d45ef1c9893dbdac8cafd2e98c6a60c5f4cf0",
+      "outputSummary": "Parsing and compiling...\nSorting:\n\tmakeIdGen : 2\n\tgetId : 3\n\treset : 3Adjusted:\n\tmakeIdGen : 2\n\tgetId : 2\n\treset : 2Preprocessing...\nObtaining specs to verify...\nObtaining lemmas to verify...\nObtained 3 symbolic tests in total\nRunning symbolic tests: 0.077718\nVerifying one spec of procedure getId... f Failure\nVerifying one spec of procedure reset... s Success\nVerifying one spec of procedure makeIdGen... s Success\nThere were failures: 0.263122\nAnalysis failures!\n1. Couldn't satisfy postcondition"
+    }
+  ],
+  "completed": "2026-11-20T09:11:51.198Z"
+}

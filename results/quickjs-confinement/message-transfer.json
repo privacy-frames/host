@@ -164,7 +164,7 @@
     "node_modules/xmlchars/xmlns/1.0/ed3.js": "ff14ffa3a2cdfdd1b6077c4a8443dc949f53d5bb56de5ed89d4dbc5d9fdf08f7",
     "src/guest/browser.ts": "bf056d51e99ded19d87adb42f8ba58261f8a85112ad945e9ffad54b465ff6ad6",
     "src/guest/contexts/audio-worklet.ts": "8706554251c0020af6599b599e306b3e0e9cffceebd31ce739c825071e789577",
-    "src/guest/contexts/brands.ts": "fc87c235cf08fd6ab8dce72d81ca95ad2a94b86da06cc5438d1f1c8bbd6320d6",
+    "src/guest/contexts/brands.ts": "d0b5d97c4e97a71e13408adb1bc0b46c00e2d2c13cf3bb1320fbe9d1bf4a94e5",
     "src/guest/contexts/documents.ts": "02ce86f6e8ef962eb48eb84c88b012613d91728fffe752f4a600f3cd8d8746f0",
     "src/guest/contexts/lifecycle-kernel.ts": "93a3711767ee0e6071ed0a3ebdebf3231179fd54671c639ed382243c13aa3179",
     "src/guest/contexts/processor-name.ts": "0f90b774357d6b8c5279d6a887f4f279282bee68d682002c535e40763adef5e2",
@@ -173,7 +173,7 @@
     "src/guest/css.ts": "b68e6cc3d240974a17510cef30dbe5bed5a5b4e50eb1639286c601d81db633e3",
     "src/guest/custom-elements.ts": "ff3cf0ab9c85bee1f74d6198431c01615e1c6e9cf198dd4b9fc68d78a045cb0d",
     "src/guest/dom.ts": "75a654d384521c8c7153bf55bfe71f19ed1eab3b27d1c60fa37241aa300e764a",
-    "src/guest/engine.ts": "ae9e6cbcdc2c9e563981c8c3fa231354b1c69e4d4440fa641ded9fc276002651",
+    "src/guest/engine.ts": "1ac27fbec1bd3d9a83c91f410830c845039663df47a05b70f8748bfcc11ae78b",
     "src/guest/event-listener-arguments.ts": "f5219d8d8da8d9f5d67f0afb46756a2e7ef55003b64fc846dafccf134c27a080",
     "src/guest/generated-runtime-interfaces.ts": "55fa35f2d27fe9b123c74f77a229a2a64b86ace4f2883e5fb70715d851117182",
     "src/guest/guest-binary.ts": "da8dbde72247dd7b85b52bac138ddafa14f778729ceec34cf11eca0b924dea32",
@@ -184,6 +184,7 @@
     "src/guest/location.ts": "c2a3a431be4e90823664b4bc444de40d292df821fabfff2c627c5fb750fd382a",
     "src/guest/message-transfer.ts": "b126fa4cf88d3434b73160c9adce0a17b7441a34c642eef7fb982b540ed79c1a",
     "src/guest/native-binary.ts": "2d0c098fdd641cf9edc5f7f958acef0fa9995766bdcbe177f925cc21ad49afd4",
+    "src/guest/native-brand.ts": "ebb96efef406a05debada5a3a3117ff0a3954e7eb706712871cb6290a2b13b00",
     "src/guest/native-host.ts": "0420675d80bbc038b3c8cfbe8d8bb53e3d322ecb856613870de0405b553a8ff9",
     "src/guest/native-policy.ts": "ba0fb4f746bc472c480f0dbeff9e83a629c74e81ba832a3bd8019a6f1e2b1ce8",
     "src/guest/native-wasm.ts": "670c8a4e9cfd50ca037aa7d2596ea4716b3b35f70d05c2cefc33c27e3db61852",
@@ -193,8 +194,8 @@
     "src/guest/runtime-interfaces.ts": "fd51bfa7d25ec78ecdd0d59adb198fe41c5119954237ee396ccee5bb6bb05103",
     "src/guest/session.ts": "7d6566044cec86e7ee1bd8629cc05bbcf89c62915d8dc4e415a5eb5d5b413f55",
     "src/guest/storage.ts": "de4d5f84f07c36f7e18a20ad30261279c49c49c31b5691da7d83e0259fe8d4d3",
-    "src/guest/text-policy.ts": "4b6341120905c42380d48854b78ffadc2a8e3ee05a801b847095c5b09c333fdf",
-    "src/guest/url-policy.ts": "e0e88fbc7f643d7c3042858cb670e9a3012a1c7057c6c49067fbbe56cee769b5",
+    "src/guest/text-policy.ts": "cb30d1be3b96c9ea73fd8c6b13375fbaf781f8bc37c4f2928d56bed1c27a345c",
+    "src/guest/url-policy.ts": "cd9c54875cac49c55634b910e723abe0fc5c402f429107eefbb910ce79d54d7a",
     "src/guest/wasm-accessors.ts": "7e03c8e70638d2d861392ec0b2ed40867c638bfcbb26774fbf1e240b2b18589b",
     "src/guest/web-services.ts": "429fa17d217a6f7a155b6e80e7ff8b062eb5077b78dd19bc635da9417147266d",
     "test/guest-message-transfer.browser.ts": "d57da74dfc9bc6abdbd0bc7a7ffd500920450d414e4407c2a1161159c1853e53",
@@ -203,9 +204,9 @@
   },
   "engineSHA256": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
   "bundleHashes": {
-    "production": "b3e7f69a200861e04c7ee875e8e76aa9e83b818c493f221d43f44860ef0fd25f",
-    "oldRereadRestored": "b733b44ea28c45e4886901f6b2c0a2b114f4d266be123665a9b2de63dbf5acb5",
-    "legacyGuardsRestored": "dd1af7899b0139b39c6744524e887d52940b5c4afd31cc942fb0c15a2b09c480"
+    "production": "c42bdb474946bfd9146d0e3fc85b08a7e8ab2de0595219757f89d4424417fd44",
+    "oldRereadRestored": "28b4cff8fb8732d7666500bba2126dd0f7bf861697d2310606b8b86f4914e017",
+    "legacyGuardsRestored": "2440929bd93e60b62a5bd466acec3caa505ae1e0bc4758cbae392354c6cbe945"
   },
   "results": [
     {
@@ -261,7 +262,7 @@
         }
       },
       "faultRejected": true,
-      "failure": "Error: Native adapter transfer conversion must run once\nError: Native adapter transfer conversion must run once\n    at check (http://127.0.0.1:32863/browser.js?variant=reread:50029:21)\n    at run (http://127.0.0.1:32863/browser.js?variant=reread:50173:5)"
+      "failure": "Error: Native adapter transfer conversion must run once\nError: Native adapter transfer conversion must run once\n    at check (http://127.0.0.1:40749/browser.js?variant=reread:50021:21)\n    at run (http://127.0.0.1:40749/browser.js?variant=reread:50165:5)"
     },
     {
       "browser": "chromium",
@@ -278,7 +279,7 @@
         }
       },
       "faultRejected": true,
-      "failure": "Error: Legacy dictionary transfer must match native MessagePort conversion\nError: Legacy dictionary transfer must match native MessagePort conversion\n    at check (http://127.0.0.1:32863/browser.js?variant=legacy-null:50026:21)\n    at run (http://127.0.0.1:32863/browser.js?variant=legacy-null:50070:3)"
+      "failure": "Error: Legacy dictionary transfer must match native MessagePort conversion\nError: Legacy dictionary transfer must match native MessagePort conversion\n    at check (http://127.0.0.1:40749/browser.js?variant=legacy-null:50018:21)\n    at run (http://127.0.0.1:40749/browser.js?variant=legacy-null:50062:3)"
     },
     {
       "browser": "firefox",
@@ -333,7 +334,7 @@
         }
       },
       "faultRejected": true,
-      "failure": "Error: Native adapter transfer conversion must run once\ncheck@http://127.0.0.1:32863/browser.js?variant=reread:50029:21\nrun@http://127.0.0.1:32863/browser.js?variant=reread:50173:10\nasync*@http://127.0.0.1:32863/browser.js?variant=reread:50235:1\n"
+      "failure": "Error: Native adapter transfer conversion must run once\ncheck@http://127.0.0.1:40749/browser.js?variant=reread:50021:21\nrun@http://127.0.0.1:40749/browser.js?variant=reread:50165:10\nasync*@http://127.0.0.1:40749/browser.js?variant=reread:50227:1\n"
     },
     {
       "browser": "firefox",
@@ -350,7 +351,7 @@
         }
       },
       "faultRejected": true,
-      "failure": "Error: Legacy dictionary transfer must match native MessagePort conversion\ncheck@http://127.0.0.1:32863/browser.js?variant=legacy-null:50026:21\nrun@http://127.0.0.1:32863/browser.js?variant=legacy-null:50070:8\nasync*@http://127.0.0.1:32863/browser.js?variant=legacy-null:50232:1\n"
+      "failure": "Error: Legacy dictionary transfer must match native MessagePort conversion\ncheck@http://127.0.0.1:40749/browser.js?variant=legacy-null:50018:21\nrun@http://127.0.0.1:40749/browser.js?variant=legacy-null:50062:8\nasync*@http://127.0.0.1:40749/browser.js?variant=legacy-null:50224:1\n"
     }
   ]
 }

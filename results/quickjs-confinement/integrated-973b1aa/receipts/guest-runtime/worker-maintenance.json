@@ -1,0 +1,1949 @@
+{
+  "completed": true,
+  "passed": true,
+  "hashes": {
+    "guard.js": "a30721850ef599f842d8a86ffdd640769c372e932d54f72bb8ee74ff19535e4b",
+    "sw.js": "c68b5f5ef41eb143f980765fc8441cee3cc09ccd7d77baf507eb5101cbd2fb5c",
+    "guest-worker.js": "c3a604edf860153650e7c6e757c8515334364403bc6c5c215de47aa485b7e9f9",
+    "guest-shared-worker.js": "53392538ca56030cde047b036c4908d0b5e1b20d5a13d62b9df7b59376ae59ed",
+    "__guest_worker_registry__.js": "106b77a615aff3a3bdc0c29b349894b596006a01078a1d7f8c1a167bbce664fc",
+    "engine.wasm": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8"
+  },
+  "sensors": [
+    {
+      "profile": "chromium",
+      "requests": [
+        {
+          "path": "/sensor?profile=chromium",
+          "time": 1795270222712
+        }
+      ]
+    },
+    {
+      "profile": "firefox",
+      "requests": [
+        {
+          "path": "/sensor?profile=firefox",
+          "time": 1795270594107
+        }
+      ]
+    },
+    {
+      "profile": "firefox-forced-age",
+      "requests": [
+        {
+          "path": "/sensor?profile=firefox-forced-age",
+          "time": 1795270901616
+        }
+      ]
+    }
+  ],
+  "coverage": {
+    "passed": true,
+    "method": "Zero HTTP and successful paired actions in every profile; physical HTTP sensor per profile; positive native maintenance control per mechanism in at least one profile",
+    "sensorCoverage": [
+      {
+        "profile": "chromium",
+        "source": "uncached native HTTP control",
+        "requests": [
+          {
+            "path": "/sensor?profile=chromium",
+            "time": 1795270222712
+          }
+        ]
+      },
+      {
+        "profile": "firefox",
+        "source": "uncached native HTTP control",
+        "requests": [
+          {
+            "path": "/sensor?profile=firefox",
+            "time": 1795270594107
+          }
+        ]
+      },
+      {
+        "profile": "firefox-forced-age",
+        "source": "uncached native HTTP control",
+        "requests": [
+          {
+            "path": "/sensor?profile=firefox-forced-age",
+            "time": 1795270901616
+          }
+        ]
+      }
+    ],
+    "mechanisms": [
+      {
+        "kind": "classic",
+        "profiles": [
+          "firefox",
+          "firefox-forced-age"
+        ]
+      },
+      {
+        "kind": "dynamic",
+        "profiles": [
+          "firefox",
+          "firefox-forced-age"
+        ]
+      },
+      {
+        "kind": "module",
+        "profiles": [
+          "firefox",
+          "firefox-forced-age"
+        ]
+      },
+      {
+        "kind": "shared",
+        "profiles": [
+          "firefox",
+          "firefox-forced-age"
+        ]
+      },
+      {
+        "kind": "frame",
+        "profiles": [
+          "chromium",
+          "firefox",
+          "firefox-forced-age"
+        ]
+      },
+      {
+        "kind": "popup",
+        "profiles": [
+          "chromium",
+          "firefox",
+          "firefox-forced-age"
+        ]
+      },
+      {
+        "kind": "modifier",
+        "profiles": [
+          "chromium",
+          "firefox",
+          "firefox-forced-age"
+        ]
+      },
+      {
+        "kind": "worklet",
+        "profiles": [
+          "firefox-forced-age"
+        ]
+      },
+      {
+        "kind": "resources",
+        "profiles": [
+          "firefox-forced-age"
+        ]
+      }
+    ],
+    "inactiveNativeGroups": [
+      {
+        "profile": "chromium",
+        "kind": "classic",
+        "samples": 3,
+        "positiveSamples": 0
+      },
+      {
+        "profile": "chromium",
+        "kind": "dynamic",
+        "samples": 3,
+        "positiveSamples": 0
+      },
+      {
+        "profile": "chromium",
+        "kind": "module",
+        "samples": 3,
+        "positiveSamples": 0
+      },
+      {
+        "profile": "chromium",
+        "kind": "shared",
+        "samples": 3,
+        "positiveSamples": 0
+      },
+      {
+        "profile": "chromium",
+        "kind": "worklet",
+        "samples": 1,
+        "positiveSamples": 0
+      },
+      {
+        "profile": "chromium",
+        "kind": "resources",
+        "samples": 1,
+        "positiveSamples": 0
+      },
+      {
+        "profile": "firefox",
+        "kind": "worklet",
+        "samples": 1,
+        "positiveSamples": 0
+      },
+      {
+        "profile": "firefox",
+        "kind": "resources",
+        "samples": 1,
+        "positiveSamples": 0
+      }
+    ],
+    "nativeGroups": [
+      {
+        "profile": "chromium",
+        "kind": "classic",
+        "samples": 3,
+        "positiveSamples": 0
+      },
+      {
+        "profile": "chromium",
+        "kind": "dynamic",
+        "samples": 3,
+        "positiveSamples": 0
+      },
+      {
+        "profile": "chromium",
+        "kind": "module",
+        "samples": 3,
+        "positiveSamples": 0
+      },
+      {
+        "profile": "chromium",
+        "kind": "shared",
+        "samples": 3,
+        "positiveSamples": 0
+      },
+      {
+        "profile": "chromium",
+        "kind": "frame",
+        "samples": 1,
+        "positiveSamples": 1
+      },
+      {
+        "profile": "chromium",
+        "kind": "popup",
+        "samples": 1,
+        "positiveSamples": 1
+      },
+      {
+        "profile": "chromium",
+        "kind": "modifier",
+        "samples": 1,
+        "positiveSamples": 1
+      },
+      {
+        "profile": "chromium",
+        "kind": "worklet",
+        "samples": 1,
+        "positiveSamples": 0
+      },
+      {
+        "profile": "chromium",
+        "kind": "resources",
+        "samples": 1,
+        "positiveSamples": 0
+      },
+      {
+        "profile": "firefox",
+        "kind": "classic",
+        "samples": 1,
+        "positiveSamples": 1
+      },
+      {
+        "profile": "firefox",
+        "kind": "dynamic",
+        "samples": 1,
+        "positiveSamples": 1
+      },
+      {
+        "profile": "firefox",
+        "kind": "module",
+        "samples": 1,
+        "positiveSamples": 1
+      },
+      {
+        "profile": "firefox",
+        "kind": "shared",
+        "samples": 1,
+        "positiveSamples": 1
+      },
+      {
+        "profile": "firefox",
+        "kind": "frame",
+        "samples": 1,
+        "positiveSamples": 1
+      },
+      {
+        "profile": "firefox",
+        "kind": "popup",
+        "samples": 1,
+        "positiveSamples": 1
+      },
+      {
+        "profile": "firefox",
+        "kind": "modifier",
+        "samples": 1,
+        "positiveSamples": 1
+      },
+      {
+        "profile": "firefox",
+        "kind": "worklet",
+        "samples": 1,
+        "positiveSamples": 0
+      },
+      {
+        "profile": "firefox",
+        "kind": "resources",
+        "samples": 1,
+        "positiveSamples": 0
+      },
+      {
+        "profile": "firefox-forced-age",
+        "kind": "classic",
+        "samples": 1,
+        "positiveSamples": 1
+      },
+      {
+        "profile": "firefox-forced-age",
+        "kind": "dynamic",
+        "samples": 1,
+        "positiveSamples": 1
+      },
+      {
+        "profile": "firefox-forced-age",
+        "kind": "module",
+        "samples": 1,
+        "positiveSamples": 1
+      },
+      {
+        "profile": "firefox-forced-age",
+        "kind": "shared",
+        "samples": 1,
+        "positiveSamples": 1
+      },
+      {
+        "profile": "firefox-forced-age",
+        "kind": "frame",
+        "samples": 1,
+        "positiveSamples": 1
+      },
+      {
+        "profile": "firefox-forced-age",
+        "kind": "popup",
+        "samples": 1,
+        "positiveSamples": 1
+      },
+      {
+        "profile": "firefox-forced-age",
+        "kind": "modifier",
+        "samples": 1,
+        "positiveSamples": 1
+      },
+      {
+        "profile": "firefox-forced-age",
+        "kind": "worklet",
+        "samples": 1,
+        "positiveSamples": 1
+      },
+      {
+        "profile": "firefox-forced-age",
+        "kind": "resources",
+        "samples": 1,
+        "positiveSamples": 1
+      }
+    ],
+    "violations": [],
+    "errors": []
+  },
+  "samples": [
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "classic",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "classic",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "classic",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "classic",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "classic",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "classic",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "dynamic",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "dynamic",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "dynamic",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "dynamic",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "dynamic",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "dynamic",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "module",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "module",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "module",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "module",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "module",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "module",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "shared",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "shared",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "shared",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "shared",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "shared",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "shared",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "frame",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "frame",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [
+        {
+          "path": "/sw.js",
+          "time": 1795270420676
+        }
+      ],
+      "updates": [
+        {
+          "path": "/sw.js",
+          "time": 1795270420676
+        }
+      ]
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "frame",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "frame",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "popup",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "popup",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [
+        {
+          "path": "/sw.js",
+          "time": 1795270453859
+        }
+      ],
+      "updates": [
+        {
+          "path": "/sw.js",
+          "time": 1795270453859
+        }
+      ]
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "popup",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "popup",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "modifier",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "modifier",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [
+        {
+          "path": "/",
+          "time": 1795270485502
+        },
+        {
+          "path": "/",
+          "time": 1795270485504
+        },
+        {
+          "path": "/",
+          "time": 1795270485512
+        },
+        {
+          "path": "/main.js",
+          "time": 1795270485512
+        },
+        {
+          "path": "/",
+          "time": 1795270485513
+        },
+        {
+          "path": "/main.js",
+          "time": 1795270485517
+        },
+        {
+          "path": "/main.js",
+          "time": 1795270485520
+        },
+        {
+          "path": "/main.js",
+          "time": 1795270485525
+        },
+        {
+          "path": "/sw.js",
+          "time": 1795270487386
+        }
+      ],
+      "updates": [
+        {
+          "path": "/sw.js",
+          "time": 1795270487386
+        }
+      ]
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "modifier",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "modifier",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "worklet",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "worklet",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "worklet",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "worklet",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "resources",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "resources",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "resources",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "resources",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "reload",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "chromium",
+      "version": "153.0.8010.12",
+      "kind": "reload",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "classic",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "classic",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [
+        {
+          "path": "/sw.js",
+          "time": 1795270606470
+        }
+      ],
+      "updates": [
+        {
+          "path": "/sw.js",
+          "time": 1795270606470
+        }
+      ]
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "classic",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "classic",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "dynamic",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "dynamic",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [
+        {
+          "path": "/sw.js",
+          "time": 1795270638510
+        }
+      ],
+      "updates": [
+        {
+          "path": "/sw.js",
+          "time": 1795270638510
+        }
+      ]
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "dynamic",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "dynamic",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "module",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "module",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [
+        {
+          "path": "/sw.js",
+          "time": 1795270670786
+        }
+      ],
+      "updates": [
+        {
+          "path": "/sw.js",
+          "time": 1795270670786
+        }
+      ]
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "module",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "module",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "shared",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "shared",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [
+        {
+          "path": "/sw.js",
+          "time": 1795270702966
+        }
+      ],
+      "updates": [
+        {
+          "path": "/sw.js",
+          "time": 1795270702966
+        }
+      ]
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "shared",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "shared",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "frame",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "frame",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [
+        {
+          "path": "/sw.js",
+          "time": 1795270734997
+        }
+      ],
+      "updates": [
+        {
+          "path": "/sw.js",
+          "time": 1795270734997
+        }
+      ]
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "frame",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "frame",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "popup",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "popup",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [
+        {
+          "path": "/favicon.ico",
+          "time": 1795270766241
+        },
+        {
+          "path": "/sw.js",
+          "time": 1795270767249
+        }
+      ],
+      "updates": [
+        {
+          "path": "/sw.js",
+          "time": 1795270767249
+        }
+      ]
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "popup",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "popup",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "modifier",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "modifier",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [
+        {
+          "path": "/",
+          "time": 1795270798219
+        },
+        {
+          "path": "/main.js",
+          "time": 1795270798249
+        },
+        {
+          "path": "/sw.js",
+          "time": 1795270799262
+        }
+      ],
+      "updates": [
+        {
+          "path": "/sw.js",
+          "time": 1795270799262
+        }
+      ]
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "modifier",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "modifier",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "worklet",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "worklet",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "worklet",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "worklet",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "resources",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "resources",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "resources",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "resources",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "reload",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox",
+      "version": "155.0",
+      "kind": "reload",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "classic",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "classic",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [
+        {
+          "path": "/sw.js",
+          "time": 1795270913949
+        }
+      ],
+      "updates": [
+        {
+          "path": "/sw.js",
+          "time": 1795270913949
+        }
+      ]
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "classic",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "classic",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "dynamic",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "dynamic",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [
+        {
+          "path": "/sw.js",
+          "time": 1795270945821
+        }
+      ],
+      "updates": [
+        {
+          "path": "/sw.js",
+          "time": 1795270945821
+        }
+      ]
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "dynamic",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "dynamic",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "module",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "module",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [
+        {
+          "path": "/sw.js",
+          "time": 1795270978128
+        }
+      ],
+      "updates": [
+        {
+          "path": "/sw.js",
+          "time": 1795270978128
+        }
+      ]
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "module",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "module",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "shared",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "shared",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [
+        {
+          "path": "/sw.js",
+          "time": 1795271010164
+        }
+      ],
+      "updates": [
+        {
+          "path": "/sw.js",
+          "time": 1795271010164
+        }
+      ]
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "shared",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "shared",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "frame",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "frame",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [
+        {
+          "path": "/sw.js",
+          "time": 1795271042167
+        }
+      ],
+      "updates": [
+        {
+          "path": "/sw.js",
+          "time": 1795271042167
+        }
+      ]
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "frame",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "frame",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "popup",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "popup",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [
+        {
+          "path": "/favicon.ico",
+          "time": 1795271073666
+        },
+        {
+          "path": "/sw.js",
+          "time": 1795271074668
+        }
+      ],
+      "updates": [
+        {
+          "path": "/sw.js",
+          "time": 1795271074668
+        }
+      ]
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "popup",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "popup",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "modifier",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "modifier",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [
+        {
+          "path": "/",
+          "time": 1795271105665
+        },
+        {
+          "path": "/main.js",
+          "time": 1795271105707
+        },
+        {
+          "path": "/sw.js",
+          "time": 1795271106720
+        }
+      ],
+      "updates": [
+        {
+          "path": "/sw.js",
+          "time": 1795271106720
+        }
+      ]
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "modifier",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "modifier",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "worklet",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "worklet",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [
+        {
+          "path": "/sw.js",
+          "time": 1795271138687
+        }
+      ],
+      "updates": [
+        {
+          "path": "/sw.js",
+          "time": 1795271138687
+        }
+      ]
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "worklet",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "worklet",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "resources",
+      "confined": false,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "resources",
+      "confined": false,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [
+        {
+          "path": "/sw.js",
+          "time": 1795271170618
+        }
+      ],
+      "updates": [
+        {
+          "path": "/sw.js",
+          "time": 1795271170618
+        }
+      ]
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "resources",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "resources",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "reload",
+      "confined": true,
+      "bit": "0",
+      "result": "skipped",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    },
+    {
+      "profile": "firefox-forced-age",
+      "version": "155.0",
+      "kind": "reload",
+      "confined": true,
+      "bit": "1",
+      "result": "ready",
+      "runtime": [],
+      "publisher": [],
+      "updates": []
+    }
+  ]
+}

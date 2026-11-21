@@ -1,0 +1,231 @@
+{
+  "helperSHA256": "058930f5f581f18210f636c210c0dbba27e51a145826c2adcb95d3295436bc1d",
+  "binaryHelperSHA256": "da8dbde72247dd7b85b52bac138ddafa14f778729ceec34cf11eca0b924dea32",
+  "engineSHA256": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
+  "observations": [
+    {
+      "variant": "prepared",
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "bundleSHA256": "f45460545a442d33693c867d3fbb295a82420873134c19995fd59f3ed88b1542",
+      "result": {
+        "checks": {
+          "capturedOperations": true,
+          "privateProxyHandler": true,
+          "privateIndexRecord": true,
+          "binaryConstructorHandler": true,
+          "thrownReference": true,
+          "classification": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "variant": "prepared",
+      "browser": "firefox",
+      "version": "155.0",
+      "bundleSHA256": "f45460545a442d33693c867d3fbb295a82420873134c19995fd59f3ed88b1542",
+      "result": {
+        "checks": {
+          "capturedOperations": true,
+          "privateProxyHandler": true,
+          "privateIndexRecord": true,
+          "binaryConstructorHandler": true,
+          "thrownReference": true,
+          "classification": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "variant": "dynamic-object-create",
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "bundleSHA256": "df0a63d91766a8d74006cab563c70dc9bde7921efd4b9a354357b370a57240d0",
+      "result": {
+        "checks": {
+          "capturedOperations": {
+            "error": "Error: mutable operation was invoked"
+          },
+          "privateProxyHandler": true,
+          "privateIndexRecord": true,
+          "binaryConstructorHandler": true,
+          "thrownReference": true,
+          "classification": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "variant": "dynamic-object-create",
+      "browser": "firefox",
+      "version": "155.0",
+      "bundleSHA256": "df0a63d91766a8d74006cab563c70dc9bde7921efd4b9a354357b370a57240d0",
+      "result": {
+        "checks": {
+          "capturedOperations": {
+            "error": "Error: mutable operation was invoked"
+          },
+          "privateProxyHandler": true,
+          "privateIndexRecord": true,
+          "binaryConstructorHandler": true,
+          "thrownReference": true,
+          "classification": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "variant": "inherited-handler",
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "bundleSHA256": "653077d2c7a250d91d3314028c6b7a68c34a21e289fe06eb8bd0fbbf4743dc23",
+      "result": {
+        "checks": {
+          "capturedOperations": true,
+          "privateProxyHandler": {
+            "error": "Error: inherited proxy handler"
+          },
+          "privateIndexRecord": true,
+          "binaryConstructorHandler": true,
+          "thrownReference": true,
+          "classification": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "variant": "inherited-handler",
+      "browser": "firefox",
+      "version": "155.0",
+      "bundleSHA256": "653077d2c7a250d91d3314028c6b7a68c34a21e289fe06eb8bd0fbbf4743dc23",
+      "result": {
+        "checks": {
+          "capturedOperations": true,
+          "privateProxyHandler": {
+            "error": "Error: inherited proxy handler"
+          },
+          "privateIndexRecord": true,
+          "binaryConstructorHandler": true,
+          "thrownReference": true,
+          "classification": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "variant": "inherited-index",
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "bundleSHA256": "a5c104a7202b1341271e993cd911c032ac465640c6c1f379f1ae34d662b1bb5e",
+      "result": {
+        "checks": {
+          "capturedOperations": true,
+          "privateProxyHandler": true,
+          "privateIndexRecord": {
+            "error": "Error: inherited private index read"
+          },
+          "binaryConstructorHandler": true,
+          "thrownReference": true,
+          "classification": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "variant": "inherited-index",
+      "browser": "firefox",
+      "version": "155.0",
+      "bundleSHA256": "a5c104a7202b1341271e993cd911c032ac465640c6c1f379f1ae34d662b1bb5e",
+      "result": {
+        "checks": {
+          "capturedOperations": true,
+          "privateProxyHandler": true,
+          "privateIndexRecord": {
+            "error": "Error: inherited private index read"
+          },
+          "binaryConstructorHandler": true,
+          "thrownReference": true,
+          "classification": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "variant": "mutable-classifier",
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "bundleSHA256": "41bb514b18fc497c1d8cb50ff3a56d57eb70adf90b69fac575ebd48765e9e46b",
+      "result": {
+        "checks": {
+          "capturedOperations": true,
+          "privateProxyHandler": true,
+          "privateIndexRecord": true,
+          "binaryConstructorHandler": true,
+          "thrownReference": true,
+          "classification": {
+            "error": "Error: application hasInstance"
+          }
+        }
+      },
+      "errors": []
+    },
+    {
+      "variant": "mutable-classifier",
+      "browser": "firefox",
+      "version": "155.0",
+      "bundleSHA256": "41bb514b18fc497c1d8cb50ff3a56d57eb70adf90b69fac575ebd48765e9e46b",
+      "result": {
+        "checks": {
+          "capturedOperations": true,
+          "privateProxyHandler": true,
+          "privateIndexRecord": true,
+          "binaryConstructorHandler": true,
+          "thrownReference": true,
+          "classification": {
+            "error": "Error: application hasInstance"
+          }
+        }
+      },
+      "errors": []
+    },
+    {
+      "variant": "inherited-binary-handler",
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "bundleSHA256": "76af0f5c479ee0534098f24820b51b9e68120352308851edee085794f6e1ac53",
+      "result": {
+        "checks": {
+          "capturedOperations": true,
+          "privateProxyHandler": true,
+          "privateIndexRecord": true,
+          "binaryConstructorHandler": {
+            "error": "Error: inherited binary constructor handler"
+          },
+          "thrownReference": true,
+          "classification": true
+        }
+      },
+      "errors": []
+    },
+    {
+      "variant": "inherited-binary-handler",
+      "browser": "firefox",
+      "version": "155.0",
+      "bundleSHA256": "76af0f5c479ee0534098f24820b51b9e68120352308851edee085794f6e1ac53",
+      "result": {
+        "checks": {
+          "capturedOperations": true,
+          "privateProxyHandler": true,
+          "privateIndexRecord": true,
+          "binaryConstructorHandler": {
+            "error": "Error: inherited binary constructor handler"
+          },
+          "thrownReference": true,
+          "classification": true
+        }
+      },
+      "errors": []
+    }
+  ]
+}

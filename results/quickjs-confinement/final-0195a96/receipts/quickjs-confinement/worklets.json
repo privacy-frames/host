@@ -1,0 +1,78 @@
+{
+  "scope": "Controlled tests of actual audio-worklet source and helper bookkeeping; selected browser integration when requested. Not a complete worklet confinement proof.",
+  "sourceRevision": "c02eb0fd6a9f0906e5fb715557dfc9ac9d6ee0e0",
+  "node": "v24.18.0",
+  "sourceHashes": {
+    "src/guest/contexts/audio-worklet.ts": "8706554251c0020af6599b599e306b3e0e9cffceebd31ce739c825071e789577",
+    "src/guest/contexts/worklet-entry.ts": "1a6ba23c493e8174a9015e79651ac90c0c4680c01008f52258e2afec06907cc9",
+    "src/guest/contexts/worklet-runtime.ts": "e43316cbdfaf8720a96457975ce02c426056ba64449646be7f5f28b7669458cd",
+    "src/guest/contexts/lifecycle-kernel.ts": "93a3711767ee0e6071ed0a3ebdebf3231179fd54671c639ed382243c13aa3179",
+    "src/guest/contexts/processor-name.ts": "0f90b774357d6b8c5279d6a887f4f279282bee68d682002c535e40763adef5e2",
+    "src/guest/identity.ts": "e067e5dea7a2b036ced0905abd77e6a40f187ec2a3231466b1825a2e84b8c748",
+    "test/guest-audio-worklet.test.ts": "e490aeb07996a9a35150faf9a84dcd895170475825f90c131bd8ad63b4adacf4",
+    "test/guest-worklet-bootstrap.test.ts": "4b85f1013912ad6b9b4519ac5e6799e715d36634b772e46c98647016af9dc2ab",
+    "test/guest-worklet-runtime.test.ts": "3068e90294dd95f092315d021c56ca22fff23eba88f3c344199007c1b82c4394"
+  },
+  "runnerSHA256": "2732c59f613db731f7cbfc578926515b4865cae485818650c6216a8ad55e4e09",
+  "unit": {
+    "tests": 12,
+    "passed": 12,
+    "failed": 0,
+    "outputSHA256": "fb80b1b1aa040e11379584a10ed79649e914d3ea73edb77b393cbca0682051f3",
+    "actualLateCloseGuardRemovalDetected": true
+  },
+  "browser": {
+    "checked": true,
+    "observations": [
+      {
+        "browser": "chromium",
+        "version": "153.0.8010.12",
+        "sample": 0.25,
+        "messages": [
+          {
+            "bytes": [
+              4,
+              4
+            ]
+          },
+          {
+            "detached": true,
+            "wasm": "object"
+          }
+        ],
+        "nativePortDetached": true
+      },
+      {
+        "browser": "firefox",
+        "version": "155.0",
+        "sample": 0.25,
+        "messages": [
+          {
+            "bytes": [
+              4,
+              4
+            ]
+          },
+          {
+            "detached": true,
+            "wasm": "object"
+          }
+        ],
+        "nativePortDetached": true
+      }
+    ],
+    "artifacts": {
+      ".tools/guest-context-test/browser.js": "821f96ae8666cf4e4e29e2ffe1ac2fa6867e87474724d302edc46e2298fbbbef",
+      ".tools/guest-context-test/worklet.js": "031f4a4e2bb4f2e9e15be3f6f0dda0e58b8b85398aa7caa21d7a432abc716beb",
+      ".tools/guest-context-test/worker.js": "9fdf82b8ba4e7f8b5a309675d48caf9aac77934f0c1a6d55d8fa4a63a21a83b3",
+      ".tools/guest-context-test/registry.js": "f7ae9e28bd9d5e5d74d796be03697d7ade87bad98c0f4847fc1d749fe8977f24",
+      "vendor/quickjs/generated/engine.wasm": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8"
+    }
+  },
+  "remaining": [
+    "Native worklet host operation mediation.",
+    "Caller ownership/private-port authentication and browser worklet/message lifetime contracts.",
+    "Composition with the verified shared publication kernel and the full guest boundary."
+  ],
+  "completed": "2026-11-20T09:48:54.018Z"
+}

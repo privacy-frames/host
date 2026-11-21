@@ -1,0 +1,86 @@
+{
+  "browser": "Chromium 153.0.8010.12",
+  "purpose": "Diagnose retained-buffer synchronization during unchanged public Pitch Training piano playback",
+  "completeAcceptance": false,
+  "profileDurationMs": 64663.199,
+  "topSelfTime": [
+    {
+      "functionName": "syncBuffers",
+      "url": "http://127.0.0.1:4211/runtime/guard.js",
+      "lineNumber": 44776,
+      "selfMs": 37554.151
+    },
+    {
+      "functionName": "wasm-function[1253]",
+      "url": "wasm://wasm/001eb57a",
+      "lineNumber": 0,
+      "selfMs": 7473.366
+    },
+    {
+      "functionName": "newHeapBufferPointer",
+      "url": "http://127.0.0.1:4211/runtime/guard.js",
+      "lineNumber": 3236,
+      "selfMs": 6523.885
+    },
+    {
+      "functionName": "wasm-function[965]",
+      "url": "wasm://wasm/001eb57a",
+      "lineNumber": 0,
+      "selfMs": 4743.582
+    },
+    {
+      "functionName": "accepts",
+      "url": "http://127.0.0.1:4211/runtime/guard.js",
+      "lineNumber": 24006,
+      "selfMs": 1216.103
+    },
+    {
+      "functionName": "newArrayBuffer",
+      "url": "http://127.0.0.1:4211/runtime/guard.js",
+      "lineNumber": 3476,
+      "selfMs": 885.562
+    },
+    {
+      "functionName": "wasm-function[789]",
+      "url": "wasm://wasm/001eb57a",
+      "lineNumber": 0,
+      "selfMs": 646.577
+    },
+    {
+      "functionName": "toPointerArray",
+      "url": "http://127.0.0.1:4211/runtime/guard.js",
+      "lineNumber": 3221,
+      "selfMs": 611.735
+    },
+    {
+      "functionName": "wasm-function[768]",
+      "url": "wasm://wasm/001eb57a",
+      "lineNumber": 0,
+      "selfMs": 561.783
+    },
+    {
+      "functionName": "wasm-function[583]",
+      "url": "wasm://wasm/001eb57a",
+      "lineNumber": 0,
+      "selfMs": 286.805
+    },
+    {
+      "functionName": "wasm-function[559]",
+      "url": "wasm://wasm/001eb57a",
+      "lineNumber": 0,
+      "selfMs": 251.796
+    },
+    {
+      "functionName": "isDocument",
+      "url": "http://127.0.0.1:4211/runtime/guard.js",
+      "lineNumber": 24029,
+      "selfMs": 236.259
+    }
+  ],
+  "observedBeforeDiagnosticBrowserClose": [
+    "full guest DOM render",
+    "native nonzero piano sample playback",
+    "exercise history saved",
+    "Reference navigation begun"
+  ]
+}

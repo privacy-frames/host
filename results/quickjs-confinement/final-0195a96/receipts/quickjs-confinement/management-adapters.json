@@ -1,0 +1,20 @@
+{
+  "scope": "Actual production adapters bundled with simulated native event/client/port observations and storage/admission dependencies. These tests do not establish browser authenticity or complete confinement.",
+  "inputHashes": {
+    "src/runtime/authority.ts": "3eb88cd705e1a3a04c362b53128f2a5c37592cd8d90527b3af961d6830a551d8",
+    "src/runtime/worker.ts": "ebbba71d21df235712f7d120e89899f732e7fafe2a9288c8d61f79f5c92c2ad5",
+    "src/bridge/connect.ts": "6cb3fd68e9b934679b89b5feeae83fc40c78ebcff1e27c67b24684733a73d2fa",
+    "test/guest-management-authority.test.ts": "ebb02e6b050ca936a8425652b7388d76b289709b919c86348f0d9b5b692861a7"
+  },
+  "bundleHashes": {
+    "workerfalse": "d45008ae990f85aa1b27a2ee027c406a03be93c2cb1292868f97f1a40d1dc2c7",
+    "workertrue": "7b273abee06402e4b046533637419db0ea18c6d80250c036b77c2909449ad6a8",
+    "connectfalse": "65a956831fd4a3af084ae84e8de344044b2175847a3fcb67f0c35a6c1b2b7fde",
+    "connecttrue": "1477c2a9301d6786a727a3791458bcc42e384c20c80c518b8f0a885f16bb7550"
+  },
+  "controls": [
+    "Actual client URL role check removed: application client accepted",
+    "Actual parent origin check removed: unrelated parent accepted"
+  ],
+  "completedAt": "2026-11-21T14:37:41.919Z"
+}
