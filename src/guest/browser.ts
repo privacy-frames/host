@@ -1,3 +1,5 @@
+import { createGuestGeometryPolicy } from './geometry-policy.ts';
+import { createGeometryProducers } from './geometry-producers.ts';
 import { captureNativeIntrinsics, ordinaryIntrinsicNames } from './native-intrinsics.ts';
 import { createNativeStringMapping } from './native-string-mapping.ts';
 import { captureEventListenerArguments } from './event-listener-arguments.ts';
@@ -324,6 +326,9 @@ export class BrowserEnvironment {
   readonly document?: Document;
   readonly dom?: GuestDOM;
   private engine?: GuestEngine;
+  private geometryArrayValues?: Function;
+  private readonly geometry: ReturnType<typeof createGuestGeometryPolicy>;
+  private readonly geometryProducers: ReturnType<typeof createGeometryProducers>;
   private readonly nativePolicies: readonly GuestHost[];
   private readonly stringMapping: ReturnType<typeof createNativeStringMapping>;
   private readonly browserPolicy: ReturnType<typeof createBrowserPolicy>;
@@ -352,6 +357,25 @@ export class BrowserEnvironment {
     const { catalog, global: native } = options;
     this.resources = new GuestResources(catalog);
     this.document = 'document' in native ? native.document : undefined;
+    this.geometry = createGuestGeometryPolicy({
+      global: native,
+      isGuestValue: (value) => this.engine?.ownsGuestValue(value) ?? false,
+      iterator: (receiver) => {
+        if (!this.geometryArrayValues)
+          throw new TypeError('Geometry iterator is not prepared');
+        return this.requireEngine().call(this.geometryArrayValues, [], receiver);
+      },
+    });
+    this.geometryProducers = createGeometryProducers({
+      global: native,
+      application: catalog.application,
+      generation: catalog.generation,
+      geometry: this.geometry,
+      active: () => !this.disposed,
+      isDOMReceiver: (value) => this.eventTargetReceiver(value),
+      recognizesCallable: (value): value is Function =>
+        this.engine?.recognizesCallable(value) ?? false,
+    });
     captureNativeIntrinsics(native, { owner: this, document: this.document });
     this.stringMapping = createNativeStringMapping({
       global: native,
@@ -375,6 +399,7 @@ export class BrowserEnvironment {
     });
     this.nativePolicies = [
       this.browserPolicy.host,
+      this.geometry,
       createGuestURLPolicy({
         URL: Reflect.get(native, 'URL'),
         URLSearchParams: Reflect.get(native, 'URLSearchParams'),
@@ -761,6 +786,10 @@ export class BrowserEnvironment {
 
   attach(engine: GuestEngine): void {
     this.engine = engine;
+    const values = engine.property(Array.prototype, 'values');
+    if (typeof values !== 'function' || !engine.ownsGuestValue(values))
+      throw new TypeError('Geometry iterator has no guest owner');
+    this.geometryArrayValues = values;
     for (const [name, value] of Object.entries(this.globals)) {
       try {
         engine.set(name, value);
@@ -984,6 +1013,8 @@ export class BrowserEnvironment {
       if (script && key === 'type') return script.type;
       if (script && (key === 'src' || key === 'href')) return script.source || '';
     }
+    const geometric = this.geometryProducers.read(target, key);
+    if (geometric) return geometric.value;
     const value: unknown = Reflect.get(target, key, target);
     if (isElement(target) && value && typeof value === 'object') {
       if (key === 'attributes') this.attributeOwners.set(value, target);
@@ -1246,7 +1277,9 @@ export class BrowserEnvironment {
     if (target === this.audioWorkletNodeConstructor && args.length >= 2)
       args[1] = guestProcessorName(args[1]);
     args = this.stringMapping.construct(target, args);
+    args = this.geometryProducers.construct(target, args);
     const value: object = Reflect.construct(target, args);
+    this.geometryProducers.constructed(target, value);
     if (isBlob(value))
       this.resources.registerBlob(value, Array.isArray(args[0]) ? args[0] : undefined);
     return value;
@@ -1640,7 +1673,9 @@ export class BrowserEnvironment {
     const invocation =
       listenerArguments?.arguments ??
       (transfer === undefined ? args : [args[0], transfer]);
+    const geometricResult = this.geometryProducers.call(target, receiver);
     const result: unknown = Reflect.apply(target, receiver, invocation);
+    geometricResult?.(result);
     if (key === 'addEventListener' && listenerArguments) {
       const cleanup = listenerArguments.cleanup();
       this.cleanups.add(() =>
