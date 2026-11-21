@@ -1,0 +1,42 @@
+chromium production {"failure":"SyntaxError: redeclaration of 'expected'\nSyntaxError: redeclaration of 'expected'\n    at _GuestEngine.guestError (http://127.0.0.1:37299/browser.js?variant=production:51249:21)\n    at _GuestEngine.unwrap (http://127.0.0.1:37299/browser.js?variant=production:51229:22)\n    at http://127.0.0.1:37299/browser.js?variant=production:50020:27\n    at _GuestEngine.enter (http://127.0.0.1:37299/browser.js?variant=production:50167:14)\n    at _GuestEngine.evaluate (http://127.0.0.1:37299/browser.js?variant=production:50019:17)\n    at run (http://127.0.0.1:37299/browser.js?variant=production:51489:27)"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: SyntaxError: redeclaration of 'expected'
+SyntaxError: redeclaration of 'expected'
+    at _GuestEngine.guestError (http://127.0.0.1:37299/browser.js?variant=production:51249:21)
+    at _GuestEngine.unwrap (http://127.0.0.1:37299/browser.js?variant=production:51229:22)
+    at http://127.0.0.1:37299/browser.js?variant=production:50020:27
+    at _GuestEngine.enter (http://127.0.0.1:37299/browser.js?variant=production:50167:14)
+    at _GuestEngine.evaluate (http://127.0.0.1:37299/browser.js?variant=production:50019:17)
+    at run (http://127.0.0.1:37299/browser.js?variant=production:51489:27)
++ actual - expected
+
++ "SyntaxError: redeclaration of 'expected'\n" +
++   "SyntaxError: redeclaration of 'expected'\n" +
++   '    at _GuestEngine.guestError (http://127.0.0.1:37299/browser.js?variant=production:51249:21)\n' +
++   '    at _GuestEngine.unwrap (http://127.0.0.1:37299/browser.js?variant=production:51229:22)\n' +
++   '    at http://127.0.0.1:37299/browser.js?variant=production:50020:27\n' +
++   '    at _GuestEngine.enter (http://127.0.0.1:37299/browser.js?variant=production:50167:14)\n' +
++   '    at _GuestEngine.evaluate (http://127.0.0.1:37299/browser.js?variant=production:50019:17)\n' +
++   '    at run (http://127.0.0.1:37299/browser.js?variant=production:51489:27)'
+- undefined
+
+    at <anonymous> (/home/damen/Projects/privacy-frames-realm-intrinsics/test/guest-realm-intrinsics.ts:126:20) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: "SyntaxError: redeclaration of 'expected'\n" +
+    "SyntaxError: redeclaration of 'expected'\n" +
+    '    at _GuestEngine.guestError (http://127.0.0.1:37299/browser.js?variant=production:51249:21)\n' +
+    '    at _GuestEngine.unwrap (http://127.0.0.1:37299/browser.js?variant=production:51229:22)\n' +
+    '    at http://127.0.0.1:37299/browser.js?variant=production:50020:27\n' +
+    '    at _GuestEngine.enter (http://127.0.0.1:37299/browser.js?variant=production:50167:14)\n' +
+    '    at _GuestEngine.evaluate (http://127.0.0.1:37299/browser.js?variant=production:50019:17)\n' +
+    '    at run (http://127.0.0.1:37299/browser.js?variant=production:51489:27)',
+  expected: undefined,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.18.0

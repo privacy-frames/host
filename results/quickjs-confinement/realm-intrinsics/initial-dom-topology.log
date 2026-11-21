@@ -1,0 +1,28 @@
+chromium production {"failure":"Error: DOM constructor intrinsic boundary\n    at <anonymous> (application.js:7:26)\n    at <eval> (application.js:19:9)\n"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Error: DOM constructor intrinsic boundary
+    at <anonymous> (application.js:7:26)
+    at <eval> (application.js:19:9)
+
++ actual - expected
+
++ 'Error: DOM constructor intrinsic boundary\n' +
++   '    at <anonymous> (application.js:7:26)\n' +
++   '    at <eval> (application.js:19:9)\n'
+- undefined
+
+    at <anonymous> (/home/damen/Projects/privacy-frames-realm-intrinsics/test/guest-realm-intrinsics.ts:126:20) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'Error: DOM constructor intrinsic boundary\n' +
+    '    at <anonymous> (application.js:7:26)\n' +
+    '    at <eval> (application.js:19:9)\n',
+  expected: undefined,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.18.0

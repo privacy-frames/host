@@ -1,0 +1,87 @@
+{
+  "sourceRevision": "0a7a66712924d6a8030d953095db2395d5e30deb",
+  "baseRevision": "e4b8ba4373fff7917d60772ac1a15c42e49b9a5c",
+  "scope": "Exact ordinary constructor/prototype identities from trusted prepared realms, receiving QuickJS counterparts, existing aliases and disposal. Pending-reference mediation, foreign dynamic constructors, complete BrowserEnvironment mediation and full application release are not qualified.",
+  "sourceHashes": {
+    "src/guest/native-intrinsics.ts": "4cac286927ee1197a4025161c5798b038e284e5c3292280cd8966ac438a92623",
+    "src/guest/engine.ts": "c3bf69da6514cf54e0474b7dcab34f38cafc8db4cd3b86ae0b97788cd16cb1cc",
+    "src/guest/browser.ts": "af4c0b9bc02b9af95a31bccf4abb63fac892e1f4ab829ec0f69bdf0febf5568b",
+    "src/guest/native-binary.ts": "ed0665a76a4c4fb2e35e5acc180b4d4e50e8c1c3fc3762de389362b380e5d637",
+    "test/native-intrinsics.test.ts": "006affa7daa2561e017191722aa09077952f98a604b3dbe178c2e1c8290661f7",
+    "test/guest-realm-intrinsics.browser.ts": "0e15292b9a37e6abea1279f9fecac8cd4c950a719a5e9c9fef47b829990a3e7b",
+    "test/guest-realm-intrinsics.ts": "30fc2b64a961468406e897bec93ee4ad56af61ded43d528d21f1e609f59eb38e",
+    "docs/implementation/native-intrinsics.md": "25ad4a2d00e3c45a0d5f0c8c9e06d782b402eddda30e91324b4f4e990e2a97cc"
+  },
+  "checks": [
+    {
+      "command": "tsx --test test/native-intrinsics.test.ts test/guest-native-policy.test.ts test/native-binary-policy.test.ts test/guest-engine-initialization.test.ts",
+      "tests": 28,
+      "exitCode": 0,
+      "log": "units.log"
+    },
+    {
+      "command": "tsc --noEmit",
+      "exitCode": 0,
+      "log": "types.log"
+    },
+    {
+      "command": "Scoped Prettier",
+      "exitCode": 0,
+      "log": "format.log"
+    },
+    {
+      "command": "tsx test/guest-realm-intrinsics.ts",
+      "exitCode": 0,
+      "receipts": 8,
+      "browsers": [
+        "Chromium",
+        "Firefox"
+      ],
+      "receipt": "result.json",
+      "log": "browser.log"
+    },
+    {
+      "command": "tsx test/guest-engine.ts",
+      "exitCode": 0,
+      "receipt": "engine.json",
+      "log": "engine.log"
+    },
+    {
+      "command": "tsx test/guest-text-bridge.ts",
+      "exitCode": 0,
+      "receipt": "text.json",
+      "log": "text.log"
+    }
+  ],
+  "controls": [
+    "Native foreign identities differ before projection",
+    "Guest ctor/proto and descriptor.value identities match retained canonical guest counterparts after global replacement and prototype extension",
+    "Foreign DOM constructor hierarchy, node writes, callback delivery and cancellation remain available",
+    "Re-encoding and metadata operations refuse a generic proxy whose identity was captured later",
+    "Explicit trusted aliases remain usable",
+    "Missing receiving Function role refuses before generic proxying",
+    "Omitted ordinary identity mapping fails Object identity assertion without invoking native code generation",
+    "Hidden native shared-buffer constructor/prototype identities project in non-COI pages; actual shared-buffer encoding passes in COI pages",
+    "Receiving and child QuickJS contexts dispose without retained-handle assertion"
+  ],
+  "additionalFailedProbe": {
+    "log": "native-shared-buffer-encoding.log",
+    "outcome": "Native shared-memory buffer encoding in non-COI page failed with DataCloneError in NativeBinary.bindConstructor structuredClone. Actual same-case encoding passed with COI headers.",
+    "nativeBinarySourceMatchesBase": true,
+    "baselineNativeBinarySHA256": "ed0665a76a4c4fb2e35e5acc180b4d4e50e8c1c3fc3762de389362b380e5d637",
+    "limit": "Baseline runtime was not rerun for this probe; unchanged source is not a before/after behavior measurement."
+  },
+  "earlierHarnessDiagnostics": {
+    "initial-harness.log": "Repeated global const declaration in per-role fixture; corrected to per-evaluation function scope.",
+    "initial-dom-topology.log": "Fixture assumed direct DOM constructor inheritance from Function.prototype; corrected to traverse native DOM constructor lineage.",
+    "initial-late-capture.log": "Control frame was auto-prepared by GuestDOM MutationObserver before purported late capture; moved host-created control frame before observer installation."
+  },
+  "callerPremises": [
+    "Only authoritative trusted setup registers actual native realm identities, before application publication.",
+    "Snapshots associate the actual setup owner and document; Window/Node brands and public function names confer no registration authority.",
+    "Identity index values hold roles rather than environments/engines.",
+    "Canonical guest handles are retained after binary installation, not read from mutable guest globals later.",
+    "Only exact trusted startup binary alias replacement clears startup generic-proxy markers."
+  ],
+  "proseReview": "Documentation reviewed sentence by sentence against surrounding implementation context and writing preferences. Unslop phrase scan found no findings; soft reference-prose cadence warning reviewed. Private writing-registry examples are excluded."
+}

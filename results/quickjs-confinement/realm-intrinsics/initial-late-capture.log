@@ -1,0 +1,30 @@
+chromium production {"failure":"Error: An existing generic proxy cannot silently become a canonical intrinsic\nError: An existing generic proxy cannot silently become a canonical intrinsic\n    at check (http://127.0.0.1:41135/browser.js?variant=production:51423:21)\n    at run (http://127.0.0.1:41135/browser.js?variant=production:51545:5)"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Error: An existing generic proxy cannot silently become a canonical intrinsic
+Error: An existing generic proxy cannot silently become a canonical intrinsic
+    at check (http://127.0.0.1:41135/browser.js?variant=production:51423:21)
+    at run (http://127.0.0.1:41135/browser.js?variant=production:51545:5)
++ actual - expected
+
++ 'Error: An existing generic proxy cannot silently become a canonical intrinsic\n' +
++   'Error: An existing generic proxy cannot silently become a canonical intrinsic\n' +
++   '    at check (http://127.0.0.1:41135/browser.js?variant=production:51423:21)\n' +
++   '    at run (http://127.0.0.1:41135/browser.js?variant=production:51545:5)'
+- undefined
+
+    at <anonymous> (/home/damen/Projects/privacy-frames-realm-intrinsics/test/guest-realm-intrinsics.ts:126:20) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'Error: An existing generic proxy cannot silently become a canonical intrinsic\n' +
+    'Error: An existing generic proxy cannot silently become a canonical intrinsic\n' +
+    '    at check (http://127.0.0.1:41135/browser.js?variant=production:51423:21)\n' +
+    '    at run (http://127.0.0.1:41135/browser.js?variant=production:51545:5)',
+  expected: undefined,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.18.0

@@ -1,0 +1,42 @@
+chromium production {"failure":"DataCloneError: Failed to execute 'structuredClone' on 'Window': SharedArrayBuffer transfer requires self.crossOriginIsolated.\nDataCloneError: Failed to execute 'structuredClone' on 'Window': SharedArrayBuffer transfer requires self.crossOriginIsolated.\n    at NativeBinary.bindConstructor (http://127.0.0.1:40275/browser.js?variant=production:48631:21)\n    at _GuestEngine.encode (http://127.0.0.1:40275/browser.js?variant=production:50524:23)\n    at http://127.0.0.1:40275/browser.js?variant=production:50035:27\n    at _GuestEngine.enter (http://127.0.0.1:40275/browser.js?variant=production:50169:14)\n    at _GuestEngine.set (http://127.0.0.1:40275/browser.js?variant=production:50034:10)\n    at run (http://127.0.0.1:40275/browser.js?variant=production:51554:21)"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: DataCloneError: Failed to execute 'structuredClone' on 'Window': SharedArrayBuffer transfer requires self.crossOriginIsolated.
+DataCloneError: Failed to execute 'structuredClone' on 'Window': SharedArrayBuffer transfer requires self.crossOriginIsolated.
+    at NativeBinary.bindConstructor (http://127.0.0.1:40275/browser.js?variant=production:48631:21)
+    at _GuestEngine.encode (http://127.0.0.1:40275/browser.js?variant=production:50524:23)
+    at http://127.0.0.1:40275/browser.js?variant=production:50035:27
+    at _GuestEngine.enter (http://127.0.0.1:40275/browser.js?variant=production:50169:14)
+    at _GuestEngine.set (http://127.0.0.1:40275/browser.js?variant=production:50034:10)
+    at run (http://127.0.0.1:40275/browser.js?variant=production:51554:21)
++ actual - expected
+
++ "DataCloneError: Failed to execute 'structuredClone' on 'Window': SharedArrayBuffer transfer requires self.crossOriginIsolated.\n" +
++   "DataCloneError: Failed to execute 'structuredClone' on 'Window': SharedArrayBuffer transfer requires self.crossOriginIsolated.\n" +
++   '    at NativeBinary.bindConstructor (http://127.0.0.1:40275/browser.js?variant=production:48631:21)\n' +
++   '    at _GuestEngine.encode (http://127.0.0.1:40275/browser.js?variant=production:50524:23)\n' +
++   '    at http://127.0.0.1:40275/browser.js?variant=production:50035:27\n' +
++   '    at _GuestEngine.enter (http://127.0.0.1:40275/browser.js?variant=production:50169:14)\n' +
++   '    at _GuestEngine.set (http://127.0.0.1:40275/browser.js?variant=production:50034:10)\n' +
++   '    at run (http://127.0.0.1:40275/browser.js?variant=production:51554:21)'
+- undefined
+
+    at <anonymous> (/home/damen/Projects/privacy-frames-realm-intrinsics/test/guest-realm-intrinsics.ts:126:20) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: "DataCloneError: Failed to execute 'structuredClone' on 'Window': SharedArrayBuffer transfer requires self.crossOriginIsolated.\n" +
+    "DataCloneError: Failed to execute 'structuredClone' on 'Window': SharedArrayBuffer transfer requires self.crossOriginIsolated.\n" +
+    '    at NativeBinary.bindConstructor (http://127.0.0.1:40275/browser.js?variant=production:48631:21)\n' +
+    '    at _GuestEngine.encode (http://127.0.0.1:40275/browser.js?variant=production:50524:23)\n' +
+    '    at http://127.0.0.1:40275/browser.js?variant=production:50035:27\n' +
+    '    at _GuestEngine.enter (http://127.0.0.1:40275/browser.js?variant=production:50169:14)\n' +
+    '    at _GuestEngine.set (http://127.0.0.1:40275/browser.js?variant=production:50034:10)\n' +
+    '    at run (http://127.0.0.1:40275/browser.js?variant=production:51554:21)',
+  expected: undefined,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.18.0
