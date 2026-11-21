@@ -61,6 +61,10 @@ try {
       console.log(JSON.stringify(observations.at(-1)));
       assert(result && !result.error, JSON.stringify(result));
       assert.deepEqual(pageErrors, []);
+      assert.deepEqual(result.binaryPolicy, {
+        binaryGetterDenied: true,
+        binaryGetterReads: 0,
+      });
       const values = result.result as Record<string, unknown>;
       const additional = result.additional as Record<string, unknown>;
       const advanced = result.advanced as Record<string, unknown>;

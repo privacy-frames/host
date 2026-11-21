@@ -19,7 +19,18 @@ const host: GuestHost = {
   prototype: (target) => Object.getPrototypeOf(target),
 };
 
+let binaryGetterReads = 0;
 try {
+  Object.defineProperty(ArrayBuffer.prototype, 'unreviewedBinaryFixture', {
+    configurable: true,
+    get() {
+      binaryGetterReads++;
+      return 17;
+    },
+  });
+  if (Reflect.get(new ArrayBuffer(0), 'unreviewedBinaryFixture') !== 17)
+    throw new Error('Native binary getter control did not execute');
+  binaryGetterReads = 0;
   Reflect.set(globalThis, '__nativeEngineWitness', 42);
   const errors: string[] = [];
   const engine = await GuestEngine.create({
@@ -29,6 +40,13 @@ try {
     modules: new Map([['https://example.test/value.js', 'export const value = 42;']]),
     onError: (error) => errors.push(error.message),
   });
+  const binaryGetterDenied = engine.evaluate(`(() => {
+    const memory = new WebAssembly.Memory({ initial: 1 });
+    try { memory.buffer.unreviewedBinaryFixture; } catch { return true; }
+    return false;
+  })()`);
+  if (binaryGetterDenied !== true || binaryGetterReads !== 0)
+    throw new Error('Guest binary access executed an unreviewed native getter');
   engine.set('window', window);
   engine.set('self', window);
   engine.set('document', document);
@@ -488,6 +506,7 @@ try {
     await Promise.resolve();
   }
   globalThis.guestEngineResults = {
+    binaryPolicy: { binaryGetterDenied, binaryGetterReads },
     result,
     additional,
     advanced,
@@ -508,4 +527,6 @@ try {
     error: String(error),
     stack: error instanceof Error ? error.stack : undefined,
   };
+} finally {
+  Reflect.deleteProperty(ArrayBuffer.prototype, 'unreviewedBinaryFixture');
 }
