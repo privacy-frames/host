@@ -1,0 +1,41 @@
+{
+  "passed": true,
+  "scope": "Deferred prototype protocol and selected actual helper/context integration, not full confinement proof",
+  "source": {
+    "src/guest/protocol.ts": "5ec8bf473bf3b462317da6301ee42871e439a089480577c2f1a48e00e16fa7b8",
+    "src/guest/native-host.ts": "21f56d217ab805a84fb9d30fc0e29aba36ee5de20feb695ad855f9200559ddce",
+    "src/guest/engine.ts": "ce4b90167e3665c9ac79b738b182cbb91c9cc233bcda8f53a3003974e6a801f7",
+    "src/guest/guest-runtime.ts": "03c01065cc5f73dc7be785d3fd6cddef1f409d17d334c3eb9769a86eafbd7f7c",
+    "src/guest/browser.ts": "516fcb8f19bdaed99d9a63d8d2c420cbad865d1bd947274e4d85c1ffb9d9ab39",
+    "test/guest-window-reflection.browser.ts": "4312315aa2bcada4ccd545bd2cdb9edc8277df03ba028e1a7baa04a9e30fbe96",
+    "test/guest-context-windows.ts": "406a102441a36d8367f24fc70c3afb87c3629003e49ecf2137c2167ce417b6a7",
+    "test/guest-context-windows.browser.ts": "34614802a86314186399bed947e9449251c0a7743ed09af9775255b22b79f03d",
+    "formal/quickjs/bootstrap-mode/check.ts": "d782e41449e47b6e3a5c856defbe74f59f626e81ad7948f84efe4cec9fb9df1a",
+    "formal/quickjs/bootstrap-mode/extract.ts": "d4f488168730894a31037f62fc30cf66eed237301790b362cbf70acceda0b4d0",
+    "test/guest-primordials.ts": "65ec0a93a9874dec1d133ec8612eefea386a96e0491176a7dbfa0af87889194d"
+  },
+  "checks": [
+    "reflection:10both-browser production/control outcomes",
+    "writes:4both-browser production/control outcomes",
+    "existing context-windows:Chromium and Firefox pass",
+    "bootstrap-mode:3actual privacy sites strict +3omitted-option controls",
+    "primordials:both-browser helper/control cases pass",
+    "TypeScript and formatting pass"
+  ],
+  "artifacts": {
+    "context-windows.json": "b8d5ca279119937e5c375ee5b375d042a5a3182968f1a0c3d41db92ea69e8866",
+    "primordials.json": "79024c73df9b0be9f98effb44915770c033a5a2665ff38b8c4dd7f8e21d3de2f",
+    "initial-context-windows-failure.json": "0fc99243b22f096517c36442826b9295ada1a0d6b1c6e5d3f4d0ae52ab5e9e2a",
+    "writes.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bootstrap.log": "9779ed6538c2731f82ea18ff1ea2b00333c102ef61473dfc521a65ccca85e5f6",
+    "reflection.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "initial-context-windows-failure.log": "b5ae0cabaa665b29273cf13d1e66adee68b250d314ecba29f49fcaad5fda92cb",
+    "reflection.json": "15efaeaf08c20ac8ed801a80a05f7ec173407d356674a21da1bb2ca4bc62f515",
+    "writes.json": "5fbeac27078f7ed8bda827b10d90c8b9c28fa0b199e0f7557d904d5d6c834aeb",
+    "primordials.log": "c11d2d429af7c99d604be90fd20462a71783b753dc045c26c2f3d345a93a9861",
+    "bootstrap.json": "466128151e3055976c5a34ff6595554877f25988338b3dda1c3e2e6f835c5221",
+    "context-windows.log": "6c2859ee45c31c94c3361b3b8fc2acd4e1b034e87abe35a8e94e58121c9cbb0b"
+  },
+  "contextBundleSHA256": "ffd0ef5c47a7e8f91f276f592f7c706af4fea826ae9274f1841ece257cb77f0f",
+  "provenance": "New reflection/writes drivers select and hash exact browser executables. Existing context/primordial drivers record their own browser versions and narrower provenance. No per-process executable claim is added for them."
+}

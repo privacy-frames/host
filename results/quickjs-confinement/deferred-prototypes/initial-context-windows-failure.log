@@ -1,0 +1,23 @@
+chromium SecurityError: Window preparation is incomplete
+    at _GuestEngine.guestError (http://127.0.0.1:35253/browser.js:51248:21)
+    at _GuestEngine.unwrap (http://127.0.0.1:35253/browser.js:51228:22)
+    at http://127.0.0.1:35253/browser.js:50017:27
+    at _GuestEngine.enter (http://127.0.0.1:35253/browser.js:50164:14)
+    at _GuestEngine.evaluate (http://127.0.0.1:35253/browser.js:50016:17)
+    at run (http://127.0.0.1:35253/browser.js:51596:57)
+{"browser":"chromium","version":"153.0.8010.12","observation":{"error":"SecurityError: Window preparation is incomplete"},"requests":["http://127.0.0.1:35253/","http://127.0.0.1:35253/browser.js","http://127.0.0.1:35253/quickjs.wasm"],"approvals":[],"assertionFailure":"AssertionError [ERR_ASSERTION]: {\"error\":\"SecurityError: Window preparation is incomplete\"}\n    at <anonymous> (/home/damen/Projects/privacy-frames-quickjs-kernel/test/guest-context-windows.ts:89:7)","nativeBlobNavigationControl":false,"downloads":[]}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: {"error":"SecurityError: Window preparation is incomplete"}
+    at <anonymous> (/home/damen/Projects/privacy-frames-quickjs-kernel/test/guest-context-windows.ts:89:7) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.18.0
