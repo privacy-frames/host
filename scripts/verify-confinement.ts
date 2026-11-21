@@ -39,6 +39,11 @@ const checks: readonly Check[] = [
     receipt: 'management-composition/result.json',
   },
   {
+    name: 'resource-publication',
+    runner: 'resource-publication/check.ts',
+    receipt: 'resource-publication/model.json',
+  },
+  {
     name: 'publication',
     runner: 'context-publication-check.ts',
     receipt: 'context-publication-implementation.json',
