@@ -25,6 +25,8 @@ export interface NativeHostOptions {
   hasProperty?(target: object, key: PropertyKey): boolean;
   /** Trusted adapters may associate argument decoding with the exposed identity. */
   callablePublished?(target: Function, contract: NativeContract): void;
+  /** Apply a reviewed operation's native receiver convention before admission. */
+  normalizeReceiver?(receiver: unknown, contract: NativeContract): unknown;
 }
 export interface NativeHost extends GuestHost {
   captureCallableShape(id: string, target: Function): void;
@@ -94,6 +96,13 @@ export function createNativeHost(options: NativeHostOptions): NativeHost {
     wrappers.set(token, target);
     options.callablePublished?.(target, token.contract);
   }
+  function invoke(token: NativeCallable, receiver: unknown, args: unknown[]): unknown {
+    const normalized = options.normalizeReceiver
+      ? options.normalizeReceiver(receiver, token.contract)
+      : receiver;
+    if (object(normalized)) options.admit(normalized);
+    return unwrap(registry.call(token, normalized, args));
+  }
   function unwrap(result: NativeResult): unknown {
     if (result.kind === 'constructor') {
       const target = constructorTargets.get(result.construct);
@@ -118,8 +127,7 @@ export function createNativeHost(options: NativeHostOptions): NativeHost {
       const token = result.callable;
       wrapper = {
         invoke(this: unknown, ...args: unknown[]) {
-          if (object(this)) options.admit(this);
-          return unwrap(registry.call(token, this, args));
+          return invoke(token, this, args);
         },
       }.invoke;
       const shape = shapes.get(token.contract.id);
@@ -183,8 +191,7 @@ export function createNativeHost(options: NativeHostOptions): NativeHost {
         throw new TypeError(name + ' constructors require new');
       if (!token)
         throw new NativePolicyError('call', name, undefined, 'unregistered callable');
-      if (object(receiver)) options.admit(receiver);
-      return unwrap(registry.call(token, receiver, args));
+      return invoke(token, receiver, args);
     },
     construct(target, args) {
       const token = constructors.get(target);

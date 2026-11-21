@@ -1,5 +1,5 @@
 import { createNativeHost } from './native-host.ts';
-import { NativePolicy, NativePolicyError } from './native-policy.ts';
+import { NativePolicy, NativePolicyError, type NativeContract } from './native-policy.ts';
 import { registerEventFamily, type EventFamilyOptions } from './event-policy.ts';
 
 export interface BrowserPolicyOptions extends EventFamilyOptions {
@@ -12,6 +12,7 @@ export function createBrowserPolicy(options: BrowserPolicyOptions) {
   const registry = new NativePolicy({ isGuestValue: options.isGuestValue });
   const owned = new WeakSet<object>();
   const callables = new WeakSet<Function>();
+  const globalReceiverContracts = new WeakSet<NativeContract>();
   const methods = new WeakMap<Function, { owner: object; key: PropertyKey }>();
   const host = createNativeHost({
     name: 'Browser',
@@ -33,6 +34,19 @@ export function createBrowserPolicy(options: BrowserPolicyOptions) {
       return parent ?? Object.prototype;
     },
     functionPrototype: Function.prototype,
+    callablePublished(_target, contract) {
+      if (
+        contract.id === 'EventTarget.addEventListener' ||
+        contract.id === 'EventTarget.removeEventListener' ||
+        contract.id === 'EventTarget.dispatchEvent'
+      )
+        globalReceiverContracts.add(contract);
+    },
+    normalizeReceiver(receiver, contract) {
+      return receiver == null && globalReceiverContracts.has(contract)
+        ? options.global
+        : receiver;
+    },
   });
   const events = registerEventFamily({
     ...options,
