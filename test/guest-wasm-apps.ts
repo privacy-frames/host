@@ -5,6 +5,7 @@ import { access, mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { chromium, firefox, type Page } from 'playwright';
 import { launch } from './browser-profile.ts';
+import { waitUntil } from './helpers/poll.ts';
 
 const root = process.cwd();
 const publicRun = process.env.WASM_APPS_PUBLIC === '1';
@@ -192,10 +193,32 @@ async function download(page: Page, action: () => Promise<unknown>, confined: bo
       sha256: createHash('sha256').update(bytes).digest('hex'),
       decoded: await decoded(page, bytes),
     };
+  } catch (error) {
+    throw new Error(
+      `File export failed after ${confirmations} host confirmations: ${error instanceof Error ? error.message : String(error)}`,
+      { cause: error },
+    );
   } finally {
     page.off('dialog', approve);
   }
 }
+
+async function openCanvasMenu(
+  page: Page,
+  name: string,
+  clip: { x: number; y: number; width: number; height: number },
+  action: () => Promise<unknown>,
+) {
+  // The app draws menus on canvas. These regions contain the menu background,
+  // outside the image and pointer, so a paint/cursor update cannot satisfy this.
+  const closed = await page.screenshot({ clip });
+  await action();
+  await waitUntil(
+    async () => !(await page.screenshot({ clip })).equals(closed),
+    name + ' did not render',
+  );
+}
+
 async function photo(page: Page, confined: boolean) {
   await page.waitForFunction(
     () =>
@@ -242,10 +265,18 @@ async function photo(page: Page, confined: boolean) {
     [255, 0, 0, 255],
     [0, 0, 0, 255],
   ]);
-  await page.mouse.click(25, 15);
-  await page.waitForTimeout(2000);
-  await page.mouse.move(75, 465);
-  await page.waitForTimeout(2000);
+  await openCanvasMenu(
+    page,
+    'PhotoCraft File menu',
+    { x: 90, y: 200, width: 100, height: 40 },
+    () => page.mouse.click(25, 15),
+  );
+  await openCanvasMenu(
+    page,
+    'PhotoCraft Export submenu',
+    { x: 300, y: 100, width: 120, height: 40 },
+    () => page.mouse.move(75, 465),
+  );
   if (process.env.WASM_APPS_INSPECT) return { inspected: true };
   const exported = await download(page, () => page.mouse.click(350, 100), confined);
   assert.equal(exported.decoded.width, 256);
