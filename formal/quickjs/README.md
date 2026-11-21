@@ -39,6 +39,25 @@ The [handoff](handoff.md) records active work and qualification status. Componen
 receipts must be read with their source revision, browser, controls and stated
 scope; they do not qualify a combined release.
 
+## Run component verification
+
+With Node 24, Docker and Lean 4.35.0 available, run:
+
+```sh
+PF_LEAN=/path/to/lean npm run verify:components
+```
+
+The command rebuilds the engine if needed, then runs the actual-source component
+drivers, Lean models, bounded management schedules and their controls. The pinned
+Gillian and CBMC containers are fetched by Docker when absent. The CI workflow
+verifies the Lean release archive before extraction.
+
+Each driver must produce a fresh receipt. The aggregate runner records input
+hashes, receipt hashes and logs, and fails if inputs change during verification.
+An unsuccessful invocation writes `passed: false` with its completed checks under
+`results/quickjs-confinement/component-verification/`. Application compatibility,
+browser-effect coverage and release qualification require their separate checks.
+
 ## Verifier calibration
 
 Run the existing pinned Gillian verifier against a stateful fixture and a failed

@@ -1,0 +1,43 @@
+name: Check confinement components
+on:
+  push:
+    branches: [main, quickjs-confinement-kernel]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: confinement-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  components:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - uses: actions/cache@v4
+        with:
+          path: .tools/lean-4.35.0-linux.tar.zst
+          key: lean-4.35.0-linux-7289597a44543246
+      - name: Fetch and verify Lean 4.35.0
+        run: |
+          mkdir -p .tools
+          if [ ! -f .tools/lean-4.35.0-linux.tar.zst ]; then
+            curl -fL --retry 3 https://github.com/leanprover/lean4/releases/download/v4.35.0/lean-4.35.0-linux.tar.zst -o .tools/lean-4.35.0-linux.tar.zst
+          fi
+          printf '%s  %s\n' 7289597a44543246c9227b8cae501767e095ce17f6d448b95fc4a8dc97268f6d .tools/lean-4.35.0-linux.tar.zst | sha256sum -c -
+          tar --zstd -xf .tools/lean-4.35.0-linux.tar.zst -C .tools
+      - run: npm run verify:components
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: confinement-component-evidence
+          path: |
+            results/quickjs-confinement/
+            .tools/quickjs-proof/**/*.log
+          include-hidden-files: true
