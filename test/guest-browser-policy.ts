@@ -108,7 +108,10 @@ try {
     ['chromium', chromium],
     ['firefox', firefox],
   ] as const) {
-    const browser = await type.launch({ headless: true });
+    const browser = await type.launch({
+      headless: true,
+      executablePath: type.executablePath(),
+    });
     try {
       for (const variant of variants) {
         const page = await browser.newPage();

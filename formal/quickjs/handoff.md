@@ -31,21 +31,53 @@ strict-option omission controls fail their intended semantic probes. The applica
 runtime remains non-strict by default. Generic native browser forwarding remains.
 
 Initial combined-suite failures are preserved under `integrated-events-initial/`.
-The cleanup fixture patched a native method after the new adapter had captured it;
-`ceb44b5` corrects the spy timing and selected-adapter omission controls without
-changing runtime source. Both browsers pass its focused checks. The context-window
-suite also found a refused EventTarget global call; its receiver semantics are under
-investigation. Combined application and performance qualification is pending.
+`ceb44b5` corrects the cleanup spy timing and selected-adapter omission controls
+without changing runtime source. `8d5f4e0` applies the native EventTarget global
+receiver convention through one shared codec invocation path. `ea1fd87` restricts
+that convention to actual null/undefined, preserving native rejection of
+`document.all`. Native controls and their earlier failures are preserved.
 
-Active isolated work:
+The Abort family is integrated at `a6f695e`; its own producers, reasons, handlers
+and inherited EventTarget operations are reviewed. Request.signal remains outside
+that producer set. `111885f` closes an owned shared-worker session when startup
+fails while preserving the original failure. `9758c2c` blocks native Window writes
+until engine attachment and after closure.
 
-- `privacy-frames-browser-policy`: global EventTarget receiver regression, owned by
-  the browser-policy agent. Root must review and qualify its fix.
-- `privacy-frames-abort-policy`, branch `quickjs-abort-policy`, based on `3523490`:
-  reviewed AbortController/AbortSignal producers and inherited EventTarget admission.
-  No changes from this worktree are integrated yet.
-- Root runs the integrated core/policy/installation checks. Preserve failures and
-  inspect terminal status before reusing receipts or starting overlapping suites.
+CSS/Audio deferred conversion is integrated at `40b0205`, corrected at `374c8aa`.
+The correction removes inference of one API's string binding from CSS.escape.
+Only decoded resource URL values receive scalar/NUL normalization; whole CSS text
+retains native handling. Failed whole-text preprocessing comparisons and the raw
+unquoted-NUL grammar limitation remain recorded. `6a221e6` extends mapping to
+FontFace string sources while preserving native validation of genuine binary
+candidates, including native rejection where appropriate. No catalog or worker
+initialization field was added. Both-browser Window/Worker and QuickJS controls pass.
+
+The combined source through FontFace passed 248 units, type checking, formatting
+and focused FontFace checks. Combined Window-write, context-publication and shared
+startup checks also pass. The earlier full suite at executable `640785e` was
+intentionally interrupted during maintenance checks so the completed fixes could
+be integrated. It is not a full-suite pass; its source/artifacts and interrupted
+log are preserved under `integrated-events-abort/`.
+
+Active isolated work, not yet integrated:
+
+- `privacy-frames-realm-intrinsics`, branch `quickjs-realm-intrinsics`: private
+  capture of ordinary intrinsic identities from trusted prepared native realms,
+  then canonicalization to the receiving guest's captured handles. Reflective
+  foreign references remain a C2/C3 correspondence gap until this is qualified.
+- `privacy-frames-window-writes`, branch `quickjs-window-reflection`: pending
+  Window prototype and contentDocument producers, with guarded native mutation.
+  Prototype refusal must not cache a temporary null before readiness.
+
+The earlier `privacy-frames-browser-policy` and `privacy-frames-abort-policy`
+worktrees are integrated. Preserve their original branch references, including
+`quickjs-abort-policy`, while those worktrees serve newer isolated tasks.
+
+Root owns integration, suite wiring and exact executable provenance. The event
+fixtures now explicitly launch the executable whose path/hash they record; earlier
+receipts using Playwright's implicit headless selection retain that qualification
+limit. Full suite, application matrix, Pitch and paired image qualification are
+pending on the final combined source. No heavy qualification job is currently active.
 
 Publisher inputs remain the `8db931d` checkout at
 `/home/damen/Projects/privacy-frames-quickjs-proof/publisher-source`; set
