@@ -950,35 +950,15 @@ export class GuestEngine {
       const deferred = this.context.newPromise();
       this.promises.add(deferred);
       this.nativeHandles.set(value, deferred.handle.dup());
-      void Promise.resolve(value)
+      // Adopt through a private ordinary Promise. Source thenable/species errors
+      // become rejection, and cannot interrupt publication of the cached handle.
+      const promise = new Promise<unknown>((resolve) => resolve(value));
+      void promise
         .then(
-          (result) => {
-            if (this.closed) return;
-            this.enter(() => {
-              const encoded = this.encode(result);
-              try {
-                deferred.resolve(encoded);
-              } finally {
-                encoded.dispose();
-              }
-            });
-          },
-          (error: unknown) => {
-            if (this.closed) return;
-            this.enter(() => {
-              const encoded = this.encode(error);
-              try {
-                deferred.reject(encoded);
-              } finally {
-                encoded.dispose();
-              }
-            });
-          },
+          (result) => this.settleNativePromise(deferred, result, false),
+          (error: unknown) => this.settleNativePromise(deferred, error, true),
         )
-        .finally(() => {
-          this.promises.delete(deferred);
-          deferred.dispose();
-        });
+        .catch((error: unknown) => this.reportPromiseFailure(error));
       return deferred.handle.dup();
     }
     if (Array.isArray(value)) {
@@ -1177,6 +1157,79 @@ export class GuestEngine {
     }
   }
 
+  private settleNativePromise(
+    deferred: QuickJSDeferredPromise,
+    value: unknown,
+    rejected: boolean,
+  ): void {
+    let entered = false;
+    let failed = false;
+    let failure: unknown;
+    try {
+      if (!this.closed)
+        this.enter(() => {
+          entered = true;
+          let encoded: QuickJSHandle;
+          try {
+            encoded = this.encode(value);
+          } catch (error) {
+            if (this.closed) return;
+            encoded = this.exception(error);
+            rejected = true;
+          }
+          try {
+            if (!this.closed) {
+              if (rejected) deferred.reject(encoded);
+              else deferred.resolve(encoded);
+            }
+          } catch (error) {
+            failed = true;
+            failure = error;
+            throw error;
+          } finally {
+            encoded.dispose();
+          }
+        });
+    } catch (error) {
+      if (!failed) {
+        failed = true;
+        failure = error;
+      }
+    } finally {
+      // A failed entry barrier cannot authorize settlement outside its scope.
+      // Retain the deferred for terminal cleanup when no entry was established.
+      if (entered || this.closed) {
+        this.promises.delete(deferred);
+        try {
+          deferred.dispose();
+        } catch (error) {
+          // Cleanup must not replace the settlement failure being reported.
+          if (!failed) {
+            failed = true;
+            failure = error;
+          }
+        }
+      }
+    }
+    if (failed) throw failure;
+  }
+
+  private promiseFailure(error: unknown): Error {
+    return error instanceof Error
+      ? error
+      : new Error('Promise conversion failed', { cause: error });
+  }
+
+  private reportPromiseFailure(error: unknown): void {
+    if (this.closed) return;
+    try {
+      this.report(this.promiseFailure(error));
+    } catch {
+      // No synchronous caller can receive an asynchronous reporter failure.
+      // The original failure has already been delivered to the reporter.
+    }
+  }
+
   private encodeRecord(value: PropertyDescriptor): QuickJSHandle {
     const result = this.context.newObject();
     for (const [key, item] of Object.entries(value)) {
@@ -1352,38 +1405,45 @@ export class GuestEngine {
     if (kind === 'view') return this.decodeView(value, id, seen);
     if (kind === 'promise') {
       if (previous) return previous.value;
-      let resolvePromise: (value: unknown) => void;
-      let rejectPromise: (error: Error) => void;
+      let resolvePromise!: (value: unknown) => void;
+      let rejectPromise!: (error: Error) => void;
       const promise = new Promise<unknown>((resolve, reject) => {
         resolvePromise = resolve;
         rejectPromise = reject;
       });
-      this.pendingPromises.add(rejectPromise!);
+      this.pendingPromises.add(rejectPromise);
+      void promise.catch((error: unknown) => this.reportPromiseFailure(error));
       const resolve = this.context.newFunction('resolve', (result) => {
         if (this.closed) return;
-        this.pendingPromises.delete(rejectPromise);
         try {
           resolvePromise(this.decode(result));
         } catch (error) {
-          rejectPromise(error instanceof Error ? error : new Error(String(error)));
+          rejectPromise(this.promiseFailure(error));
+        } finally {
+          this.pendingPromises.delete(rejectPromise);
         }
       });
       const reject = this.context.newFunction('reject', (error) => {
         if (this.closed) return;
-        this.pendingPromises.delete(rejectPromise);
-        rejectPromise(this.guestError(error));
+        try {
+          rejectPromise(this.guestError(error));
+        } catch (failure) {
+          rejectPromise(this.promiseFailure(failure));
+        } finally {
+          this.pendingPromises.delete(rejectPromise);
+        }
       });
       try {
         this.helper('observePromise', [value, resolve, reject]).dispose();
+      } catch (error) {
+        rejectPromise(this.promiseFailure(error));
+        this.pendingPromises.delete(rejectPromise);
+        throw error;
       } finally {
         resolve.dispose();
         reject.dispose();
       }
       this.retainGuest(id, value.dup(), promise);
-      void promise.catch((error: unknown) => {
-        if (!this.closed)
-          this.report(error instanceof Error ? error : new Error(String(error)));
-      });
       this.scheduleJobs();
       return promise;
     }
