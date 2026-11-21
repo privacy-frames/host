@@ -1,6 +1,64 @@
 # QuickJS confinement implementation handoff
 
-## Current checkpoint
+## Current integration
+
+The browser and its normal built-in services remain trusted. Application network
+operations, resource loads and navigation remain confined. Keep the static web-only
+design and the current production deployment; the verification goal is active.
+
+Primary checkout: `/home/damen/Projects/privacy-frames-quickjs-kernel`, branch
+`quickjs-confinement-kernel`. Production is still executable `5f62e61` with release
+evidence `10bc6cc`. No candidate from this work has been deployed.
+
+The binary policy passed the full suite, twelve-case application matrix, Pitch
+and three paired image rounds at `81967aa`. Receipts are preserved under
+`integrated-81967aa/` and `images-81967aa/`. These qualify that earlier source,
+not the event changes below. All 48 Squoosh export hashes matched; the original
+25% performance investigation threshold remains unchanged.
+
+C8 resource publication is integrated in `19cfa11` and its verification wiring in
+`31eafb3`. Native IndexedDB production and omission controls pass in both browsers.
+The component CI run at `31eafb3` passed all fifteen drivers; fresh hash-matched
+receipts and logs are archived under `ci-31eafb3/`. The bounded transaction checks
+do not establish complete asynchronous correspondence or UUID freshness.
+
+Selected browser events, existing-handle callback dispatch, explicit strict trusted
+bootstrap evaluation, primitive-string length and error-handle cleanup are integrated
+through `3523490`. Focused Chromium/Firefox checks pass, including cross-window
+listener marshalling and native method shape. All 232 unit tests, types and formatting
+passed. C5 bootstrap calibration is now included in the component runner; its three
+strict-option omission controls fail their intended semantic probes. The application
+runtime remains non-strict by default. Generic native browser forwarding remains.
+
+Initial combined-suite failures are preserved under `integrated-events-initial/`.
+The cleanup fixture patched a native method after the new adapter had captured it;
+`ceb44b5` corrects the spy timing and selected-adapter omission controls without
+changing runtime source. Both browsers pass its focused checks. The context-window
+suite also found a refused EventTarget global call; its receiver semantics are under
+investigation. Combined application and performance qualification is pending.
+
+Active isolated work:
+
+- `privacy-frames-browser-policy`: global EventTarget receiver regression, owned by
+  the browser-policy agent. Root must review and qualify its fix.
+- `privacy-frames-abort-policy`, branch `quickjs-abort-policy`, based on `3523490`:
+  reviewed AbortController/AbortSignal producers and inherited EventTarget admission.
+  No changes from this worktree are integrated yet.
+- Root runs the integrated core/policy/installation checks. Preserve failures and
+  inspect terminal status before reusing receipts or starting overlapping suites.
+
+Publisher inputs remain the `8db931d` checkout at
+`/home/damen/Projects/privacy-frames-quickjs-proof/publisher-source`; set
+`PUBLISHER_DIRECTORY` to its `dist` directory. The unrelated Xvfb :99 (PID 12947)
+must remain running. No owned performance display is currently active.
+
+Continue the [resumption plan](../../docs/implementation/confinement-verification-resumption.md).
+The [security argument](README.md#security-argument) records C1–C8 premises and gaps;
+[incoming message producers](reviews/message-producers.md) records the closed-peer
+provenance obligation. Remaining work includes browser-family mediation, reference
+and effect composition, lifecycle callers, upgrade tests and release qualification.
+
+## Historical checkpoint before event integration
 
 The browser and its normal built-in services are trusted. On 21 November the user
 confirmed the static web-only deployment and this trust boundary after reviewing

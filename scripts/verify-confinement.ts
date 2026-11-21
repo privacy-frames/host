@@ -79,6 +79,11 @@ const checks: readonly Check[] = [
     runner: 'wasm/check-engine-lifetime.ts',
     receipt: 'wasm-authority-engine-lifetime.json',
   },
+  {
+    name: 'bootstrap-mode',
+    runner: 'bootstrap-mode/check.ts',
+    receipt: 'bootstrap-mode/calibration.json',
+  },
   { name: 'worklets', runner: 'worklets/check.ts', receipt: 'worklets.json' },
 ];
 
