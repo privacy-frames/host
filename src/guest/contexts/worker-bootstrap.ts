@@ -136,7 +136,16 @@ export function startSharedWorker(
           descriptor = candidate;
           ready = (async () => {
             const session = await createSession(candidate, scope);
-            await session.start(candidate.entryURL, candidate.scriptType);
+            try {
+              await session.start(candidate.entryURL, candidate.scriptType);
+            } catch (error) {
+              try {
+                session.close();
+              } catch {
+                // Startup remains the shared failure even if cleanup also fails.
+              }
+              throw error;
+            }
             return session;
           })();
         } else if (
