@@ -1,12 +1,12 @@
 {
   "scope": "Actual BrowserEnvironment and QuickJS TextEncoder/TextDecoder bridge: native conversions, buffer handoff/encodeInto, stateful/fatal decoding, reflection and unknown getter/foreign brand rejection. Temporary shared nativeOwner get-route removal must execute the real unknown getter and fail the fixture. This does not verify NativeBinary ownership or other native families.",
   "sourceHashes": {
-    "src/guest/browser.ts": "c598247101e98649562ad847a51e3db618d1b29039cf001682e19d9a9ee1e8d1",
-    "src/guest/engine.ts": "f47d9f29180bf54561025352567648768dcb0cfc2b01519ee218ac7e447f6027",
-    "src/guest/guest-runtime.ts": "058930f5f581f18210f636c210c0dbba27e51a145826c2adcb95d3295436bc1d",
+    "src/guest/browser.ts": "d8c88d323e2134addd15f7ab07b91c5fd5b1d03e0db27ed5990cb2172739a64d",
+    "src/guest/engine.ts": "ce4b90167e3665c9ac79b738b182cbb91c9cc233bcda8f53a3003974e6a801f7",
+    "src/guest/guest-runtime.ts": "03c01065cc5f73dc7be785d3fd6cddef1f409d17d334c3eb9769a86eafbd7f7c",
     "src/guest/native-policy.ts": "ba0fb4f746bc472c480f0dbeff9e83a629c74e81ba832a3bd8019a6f1e2b1ce8",
     "src/guest/text-policy.ts": "cb30d1be3b96c9ea73fd8c6b13375fbaf781f8bc37c4f2928d56bed1c27a345c",
-    "src/guest/native-host.ts": "2d312e70d1afbdf3b54df66229b6a24520ce0a447ef65b13a250df3c0bd3ab50",
+    "src/guest/native-host.ts": "21f56d217ab805a84fb9d30fc0e29aba36ee5de20feb695ad855f9200559ddce",
     "src/guest/resources.ts": "fbb363fbe07bb3ea59ac7789afbe19b51099972282012daa69624789e3c90778",
     "src/guest/session.ts": "7d6566044cec86e7ee1bd8629cc05bbcf89c62915d8dc4e415a5eb5d5b413f55",
     "test/guest-text-bridge.browser.ts": "49b065ca4437624c4ac0ed582d4f0f12e3d68658123d6e964d4c92503aa6c0bf",
@@ -175,8 +175,8 @@
     "node_modules/xmlchars/xml/1.1/ed2.js": "461d5c71cc6076dc16aebbfd2d3c506481df5a74f43631d82372a6ffdc239d69",
     "node_modules/xmlchars/xmlns/1.0/ed3.js": "ff14ffa3a2cdfdd1b6077c4a8443dc949f53d5bb56de5ed89d4dbc5d9fdf08f7",
     "src/guest/abort-policy.ts": "fe1c6b38e7a9a3dec44800d6ea554210e66e0bcad042e89b1a4d620466b85620",
-    "src/guest/browser-policy.ts": "230924ffe38882b30ecf8120454c6a0c20f3a83e722f95ce406058e60fbf95a3",
-    "src/guest/browser.ts": "c598247101e98649562ad847a51e3db618d1b29039cf001682e19d9a9ee1e8d1",
+    "src/guest/browser-policy.ts": "65c27fddb6e7c90ec4ef35f952287d398ec0cf209207401189e40eb58cb9d645",
+    "src/guest/browser.ts": "d8c88d323e2134addd15f7ab07b91c5fd5b1d03e0db27ed5990cb2172739a64d",
     "src/guest/contexts/audio-worklet.ts": "8706554251c0020af6599b599e306b3e0e9cffceebd31ce739c825071e789577",
     "src/guest/contexts/brands.ts": "d0b5d97c4e97a71e13408adb1bc0b46c00e2d2c13cf3bb1320fbe9d1bf4a94e5",
     "src/guest/contexts/documents.ts": "02ce86f6e8ef962eb48eb84c88b012613d91728fffe752f4a600f3cd8d8746f0",
@@ -184,15 +184,15 @@
     "src/guest/contexts/processor-name.ts": "0f90b774357d6b8c5279d6a887f4f279282bee68d682002c535e40763adef5e2",
     "src/guest/contexts/window-contexts.ts": "b38d44e2dd955c36894abb587b9e28dc82397e0845924077e940c8b7c656ec7a",
     "src/guest/contexts/worker-factory.ts": "9d6b64c8471f497408588e4c892910638d67cb0dd2d559fbb6dbce70b507a1bd",
-    "src/guest/css.ts": "b68e6cc3d240974a17510cef30dbe5bed5a5b4e50eb1639286c601d81db633e3",
+    "src/guest/css.ts": "ef01e1e37e18deb526344717219399160394fd5d190f471535ff5fd10dfdecb9",
     "src/guest/custom-elements.ts": "ff3cf0ab9c85bee1f74d6198431c01615e1c6e9cf198dd4b9fc68d78a045cb0d",
     "src/guest/dom.ts": "75a654d384521c8c7153bf55bfe71f19ed1eab3b27d1c60fa37241aa300e764a",
-    "src/guest/engine.ts": "f47d9f29180bf54561025352567648768dcb0cfc2b01519ee218ac7e447f6027",
+    "src/guest/engine.ts": "ce4b90167e3665c9ac79b738b182cbb91c9cc233bcda8f53a3003974e6a801f7",
     "src/guest/event-listener-arguments.ts": "f5219d8d8da8d9f5d67f0afb46756a2e7ef55003b64fc846dafccf134c27a080",
     "src/guest/event-policy.ts": "13543ed303ec876ff179bfcb9ced225347ddc1f404e13f392fc3ecf417c8bac6",
     "src/guest/generated-runtime-interfaces.ts": "55fa35f2d27fe9b123c74f77a229a2a64b86ace4f2883e5fb70715d851117182",
     "src/guest/guest-binary.ts": "da8dbde72247dd7b85b52bac138ddafa14f778729ceec34cf11eca0b924dea32",
-    "src/guest/guest-runtime.ts": "058930f5f581f18210f636c210c0dbba27e51a145826c2adcb95d3295436bc1d",
+    "src/guest/guest-runtime.ts": "03c01065cc5f73dc7be785d3fd6cddef1f409d17d334c3eb9769a86eafbd7f7c",
     "src/guest/identity.ts": "e067e5dea7a2b036ced0905abd77e6a40f187ec2a3231466b1825a2e84b8c748",
     "src/guest/indexed-access.ts": "5ba66e4bd8e29240a4d3def4cc97eaef5007103b26f8121f5261d492bbc86e5d",
     "src/guest/legacy-regexp.ts": "bbfcdccb8fab7c9a1462d91c8237f6cbe8c90be1f331c2f5f6b3629b569231bb",
@@ -200,8 +200,10 @@
     "src/guest/message-transfer.ts": "b126fa4cf88d3434b73160c9adce0a17b7441a34c642eef7fb982b540ed79c1a",
     "src/guest/native-binary.ts": "ed0665a76a4c4fb2e35e5acc180b4d4e50e8c1c3fc3762de389362b380e5d637",
     "src/guest/native-brand.ts": "ebb96efef406a05debada5a3a3117ff0a3954e7eb706712871cb6290a2b13b00",
-    "src/guest/native-host.ts": "2d312e70d1afbdf3b54df66229b6a24520ce0a447ef65b13a250df3c0bd3ab50",
+    "src/guest/native-host.ts": "21f56d217ab805a84fb9d30fc0e29aba36ee5de20feb695ad855f9200559ddce",
+    "src/guest/native-intrinsics.ts": "4cac286927ee1197a4025161c5798b038e284e5c3292280cd8966ac438a92623",
     "src/guest/native-policy.ts": "ba0fb4f746bc472c480f0dbeff9e83a629c74e81ba832a3bd8019a6f1e2b1ce8",
+    "src/guest/native-string-mapping.ts": "2557cbe440db717251a01723b0a171b5970dd02112c5c843d0f32f2e2dee55a5",
     "src/guest/native-wasm.ts": "670c8a4e9cfd50ca037aa7d2596ea4716b3b35f70d05c2cefc33c27e3db61852",
     "src/guest/parser.ts": "cf041b9ade4752b4936d5b384b65b03e154d9c12d255f543fb628c2f21e9671e",
     "src/guest/quickjs.ts": "ab4b6912ca399f3fa56a4a6f252b13e69561fe626e8dcf956f8ffff59a2b9d3b",
@@ -222,8 +224,8 @@
   },
   "engineSHA256": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
   "bundleHashes": {
-    "production": "50d92043840e07c92d97767ebfcc0ec5ea8605020460f8ed83c88563b209c282",
-    "textGetRouteRemoved": "28919e55e61ff427dc429ff3dc220bba839a452bd451d7edb8d4de8d435cae21"
+    "production": "edd19b76a5dd7742af0dd4f7af251e07b29a1bc7e92bb92bbbcefd5b1177d663",
+    "textGetRouteRemoved": "30bfcf13509a85b402571fc76c29f7450d753c992e57e20caf24574fea72a774"
   },
   "fault": "Only the actual BrowserEnvironment private get shared nativeOwner routing line is omitted from a temporary esbuild bundle. Production sources are unchanged.",
   "receipts": [
@@ -298,5 +300,5 @@
       "rejected": true
     }
   ],
-  "completedAt": "2026-11-21T18:58:37.715Z"
+  "completedAt": "2026-11-21T20:08:54.361Z"
 }

@@ -1,0 +1,25 @@
+
+> verify:components
+> npm run build:engine && tsx scripts/verify-confinement.ts
+
+
+> build:engine
+> tsx scripts/quickjs.ts
+
+Checking calibration
+Checking identity
+Checking identity-model
+Checking management
+Checking management-composition
+Checking resource-publication
+Checking publication
+Checking publication-model
+Checking wasm-modules
+Checking wasm-bounds
+Checking wasm-records
+Checking wasm-branches
+Checking wasm-invalidation
+Checking engine-lifetime
+Checking bootstrap-mode
+Checking worklets
+16 component drivers passed on unchanged inputs.

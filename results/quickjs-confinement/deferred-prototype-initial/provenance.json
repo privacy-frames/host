@@ -1,0 +1,16 @@
+{
+  "revision": "bcfb26fb201d6874c082766faec128cc23be3469",
+  "passed": false,
+  "scope": "Popup preparation polling failed before the deferred-prototype protocol repair. No full-suite or release pass.",
+  "sourceHashes": {
+    "src/guest/browser.ts": "552d2d94170ef4e96a8785b6fac60b1b0d0d091b7d026a6a2e324111250ea03a",
+    "src/guest/engine.ts": "75d05ffb0ee9c436adeb5ac619de8d69842c86a449123bc77dbab109ef0c5fab",
+    "src/guest/guest-runtime.ts": "058930f5f581f18210f636c210c0dbba27e51a145826c2adcb95d3295436bc1d",
+    "src/guest/protocol.ts": "7fd5b655bb3af74d61c345fdd3337a3f8d0185648e6452f3233df3602a95c5b8",
+    "src/guest/native-intrinsics.ts": "4cac286927ee1197a4025161c5798b038e284e5c3292280cd8966ac438a92623",
+    "test/guest-context-windows.ts": "406a102441a36d8367f24fc70c3afb87c3629003e49ecf2137c2167ce417b6a7",
+    "test/guest-context-windows.browser.ts": "34614802a86314186399bed947e9449251c0a7743ed09af9775255b22b79f03d",
+    ".tools/guest-window-test/browser.js": "3ff261577e3f02a45941cba7100b9337637304d6e7f584fabd82f8945c93ee21"
+  },
+  "dirtySourcePatch": "diff --git a/src/guest/browser.ts b/src/guest/browser.ts\nindex 0f99781..6bdba0d 100644\n--- a/src/guest/browser.ts\n+++ b/src/guest/browser.ts\n@@ -1 +1 @@\n-import { captureNativeIntrinsics } from './native-intrinsics.ts';\n+import { captureNativeIntrinsics, ordinaryIntrinsicNames } from './native-intrinsics.ts';\n@@ -78,41 +78 @@ const forbidden =\n-const intrinsic = new Set([\n-  'Object',\n-  'Function',\n-  'Array',\n-  'Boolean',\n-  'Number',\n-  'String',\n-  'Symbol',\n-  'BigInt',\n-  'Date',\n-  'RegExp',\n-  'Map',\n-  'Set',\n-  'WeakMap',\n-  'WeakSet',\n-  'Promise',\n-  'Error',\n-  'TypeError',\n-  'RangeError',\n-  'ReferenceError',\n-  'SyntaxError',\n-  'URIError',\n-  'EvalError',\n-  'AggregateError',\n-  'ArrayBuffer',\n-  'SharedArrayBuffer',\n-  'Atomics',\n-  'DataView',\n-  'Uint8Array',\n-  'Uint8ClampedArray',\n-  'Int8Array',\n-  'Int16Array',\n-  'Uint16Array',\n-  'Int32Array',\n-  'Uint32Array',\n-  'Float32Array',\n-  'Float64Array',\n-  'BigInt64Array',\n-  'BigUint64Array',\n-  'WebAssembly',\n-]);\n+const intrinsic = new Set<string>([...ordinaryIntrinsicNames, 'Atomics', 'WebAssembly']);\n"
+}
