@@ -73,8 +73,19 @@ is preserved under `deferred-prototype-initial/` and `deferred-prototypes/`.
 The latest executable source is `786c91b`, including the shared exposure catalog
 in `24a6dfe`. Production remains unchanged; the remote backup is through `7177eb9`.
 
-Root is qualifying the combined source. Source changes are frozen during the
-component runner, full suite, application matrix, Pitch and paired image checks.
+All sixteen component drivers passed at `a638f14` with unchanged inputs. Its full
+suite stopped at the event fixture's child listener. A benign diagnostic confirmed
+two preparation owners for the manually created frame: the parent observer had
+started an automatic environment while the manual engine was already attached.
+`d79ea8f` creates and loads that manual frame before the parent observer starts.
+Both browsers pass the corrected fixture; runtime source and its assertions are
+unchanged. The failed run and diagnosis are preserved under `combined-a638f14/`
+and `event-fixture-ownership/`.
+
+Root is repeating combined qualification after that fixture correction. Source
+changes are frozen during the full suite, application matrix, Pitch and paired
+image checks. Fresh CI will rerun the component aggregate against the new test
+revision.
 The earlier `privacy-frames-browser-policy` and `privacy-frames-abort-policy`
 worktrees are integrated. Preserve their original branch references, including
 `quickjs-abort-policy`, while those worktrees serve newer isolated tasks. The
