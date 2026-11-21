@@ -1,0 +1,29 @@
+{
+  "scope": "Preserved failures while developing the component; these are not successful qualification receipts. No exact pre-fix source snapshot was retained.",
+  "attempts": [
+    {
+      "attempt": "initial",
+      "status": "failed-development-run",
+      "diagnosis": "Prototype-only CSS setter selection did not cover Chromium legacy own CSS properties.",
+      "sourceSnapshotRetained": false,
+      "logSHA256": "b0d7c349aff0b32054377bd60fecfbbe8f92b48ea94911541405214bb45196c3",
+      "output": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Error: captured CSS setter backgroundImage\n+ actual - expected\n\n+ 'Error: captured CSS setter backgroundImage'\n- undefined\n\n    at <anonymous> (/home/damen/Projects/privacy-frames-native-string-mapping/test/guest-native-string-mapping.ts:141:18) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: 'Error: captured CSS setter backgroundImage',\n  expected: undefined,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.18.0\n"
+    },
+    {
+      "attempt": "second",
+      "status": "failed-development-run",
+      "diagnosis": "Development check found unclassified own keys without descriptors and an untyped trusted-document read.",
+      "sourceSnapshotRetained": false,
+      "logSHA256": "47572f5d20d6bbbf02042e963b52e2d9dd0f6e35a9c34daf8b6e90f6660ad916",
+      "output": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: TypeError: Cannot use 'in' operator to search for 'value' in undefined\n+ actual - expected\n\n+ \"TypeError: Cannot use 'in' operator to search for 'value' in undefined\"\n- undefined\n\n    at <anonymous> (/home/damen/Projects/privacy-frames-native-string-mapping/test/guest-native-string-mapping.ts:141:18) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: \"TypeError: Cannot use 'in' operator to search for 'value' in undefined\",\n  expected: undefined,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.18.0\n"
+    },
+    {
+      "attempt": "third",
+      "status": "failed-development-run",
+      "diagnosis": "Legacy own property enumeration omitted the native dashed alias; fixture required a truthful unknown shadow variable.",
+      "sourceSnapshotRetained": false,
+      "logSHA256": "9cf033a22c7d8e2a23dc3e97b2ca2fb5a2b8750e15374a709cdc0ddab009134d",
+      "output": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Error: captured CSS setter background-image\n+ actual - expected\n\n+ 'Error: captured CSS setter background-image'\n- undefined\n\n    at <anonymous> (/home/damen/Projects/privacy-frames-native-string-mapping/test/guest-native-string-mapping.ts:142:18) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: 'Error: captured CSS setter background-image',\n  expected: undefined,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.18.0\n"
+    }
+  ]
+}
