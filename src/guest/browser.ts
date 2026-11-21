@@ -1036,6 +1036,10 @@ export class BrowserEnvironment {
   }
 
   private set(target: object, key: PropertyKey, value: unknown): boolean {
+    if (isWindow(target)) {
+      const environment = environments.get(target);
+      if (!environment || environment.disposed || !environment.engine) return false;
+    }
     const owner = this.nativeOwner(target);
     if (owner) return owner.set(target, key, value);
     if (key === '__proto__' || key === 'prototype' || key === 'constructor') return false;
