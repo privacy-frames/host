@@ -1,0 +1,108 @@
+{
+  "checkedAt": "2026-11-21T21:17:34.633Z",
+  "scope": "Actual engine promise conversion, rejection observation, close and deferred cleanup",
+  "node": {
+    "version": "v24.18.0",
+    "executable": "/home/damen/.local/share/mise/installs/node/24.18.0/bin/node",
+    "sha256": "41a74efb34cbde5c7632cdac0cf8bd1a14d0b8d73dc1e82755014d9a9ce70f5c"
+  },
+  "sourceHashes": {
+    "node_modules/@jitl/quickjs-ffi-types/dist/index.mjs": "5b6ccfe50a0d0066411135c66964b0c15c05167f5324df2e8066493da807efbe",
+    "node_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs": "5c58b732a4c6c5d097eb9366cafc08212867ff80e5b1dea24ed54e640ac71843",
+    "node_modules/quickjs-emscripten-core/dist/chunk-TAV5CUKK.mjs": "b423c720a9deef215b404e4ee212533bcef9de785a11f44aacf1ad8266ae6769",
+    "node_modules/quickjs-emscripten-core/dist/module-ES6BEMUI.mjs": "289a200ab91f855ed79f75147eb674b81cea7adf032f9344bd8b29ff5e7a7d43",
+    "node_modules/quickjs-emscripten-core/dist/module-asyncify-2EFITU5U.mjs": "c8cec04532f68af9aa436ad117defdc686d36a1670691d98cea9263345ba7b2b",
+    "node_modules/quickjs-emscripten-core/dist/index.mjs": "5f7a507ca71ffbff0ec0bad88a9c38f717d34fd8ab9222b58deacc9de5644a3e",
+    "node_modules/@jitl/quickjs-wasmfile-release-sync/dist/ffi.mjs": "ccf8b3aa066c2be5755e3ea49d81b01dff5a671deb34b7ec3a1c983dd52e9335",
+    "vendor/quickjs/generated/engine.mjs": "60147727aeb5c4441d54ad7b3c625e952bec7faa8db8531522eb71dd9ab9da2e",
+    "src/guest/quickjs.ts": "ab4b6912ca399f3fa56a4a6f252b13e69561fe626e8dcf956f8ffff59a2b9d3b",
+    "src/guest/wasm-accessors.ts": "7e03c8e70638d2d861392ec0b2ed40867c638bfcbb26774fbf1e240b2b18589b",
+    "src/guest/indexed-access.ts": "5ba66e4bd8e29240a4d3def4cc97eaef5007103b26f8121f5261d492bbc86e5d",
+    "src/guest/guest-runtime.ts": "03c01065cc5f73dc7be785d3fd6cddef1f409d17d334c3eb9769a86eafbd7f7c",
+    "src/guest/identity.ts": "e067e5dea7a2b036ced0905abd77e6a40f187ec2a3231466b1825a2e84b8c748",
+    "src/guest/legacy-regexp.ts": "bbfcdccb8fab7c9a1462d91c8237f6cbe8c90be1f331c2f5f6b3629b569231bb",
+    "node_modules/@jridgewell/resolve-uri/dist/resolve-uri.mjs": "a363be70b71dbaf1b3e6fd25c35e45e3cd8993104bc4d9551c0568b6fd76963b",
+    "src/guest/native-policy.ts": "ba0fb4f746bc472c480f0dbeff9e83a629c74e81ba832a3bd8019a6f1e2b1ce8",
+    "src/guest/native-host.ts": "21f56d217ab805a84fb9d30fc0e29aba36ee5de20feb695ad855f9200559ddce",
+    "src/guest/native-binary.ts": "ed0665a76a4c4fb2e35e5acc180b4d4e50e8c1c3fc3762de389362b380e5d637",
+    "src/guest/native-brand.ts": "ebb96efef406a05debada5a3a3117ff0a3954e7eb706712871cb6290a2b13b00",
+    "src/guest/guest-binary.ts": "da8dbde72247dd7b85b52bac138ddafa14f778729ceec34cf11eca0b924dea32",
+    "src/guest/native-wasm.ts": "670c8a4e9cfd50ca037aa7d2596ea4716b3b35f70d05c2cefc33c27e3db61852",
+    "src/guest/native-intrinsics.ts": "4cac286927ee1197a4025161c5798b038e284e5c3292280cd8966ac438a92623",
+    "src/guest/engine.ts": "b5f72017ef7f1650f633ead7c04746774d751436f03a827621606349837863c7",
+    "test/guest-promise-settlement.fixture.ts": "91fcd7ed67befac982f9354867e72c266bc65d0728a076bcc5c6f0cee425eeb0",
+    "vendor/quickjs/generated/engine.wasm": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
+    "vendor/quickjs/generated/build.json": "2366677bac28dda0928190af20df7c7a842cad752593ae4f3cc9b81525caf789",
+    "test/guest-promise-settlement.ts": "26397570f5e29eb3d48d5f28ddb7bc4a74122600325ffde7af34692340439c28",
+    "package-lock.json": "501bfd0da3702e4cfc3b43d5a4ec3380cca9045e7959204e1460e53ed781422a"
+  },
+  "observations": [
+    {
+      "name": "production",
+      "sourceHash": "b5f72017ef7f1650f633ead7c04746774d751436f03a827621606349837863c7",
+      "bundleHash": "d630f66986ed8aede20f0a3c68c9d402387bbce865445c35b5c0cba192e16b64",
+      "failed": false,
+      "stdout": "{\"observations\":[\"native-resolution-conversion\",\"native-rejection-conversion\",\"host-adoption-rejection-and-reentrant-identity\",\"adoption-reentrant-close\",\"guest-observer-setup-failure\",\"normal-settlement-and-rejection-identity\",\"guest-resolution-conversion\",\"guest-rejection-conversion\",\"entry-reporting-failure-and-retained-close\",\"late-settlement-and-close\",\"settlement-cleanup-primary-error\",\"reentrant-conversion-close\"]}\n",
+      "stderr": ""
+    },
+    {
+      "name": "missing-private-adoption",
+      "sourceHash": "97d4a90279697e604f080ad4ed71d9e256476a8039d296994c7228450bcb580b",
+      "bundleHash": "dd77aba73c60843c68a6ea5560ace9c807c3d15fded10cc3bc9f19c8191f7ea2",
+      "failed": true,
+      "expectedFailure": "host constructor failure must be adopted as rejection",
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Got unwanted exception: host constructor failure must be adopted as rejection\nActual message: \"controlled promise constructor lookup\"\n    at file:///tmp/pf-promise-settlement-0J89TF/missing-private-adoption.mjs:7701:10 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: Error: controlled promise constructor lookup\n      at file:///tmp/pf-promise-settlement-0J89TF/missing-private-adoption.mjs:7695:19,\n  expected: undefined,\n  operator: 'doesNotThrow',\n  diff: 'simple'\n}\n\nNode.js v24.18.0\n"
+    },
+    {
+      "name": "missing-guest-setup-cleanup",
+      "sourceHash": "ccbf64fe6be7a3b0f0ee6a2a4e35a26763b74911549e36051e83e7a164377e8d",
+      "bundleHash": "a6bfa1e0821004283b50e49c18b9612470089cb7bfd0c9f23f650a0cffc3193d",
+      "failed": true,
+      "expectedFailure": "failed observer setup must remove its native waiter",
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: failed observer setup must remove its native waiter\n\n1 !== 0\n\n    at file:///tmp/pf-promise-settlement-0J89TF/missing-guest-setup-cleanup.mjs:7756:10 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: 1,\n  expected: 0,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.18.0\n"
+    },
+    {
+      "name": "missing-native-conversion-rejection",
+      "sourceHash": "24b22805a5ba6a9edebc0d919d67d1fe5c3f11a539f6b02a0b4ca751968fa29f",
+      "bundleHash": "b0702245068db9a2bb74ae808fa8ea135b1087eaf5ac761f7ef7bab6ef144aed",
+      "failed": true,
+      "expectedFailure": "native conversion failure must reject the guest promise once",
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: native conversion failure must reject the guest promise once\n+ actual - expected\n\n+ []\n- [\n-   [\n-     'rejected',\n-     'controlled native conversion'\n-   ]\n- ]\n\n    at file:///tmp/pf-promise-settlement-0J89TF/missing-native-conversion-rejection.mjs:7677:10 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: [],\n  expected: [ [ 'rejected', 'controlled native conversion' ] ],\n  operator: 'deepStrictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.18.0\n"
+    },
+    {
+      "name": "missing-guest-rejection-conversion",
+      "sourceHash": "8e3f87c283cb1391ace71f7b65061785c68ba889c090427205f6b7afc4297d29",
+      "bundleHash": "5a107d50dc9d7a708ce11b251d508831bc69b1a2a0969551d22973402cb00106",
+      "failed": true,
+      "expectedFailure": "guest conversion failure must reject the native promise",
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: guest conversion failure must reject the native promise\n+ actual - expected\n\n+ undefined\n- Error: controlled guest conversion\n-     at file:///tmp/pf-promise-settlement-0J89TF/missing-guest-rejection-conversion.mjs:7806:19\n\n    at file:///tmp/pf-promise-settlement-0J89TF/missing-guest-rejection-conversion.mjs:7839:10 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: undefined,\n  expected: Error: controlled guest conversion\n      at file:///tmp/pf-promise-settlement-0J89TF/missing-guest-rejection-conversion.mjs:7806:19,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.18.0\n"
+    },
+    {
+      "name": "missing-host-rejection-observer",
+      "sourceHash": "f25a1c2c5c7b744b987bcacf9dc1fc2c6aaab1dd3840b5e2c192a0296db710b4",
+      "bundleHash": "1de2890cdb5ed45a01490b55ce5ac51f319396eec439d439ea8bffc6751a68b1",
+      "failed": true,
+      "expectedFailure": "entry failure remains primary over cleanup failure",
+      "stdout": "",
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: entry failure remains primary over cleanup failure\n+ actual - expected\n\n+ []\n- [\n-   Error: controlled entry failure\n-       at file:///tmp/pf-promise-settlement-0J89TF/missing-host-rejection-observer.mjs:7855:19\n- ]\n\n    at file:///tmp/pf-promise-settlement-0J89TF/missing-host-rejection-observer.mjs:7880:10 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: [],\n  expected: [\n    Error: controlled entry failure\n        at file:///tmp/pf-promise-settlement-0J89TF/missing-host-rejection-observer.mjs:7855:19\n  ],\n  operator: 'deepStrictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.18.0\n"
+    }
+  ],
+  "conversionContract": [
+    "Native Promise/thenable adoption uses one private ordinary native Promise after caching the guest identity; source lookup failures become asynchronous rejection",
+    "Guest observer setup failure rejects its private native waiter, removes it from pending cleanup and rethrows the primary conversion error",
+    "A conversion failure during an admitted native settlement rejects through the existing mediated exception path",
+    "Async failure reporting observes the primary error even when a reporter throws; no secondary unobserved reporting chain is created"
+  ],
+  "remainingPremises": [
+    "esbuild, the SDK and C-to-Wasm compilation are trusted",
+    "The fixture uses an explicit trusted local Host and controlled host-object faults; it does not qualify GenericBrowser producers, arbitrary native objects or application compatibility",
+    "All guest application execution uses engine-owned entry/job/Wasm paths; raw public SDK context calls are outside this contract",
+    "The probes check selected actual synchronous and asynchronous paths, not an inductive proof of every caller history",
+    "A live pre-action entry failure is reported and retains deferred roots until terminal cleanup; it does not promise guest settlement",
+    "Pinned SDK deferred disposal is idempotent, including after reentrant terminal cleanup"
+  ]
+}

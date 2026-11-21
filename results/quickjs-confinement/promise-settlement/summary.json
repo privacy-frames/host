@@ -1,0 +1,43 @@
+{
+  "checkedAt": "2026-11-21T21:18:29.837833+00:00",
+  "sourceCommit": "4039d5f",
+  "baseCommit": "4d229a3",
+  "scope": "Actual GuestEngine Promise settlement and SDK-root lifetime in Node with a trusted local Host",
+  "passed": true,
+  "checks": [
+    {
+      "command": "tsx test/guest-promise-settlement.ts",
+      "productionCases": 12,
+      "omissionControls": 5,
+      "exitCode": 0
+    },
+    {
+      "command": "tsx formal/quickjs/wasm/check-engine-lifetime.ts",
+      "productionCases": 10,
+      "omissionControls": 5,
+      "exitCode": 0
+    },
+    {
+      "command": "tsc --noEmit",
+      "exitCode": 0
+    },
+    {
+      "command": "prettier --check src/guest/engine.ts test/guest-promise-settlement.fixture.ts test/guest-promise-settlement.ts",
+      "exitCode": 0
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "artifacts": {
+    "node.json": "1608832c0f85f67dcd5086dbbde62c7c9291dcd812dbf38c962c5d291e07309e",
+    "lifetime.json": "7f893b61a0e64b96c4bc29c21eed2ab2bb68b31ff7a03623dced30672aad817e"
+  },
+  "limits": [
+    "Source thenable adoption uses a private ordinary native Promise. Host constructor/species errors become asynchronous rejection rather than synchronous engine.set failure.",
+    "A live pre-action entry failure is reported, retains deferred roots until terminal cleanup, and does not establish guest settlement.",
+    "Reentrant closure is logically immediate; SDK roots remain owned until the active entry unwinds. Repeated deferred disposal relies on the pinned SDK idempotence contract.",
+    "The fixtures inject controlled local host/SDK failures. They do not prove complete C3 mediation, GenericBrowser producer provenance, arbitrary native-object behavior, browser qualification or application compatibility."
+  ]
+}
