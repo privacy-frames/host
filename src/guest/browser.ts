@@ -872,9 +872,16 @@ export class BrowserEnvironment {
           if (!wrapper) {
             const engine = environment.engine;
             // Marshal arguments through the exact prepared owner's existing handle.
-            wrapper = function (this: unknown, ...args: unknown[]) {
-              return engine.call(value, args, this);
-            };
+            wrapper = {
+              invoke(this: unknown, ...args: unknown[]) {
+                return engine.call(value, args, this);
+              },
+            }.invoke;
+            for (const key of ['name', 'length']) {
+              const descriptor = Object.getOwnPropertyDescriptor(value, key);
+              if (descriptor && 'value' in descriptor)
+                Object.defineProperty(wrapper, key, descriptor);
+            }
             this.foreignBrowserCallables.set(value, wrapper);
           }
           return wrapper;

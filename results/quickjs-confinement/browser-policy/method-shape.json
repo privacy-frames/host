@@ -1,0 +1,29 @@
+{
+  "baseRevision": "02452d7677039b71110c322569c80355a5ce9e11",
+  "scope": "Callable shape of exact reviewed browser method bridges between prepared same-application windows",
+  "mechanism": "The bridge is an object method. Only own name and length data descriptors from its canonical method are copied; accessor descriptors are never invoked. Stable identity and owning-engine argument marshalling are unchanged.",
+  "checks": {
+    "browser": "Chromium and Firefox: production fixture and both string controls passed",
+    "types": "tsc --noEmit passed",
+    "format": "Scoped Prettier check passed"
+  },
+  "assertions": [
+    "stable cross-context method identity",
+    "name and length descriptor equality with native method contract",
+    "no own prototype",
+    "Reflect.construct with bridge as newTarget throws TypeError",
+    "existing child listener delivery, synchronous cancellation and explicit removal"
+  ],
+  "previousPassingReceipt": "browser-before-method-shape.json",
+  "browserReceipt": "browser.json",
+  "browserLog": "method-shape-browser.log",
+  "typeLog": "method-shape-types.log",
+  "formatLog": "method-shape-format.log",
+  "sourceHashes": {
+    "src/guest/browser.ts": "c598247101e98649562ad847a51e3db618d1b29039cf001682e19d9a9ee1e8d1",
+    "src/guest/browser-policy.ts": "1a33de5c6a021e3618ecd9d7847a6fa1749b2e0497f964b1c6f19b0d96d9a8c7",
+    "test/guest-browser-policy.browser.ts": "99457b7dd843f5ace0f59fecf0634ca37c29b0c428811e2d808ed2349e404707",
+    "test/guest-browser-policy.ts": "1c1db91a183ec81215bdf8284d7e20596a4a0920b4cb66583d019a3babb4bfc7"
+  },
+  "limits": "No constructor, arbitrary callable or unclaimed native-method adaptation was added. Full application and confinement qualification were not run."
+}

@@ -152,6 +152,23 @@ async function run() {
         if (parent.addEventListener !== parent.addEventListener ||
             parent.removeEventListener !== parent.removeEventListener)
           throw new Error('Cross-context method identity');
+        for (const key of ['addEventListener', 'removeEventListener']) {
+          const method = parent[key];
+          const local = EventTarget.prototype[key];
+          for (const field of ['name', 'length']) {
+            const actual = Object.getOwnPropertyDescriptor(method, field);
+            const expected = Object.getOwnPropertyDescriptor(local, field);
+            if (JSON.stringify(actual) !== JSON.stringify(expected))
+              throw new Error('Cross-context method metadata: ' + key + '.' + field);
+          }
+          if (Object.getOwnPropertyDescriptor(method, 'prototype') !== undefined)
+            throw new Error('Cross-context method has own prototype');
+          let refused = false;
+          try { Reflect.construct(function () {}, [], method); } catch (error) {
+            refused = error instanceof TypeError;
+          }
+          if (!refused) throw new Error('Cross-context method became constructible');
+        }
         globalThis.parentEvents = 0;
         globalThis.parentCallback = function (event) {
           if (this !== parent || event.type !== 'prepared-parent')
