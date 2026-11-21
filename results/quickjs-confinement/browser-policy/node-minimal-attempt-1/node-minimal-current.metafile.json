@@ -1,0 +1,64 @@
+{
+  "inputs": {
+    "results/quickjs-confinement/browser-policy/node-minimal-current.mjs": {
+      "bytes": 1667,
+      "imports": [
+        {
+          "path": "node:fs/promises",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "file:///home/damen/Projects/privacy-frames-browser-policy/src/guest/engine.ts",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "file:///home/damen/Projects/privacy-frames-browser-policy/src/guest/guest-runtime.ts",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "file:///home/damen/Projects/privacy-frames-browser-policy/src/guest/legacy-regexp.ts",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "results/quickjs-confinement/browser-policy/node-minimal-current.bundle.mjs": {
+      "imports": [
+        {
+          "path": "node:fs/promises",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "file:///home/damen/Projects/privacy-frames-browser-policy/src/guest/engine.ts",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "file:///home/damen/Projects/privacy-frames-browser-policy/src/guest/guest-runtime.ts",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "file:///home/damen/Projects/privacy-frames-browser-policy/src/guest/legacy-regexp.ts",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "exports": [],
+      "entryPoint": "results/quickjs-confinement/browser-policy/node-minimal-current.mjs",
+      "inputs": {
+        "results/quickjs-confinement/browser-policy/node-minimal-current.mjs": {
+          "bytesInOutput": 1790
+        }
+      },
+      "bytes": 1861
+    }
+  }
+}

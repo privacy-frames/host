@@ -1,0 +1,22 @@
+{
+  "scope": "Exploratory direct-Node GuestEngine and browser event policy smoke; not BrowserEnvironment or browser qualification",
+  "workingDirectory": "/home/damen/Projects/privacy-frames-browser-policy",
+  "baseRevision": "afe426ada8a69a982cd0b805029939b27324f3e0",
+  "sourceState": "Exact relevant source/artifact hashes captured before subsequent production edits; the relevant source files were unchanged between the failed invocation and this capture.",
+  "command": "export PATH=/home/damen/.local/share/mise/installs/node/24.18.0/bin:$PATH\nnode --import tsx --input-type=module < results/quickjs-confinement/browser-policy/node-smoke-source.mjs",
+  "invocationNote": "Originally executed with the same stdin source in a quoted heredoc; the saved source keeps imports relative to the repository working directory.",
+  "exitCode": 1,
+  "qualified": false,
+  "applicationResultObserved": false,
+  "cause": "unestablished",
+  "visibleOutput": "node-smoke-visible-output.txt",
+  "outputLimit": "The tool output was truncated at 7185 original tokens; the complete generated-loader source line and full stdout/stderr stream were not preserved.",
+  "productionChanged": false,
+  "inputHashes": "node-smoke-input-hashes.json",
+  "snapshotArchiveSHA256": "b7a90292b9312c64e03a58e5a5b62d0e72d1e96c27cbf85a62dfb4b0e05b0968",
+  "snapshotArchiveVerifiedFiles": 81,
+  "originalSourcePatch": "node-smoke-original-source.patch",
+  "originalSourcePatchSHA256": "e269776ec1aa4547d19da01f4d28b37f6b953ea72ed8a7200065f88cabdf746a",
+  "localSnapshotArchive": ".tools/browser-policy-diagnostics/node-smoke-inputs.tar.gz",
+  "snapshotNote": "The full exact relevant-input snapshot is retained locally, not published. Public provenance uses the git base, original-state source patch and input hash manifest; installed dependency copies are omitted."
+}

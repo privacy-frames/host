@@ -1,0 +1,20 @@
+Aborted(Assertion failed: list_empty(&rt->gc_obj_list), at: /source/upstream/quickjs.c,2052,JS_FreeRuntime)
+file:///home/damen/Projects/privacy-frames-browser-policy/vendor/quickjs/generated/engine.mjs:1
+
+[The tool output printed the generated engine loader's single minified line and
+truncated that portion. The complete stdout/stderr stream was not saved. This
+file preserves the visible assertion and stack, not a reconstructed full log.]
+
+RuntimeError: Aborted(Assertion failed: list_empty(&rt->gc_obj_list), at: /source/upstream/quickjs.c,2052,JS_FreeRuntime). Build with -sASSERTIONS for more info.
+    at abort (file:///home/damen/Projects/privacy-frames-browser-policy/vendor/quickjs/generated/engine.mjs:1:2974)
+    at ___assert_fail (file:///home/damen/Projects/privacy-frames-browser-policy/vendor/quickjs/generated/engine.mjs:1:6454)
+    at wasm://wasm/00356f16:wasm-function[450]:0x70101
+    at wasm://wasm/00356f16:wasm-function[755]:0xa04bb
+    at _Lifetime.error (/home/damen/Projects/privacy-frames-quickjs-kernel/node_modules/quickjs-emscripten-core/src/module.ts:460:1)
+    at _Lifetime.dispose (/home/damen/Projects/privacy-frames-quickjs-kernel/node_modules/quickjs-emscripten-core/src/lifetime.ts:177:12)
+    at _Scope.error (/home/damen/Projects/privacy-frames-quickjs-kernel/node_modules/quickjs-emscripten-core/src/lifetime.ts:341:18)
+    at QuickJSRuntime.error (/home/damen/Projects/privacy-frames-quickjs-kernel/node_modules/quickjs-emscripten-core/src/module.ts:460:1)
+    at GuestEngine.finishDisposalIfIdle (/home/damen/Projects/privacy-frames-browser-policy/src/guest/engine.ts:1941:18)
+    at GuestEngine.dispose (/home/damen/Projects/privacy-frames-browser-policy/src/guest/engine.ts:1889:10)
+
+Node.js v24.18.0

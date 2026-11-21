@@ -1,0 +1,61 @@
+diff --git a/src/guest/engine.ts b/src/guest/engine.ts
+--- a/src/guest/engine.ts
++++ b/src/guest/engine.ts
+@@ -242,6 +242,7 @@
+       this.context.evalCode(
+         `(${installGuestRegExpLegacy.toString()})();`,
+         'privacy:legacy-regexp',
++        { type: 'global', strict: true },
+       ),
+     ).dispose();
+     for (const [native, name] of wellKnownSymbols)
+@@ -259,6 +260,7 @@
+       this.context.evalCode(
+         `(${installGuestRuntime.toString()})(${allocateIdentity.toString()})`,
+         'privacy:bindings',
++        { type: 'global', strict: true },
+       ),
+     );
+     try {
+@@ -401,7 +403,10 @@
+ 
+   private installBinary(): void {
+     const installer = this.unwrap(
+-      this.context.evalCode(`(${installGuestBinary.toString()})`, 'privacy:binary'),
++      this.context.evalCode(`(${installGuestBinary.toString()})`, 'privacy:binary', {
++        type: 'global',
++        strict: true,
++      }),
+     );
+     const bindings = this.encode(this.binary.bindings);
+     const hooks = this.helper('binaryHooks', []);
+@@ -439,6 +444,16 @@
+   /** Identify a previously decoded guest reference without invoking guest code. */
+   ownsGuestValue(value: object): boolean {
+     return !this.closed && this.guestHandles.has(value);
++  }
++
++  /** Only identities already crossing this engine's reference boundary qualify.
++   * Recognition must not encode a new value or ask a default native owner. */
++  recognizesCallable(value: unknown): value is Function {
++    return (
++      !this.closed &&
++      typeof value === 'function' &&
++      (this.guestHandles.has(value) || this.nativeHandles.has(value))
++    );
+   }
+ 
+   private owner(target: object): GuestHost {
+@@ -544,7 +559,11 @@
+   }
+ 
+   call(fn: Function, arguments_: unknown[] = [], receiver?: unknown): unknown {
+-    return Reflect.apply(fn, receiver, arguments_);
++    if (!this.recognizesCallable(fn))
++      throw new TypeError('Callable has no recorded engine owner');
++    // Decoded guest wrappers retain their existing entry and deferral behavior.
++    if (this.guestHandles.has(fn)) return Reflect.apply(fn, receiver, arguments_);
++    return this.invoke(this.nativeHandles.get(fn)!, receiver, arguments_, false);
+   }
+ 
+   /** Read guest class metadata without bypassing guest property policies. */

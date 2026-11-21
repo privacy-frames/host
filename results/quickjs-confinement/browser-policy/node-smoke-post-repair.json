@@ -1,0 +1,16 @@
+{
+  "scope": "The original direct-TSX smoke remains a rejected bootstrap mode; after the length/lifetime repair it must expose the first ReferenceError without a runtime disposal assertion. This does not qualify direct-TSX application execution.",
+  "command": "node --import tsx --input-type=module < results/quickjs-confinement/browser-policy/node-smoke-retry-source.mjs",
+  "exitCode": 1,
+  "expectedCleanRefusal": true,
+  "applicationResultObserved": false,
+  "sourceHashes": {
+    "src/guest/engine.ts": "f47d9f29180bf54561025352567648768dcb0cfc2b01519ee218ac7e447f6027",
+    "src/guest/browser-policy.ts": "229e6ec240c9decdd5b8e3fb5c6c217d43288f931b309fd09ce179abac327e6d",
+    "src/guest/event-policy.ts": "04b6c5c11b185b3359931505b50fc147ea0e6195d2acf7cc1792260bf7387c82",
+    "results/quickjs-confinement/browser-policy/node-smoke-retry-source.mjs": "f77a636a318e37ed2fcc1da5c5f3fedb2ed68b9f6936e9f73aa59b5f22f69c3c"
+  },
+  "stdout": "node-smoke-post-repair.stdout",
+  "stderr": "node-smoke-post-repair.stderr",
+  "completedAt": "2026-11-21T18:05:20.761218+00:00"
+}

@@ -1,0 +1,77 @@
+{
+  "scope": "Development checkpoint for selected browser event mediation, existing-handle callable invocation, trusted factory evaluation mode, primitive string recovery and initializer failure cleanup. This is not full BrowserEnvironment mediation or application/library release qualification.",
+  "sourceRevision": "6681c446dab4bc47f5b7e9965911fad53295ca01",
+  "baseRevision": "afe426ada8a69a982cd0b805029939b27324f3e0",
+  "sourceHashes": "final-source-hashes.json",
+  "checks": [
+    {
+      "command": "npm run test:unit",
+      "exitCode": 0,
+      "tests": 232,
+      "log": "full-unit.log"
+    },
+    {
+      "command": "node_modules/.bin/tsc --noEmit",
+      "exitCode": 0,
+      "log": "typecheck.log"
+    },
+    {
+      "command": "Scoped Prettier check on modified runtime and test TypeScript files",
+      "exitCode": 0,
+      "log": "format.log"
+    },
+    {
+      "command": "node --import tsx test/guest-browser-policy.ts",
+      "exitCode": 0,
+      "browsers": [
+        "chromium",
+        "firefox"
+      ],
+      "cases": 6,
+      "receipt": "browser.json",
+      "log": "browser-string-repair.log"
+    },
+    {
+      "command": "node --import tsx test/guest-engine.ts",
+      "exitCode": 0,
+      "browsers": [
+        "chromium",
+        "firefox"
+      ],
+      "receipt": "existing-guest-engine.json",
+      "log": "existing-guest-engine.log"
+    },
+    {
+      "command": "node --import tsx test/guest-text-bridge.ts",
+      "exitCode": 0,
+      "browsers": [
+        "chromium",
+        "firefox"
+      ],
+      "receipt": "existing-text-bridge.json",
+      "log": "existing-text-bridge.log"
+    },
+    {
+      "command": "node --import tsx formal/quickjs/bootstrap-mode/check.ts",
+      "exitCode": 0,
+      "receipt": "../bootstrap-mode/calibration.json"
+    }
+  ],
+  "diagnostics": {
+    "originalFailure": "node-smoke.json",
+    "sourcePollutionCause": "node-bootstrap-error.json",
+    "primitiveLengthCharacterization": "sdk-string-length.json",
+    "postRepairCleanRefusal": "node-smoke-post-repair.json",
+    "toolModeControls": "node-minimal-controls.json",
+    "retainedFirstHarnessAttempt": "node-minimal-attempt-1/",
+    "publicSourcePreservation": "git base plus node-smoke-original-source.patch; installed dependency copies and generated bundles remain locally ignored"
+  },
+  "remainingPremises": [
+    "Other browser/DOM native families remain unclaimed.",
+    "Explicit borrowed EventTarget operations on unregistered target families require producer enrollment and application qualification.",
+    "Producer, callback and lifecycle composition is not an implementation-wide proof.",
+    "Full application compatibility/performance and release checks belong to root integration."
+  ],
+  "deployed": false,
+  "completedAt": "2026-11-21T18:10:34.985943+00:00"
+}

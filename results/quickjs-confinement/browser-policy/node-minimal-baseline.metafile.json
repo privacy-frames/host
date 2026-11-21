@@ -1,0 +1,269 @@
+{
+  "inputs": {
+    ".tools/browser-policy-node-baseline/vendor/quickjs/generated/engine.mjs": {
+      "bytes": 26255,
+      "imports": [],
+      "format": "esm"
+    },
+    ".tools/browser-policy-node-baseline/src/guest/quickjs.ts": {
+      "bytes": 1097,
+      "imports": [
+        {
+          "path": "@jitl/quickjs-wasmfile-release-sync/ffi",
+          "kind": "dynamic-import",
+          "external": true
+        },
+        {
+          "path": ".tools/browser-policy-node-baseline/vendor/quickjs/generated/engine.mjs",
+          "kind": "dynamic-import",
+          "original": "../../vendor/quickjs/generated/engine.mjs"
+        },
+        {
+          "path": ".tools/browser-policy-node-baseline/vendor/quickjs/generated/engine.mjs",
+          "kind": "dynamic-import",
+          "original": "../../vendor/quickjs/generated/engine.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    ".tools/browser-policy-node-baseline/src/guest/wasm-accessors.ts": {
+      "bytes": 4165,
+      "imports": [],
+      "format": "esm"
+    },
+    ".tools/browser-policy-node-baseline/src/guest/indexed-access.ts": {
+      "bytes": 8336,
+      "imports": [
+        {
+          "path": ".tools/browser-policy-node-baseline/src/guest/wasm-accessors.ts",
+          "kind": "import-statement",
+          "original": "./wasm-accessors.ts"
+        }
+      ],
+      "format": "esm"
+    },
+    ".tools/browser-policy-node-baseline/src/guest/guest-runtime.ts": {
+      "bytes": 29473,
+      "imports": [],
+      "format": "esm"
+    },
+    ".tools/browser-policy-node-baseline/src/guest/identity.ts": {
+      "bytes": 653,
+      "imports": [],
+      "format": "esm"
+    },
+    ".tools/browser-policy-node-baseline/src/guest/legacy-regexp.ts": {
+      "bytes": 2197,
+      "imports": [],
+      "format": "esm"
+    },
+    ".tools/browser-policy-node-baseline/src/guest/native-policy.ts": {
+      "bytes": 25551,
+      "imports": [],
+      "format": "esm"
+    },
+    ".tools/browser-policy-node-baseline/src/guest/native-host.ts": {
+      "bytes": 9459,
+      "imports": [
+        {
+          "path": ".tools/browser-policy-node-baseline/src/guest/native-policy.ts",
+          "kind": "import-statement",
+          "original": "./native-policy.ts"
+        }
+      ],
+      "format": "esm"
+    },
+    ".tools/browser-policy-node-baseline/src/guest/native-binary.ts": {
+      "bytes": 30802,
+      "imports": [
+        {
+          "path": ".tools/browser-policy-node-baseline/src/guest/native-host.ts",
+          "kind": "import-statement",
+          "original": "./native-host.ts"
+        },
+        {
+          "path": ".tools/browser-policy-node-baseline/src/guest/native-policy.ts",
+          "kind": "import-statement",
+          "original": "./native-policy.ts"
+        }
+      ],
+      "format": "esm"
+    },
+    ".tools/browser-policy-node-baseline/src/guest/guest-binary.ts": {
+      "bytes": 7053,
+      "imports": [],
+      "format": "esm"
+    },
+    ".tools/browser-policy-node-baseline/src/guest/native-wasm.ts": {
+      "bytes": 26032,
+      "imports": [
+        {
+          "path": ".tools/browser-policy-node-baseline/src/guest/native-host.ts",
+          "kind": "import-statement",
+          "original": "./native-host.ts"
+        },
+        {
+          "path": ".tools/browser-policy-node-baseline/src/guest/native-policy.ts",
+          "kind": "import-statement",
+          "original": "./native-policy.ts"
+        }
+      ],
+      "format": "esm"
+    },
+    ".tools/browser-policy-node-baseline/src/guest/engine.ts": {
+      "bytes": 68701,
+      "imports": [
+        {
+          "path": "quickjs-emscripten-core",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": ".tools/browser-policy-node-baseline/src/guest/quickjs.ts",
+          "kind": "import-statement",
+          "original": "./quickjs.ts"
+        },
+        {
+          "path": ".tools/browser-policy-node-baseline/src/guest/indexed-access.ts",
+          "kind": "import-statement",
+          "original": "./indexed-access.ts"
+        },
+        {
+          "path": ".tools/browser-policy-node-baseline/src/guest/guest-runtime.ts",
+          "kind": "import-statement",
+          "original": "./guest-runtime.ts"
+        },
+        {
+          "path": ".tools/browser-policy-node-baseline/src/guest/identity.ts",
+          "kind": "import-statement",
+          "original": "./identity.ts"
+        },
+        {
+          "path": ".tools/browser-policy-node-baseline/src/guest/legacy-regexp.ts",
+          "kind": "import-statement",
+          "original": "./legacy-regexp.ts"
+        },
+        {
+          "path": "@jridgewell/resolve-uri",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": ".tools/browser-policy-node-baseline/src/guest/native-binary.ts",
+          "kind": "import-statement",
+          "original": "./native-binary.ts"
+        },
+        {
+          "path": ".tools/browser-policy-node-baseline/src/guest/guest-binary.ts",
+          "kind": "import-statement",
+          "original": "./guest-binary.ts"
+        },
+        {
+          "path": ".tools/browser-policy-node-baseline/src/guest/native-wasm.ts",
+          "kind": "import-statement",
+          "original": "./native-wasm.ts"
+        }
+      ],
+      "format": "esm"
+    },
+    "results/quickjs-confinement/browser-policy/node-minimal-baseline.mjs": {
+      "bytes": 1790,
+      "imports": [
+        {
+          "path": "node:fs/promises",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": ".tools/browser-policy-node-baseline/src/guest/engine.ts",
+          "kind": "import-statement",
+          "original": "/home/damen/Projects/privacy-frames-browser-policy/.tools/browser-policy-node-baseline/src/guest/engine.ts"
+        },
+        {
+          "path": ".tools/browser-policy-node-baseline/src/guest/guest-runtime.ts",
+          "kind": "import-statement",
+          "original": "/home/damen/Projects/privacy-frames-browser-policy/.tools/browser-policy-node-baseline/src/guest/guest-runtime.ts"
+        },
+        {
+          "path": ".tools/browser-policy-node-baseline/src/guest/legacy-regexp.ts",
+          "kind": "import-statement",
+          "original": "/home/damen/Projects/privacy-frames-browser-policy/.tools/browser-policy-node-baseline/src/guest/legacy-regexp.ts"
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "results/quickjs-confinement/browser-policy/node-minimal-baseline.bundle.mjs": {
+      "imports": [
+        {
+          "path": "node:fs/promises",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "quickjs-emscripten-core",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "@jitl/quickjs-wasmfile-release-sync/ffi",
+          "kind": "dynamic-import",
+          "external": true
+        },
+        {
+          "path": "@jridgewell/resolve-uri",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "exports": [],
+      "entryPoint": "results/quickjs-confinement/browser-policy/node-minimal-baseline.mjs",
+      "inputs": {
+        ".tools/browser-policy-node-baseline/vendor/quickjs/generated/engine.mjs": {
+          "bytesInOutput": 33442
+        },
+        "results/quickjs-confinement/browser-policy/node-minimal-baseline.mjs": {
+          "bytesInOutput": 1464
+        },
+        ".tools/browser-policy-node-baseline/src/guest/engine.ts": {
+          "bytesInOutput": 61517
+        },
+        ".tools/browser-policy-node-baseline/src/guest/quickjs.ts": {
+          "bytesInOutput": 634
+        },
+        ".tools/browser-policy-node-baseline/src/guest/wasm-accessors.ts": {
+          "bytesInOutput": 3130
+        },
+        ".tools/browser-policy-node-baseline/src/guest/indexed-access.ts": {
+          "bytesInOutput": 6478
+        },
+        ".tools/browser-policy-node-baseline/src/guest/guest-runtime.ts": {
+          "bytesInOutput": 25167
+        },
+        ".tools/browser-policy-node-baseline/src/guest/identity.ts": {
+          "bytesInOutput": 159
+        },
+        ".tools/browser-policy-node-baseline/src/guest/legacy-regexp.ts": {
+          "bytesInOutput": 1799
+        },
+        ".tools/browser-policy-node-baseline/src/guest/native-policy.ts": {
+          "bytesInOutput": 18570
+        },
+        ".tools/browser-policy-node-baseline/src/guest/native-host.ts": {
+          "bytesInOutput": 6978
+        },
+        ".tools/browser-policy-node-baseline/src/guest/native-binary.ts": {
+          "bytesInOutput": 26198
+        },
+        ".tools/browser-policy-node-baseline/src/guest/guest-binary.ts": {
+          "bytesInOutput": 5578
+        },
+        ".tools/browser-policy-node-baseline/src/guest/native-wasm.ts": {
+          "bytesInOutput": 22061
+        }
+      },
+      "bytes": 214725
+    }
+  }
+}

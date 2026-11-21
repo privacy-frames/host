@@ -1,0 +1,269 @@
+{
+  "inputs": {
+    "vendor/quickjs/generated/engine.mjs": {
+      "bytes": 26255,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/guest/quickjs.ts": {
+      "bytes": 1097,
+      "imports": [
+        {
+          "path": "@jitl/quickjs-wasmfile-release-sync/ffi",
+          "kind": "dynamic-import",
+          "external": true
+        },
+        {
+          "path": "vendor/quickjs/generated/engine.mjs",
+          "kind": "dynamic-import",
+          "original": "../../vendor/quickjs/generated/engine.mjs"
+        },
+        {
+          "path": "vendor/quickjs/generated/engine.mjs",
+          "kind": "dynamic-import",
+          "original": "../../vendor/quickjs/generated/engine.mjs"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/guest/wasm-accessors.ts": {
+      "bytes": 4165,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/guest/indexed-access.ts": {
+      "bytes": 8336,
+      "imports": [
+        {
+          "path": "src/guest/wasm-accessors.ts",
+          "kind": "import-statement",
+          "original": "./wasm-accessors.ts"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/guest/guest-runtime.ts": {
+      "bytes": 29473,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/guest/identity.ts": {
+      "bytes": 653,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/guest/legacy-regexp.ts": {
+      "bytes": 2197,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/guest/native-policy.ts": {
+      "bytes": 25551,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/guest/native-host.ts": {
+      "bytes": 9459,
+      "imports": [
+        {
+          "path": "src/guest/native-policy.ts",
+          "kind": "import-statement",
+          "original": "./native-policy.ts"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/guest/native-binary.ts": {
+      "bytes": 30802,
+      "imports": [
+        {
+          "path": "src/guest/native-host.ts",
+          "kind": "import-statement",
+          "original": "./native-host.ts"
+        },
+        {
+          "path": "src/guest/native-policy.ts",
+          "kind": "import-statement",
+          "original": "./native-policy.ts"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/guest/guest-binary.ts": {
+      "bytes": 7053,
+      "imports": [],
+      "format": "esm"
+    },
+    "src/guest/native-wasm.ts": {
+      "bytes": 26032,
+      "imports": [
+        {
+          "path": "src/guest/native-host.ts",
+          "kind": "import-statement",
+          "original": "./native-host.ts"
+        },
+        {
+          "path": "src/guest/native-policy.ts",
+          "kind": "import-statement",
+          "original": "./native-policy.ts"
+        }
+      ],
+      "format": "esm"
+    },
+    "src/guest/engine.ts": {
+      "bytes": 69373,
+      "imports": [
+        {
+          "path": "quickjs-emscripten-core",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/guest/quickjs.ts",
+          "kind": "import-statement",
+          "original": "./quickjs.ts"
+        },
+        {
+          "path": "src/guest/indexed-access.ts",
+          "kind": "import-statement",
+          "original": "./indexed-access.ts"
+        },
+        {
+          "path": "src/guest/guest-runtime.ts",
+          "kind": "import-statement",
+          "original": "./guest-runtime.ts"
+        },
+        {
+          "path": "src/guest/identity.ts",
+          "kind": "import-statement",
+          "original": "./identity.ts"
+        },
+        {
+          "path": "src/guest/legacy-regexp.ts",
+          "kind": "import-statement",
+          "original": "./legacy-regexp.ts"
+        },
+        {
+          "path": "@jridgewell/resolve-uri",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/guest/native-binary.ts",
+          "kind": "import-statement",
+          "original": "./native-binary.ts"
+        },
+        {
+          "path": "src/guest/guest-binary.ts",
+          "kind": "import-statement",
+          "original": "./guest-binary.ts"
+        },
+        {
+          "path": "src/guest/native-wasm.ts",
+          "kind": "import-statement",
+          "original": "./native-wasm.ts"
+        }
+      ],
+      "format": "esm"
+    },
+    "results/quickjs-confinement/browser-policy/node-minimal-current.mjs": {
+      "bytes": 1646,
+      "imports": [
+        {
+          "path": "node:fs/promises",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "src/guest/engine.ts",
+          "kind": "import-statement",
+          "original": "/home/damen/Projects/privacy-frames-browser-policy/src/guest/engine.ts"
+        },
+        {
+          "path": "src/guest/guest-runtime.ts",
+          "kind": "import-statement",
+          "original": "/home/damen/Projects/privacy-frames-browser-policy/src/guest/guest-runtime.ts"
+        },
+        {
+          "path": "src/guest/legacy-regexp.ts",
+          "kind": "import-statement",
+          "original": "/home/damen/Projects/privacy-frames-browser-policy/src/guest/legacy-regexp.ts"
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "results/quickjs-confinement/browser-policy/node-minimal-current.bundle.mjs": {
+      "imports": [
+        {
+          "path": "node:fs/promises",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "quickjs-emscripten-core",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "@jitl/quickjs-wasmfile-release-sync/ffi",
+          "kind": "dynamic-import",
+          "external": true
+        },
+        {
+          "path": "@jridgewell/resolve-uri",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "exports": [],
+      "entryPoint": "results/quickjs-confinement/browser-policy/node-minimal-current.mjs",
+      "inputs": {
+        "vendor/quickjs/generated/engine.mjs": {
+          "bytesInOutput": 33406
+        },
+        "results/quickjs-confinement/browser-policy/node-minimal-current.mjs": {
+          "bytesInOutput": 1428
+        },
+        "src/guest/engine.ts": {
+          "bytesInOutput": 62052
+        },
+        "src/guest/quickjs.ts": {
+          "bytesInOutput": 634
+        },
+        "src/guest/wasm-accessors.ts": {
+          "bytesInOutput": 3130
+        },
+        "src/guest/indexed-access.ts": {
+          "bytesInOutput": 6478
+        },
+        "src/guest/guest-runtime.ts": {
+          "bytesInOutput": 25167
+        },
+        "src/guest/identity.ts": {
+          "bytesInOutput": 159
+        },
+        "src/guest/legacy-regexp.ts": {
+          "bytesInOutput": 1799
+        },
+        "src/guest/native-policy.ts": {
+          "bytesInOutput": 18570
+        },
+        "src/guest/native-host.ts": {
+          "bytesInOutput": 6978
+        },
+        "src/guest/native-binary.ts": {
+          "bytesInOutput": 26198
+        },
+        "src/guest/guest-binary.ts": {
+          "bytesInOutput": 5578
+        },
+        "src/guest/native-wasm.ts": {
+          "bytesInOutput": 22061
+        }
+      },
+      "bytes": 214646
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "inputs": {
+    "results/quickjs-confinement/browser-policy/node-minimal-baseline.mjs": {
+      "bytes": 1811,
+      "imports": [
+        {
+          "path": "node:fs/promises",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "file:///home/damen/Projects/privacy-frames-browser-policy/.tools/browser-policy-node-baseline/src/guest/engine.ts",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "file:///home/damen/Projects/privacy-frames-browser-policy/.tools/browser-policy-node-baseline/src/guest/guest-runtime.ts",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "file:///home/damen/Projects/privacy-frames-browser-policy/.tools/browser-policy-node-baseline/src/guest/legacy-regexp.ts",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "format": "esm"
+    }
+  },
+  "outputs": {
+    "results/quickjs-confinement/browser-policy/node-minimal-baseline.bundle.mjs": {
+      "imports": [
+        {
+          "path": "node:fs/promises",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "file:///home/damen/Projects/privacy-frames-browser-policy/.tools/browser-policy-node-baseline/src/guest/engine.ts",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "file:///home/damen/Projects/privacy-frames-browser-policy/.tools/browser-policy-node-baseline/src/guest/guest-runtime.ts",
+          "kind": "import-statement",
+          "external": true
+        },
+        {
+          "path": "file:///home/damen/Projects/privacy-frames-browser-policy/.tools/browser-policy-node-baseline/src/guest/legacy-regexp.ts",
+          "kind": "import-statement",
+          "external": true
+        }
+      ],
+      "exports": [],
+      "entryPoint": "results/quickjs-confinement/browser-policy/node-minimal-baseline.mjs",
+      "inputs": {
+        "results/quickjs-confinement/browser-policy/node-minimal-baseline.mjs": {
+          "bytesInOutput": 1934
+        }
+      },
+      "bytes": 2006
+    }
+  }
+}

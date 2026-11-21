@@ -1,0 +1,29 @@
+{
+  "baselineRevision": "afe426ada8a69a982cd0b805029939b27324f3e0",
+  "scope": "Identical minimal host and arithmetic workload; only imported source/artifact paths differ between the unchanged afe426a baseline and current isolated engine. No browser/native capability is exposed by the host.",
+  "inputs": {
+    "baseline": {
+      "source": "results/quickjs-confinement/browser-policy/node-minimal-baseline.mjs",
+      "sourceSHA256": "790e6bb61b81f0335bf6d1d77f1fbb3d7e3fcd4d2d4f6c88903616ead56ef4a4",
+      "hashes": {
+        "/home/damen/Projects/privacy-frames-browser-policy/.tools/browser-policy-node-baseline/src/guest/engine.ts": "1ac27fbec1bd3d9a83c91f410830c845039663df47a05b70f8748bfcc11ae78b",
+        "/home/damen/Projects/privacy-frames-browser-policy/.tools/browser-policy-node-baseline/src/guest/guest-runtime.ts": "058930f5f581f18210f636c210c0dbba27e51a145826c2adcb95d3295436bc1d",
+        "/home/damen/Projects/privacy-frames-browser-policy/.tools/browser-policy-node-baseline/src/guest/legacy-regexp.ts": "bbfcdccb8fab7c9a1462d91c8237f6cbe8c90be1f331c2f5f6b3629b569231bb",
+        "/home/damen/Projects/privacy-frames-browser-policy/.tools/browser-policy-node-baseline/vendor/quickjs/generated/engine.wasm": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
+        "/home/damen/Projects/privacy-frames-browser-policy/.tools/browser-policy-node-baseline/vendor/quickjs/generated/engine.mjs": "60147727aeb5c4441d54ad7b3c625e952bec7faa8db8531522eb71dd9ab9da2e"
+      }
+    },
+    "current": {
+      "source": "results/quickjs-confinement/browser-policy/node-minimal-current.mjs",
+      "sourceSHA256": "bcba770cd019d50c30d0443c8b5e82c67376f9d919ba55d63b10a928c57936b7",
+      "hashes": {
+        "/home/damen/Projects/privacy-frames-browser-policy/src/guest/engine.ts": "b6dd0915f04e8612ae1a1d4c3863118fe2b586fb9ab738fb8d0f82f337beea24",
+        "/home/damen/Projects/privacy-frames-browser-policy/src/guest/guest-runtime.ts": "058930f5f581f18210f636c210c0dbba27e51a145826c2adcb95d3295436bc1d",
+        "/home/damen/Projects/privacy-frames-browser-policy/src/guest/legacy-regexp.ts": "bbfcdccb8fab7c9a1462d91c8237f6cbe8c90be1f331c2f5f6b3629b569231bb",
+        "/home/damen/Projects/privacy-frames-browser-policy/vendor/quickjs/generated/engine.wasm": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
+        "/home/damen/Projects/privacy-frames-browser-policy/vendor/quickjs/generated/engine.mjs": "60147727aeb5c4441d54ad7b3c625e952bec7faa8db8531522eb71dd9ab9da2e"
+      }
+    }
+  },
+  "controlRevision": "Normal absolute import specifiers; the prior file-URL imports were treated as external by esbuild and that failed control attempt is preserved under node-minimal-attempt-1/."
+}

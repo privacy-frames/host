@@ -1,0 +1,67 @@
+{
+  "scope": "Diagnostic controls for direct-TSX embedded bootstrap source versus esbuild keepNames:false. These are tool-mode/arithmetic controls, not event-policy or confinement qualification.",
+  "inputs": "node-minimal-control-inputs.json",
+  "priorFailedHarnessAttempt": "node-minimal-attempt-1/",
+  "controls": [
+    {
+      "sourceVariant": "baseline",
+      "mode": "direct-tsx",
+      "command": [
+        "/home/damen/.local/share/mise/installs/node/24.18.0/bin/node",
+        "--import",
+        "tsx",
+        "/home/damen/Projects/privacy-frames-browser-policy/results/quickjs-confinement/browser-policy/node-minimal-baseline.mjs"
+      ],
+      "sourceSHA256": "790e6bb61b81f0335bf6d1d77f1fbb3d7e3fcd4d2d4f6c88903616ead56ef4a4",
+      "exitCode": 1,
+      "stdout": "node-minimal-baseline-direct-tsx.stdout",
+      "stderr": "node-minimal-baseline-direct-tsx.stderr",
+      "fullOutputCaptured": true
+    },
+    {
+      "sourceVariant": "baseline",
+      "mode": "bundled",
+      "command": [
+        "/home/damen/.local/share/mise/installs/node/24.18.0/bin/node",
+        "/home/damen/Projects/privacy-frames-browser-policy/results/quickjs-confinement/browser-policy/node-minimal-baseline.bundle.mjs"
+      ],
+      "sourceSHA256": "ef2b8649835ae97cfd802e24381892a8b3d7687463fa790da45b4eac891cb218",
+      "exitCode": 0,
+      "stdout": "node-minimal-baseline-bundled.stdout",
+      "stderr": "node-minimal-baseline-bundled.stderr",
+      "fullOutputCaptured": true,
+      "localBundleArtifact": ".tools/browser-policy-diagnostics/node-minimal-baseline.bundle.mjs"
+    },
+    {
+      "sourceVariant": "current",
+      "mode": "direct-tsx",
+      "command": [
+        "/home/damen/.local/share/mise/installs/node/24.18.0/bin/node",
+        "--import",
+        "tsx",
+        "/home/damen/Projects/privacy-frames-browser-policy/results/quickjs-confinement/browser-policy/node-minimal-current.mjs"
+      ],
+      "sourceSHA256": "bcba770cd019d50c30d0443c8b5e82c67376f9d919ba55d63b10a928c57936b7",
+      "exitCode": 1,
+      "stdout": "node-minimal-current-direct-tsx.stdout",
+      "stderr": "node-minimal-current-direct-tsx.stderr",
+      "fullOutputCaptured": true
+    },
+    {
+      "sourceVariant": "current",
+      "mode": "bundled",
+      "command": [
+        "/home/damen/.local/share/mise/installs/node/24.18.0/bin/node",
+        "/home/damen/Projects/privacy-frames-browser-policy/results/quickjs-confinement/browser-policy/node-minimal-current.bundle.mjs"
+      ],
+      "sourceSHA256": "89ded7869b64ef960653400a14daa34d56ae7c875c20e27f049bf40e4eba1507",
+      "exitCode": 0,
+      "stdout": "node-minimal-current-bundled.stdout",
+      "stderr": "node-minimal-current-bundled.stderr",
+      "fullOutputCaptured": true,
+      "localBundleArtifact": ".tools/browser-policy-diagnostics/node-minimal-current.bundle.mjs"
+    }
+  ],
+  "completedAt": "2026-11-21T17:39:45.786564+00:00",
+  "bundleArtifactPolicy": "Generated bundles are retained locally under .tools/browser-policy-diagnostics, not published as duplicate dependency code. Recorded source/bundle hashes and esbuild metafiles identify the executed artifacts."
+}
