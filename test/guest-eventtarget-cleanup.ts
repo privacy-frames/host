@@ -8,6 +8,7 @@ import { chromium, firefox } from 'playwright';
 
 const sources = [
   'src/guest/browser.ts',
+  'src/guest/event-policy.ts',
   'src/guest/engine.ts',
   'src/guest/session.ts',
   'src/guest/event-listener-arguments.ts',
@@ -56,6 +57,35 @@ for (const fault of ['production', 'conversion', 'cleanup']) {
             {
               name: 'restore-listener-cleanup-fault',
               setup(builder) {
+                if (fault === 'conversion')
+                  builder.onLoad(
+                    { filter: /\/src\/guest\/event-policy\.ts$/ },
+                    async ({ path }) => {
+                      let source = await readFile(path, 'utf8');
+                      const start = source.indexOf(
+                        '            const converted = captureEventListenerArguments(forwarded);',
+                      );
+                      const end = source.indexOf('            return value;', start);
+                      assert(start >= 0 && end > start);
+                      // Restore the same post-registration conversion fault in the
+                      // selected EventTarget adapter as in the historical generic path.
+                      source =
+                        source.slice(0, start) +
+                        `
+            const value: unknown = apply(native, receiver, forwarded);
+            if (key === 'addEventListener') {
+              const [type, callback, listenerOptions] = forwarded;
+              const capture = typeof listenerOptions === 'boolean' ? listenerOptions :
+                !!(listenerOptions && typeof listenerOptions === 'object' &&
+                  'capture' in listenerOptions && listenerOptions.capture);
+              options.addCleanup(() => apply(removeListener, receiver,
+                [String(type), callback, capture]));
+            }
+` +
+                        source.slice(end);
+                      return { loader: 'ts', contents: source };
+                    },
+                  );
                 builder.onLoad(
                   { filter: /\/src\/guest\/browser\.ts$/ },
                   async ({ path }) => {
@@ -165,6 +195,7 @@ try {
         const result: unknown = await page.evaluate(() =>
           Reflect.get(window, '__eventtargetResult'),
         );
+        console.log(name, probe, JSON.stringify({ result, observed, failure }));
         if (probe === 'production') {
           assert.equal(failure, undefined, String(failure));
           assert(result && typeof result === 'object' && 'nativeComparisons' in result);
@@ -260,7 +291,7 @@ await writeFile(
         [...bundles].map(([name, bytes]) => [name, hash(bytes)]),
       ),
       controls: [
-        'Restore original listener conversion/bookkeeping block from48a97d6',
+        'Restore post-registration conversion/bookkeeping in generic and selected EventTarget adapters (historical block from 48a97d6)',
         'Omit BrowserEnvironment local cleanup error containment',
       ],
       receipts,

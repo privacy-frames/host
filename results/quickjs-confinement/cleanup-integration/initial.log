@@ -1,0 +1,30 @@
+chromium production {"observed":{"mode":"type","typeReads":1,"removals":0,"counts":{"workers":1,"windows":1,"audio":1,"customElements":1,"dom":1,"resources":1},"contextAlive":false},"failure":"Error: Primitive listener cleanup must release every owned subsystem\nError: Primitive listener cleanup must release every owned subsystem\n    at check (http://127.0.0.1:42859/browser.js?variant=production:50940:21)\n    at run (http://127.0.0.1:42859/browser.js?variant=production:51145:7)"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Error: Primitive listener cleanup must release every owned subsystem
+Error: Primitive listener cleanup must release every owned subsystem
+    at check (http://127.0.0.1:42859/browser.js?variant=production:50940:21)
+    at run (http://127.0.0.1:42859/browser.js?variant=production:51145:7)
++ actual - expected
+
++ 'Error: Primitive listener cleanup must release every owned subsystem\n' +
++   'Error: Primitive listener cleanup must release every owned subsystem\n' +
++   '    at check (http://127.0.0.1:42859/browser.js?variant=production:50940:21)\n' +
++   '    at run (http://127.0.0.1:42859/browser.js?variant=production:51145:7)'
+- undefined
+
+    at <anonymous> (/home/damen/Projects/privacy-frames-browser-policy/test/guest-eventtarget-cleanup.ts:170:18) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'Error: Primitive listener cleanup must release every owned subsystem\n' +
+    'Error: Primitive listener cleanup must release every owned subsystem\n' +
+    '    at check (http://127.0.0.1:42859/browser.js?variant=production:50940:21)\n' +
+    '    at run (http://127.0.0.1:42859/browser.js?variant=production:51145:7)',
+  expected: undefined,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.18.0

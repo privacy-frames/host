@@ -1,0 +1,40 @@
+{
+  "baseRevision": "d8a73800d335c7681877600125aff58ae88a98a0",
+  "scope": "Cleanup fixture instrumentation and test-only omission controls; runtime source unchanged",
+  "initial": {
+    "receipt": "initial.log",
+    "inputs": "initial-inputs.json",
+    "runnerPatch": "initial-runner.patch",
+    "applyFlags": [
+      "--unidiff-zero"
+    ],
+    "observation": {
+      "typeReads": 1,
+      "removals": 0,
+      "allSixSubsystemDisposals": 1,
+      "contextAlive": false
+    },
+    "cause": "The removal spy was installed after event-policy captured the native removal method; the captured original bypassed the spy."
+  },
+  "change": "Install the type-removal observer before creating the guest environment, restore it in finally, and count only after the captured native removal returns. Apply the conversion omission to the selected EventTarget adapter as well as the generic path.",
+  "verification": {
+    "browserReceipt": "result.json",
+    "log": "focused.log",
+    "browsers": [
+      "Chromium",
+      "Firefox"
+    ],
+    "production": "single options/type conversion, listener delivery, one captured native removal and every owned subsystem disposed once",
+    "conversionOmissions": "capture read twice with registered delivery but no tracked cleanup; retained type object prevents primitive native removal",
+    "cleanupOmission": "later cleanup and subsystem disposal are skipped",
+    "types": "types.log",
+    "format": "format.log"
+  },
+  "sourceHashes": {
+    "src/guest/browser.ts": "c598247101e98649562ad847a51e3db618d1b29039cf001682e19d9a9ee1e8d1",
+    "src/guest/event-policy.ts": "04b6c5c11b185b3359931505b50fc147ea0e6195d2acf7cc1792260bf7387c82",
+    "src/guest/engine.ts": "f47d9f29180bf54561025352567648768dcb0cfc2b01519ee218ac7e447f6027",
+    "test/guest-eventtarget-cleanup.browser.ts": "5615bb85d55df6121c904eb059359c9f8a505999974eae9a69f7b6ee65736ce0",
+    "test/guest-eventtarget-cleanup.ts": "3a1c5869c4815ff2f0de39298ddf848a743d3a2584781fd4ebfa783428355f70"
+  }
+}

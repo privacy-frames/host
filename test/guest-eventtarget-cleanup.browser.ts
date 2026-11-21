@@ -150,127 +150,129 @@ async function run() {
   const observations: unknown[] = [];
   const selected = probe ? [probe] : ['capture', 'type', 'failure'];
   for (const mode of selected) {
-    const session = await createGuestWindow(catalog, window);
-    const environment = session.environment;
-    const counts: Record<string, number> = {};
-    for (const name of [
-      'workers',
-      'windows',
-      'audio',
-      'customElements',
-      'dom',
-      'resources',
-    ]) {
-      const target: unknown = Reflect.get(environment, name);
-      if (!target || typeof target !== 'object') continue;
-      const original: unknown = Reflect.get(target, 'dispose');
-      if (typeof original !== 'function') continue;
-      counts[name] = 0;
-      Reflect.set(target, 'dispose', () => {
-        counts[name]++;
-        return Reflect.apply(original, target, []);
-      });
-    }
-    const cleanups: Set<() => void> = Reflect.get(environment, 'cleanups');
-    const before = cleanups.size;
-    if (mode === 'capture') {
-      session.engine.evaluate(`globalThis.captureReads=0;globalThis.deliveries=0;
+    let removals = 0;
+    const remove = EventTarget.prototype.removeEventListener;
+    if (mode === 'type')
+      EventTarget.prototype.removeEventListener = function (type, listener, options) {
+        const result = Reflect.apply(remove, this, [type, listener, options]);
+        if (type === 'type-cleanup-fixture') removals++;
+        return result;
+      };
+    try {
+      const session = await createGuestWindow(catalog, window);
+      const environment = session.environment;
+      const counts: Record<string, number> = {};
+      for (const name of [
+        'workers',
+        'windows',
+        'audio',
+        'customElements',
+        'dom',
+        'resources',
+      ]) {
+        const target: unknown = Reflect.get(environment, name);
+        if (!target || typeof target !== 'object') continue;
+        const original: unknown = Reflect.get(target, 'dispose');
+        if (typeof original !== 'function') continue;
+        counts[name] = 0;
+        Reflect.set(target, 'dispose', () => {
+          counts[name]++;
+          return Reflect.apply(original, target, []);
+        });
+      }
+      const cleanups: Set<() => void> = Reflect.get(environment, 'cleanups');
+      const before = cleanups.size;
+      if (mode === 'capture') {
+        session.engine.evaluate(`globalThis.captureReads=0;globalThis.deliveries=0;
         const options={};Object.defineProperty(options,'capture',{get(){
           captureReads++;if(captureReads>1)throw new Error('capture-read-again');return false;
         }});
         try{window.addEventListener('capture-cleanup-fixture',()=>{deliveries++},options)}
         catch(error){globalThis.registrationError=error.message}`);
-      window.dispatchEvent(new Event('capture-cleanup-fixture'));
-      const captureReads = session.engine.get('captureReads');
-      const registrationError = session.engine.get('registrationError');
-      const deliveries = session.engine.get('deliveries');
-      const observed = {
-        mode,
-        captureReads,
-        registrationError,
-        deliveries,
-        tracked: cleanups.size - before,
-      };
-      Reflect.set(window, '__eventtargetObserved', observed);
-      check(
-        captureReads === 1 &&
-          registrationError === undefined &&
-          deliveries === 1 &&
-          cleanups.size === before + 1,
-        'Capture options must be consumed once before bookkeeping',
-      );
-      session.close();
-      observations.push(observed);
-    } else if (mode === 'type') {
-      let removals = 0;
-      const remove = EventTarget.prototype.removeEventListener;
-      EventTarget.prototype.removeEventListener = function (type, listener, options) {
-        if (type === 'type-cleanup-fixture') removals++;
-        return Reflect.apply(remove, this, [type, listener, options]);
-      };
-      session.engine.evaluate(`globalThis.typeReads=0;const type={toString(){
+        window.dispatchEvent(new Event('capture-cleanup-fixture'));
+        const captureReads = session.engine.get('captureReads');
+        const registrationError = session.engine.get('registrationError');
+        const deliveries = session.engine.get('deliveries');
+        const observed = {
+          mode,
+          captureReads,
+          registrationError,
+          deliveries,
+          tracked: cleanups.size - before,
+        };
+        Reflect.set(window, '__eventtargetObserved', observed);
+        check(
+          captureReads === 1 &&
+            registrationError === undefined &&
+            deliveries === 1 &&
+            cleanups.size === before + 1,
+          'Capture options must be consumed once before bookkeeping',
+        );
+        session.close();
+        observations.push(observed);
+      } else if (mode === 'type') {
+        session.engine.evaluate(`globalThis.typeReads=0;const type={toString(){
         typeReads++;if(typeReads>1)throw new Error('type-read-again');return 'type-cleanup-fixture';
       }};window.addEventListener(type,()=>{});`);
-      const typeReads = session.engine.get('typeReads');
-      try {
+        const typeReads = session.engine.get('typeReads');
         session.close();
-      } finally {
-        EventTarget.prototype.removeEventListener = remove;
+        const observed = {
+          mode,
+          typeReads,
+          removals,
+          counts,
+          contextAlive: session.engine.context.alive,
+        };
+        Reflect.set(window, '__eventtargetObserved', observed);
+        check(
+          typeReads === 1 &&
+            removals === 1 &&
+            Object.values(counts).every((value) => value === 1),
+          'Primitive listener cleanup must release every owned subsystem',
+        );
+        observations.push(observed);
+      } else if (mode === 'failure') {
+        let later = 0;
+        cleanups.add(() => {
+          throw undefined;
+        });
+        cleanups.add(() => {
+          later++;
+          throw new Error('later cleanup failure');
+        });
+        cleanups.add(() => {
+          later++;
+        });
+        let caught = false;
+        let failure: unknown;
+        try {
+          environment.dispose();
+        } catch (error) {
+          caught = true;
+          failure = error;
+        }
+        const observed = {
+          mode,
+          caught,
+          firstFailurePreserved: failure === undefined,
+          later,
+          counts,
+          remainingCleanups: cleanups.size,
+        };
+        Reflect.set(window, '__eventtargetObserved', observed);
+        check(
+          caught &&
+            failure === undefined &&
+            later === 2 &&
+            Object.values(counts).every((value) => value === 1) &&
+            cleanups.size === 0,
+          'Every owned subsystem must be attempted after cleanup failure',
+        );
+        session.close();
+        observations.push(observed);
       }
-      const observed = {
-        mode,
-        typeReads,
-        removals,
-        counts,
-        contextAlive: session.engine.context.alive,
-      };
-      Reflect.set(window, '__eventtargetObserved', observed);
-      check(
-        typeReads === 1 &&
-          removals === 1 &&
-          Object.values(counts).every((value) => value === 1),
-        'Primitive listener cleanup must release every owned subsystem',
-      );
-      observations.push(observed);
-    } else if (mode === 'failure') {
-      let later = 0;
-      cleanups.add(() => {
-        throw undefined;
-      });
-      cleanups.add(() => {
-        later++;
-        throw new Error('later cleanup failure');
-      });
-      cleanups.add(() => {
-        later++;
-      });
-      let caught = false;
-      let failure: unknown;
-      try {
-        environment.dispose();
-      } catch (error) {
-        caught = true;
-        failure = error;
-      }
-      const observed = {
-        mode,
-        caught,
-        firstFailurePreserved: failure === undefined,
-        later,
-        counts,
-        remainingCleanups: cleanups.size,
-      };
-      Reflect.set(window, '__eventtargetObserved', observed);
-      check(
-        caught &&
-          failure === undefined &&
-          later === 2 &&
-          Object.values(counts).every((value) => value === 1) &&
-          cleanups.size === 0,
-        'Every owned subsystem must be attempted after cleanup failure',
-      );
-      session.close();
-      observations.push(observed);
+    } finally {
+      EventTarget.prototype.removeEventListener = remove;
     }
   }
   return { nativeComparisons: modes.length, observations };
