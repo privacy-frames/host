@@ -37,13 +37,13 @@ for (const variant of ['production', 'omitted-window-gate']) {
                   { filter: /\/src\/guest\/browser\.ts$/ },
                   async ({ path }) => {
                     let contents = await readFile(path, 'utf8');
-                    const anchor = `    if (isWindow(target)) {
-      const environment = environments.get(target);
-      if (!environment || environment.disposed || !environment.engine) return false;
-    }
-`;
+                    const anchor = `  private set(target: object, key: PropertyKey, value: unknown): boolean {
+    if (isWindow(target) && !this.preparedWindow(target)) return false;`;
                     assert.equal(contents.split(anchor).length, 2);
-                    contents = contents.replace(anchor, '');
+                    contents = contents.replace(
+                      anchor,
+                      '  private set(target: object, key: PropertyKey, value: unknown): boolean {',
+                    );
                     return { contents, loader: 'ts' };
                   },
                 );

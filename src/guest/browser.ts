@@ -58,6 +58,20 @@ interface BrowserEnvironmentOptions {
 
 const environments = new WeakMap<object, BrowserEnvironment>();
 const globalPrototypes = new WeakMap<object, BrowserEnvironment>();
+const nativeFrameDocument =
+  typeof HTMLIFrameElement === 'function'
+    ? Object.getOwnPropertyDescriptor(HTMLIFrameElement.prototype, 'contentDocument')?.get
+    : undefined;
+const nativeDocumentWindow =
+  typeof Document === 'function'
+    ? Object.getOwnPropertyDescriptor(Document.prototype, 'defaultView')?.get
+    : undefined;
+const nativeWindowClosed =
+  typeof Window === 'function'
+    ? Object.getOwnPropertyDescriptor(globalThis, 'closed')?.get ||
+      Object.getOwnPropertyDescriptor(Window.prototype, 'closed')?.get
+    : undefined;
+
 const forbidden =
   /^(?:WebSocket|WebTransport|EventSource|RTC|webkitRTC|ServiceWorker|NavigationPreload|Credential|IdentityCredential|FederatedCredential|Authenticator|Presentation|RemotePlayback|SpeechRecognition|webkitSpeechRecognition|SpeechSynthesis|Payment|Push|Notification|Bluetooth|USB|Serial|HID|NDEF|XR|WebUSB|WebHID|WebNFC|XSLTProcessor)/;
 const intrinsic = new Set([
@@ -368,7 +382,6 @@ export class BrowserEnvironment {
   private animatedURLs = new WeakMap<object, Element>();
   private animatedTargets = new WeakMap<object, Element>();
   private tokenOwners = new WeakMap<object, Element>();
-  private windowsSeen = new WeakSet<object>();
   private linkActions = new WeakMap<Event, () => void>();
   private disposed = false;
   private stopServices = () => {};
@@ -503,6 +516,12 @@ export class BrowserEnvironment {
       },
       descriptor: (target, key) => this.descriptor(target, key),
       prototype: (target) => {
+        if (
+          isWindow(target) &&
+          !this.preparedWindow(target) &&
+          !(target === native && !this.disposed && !this.engine)
+        )
+          throw new DOMException('Window preparation is incomplete', 'SecurityError');
         const owner = this.nativeOwner(target);
         return owner ? owner.prototype(target) : Reflect.getPrototypeOf(target);
       },
@@ -512,6 +531,7 @@ export class BrowserEnvironment {
         (this.namedSetters.has(target) ||
           Object.prototype.toString.call(target) === '[object DOMStringMap]'),
       delete: (target, key) => {
+        if (isWindow(target) && !this.preparedWindow(target)) return false;
         const owner = this.nativeOwner(target);
         return owner
           ? (owner.delete?.(target, key) ?? false)
@@ -819,6 +839,11 @@ export class BrowserEnvironment {
     return { kind: 'privacy-frames:guest-worker', catalog, entryURL: url, scriptType };
   }
 
+  private preparedWindow(target: object): boolean {
+    const environment = environments.get(target);
+    return !!environment && !environment.disposed && !!environment.engine;
+  }
+
   private nativeOwner(target: object): GuestHost | undefined {
     return this.nativePolicies.find((policy) => policy.owns?.(target));
   }
@@ -840,8 +865,23 @@ export class BrowserEnvironment {
   }
 
   private get(target: object, key: PropertyKey): unknown {
+    if (isWindow(target) && !this.preparedWindow(target)) {
+      return key === 'closed' && nativeWindowClosed
+        ? Reflect.apply(nativeWindowClosed, target, [])
+        : undefined;
+    }
     const owner = this.nativeOwner(target);
     if (owner) return owner.get(target, key);
+    if (key === 'contentDocument' && isHTMLIFrameElement(target)) {
+      if (!nativeFrameDocument || !nativeDocumentWindow) return null;
+      const document: unknown = Reflect.apply(nativeFrameDocument, target, []);
+      if (!isDocument(document)) return null;
+      const child: unknown = Reflect.apply(nativeDocumentWindow, document, []);
+      return child && typeof child === 'object' && this.preparedWindow(child)
+        ? document
+        : null;
+    }
+
     if (!this.scopeProperty(target, key)) return undefined;
     const scope = globalPrototypes.get(target);
     if (scope && typeof key === 'string' && own(scope.globals, key))
@@ -866,8 +906,6 @@ export class BrowserEnvironment {
         transfer?: Transferable[],
       ) => this.windows!.postMessage(target, message, origin, transfer);
     const environment = environments.get(target);
-    if (!environment && (this.windowsSeen.has(target) || isWindow(target)))
-      return key === 'closed' && isWindow(target) ? target.closed : undefined;
     if (environment) {
       if (typeof key !== 'string') return undefined;
       if (environment !== this && environment.engine) {
@@ -985,7 +1023,6 @@ export class BrowserEnvironment {
       if (script && (key === 'src' || key === 'href')) return script.source || '';
     }
     const value: unknown = Reflect.get(target, key, target);
-    if (isWindow(value)) this.windowsSeen.add(value);
     if (isElement(target) && value && typeof value === 'object') {
       if (key === 'attributes') this.attributeOwners.set(value, target);
       if (key === 'relList') this.tokenOwners.set(value, target);
@@ -1036,10 +1073,7 @@ export class BrowserEnvironment {
   }
 
   private set(target: object, key: PropertyKey, value: unknown): boolean {
-    if (isWindow(target)) {
-      const environment = environments.get(target);
-      if (!environment || environment.disposed || !environment.engine) return false;
-    }
+    if (isWindow(target) && !this.preparedWindow(target)) return false;
     const owner = this.nativeOwner(target);
     if (owner) return owner.set(target, key, value);
     if (key === '__proto__' || key === 'prototype' || key === 'constructor') return false;
