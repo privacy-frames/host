@@ -1,0 +1,698 @@
+{
+  "scope": "12 actual completion callback cases and 24 abstract transaction schedules; no full async/browser proof",
+  "source": {
+    "src/runtime/storage.ts": "ca2e8d504c1a7ccf5e03a9a102874ead4e081ed715381bf4508e5f1c1a8fd146"
+  },
+  "harness": "4286a6c9beed27d68e59145e6503d1552524626124aadadb9f989073b394401d",
+  "extractedCallback": "ab5c0b8293a919af98b843d88902ec35ad6d33e3597553e9c5df73ff84b345cc",
+  "completionCases": [
+    {
+      "generation": null,
+      "present": false,
+      "expected": "g0",
+      "resolved": false,
+      "rejected": true
+    },
+    {
+      "generation": null,
+      "present": false,
+      "expected": "g1",
+      "resolved": false,
+      "rejected": true
+    },
+    {
+      "generation": null,
+      "present": true,
+      "expected": "g0",
+      "resolved": false,
+      "rejected": true
+    },
+    {
+      "generation": null,
+      "present": true,
+      "expected": "g1",
+      "resolved": false,
+      "rejected": true
+    },
+    {
+      "generation": "g0",
+      "present": false,
+      "expected": "g0",
+      "resolved": false,
+      "rejected": true
+    },
+    {
+      "generation": "g0",
+      "present": false,
+      "expected": "g1",
+      "resolved": false,
+      "rejected": true
+    },
+    {
+      "generation": "g0",
+      "present": true,
+      "expected": "g0",
+      "resolved": true,
+      "rejected": false
+    },
+    {
+      "generation": "g0",
+      "present": true,
+      "expected": "g1",
+      "resolved": false,
+      "rejected": true
+    },
+    {
+      "generation": "g1",
+      "present": false,
+      "expected": "g0",
+      "resolved": false,
+      "rejected": true
+    },
+    {
+      "generation": "g1",
+      "present": false,
+      "expected": "g1",
+      "resolved": false,
+      "rejected": true
+    },
+    {
+      "generation": "g1",
+      "present": true,
+      "expected": "g0",
+      "resolved": false,
+      "rejected": true
+    },
+    {
+      "generation": "g1",
+      "present": true,
+      "expected": "g1",
+      "resolved": true,
+      "rejected": false
+    }
+  ],
+  "outcomes": [
+    {
+      "schedule": [
+        "read-a",
+        "read-b",
+        "replace",
+        "remove"
+      ],
+      "rejected": false,
+      "provenance": true,
+      "captured": [
+        {
+          "generation": 0,
+          "bytes": "a:g0"
+        },
+        {
+          "generation": 0,
+          "bytes": "b:g0"
+        }
+      ],
+      "finalGeneration": null
+    },
+    {
+      "schedule": [
+        "read-a",
+        "read-b",
+        "remove",
+        "replace"
+      ],
+      "rejected": false,
+      "provenance": true,
+      "captured": [
+        {
+          "generation": 0,
+          "bytes": "a:g0"
+        },
+        {
+          "generation": 0,
+          "bytes": "b:g0"
+        }
+      ],
+      "finalGeneration": 1
+    },
+    {
+      "schedule": [
+        "read-a",
+        "replace",
+        "read-b",
+        "remove"
+      ],
+      "rejected": true,
+      "provenance": true,
+      "captured": [
+        {
+          "generation": 0,
+          "bytes": "a:g0"
+        }
+      ],
+      "finalGeneration": null
+    },
+    {
+      "schedule": [
+        "read-a",
+        "replace",
+        "remove",
+        "read-b"
+      ],
+      "rejected": true,
+      "provenance": true,
+      "captured": [
+        {
+          "generation": 0,
+          "bytes": "a:g0"
+        }
+      ],
+      "finalGeneration": null
+    },
+    {
+      "schedule": [
+        "read-a",
+        "remove",
+        "read-b",
+        "replace"
+      ],
+      "rejected": true,
+      "provenance": true,
+      "captured": [
+        {
+          "generation": 0,
+          "bytes": "a:g0"
+        }
+      ],
+      "finalGeneration": 1
+    },
+    {
+      "schedule": [
+        "read-a",
+        "remove",
+        "replace",
+        "read-b"
+      ],
+      "rejected": true,
+      "provenance": true,
+      "captured": [
+        {
+          "generation": 0,
+          "bytes": "a:g0"
+        }
+      ],
+      "finalGeneration": 1
+    },
+    {
+      "schedule": [
+        "read-b",
+        "read-a",
+        "replace",
+        "remove"
+      ],
+      "rejected": false,
+      "provenance": true,
+      "captured": [
+        {
+          "generation": 0,
+          "bytes": "b:g0"
+        },
+        {
+          "generation": 0,
+          "bytes": "a:g0"
+        }
+      ],
+      "finalGeneration": null
+    },
+    {
+      "schedule": [
+        "read-b",
+        "read-a",
+        "remove",
+        "replace"
+      ],
+      "rejected": false,
+      "provenance": true,
+      "captured": [
+        {
+          "generation": 0,
+          "bytes": "b:g0"
+        },
+        {
+          "generation": 0,
+          "bytes": "a:g0"
+        }
+      ],
+      "finalGeneration": 1
+    },
+    {
+      "schedule": [
+        "read-b",
+        "replace",
+        "read-a",
+        "remove"
+      ],
+      "rejected": true,
+      "provenance": true,
+      "captured": [
+        {
+          "generation": 0,
+          "bytes": "b:g0"
+        }
+      ],
+      "finalGeneration": null
+    },
+    {
+      "schedule": [
+        "read-b",
+        "replace",
+        "remove",
+        "read-a"
+      ],
+      "rejected": true,
+      "provenance": true,
+      "captured": [
+        {
+          "generation": 0,
+          "bytes": "b:g0"
+        }
+      ],
+      "finalGeneration": null
+    },
+    {
+      "schedule": [
+        "read-b",
+        "remove",
+        "read-a",
+        "replace"
+      ],
+      "rejected": true,
+      "provenance": true,
+      "captured": [
+        {
+          "generation": 0,
+          "bytes": "b:g0"
+        }
+      ],
+      "finalGeneration": 1
+    },
+    {
+      "schedule": [
+        "read-b",
+        "remove",
+        "replace",
+        "read-a"
+      ],
+      "rejected": true,
+      "provenance": true,
+      "captured": [
+        {
+          "generation": 0,
+          "bytes": "b:g0"
+        }
+      ],
+      "finalGeneration": 1
+    },
+    {
+      "schedule": [
+        "replace",
+        "read-a",
+        "read-b",
+        "remove"
+      ],
+      "rejected": true,
+      "provenance": true,
+      "captured": [],
+      "finalGeneration": null
+    },
+    {
+      "schedule": [
+        "replace",
+        "read-a",
+        "remove",
+        "read-b"
+      ],
+      "rejected": true,
+      "provenance": true,
+      "captured": [],
+      "finalGeneration": null
+    },
+    {
+      "schedule": [
+        "replace",
+        "read-b",
+        "read-a",
+        "remove"
+      ],
+      "rejected": true,
+      "provenance": true,
+      "captured": [],
+      "finalGeneration": null
+    },
+    {
+      "schedule": [
+        "replace",
+        "read-b",
+        "remove",
+        "read-a"
+      ],
+      "rejected": true,
+      "provenance": true,
+      "captured": [],
+      "finalGeneration": null
+    },
+    {
+      "schedule": [
+        "replace",
+        "remove",
+        "read-a",
+        "read-b"
+      ],
+      "rejected": true,
+      "provenance": true,
+      "captured": [],
+      "finalGeneration": null
+    },
+    {
+      "schedule": [
+        "replace",
+        "remove",
+        "read-b",
+        "read-a"
+      ],
+      "rejected": true,
+      "provenance": true,
+      "captured": [],
+      "finalGeneration": null
+    },
+    {
+      "schedule": [
+        "remove",
+        "read-a",
+        "read-b",
+        "replace"
+      ],
+      "rejected": true,
+      "provenance": true,
+      "captured": [],
+      "finalGeneration": 1
+    },
+    {
+      "schedule": [
+        "remove",
+        "read-a",
+        "replace",
+        "read-b"
+      ],
+      "rejected": true,
+      "provenance": true,
+      "captured": [],
+      "finalGeneration": 1
+    },
+    {
+      "schedule": [
+        "remove",
+        "read-b",
+        "read-a",
+        "replace"
+      ],
+      "rejected": true,
+      "provenance": true,
+      "captured": [],
+      "finalGeneration": 1
+    },
+    {
+      "schedule": [
+        "remove",
+        "read-b",
+        "replace",
+        "read-a"
+      ],
+      "rejected": true,
+      "provenance": true,
+      "captured": [],
+      "finalGeneration": 1
+    },
+    {
+      "schedule": [
+        "remove",
+        "replace",
+        "read-a",
+        "read-b"
+      ],
+      "rejected": true,
+      "provenance": true,
+      "captured": [],
+      "finalGeneration": 1
+    },
+    {
+      "schedule": [
+        "remove",
+        "replace",
+        "read-b",
+        "read-a"
+      ],
+      "rejected": true,
+      "provenance": true,
+      "captured": [],
+      "finalGeneration": 1
+    }
+  ],
+  "generationOmissionCounterexamples": [
+    {
+      "schedule": [
+        "read-a",
+        "replace",
+        "read-b",
+        "remove"
+      ],
+      "rejected": false,
+      "provenance": false,
+      "captured": [
+        {
+          "generation": 0,
+          "bytes": "a:g0"
+        },
+        {
+          "generation": 1,
+          "bytes": "b:g1"
+        }
+      ],
+      "finalGeneration": null
+    },
+    {
+      "schedule": [
+        "read-a",
+        "remove",
+        "replace",
+        "read-b"
+      ],
+      "rejected": false,
+      "provenance": false,
+      "captured": [
+        {
+          "generation": 0,
+          "bytes": "a:g0"
+        },
+        {
+          "generation": 1,
+          "bytes": "b:g1"
+        }
+      ],
+      "finalGeneration": 1
+    },
+    {
+      "schedule": [
+        "read-b",
+        "replace",
+        "read-a",
+        "remove"
+      ],
+      "rejected": false,
+      "provenance": false,
+      "captured": [
+        {
+          "generation": 0,
+          "bytes": "b:g0"
+        },
+        {
+          "generation": 1,
+          "bytes": "a:g1"
+        }
+      ],
+      "finalGeneration": null
+    },
+    {
+      "schedule": [
+        "read-b",
+        "remove",
+        "replace",
+        "read-a"
+      ],
+      "rejected": false,
+      "provenance": false,
+      "captured": [
+        {
+          "generation": 0,
+          "bytes": "b:g0"
+        },
+        {
+          "generation": 1,
+          "bytes": "a:g1"
+        }
+      ],
+      "finalGeneration": 1
+    },
+    {
+      "schedule": [
+        "replace",
+        "read-a",
+        "read-b",
+        "remove"
+      ],
+      "rejected": false,
+      "provenance": false,
+      "captured": [
+        {
+          "generation": 1,
+          "bytes": "a:g1"
+        },
+        {
+          "generation": 1,
+          "bytes": "b:g1"
+        }
+      ],
+      "finalGeneration": null
+    },
+    {
+      "schedule": [
+        "replace",
+        "read-a",
+        "remove",
+        "read-b"
+      ],
+      "rejected": true,
+      "provenance": false,
+      "captured": [
+        {
+          "generation": 1,
+          "bytes": "a:g1"
+        }
+      ],
+      "finalGeneration": null
+    },
+    {
+      "schedule": [
+        "replace",
+        "read-b",
+        "read-a",
+        "remove"
+      ],
+      "rejected": false,
+      "provenance": false,
+      "captured": [
+        {
+          "generation": 1,
+          "bytes": "b:g1"
+        },
+        {
+          "generation": 1,
+          "bytes": "a:g1"
+        }
+      ],
+      "finalGeneration": null
+    },
+    {
+      "schedule": [
+        "replace",
+        "read-b",
+        "remove",
+        "read-a"
+      ],
+      "rejected": true,
+      "provenance": false,
+      "captured": [
+        {
+          "generation": 1,
+          "bytes": "b:g1"
+        }
+      ],
+      "finalGeneration": null
+    },
+    {
+      "schedule": [
+        "remove",
+        "read-a",
+        "replace",
+        "read-b"
+      ],
+      "rejected": true,
+      "provenance": false,
+      "captured": [
+        {
+          "generation": 1,
+          "bytes": "b:g1"
+        }
+      ],
+      "finalGeneration": 1
+    },
+    {
+      "schedule": [
+        "remove",
+        "read-b",
+        "replace",
+        "read-a"
+      ],
+      "rejected": true,
+      "provenance": false,
+      "captured": [
+        {
+          "generation": 1,
+          "bytes": "a:g1"
+        }
+      ],
+      "finalGeneration": 1
+    },
+    {
+      "schedule": [
+        "remove",
+        "replace",
+        "read-a",
+        "read-b"
+      ],
+      "rejected": false,
+      "provenance": false,
+      "captured": [
+        {
+          "generation": 1,
+          "bytes": "a:g1"
+        },
+        {
+          "generation": 1,
+          "bytes": "b:g1"
+        }
+      ],
+      "finalGeneration": 1
+    },
+    {
+      "schedule": [
+        "remove",
+        "replace",
+        "read-b",
+        "read-a"
+      ],
+      "rejected": false,
+      "provenance": false,
+      "captured": [
+        {
+          "generation": 1,
+          "bytes": "b:g1"
+        },
+        {
+          "generation": 1,
+          "bytes": "a:g1"
+        }
+      ],
+      "finalGeneration": 1
+    }
+  ]
+}

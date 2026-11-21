@@ -9,6 +9,11 @@ const DATABASE = 'privacy-frames-resources';
 const METADATA = 'installations';
 const BODIES = 'resources';
 
+function resourceKeys(id: string): IDBKeyRange {
+  // Array keys sort after every string path, including strings prefixed by U+FFFF.
+  return IDBKeyRange.bound([id, ''], [id, []], false, true);
+}
+
 function openDatabase(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
     const request = indexedDB.open(DATABASE, 1);
@@ -80,7 +85,7 @@ export async function putApp(app: PreparedInstallation): Promise<void> {
     await new Promise<void>((resolve, reject) => {
       const transaction = database.transaction([METADATA, BODIES], 'readwrite');
       const resources = transaction.objectStore(BODIES);
-      resources.delete(IDBKeyRange.bound([app.id, ''], [app.id, '\uffff']));
+      resources.delete(resourceKeys(app.id));
       for (const resource of app.resources)
         resources.put(resource.bytes, [app.id, resource.path]);
       const metadata: StoredInstallation = {
@@ -104,7 +109,7 @@ export async function deleteApp(id: string): Promise<void> {
     await new Promise<void>((resolve, reject) => {
       const transaction = database.transaction([METADATA, BODIES], 'readwrite');
       transaction.objectStore(METADATA).delete(id);
-      transaction.objectStore(BODIES).delete(IDBKeyRange.bound([id, ''], [id, '\uffff']));
+      transaction.objectStore(BODIES).delete(resourceKeys(id));
       transaction.oncomplete = () => resolve();
       transaction.onerror = () => reject(transaction.error);
       transaction.onabort = () => reject(transaction.error);

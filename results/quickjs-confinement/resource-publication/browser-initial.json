@@ -1,0 +1,140 @@
+{
+  "sources": {
+    "src/shared/primordials.ts": "422a992a7e863c1b3b09f7d1484f10fa66a0300cdea007dfe485c9bf0c1e980c",
+    "src/shared/policy.ts": "8f3ee7a6dd7f0942d9d98819aaeca3282736b4e5d7a7982b96106d51a51c09cb",
+    "src/shared/runtime-url.ts": "26503f8994b0307030dddb9f843f6bd438573869b7ab01226565c865c9e3c24f",
+    "src/runtime/storage.ts": "ca2e8d504c1a7ccf5e03a9a102874ead4e081ed715381bf4508e5f1c1a8fd146",
+    "src/runtime/admission.ts": "e1b6b975a73d0b504a7bfd62373f46f9fa933b19dc9586194e92ea258cbddf0a",
+    "src/guest/catalog.ts": "eedf4c12a469b8f7fc00b641d235a90cd1c563aebf38fdb20c433b8470d62429",
+    "test/resource-publication.browser.ts": "36e4684348563d8c06c387e4ddea6d62708b76e8c6c2e52b6a5331a10fd27ab7",
+    "test/resource-publication.ts": "d73a2b0485b6cc4f9c317874f7d629b14cc7ccddf568e608b6887ba5ee00c9d8",
+    "test/browser-profile.ts": "c161489dfce9c3124474d1416440c9876b0a8fce329d2f09fa16f99af744e3a0"
+  },
+  "bundles": {
+    "none": "e6a1ef064efc819c4323cdb1674af5109e2ae0d062df4af1230f3fb97b33d76a",
+    "cleanup": "24b2cfd732e232e0a63041e912177b2bfb3a043bee4d57f6ba28d15c5dbb31bf",
+    "generation": "77416ae2fcdc6d4231f3b2274b503bf393ae3187210182779e08c7b4d01100ea"
+  },
+  "observations": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "fault": "none",
+      "checks": {
+        "literalPathAdmitted": true,
+        "encodedPathRefused": true,
+        "nativeRange": true,
+        "metadataOmitsBodies": true,
+        "catalogGeneration": true,
+        "freshGeneration": true,
+        "cleanupReplace": true,
+        "staleGenerationRefused": true,
+        "missingBodyRefused": true,
+        "removedBodyRefused": true,
+        "cleanupRemove": true,
+        "capturedBytesRemainLocal": true,
+        "unrelatedRetained": true
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "fault": "cleanup",
+      "checks": {
+        "literalPathAdmitted": true,
+        "encodedPathRefused": true,
+        "nativeRange": true,
+        "metadataOmitsBodies": true,
+        "catalogGeneration": true,
+        "freshGeneration": true,
+        "cleanupReplace": false,
+        "staleGenerationRefused": true,
+        "missingBodyRefused": true,
+        "removedBodyRefused": false,
+        "cleanupRemove": false,
+        "capturedBytesRemainLocal": true,
+        "unrelatedRetained": true
+      }
+    },
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "fault": "generation",
+      "checks": {
+        "literalPathAdmitted": true,
+        "encodedPathRefused": true,
+        "nativeRange": true,
+        "metadataOmitsBodies": true,
+        "catalogGeneration": true,
+        "freshGeneration": true,
+        "cleanupReplace": true,
+        "staleGenerationRefused": false,
+        "missingBodyRefused": true,
+        "removedBodyRefused": true,
+        "cleanupRemove": true,
+        "capturedBytesRemainLocal": true,
+        "unrelatedRetained": true
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "fault": "none",
+      "checks": {
+        "literalPathAdmitted": true,
+        "encodedPathRefused": true,
+        "nativeRange": true,
+        "metadataOmitsBodies": true,
+        "catalogGeneration": true,
+        "freshGeneration": true,
+        "cleanupReplace": true,
+        "staleGenerationRefused": true,
+        "missingBodyRefused": true,
+        "removedBodyRefused": true,
+        "cleanupRemove": true,
+        "capturedBytesRemainLocal": true,
+        "unrelatedRetained": true
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "fault": "cleanup",
+      "checks": {
+        "literalPathAdmitted": true,
+        "encodedPathRefused": true,
+        "nativeRange": true,
+        "metadataOmitsBodies": true,
+        "catalogGeneration": true,
+        "freshGeneration": true,
+        "cleanupReplace": false,
+        "staleGenerationRefused": true,
+        "missingBodyRefused": true,
+        "removedBodyRefused": false,
+        "cleanupRemove": false,
+        "capturedBytesRemainLocal": true,
+        "unrelatedRetained": true
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "fault": "generation",
+      "checks": {
+        "literalPathAdmitted": true,
+        "encodedPathRefused": true,
+        "nativeRange": true,
+        "metadataOmitsBodies": true,
+        "catalogGeneration": true,
+        "freshGeneration": true,
+        "cleanupReplace": true,
+        "staleGenerationRefused": false,
+        "missingBodyRefused": true,
+        "removedBodyRefused": true,
+        "cleanupRemove": true,
+        "capturedBytesRemainLocal": true,
+        "unrelatedRetained": true
+      }
+    }
+  ]
+}
