@@ -1,4 +1,4 @@
-import { captureNativeIntrinsics } from './native-intrinsics.ts';
+import { captureNativeIntrinsics, ordinaryIntrinsicNames } from './native-intrinsics.ts';
 import { createNativeStringMapping } from './native-string-mapping.ts';
 import { captureEventListenerArguments } from './event-listener-arguments.ts';
 import { captureMessageTransfer } from './message-transfer.ts';
@@ -75,47 +75,7 @@ const nativeWindowClosed =
 
 const forbidden =
   /^(?:WebSocket|WebTransport|EventSource|RTC|webkitRTC|ServiceWorker|NavigationPreload|Credential|IdentityCredential|FederatedCredential|Authenticator|Presentation|RemotePlayback|SpeechRecognition|webkitSpeechRecognition|SpeechSynthesis|Payment|Push|Notification|Bluetooth|USB|Serial|HID|NDEF|XR|WebUSB|WebHID|WebNFC|XSLTProcessor)/;
-const intrinsic = new Set([
-  'Object',
-  'Function',
-  'Array',
-  'Boolean',
-  'Number',
-  'String',
-  'Symbol',
-  'BigInt',
-  'Date',
-  'RegExp',
-  'Map',
-  'Set',
-  'WeakMap',
-  'WeakSet',
-  'Promise',
-  'Error',
-  'TypeError',
-  'RangeError',
-  'ReferenceError',
-  'SyntaxError',
-  'URIError',
-  'EvalError',
-  'AggregateError',
-  'ArrayBuffer',
-  'SharedArrayBuffer',
-  'Atomics',
-  'DataView',
-  'Uint8Array',
-  'Uint8ClampedArray',
-  'Int8Array',
-  'Int16Array',
-  'Uint16Array',
-  'Int32Array',
-  'Uint32Array',
-  'Float32Array',
-  'Float64Array',
-  'BigInt64Array',
-  'BigUint64Array',
-  'WebAssembly',
-]);
+const intrinsic = new Set<string>([...ordinaryIntrinsicNames, 'Atomics', 'WebAssembly']);
 const globalsDenied = new Set([
   'fetch',
   'XMLHttpRequest',
