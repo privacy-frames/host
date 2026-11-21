@@ -173,7 +173,8 @@
     "node_modules/xmlchars/xml/1.0/ed5.js": "ea350479ab6f6553c0c3395c30ec440fb39821f6902081939831ddf1b5e8fd0f",
     "node_modules/xmlchars/xml/1.1/ed2.js": "461d5c71cc6076dc16aebbfd2d3c506481df5a74f43631d82372a6ffdc239d69",
     "node_modules/xmlchars/xmlns/1.0/ed3.js": "ff14ffa3a2cdfdd1b6077c4a8443dc949f53d5bb56de5ed89d4dbc5d9fdf08f7",
-    "src/guest/browser-policy.ts": "1a33de5c6a021e3618ecd9d7847a6fa1749b2e0497f964b1c6f19b0d96d9a8c7",
+    "src/guest/abort-policy.ts": "fe1c6b38e7a9a3dec44800d6ea554210e66e0bcad042e89b1a4d620466b85620",
+    "src/guest/browser-policy.ts": "230924ffe38882b30ecf8120454c6a0c20f3a83e722f95ce406058e60fbf95a3",
     "src/guest/browser.ts": "c598247101e98649562ad847a51e3db618d1b29039cf001682e19d9a9ee1e8d1",
     "src/guest/contexts/audio-worklet.ts": "8706554251c0020af6599b599e306b3e0e9cffceebd31ce739c825071e789577",
     "src/guest/contexts/brands.ts": "d0b5d97c4e97a71e13408adb1bc0b46c00e2d2c13cf3bb1320fbe9d1bf4a94e5",
@@ -187,7 +188,7 @@
     "src/guest/dom.ts": "75a654d384521c8c7153bf55bfe71f19ed1eab3b27d1c60fa37241aa300e764a",
     "src/guest/engine.ts": "f47d9f29180bf54561025352567648768dcb0cfc2b01519ee218ac7e447f6027",
     "src/guest/event-listener-arguments.ts": "f5219d8d8da8d9f5d67f0afb46756a2e7ef55003b64fc846dafccf134c27a080",
-    "src/guest/event-policy.ts": "04b6c5c11b185b3359931505b50fc147ea0e6195d2acf7cc1792260bf7387c82",
+    "src/guest/event-policy.ts": "13543ed303ec876ff179bfcb9ced225347ddc1f404e13f392fc3ecf417c8bac6",
     "src/guest/generated-runtime-interfaces.ts": "55fa35f2d27fe9b123c74f77a229a2a64b86ace4f2883e5fb70715d851117182",
     "src/guest/guest-binary.ts": "da8dbde72247dd7b85b52bac138ddafa14f778729ceec34cf11eca0b924dea32",
     "src/guest/guest-runtime.ts": "058930f5f581f18210f636c210c0dbba27e51a145826c2adcb95d3295436bc1d",
@@ -198,7 +199,7 @@
     "src/guest/message-transfer.ts": "b126fa4cf88d3434b73160c9adce0a17b7441a34c642eef7fb982b540ed79c1a",
     "src/guest/native-binary.ts": "ed0665a76a4c4fb2e35e5acc180b4d4e50e8c1c3fc3762de389362b380e5d637",
     "src/guest/native-brand.ts": "ebb96efef406a05debada5a3a3117ff0a3954e7eb706712871cb6290a2b13b00",
-    "src/guest/native-host.ts": "0420675d80bbc038b3c8cfbe8d8bb53e3d322ecb856613870de0405b553a8ff9",
+    "src/guest/native-host.ts": "2d312e70d1afbdf3b54df66229b6a24520ce0a447ef65b13a250df3c0bd3ab50",
     "src/guest/native-policy.ts": "ba0fb4f746bc472c480f0dbeff9e83a629c74e81ba832a3bd8019a6f1e2b1ce8",
     "src/guest/native-wasm.ts": "670c8a4e9cfd50ca037aa7d2596ea4716b3b35f70d05c2cefc33c27e3db61852",
     "src/guest/parser.ts": "cf041b9ade4752b4936d5b384b65b03e154d9c12d255f543fb628c2f21e9671e",
@@ -220,8 +221,8 @@
   },
   "engineSHA256": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
   "bundleHashes": {
-    "production": "9872e625824f87ede21e87b7f454921bf31d194adda2e27fd46e55e1c3b99508",
-    "urlGetRouteRemoved": "7dbeb462e306e5e5704264ab224835c0e1b520c101fe7606f8c5f75827941f7a"
+    "production": "a11d79c89372d21ce05cace5a7c9072812e623c572c960b489018588c618ef76",
+    "urlGetRouteRemoved": "1d90be7ed12d0b1946d19b9301739dd7ab2edd6be864857993f823d9ad0262a2"
   },
   "fault": "Only the actual BrowserEnvironment private get URL-domain routing line is omitted from a temporary esbuild bundle. Production sources are unchanged.",
   "receipts": [
@@ -296,5 +297,5 @@
       "rejected": true
     }
   ],
-  "completedAt": "2026-11-21T18:50:46.390Z"
+  "completedAt": "2026-11-21T18:58:33.283Z"
 }

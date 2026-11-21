@@ -1,0 +1,54 @@
+{
+  "schedules": 143,
+  "controls": [
+    {
+      "fault": "mutation",
+      "detected": true
+    },
+    {
+      "fault": "reply",
+      "detected": true
+    },
+    {
+      "fault": "recipient",
+      "detected": true
+    },
+    {
+      "fault": "ready",
+      "detected": true
+    }
+  ],
+  "freshnessCounterexample": {
+    "property": "current-generation-at-transfer",
+    "established": false,
+    "removal": [
+      "client:manager",
+      "getApp",
+      "matchAll",
+      "client:manager",
+      "deleteApp",
+      "client:manager"
+    ],
+    "bootstrap": [
+      "client:app",
+      "listApps",
+      "cache.open",
+      "cache.match",
+      "cache.bytes",
+      "cache.open",
+      "cache.match",
+      "cache.bytes",
+      "cache.open",
+      "cache.match",
+      "cache.bytes",
+      "cache.open",
+      "cache.match",
+      "cache.bytes",
+      "catalog",
+      "getApp",
+      "client:app"
+    ],
+    "transferredGeneration": "g0",
+    "currentGeneration": null
+  }
+}
