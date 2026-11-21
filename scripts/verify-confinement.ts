@@ -7,6 +7,7 @@ import { promisify } from 'node:util';
 
 const root = resolve(import.meta.dirname, '..');
 const directory = resolve(root, 'results/quickjs-confinement/component-verification');
+const scope = 'Component checks only; not complete confinement or release qualification.';
 const execute = promisify(execFile);
 const sha = (value: Uint8Array | string) =>
   createHash('sha256').update(value).digest('hex');
@@ -118,11 +119,34 @@ async function inputs(): Promise<Record<string, string>> {
 }
 
 await mkdir(directory, { recursive: true });
+const summary = resolve(directory, 'result.json');
+await writeFile(
+  summary,
+  JSON.stringify(
+    {
+      scope,
+      passed: false,
+      started: new Date().toISOString(),
+      expectedChecks: checks.map((check) => check.name),
+      checks: [],
+      failedCheck: 'input-collection',
+    },
+    null,
+    2,
+  ) + '\n',
+);
 const before = await inputs();
-const results: { name: string; receiptSHA256: string; logSHA256: string }[] = [];
+const results: {
+  name: string;
+  receipt: string;
+  receiptSHA256: string;
+  logSHA256: string;
+}[] = [];
 let passed = false;
+let currentCheck: string | undefined;
 try {
   for (const check of checks) {
+    currentCheck = check.name;
     const receipt = resolve(root, 'results/quickjs-confinement', check.receipt);
     // A stale receipt cannot satisfy a fresh invocation that fails to write one.
     await rm(receipt, { force: true });
@@ -152,20 +176,27 @@ try {
     const bytes = await readFile(receipt);
     const parsed: unknown = JSON.parse(bytes.toString());
     assert(parsed !== null && typeof parsed === 'object', 'Missing component receipt');
-    results.push({ name: check.name, receiptSHA256: sha(bytes), logSHA256: sha(log) });
+    results.push({
+      name: check.name,
+      receipt: check.receipt,
+      receiptSHA256: sha(bytes),
+      logSHA256: sha(log),
+    });
   }
+  currentCheck = 'input-stability';
   assert.deepEqual(await inputs(), before, 'Verification inputs changed during the run');
   passed = true;
 } finally {
   await writeFile(
-    resolve(directory, 'result.json'),
+    summary,
     JSON.stringify(
       {
-        scope:
-          'Component checks only; not complete confinement or release qualification.',
+        scope,
         passed,
         completed: new Date().toISOString(),
         node: process.version,
+        expectedChecks: checks.map((check) => check.name),
+        ...(passed ? {} : { failedCheck: currentCheck }),
         inputHashes: before,
         checks: results,
       },
