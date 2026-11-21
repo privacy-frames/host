@@ -1,13 +1,14 @@
 import assert from 'node:assert/strict';
 import { execFileSync, spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { mkdir, readFile, realpath, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, realpath, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { chromium } from 'playwright';
 
 // This driver grants the browser loopback access only. The service override is
 // diagnostic configuration, not the mechanism preventing outside communication.
-const image = 'sha256:e4c2042356fd9437a6c9c40bd9af10b347f19b70ee92a339f08b95267b057601';
+// Locally cached node:22.14.0-bookworm-slim, addressed by immutable image ID.
+const image = 'sha256:1c18d9ab3af4585870b92e4dbc5cac5a0dc77dd13df1a5905cea89fc720eb05b';
 const root = process.cwd();
 const browserDirectory = path.dirname(chromium.executablePath());
 const libraryDirectory = '/usr/lib/x86_64-linux-gnu';
@@ -79,11 +80,14 @@ const sourceFiles = [
   'test/browser-owned-services.ts',
   'test/browser-owned-services.container.ts',
 ];
-const artifactFiles = [
-  'dist-runtime/guard.js',
-  'dist-runtime/sw.js',
-  'dist-runtime/engine.wasm',
-];
+const artifactFiles = (
+  await Promise.all(
+    ['manager', 'runtime', 'installation'].map(async (role) => {
+      const directory = 'dist-' + role;
+      return (await readdir(directory)).sort().map((name) => path.join(directory, name));
+    }),
+  )
+).flat();
 const provenance = Object.fromEntries(
   await Promise.all(
     [...sourceFiles, ...artifactFiles].map(async (name) => [

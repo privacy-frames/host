@@ -117,7 +117,9 @@ try {
         ignoreDefaultArgs: ['--disable-background-networking'],
         args: [
           serviceSwitch,
-          `--${variant === 'disabled-native' ? 'disable' : 'enable'}-features=AutofillServerCommunication`,
+          ...(variant === 'disabled-native'
+            ? ['--disable-features=AutofillServerCommunication']
+            : []),
         ],
       });
     let context = await launchContext();
