@@ -5,6 +5,30 @@ const nativePrototype = Reflect.getPrototypeOf;
 const nativeKeys = Reflect.ownKeys;
 const wellFormed: unknown = Reflect.get(String.prototype, 'toWellFormed');
 
+const arrayBufferIsView = ArrayBuffer.isView;
+const bufferLength = nativeDescriptor(ArrayBuffer.prototype, 'byteLength')!.get!;
+const sharedConstructor: unknown = Reflect.get(globalThis, 'SharedArrayBuffer');
+const sharedLength =
+  typeof sharedConstructor === 'function'
+    ? nativeDescriptor(sharedConstructor.prototype, 'byteLength')?.get
+    : undefined;
+const binaryLengthGetters = sharedLength ? [bufferLength, sharedLength] : [bufferLength];
+
+/** Preserve native binary-union selection, including rejection of unsupported
+ * shared/resizable/detached sources. Never ask a candidate for its properties. */
+function isBinarySource(value: unknown): boolean {
+  if (arrayBufferIsView(value)) return true;
+  for (const getter of binaryLengthGetters) {
+    try {
+      nativeApply(getter, value, []);
+      return true;
+    } catch {
+      /* This captured native getter recognizes a different internal slot. */
+    }
+  }
+  return false;
+}
+
 type StringType = 'DOMString' | 'USVString';
 type CSSContext = 'value' | 'declarationList' | 'stylesheet';
 
@@ -65,8 +89,9 @@ export function createNativeStringMapping(options: MappingOptions) {
   const read = (key: string): unknown => Reflect.get(options.global, key);
   const css: unknown = read('CSS');
   const supports: unknown = css && Reflect.get(css, 'supports');
-  // CSS-bound input is filtered by the CSS parser before resource mapping.
-  // Do not infer another API's bindings from CSS.escape's string type.
+  // Defer original coercion; the rewriter normalizes decoded resource URLs,
+  // and the native binding retains its further conversion. CSS.escape does
+  // not establish another API's string representation.
   const mappedCSS = (input: unknown, context: CSSContext, legacy = false): object =>
     mapNativeString(input, (value) => options.css(value, context), {
       type: 'DOMString',
@@ -163,6 +188,7 @@ export function createNativeStringMapping(options: MappingOptions) {
     }
   };
   const audio = read('Audio');
+  const fontFace = read('FontFace');
   return {
     set(target: object, key: PropertyKey, value: unknown): unknown {
       for (let owner: object | null = target; owner; owner = nativePrototype(owner)) {
@@ -186,6 +212,11 @@ export function createNativeStringMapping(options: MappingOptions) {
       return operations.get(target)?.(args) ?? args;
     },
     construct(target: Function, args: unknown[]): unknown[] {
+      if (target === fontFace && args.length > 1 && !isBinarySource(args[1])) {
+        const forwarded = [...args];
+        forwarded[1] = mappedCSS(args[1], 'value');
+        return forwarded;
+      }
       if (target !== audio || !args.length || args[0] === undefined) return args;
       const forwarded = [...args];
       forwarded[0] = mapNativeString(args[0], options.url, { type: 'DOMString' });

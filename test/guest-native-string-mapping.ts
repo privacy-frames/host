@@ -208,13 +208,13 @@ await mkdir(
 );
 await writeFile(
   new URL(
-    '../results/quickjs-confinement/native-string-mapping/css-url-correction.json',
+    '../results/quickjs-confinement/native-string-mapping/css-url-after-fontface.json',
     import.meta.url,
   ),
   JSON.stringify(
     {
       scope:
-        'Native CSS/Audio conversion parity and actual BrowserEnvironment+QuickJS unknown URL rewriting. Removing the actual CSS setter mapping must fail the independent mapped-URL assertion. FontFace source conversion remains deferred; this is not a complete rendering/confinement proof.',
+        'Native CSS/Audio conversion parity and actual BrowserEnvironment+QuickJS unknown URL rewriting. Removing the actual CSS setter mapping must fail the independent mapped-URL assertion. FontFace constructor coverage is recorded separately; this is not a complete rendering/confinement proof.',
       sourceHashes: inputHashes,
       transitiveInputHashes,
       toolchain: { node: process.version, esbuild: esbuildVersion },

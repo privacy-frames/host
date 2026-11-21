@@ -1250,8 +1250,6 @@ export class BrowserEnvironment {
     if (target === this.audioWorkletNodeConstructor && args.length >= 2)
       args[1] = guestProcessorName(args[1]);
     args = this.stringMapping.construct(target, args);
-    if (target.name === 'FontFace' && typeof args[1] === 'string')
-      args[1] = rewriteGuestCSS(args[1], (url) => this.resources.nativeURL(url), 'value');
     const value: object = Reflect.construct(target, args);
     if (isBlob(value))
       this.resources.registerBlob(value, Array.isArray(args[0]) ? args[0] : undefined);
