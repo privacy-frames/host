@@ -2,8 +2,9 @@
 
 `browser-policy.ts` composes reviewed browser families into one `NativePolicy` and
 host codec. This first family covers native EventTarget construction and the
-selected Event, CustomEvent and MessageEvent declarations. Other browser families
-still contain generic forwarding. These changes establish no complete confinement
+selected Event, CustomEvent and MessageEvent declarations. The [abort family](abort-policy.md)
+adds reviewed AbortController/AbortSignal producers with the same event lineage.
+Other browser families still contain generic forwarding. These changes establish no complete confinement
 proof and demonstrate no new communication violation.
 
 ## Owned values and borrowed receivers
@@ -64,8 +65,9 @@ temporary information handle even when formatting fails.
 
 ## Remaining families and qualification
 
-Native target families such as FileReader, IDB requests, XHR and AbortSignal retain
-their existing handling. Their private producers have not been enrolled here.
+Native target families such as FileReader, IDB requests and XHR retain their existing
+handling. Their private producers have not been enrolled here. Abort signals from
+the generic Request.signal getter also remain outside the reviewed producer set.
 Explicitly borrowing the claimed EventTarget wrapper onto one of these unregistered
 receivers is therefore a compatibility concern for application qualification.
 Detached parser documents also need a private producer record for this borrowed
