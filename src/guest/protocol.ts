@@ -11,7 +11,9 @@ export interface GuestHost {
   construct(target: Function, arguments_: unknown[], newTarget?: Function): object;
   ownKeys(target: object): (string | symbol)[];
   descriptor(target: object, key: PropertyKey): PropertyDescriptor | undefined;
-  prototype(target: object): object | null;
+  /** Undefined defers prototype production: ordinary lookup may stop, but must
+   * retry later. Explicit prototype reflection rejects until a value is ready. */
+  prototype(target: object): object | null | undefined;
 }
 
 export interface GuestEngineOptions {

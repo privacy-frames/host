@@ -13,6 +13,7 @@ export function installGuestRuntime(
 
   const createObject = Object.create;
   const RangeErrorConstructor = RangeError;
+  const TypeErrorConstructor = TypeError;
   const objectPrototype = Object.prototype;
   const functionPrototype = Function.prototype;
   const reflectGet = Reflect.get;
@@ -267,9 +268,9 @@ export function installGuestRuntime(
     }
     return false;
   };
-  const parent = (record: ProxyRecord): object | null => {
+  const parent = (record: ProxyRecord): object | null | undefined => {
     if (record.parent === undefined) {
-      record.parent = native('prototype', record.id) as object | null;
+      record.parent = native('prototype', record.id) as object | null | undefined;
     }
     return record.parent;
   };
@@ -280,7 +281,7 @@ export function installGuestRuntime(
     record: ProxyRecord,
     property: PropertyKey,
   ): PropertyDescriptor | null | undefined => {
-    let current: object | null = record.proxy;
+    let current: object | null | undefined = record.proxy;
     const visited = new InternalSet<object>();
     while (current && !visited.has(current)) {
       visited.add(current);
@@ -512,7 +513,10 @@ export function installGuestRuntime(
         return descriptor ? { ...descriptor, configurable: true } : own;
       },
       getPrototypeOf() {
-        return parent(record);
+        const prototype = parent(record);
+        if (prototype === undefined)
+          throw new TypeErrorConstructor('Native prototype is not ready');
+        return prototype;
       },
       setPrototypeOf(_target, value) {
         record.parent = value;

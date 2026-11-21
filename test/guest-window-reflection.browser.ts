@@ -55,13 +55,10 @@ async function run() {
   let child: Awaited<ReturnType<typeof createGuestWindow>> | undefined;
   const own = new BrowserEnvironment({ catalog, global: bootstrap });
   async function withheld(target: Window, frame: HTMLIFrameElement, label: string) {
-    let refused = false;
-    try {
-      parent.environment.host.prototype(target);
-    } catch {
-      refused = true;
-    }
-    check(refused, label + ' prototype withheld');
+    check(
+      parent.environment.host.prototype(target) === undefined,
+      label + ' prototype withheld',
+    );
     check(
       parent.environment.host.get(target, 'document') === undefined,
       label + ' window document withheld',
@@ -87,14 +84,21 @@ async function run() {
     parent.engine.set('retainedWindow', target);
     parent.engine.set('retainedFrame', frame);
     const result = await parent.engine.evaluate(`(() => {
-      let denied=false;try {Object.getPrototypeOf(retainedWindow);}catch{denied=true;}
+      Object.prototype.__deferredFixtureInherited__ = true;
+      const originalTypeError = TypeError;
+      globalThis.TypeError = function ReplacedTypeError() { throw Error('Mutable constructor executed'); };
+      let denied=false;try {Object.getPrototypeOf(retainedWindow);}catch(error){denied=error instanceof originalTypeError;}
+      globalThis.TypeError = originalTypeError;
+      const poll = typeof retainedWindow.popupMarker === 'undefined';
+      const inherited = !('__deferredFixtureInherited__' in retainedWindow);
       const getter=Object.getOwnPropertyDescriptor(HTMLIFrameElement.prototype,'contentDocument').get;
       const windowGetter=Object.getOwnPropertyDescriptor(retainedWindow,'document').get;
-      return JSON.stringify({denied,windowDoc:retainedWindow.document===undefined,windowReflected:windowGetter.call(retainedWindow)===undefined,constructor:retainedWindow.AbortController===undefined,api:retainedWindow.fetch===undefined,direct:retainedFrame.contentDocument===null,reflected:getter.call(retainedFrame)===null,keys:Array.isArray(Object.getOwnPropertyNames(retainedWindow))});
+      return JSON.stringify({denied,poll,inherited,windowDoc:retainedWindow.document===undefined,windowReflected:windowGetter.call(retainedWindow)===undefined,constructor:retainedWindow.AbortController===undefined,api:retainedWindow.fetch===undefined,direct:retainedFrame.contentDocument===null,reflected:getter.call(retainedFrame)===null,keys:Array.isArray(Object.getOwnPropertyNames(retainedWindow))});
     })()`);
     const checks = JSON.parse(String(result));
     check(
       (checks.denied || label === 'Disposed') &&
+        (label === 'Disposed' || (checks.poll && checks.inherited)) &&
         checks.windowDoc &&
         checks.windowReflected &&
         checks.constructor &&
@@ -110,13 +114,10 @@ async function run() {
       own.host.prototype(bootstrap) === Object.getPrototypeOf(bootstrap),
       'Trusted own bootstrap retains native prototype',
     );
-    let borrowed = false;
-    try {
-      parent.environment.host.prototype(bootstrap);
-    } catch {
-      borrowed = true;
-    }
-    check(borrowed, 'Other environment cannot borrow own-bootstrap exception');
+    check(
+      parent.environment.host.prototype(bootstrap) === undefined,
+      'Other environment cannot borrow own-bootstrap exception',
+    );
     await withheld(unknown, unpreparedFrame, 'Unprepared');
     const gate = deferred<WebAssembly.Module>();
     const compile = WebAssembly.compile;
@@ -131,11 +132,12 @@ async function run() {
     await withheld(pending, pendingFrame, 'Pending');
     gate.resolve(await compile(catalog.engineWasm));
     child = await preparation;
+    child.engine.set('popupMarker', 17);
     const ready = await parent.engine.evaluate(`(() => {
       const first=Object.getPrototypeOf(retainedWindow), second=Object.getPrototypeOf(retainedWindow);
       const getter=Object.getOwnPropertyDescriptor(HTMLIFrameElement.prototype,'contentDocument').get;
       const document=retainedFrame.contentDocument;
-      return first!==null && first===second && document.defaultView===retainedWindow && getter.call(retainedFrame)===document && retainedWindow.document===document;
+      return first!==null && first===second && document.defaultView===retainedWindow && getter.call(retainedFrame)===document && retainedWindow.document===document && retainedWindow.popupMarker===17 && ('__deferredFixtureInherited__' in retainedWindow);
     })()`);
     check(
       ready === true,
@@ -149,13 +151,10 @@ async function run() {
     child.close();
     await withheld(pending, pendingFrame, 'Disposed');
     own.dispose();
-    let ownClosed = false;
-    try {
-      own.host.prototype(bootstrap);
-    } catch {
-      ownClosed = true;
-    }
-    check(ownClosed, 'Disposed own environment has no bootstrap exception');
+    check(
+      own.host.prototype(bootstrap) === undefined,
+      'Disposed own environment has no bootstrap exception',
+    );
     return {
       nativePositive: true,
       ownBootstrap: true,

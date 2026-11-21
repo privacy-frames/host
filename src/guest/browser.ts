@@ -483,7 +483,7 @@ export class BrowserEnvironment {
           !this.preparedWindow(target) &&
           !(target === native && !this.disposed && !this.engine)
         )
-          throw new DOMException('Window preparation is incomplete', 'SecurityError');
+          return undefined;
         const owner = this.nativeOwner(target);
         return owner ? owner.prototype(target) : Reflect.getPrototypeOf(target);
       },

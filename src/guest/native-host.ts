@@ -29,6 +29,8 @@ export interface NativeHostOptions {
   normalizeReceiver?(receiver: unknown, contract: NativeContract): unknown;
 }
 export interface NativeHost extends GuestHost {
+  /** Registered native families always have a settled reviewed prototype. */
+  prototype(target: object): object | null;
   captureCallableShape(id: string, target: Function): void;
   registerConstructor(target: Function, token: NativeConstructor): void;
   /** The trusted producer retains this exact native identity (for example a funcref). */

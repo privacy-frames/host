@@ -830,7 +830,7 @@ export class GuestEngine {
 
   private has(target: object, key: PropertyKey): boolean {
     const visited = new Set<object>();
-    let current: object | null = target;
+    let current: object | null | undefined = target;
     while (current && !visited.has(current)) {
       visited.add(current);
       const host = this.owner(current);
