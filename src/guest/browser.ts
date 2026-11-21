@@ -1,3 +1,4 @@
+import { captureNativeIntrinsics } from './native-intrinsics.ts';
 import { createNativeStringMapping } from './native-string-mapping.ts';
 import { captureEventListenerArguments } from './event-listener-arguments.ts';
 import { captureMessageTransfer } from './message-transfer.ts';
@@ -391,6 +392,7 @@ export class BrowserEnvironment {
     const { catalog, global: native } = options;
     this.resources = new GuestResources(catalog);
     this.document = 'document' in native ? native.document : undefined;
+    captureNativeIntrinsics(native, { owner: this, document: this.document });
     this.stringMapping = createNativeStringMapping({
       global: native,
       css: (value, context) =>

@@ -18,6 +18,16 @@ import type { GuestEngineOptions, GuestEvaluationMode, GuestHost } from './proto
 import { NativeBinary } from './native-binary.ts';
 import { installGuestBinary } from './guest-binary.ts';
 import { createNativeWasm } from './native-wasm.ts';
+import {
+  captureNativeIntrinsics,
+  capturedNativeIntrinsics,
+  nativeIntrinsicRole,
+  ordinaryIntrinsicNames,
+  type NativeIntrinsicRole,
+} from './native-intrinsics.ts';
+
+const moduleIntrinsicOwner = {};
+captureNativeIntrinsics(globalThis, { owner: moduleIntrinsicOwner });
 
 interface RetainedGuest {
   id: number;
@@ -94,45 +104,6 @@ for (const key of Object.getOwnPropertyNames(Symbol)) {
   if (typeof value === 'symbol') wellKnownSymbols.set(value, key);
 }
 
-const intrinsicNames = [
-  'Object',
-  'Function',
-  'Array',
-  'Boolean',
-  'Number',
-  'String',
-  'Symbol',
-  'BigInt',
-  'Date',
-  'RegExp',
-  'Map',
-  'Set',
-  'WeakMap',
-  'WeakSet',
-  'Promise',
-  'Error',
-  'TypeError',
-  'RangeError',
-  'ReferenceError',
-  'SyntaxError',
-  'URIError',
-  'EvalError',
-  'AggregateError',
-  'ArrayBuffer',
-  'DataView',
-  'Int8Array',
-  'Uint8Array',
-  'Uint8ClampedArray',
-  'Int16Array',
-  'Uint16Array',
-  'Int32Array',
-  'Uint32Array',
-  'Float32Array',
-  'Float64Array',
-  'BigInt64Array',
-  'BigUint64Array',
-] as const;
-
 const viewConstructors = new Map<string, Function>([
   ['DataView', DataView],
   ['Int8Array', Int8Array],
@@ -160,10 +131,16 @@ export class GuestEngine {
   private readonly owners = new WeakMap<object, GuestHost>();
   private wasm?: ReturnType<typeof createNativeWasm>;
   private readonly options: GuestEngineOptions;
+  private readonly sourceObjectPrototype?: object;
   private readonly helpers = new Map<string, QuickJSHandle>();
   private readonly nativeIds = new WeakMap<object, number>();
   private readonly nativeObjects = new Map<number, object>();
   private readonly nativeHandles = new Map<object, QuickJSHandle>();
+  private readonly canonicalIntrinsics = new Map<NativeIntrinsicRole, QuickJSHandle>();
+  private intrinsicBoundaryReady = false;
+  private readonly canonicalIntrinsicAliases = new WeakSet<object>();
+  private readonly explicitAliases = new WeakSet<object>();
+  private readonly nativeProxies = new WeakSet<object>();
   private readonly guestObjects = new Map<number, RetainedGuest>();
   private readonly importReferences = new Map<number, RetainedGuest>();
   private readonly guestHandles = new WeakMap<object, QuickJSHandle>();
@@ -198,6 +175,9 @@ export class GuestEngine {
     this.runtime = context.runtime;
     this.host = options.host;
     this.options = options;
+    this.sourceObjectPrototype = capturedNativeIntrinsics(
+      options.globalObject ?? globalThis,
+    ).find(({ role }) => role === 'Object.prototype')?.value;
     this.runtime.setMemoryLimit(options.memoryLimit ?? 512 * 1024 * 1024);
     this.runtime.setMaxStackSize(options.stackSize ?? 2 * 1024 * 1024);
   }
@@ -279,25 +259,19 @@ export class GuestEngine {
     }
 
     for (const source of new Set([globalThis, this.options.globalObject ?? globalThis])) {
-      for (const name of intrinsicNames) {
-        const native: unknown = Reflect.get(source, name);
-        const guest = this.context.getProp(this.context.global, name);
-        if (
-          typeof native === 'function' &&
-          this.context.typeof(guest) === 'function' &&
-          !this.nativeHandles.has(native)
-        ) {
-          this.nativeHandles.set(native, guest.dup());
-          const nativePrototype: unknown = Reflect.get(native, 'prototype');
-          if (
-            nativePrototype &&
-            (typeof nativePrototype === 'object' || typeof nativePrototype === 'function')
-          ) {
-            const prototype = this.context.getProp(guest, 'prototype');
-            this.nativeHandles.set(nativePrototype, prototype);
-          }
+      for (const { value, role } of capturedNativeIntrinsics(source)) {
+        if (this.nativeHandles.has(value)) continue;
+        const [name, part] = role.split('.');
+        const constructor = this.context.getProp(this.context.global, name);
+        try {
+          if (this.context.typeof(constructor) !== 'function') continue;
+          const handle = part
+            ? this.context.getProp(constructor, 'prototype')
+            : constructor.dup();
+          this.nativeHandles.set(value, handle);
+        } finally {
+          constructor.dispose();
         }
-        guest.dispose();
       }
     }
 
@@ -352,6 +326,7 @@ export class GuestEngine {
       },
     );
     this.installBinary();
+    this.captureGuestIntrinsics();
     this.wasm = createNativeWasm({
       runWasm: (action, deferOrdinary = false) => this.runWasm(action, deferOrdinary),
       retainBuffer: (buffer) => {
@@ -401,7 +376,29 @@ export class GuestEngine {
     this.set('WebAssembly', this.wasm.namespace);
   }
 
+  private captureGuestIntrinsics(): void {
+    for (const name of ordinaryIntrinsicNames) {
+      const binaryAlias = this.binary.aliases().find(([role]) => role === name)?.[1];
+      const installed = binaryAlias && this.nativeHandles.get(binaryAlias);
+      const constructor = installed
+        ? installed.dup()
+        : this.context.getProp(this.context.global, name);
+      if (this.context.typeof(constructor) !== 'function') {
+        constructor.dispose();
+        continue;
+      }
+      this.canonicalIntrinsics.set(name, constructor);
+      const prototype = this.context.getProp(constructor, 'prototype');
+      const type = this.context.typeof(prototype);
+      if (type === 'object' || type === 'function')
+        this.canonicalIntrinsics.set(`${name}.prototype`, prototype);
+      else prototype.dispose();
+    }
+    this.intrinsicBoundaryReady = true;
+  }
+
   private installBinary(): void {
+    captureNativeIntrinsics(globalThis, { owner: this.binary }, this.binary.aliases());
     const installer = this.unwrap(
       this.context.evalCode(`(${installGuestBinary.toString()})`, 'privacy:binary', {
         type: 'global',
@@ -426,9 +423,11 @@ export class GuestEngine {
           }
           this.nativeHandles.get(native)?.dispose();
           this.nativeHandles.set(native, constructor.dup());
+          this.nativeProxies.delete(native);
           const prototype = this.context.getProp(constructor, 'prototype');
           this.nativeHandles.get(native.prototype)?.dispose();
           this.nativeHandles.set(native.prototype, prototype);
+          this.nativeProxies.delete(native.prototype);
           constructor.dispose();
         }
       } finally {
@@ -595,6 +594,7 @@ export class GuestEngine {
     const handle = this.encode(guest);
     this.nativeHandles.get(native)?.dispose();
     this.nativeHandles.set(native, handle);
+    this.explicitAliases.add(native);
   }
 
   /** Keep host listeners/resources alive until explicit realm disposal. */
@@ -693,6 +693,13 @@ export class GuestEngine {
     const id = this.context.getNumber(idHandle);
     const target = this.nativeObjects.get(id);
     if (!target) throw new Error('Unknown native object');
+    if (
+      this.intrinsicBoundaryReady &&
+      this.nativeProxies.has(target) &&
+      nativeIntrinsicRole(target) &&
+      !this.explicitAliases.has(target)
+    )
+      throw new TypeError('Native intrinsic was exposed before realm capture');
     const encodedKey = this.readString(keyHandle);
     const key = this.propertyKey(encodedKey);
     const host = this.owner(target);
@@ -879,6 +886,22 @@ export class GuestEngine {
     const object = value as object;
     const original = this.guestHandles.get(object);
     if (original) return original.dup();
+    const role = nativeIntrinsicRole(object);
+    if (role && this.intrinsicBoundaryReady && !this.explicitAliases.has(object)) {
+      if (this.nativeProxies.has(object))
+        throw new TypeError('Native intrinsic was exposed before realm capture');
+      const intrinsic = this.canonicalIntrinsics.get(role);
+      if (!intrinsic)
+        throw new TypeError(
+          'Native intrinsic has no supported guest counterpart: ' + role,
+        );
+      if (!this.canonicalIntrinsicAliases.has(object)) {
+        this.nativeHandles.get(object)?.dispose();
+        this.nativeHandles.set(object, intrinsic.dup());
+        this.canonicalIntrinsicAliases.add(object);
+      }
+      return this.nativeHandles.get(object)!.dup();
+    }
     const cached = this.nativeHandles.get(object) ?? seen.get(object);
     if (cached) return cached.dup();
     if (isArrayBuffer(value) && !this.binary.buffer(value))
@@ -943,14 +966,10 @@ export class GuestEngine {
     const prototypeObject =
       typeof constructor === 'function' && constructor.prototype === object;
     const prototype = Object.getPrototypeOf(object);
-    const sourceObject: unknown =
-      this.options.globalObject && Reflect.get(this.options.globalObject, 'Object');
-    const sourcePrototype =
-      typeof sourceObject === 'function' ? sourceObject.prototype : undefined;
     const plain =
       prototype === null ||
       prototype === Object.prototype ||
-      prototype === sourcePrototype;
+      prototype === this.sourceObjectPrototype;
     const descriptors = plain ? Object.getOwnPropertyDescriptors(object) : {};
     const liveFacade = Object.values(descriptors).some(
       (descriptor) => !('value' in descriptor) || !descriptor.enumerable,
@@ -1034,6 +1053,7 @@ export class GuestEngine {
       const result = this.helper('createHost', arguments_);
       const retained = result.dup();
       this.nativeHandles.set(object, retained);
+      this.nativeProxies.add(object);
       try {
         if (this.binary.view(object)) {
           let buffer: unknown;
@@ -1944,6 +1964,8 @@ export class GuestEngine {
     this.indexed.dispose();
     for (const handle of this.helpers.values()) if (handle.alive) handle.dispose();
     for (const handle of this.nativeHandles.values()) if (handle.alive) handle.dispose();
+    for (const handle of this.canonicalIntrinsics.values())
+      if (handle.alive) handle.dispose();
     for (const { handle } of this.guestObjects.values())
       if (handle.alive) handle.dispose();
     for (const { handle } of this.importReferences.values())
@@ -1955,6 +1977,7 @@ export class GuestEngine {
     for (const promise of this.promises) promise.dispose();
     this.helpers.clear();
     this.nativeHandles.clear();
+    this.canonicalIntrinsics.clear();
     this.nativeObjects.clear();
     this.guestObjects.clear();
     this.importReferences.clear();
