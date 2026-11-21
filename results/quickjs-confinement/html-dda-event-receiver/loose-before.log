@@ -1,0 +1,30 @@
+chromium production {"failure":"Error: Guest receiver behavior differs from unrestricted native control\nError: Guest receiver behavior differs from unrestricted native control\n    at check (http://127.0.0.1:41543/browser.js?variant=production:51193:21)\n    at run (http://127.0.0.1:41543/browser.js?variant=production:51222:5)","comparison":{"native":{"rows":[{"source":"global","kind":"undefined","count":1,"cancelled":true,"removed":true},{"source":"global","kind":"null","count":1,"cancelled":true,"removed":true},{"source":"global","kind":"html-dda","count":0,"error":true},{"source":"global","kind":"plain","count":0,"error":true},{"source":"global","kind":"window","count":1,"cancelled":true,"removed":true},{"source":"global","kind":"target","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"undefined","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"null","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"html-dda","count":0,"error":true},{"source":"prototype","kind":"plain","count":0,"error":true},{"source":"prototype","kind":"window","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"target","count":1,"cancelled":true,"removed":true}],"same":true,"name":"addEventListener","length":2,"prototype":false,"constructible":false},"guest":{"rows":[{"source":"global","kind":"undefined","count":1,"cancelled":true,"removed":true},{"source":"global","kind":"null","count":1,"cancelled":true,"removed":true},{"source":"global","kind":"html-dda","count":1,"cancelled":true,"removed":true},{"source":"global","kind":"plain","count":0,"error":true},{"source":"global","kind":"window","count":1,"cancelled":true,"removed":true},{"source":"global","kind":"target","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"undefined","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"null","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"html-dda","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"plain","count":0,"error":true},{"source":"prototype","kind":"window","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"target","count":1,"cancelled":true,"removed":true}],"same":true,"name":"addEventListener","length":2,"prototype":false,"constructible":false}}}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Error: Guest receiver behavior differs from unrestricted native control
+Error: Guest receiver behavior differs from unrestricted native control
+    at check (http://127.0.0.1:41543/browser.js?variant=production:51193:21)
+    at run (http://127.0.0.1:41543/browser.js?variant=production:51222:5)
++ actual - expected
+
++ 'Error: Guest receiver behavior differs from unrestricted native control\n' +
++   'Error: Guest receiver behavior differs from unrestricted native control\n' +
++   '    at check (http://127.0.0.1:41543/browser.js?variant=production:51193:21)\n' +
++   '    at run (http://127.0.0.1:41543/browser.js?variant=production:51222:5)'
+- undefined
+
+    at <anonymous> (/home/damen/Projects/privacy-frames-abort-policy/test/guest-global-event-receiver.ts:129:20) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'Error: Guest receiver behavior differs from unrestricted native control\n' +
+    'Error: Guest receiver behavior differs from unrestricted native control\n' +
+    '    at check (http://127.0.0.1:41543/browser.js?variant=production:51193:21)\n' +
+    '    at run (http://127.0.0.1:41543/browser.js?variant=production:51222:5)',
+  expected: undefined,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.18.0

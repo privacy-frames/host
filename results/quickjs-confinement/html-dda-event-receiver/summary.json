@@ -1,0 +1,21 @@
+{
+  "scope": "Native receiver parity and prepared-receiver restriction; no capability escape or complete confinement claim",
+  "change": "Only strict null and undefined normalize to the prepared global for the three existing canonical EventTarget contracts",
+  "passed": true,
+  "units": 18,
+  "source": {
+    "src/guest/browser-policy.ts": "65c27fddb6e7c90ec4ef35f952287d398ec0cf209207401189e40eb58cb9d645",
+    "test/native-host.test.ts": "3d2d2d031756350e1a58fa04e674295589b8eaa36ca20ed74cdd3803876751e3",
+    "test/guest-global-event-receiver.browser.ts": "1ee091a9cdde47663184bc2c960898d7d28bfaf9530ecdb3acc54db6927636a4"
+  },
+  "browserOutcomes": 6,
+  "before": "Both native engines rejected HTMLDDA; loose comparison accepted it as global",
+  "after": "Both production matrices match native, including HTMLDDA refusal; raw host.call and direct wrappers reject the same receivers",
+  "provenanceLimitation": "Existing browser driver records BrowserType.executablePath/hash but launches with default headless selection; Chromium actual-process executable path is not established by that field. Browser versions and source/bundle hashes are recorded.",
+  "logs": {
+    "units.log": "4f8d424db1c739fb0655fb2b89192284402fe3f3b3349489260b66a83ba19f26",
+    "loose-firefox-before.log": "95eb0a3855ff61ba1bafdf5968c4242957138bb16429ab645eb3bb8ca2672ffa",
+    "loose-before.log": "671c4c53019553385cdc4220665b4f80149a45de5cb0845f1b854f649bece2de",
+    "strict-after.log": "500b9de13e5cf8174021f006f04b63ccce02eaa836bae8af24c00e715acb3ef9"
+  }
+}

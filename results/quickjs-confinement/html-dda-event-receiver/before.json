@@ -1,0 +1,394 @@
+{
+  "scope": "Observed native-versus-confined receiver parity failure with loose null comparison; not an escape claim",
+  "source": {
+    "src/guest/browser-policy.ts": "230924ffe38882b30ecf8120454c6a0c20f3a83e722f95ce406058e60fbf95a3",
+    "test/guest-global-event-receiver.browser.ts": "1ee091a9cdde47663184bc2c960898d7d28bfaf9530ecdb3acc54db6927636a4",
+    "test/guest-global-event-receiver.ts": "5e259c576a424b726cac27cad922ccaa6cdede6957ba8620f81f81fce2bcb850",
+    ".tools/html-dda-firefox-before.ts": "647a77b52ddb506c5287613ef7c8c0ccf132833b7e4579a63c1fc4540844f3ef"
+  },
+  "firefoxDriverDifference": "Temporary original driver copy omits Chromium engine row only; canonical driver unchanged",
+  "observations": [
+    {
+      "browser": "chromium",
+      "expectedFailure": true,
+      "observation": {
+        "failure": "Error: Guest receiver behavior differs from unrestricted native control\nError: Guest receiver behavior differs from unrestricted native control\n    at check (http://127.0.0.1:41543/browser.js?variant=production:51193:21)\n    at run (http://127.0.0.1:41543/browser.js?variant=production:51222:5)",
+        "comparison": {
+          "native": {
+            "rows": [
+              {
+                "source": "global",
+                "kind": "undefined",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "global",
+                "kind": "null",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "global",
+                "kind": "html-dda",
+                "count": 0,
+                "error": true
+              },
+              {
+                "source": "global",
+                "kind": "plain",
+                "count": 0,
+                "error": true
+              },
+              {
+                "source": "global",
+                "kind": "window",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "global",
+                "kind": "target",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "prototype",
+                "kind": "undefined",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "prototype",
+                "kind": "null",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "prototype",
+                "kind": "html-dda",
+                "count": 0,
+                "error": true
+              },
+              {
+                "source": "prototype",
+                "kind": "plain",
+                "count": 0,
+                "error": true
+              },
+              {
+                "source": "prototype",
+                "kind": "window",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "prototype",
+                "kind": "target",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              }
+            ],
+            "same": true,
+            "name": "addEventListener",
+            "length": 2,
+            "prototype": false,
+            "constructible": false
+          },
+          "guest": {
+            "rows": [
+              {
+                "source": "global",
+                "kind": "undefined",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "global",
+                "kind": "null",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "global",
+                "kind": "html-dda",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "global",
+                "kind": "plain",
+                "count": 0,
+                "error": true
+              },
+              {
+                "source": "global",
+                "kind": "window",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "global",
+                "kind": "target",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "prototype",
+                "kind": "undefined",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "prototype",
+                "kind": "null",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "prototype",
+                "kind": "html-dda",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "prototype",
+                "kind": "plain",
+                "count": 0,
+                "error": true
+              },
+              {
+                "source": "prototype",
+                "kind": "window",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "prototype",
+                "kind": "target",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              }
+            ],
+            "same": true,
+            "name": "addEventListener",
+            "length": 2,
+            "prototype": false,
+            "constructible": false
+          }
+        }
+      },
+      "log": "loose-before.log",
+      "logSHA256": "671c4c53019553385cdc4220665b4f80149a45de5cb0845f1b854f649bece2de"
+    },
+    {
+      "browser": "firefox",
+      "expectedFailure": true,
+      "observation": {
+        "failure": "Error: Guest receiver behavior differs from unrestricted native control\ncheck@http://127.0.0.1:41567/browser.js?variant=production:51193:21\nrun@http://127.0.0.1:41567/browser.js?variant=production:51222:10\nasync*@http://127.0.0.1:41567/browser.js?variant=production:51298:1\n",
+        "comparison": {
+          "native": {
+            "rows": [
+              {
+                "source": "global",
+                "kind": "undefined",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "global",
+                "kind": "null",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "global",
+                "kind": "html-dda",
+                "count": 0,
+                "error": true
+              },
+              {
+                "source": "global",
+                "kind": "plain",
+                "count": 0,
+                "error": true
+              },
+              {
+                "source": "global",
+                "kind": "window",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "global",
+                "kind": "target",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "prototype",
+                "kind": "undefined",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "prototype",
+                "kind": "null",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "prototype",
+                "kind": "html-dda",
+                "count": 0,
+                "error": true
+              },
+              {
+                "source": "prototype",
+                "kind": "plain",
+                "count": 0,
+                "error": true
+              },
+              {
+                "source": "prototype",
+                "kind": "window",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "prototype",
+                "kind": "target",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              }
+            ],
+            "same": true,
+            "name": "addEventListener",
+            "length": 2,
+            "prototype": false,
+            "constructible": false
+          },
+          "guest": {
+            "rows": [
+              {
+                "source": "global",
+                "kind": "undefined",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "global",
+                "kind": "null",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "global",
+                "kind": "html-dda",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "global",
+                "kind": "plain",
+                "count": 0,
+                "error": true
+              },
+              {
+                "source": "global",
+                "kind": "window",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "global",
+                "kind": "target",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "prototype",
+                "kind": "undefined",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "prototype",
+                "kind": "null",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "prototype",
+                "kind": "html-dda",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "prototype",
+                "kind": "plain",
+                "count": 0,
+                "error": true
+              },
+              {
+                "source": "prototype",
+                "kind": "window",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              },
+              {
+                "source": "prototype",
+                "kind": "target",
+                "count": 1,
+                "cancelled": true,
+                "removed": true
+              }
+            ],
+            "same": true,
+            "name": "addEventListener",
+            "length": 2,
+            "prototype": false,
+            "constructible": false
+          }
+        }
+      },
+      "log": "loose-firefox-before.log",
+      "logSHA256": "95eb0a3855ff61ba1bafdf5968c4242957138bb16429ab645eb3bb8ca2672ffa"
+    }
+  ]
+}

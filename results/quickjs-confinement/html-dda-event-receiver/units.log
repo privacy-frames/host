@@ -1,0 +1,26 @@
+✔ abort constructors, native state and delegated reason/throw identity (16.055833ms)
+✔ abort events preserve native synchronous ordering, handler identity and cleanup (1.839478ms)
+✔ unknown abort getters and borrowed mismatched receivers fail before execution (0.811055ms)
+✔ static abort/any use exact native algorithms, extracted calls and one sequence conversion (1.53797ms)
+✔ native timeout produces owned signals and late deliveries cannot enter closed guest (26.573837ms)
+✔ abort callable shapes and reflected getter shapes retain exact native metadata (0.757104ms)
+✔ selected native event constructors preserve identity, conversion and cancellation (16.865907ms)
+✔ native dispatch and cleanup retain guest callback and object-listener semantics (1.197333ms)
+✔ listener conversions match native order and failures do not register cleanup (0.833415ms)
+✔ callback ownership is checked before registration and again on delivery (0.617711ms)
+✔ registered native callables use the provided invocation route as listeners (0.73792ms)
+✔ native delivery rechecks receiver provenance without revoking detached local targets (0.597204ms)
+✔ unknown getters and reflected access are denied before execution (0.87115ms)
+✔ native descriptor changes invalidate cached callable and accessor authority (0.591684ms)
+✔ canonical methods and borrowed receivers do not claim unrelated whole objects (0.841638ms)
+✔ unreviewed aliases do not become local-family members (0.549378ms)
+✔ method publication does not capture unclaimed native target families (0.466952ms)
+✔ reviewed receiver normalization precedes admission on codec and direct wrapper calls (2.888029ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 169.190118
