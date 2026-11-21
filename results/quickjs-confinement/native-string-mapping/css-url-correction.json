@@ -1,0 +1,598 @@
+{
+  "scope": "Native CSS/Audio conversion parity and actual BrowserEnvironment+QuickJS unknown URL rewriting. Removing the actual CSS setter mapping must fail the independent mapped-URL assertion. FontFace source conversion remains deferred; this is not a complete rendering/confinement proof.",
+  "sourceHashes": {
+    "src/guest/browser.ts": "0c6c18f477416a69994ff590f63a419689465939ef1aff1188e5e09e22a97a29",
+    "src/guest/engine.ts": "f47d9f29180bf54561025352567648768dcb0cfc2b01519ee218ac7e447f6027",
+    "src/guest/guest-runtime.ts": "058930f5f581f18210f636c210c0dbba27e51a145826c2adcb95d3295436bc1d",
+    "src/guest/native-policy.ts": "ba0fb4f746bc472c480f0dbeff9e83a629c74e81ba832a3bd8019a6f1e2b1ce8",
+    "src/guest/native-string-mapping.ts": "e82837f3f3ea402c3eb3c9f15a08b81dad1a1a9a0bac399328dd99cc6e0bd319",
+    "src/guest/css.ts": "ef01e1e37e18deb526344717219399160394fd5d190f471535ff5fd10dfdecb9",
+    "src/guest/resources.ts": "fbb363fbe07bb3ea59ac7789afbe19b51099972282012daa69624789e3c90778",
+    "src/guest/session.ts": "7d6566044cec86e7ee1bd8629cc05bbcf89c62915d8dc4e415a5eb5d5b413f55",
+    "node_modules/@webref/idl/cssom.idl": "41d65d4ffbdf129a2659f2a6aaafa4f9cc1657d180c990190e8dc38cd0d06542",
+    "node_modules/@webref/idl/html.idl": "936de2af54db9e2146fb283b108915e4f57b1eda5b37c9014429c51e70abd133",
+    "test/guest-native-string-mapping.browser.ts": "84c2e6c9bb33fbaf024b2b1da9a8314e0b09b993f8193145c0b5d55483cded8f",
+    "test/guest-native-string-mapping.ts": "9148bcbd765d8c3acadb5a77a9067b551ce167aceef41ff3effe28268ee73ce4"
+  },
+  "transitiveInputHashes": {
+    "../privacy-frames-quickjs-kernel/node_modules/@jitl/quickjs-ffi-types/dist/index.mjs": "5b6ccfe50a0d0066411135c66964b0c15c05167f5324df2e8066493da807efbe",
+    "../privacy-frames-quickjs-kernel/node_modules/@jitl/quickjs-wasmfile-release-sync/dist/ffi.mjs": "ccf8b3aa066c2be5755e3ea49d81b01dff5a671deb34b7ec3a1c983dd52e9335",
+    "../privacy-frames-quickjs-kernel/node_modules/@jridgewell/resolve-uri/dist/resolve-uri.umd.js": "185ffb426c58c59031f890e262f162d75b82dfb8a96c529e191b28ab49582182",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/dist/data.js": "b0fd864760415cd6b8cf5cf1d87b4b7e326b3e5e7ce3e07a8cb9792b4181acdb",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/dist/version.js": "84162fb3f322ba881ce5997d0c9b8184ae137efd059b6588be5804c86585868c",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/convertor/create.js": "5362ff474f863e16995f1f920a78a86252316bba425def986d01fd521b821a21",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/definition-syntax/SyntaxError.js": "a8b72a0d0a092d87e2d71b35d9bdb074800dfa4973daf378f5d791ff996c31a9",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/definition-syntax/generate.js": "8219bdc7bbdcd9a35dd022d0f0b6aebb8b6927574a0a66f6f9ff2dc98c6548d7",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/definition-syntax/index.js": "7d8f396bc462f16e1a941d452c08c211edd43576f8520019da4271f16ba44e7f",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/definition-syntax/parse.js": "1314a5458f65204a04c20dafeb0a6e8e24d7fe37bb9e0da5133c6d59ab72ae63",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/definition-syntax/scanner.js": "4ae252555ea0f5e79cdd09163991e4f8310b31cf1eb9cc77357b2f6e5bb1f383",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/definition-syntax/walk.js": "342d693c25a42c74ac3f66090043fcf5646b1a90438207c389dab6e8028879fc",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/generator/create.js": "2e4112898f61442bfa9aebc808e6e5e1dd28b267955fffdef5a87f32ca248ec0",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/generator/sourceMap.js": "6bbce641ceb01ea9413f1eb435dbc95f5ca4c602eb864b05af47bf03488503c7",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/generator/token-before.js": "1896ece52083a5209f887474a50826f8ce60af68135dd1c547bb1c2bc33c72f3",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/index.js": "8e8e4179971e7edc1e3fd04c14ec7efe84ecf51deb12d5d052ecc59cdc89b5dc",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/lexer/Lexer.js": "818e6d0d35dbfa8d1f4c9a34634c7f1d73dbcef9fc97ec25e599b55ee68e71af",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/lexer/error.js": "cbb0e395106f5c3d4da276bdc27d8199da3eb95cbc8e65d1583ba2c9bacafd5b",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/lexer/generic-an-plus-b.js": "e73105323a180175b51dfdf81f5833a5a5d4e36ba235d17ff0589ee8929a36fd",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/lexer/generic-const.js": "72896ada1af386326bbc053bc1302c51739c928e90f7e57d2024b9cee72c5e2b",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/lexer/generic-urange.js": "01256dbcdb627bb4bd9966863b414eb9372ceef67e984d9a89bd521020636393",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/lexer/generic.js": "d3e66172510a6057879885aaf4ffd77944e598f9262aab369216de7bfd222daf",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/lexer/match-graph.js": "862b1e04494b93d337cde872c680731a242b8b8a715655ba65887049edbea6c6",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/lexer/match.js": "d1aa43eee2383b47e63ce180ea285d197d452e6402e609637bb3846378f0cea1",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/lexer/prepare-tokens.js": "e25ecabc4a78c35903e603a25f094fa074b763060c6842aae55d049a2f999675",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/lexer/search.js": "7805cd906f66272b98321307c6fe5d1efd0a8f177a5e89b25463b405eeb4783e",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/lexer/structure.js": "11fe95b505a401e752636ddf6eaae75ac51963feefe44100e1c769ab575ca4df",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/lexer/trace.js": "616c3897a9fe65f595ccbbebe130e3d71525edf98a1441ecc9042d012c27fa3b",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/lexer/units.js": "25f99b405f14194f8e1a4d3432a8d1d3f59e814dd93bc703db2d6332d397b1f1",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/parser/SyntaxError.js": "db9c79b67c9766cd6f0376aadc85ae25b1694a613b34fcf7407b9351487821e0",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/parser/create.js": "b884e64b00eb8b63d398fe395a29f6b40a43a29220364864717cbba9dd670334",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/parser/sequence.js": "c3930235086e8342b1c0d0808cf4bf3790114ecd7af96c851fa7c05a55517b86",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/atrule/container.js": "8a5e4a0553fd30c76c34a25da3faf43400130b986e75f016f1f259659a3feeb9",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/atrule/font-face.js": "e8577c256cb18011d3cc005722e4af5f6df289cc7e3820b9bd52e0e617f4bbe3",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/atrule/import.js": "d1a544786ac26f55d8856c3fc9e2b408be46eba1d21ff5daf4b5aeadd396da3c",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/atrule/index.js": "69ccce383380e212bf1e8ed1f693c65702ed6ca92076a399f4ea4d4f082b8aa8",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/atrule/layer.js": "b5ab72fd51afc067c458618977f4e7c5bb0a770937b81f5b55b309b346deea35",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/atrule/media.js": "e04fa163e347946fbcafd54c1500a396041931cad8a1923fded62805e51c6a06",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/atrule/nest.js": "ee141ed45c843703242e32b9988bb7620f72caeae06c15fd14293bd8279973a8",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/atrule/page.js": "ee141ed45c843703242e32b9988bb7620f72caeae06c15fd14293bd8279973a8",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/atrule/scope.js": "67e42f8220965cdd89497465f0eaae540177db75e18cfaa8e47ef1a63af36893",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/atrule/starting-style.js": "477a913ceff8ad5516e580b2c7d3b92a757bb1f2aac194c218c74e83f8a76d25",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/atrule/supports.js": "771ec140c95baaf05e49f07d8db828d06aea771ab1ad84d9611bd494d8e284a9",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/config/lexer.js": "9070d8711d1c8fd2540299f272b8c307b48d060b55a77746be8c1ce99779bb7a",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/config/mix.js": "60e42b08af1a9fc72864f4fb04dbc49b53a122c715a089e0f1dacba2da3c2a5d",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/config/parser.js": "81f0e01cffe0f898df7d0732cb181bdecc4d89ac8ff85b3519e57b8ae39d5c0f",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/config/walker.js": "130ec32c1207d4578698afa275666729fde45b49cb9a99de22de70a7c6bac619",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/create.js": "6b17b6b6f894e565124a378788928db01661067059c1a34a0daf929d53019dae",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/function/expression.js": "e1c4196e41ccc87ca37d658dcc04eb0c393bd6722ae4edc264d8e5cda6f2ef22",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/function/var.js": "e56be12d3341d1d4538119c0963fcb7d6dfb1692f63133983800d09026c0f48b",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/index.js": "a419605b5daf916d5afc872603d1d63e843baa42317d5d7378fc97358dc45712",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/AnPlusB.js": "174df1187617e79ef0186dbd009e76f6c7e5206f0ff2c242b44800fe4167b869",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Atrule.js": "09dfb8efc2b6cc26a221b3157d251be4c6ef11aa00f799a7cd095c132ccab339",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/AtrulePrelude.js": "b4506828af3a5a4d98e3495d49e1ed2f3263a3a46f378d7596d3702d841bd2d4",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/AttributeSelector.js": "233e66919c3507150e603a0d56d3098d5682717afe392feb6f4487bb434c4119",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Block.js": "81923650a615fcd8cc3086b853f536e6a325489f4bc0c6bd369a66d6c1e0c734",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Brackets.js": "d1a39842542877540e6dfe6bca99b50490e8a2bbc79ffbf67fe29eb76f51d7fe",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/CDC.js": "4c24e5a51a454fcdf4be577c57bac647fae9fc292c73fd5757735b740650094e",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/CDO.js": "e2f5820901326cec91a473bc1ae002d49e07048a356d187d0f29ad1585a9e1e3",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/ClassSelector.js": "a06bc9dd02ea4812cfd4471ff25a057767616fa28a71408c8aabe1fddb4c2f4c",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Combinator.js": "eb4b00e70635c7383c035d6d5992f75ac9f39152d509222b7f312ef4d4d6b5ec",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Comment.js": "c0ef6a16f29de78890b47857c93a31a25e21a46d5b675243ab4726d764e0f38b",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Condition.js": "c87b0e76b8f72bb43bba26b827522654a22ac720ddaacc7f1b1a111ba768bcca",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Declaration.js": "e374b4da8b379775addbbb94d84267b099b3dd174ad27e6ae045c1a5c569db69",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/DeclarationList.js": "07bfa453f9e72e605b000f94c6477dd4ce3e0621a2649f74aa2b6f8599bfa932",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Dimension.js": "74762aaefbed62f292d1750e441694c7c6d85d576fdb746b7882adb705f4d26c",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Feature.js": "2962fc95aa8b884ed5638b761865a318dc4eace4bb210665bbe9b6c87ebd6e51",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/FeatureFunction.js": "668cc9678dcb8a684efea81a029f359b0eeadac3ad959d347b209f3593550a15",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/FeatureRange.js": "948cdbcd4d42bc94acb526a2c991a219a4778d6abd66a198a0099dab2635860e",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Function.js": "83b4204cff6071c9788ac04b5c5e6b8a911f57b83e756d5972a12055ae263d29",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/GeneralEnclosed.js": "4486d2374636933a911593afb034888fbe3539644cd198cf6e39f714ffbca4a8",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Hash.js": "056aa0c9b6c65c09284f036b78e5134294f4055679c56b3f98402657d23d7cf2",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/IdSelector.js": "86d4d75c9ed074da8060b1e31a5e5118fca068c25828cd69e9a6f4dab1bb9ab8",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Identifier.js": "d14b969e25957bfc72fb02cff0f643e290eed04f658a54f7f64cbbdd261a58f2",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Layer.js": "125a2511cde6ccec92cac679b280cb198e9848671e9a7a5d2bfd0b3d8252a1fa",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/LayerList.js": "15bffd602747af6ee56a92ecedb8e6677615212a2f798941b26c89c81708953a",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/MediaQuery.js": "c6784fe7c64e7cbb5d21ff74a9d8904d5c849cddf134a6c67cd78205597e1165",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/MediaQueryList.js": "2bcb4702cafa34221a1b03d3fddb9376ca9f79a68d508b0ce1be0feabbe125e7",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/NestingSelector.js": "2d7576f97341fc196fcc7c7950f10f8d812ce542725eb65fdc8d20c6307d39d2",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Nth.js": "a4b0a04f8f6de7349fc4e393f667c62b1cf55a5c27c9df2a3c44d83993631a74",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Number.js": "182dd5f9e3db12f5ca71c30def5f788e23751d20787a1c74ec36e0096689227b",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Operator.js": "20ede258409eaef827a6d9accd769a1fbfe3a1e2391d09e9ea57243e015d56b6",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Parentheses.js": "4a1a93aa8f161d62cf6f287714ab7a7c0be9c7db0da058f4352ba21e50099af7",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Percentage.js": "f286f1708b7cf35ca02de184b0ebd96508ac1a4dcdffeb3b472e11183eb7f7d4",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/PseudoClassSelector.js": "6c10d2b009dd8b97bcd52631682b3baedf212a54f23e487a0946b28b8c7aebe0",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/PseudoElementSelector.js": "cebd838d4e6f0d516382fed5d0b4c6e4e55490a465e293002e5d471ca4c781f3",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Ratio.js": "b6af081d1a0c6ac1775cf21825d998dfd8b59867ceca57dff338774fb299e81b",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Raw.js": "8ae4e8cb9dd860d8684899f34f923d2ca309de2cf75d4d4f62a4bb45e2d99346",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Rule.js": "32072072fd78b3016e0a54f242feb350125366ae5f9f2d2a2640d5c4ae1c8cd8",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Scope.js": "060220580f8c52e3cd9d397d24ca1d7aba72d7a9ea986072a12975bc5783913f",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Selector.js": "8e648d3363b3137f7f27e92b9fccc753729ce0a8bad7c3b7417f6f5fce247fc1",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/SelectorList.js": "674f3f2bfda443a44a673d4092cc83fe6b4cde36f4351f2b7c76cd2bd64c526e",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/String.js": "d9505e97bee2866f96fef0af2ad2aa6bbf1c8b72c03f5f2e52a881a6e533055f",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/StyleSheet.js": "086ee5ab40beaed694c257b18f951a08478865060a08d67e93f607662456f71f",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/SupportsDeclaration.js": "55abee1f999074c97da8fceb4146d16677005e8de4cd5f3947858b4d792eb49b",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/TypeSelector.js": "ff416f7a83c6dd06e4d6c4436475075a0d903be049a9e9c6c096614bab7ef5ed",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/UnicodeRange.js": "5082f5ef86771478388ed14d2e187e2bf1d3e277876b10199e34c3249bb6bffd",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Url.js": "b3e6edc61f39556bbfc9576a8368f42f6c88baa0b79cc1b0e8d2c3a67d820113",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/Value.js": "bb1d1a21555903d949fabeaebdbc76e822dce3b1cdf7251a2c5c9977ba21b644",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/WhiteSpace.js": "b1648391876a49698683a96141c1b3c6f37cf175fee7b7315cf64a7958d8b16c",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/index-parse.js": "9942360e65b1944f39d69279e7b67e6786258864c98eba1c7e508dade7c54fc7",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/node/index.js": "52198aa0f3528be20118093694f0687d285d45306725de92964e5e26aec5a57c",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/pseudo/index.js": "5c4e58d049c1c13930494f4d5ffc8c05d8464b6f5c3dba88bd8dfb701936d566",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/pseudo/lang.js": "ce5ce349afe26732f00aacf01aef046c5d561ab79988258c276652d2afc3a0c2",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/scope/atrulePrelude.js": "a770bb485cdd853f875909466657f5fd11ec45ed65fe75983a3195f3e6e47d9c",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/scope/default.js": "96dc78a97b49b02a9c4e768ad658b04cde0ccca92d46ec5a016d2b94b8df3aa7",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/scope/index.js": "d86ac0998693af6e7535e7314144032da29124b7c5686b5d19b2330967f1a0a9",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/scope/selector.js": "372306c1f32910ffbdbfa8dbe3abe550483061534b289cebca0248bfe103c15a",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/syntax/scope/value.js": "92c03516e7d6b36403c08421663b97e7c7a704590dd3f52589b9e32a3c4ca1c9",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/tokenizer/OffsetToLocation.js": "1246bdff87c6a08ac9f9505e2758898fee39e3bf1480ef6bfbf05eb65c6f59b6",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/tokenizer/TokenStream.js": "9d1b0b5e157a984b2700b75a2a44b63dae4ab426186f4d94d3aff2436967d0ec",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/tokenizer/adopt-buffer.js": "a5fdeaf3d9fb293c8f57cca9ec3aad1e66057ce646eac6d4e294032d12dcd087",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/tokenizer/char-code-definitions.js": "f184aa02202424f4b33110f3fb5f6228626eeb0cbbb9e15bcc0e33522ad28790",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/tokenizer/index.js": "51d063532994e1e1f7c0c24ac1a8ef0f213e5b97fdc5b17c1aaedfdcde4016df",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/tokenizer/names.js": "e033bb7b9a6fc4a6c4541f0e69cce456841bfbf689be4520710fa9018941f98f",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/tokenizer/types.js": "44e51dcd9d13abf655a7bcd5d9655bdaf386ec751a910d4aca9452544e8bfb81",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/tokenizer/utils.js": "2c0087a12707b22eae4bc44dd338a8682838663872b2240387c5979ae76d44bb",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/utils/List.js": "877cc7541338d107e5b9cebe265107fbe02f60d2c6b68944b2fa4a334e9158c8",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/utils/clone.js": "ebee335a4abd5dd5d591b7c960b5782ced9bfad372c0b42efb9e9104ea899f6c",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/utils/create-custom-error.js": "0433bd9e75230232aab25b5d37d14351c3dfe005933841bf176d01f0e0dfd238",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/utils/ident.js": "6e0e3d9ad14c2491d6f5f6d5caed0aca99becdb72f6eb3e80245c2dc1f4a9bf4",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/utils/names.js": "53e7d8b7a84f5d437be9b18b33b4d28412d83dab3de53659cdc624c54a4b56b9",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/utils/string.js": "249c99944c31160a71df74c76c71fe3327939e84243f24d1b9f46d9abf6ea5c4",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/utils/url.js": "c08cb33b48ba773ca988f8dab00c6ce0c7ae17621d8624e204a16b4510531df2",
+    "../privacy-frames-quickjs-kernel/node_modules/css-tree/lib/walker/create.js": "aa632d55bec88636a4a2f964e7dfb075993c1e0589eeebffa0b0327351af0f84",
+    "../privacy-frames-quickjs-kernel/node_modules/entities/dist/decode-codepoint.js": "dddf76e72987697316e647f046b2755dafe16308fe83159969b3155e0ebf3beb",
+    "../privacy-frames-quickjs-kernel/node_modules/entities/dist/decode.js": "6ce0048039ae0f9dab6e21dd1309661bcfe7e3beabfab1f15cdd61adb91e20b7",
+    "../privacy-frames-quickjs-kernel/node_modules/entities/dist/escape.js": "880426162e6e6a1c65cb67cca4824c529c37192b51b0571927a81d33074f7302",
+    "../privacy-frames-quickjs-kernel/node_modules/entities/dist/generated/decode-data-html.js": "1ff1226550125bb8976dd032b2dcfc37ba311863dbf9ae69b4b16922f5a38ead",
+    "../privacy-frames-quickjs-kernel/node_modules/entities/dist/generated/decode-data-xml.js": "e549a5fd573d540a4652c81fab6655f3418c34c1613a30ed245ca017d9a5b730",
+    "../privacy-frames-quickjs-kernel/node_modules/entities/dist/internal/bin-trie-flags.js": "8bb285f9ab41b9fd2525c83902c99b36e7c36da7cb7fa3be574d68f328183de5",
+    "../privacy-frames-quickjs-kernel/node_modules/entities/dist/internal/decode-shared.js": "cd26388e8ec3fdc2c4b212883e9ae460a4fe6dd37d80d0dacffd6b0087171b6b",
+    "../privacy-frames-quickjs-kernel/node_modules/parse5/dist/common/doctype.js": "855d8cd764782cdc73003a9847d03ed261c5158f6a6901e563ccd4d3b92c8b16",
+    "../privacy-frames-quickjs-kernel/node_modules/parse5/dist/common/error-codes.js": "b38ae5ac4f2a31ce2e1cfeca35cf7b89cc66736cd5be068cc433a3ccaca78be2",
+    "../privacy-frames-quickjs-kernel/node_modules/parse5/dist/common/foreign-content.js": "129a84a9d04b6050b6896de45a70e1ee468434e19bdd6486e3aef3405d137cac",
+    "../privacy-frames-quickjs-kernel/node_modules/parse5/dist/common/html.js": "e6cf93f387be70ddcd4f2bec67fbeb53161094f6306d834de461ec888a9dab76",
+    "../privacy-frames-quickjs-kernel/node_modules/parse5/dist/common/token.js": "52dac9efba3a637771818d633a5cf1df30c7913d05ff23235150c88319ea035a",
+    "../privacy-frames-quickjs-kernel/node_modules/parse5/dist/common/unicode.js": "69a0a52be895d2bcf88850beead4a098c5305c0b5669d1e8a0fe26f621ea25c6",
+    "../privacy-frames-quickjs-kernel/node_modules/parse5/dist/index.js": "b825162aced2e79be8d68d45efb1f89ec34ed4189467195a071a0d7b694a19d4",
+    "../privacy-frames-quickjs-kernel/node_modules/parse5/dist/parser/formatting-element-list.js": "a6e04b000b228a0bf7eba4e5462b343ec1e13dbfbe40bce913ade646bbde4461",
+    "../privacy-frames-quickjs-kernel/node_modules/parse5/dist/parser/index.js": "23eb8e0f6b45abc36132c08f067899e0e615acbe9069762ba7780a66db78e65d",
+    "../privacy-frames-quickjs-kernel/node_modules/parse5/dist/parser/open-element-stack.js": "fe4b609a572c9aa06fbd45ac53632b3ad565168903f4126a6f98d5a9d1f42999",
+    "../privacy-frames-quickjs-kernel/node_modules/parse5/dist/serializer/index.js": "bb11a62d05d463bf756814d89227ea889733d3808fe7ebe27cb4f607ed85a4c7",
+    "../privacy-frames-quickjs-kernel/node_modules/parse5/dist/tokenizer/index.js": "810ebc73056d41c9ed5e4718d0973b87bc90306ca010d0c8533ed81669f58a58",
+    "../privacy-frames-quickjs-kernel/node_modules/parse5/dist/tokenizer/preprocessor.js": "12199175a31eb461dcecefa10ce2536c69ab92cdd2a1f67da3ea20b214599ac1",
+    "../privacy-frames-quickjs-kernel/node_modules/parse5/dist/tree-adapters/default.js": "14b6408b0abb1c041e645644f977db34da280239be8a59a2eb3c9e282e89b7c4",
+    "../privacy-frames-quickjs-kernel/node_modules/quickjs-emscripten-core/dist/chunk-TAV5CUKK.mjs": "b423c720a9deef215b404e4ee212533bcef9de785a11f44aacf1ad8266ae6769",
+    "../privacy-frames-quickjs-kernel/node_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs": "5c58b732a4c6c5d097eb9366cafc08212867ff80e5b1dea24ed54e640ac71843",
+    "../privacy-frames-quickjs-kernel/node_modules/quickjs-emscripten-core/dist/index.mjs": "5f7a507ca71ffbff0ec0bad88a9c38f717d34fd8ab9222b58deacc9de5644a3e",
+    "../privacy-frames-quickjs-kernel/node_modules/quickjs-emscripten-core/dist/module-ES6BEMUI.mjs": "289a200ab91f855ed79f75147eb674b81cea7adf032f9344bd8b29ff5e7a7d43",
+    "../privacy-frames-quickjs-kernel/node_modules/quickjs-emscripten-core/dist/module-asyncify-2EFITU5U.mjs": "c8cec04532f68af9aa436ad117defdc686d36a1670691d98cea9263345ba7b2b",
+    "../privacy-frames-quickjs-kernel/node_modules/saxes/saxes.js": "d00e2ba27ed7d6ac961d03ff14d6b8c0eb5bf063ed2c996c22c6df06ac121423",
+    "../privacy-frames-quickjs-kernel/node_modules/source-map-js/lib/array-set.js": "163bb3055aaea7140167740036a83161fd912c344b14f992754b80f21477d754",
+    "../privacy-frames-quickjs-kernel/node_modules/source-map-js/lib/base64-vlq.js": "f3407e528f54ec0787bd0a71eeac0c99fffd98445916fcbe116dc69ca3be928b",
+    "../privacy-frames-quickjs-kernel/node_modules/source-map-js/lib/base64.js": "651bf433cf05e9ec8cee0b94639483236a605d48279e83d3d5c5de81c21d6599",
+    "../privacy-frames-quickjs-kernel/node_modules/source-map-js/lib/mapping-list.js": "35ddb82861f11a70ab84cb47d620fcb28d7f884bb444644e06bde815b836ef9e",
+    "../privacy-frames-quickjs-kernel/node_modules/source-map-js/lib/source-map-generator.js": "07894c9ea1e674263e2e7694d43d4fb935e98549b93946205b9536c1420696c0",
+    "../privacy-frames-quickjs-kernel/node_modules/source-map-js/lib/util.js": "0629f3ae2f3049cda3a2e87ea651dcf0cc71108f4681795ab989a8ac1573fc03",
+    "../privacy-frames-quickjs-kernel/node_modules/xmlchars/xml/1.0/ed5.js": "ea350479ab6f6553c0c3395c30ec440fb39821f6902081939831ddf1b5e8fd0f",
+    "../privacy-frames-quickjs-kernel/node_modules/xmlchars/xml/1.1/ed2.js": "461d5c71cc6076dc16aebbfd2d3c506481df5a74f43631d82372a6ffdc239d69",
+    "../privacy-frames-quickjs-kernel/node_modules/xmlchars/xmlns/1.0/ed3.js": "ff14ffa3a2cdfdd1b6077c4a8443dc949f53d5bb56de5ed89d4dbc5d9fdf08f7",
+    "src/guest/browser-policy.ts": "1a33de5c6a021e3618ecd9d7847a6fa1749b2e0497f964b1c6f19b0d96d9a8c7",
+    "src/guest/browser.ts": "0c6c18f477416a69994ff590f63a419689465939ef1aff1188e5e09e22a97a29",
+    "src/guest/contexts/audio-worklet.ts": "8706554251c0020af6599b599e306b3e0e9cffceebd31ce739c825071e789577",
+    "src/guest/contexts/brands.ts": "d0b5d97c4e97a71e13408adb1bc0b46c00e2d2c13cf3bb1320fbe9d1bf4a94e5",
+    "src/guest/contexts/documents.ts": "02ce86f6e8ef962eb48eb84c88b012613d91728fffe752f4a600f3cd8d8746f0",
+    "src/guest/contexts/lifecycle-kernel.ts": "93a3711767ee0e6071ed0a3ebdebf3231179fd54671c639ed382243c13aa3179",
+    "src/guest/contexts/processor-name.ts": "0f90b774357d6b8c5279d6a887f4f279282bee68d682002c535e40763adef5e2",
+    "src/guest/contexts/window-contexts.ts": "b38d44e2dd955c36894abb587b9e28dc82397e0845924077e940c8b7c656ec7a",
+    "src/guest/contexts/worker-factory.ts": "9d6b64c8471f497408588e4c892910638d67cb0dd2d559fbb6dbce70b507a1bd",
+    "src/guest/css.ts": "ef01e1e37e18deb526344717219399160394fd5d190f471535ff5fd10dfdecb9",
+    "src/guest/custom-elements.ts": "ff3cf0ab9c85bee1f74d6198431c01615e1c6e9cf198dd4b9fc68d78a045cb0d",
+    "src/guest/dom.ts": "75a654d384521c8c7153bf55bfe71f19ed1eab3b27d1c60fa37241aa300e764a",
+    "src/guest/engine.ts": "f47d9f29180bf54561025352567648768dcb0cfc2b01519ee218ac7e447f6027",
+    "src/guest/event-listener-arguments.ts": "f5219d8d8da8d9f5d67f0afb46756a2e7ef55003b64fc846dafccf134c27a080",
+    "src/guest/event-policy.ts": "04b6c5c11b185b3359931505b50fc147ea0e6195d2acf7cc1792260bf7387c82",
+    "src/guest/generated-runtime-interfaces.ts": "55fa35f2d27fe9b123c74f77a229a2a64b86ace4f2883e5fb70715d851117182",
+    "src/guest/guest-binary.ts": "da8dbde72247dd7b85b52bac138ddafa14f778729ceec34cf11eca0b924dea32",
+    "src/guest/guest-runtime.ts": "058930f5f581f18210f636c210c0dbba27e51a145826c2adcb95d3295436bc1d",
+    "src/guest/identity.ts": "e067e5dea7a2b036ced0905abd77e6a40f187ec2a3231466b1825a2e84b8c748",
+    "src/guest/indexed-access.ts": "5ba66e4bd8e29240a4d3def4cc97eaef5007103b26f8121f5261d492bbc86e5d",
+    "src/guest/legacy-regexp.ts": "bbfcdccb8fab7c9a1462d91c8237f6cbe8c90be1f331c2f5f6b3629b569231bb",
+    "src/guest/location.ts": "c2a3a431be4e90823664b4bc444de40d292df821fabfff2c627c5fb750fd382a",
+    "src/guest/message-transfer.ts": "b126fa4cf88d3434b73160c9adce0a17b7441a34c642eef7fb982b540ed79c1a",
+    "src/guest/native-binary.ts": "ed0665a76a4c4fb2e35e5acc180b4d4e50e8c1c3fc3762de389362b380e5d637",
+    "src/guest/native-brand.ts": "ebb96efef406a05debada5a3a3117ff0a3954e7eb706712871cb6290a2b13b00",
+    "src/guest/native-host.ts": "0420675d80bbc038b3c8cfbe8d8bb53e3d322ecb856613870de0405b553a8ff9",
+    "src/guest/native-policy.ts": "ba0fb4f746bc472c480f0dbeff9e83a629c74e81ba832a3bd8019a6f1e2b1ce8",
+    "src/guest/native-string-mapping.ts": "e82837f3f3ea402c3eb3c9f15a08b81dad1a1a9a0bac399328dd99cc6e0bd319",
+    "src/guest/native-wasm.ts": "670c8a4e9cfd50ca037aa7d2596ea4716b3b35f70d05c2cefc33c27e3db61852",
+    "src/guest/parser.ts": "cf041b9ade4752b4936d5b384b65b03e154d9c12d255f543fb628c2f21e9671e",
+    "src/guest/quickjs.ts": "ab4b6912ca399f3fa56a4a6f252b13e69561fe626e8dcf956f8ffff59a2b9d3b",
+    "src/guest/resources.ts": "fbb363fbe07bb3ea59ac7789afbe19b51099972282012daa69624789e3c90778",
+    "src/guest/runtime-interfaces.ts": "fd51bfa7d25ec78ecdd0d59adb198fe41c5119954237ee396ccee5bb6bb05103",
+    "src/guest/session.ts": "7d6566044cec86e7ee1bd8629cc05bbcf89c62915d8dc4e415a5eb5d5b413f55",
+    "src/guest/storage.ts": "de4d5f84f07c36f7e18a20ad30261279c49c49c31b5691da7d83e0259fe8d4d3",
+    "src/guest/text-policy.ts": "cb30d1be3b96c9ea73fd8c6b13375fbaf781f8bc37c4f2928d56bed1c27a345c",
+    "src/guest/url-policy.ts": "cd9c54875cac49c55634b910e723abe0fc5c402f429107eefbb910ce79d54d7a",
+    "src/guest/wasm-accessors.ts": "7e03c8e70638d2d861392ec0b2ed40867c638bfcbb26774fbf1e240b2b18589b",
+    "src/guest/web-services.ts": "429fa17d217a6f7a155b6e80e7ff8b062eb5077b78dd19bc635da9417147266d",
+    "test/guest-native-string-mapping.browser.ts": "84c2e6c9bb33fbaf024b2b1da9a8314e0b09b993f8193145c0b5d55483cded8f",
+    "vendor/quickjs/generated/engine.mjs": "60147727aeb5c4441d54ad7b3c625e952bec7faa8db8531522eb71dd9ab9da2e"
+  },
+  "toolchain": {
+    "node": "v24.18.0",
+    "esbuild": "0.28.2"
+  },
+  "engineSHA256": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
+  "bundleHashes": {
+    "production": "4c96811dcbed9d20e920eb4e55be50d8f28772dd78abb7989748a5a6279240f9",
+    "cssSetMappingRemoved": "a8553953589041e59bdc9a0914ed38fba33da895dfb9158e7a5aa9dd8d7be7d1"
+  },
+  "fault": "Only the actual BrowserEnvironment CSS assignment mapping line is omitted from a temporary esbuild bundle. Production sources are unchanged.",
+  "receipts": [
+    {
+      "browser": "chromium",
+      "executablePath": "/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+      "executableSHA256": "8c599d43aec53f2460a31ae2f4af6bd863f8258b34ff519564bc5d4726bfaa1e",
+      "version": "153.0.8010.12",
+      "variant": "production",
+      "result": {
+        "cases": [
+          "setProperty:objects",
+          "setProperty:null",
+          "setProperty:undefined",
+          "setProperty:symbol",
+          "setProperty:throw",
+          "setProperty:missing",
+          "setProperty:priorityUndefined",
+          "setProperty:priorityNull",
+          "setProperty:reentry"
+        ],
+        "computedURLs": [
+          {
+            "input": "url(\"https://fixture.invalid/base/\ud800\")",
+            "declared": "url(\"https://fixture.invalid/base/\\0 \")",
+            "expected": "url(\"https://fixture.invalid/base/%EF%BF%BD\")",
+            "actual": "url(\"https://fixture.invalid/base/%EF%BF%BD\")",
+            "mapped": [
+              "https://fixture.invalid/base/�"
+            ]
+          },
+          {
+            "input": "u\\72l(\"https://fixture.invalid/base/\\d800 \")",
+            "declared": "url(\"https://fixture.invalid/base/�\")",
+            "expected": "url(\"https://fixture.invalid/base/%EF%BF%BD\")",
+            "actual": "url(\"https://fixture.invalid/base/%EF%BF%BD\")",
+            "mapped": [
+              "https://fixture.invalid/base/�"
+            ]
+          },
+          {
+            "input": "url(\"https://fixture.invalid/base/\u0000\")",
+            "declared": "url(\"https://fixture.invalid/base/�\")",
+            "expected": "url(\"https://fixture.invalid/base/%EF%BF%BD\")",
+            "actual": "url(\"https://fixture.invalid/base/%EF%BF%BD\")",
+            "mapped": [
+              "https://fixture.invalid/base/�"
+            ]
+          },
+          {
+            "input": "url(https://fixture.invalid/base/\\0 )",
+            "declared": "url(\"https://fixture.invalid/base/�\")",
+            "expected": "url(\"https://fixture.invalid/base/%EF%BF%BD\")",
+            "actual": "url(\"https://fixture.invalid/base/%EF%BF%BD\")",
+            "mapped": [
+              "https://fixture.invalid/base/�"
+            ]
+          },
+          {
+            "input": "url(\"data:text/plain,\ud800\")",
+            "declared": "url(\"data:text/plain,\\0 \")",
+            "expected": "url(\"data:text/plain,%EF%BF%BD\")",
+            "actual": "url(\"data:text/plain,%EF%BF%BD\")",
+            "mapped": [
+              "data:text/plain,�"
+            ]
+          },
+          {
+            "input": "u\\72l(\"data:text/plain,\\d800 \")",
+            "declared": "url(\"data:text/plain,�\")",
+            "expected": "url(\"data:text/plain,%EF%BF%BD\")",
+            "actual": "url(\"data:text/plain,%EF%BF%BD\")",
+            "mapped": [
+              "data:text/plain,�"
+            ]
+          },
+          {
+            "input": "url(\"data:text/plain,\u0000\")",
+            "declared": "url(\"data:text/plain,�\")",
+            "expected": "url(\"data:text/plain,%EF%BF%BD\")",
+            "actual": "url(\"data:text/plain,%EF%BF%BD\")",
+            "mapped": [
+              "data:text/plain,�"
+            ]
+          },
+          {
+            "input": "url(data:text/plain,\\0 )",
+            "declared": "url(\"data:text/plain,�\")",
+            "expected": "url(\"data:text/plain,%EF%BF%BD\")",
+            "actual": "url(\"data:text/plain,%EF%BF%BD\")",
+            "mapped": [
+              "data:text/plain,�"
+            ]
+          },
+          {
+            "input": "url(\"blob:https://fixture.invalid/\ud800\")",
+            "declared": "url(\"blob:https://fixture.invalid/\\0 \")",
+            "expected": "url(\"blob:https://fixture.invalid/%EF%BF%BD\")",
+            "actual": "url(\"blob:https://fixture.invalid/%EF%BF%BD\")",
+            "mapped": [
+              "blob:https://fixture.invalid/�"
+            ]
+          },
+          {
+            "input": "u\\72l(\"blob:https://fixture.invalid/\\d800 \")",
+            "declared": "url(\"blob:https://fixture.invalid/�\")",
+            "expected": "url(\"blob:https://fixture.invalid/%EF%BF%BD\")",
+            "actual": "url(\"blob:https://fixture.invalid/%EF%BF%BD\")",
+            "mapped": [
+              "blob:https://fixture.invalid/�"
+            ]
+          },
+          {
+            "input": "url(\"blob:https://fixture.invalid/\u0000\")",
+            "declared": "url(\"blob:https://fixture.invalid/�\")",
+            "expected": "url(\"blob:https://fixture.invalid/%EF%BF%BD\")",
+            "actual": "url(\"blob:https://fixture.invalid/%EF%BF%BD\")",
+            "mapped": [
+              "blob:https://fixture.invalid/�"
+            ]
+          },
+          {
+            "input": "url(blob:https://fixture.invalid/\\0 )",
+            "declared": "url(\"blob:https://fixture.invalid/�\")",
+            "expected": "url(\"blob:https://fixture.invalid/%EF%BF%BD\")",
+            "actual": "url(\"blob:https://fixture.invalid/%EF%BF%BD\")",
+            "mapped": [
+              "blob:https://fixture.invalid/�"
+            ]
+          },
+          {
+            "input": "url(\"https://fixture.invalid/base/😀\")",
+            "declared": "url(\"https://fixture.invalid/base/😀\")",
+            "expected": "url(\"https://fixture.invalid/base/%F0%9F%98%80\")",
+            "actual": "url(\"https://fixture.invalid/base/%F0%9F%98%80\")",
+            "mapped": [
+              "https://fixture.invalid/base/😀"
+            ]
+          },
+          {
+            "input": "url(\"https://fixture.invalid/base/\\d83d\\de00\")",
+            "declared": "url(\"https://fixture.invalid/base/��\")",
+            "expected": "url(\"https://fixture.invalid/base/%EF%BF%BD%EF%BF%BD\")",
+            "actual": "url(\"https://fixture.invalid/base/%EF%BF%BD%EF%BF%BD\")",
+            "mapped": [
+              "https://fixture.invalid/base/��"
+            ]
+          },
+          {
+            "input": "url(\"https://fixture.invalid/base/%ED%A0%80\")",
+            "declared": "url(\"https://fixture.invalid/base/%ED%A0%80\")",
+            "expected": "url(\"https://fixture.invalid/base/%ED%A0%80\")",
+            "actual": "url(\"https://fixture.invalid/base/%ED%A0%80\")",
+            "mapped": [
+              "https://fixture.invalid/base/%ED%A0%80"
+            ]
+          }
+        ],
+        "actual": true
+      },
+      "observed": {
+        "count": 4,
+        "first": "url(\"data:application/octet-stream,\")",
+        "primitive": "url(\"data:application/octet-stream,\")",
+        "second": "url(\"data:application/octet-stream,\")",
+        "third": ".fixture { background: url(\"data:application/octet-stream,\"); }",
+        "audio": "data:application/octet-stream,"
+      }
+    },
+    {
+      "browser": "chromium",
+      "executablePath": "/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+      "executableSHA256": "8c599d43aec53f2460a31ae2f4af6bd863f8258b34ff519564bc5d4726bfaa1e",
+      "version": "153.0.8010.12",
+      "variant": "CSS-set-mapping-removed",
+      "observed": {
+        "count": 4,
+        "first": "url(\"https://fixture.invalid/unknown.png\")",
+        "primitive": "url(\"https://fixture.invalid/primitive.png\")",
+        "second": "url(\"data:application/octet-stream,\")",
+        "third": ".fixture { background: url(\"data:application/octet-stream,\"); }",
+        "audio": "data:application/octet-stream,"
+      },
+      "rejected": true
+    },
+    {
+      "browser": "firefox",
+      "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
+      "executableSHA256": "062272ac4d851eade5b75db2dc7c14569d96cb3ca38f949337cdc1b74367e35b",
+      "version": "155.0",
+      "variant": "production",
+      "result": {
+        "cases": [
+          "setProperty:objects",
+          "setProperty:null",
+          "setProperty:undefined",
+          "setProperty:symbol",
+          "setProperty:throw",
+          "setProperty:missing",
+          "setProperty:priorityUndefined",
+          "setProperty:priorityNull",
+          "setProperty:reentry"
+        ],
+        "computedURLs": [
+          {
+            "input": "url(\"https://fixture.invalid/base/\ud800\")",
+            "declared": "url(\"https://fixture.invalid/base/�\")",
+            "expected": "url(\"https://fixture.invalid/base/%EF%BF%BD\")",
+            "actual": "url(\"https://fixture.invalid/base/%EF%BF%BD\")",
+            "mapped": [
+              "https://fixture.invalid/base/�"
+            ]
+          },
+          {
+            "input": "u\\72l(\"https://fixture.invalid/base/\\d800 \")",
+            "declared": "url(\"https://fixture.invalid/base/�\")",
+            "expected": "url(\"https://fixture.invalid/base/%EF%BF%BD\")",
+            "actual": "url(\"https://fixture.invalid/base/%EF%BF%BD\")",
+            "mapped": [
+              "https://fixture.invalid/base/�"
+            ]
+          },
+          {
+            "input": "url(\"https://fixture.invalid/base/\u0000\")",
+            "declared": "url(\"https://fixture.invalid/base/�\")",
+            "expected": "url(\"https://fixture.invalid/base/%EF%BF%BD\")",
+            "actual": "url(\"https://fixture.invalid/base/%EF%BF%BD\")",
+            "mapped": [
+              "https://fixture.invalid/base/�"
+            ]
+          },
+          {
+            "input": "url(https://fixture.invalid/base/\\0 )",
+            "declared": "url(\"https://fixture.invalid/base/�\")",
+            "expected": "url(\"https://fixture.invalid/base/%EF%BF%BD\")",
+            "actual": "url(\"https://fixture.invalid/base/%EF%BF%BD\")",
+            "mapped": [
+              "https://fixture.invalid/base/�"
+            ]
+          },
+          {
+            "input": "url(\"data:text/plain,\ud800\")",
+            "declared": "url(\"data:text/plain,�\")",
+            "expected": "url(\"data:text/plain,%EF%BF%BD\")",
+            "actual": "url(\"data:text/plain,%EF%BF%BD\")",
+            "mapped": [
+              "data:text/plain,�"
+            ]
+          },
+          {
+            "input": "u\\72l(\"data:text/plain,\\d800 \")",
+            "declared": "url(\"data:text/plain,�\")",
+            "expected": "url(\"data:text/plain,%EF%BF%BD\")",
+            "actual": "url(\"data:text/plain,%EF%BF%BD\")",
+            "mapped": [
+              "data:text/plain,�"
+            ]
+          },
+          {
+            "input": "url(\"data:text/plain,\u0000\")",
+            "declared": "url(\"data:text/plain,�\")",
+            "expected": "url(\"data:text/plain,%EF%BF%BD\")",
+            "actual": "url(\"data:text/plain,%EF%BF%BD\")",
+            "mapped": [
+              "data:text/plain,�"
+            ]
+          },
+          {
+            "input": "url(data:text/plain,\\0 )",
+            "declared": "url(\"data:text/plain,�\")",
+            "expected": "url(\"data:text/plain,%EF%BF%BD\")",
+            "actual": "url(\"data:text/plain,%EF%BF%BD\")",
+            "mapped": [
+              "data:text/plain,�"
+            ]
+          },
+          {
+            "input": "url(\"blob:https://fixture.invalid/\ud800\")",
+            "declared": "url(\"blob:https://fixture.invalid/�\")",
+            "expected": "url(\"blob:https://fixture.invalid/%EF%BF%BD\")",
+            "actual": "url(\"blob:https://fixture.invalid/%EF%BF%BD\")",
+            "mapped": [
+              "blob:https://fixture.invalid/�"
+            ]
+          },
+          {
+            "input": "u\\72l(\"blob:https://fixture.invalid/\\d800 \")",
+            "declared": "url(\"blob:https://fixture.invalid/�\")",
+            "expected": "url(\"blob:https://fixture.invalid/%EF%BF%BD\")",
+            "actual": "url(\"blob:https://fixture.invalid/%EF%BF%BD\")",
+            "mapped": [
+              "blob:https://fixture.invalid/�"
+            ]
+          },
+          {
+            "input": "url(\"blob:https://fixture.invalid/\u0000\")",
+            "declared": "url(\"blob:https://fixture.invalid/�\")",
+            "expected": "url(\"blob:https://fixture.invalid/%EF%BF%BD\")",
+            "actual": "url(\"blob:https://fixture.invalid/%EF%BF%BD\")",
+            "mapped": [
+              "blob:https://fixture.invalid/�"
+            ]
+          },
+          {
+            "input": "url(blob:https://fixture.invalid/\\0 )",
+            "declared": "url(\"blob:https://fixture.invalid/�\")",
+            "expected": "url(\"blob:https://fixture.invalid/%EF%BF%BD\")",
+            "actual": "url(\"blob:https://fixture.invalid/%EF%BF%BD\")",
+            "mapped": [
+              "blob:https://fixture.invalid/�"
+            ]
+          },
+          {
+            "input": "url(\"https://fixture.invalid/base/😀\")",
+            "declared": "url(\"https://fixture.invalid/base/😀\")",
+            "expected": "url(\"https://fixture.invalid/base/%F0%9F%98%80\")",
+            "actual": "url(\"https://fixture.invalid/base/%F0%9F%98%80\")",
+            "mapped": [
+              "https://fixture.invalid/base/😀"
+            ]
+          },
+          {
+            "input": "url(\"https://fixture.invalid/base/\\d83d\\de00\")",
+            "declared": "url(\"https://fixture.invalid/base/��\")",
+            "expected": "url(\"https://fixture.invalid/base/%EF%BF%BD%EF%BF%BD\")",
+            "actual": "url(\"https://fixture.invalid/base/%EF%BF%BD%EF%BF%BD\")",
+            "mapped": [
+              "https://fixture.invalid/base/��"
+            ]
+          },
+          {
+            "input": "url(\"https://fixture.invalid/base/%ED%A0%80\")",
+            "declared": "url(\"https://fixture.invalid/base/%ED%A0%80\")",
+            "expected": "url(\"https://fixture.invalid/base/%ED%A0%80\")",
+            "actual": "url(\"https://fixture.invalid/base/%ED%A0%80\")",
+            "mapped": [
+              "https://fixture.invalid/base/%ED%A0%80"
+            ]
+          }
+        ],
+        "actual": true
+      },
+      "observed": {
+        "count": 4,
+        "first": "url(\"data:application/octet-stream,\")",
+        "primitive": "url(\"data:application/octet-stream,\")",
+        "second": "url(\"data:application/octet-stream,\")",
+        "third": ".fixture { background: url(\"data:application/octet-stream,\"); }",
+        "audio": "data:application/octet-stream,"
+      }
+    },
+    {
+      "browser": "firefox",
+      "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
+      "executableSHA256": "062272ac4d851eade5b75db2dc7c14569d96cb3ca38f949337cdc1b74367e35b",
+      "version": "155.0",
+      "variant": "CSS-set-mapping-removed",
+      "observed": {
+        "count": 4,
+        "first": "url(\"https://fixture.invalid/unknown.png\")",
+        "primitive": "url(\"https://fixture.invalid/primitive.png\")",
+        "second": "url(\"data:application/octet-stream,\")",
+        "third": ".fixture { background: url(\"data:application/octet-stream,\"); }",
+        "audio": "data:application/octet-stream,"
+      },
+      "rejected": true
+    }
+  ],
+  "completedAt": "2026-11-21T19:19:00.075Z"
+}

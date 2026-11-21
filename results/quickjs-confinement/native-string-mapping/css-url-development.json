@@ -1,0 +1,127 @@
+{
+  "status": "failed-development-expectation",
+  "reason": "An initial expectation incorrectly treated pre-existing unquoted raw-NUL grammar rejection as supported native parity; it remains explicitly unsupported and fail-closed, not silently normalized. A stale result label was also corrected.",
+  "sourceHashes": {
+    "src/guest/css.ts": "ef01e1e37e18deb526344717219399160394fd5d190f471535ff5fd10dfdecb9",
+    "test/guest-native-string-mapping.browser.ts": "6108fc6525aa86d6ae5fe3af0582703548a92b69bd83670b061265febd8db8b6",
+    "test/guest-css-url-normalization.test.ts": "0f8c8a10e019897c588cfb80deef8620fcd3874df5d08b2c50d2a3ae78d4ed27"
+  },
+  "unitFailure": "\u2716 decoded CSS resource URLs normalize invalid scalar input before mapping (4.004209ms)\n\u2714 mapping defers original string conversion and preserves the original receiver (1.065805ms)\n\u2714 null conversion, USV normalization and Symbol errors precede mapping (0.356054ms)\n\u2139 tests 3\n\u2139 suites 0\n\u2139 pass 2\n\u2139 fail 1\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 187.758356\n\n\u2716 failing tests:\n\ntest at test/guest-css-url-normalization.test.ts:5:1\n\u2716 decoded CSS resource URLs normalize invalid scalar input before mapping (4.004209ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n  + actual - expected\n  \n  + []\n  - [\n  -   './\ufffd'\n  - ]\n  \n      at TestContext.<anonymous> (/home/damen/Projects/privacy-frames-native-string-mapping/test/guest-css-url-normalization.test.ts:21:12)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1325:25)\n      at Test.start (node:internal/test_runner/test:1191:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:385:17) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: [],\n    expected: [ './\ufffd' ],\n    operator: 'deepStrictEqual',\n    diff: 'simple'\n  }\n",
+  "browserFailure": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Error: native computed URL classification: {\"a\":\"url(\\\"https://fixture.invalid/base/%EF%BF%BD\\\")\",\"b\":\"none\"}\n+ actual - expected\n\n+ 'Error: native computed URL classification: {\"a\":\"url(\\\\\"https://fixture.invalid/base/%EF%BF%BD\\\\\")\",\"b\":\"none\"}'\n- undefined\n\n    at <anonymous> (/home/damen/Projects/privacy-frames-native-string-mapping/test/guest-native-string-mapping.ts:149:18) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: 'Error: native computed URL classification: {\"a\":\"url(\\\\\"https://fixture.invalid/base/%EF%BF%BD\\\\\")\",\"b\":\"none\"}',\n  expected: undefined,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.18.0\n",
+  "nativeURLCharacterization": [
+    {
+      "browser": "chromium",
+      "executablePath": "/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
+      "version": "153.0.8010.12",
+      "observations": [
+        {
+          "value": "./\ud800",
+          "declared": "url(\"./\\0 \")",
+          "computed": "url(\"https://fixture.invalid/base/%EF%BF%BD\")"
+        },
+        {
+          "value": "./\\d800 ",
+          "declared": "url(\"./\ufffd\")",
+          "computed": "url(\"https://fixture.invalid/base/%EF%BF%BD\")"
+        },
+        {
+          "value": "./\udc00",
+          "declared": "url(\"./\\0 \")",
+          "computed": "url(\"https://fixture.invalid/base/%EF%BF%BD\")"
+        },
+        {
+          "value": "./\ud83d\ude00",
+          "declared": "url(\"./\ud83d\ude00\")",
+          "computed": "url(\"https://fixture.invalid/base/%F0%9F%98%80\")"
+        },
+        {
+          "value": "./\\d83d\\de00",
+          "declared": "url(\"./\ufffd\ufffd\")",
+          "computed": "url(\"https://fixture.invalid/base/%EF%BF%BD%EF%BF%BD\")"
+        },
+        {
+          "value": "./\u0000",
+          "declared": "url(\"./\ufffd\")",
+          "computed": "url(\"https://fixture.invalid/base/%EF%BF%BD\")"
+        },
+        {
+          "value": "./\\0 ",
+          "declared": "url(\"./\ufffd\")",
+          "computed": "url(\"https://fixture.invalid/base/%EF%BF%BD\")"
+        },
+        {
+          "value": "./%ED%A0%80",
+          "declared": "url(\"./%ED%A0%80\")",
+          "computed": "url(\"https://fixture.invalid/base/%ED%A0%80\")"
+        },
+        {
+          "value": "data:text/plain,\ud800",
+          "declared": "url(\"data:text/plain,\\0 \")",
+          "computed": "url(\"data:text/plain,%EF%BF%BD\")"
+        },
+        {
+          "value": "blob:https://fixture.invalid/\ud800",
+          "declared": "url(\"blob:https://fixture.invalid/\\0 \")",
+          "computed": "url(\"blob:https://fixture.invalid/%EF%BF%BD\")"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
+      "version": "155.0",
+      "observations": [
+        {
+          "value": "./\ud800",
+          "declared": "url(\"./\ufffd\")",
+          "computed": "url(\"https://fixture.invalid/base/%EF%BF%BD\")"
+        },
+        {
+          "value": "./\\d800 ",
+          "declared": "url(\"./\ufffd\")",
+          "computed": "url(\"https://fixture.invalid/base/%EF%BF%BD\")"
+        },
+        {
+          "value": "./\udc00",
+          "declared": "url(\"./\ufffd\")",
+          "computed": "url(\"https://fixture.invalid/base/%EF%BF%BD\")"
+        },
+        {
+          "value": "./\ud83d\ude00",
+          "declared": "url(\"./\ud83d\ude00\")",
+          "computed": "url(\"https://fixture.invalid/base/%F0%9F%98%80\")"
+        },
+        {
+          "value": "./\\d83d\\de00",
+          "declared": "url(\"./\ufffd\ufffd\")",
+          "computed": "url(\"https://fixture.invalid/base/%EF%BF%BD%EF%BF%BD\")"
+        },
+        {
+          "value": "./\u0000",
+          "declared": "url(\"./\ufffd\")",
+          "computed": "url(\"https://fixture.invalid/base/%EF%BF%BD\")"
+        },
+        {
+          "value": "./\\0 ",
+          "declared": "url(\"./\ufffd\")",
+          "computed": "url(\"https://fixture.invalid/base/%EF%BF%BD\")"
+        },
+        {
+          "value": "./%ED%A0%80",
+          "declared": "url(\"./%ED%A0%80\")",
+          "computed": "url(\"https://fixture.invalid/base/%ED%A0%80\")"
+        },
+        {
+          "value": "data:text/plain,\ud800",
+          "declared": "url(\"data:text/plain,\ufffd\")",
+          "computed": "url(\"data:text/plain,%EF%BF%BD\")"
+        },
+        {
+          "value": "blob:https://fixture.invalid/\ud800",
+          "declared": "url(\"blob:https://fixture.invalid/\ufffd\")",
+          "computed": "url(\"blob:https://fixture.invalid/%EF%BF%BD\")"
+        }
+      ]
+    }
+  ]
+}

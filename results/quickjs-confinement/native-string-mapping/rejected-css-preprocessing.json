@@ -1,0 +1,97 @@
+{
+  "status": "rejected-development-approach",
+  "reason": "A CSS Syntax preprocessing expansion did not preserve actual Chromium CSSOM serialization of malformed UTF16. It is not production qualification.",
+  "sourceHashes": {
+    "src/guest/css.ts": "89da8c0b6e3ee1ee671c4f9488d2626fdeb30d45ec6b1bab57375bd385cfec2b",
+    "src/guest/native-string-mapping.ts": "e82837f3f3ea402c3eb3c9f15a08b81dad1a1a9a0bac399328dd99cc6e0bd319",
+    "test/guest-native-string-mapping.browser.ts": "011b80881879b9768643ec1a0f0b1bafa0b0c2519190ab27099cb0bda92af313",
+    "test/guest-css-preprocessing.test.ts": "7fe6dd7769b28702f4862961c86e6355603c7ec49abe4503bff36754420a26b9"
+  },
+  "patch": "diff --git a/src/guest/css.ts b/src/guest/css.ts\nindex 8b0a3fb..a9a2ac0 100644\n--- a/src/guest/css.ts\n+++ b/src/guest/css.ts\n@@ -2,12 +2,25 @@ import { generate, ident, parse, walk, type CssNode } from 'css-tree';\n \n export type GuestCSSContext = 'stylesheet' | 'declarationList' | 'value';\n \n+const wellFormed: unknown = Reflect.get(String.prototype, 'toWellFormed');\n+const apply = Reflect.apply;\n+\n+/** CSS Syntax input filtering is independent of the native binding's string\n+ * representation. Apply it before parsing or classifying any resource URL. */\n+export function preprocessGuestCSS(text: string): string {\n+  if (typeof wellFormed !== 'function')\n+    throw new TypeError('CSS input filtering requires String.prototype.toWellFormed');\n+  const normalized: string = apply(wellFormed, text, []);\n+  return normalized.replace(/\\r\\n?|\\f/g, '\\n').replace(/\\0/g, '\\ufffd');\n+}\n+\n /** Parse before mapping so escaped syntax and quoted image candidates agree. */\n export function rewriteGuestCSS(\n   text: string,\n   map: (url: string) => string,\n   context?: GuestCSSContext,\n ): string {\n+  text = preprocessGuestCSS(text);\n   const mapped = (value: string) => {\n     if (!value) return value;\n     try {\ndiff --git a/src/guest/native-string-mapping.ts b/src/guest/native-string-mapping.ts\nindex d26f03e..efa176b 100644\n--- a/src/guest/native-string-mapping.ts\n+++ b/src/guest/native-string-mapping.ts\n@@ -37,15 +37,6 @@ export function mapNativeString(\n   return wrapper;\n }\n \n-/** CSSOM explicitly permits either string representation. CSS.escape performs\n- * no CSS parsing, so unlike a style declaration it preserves the distinction. */\n-export function cssomStringType(escape: (value: string) => string): StringType {\n-  const converted = escape('\\ud800');\n-  if (converted === '\\ud800') return 'DOMString';\n-  if (converted === '\\ufffd') return 'USVString';\n-  throw new TypeError('Unrecognized native CSSOMString conversion');\n-}\n-\n function legacyCSSData(descriptor: PropertyDescriptor | undefined): boolean {\n   return (\n     !!descriptor &&\n@@ -73,19 +64,14 @@ interface MappingOptions {\n export function createNativeStringMapping(options: MappingOptions) {\n   const read = (key: string): unknown => Reflect.get(options.global, key);\n   const css: unknown = read('CSS');\n-  const escape: unknown = css && Reflect.get(css, 'escape');\n   const supports: unknown = css && Reflect.get(css, 'supports');\n-  const cssType =\n-    typeof escape === 'function'\n-      ? cssomStringType((value) => nativeApply(escape, css, [value]))\n-      : undefined;\n-  const mappedCSS = (input: unknown, context: CSSContext, legacy = false): object => {\n-    if (!cssType) throw new TypeError('Native CSSOMString conversion is unavailable');\n-    return mapNativeString(input, (value) => options.css(value, context), {\n-      type: cssType,\n+  // CSS-bound input is filtered by the CSS parser before resource mapping.\n+  // Do not infer another API's bindings from CSS.escape's string type.\n+  const mappedCSS = (input: unknown, context: CSSContext, legacy = false): object =>\n+    mapNativeString(input, (value) => options.css(value, context), {\n+      type: 'DOMString',\n       legacyNullToEmptyString: legacy,\n     });\n-  };\n   const setters = new Map<Function, { context: CSSContext; legacy: boolean }>();\n   const operations = new Map<Function, (args: readonly unknown[]) => unknown[]>();\n   const prototype = (name: string): object | undefined => {\ndiff --git a/test/guest-native-string-mapping.browser.ts b/test/guest-native-string-mapping.browser.ts\nindex 78ceed6..13987ae 100644\n--- a/test/guest-native-string-mapping.browser.ts\n+++ b/test/guest-native-string-mapping.browser.ts\n@@ -1,3 +1,4 @@\n+import { preprocessGuestCSS, rewriteGuestCSS } from '../src/guest/css.ts';\n import { createNativeStringMapping } from '../src/guest/native-string-mapping.ts';\n import { createGuestWindow } from '../src/guest/session.ts';\n import type { GuestContextCatalog } from '../src/guest/contexts/types.ts';\n@@ -212,6 +213,38 @@ async function run() {\n     }\n     same(outcomes[0], outcomes[1], 'Audio optional native parity');\n   }\n+  const cssInputs = [\n+    ...['./', 'data:text/plain,', 'blob:https://fixture.invalid/'].flatMap((prefix) => [\n+      `url(\"${prefix}\\ud800\")`,\n+      `u\\\\72l(\"${prefix}\\\\d800 \")`,\n+      `url(${prefix}\\0)`,\n+      `url(${prefix}\\\\0 )`,\n+    ]),\n+    'url(\"./\ud83d\ude00\")',\n+    'url(\"./\\\\d83d\\\\de00\")',\n+    'url(\"./%ED%A0%80\")',\n+    'url(\"./a\\\\\\r\\nb\")',\n+    'url(./a\\r\\n)',\n+    'url(./a\\f)',\n+  ];\n+  for (const input of cssInputs) {\n+    const native = document.createElement('div').style;\n+    const filtered = document.createElement('div').style;\n+    const rewritten = document.createElement('div').style;\n+    native.backgroundImage = input;\n+    filtered.backgroundImage = preprocessGuestCSS(input);\n+    rewritten.backgroundImage = rewriteGuestCSS(input, (url) => url, 'value');\n+    same(\n+      native.backgroundImage,\n+      filtered.backgroundImage,\n+      'native CSS filtering equivalence',\n+    );\n+    same(\n+      native.backgroundImage,\n+      rewritten.backgroundImage,\n+      'native CSS rewrite equivalence',\n+    );\n+  }\n   const catalog: GuestContextCatalog = {\n     application: 'string-mapping',\n     generation: 'fixture',\n@@ -255,7 +288,11 @@ async function run() {\n         String(Reflect.get(result, key)).includes('data:application/octet-stream,'),\n         'actual unknown URL mapped: ' + key,\n       );\n-    Reflect.set(window, '__stringMappingResult', { cases, actual: true });\n+    Reflect.set(window, '__stringMappingResult', {\n+      cases,\n+      cssInputs: cssInputs.length,\n+      actual: true,\n+    });\n   } finally {\n     session.close();\n   }\n",
+  "newTestSource": "import assert from 'node:assert/strict';\nimport { test } from 'node:test';\nimport { preprocessGuestCSS, rewriteGuestCSS } from '../src/guest/css.ts';\n\ntest('CSS input filtering preserves pairs and filters scalar-invalid code units and newlines', () => {\n  assert.equal(\n    preprocessGuestCSS('a\\r\\nb\\rc\\fd\\0\\ud800\\udc00\\ud800x\\udc00'),\n    'a\\nb\\nc\\nd\\ufffd\\ud800\\udc00\\ufffdx\\ufffd',\n  );\n  const input = 'a\\r\\n\\0\\ud800\ud83d\ude00';\n  assert.equal(preprocessGuestCSS(preprocessGuestCSS(input)), preprocessGuestCSS(input));\n});\n\ntest('raw and CSS-escaped replacement characters produce identical URL inputs', () => {\n  const seen = (text: string) => {\n    const urls: string[] = [];\n    rewriteGuestCSS(\n      text,\n      (url) => {\n        urls.push(url);\n        return 'data:,';\n      },\n      'value',\n    );\n    return urls;\n  };\n  for (const prefix of ['./', 'data:text/plain,', 'blob:https://fixture.invalid/']) {\n    assert.deepEqual(seen(`url(\"${prefix}\\ud800\")`), [prefix + '\\ufffd']);\n    assert.deepEqual(seen(`u\\\\72l(\"${prefix}\\\\d800 \")`), [prefix + '\\ufffd']);\n    assert.deepEqual(seen(`url(${prefix}\\0)`), [prefix + '\\ufffd']);\n    assert.deepEqual(seen(`url(${prefix}\\\\0 )`), [prefix + '\\ufffd']);\n  }\n  assert.deepEqual(seen('url(\"./\ud83d\ude00\")'), ['./\ud83d\ude00']);\n  assert.deepEqual(seen('url(\"./\\\\d83d\\\\de00\")'), ['./\\ufffd\\ufffd']);\n  assert.deepEqual(seen('url(\"./%ED%A0%80\")'), ['./%ED%A0%80']);\n});\n",
+  "failureLog": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: Error: native CSS filtering equivalence: {\"a\":\"url(\\\"./\\\\0 \\\")\",\"b\":\"url(\\\"./\ufffd\\\")\"}\n+ actual - expected\n\n+ 'Error: native CSS filtering equivalence: {\"a\":\"url(\\\\\"./\\\\\\\\0 \\\\\")\",\"b\":\"url(\\\\\"./\ufffd\\\\\")\"}'\n- undefined\n\n    at <anonymous> (/home/damen/Projects/privacy-frames-native-string-mapping/test/guest-native-string-mapping.ts:149:18) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: 'Error: native CSS filtering equivalence: {\"a\":\"url(\\\\\"./\\\\\\\\0 \\\\\")\",\"b\":\"url(\\\\\"./\ufffd\\\\\")\"}',\n  expected: undefined,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.18.0\n",
+  "nativeCharacterization": [
+    {
+      "browser": "chromium",
+      "version": "153.0.8010.12",
+      "observations": [
+        {
+          "input": "url(\"./\ud800\")",
+          "declared": "url(\"./\\0 \")",
+          "computed": "url(\"./\\0 \")"
+        },
+        {
+          "input": "url(\"./\udc00\")",
+          "declared": "url(\"./\\0 \")",
+          "computed": "url(\"./\\0 \")"
+        },
+        {
+          "input": "url(\"./\u0000\")",
+          "declared": "url(\"./\ufffd\")",
+          "computed": "url(\"./\ufffd\")"
+        },
+        {
+          "input": "url(\"./\\0 \")",
+          "declared": "url(\"./\ufffd\")",
+          "computed": "url(\"./\ufffd\")"
+        },
+        {
+          "input": "url(\"./a\\\r\nb\")",
+          "declared": "url(\"./ab\")",
+          "computed": "url(\"./ab\")"
+        },
+        {
+          "input": "url(./a\r\n)",
+          "declared": "url(\"./a\")",
+          "computed": "url(\"./a\")"
+        },
+        {
+          "input": "url(./a\f)",
+          "declared": "url(\"./a\")",
+          "computed": "url(\"./a\")"
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "version": "155.0",
+      "observations": [
+        {
+          "input": "url(\"./\ud800\")",
+          "declared": "url(\"./\ufffd\")",
+          "computed": "url(\"about:invalid\")"
+        },
+        {
+          "input": "url(\"./\udc00\")",
+          "declared": "url(\"./\ufffd\")",
+          "computed": "url(\"about:invalid\")"
+        },
+        {
+          "input": "url(\"./\u0000\")",
+          "declared": "url(\"./\ufffd\")",
+          "computed": "url(\"about:invalid\")"
+        },
+        {
+          "input": "url(\"./\\0 \")",
+          "declared": "url(\"./\ufffd\")",
+          "computed": "url(\"about:invalid\")"
+        },
+        {
+          "input": "url(\"./a\\\r\nb\")",
+          "declared": "url(\"./ab\")",
+          "computed": "url(\"about:invalid\")"
+        },
+        {
+          "input": "url(./a\r\n)",
+          "declared": "url(\"./a\")",
+          "computed": "url(\"about:invalid\")"
+        },
+        {
+          "input": "url(./a\f)",
+          "declared": "url(\"./a\")",
+          "computed": "url(\"about:invalid\")"
+        }
+      ]
+    }
+  ]
+}
