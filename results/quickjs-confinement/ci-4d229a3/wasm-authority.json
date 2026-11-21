@@ -1,0 +1,262 @@
+{
+  "scope": "Structural verification of modules emitted by the actual TypeScript accessor generator; local native-memory binding controls. Not a proof of C lifetime or the whole runtime.",
+  "node": "v24.22.3",
+  "typescript": "6.0.3",
+  "assumptions": [
+    "Standard WebAssembly validation/execution and memory import isolation are trusted.",
+    "The strict decoder and TypeScript erasure/instrumentation are trusted verification code.",
+    "Only one unshared wasm32 memory is imported; no host function, table, global or second memory is admitted."
+  ],
+  "sourceHashes": {
+    "src/guest/wasm-accessors.ts": "7e03c8e70638d2d861392ec0b2ed40867c638bfcbb26774fbf1e240b2b18589b",
+    "src/guest/indexed-access.ts": "5ba66e4bd8e29240a4d3def4cc97eaef5007103b26f8121f5261d492bbc86e5d",
+    "src/guest/native-wasm.ts": "670c8a4e9cfd50ca037aa7d2596ea4716b3b35f70d05c2cefc33c27e3db61852",
+    "src/guest/engine.ts": "8f62cd622a3e3a8067e46de5d9af1a4d9796762b2f9d14df51f20f211076ef4c",
+    "vendor/quickjs/upstream/quickjs.c": "78874f652f90453ef6398f5b7f79f789dc9b8937c30184e5d1d64263d28097a6",
+    "vendor/quickjs/c/interface.c": "53b219444387a65b270ee91bcc21389aab8717f11aba205b72f43499f6f21c89"
+  },
+  "runnerSHA256": "c951267c61ed5db209da26a6aa2285a65122e42671c755bbe392c2741603747d",
+  "compiledSHA256": "71b1ebc4f280161423299abd4e5854c9aa5507ceca4055fec00690f038ccd595",
+  "observations": [
+    {
+      "family": "Int8Array",
+      "moduleSHA256": "8ac1d783e28431bd916441de0e60ac41d8693fbcad3315bff59eea74d48380fa",
+      "bytes": 84,
+      "imports": [
+        {
+          "module": "env",
+          "name": "memory",
+          "kind": "memory"
+        }
+      ],
+      "exports": [
+        {
+          "name": "read",
+          "kind": "function"
+        },
+        {
+          "name": "write",
+          "kind": "function"
+        }
+      ],
+      "memoryBindingsIndependent": true,
+      "outOfBoundsTraps": true,
+      "validExtraHostImportRejected": true,
+      "validInstructionDriftRejected": true
+    },
+    {
+      "family": "Uint8Array",
+      "moduleSHA256": "50d05be84cd75e8fb41ca0857f6e4e28c6417004fadc24773295a8b23f042b34",
+      "bytes": 84,
+      "imports": [
+        {
+          "module": "env",
+          "name": "memory",
+          "kind": "memory"
+        }
+      ],
+      "exports": [
+        {
+          "name": "read",
+          "kind": "function"
+        },
+        {
+          "name": "write",
+          "kind": "function"
+        }
+      ],
+      "memoryBindingsIndependent": true,
+      "outOfBoundsTraps": true,
+      "validExtraHostImportRejected": true,
+      "validInstructionDriftRejected": true
+    },
+    {
+      "family": "Uint8ClampedArray",
+      "moduleSHA256": "50d05be84cd75e8fb41ca0857f6e4e28c6417004fadc24773295a8b23f042b34",
+      "bytes": 84,
+      "imports": [
+        {
+          "module": "env",
+          "name": "memory",
+          "kind": "memory"
+        }
+      ],
+      "exports": [
+        {
+          "name": "read",
+          "kind": "function"
+        },
+        {
+          "name": "write",
+          "kind": "function"
+        }
+      ],
+      "memoryBindingsIndependent": true,
+      "outOfBoundsTraps": true,
+      "validExtraHostImportRejected": true,
+      "validInstructionDriftRejected": true
+    },
+    {
+      "family": "Int16Array",
+      "moduleSHA256": "539a082fba53e71abbbf8240b92cb7e93edc32cedb3c2160c1b4ab03852f1677",
+      "bytes": 84,
+      "imports": [
+        {
+          "module": "env",
+          "name": "memory",
+          "kind": "memory"
+        }
+      ],
+      "exports": [
+        {
+          "name": "read",
+          "kind": "function"
+        },
+        {
+          "name": "write",
+          "kind": "function"
+        }
+      ],
+      "memoryBindingsIndependent": true,
+      "outOfBoundsTraps": true,
+      "validExtraHostImportRejected": true,
+      "validInstructionDriftRejected": true
+    },
+    {
+      "family": "Uint16Array",
+      "moduleSHA256": "e3900e579d8783921170336123a2a1418018038d799d5b19d8394b3524c0e494",
+      "bytes": 84,
+      "imports": [
+        {
+          "module": "env",
+          "name": "memory",
+          "kind": "memory"
+        }
+      ],
+      "exports": [
+        {
+          "name": "read",
+          "kind": "function"
+        },
+        {
+          "name": "write",
+          "kind": "function"
+        }
+      ],
+      "memoryBindingsIndependent": true,
+      "outOfBoundsTraps": true,
+      "validExtraHostImportRejected": true,
+      "validInstructionDriftRejected": true
+    },
+    {
+      "family": "Int32Array",
+      "moduleSHA256": "72b2a353f7d57ca6ad98c4bb66547b89e68498c166dd56e16883cfe309ad43bb",
+      "bytes": 84,
+      "imports": [
+        {
+          "module": "env",
+          "name": "memory",
+          "kind": "memory"
+        }
+      ],
+      "exports": [
+        {
+          "name": "read",
+          "kind": "function"
+        },
+        {
+          "name": "write",
+          "kind": "function"
+        }
+      ],
+      "memoryBindingsIndependent": true,
+      "outOfBoundsTraps": true,
+      "validExtraHostImportRejected": true,
+      "validInstructionDriftRejected": true
+    },
+    {
+      "family": "Uint32Array",
+      "moduleSHA256": "51581da641843561736bd89efbfb1711dec7ded9e9078311d924dfcc3b0082a5",
+      "bytes": 84,
+      "imports": [
+        {
+          "module": "env",
+          "name": "memory",
+          "kind": "memory"
+        }
+      ],
+      "exports": [
+        {
+          "name": "read",
+          "kind": "function"
+        },
+        {
+          "name": "write",
+          "kind": "function"
+        }
+      ],
+      "memoryBindingsIndependent": true,
+      "outOfBoundsTraps": true,
+      "validExtraHostImportRejected": true,
+      "validInstructionDriftRejected": true
+    },
+    {
+      "family": "Float32Array",
+      "moduleSHA256": "14d6c39910e621556814c25a3b5a3abe76111c5851252175f172954c2f1cc7d2",
+      "bytes": 84,
+      "imports": [
+        {
+          "module": "env",
+          "name": "memory",
+          "kind": "memory"
+        }
+      ],
+      "exports": [
+        {
+          "name": "read",
+          "kind": "function"
+        },
+        {
+          "name": "write",
+          "kind": "function"
+        }
+      ],
+      "memoryBindingsIndependent": true,
+      "outOfBoundsTraps": true,
+      "validExtraHostImportRejected": true,
+      "validInstructionDriftRejected": true
+    },
+    {
+      "family": "Float64Array",
+      "moduleSHA256": "6bb4ab489f5e4c48b8c73aaaeaf55236e17260f2307f84212af2d39d40893618",
+      "bytes": 82,
+      "imports": [
+        {
+          "module": "env",
+          "name": "memory",
+          "kind": "memory"
+        }
+      ],
+      "exports": [
+        {
+          "name": "read",
+          "kind": "function"
+        },
+        {
+          "name": "write",
+          "kind": "function"
+        }
+      ],
+      "memoryBindingsIndependent": true,
+      "outOfBoundsTraps": true,
+      "validExtraHostImportRejected": true,
+      "validInstructionDriftRejected": true
+    }
+  ],
+  "remaining": [
+    "Production caller ownership of the exact application Memory object.",
+    "C control-record/borrowed-handle lifetime and host function-table slot lifetime.",
+    "Initialization, invalidation and disposal across reentry, detachment and native calls."
+  ],
+  "completed": "2026-11-21T21:00:52.888Z"
+}

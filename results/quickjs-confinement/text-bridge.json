@@ -2,7 +2,7 @@
   "scope": "Actual BrowserEnvironment and QuickJS TextEncoder/TextDecoder bridge: native conversions, buffer handoff/encodeInto, stateful/fatal decoding, reflection and unknown getter/foreign brand rejection. Temporary shared nativeOwner get-route removal must execute the real unknown getter and fail the fixture. This does not verify NativeBinary ownership or other native families.",
   "sourceHashes": {
     "src/guest/browser.ts": "d8c88d323e2134addd15f7ab07b91c5fd5b1d03e0db27ed5990cb2172739a64d",
-    "src/guest/engine.ts": "ce4b90167e3665c9ac79b738b182cbb91c9cc233bcda8f53a3003974e6a801f7",
+    "src/guest/engine.ts": "8f62cd622a3e3a8067e46de5d9af1a4d9796762b2f9d14df51f20f211076ef4c",
     "src/guest/guest-runtime.ts": "03c01065cc5f73dc7be785d3fd6cddef1f409d17d334c3eb9769a86eafbd7f7c",
     "src/guest/native-policy.ts": "ba0fb4f746bc472c480f0dbeff9e83a629c74e81ba832a3bd8019a6f1e2b1ce8",
     "src/guest/text-policy.ts": "cb30d1be3b96c9ea73fd8c6b13375fbaf781f8bc37c4f2928d56bed1c27a345c",
@@ -187,7 +187,7 @@
     "src/guest/css.ts": "ef01e1e37e18deb526344717219399160394fd5d190f471535ff5fd10dfdecb9",
     "src/guest/custom-elements.ts": "ff3cf0ab9c85bee1f74d6198431c01615e1c6e9cf198dd4b9fc68d78a045cb0d",
     "src/guest/dom.ts": "75a654d384521c8c7153bf55bfe71f19ed1eab3b27d1c60fa37241aa300e764a",
-    "src/guest/engine.ts": "ce4b90167e3665c9ac79b738b182cbb91c9cc233bcda8f53a3003974e6a801f7",
+    "src/guest/engine.ts": "8f62cd622a3e3a8067e46de5d9af1a4d9796762b2f9d14df51f20f211076ef4c",
     "src/guest/event-listener-arguments.ts": "f5219d8d8da8d9f5d67f0afb46756a2e7ef55003b64fc846dafccf134c27a080",
     "src/guest/event-policy.ts": "13543ed303ec876ff179bfcb9ced225347ddc1f404e13f392fc3ecf417c8bac6",
     "src/guest/generated-runtime-interfaces.ts": "55fa35f2d27fe9b123c74f77a229a2a64b86ace4f2883e5fb70715d851117182",
@@ -224,8 +224,8 @@
   },
   "engineSHA256": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
   "bundleHashes": {
-    "production": "edd19b76a5dd7742af0dd4f7af251e07b29a1bc7e92bb92bbbcefd5b1177d663",
-    "textGetRouteRemoved": "30bfcf13509a85b402571fc76c29f7450d753c992e57e20caf24574fea72a774"
+    "production": "a9b89984ce4e8387270040ef81d3faa4a6a686d5dd602601c1ca7f6ec6979716",
+    "textGetRouteRemoved": "4390e86a3b0fad35665ca790b1c431802af7be7a0dd81247941d36257e1ed567"
   },
   "fault": "Only the actual BrowserEnvironment private get shared nativeOwner routing line is omitted from a temporary esbuild bundle. Production sources are unchanged.",
   "receipts": [
@@ -300,5 +300,5 @@
       "rejected": true
     }
   ],
-  "completedAt": "2026-11-21T20:08:54.361Z"
+  "completedAt": "2026-11-21T20:45:03.368Z"
 }

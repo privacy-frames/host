@@ -4,7 +4,7 @@
 
 The browser and its normal built-in services remain trusted. Application network
 operations, resource loads and navigation remain confined. Keep the static web-only
-design and the current production deployment; the verification goal is active.
+design and the current production deployment. Work is paused at the user’s request.
 
 Primary checkout: `/home/damen/Projects/privacy-frames-quickjs-kernel`, branch
 `quickjs-confinement-kernel`. Production is still executable `5f62e61` with release
@@ -70,8 +70,8 @@ identity. Foreign dynamic constructors remain outside this catalog.
 property polling stays usable, while explicit prototype reflection fails locally.
 No temporary null prototype is cached. The original combined popup-polling failure
 is preserved under `deferred-prototype-initial/` and `deferred-prototypes/`.
-The latest executable source is `786c91b`, including the shared exposure catalog
-in `24a6dfe`. Production remains unchanged; the remote backup is through `7177eb9`.
+The shared exposure catalog is integrated in `24a6dfe`. The following source and
+qualification checkpoints include the later repairs.
 
 All sixteen component drivers passed at `a638f14` with unchanged inputs. Its full
 suite stopped at the event fixture's child listener. A benign diagnostic confirmed
@@ -92,10 +92,61 @@ under `cross-realm-data/`. Both-browser focused, engine and intrinsic checks pas
 The latest executable source is now `520c6cf`; earlier source references above
 identify their component checkpoints.
 
-Root is repeating combined qualification after these corrections. Source
-changes are frozen during the full suite, application matrix, Pitch and paired
-image checks. Fresh CI will rerun the component aggregate against the new test
-revision.
+At `80afbbd`, all sixteen component drivers and the full core suite passed with
+unchanged source. The context suite then stopped at a cancellation omission
+control: its parent-Window notification could be hidden by the pending-Window
+read guard. `4d229a3` gives the test an independent guest execution counter,
+without changing runtime source. Chromium and Firefox now detect one stale
+execution when cancellation is removed; production records zero stale and one
+live execution. The original failure is preserved under `combined-80afbbd/`.
+
+The remaining context, policy, installation, twelve-case application matrix and
+Pitch checks all passed at `4d229a3`, with 848 unchanged inputs. The lifecycle
+checks recorded 122 observations: all 60 confined cases made zero runtime or
+publisher requests; native controls recorded 19 update requests. Results are
+preserved under `remaining-4d229a3/`. The inherited core receipt identifies the
+unchanged runtime source without asserting identical revision-labeled artifacts.
+CI at `80afbbd` and `4d229a3` passed all sixteen component drivers; hash-verified
+receipts and logs are archived under their respective `ci-` directories.
+
+The user requested a pause after this qualification finished. Production remains
+unchanged. Promise source `4039d5f` and evidence `6682e04` are approved for their
+bounded scope but remain unmerged on `quickjs-promise-settlement`, in
+`/home/damen/Projects/privacy-frames-promise-settlement`. Twelve actual SDK cases,
+five omission controls and the existing lifetime checks pass. Private native
+Promise adoption contains source lookup errors; conversion failures settle
+through the existing exception boundary. Failure before engine entry reports
+and retains deferred roots until close; it does not guarantee guest settlement.
+The independent review found no blocker within that stated scope.
+
+Geometry work remains unqualified in
+`/home/damen/Projects/privacy-frames-geometry-policy`, branch
+`quickjs-geometry-policy`: source WIP `7ddde23`, observations `143f88f`. Its
+[isolated handoff](/home/damen/Projects/privacy-frames-geometry-policy/formal/quickjs/geometry/HANDOFF.md)
+records missing Performance/TypedOM producers, failed exploratory runs and a
+temporary runner that does not enforce failure exit codes. The draft replaces
+generic geometry forwarding with reviewed
+modern and legacy SVG schemas and exact producer records. Native calibration
+found separate legacy SVGPoint/SVGRect/SVGMatrix implementations in both browsers.
+The draft uses privately captured guest Array.values for DOMRectList iteration.
+Produced data retains only native schema/realm provenance, so child closure does
+not revoke numeric data or keep its engine alive. DOM/observer acquisition still
+checks preparation and lifetime. Complete its browser and cross-context checks
+before merging; current draft fixtures and claims are not qualification.
+
+A source-only C5 review found no inspected producer of foreign native async or
+generator functions: inspected wrappers originate in the trusted module realm.
+The producer/browser-result inventory remains unfinished; foreign dynamic
+constructors are not universally discharged. No new constructor mechanism was
+added.
+
+On resumption, review the isolated checkpoints, integrate and wire the promise
+check, finish geometry qualification, then qualify the combined source. Paired
+image/performance checks have not run for the latest executable source; preserve
+the original three-round comparison and 25% median investigation threshold.
+Generic browser forwarding, C1–C8 composition, coverage, upgrade tests and release
+qualification remain open. Keep production on its qualified release until the resumption plan’s release
+criteria are met.
 The earlier `privacy-frames-browser-policy` and `privacy-frames-abort-policy`
 worktrees are integrated. Preserve their original branch references, including
 `quickjs-abort-policy`, while those worktrees serve newer isolated tasks. The

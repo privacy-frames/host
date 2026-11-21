@@ -1,0 +1,28 @@
+{
+  "scope": "Kernel-checked natural-number/Wasm32 modular address arithmetic, conditional on a valid native view and live registered control. This does not prove C pointer lifetime, caller ownership or all C behavior.",
+  "lean": "Lean (version 4.35.0, x86_64-unknown-linux-gnu, commit eb6cafb7290e8bd5f2937522d8d804f58f02bafc, Release)",
+  "sourceSHA256": "c012f05aecba68b16aaeab004afb0c25703de445668d13ee0fe554d5cc0444df",
+  "runnerSHA256": "b0d6df4a5b077b02a41e1300584e1efac8b6715b944de69044c5084c3cf829d0",
+  "cSourceSHA256": "78874f652f90453ef6398f5b7f79f789dc9b8937c30184e5d1d64263d28097a6",
+  "sourceCorrespondence": "The two C read/write formulas and shift mask are checked against the reviewed spellings. This is not a C semantics proof.",
+  "theorems": [
+    "element_fits",
+    "mathematical_address_bounded",
+    "remainder_unchanged",
+    "uint32_address_exact",
+    "uint32_access_within_view"
+  ],
+  "axiomDependencies": [],
+  "wrongAddressControl": {
+    "passed": true,
+    "exitCode": 1,
+    "outputSHA256": "8eeb83e3fdc22c832c32f11f59c73c4d04a8ed6f51dd80de9161427f1f63c60a"
+  },
+  "premises": [
+    "Native typed-array getters establish index < length and offset + length * width <= buffer byteLength.",
+    "The backing is fixed, nonshared, live and at most 2^32 bytes.",
+    "The C uint32 shift/add implements arithmetic modulo 2^32; width is 2^shift with shift in 0..3.",
+    "Control records, borrowed handles and private table slots remain valid through the native call."
+  ],
+  "completed": "2026-11-21T21:00:53.299315+00:00"
+}

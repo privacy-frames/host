@@ -1,0 +1,52 @@
+
+> test:compatibility
+> tsx test/guest-corpus-matrix.ts
+
+Starting bindings
+bindings: Installed DOM compatibility fixture.
+bindings: runtime ready
+{"id":"bindings","passed":true,"errors":[]}
+Starting wikipedia
+wikipedia: Installed Albert Einstein.
+wikipedia: runtime ready
+{"id":"wikipedia","passed":true,"errors":[]}
+Starting excalidraw
+excalidraw: Installed Excalidraw Whiteboard.
+excalidraw: runtime ready
+{"id":"excalidraw","passed":true,"errors":["Failed to load resource: the server responded with a status of 404 (Not Found)","TypeError: Script resource is not installed: https://scripts.simpleanalyticscdn.com/latest.js\n    at GuestResources.source (http://127.0.0.1:4311/runtime/guard.js:16305:15)\n    at GuestDOM.execute (http://127.0.0.1:4311/runtime/guard.js:27038:65)\n    at GuestDOM.connected (http://127.0.0.1:4311/runtime/guard.js:26974:37)\n    at BrowserEnvironment.invoke (http://127.0.0.1:4311/runtime/guard.js:47215:76)\n    at HTMLBodyElement.appendChild (http://127.0.0.1:4311/runtime/guard.js:46748:31)\n    at Object.call (http://127.0.0.1:4311/runtime/guard.js:46294:71)\n    at _GuestEngine.dispatch (http://127.0.0.1:4311/runtime/guard.js:50544:27)\n    at WeakLifetime.<anonymous> (http://127.0.0.1:4311/runtime/guard.js:50052:23)\n    at QuickJSContext.<anonymous> (http://127.0.0.1:4311/runtime/guard.js:3397:48)\n    at next (<anonymous>)","TypeError: Script resource is not installed: https://scripts.simpleanalyticscdn.com/latest.js\n    at GuestResources.source (http://127.0.0.1:4311/runtime/guard.js:16305:15)\n    at GuestDOM.execute (http://127.0.0.1:4311/runtime/guard.js:27038:65)\n    at GuestDOM.connected (http://127.0.0.1:4311/runtime/guard.js:26974:37)\n    at BrowserEnvironment.invoke (http://127.0.0.1:4311/runtime/guard.js:47215:76)\n    at HTMLBodyElement.appendChild (http://127.0.0.1:4311/runtime/guard.js:46748:31)\n    at Object.call (http://127.0.0.1:4311/runtime/guard.js:46294:71)\n    at _GuestEngine.dispatch (http://127.0.0.1:4311/runtime/guard.js:50544:27)\n    at WeakLifetime.<anonymous> (http://127.0.0.1:4311/runtime/guard.js:50052:23)\n    at QuickJSContext.<anonymous> (http://127.0.0.1:4311/runtime/guard.js:3397:48)\n    at next (<anonymous>)"]}
+Starting drawio
+drawio: Installed Flowchart Maker & Online Diagram Software.
+drawio: runtime ready
+{"id":"drawio","passed":true,"errors":[]}
+Starting stackedit
+stackedit: Installed StackEdit.
+stackedit: runtime ready
+{"id":"stackedit","passed":true,"errors":["TypeError: Script resource is not installed: https://apis.google.com/js/api.js?1795295868841\n    at GuestResources.source (http://127.0.0.1:4311/runtime/guard.js:16305:15)\n    at GuestDOM.execute (http://127.0.0.1:4311/runtime/guard.js:27038:65)\n    at GuestDOM.connected (http://127.0.0.1:4311/runtime/guard.js:26974:37)\n    at BrowserEnvironment.invoke (http://127.0.0.1:4311/runtime/guard.js:47215:76)\n    at HTMLHeadElement.appendChild (http://127.0.0.1:4311/runtime/guard.js:46748:31)\n    at Object.call (http://127.0.0.1:4311/runtime/guard.js:46294:71)\n    at _GuestEngine.dispatch (http://127.0.0.1:4311/runtime/guard.js:50544:27)\n    at WeakLifetime.<anonymous> (http://127.0.0.1:4311/runtime/guard.js:50052:23)\n    at QuickJSContext.<anonymous> (http://127.0.0.1:4311/runtime/guard.js:3397:48)\n    at next (<anonymous>)","Loading the image 'http://127.0.0.1:4312/apps/stackedit/' violates the following Content Security Policy directive: \"img-src data: blob:\". The action has been blocked.","Loading the image 'http://127.0.0.1:4312/apps/stackedit/' violates the following Content Security Policy directive: \"img-src data: blob:\". The action has been blocked.","Loading the image 'http://127.0.0.1:4312/apps/stackedit/' violates the following Content Security Policy directive: \"img-src data: blob:\". The action has been blocked."]}
+Starting cyberchef
+cyberchef: Installed CyberChef.
+cyberchef: runtime ready
+{"id":"cyberchef","passed":true,"errors":[]}
+Starting bindings
+bindings: Installed DOM compatibility fixture.
+bindings: runtime ready
+{"id":"bindings","passed":true,"errors":["[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4311/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]","[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4311/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]"]}
+Starting wikipedia
+wikipedia: Installed Albert Einstein.
+wikipedia: runtime ready
+{"id":"wikipedia","passed":true,"errors":["[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4311/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]","[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4311/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]"]}
+Starting excalidraw
+excalidraw: Installed Excalidraw Whiteboard.
+excalidraw: runtime ready
+{"id":"excalidraw","passed":true,"errors":["[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4311/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]","JSHandle@object","TypeError: Script resource is not installed: https://scripts.simpleanalyticscdn.com/latest.js","[JavaScript Error: \"downloadable font: font load failed (font-family: \"Excalifont\" style:normal weight:400 width:100 src index:0): status=2147500037 source: data:application/octet-stream,\"]"]}
+Starting drawio
+drawio: Installed Flowchart Maker & Online Diagram Software.
+drawio: runtime ready
+{"id":"drawio","passed":true,"errors":["[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4311/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]","[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4311/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]"]}
+Starting stackedit
+stackedit: Installed StackEdit.
+stackedit: runtime ready
+{"id":"stackedit","passed":true,"errors":["[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4311/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]","JSHandle@object","TypeError: Script resource is not installed: https://apis.google.com/js/api.js?1795296164287","[JavaScript Error: \"Security Error: Content at http://127.0.0.1:4311/runtime/xu3ICkbxuKw/stackedit/ may not load data from http://127.0.0.1:4312/apps/stackedit/.\"]"]}
+Starting cyberchef
+cyberchef: Installed CyberChef.
+cyberchef: runtime ready
+{"id":"cyberchef","passed":true,"errors":["[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4311/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]","[JavaScript Error: \"Content-Security-Policy: The page’s settings blocked the loading of a resource (img-src) at http://127.0.0.1:4311/favicon.ico because it violates the following directive: “img-src data: blob:”\" {file: \"resource:///modules/FaviconLoader.sys.mjs\" line: 229}]"]}

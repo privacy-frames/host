@@ -3,6 +3,7 @@
   "node": "v24.18.0",
   "launchProfile": "test/browser-profile.ts with explicit executablePath",
   "source": {
+    "src/guest/native-intrinsics.ts": "4cac286927ee1197a4025161c5798b038e284e5c3292280cd8966ac438a92623",
     "src/guest/native-string-mapping.ts": "2557cbe440db717251a01723b0a171b5970dd02112c5c843d0f32f2e2dee55a5",
     "src/guest/event-listener-arguments.ts": "f5219d8d8da8d9f5d67f0afb46756a2e7ef55003b64fc846dafccf134c27a080",
     "src/guest/message-transfer.ts": "b126fa4cf88d3434b73160c9adce0a17b7441a34c642eef7fb982b540ed79c1a",
@@ -138,7 +139,7 @@
     "src/guest/css.ts": "ef01e1e37e18deb526344717219399160394fd5d190f471535ff5fd10dfdecb9",
     "src/guest/resources.ts": "fbb363fbe07bb3ea59ac7789afbe19b51099972282012daa69624789e3c90778",
     "src/guest/native-policy.ts": "ba0fb4f746bc472c480f0dbeff9e83a629c74e81ba832a3bd8019a6f1e2b1ce8",
-    "src/guest/native-host.ts": "2d312e70d1afbdf3b54df66229b6a24520ce0a447ef65b13a250df3c0bd3ab50",
+    "src/guest/native-host.ts": "21f56d217ab805a84fb9d30fc0e29aba36ee5de20feb695ad855f9200559ddce",
     "src/guest/native-brand.ts": "ebb96efef406a05debada5a3a3117ff0a3954e7eb706712871cb6290a2b13b00",
     "src/guest/url-policy.ts": "cd9c54875cac49c55634b910e723abe0fc5c402f429107eefbb910ce79d54d7a",
     "src/guest/text-policy.ts": "cb30d1be3b96c9ea73fd8c6b13375fbaf781f8bc37c4f2928d56bed1c27a345c",
@@ -185,7 +186,7 @@
     "src/guest/contexts/lifecycle-kernel.ts": "93a3711767ee0e6071ed0a3ebdebf3231179fd54671c639ed382243c13aa3179",
     "src/guest/contexts/documents.ts": "02ce86f6e8ef962eb48eb84c88b012613d91728fffe752f4a600f3cd8d8746f0",
     "src/guest/contexts/window-contexts.ts": "b38d44e2dd955c36894abb587b9e28dc82397e0845924077e940c8b7c656ec7a",
-    "src/guest/browser.ts": "54657105615cf9b15aa3b4649e6bad24311462af7d399730ec32507d2cc40435",
+    "src/guest/browser.ts": "d8c88d323e2134addd15f7ab07b91c5fd5b1d03e0db27ed5990cb2172739a64d",
     "node_modules/@jitl/quickjs-ffi-types/dist/index.mjs": "5b6ccfe50a0d0066411135c66964b0c15c05167f5324df2e8066493da807efbe",
     "node_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs": "5c58b732a4c6c5d097eb9366cafc08212867ff80e5b1dea24ed54e640ac71843",
     "node_modules/quickjs-emscripten-core/dist/chunk-TAV5CUKK.mjs": "b423c720a9deef215b404e4ee212533bcef9de785a11f44aacf1ad8266ae6769",
@@ -197,13 +198,13 @@
     "src/guest/quickjs.ts": "ab4b6912ca399f3fa56a4a6f252b13e69561fe626e8dcf956f8ffff59a2b9d3b",
     "src/guest/wasm-accessors.ts": "7e03c8e70638d2d861392ec0b2ed40867c638bfcbb26774fbf1e240b2b18589b",
     "src/guest/indexed-access.ts": "5ba66e4bd8e29240a4d3def4cc97eaef5007103b26f8121f5261d492bbc86e5d",
-    "src/guest/guest-runtime.ts": "058930f5f581f18210f636c210c0dbba27e51a145826c2adcb95d3295436bc1d",
+    "src/guest/guest-runtime.ts": "03c01065cc5f73dc7be785d3fd6cddef1f409d17d334c3eb9769a86eafbd7f7c",
     "src/guest/legacy-regexp.ts": "bbfcdccb8fab7c9a1462d91c8237f6cbe8c90be1f331c2f5f6b3629b569231bb",
     "node_modules/@jridgewell/resolve-uri/dist/resolve-uri.umd.js": "185ffb426c58c59031f890e262f162d75b82dfb8a96c529e191b28ab49582182",
     "src/guest/native-binary.ts": "ed0665a76a4c4fb2e35e5acc180b4d4e50e8c1c3fc3762de389362b380e5d637",
     "src/guest/guest-binary.ts": "da8dbde72247dd7b85b52bac138ddafa14f778729ceec34cf11eca0b924dea32",
     "src/guest/native-wasm.ts": "670c8a4e9cfd50ca037aa7d2596ea4716b3b35f70d05c2cefc33c27e3db61852",
-    "src/guest/engine.ts": "f47d9f29180bf54561025352567648768dcb0cfc2b01519ee218ac7e447f6027",
+    "src/guest/engine.ts": "8f62cd622a3e3a8067e46de5d9af1a4d9796762b2f9d14df51f20f211076ef4c",
     "src/guest/session.ts": "7d6566044cec86e7ee1bd8629cc05bbcf89c62915d8dc4e415a5eb5d5b413f55",
     "test/guest-window-writes.browser.ts": "e9ff91b15068a67030c9967a574d8bfe702766bd893d9f52c5967bd3ce2dc3ef",
     "test/guest-window-writes.ts": "7446a85e91fd100fea0e7785bb5ffd4a5755fc3ae299512ac15eac97fe19c385",
@@ -211,8 +212,8 @@
     "vendor/quickjs/generated/engine.wasm": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8"
   },
   "bundles": {
-    "production": "78a67fff915221fd75609ef69c9e3e8948c6098515415b5dc37cca0a82d839f9",
-    "omitted-window-gate": "805e381a9b22f962f8c3513c2935af4fee0a987b6e6a20282dccc7121c1d2a95"
+    "production": "0462914985d2c024ee8539959f65d0adebe3f247e01c07c7cbf7b27c44aeb57d",
+    "omitted-window-gate": "f94ec2c02f1db2fe40bfa6449248aa2d7404c430531590277425618e5497effb"
   },
   "observations": [
     {
@@ -236,7 +237,7 @@
       "executablePath": "/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
       "executableSHA256": "8c599d43aec53f2460a31ae2f4af6bd863f8258b34ff519564bc5d4726bfaa1e",
       "variant": "omitted-window-gate",
-      "failure": "Error: Unprepared window assignment never executes native accessors\nError: Unprepared window assignment never executes native accessors\n    at check (http://127.0.0.1:43189/fixture.js?variant=omitted-window-gate:51351:21)\n    at deniedWrites (http://127.0.0.1:43189/fixture.js?variant=omitted-window-gate:51412:5)\n    at async run (http://127.0.0.1:43189/fixture.js?variant=omitted-window-gate:51441:5)"
+      "failure": "Error: Unprepared window assignment never executes native accessors\nError: Unprepared window assignment never executes native accessors\n    at check (http://127.0.0.1:34447/fixture.js?variant=omitted-window-gate:51530:21)\n    at deniedWrites (http://127.0.0.1:34447/fixture.js?variant=omitted-window-gate:51591:5)\n    at async run (http://127.0.0.1:34447/fixture.js?variant=omitted-window-gate:51620:5)"
     },
     {
       "browser": "firefox",
@@ -259,7 +260,7 @@
       "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
       "executableSHA256": "062272ac4d851eade5b75db2dc7c14569d96cb3ca38f949337cdc1b74367e35b",
       "variant": "omitted-window-gate",
-      "failure": "Error: Unprepared window assignment never executes native accessors\ncheck@http://127.0.0.1:43189/fixture.js?variant=omitted-window-gate:51351:21\ndeniedWrites@http://127.0.0.1:43189/fixture.js?variant=omitted-window-gate:51412:10\nasync*run@http://127.0.0.1:43189/fixture.js?variant=omitted-window-gate:51441:11\nasync*@http://127.0.0.1:43189/fixture.js?variant=omitted-window-gate:51504:1\n"
+      "failure": "Error: Unprepared window assignment never executes native accessors\ncheck@http://127.0.0.1:34447/fixture.js?variant=omitted-window-gate:51530:21\ndeniedWrites@http://127.0.0.1:34447/fixture.js?variant=omitted-window-gate:51591:10\nasync*run@http://127.0.0.1:34447/fixture.js?variant=omitted-window-gate:51620:11\nasync*@http://127.0.0.1:34447/fixture.js?variant=omitted-window-gate:51683:1\n"
     }
   ]
 }

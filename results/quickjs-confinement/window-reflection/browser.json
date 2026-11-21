@@ -204,7 +204,7 @@
     "src/guest/native-binary.ts": "ed0665a76a4c4fb2e35e5acc180b4d4e50e8c1c3fc3762de389362b380e5d637",
     "src/guest/guest-binary.ts": "da8dbde72247dd7b85b52bac138ddafa14f778729ceec34cf11eca0b924dea32",
     "src/guest/native-wasm.ts": "670c8a4e9cfd50ca037aa7d2596ea4716b3b35f70d05c2cefc33c27e3db61852",
-    "src/guest/engine.ts": "ce4b90167e3665c9ac79b738b182cbb91c9cc233bcda8f53a3003974e6a801f7",
+    "src/guest/engine.ts": "8f62cd622a3e3a8067e46de5d9af1a4d9796762b2f9d14df51f20f211076ef4c",
     "src/guest/session.ts": "7d6566044cec86e7ee1bd8629cc05bbcf89c62915d8dc4e415a5eb5d5b413f55",
     "test/guest-window-reflection.browser.ts": "4312315aa2bcada4ccd545bd2cdb9edc8277df03ba028e1a7baa04a9e30fbe96",
     "test/guest-window-reflection.ts": "d936ffd0d604d8632565aae6197563bd6513decf5b7fe468e63c0e829f9a60b6",
@@ -212,11 +212,11 @@
     "vendor/quickjs/generated/engine.wasm": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8"
   },
   "bundles": {
-    "production": "cf495b32d2de51ccdb530b83a7125ad38fcd367dfa493878acfa22ea9b4133b1",
-    "no-prototype": "e1ab0cd185e74421bdcd2c5696381fac0ba0a6a7d73523021e601855450e05b9",
-    "no-document": "3c2f0901534e6ed0c8b45d0659fe859df8cb7b9e18536bc7b0c795123e8cdcc3",
-    "no-delete": "3aa8d39b7cd4ceaa5b641ff81a16fd61e95474895a341b24528d21939e80d622",
-    "no-read": "7bd4ec86081a1acb2032ac5841727fffa2a4ae0a2a1a5aa9d8b4f07a55e3ab43"
+    "production": "76d9c58c07ac00b95b8e0418bf66de4fee2eb46acaaf496e7e2c3a9ea90baa83",
+    "no-prototype": "5e6cc13d461ddde676c0458ef5fad76e60f0574349aff3771415b58c77c1ee6a",
+    "no-document": "7f2f1a487152abd97f99584de2351128938e7d53d9bc9f9cce0b50a5c0d0bbcc",
+    "no-delete": "d78354d80a7c41ff04a27e64396591e0ba089ac70fe475895b4d2aca7be63eb2",
+    "no-read": "8dedf26417f11f145c369d696466c50365952ec097f9c94bedd2bb3420fe5545"
   },
   "observations": [
     {
@@ -241,7 +241,7 @@
       "executablePath": "/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
       "executableSHA256": "8c599d43aec53f2460a31ae2f4af6bd863f8258b34ff519564bc5d4726bfaa1e",
       "variant": "no-prototype",
-      "failure": "Error: Other environment cannot borrow own-bootstrap exception\nError: Other environment cannot borrow own-bootstrap exception\n    at check (http://127.0.0.1:37339/fixture.js?variant=no-prototype:51424:21)\n    at run (http://127.0.0.1:37339/fixture.js?variant=no-prototype:51523:5)"
+      "failure": "Error: Other environment cannot borrow own-bootstrap exception\nError: Other environment cannot borrow own-bootstrap exception\n    at check (http://127.0.0.1:42177/fixture.js?variant=no-prototype:51529:21)\n    at run (http://127.0.0.1:42177/fixture.js?variant=no-prototype:51628:5)"
     },
     {
       "browser": "chromium",
@@ -249,7 +249,7 @@
       "executablePath": "/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
       "executableSHA256": "8c599d43aec53f2460a31ae2f4af6bd863f8258b34ff519564bc5d4726bfaa1e",
       "variant": "no-document",
-      "failure": "Error: Unprepared document withheld\nError: Unprepared document withheld\n    at check (http://127.0.0.1:37339/fixture.js?variant=no-document:51419:21)\n    at withheld (http://127.0.0.1:37339/fixture.js?variant=no-document:51485:5)\n    at run (http://127.0.0.1:37339/fixture.js?variant=no-document:51522:11)"
+      "failure": "Error: Unprepared document withheld\nError: Unprepared document withheld\n    at check (http://127.0.0.1:42177/fixture.js?variant=no-document:51524:21)\n    at withheld (http://127.0.0.1:42177/fixture.js?variant=no-document:51590:5)\n    at run (http://127.0.0.1:42177/fixture.js?variant=no-document:51627:11)"
     },
     {
       "browser": "chromium",
@@ -257,7 +257,7 @@
       "executablePath": "/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
       "executableSHA256": "8c599d43aec53f2460a31ae2f4af6bd863f8258b34ff519564bc5d4726bfaa1e",
       "variant": "no-delete",
-      "failure": "Error: Unprepared delete denied\nError: Unprepared delete denied\n    at check (http://127.0.0.1:37339/fixture.js?variant=no-delete:51425:21)\n    at withheld (http://127.0.0.1:37339/fixture.js?variant=no-delete:51495:5)\n    at run (http://127.0.0.1:37339/fixture.js?variant=no-delete:51528:11)"
+      "failure": "Error: Unprepared delete denied\nError: Unprepared delete denied\n    at check (http://127.0.0.1:42177/fixture.js?variant=no-delete:51530:21)\n    at withheld (http://127.0.0.1:42177/fixture.js?variant=no-delete:51600:5)\n    at run (http://127.0.0.1:42177/fixture.js?variant=no-delete:51633:11)"
     },
     {
       "browser": "chromium",
@@ -265,7 +265,7 @@
       "executablePath": "/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
       "executableSHA256": "8c599d43aec53f2460a31ae2f4af6bd863f8258b34ff519564bc5d4726bfaa1e",
       "variant": "no-read",
-      "failure": "Error: Unprepared window document withheld\nError: Unprepared window document withheld\n    at check (http://127.0.0.1:37339/fixture.js?variant=no-read:51423:21)\n    at withheld (http://127.0.0.1:37339/fixture.js?variant=no-read:51477:5)\n    at run (http://127.0.0.1:37339/fixture.js?variant=no-read:51526:11)"
+      "failure": "Error: Unprepared window document withheld\nError: Unprepared window document withheld\n    at check (http://127.0.0.1:42177/fixture.js?variant=no-read:51528:21)\n    at withheld (http://127.0.0.1:42177/fixture.js?variant=no-read:51582:5)\n    at run (http://127.0.0.1:42177/fixture.js?variant=no-read:51631:11)"
     },
     {
       "browser": "firefox",
@@ -289,7 +289,7 @@
       "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
       "executableSHA256": "062272ac4d851eade5b75db2dc7c14569d96cb3ca38f949337cdc1b74367e35b",
       "variant": "no-prototype",
-      "failure": "Error: Other environment cannot borrow own-bootstrap exception\ncheck@http://127.0.0.1:37339/fixture.js?variant=no-prototype:51424:21\nrun@http://127.0.0.1:37339/fixture.js?variant=no-prototype:51523:10\nasync*@http://127.0.0.1:37339/fixture.js?variant=no-prototype:51578:1\n"
+      "failure": "Error: Other environment cannot borrow own-bootstrap exception\ncheck@http://127.0.0.1:42177/fixture.js?variant=no-prototype:51529:21\nrun@http://127.0.0.1:42177/fixture.js?variant=no-prototype:51628:10\nasync*@http://127.0.0.1:42177/fixture.js?variant=no-prototype:51683:1\n"
     },
     {
       "browser": "firefox",
@@ -297,7 +297,7 @@
       "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
       "executableSHA256": "062272ac4d851eade5b75db2dc7c14569d96cb3ca38f949337cdc1b74367e35b",
       "variant": "no-document",
-      "failure": "Error: Unprepared document withheld\ncheck@http://127.0.0.1:37339/fixture.js?variant=no-document:51419:21\nwithheld@http://127.0.0.1:37339/fixture.js?variant=no-document:51485:10\nrun@http://127.0.0.1:37339/fixture.js?variant=no-document:51522:11\nasync*@http://127.0.0.1:37339/fixture.js?variant=no-document:51573:1\n"
+      "failure": "Error: Unprepared document withheld\ncheck@http://127.0.0.1:42177/fixture.js?variant=no-document:51524:21\nwithheld@http://127.0.0.1:42177/fixture.js?variant=no-document:51590:10\nrun@http://127.0.0.1:42177/fixture.js?variant=no-document:51627:11\nasync*@http://127.0.0.1:42177/fixture.js?variant=no-document:51678:1\n"
     },
     {
       "browser": "firefox",
@@ -305,7 +305,7 @@
       "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
       "executableSHA256": "062272ac4d851eade5b75db2dc7c14569d96cb3ca38f949337cdc1b74367e35b",
       "variant": "no-delete",
-      "failure": "Error: Unprepared delete denied\ncheck@http://127.0.0.1:37339/fixture.js?variant=no-delete:51425:21\nwithheld@http://127.0.0.1:37339/fixture.js?variant=no-delete:51495:10\nrun@http://127.0.0.1:37339/fixture.js?variant=no-delete:51528:11\nasync*@http://127.0.0.1:37339/fixture.js?variant=no-delete:51579:1\n"
+      "failure": "Error: Unprepared delete denied\ncheck@http://127.0.0.1:42177/fixture.js?variant=no-delete:51530:21\nwithheld@http://127.0.0.1:42177/fixture.js?variant=no-delete:51600:10\nrun@http://127.0.0.1:42177/fixture.js?variant=no-delete:51633:11\nasync*@http://127.0.0.1:42177/fixture.js?variant=no-delete:51684:1\n"
     },
     {
       "browser": "firefox",
@@ -313,7 +313,7 @@
       "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
       "executableSHA256": "062272ac4d851eade5b75db2dc7c14569d96cb3ca38f949337cdc1b74367e35b",
       "variant": "no-read",
-      "failure": "Error: Unprepared window document withheld\ncheck@http://127.0.0.1:37339/fixture.js?variant=no-read:51423:21\nwithheld@http://127.0.0.1:37339/fixture.js?variant=no-read:51477:10\nrun@http://127.0.0.1:37339/fixture.js?variant=no-read:51526:11\nasync*@http://127.0.0.1:37339/fixture.js?variant=no-read:51577:1\n"
+      "failure": "Error: Unprepared window document withheld\ncheck@http://127.0.0.1:42177/fixture.js?variant=no-read:51528:21\nwithheld@http://127.0.0.1:42177/fixture.js?variant=no-read:51582:10\nrun@http://127.0.0.1:42177/fixture.js?variant=no-read:51631:11\nasync*@http://127.0.0.1:42177/fixture.js?variant=no-read:51682:1\n"
     }
   ]
 }

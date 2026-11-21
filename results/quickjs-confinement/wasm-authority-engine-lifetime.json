@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-11-21T20:08:28.000Z",
+  "checkedAt": "2026-11-21T20:44:29.091Z",
   "scope": "Actual engine SDK-stack quiescence, terminal native bindings, reporter containment and failed-job root release",
   "node": "v24.18.0",
   "sourceHashes": {
@@ -21,10 +21,11 @@
     "src/guest/native-policy.ts": "ba0fb4f746bc472c480f0dbeff9e83a629c74e81ba832a3bd8019a6f1e2b1ce8",
     "src/guest/native-host.ts": "21f56d217ab805a84fb9d30fc0e29aba36ee5de20feb695ad855f9200559ddce",
     "src/guest/native-binary.ts": "ed0665a76a4c4fb2e35e5acc180b4d4e50e8c1c3fc3762de389362b380e5d637",
+    "src/guest/native-brand.ts": "ebb96efef406a05debada5a3a3117ff0a3954e7eb706712871cb6290a2b13b00",
     "src/guest/guest-binary.ts": "da8dbde72247dd7b85b52bac138ddafa14f778729ceec34cf11eca0b924dea32",
     "src/guest/native-wasm.ts": "670c8a4e9cfd50ca037aa7d2596ea4716b3b35f70d05c2cefc33c27e3db61852",
     "src/guest/native-intrinsics.ts": "4cac286927ee1197a4025161c5798b038e284e5c3292280cd8966ac438a92623",
-    "src/guest/engine.ts": "ce4b90167e3665c9ac79b738b182cbb91c9cc233bcda8f53a3003974e6a801f7",
+    "src/guest/engine.ts": "8f62cd622a3e3a8067e46de5d9af1a4d9796762b2f9d14df51f20f211076ef4c",
     "test/guest-engine-lifetime.fixture.ts": "e365fe09bd5773eab13740ea0a66a0a1ed6b61b85a364832057ef2326d9434f1",
     "vendor/quickjs/generated/engine.wasm": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
     "vendor/quickjs/generated/build.json": "2366677bac28dda0928190af20df7c7a842cad752593ae4f3cc9b81525caf789",
@@ -35,56 +36,56 @@
   "observations": [
     {
       "name": "production",
-      "sourceHash": "ce4b90167e3665c9ac79b738b182cbb91c9cc233bcda8f53a3003974e6a801f7",
-      "bundleHash": "3a557cc238633e172db70887fa9e15d7d30a6492c1535b537a55049f6ab1fffa",
+      "sourceHash": "8f62cd622a3e3a8067e46de5d9af1a4d9796762b2f9d14df51f20f211076ef4c",
+      "bundleHash": "3ea001625053bfbbe2b23cbd1c17d14c77a5568798d3c64c68e434fe597c6694",
       "failed": false,
       "stdout": "{\"observations\":[{\"name\":\"evaluate\",\"stopStates\":[{\"depth\":1,\"pumping\":false,\"wasmDepth\":0}],\"releaseStates\":[{\"depth\":0,\"pumping\":false,\"wasmDepth\":0,\"sdkPropertyDepth\":0}],\"nativeEffects\":0,\"callbackRejected\":true},{\"name\":\"set-encoding\",\"stopStates\":[{\"depth\":1,\"pumping\":false,\"wasmDepth\":0}],\"releaseStates\":[{\"depth\":0,\"pumping\":false,\"wasmDepth\":0,\"sdkPropertyDepth\":0}],\"nativeEffects\":0,\"callbackRejected\":true},{\"name\":\"callback\",\"stopStates\":[{\"depth\":1,\"pumping\":false,\"wasmDepth\":0}],\"releaseStates\":[{\"depth\":0,\"pumping\":false,\"wasmDepth\":0,\"sdkPropertyDepth\":0}],\"nativeEffects\":0,\"callbackRejected\":true},{\"name\":\"job\",\"stopStates\":[{\"depth\":0,\"pumping\":true,\"wasmDepth\":0}],\"releaseStates\":[{\"depth\":0,\"pumping\":false,\"wasmDepth\":0,\"sdkPropertyDepth\":0}],\"nativeEffects\":0,\"callbackRejected\":true},{\"name\":\"wasm-import\",\"stopStates\":[{\"depth\":2,\"pumping\":false,\"wasmDepth\":1}],\"releaseStates\":[{\"depth\":0,\"pumping\":false,\"wasmDepth\":0,\"sdkPropertyDepth\":0}],\"nativeEffects\":0,\"callbackRejected\":true},{\"name\":\"job-wasm-import\",\"stopStates\":[{\"depth\":1,\"pumping\":true,\"wasmDepth\":1}],\"releaseStates\":[{\"depth\":0,\"pumping\":false,\"wasmDepth\":0,\"sdkPropertyDepth\":0}],\"nativeEffects\":0,\"callbackRejected\":true},{\"name\":\"job-error-conversion\",\"stopStates\":[],\"releaseStates\":[{\"depth\":0,\"pumping\":false,\"wasmDepth\":0,\"sdkPropertyDepth\":0}],\"nativeEffects\":0,\"callbackRejected\":true},{\"name\":\"throwing-cleanup-reporter\",\"firstFailureKind\":\"object\",\"laterDisposers\":2,\"reports\":2,\"closed\":true,\"originalFailurePreserved\":true},{\"name\":\"throwing-cleanup-reporter\",\"firstFailureKind\":\"undefined\",\"laterDisposers\":2,\"reports\":2,\"closed\":true,\"originalFailurePreserved\":true},{\"name\":\"throwing-cleanup-reporter\",\"firstFailureKind\":\"null\",\"laterDisposers\":2,\"reports\":2,\"closed\":true,\"originalFailurePreserved\":true}]}\n",
       "stderr": ""
     },
     {
       "name": "eager-cleanup",
-      "sourceHash": "c235f1d5a18eb8ba116d885d64a762bf4ef0f531782dea845fe1d1b52970ab81",
-      "bundleHash": "82a6b0429c374a0c7c2272d12f814ebd0d8646aeed36be533c6772e21851a77b",
+      "sourceHash": "2c882ea8602d975e6ede0db34aaf310aae607bb5ac294d111394709e2f7012ea",
+      "bundleHash": "7275f20669861d6c0681cdfeb55d7e887c6c3bfb089865b058316a6c0b7df3bb",
       "failed": true,
       "expectedFailure": "physical indexed release waits for every engine-owned stack",
       "stdout": "",
-      "stderr": "physical indexed release waits for every engine-owned stack\nfile:///tmp/pf-engine-lifetime-mlRUgu/eager-cleanup.mjs:7341\n      const error = new Error(read(\"message\") || \"Guest execution failed\");\n                    ^\n\nError: Guest execution failed\n    at _GuestEngine.guestError (file:///tmp/pf-engine-lifetime-mlRUgu/eager-cleanup.mjs:7341:21)\n    at _GuestEngine.unwrap (file:///tmp/pf-engine-lifetime-mlRUgu/eager-cleanup.mjs:7321:22)\n    at file:///tmp/pf-engine-lifetime-mlRUgu/eager-cleanup.mjs:6110:27\n    at _GuestEngine.enter (file:///tmp/pf-engine-lifetime-mlRUgu/eager-cleanup.mjs:6257:14)\n    at _GuestEngine.evaluate (file:///tmp/pf-engine-lifetime-mlRUgu/eager-cleanup.mjs:6109:17)\n    at file:///tmp/pf-engine-lifetime-mlRUgu/eager-cleanup.mjs:7583:14\n\nNode.js v24.18.0\n"
+      "stderr": "physical indexed release waits for every engine-owned stack\nfile:///tmp/pf-engine-lifetime-5IwUqD/eager-cleanup.mjs:7466\n      const error = new Error(read(\"message\") || \"Guest execution failed\");\n                    ^\n\nError: Guest execution failed\n    at _GuestEngine.guestError (file:///tmp/pf-engine-lifetime-5IwUqD/eager-cleanup.mjs:7466:21)\n    at _GuestEngine.unwrap (file:///tmp/pf-engine-lifetime-5IwUqD/eager-cleanup.mjs:7446:22)\n    at file:///tmp/pf-engine-lifetime-5IwUqD/eager-cleanup.mjs:6154:27\n    at _GuestEngine.enter (file:///tmp/pf-engine-lifetime-5IwUqD/eager-cleanup.mjs:6301:14)\n    at _GuestEngine.evaluate (file:///tmp/pf-engine-lifetime-5IwUqD/eager-cleanup.mjs:6153:17)\n    at file:///tmp/pf-engine-lifetime-5IwUqD/eager-cleanup.mjs:7708:14\n\nNode.js v24.18.0\n"
     },
     {
       "name": "missing-terminal-bind-guards",
-      "sourceHash": "dfb61db9d5adc0f37d5cdbab8b60a48780002c15108848c69dcb97d91c115750",
-      "bundleHash": "9d23265c7286b339bd1b7031dfc1321f53c1172dba8780bfc28b3715e8d5f6de",
+      "sourceHash": "83e50530cbea79787c68a86e9618b1d58b6488ff6b90a898e7d0a878d30d5e60",
+      "bundleHash": "7a7b2e8f1afe67622506a7aa5b70f1ff6980b5006915542cb4354240270b54b9",
       "failed": true,
       "expectedFailure": "bound native operations are denied after logical close",
       "stdout": "",
-      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: bound native operations are denied after logical close\n+ actual - expected\n\n  [\n+   false,\n+   false\n-   true,\n-   true\n  ]\n\n    at file:///tmp/pf-engine-lifetime-mlRUgu/missing-terminal-bind-guards.mjs:7581:12 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: [ false, false ],\n  expected: [ true, true ],\n  operator: 'deepStrictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.18.0\n"
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: bound native operations are denied after logical close\n+ actual - expected\n\n  [\n+   false,\n+   false\n-   true,\n-   true\n  ]\n\n    at file:///tmp/pf-engine-lifetime-5IwUqD/missing-terminal-bind-guards.mjs:7706:12 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: [ false, false ],\n  expected: [ true, true ],\n  operator: 'deepStrictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.18.0\n"
     },
     {
       "name": "missing-set-entry",
-      "sourceHash": "54b3cd83e7905f30044d93a4d2feb7a22523526446d24a30b0303f8c3af80cfa",
-      "bundleHash": "705960d5b0c24334bbb842c2d3bb72781c0dca51ccf8e70a871b5bbe53c4690a",
+      "sourceHash": "72a8bafa3acf8731f8e3c4e40e929bbb2aea565f335b5dc08387ebc46fe6e911",
+      "bundleHash": "8148ad1cb27dd433cde6cbb6bda9e9c1a75e470bbc969e36d8c1271214f85e60",
       "failed": true,
       "expectedFailure": "physical indexed release waits for every engine-owned stack",
       "stdout": "",
-      "stderr": "physical indexed release waits for every engine-owned stack\nnode:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: one terminal cleanup releases indexed records\n\n0 !== 1\n\n    at finish (file:///tmp/pf-engine-lifetime-mlRUgu/missing-set-entry.mjs:7530:14)\n    at file:///tmp/pf-engine-lifetime-mlRUgu/missing-set-entry.mjs:7602:3 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: 0,\n  expected: 1,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.18.0\n"
+      "stderr": "physical indexed release waits for every engine-owned stack\nnode:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: one terminal cleanup releases indexed records\n\n0 !== 1\n\n    at finish (file:///tmp/pf-engine-lifetime-5IwUqD/missing-set-entry.mjs:7655:14)\n    at file:///tmp/pf-engine-lifetime-5IwUqD/missing-set-entry.mjs:7727:3 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: 0,\n  expected: 1,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.18.0\n"
     },
     {
       "name": "uncontained-cleanup-reporter",
-      "sourceHash": "d3fcab35fa1d3eed5c97ba08a4e72e04375318dd6af00f5b17d28215c27ede5e",
-      "bundleHash": "5cb924cb621078d0d3473d7de4d0fefb687322ee776cc06438d7f0e84410e243",
+      "sourceHash": "9da6cfcff1ca9b40a932ed4be6cdb99a76d05c9e64e227602f18effe72ef6a14",
+      "bundleHash": "06bda1dfdb31364b0483214f6c05ffa50aed28aee675f6619c645694ba743af9",
       "failed": true,
       "expectedFailure": "reporter failure cannot interrupt owned cleanup",
       "stdout": "",
-      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: reporter failure cannot interrupt owned cleanup\n\ntrue !== false\n\n    at file:///tmp/pf-engine-lifetime-mlRUgu/uncontained-cleanup-reporter.mjs:7644:10 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: true,\n  expected: false,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.18.0\n"
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: reporter failure cannot interrupt owned cleanup\n\ntrue !== false\n\n    at file:///tmp/pf-engine-lifetime-5IwUqD/uncontained-cleanup-reporter.mjs:7769:10 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: true,\n  expected: false,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.18.0\n"
     },
     {
       "name": "missing-job-error-release",
-      "sourceHash": "bc50c61d115dc9ebe27569f69e84837aa122e862d9798b4a8a03dc7524b9d9ef",
-      "bundleHash": "ed068302f93f6383d410958607ea8e14cc6f52cf0befcde8b1a5f22ae38ae8d5",
+      "sourceHash": "48f7885accc5fa9f4451f4a0f9e0f7acabc7d8ff5291b63b56f99ea10e0584f7",
+      "bundleHash": "16a77dd541f20649ec06f650950e28a06ea6e8659e184d4f4be516174e4ffe2f",
       "failed": true,
       "expectedFailure": "failed job error conversion releases its SDK root",
       "stdout": "",
-      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: failed job error conversion releases its SDK root\n\ntrue !== false\n\n    at file:///tmp/pf-engine-lifetime-mlRUgu/missing-job-error-release.mjs:7615:10 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: true,\n  expected: false,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.18.0\n"
+      "stderr": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: failed job error conversion releases its SDK root\n\ntrue !== false\n\n    at file:///tmp/pf-engine-lifetime-5IwUqD/missing-job-error-release.mjs:7740:10 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: true,\n  expected: false,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.18.0\n"
     }
   ],
   "remainingPremises": [

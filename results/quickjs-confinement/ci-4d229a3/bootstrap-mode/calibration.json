@@ -1,0 +1,185 @@
+{
+  "scope": "Source-corresponding trusted bootstrap evaluation-mode and direct-publication calibration in the pinned QuickJS SDK. Not a complete C5 privacy proof or an application escape claim.",
+  "toolchain": {
+    "node": "v24.22.3",
+    "typescript": "6.0.3",
+    "quickjsSDK": "0.32.0"
+  },
+  "inputHashes": {
+    "src/guest/legacy-regexp.ts": "bbfcdccb8fab7c9a1462d91c8237f6cbe8c90be1f331c2f5f6b3629b569231bb",
+    "src/guest/guest-runtime.ts": "03c01065cc5f73dc7be785d3fd6cddef1f409d17d334c3eb9769a86eafbd7f7c",
+    "src/guest/identity.ts": "e067e5dea7a2b036ced0905abd77e6a40f187ec2a3231466b1825a2e84b8c748",
+    "src/guest/guest-binary.ts": "da8dbde72247dd7b85b52bac138ddafa14f778729ceec34cf11eca0b924dea32",
+    "src/guest/engine.ts": "8f62cd622a3e3a8067e46de5d9af1a4d9796762b2f9d14df51f20f211076ef4c",
+    "src/guest/quickjs.ts": "ab4b6912ca399f3fa56a4a6f252b13e69561fe626e8dcf956f8ffff59a2b9d3b",
+    "vendor/quickjs/upstream/quickjs.c": "78874f652f90453ef6398f5b7f79f789dc9b8937c30184e5d1d64263d28097a6",
+    "vendor/quickjs/generated/engine.wasm": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
+    "vendor/quickjs/generated/engine.mjs": "60147727aeb5c4441d54ad7b3c625e952bec7faa8db8531522eb71dd9ab9da2e",
+    "vendor/quickjs/generated/build.json": "2366677bac28dda0928190af20df7c7a842cad752593ae4f3cc9b81525caf789",
+    "package-lock.json": "501bfd0da3702e4cfc3b43d5a4ec3380cca9045e7959204e1460e53ed781422a",
+    "formal/quickjs/bootstrap-mode/check.ts": "d782e41449e47b6e3a5c856defbe74f59f626e81ad7948f84efe4cec9fb9df1a",
+    "formal/quickjs/bootstrap-mode/extract.ts": "d4f488168730894a31037f62fc30cf66eed237301790b362cbf70acceda0b4d0",
+    "node_modules/quickjs-emscripten-core/dist/chunk-TAV5CUKK.mjs": "b423c720a9deef215b404e4ee212533bcef9de785a11f44aacf1ad8266ae6769",
+    "node_modules/quickjs-emscripten-core/dist/chunk-V2S4ZYJR.mjs": "5c58b732a4c6c5d097eb9366cafc08212867ff80e5b1dea24ed54e640ac71843",
+    "node_modules/quickjs-emscripten-core/dist/index.mjs": "5f7a507ca71ffbff0ec0bad88a9c38f717d34fd8ab9222b58deacc9de5644a3e",
+    "node_modules/quickjs-emscripten-core/dist/module-ES6BEMUI.mjs": "289a200ab91f855ed79f75147eb674b81cea7adf032f9344bd8b29ff5e7a7d43",
+    "node_modules/quickjs-emscripten-core/dist/module-asyncify-2EFITU5U.mjs": "c8cec04532f68af9aa436ad117defdc686d36a1670691d98cea9263345ba7b2b",
+    "node_modules/quickjs-emscripten-core/package.json": "9e6ee511f4dd74ca9283848b1dd7e4a94abe94581bae1c62f98e42e00c12d765",
+    "node_modules/@jitl/quickjs-wasmfile-release-sync/dist/ffi.mjs": "ccf8b3aa066c2be5755e3ea49d81b01dff5a671deb34b7ec3a1c983dd52e9335",
+    "node_modules/@jitl/quickjs-ffi-types/dist/index.mjs": "5b6ccfe50a0d0066411135c66964b0c15c05167f5324df2e8066493da807efbe",
+    "node_modules/typescript/lib/typescript.js": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39"
+  },
+  "extractedHashes": {
+    "installGuestRegExpLegacy": "d53cd93c5bd06492bbf70e2451b2b73a1d43ace4db519140e2e7b7c1baef9646",
+    "installGuestRuntime": "bc7b4b0d36011ed12b29b0f620eea9f467f866ec639200de446ff2a5ddbb0feb",
+    "allocateIdentity": "048314cf057a2f69366764c60dc994e28499d98e22c3804a259ef1980028549d",
+    "installGuestBinary": "d5cf761829b405c31ab6fa7a82f25abfa6b37ccbd196c340b39506e2f381b7fb"
+  },
+  "modes": [
+    {
+      "filename": "privacy:legacy-regexp",
+      "options": {
+        "type": "global",
+        "strict": true
+      },
+      "strictThis": true
+    },
+    {
+      "filename": "privacy:bindings",
+      "options": {
+        "type": "global",
+        "strict": true
+      },
+      "strictThis": true
+    },
+    {
+      "filename": "privacy:binary",
+      "options": {
+        "type": "global",
+        "strict": true
+      },
+      "strictThis": true
+    },
+    {
+      "filename": "privacy:legacy-regexp",
+      "options": {
+        "type": "global"
+      },
+      "ordinaryThis": true,
+      "strictProbeRejected": true
+    },
+    {
+      "filename": "privacy:bindings",
+      "options": {
+        "type": "global"
+      },
+      "ordinaryThis": true,
+      "strictProbeRejected": true
+    },
+    {
+      "filename": "privacy:binary",
+      "options": {
+        "type": "global"
+      },
+      "ordinaryThis": true,
+      "strictProbeRejected": true
+    }
+  ],
+  "poisonModes": [
+    {
+      "strict": true,
+      "result": {
+        "caller": {
+          "getter": true,
+          "setter": true,
+          "throws": true,
+          "configurable": true,
+          "ownKind": "absent",
+          "prototypeGetterThrows": true
+        },
+        "arguments": {
+          "getter": true,
+          "setter": true,
+          "throws": true,
+          "configurable": true,
+          "ownKind": "absent",
+          "prototypeGetterThrows": true
+        }
+      }
+    },
+    {
+      "strict": false,
+      "result": {
+        "caller": {
+          "getter": true,
+          "setter": true,
+          "throws": false,
+          "configurable": true,
+          "ownKind": "absent",
+          "read": {
+            "type": "undefined",
+            "isNull": false
+          },
+          "prototypeGetterThrows": false
+        },
+        "arguments": {
+          "getter": true,
+          "setter": true,
+          "throws": false,
+          "configurable": true,
+          "ownKind": "absent",
+          "read": {
+            "type": "undefined",
+            "isNull": false
+          },
+          "prototypeGetterThrows": false
+        }
+      }
+    }
+  ],
+  "applicationSloppyModePreserved": true,
+  "privacy": {
+    "dispatchRemoved": true,
+    "retainedDispatchWorks": true,
+    "helperGlobalReferences": 0,
+    "binaryPrivateGlobalReferences": 0,
+    "callerArguments": {
+      "caller": {
+        "getter": true,
+        "setter": true,
+        "throws": true,
+        "configurable": true
+      },
+      "arguments": {
+        "getter": true,
+        "setter": true,
+        "throws": true,
+        "configurable": true
+      }
+    },
+    "dispatchCalls": [
+      {
+        "operation": "own",
+        "identity": 17,
+        "property": "string:sample"
+      },
+      {
+        "operation": "prototype",
+        "identity": 17,
+        "property": ""
+      },
+      {
+        "operation": "get",
+        "identity": 17,
+        "property": "string:sample"
+      }
+    ],
+    "binaryStubScope": "Empty descriptions/atomic names exercise the actual installer; this does not validate native binary operations."
+  },
+  "premises": [
+    "QuickJS lexical environments and intrinsic semantics are trusted; global identity scans do not prove transitive heap nonreachability.",
+    "TypeScript ES2022 transpileModule is trusted for direct type erasure; source AST correspondence is narrower than complete engine execution.",
+    "The custom Wasm module, SDK flags and native host function support are trusted. Function caller/arguments poison behavior is characterized, not asserted as an escape."
+  ],
+  "completedAt": "2026-11-21T21:01:03.512Z"
+}

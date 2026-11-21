@@ -175,7 +175,7 @@
     "src/guest/css.ts": "ef01e1e37e18deb526344717219399160394fd5d190f471535ff5fd10dfdecb9",
     "src/guest/custom-elements.ts": "ff3cf0ab9c85bee1f74d6198431c01615e1c6e9cf198dd4b9fc68d78a045cb0d",
     "src/guest/dom.ts": "75a654d384521c8c7153bf55bfe71f19ed1eab3b27d1c60fa37241aa300e764a",
-    "src/guest/engine.ts": "ce4b90167e3665c9ac79b738b182cbb91c9cc233bcda8f53a3003974e6a801f7",
+    "src/guest/engine.ts": "8f62cd622a3e3a8067e46de5d9af1a4d9796762b2f9d14df51f20f211076ef4c",
     "src/guest/event-listener-arguments.ts": "f5219d8d8da8d9f5d67f0afb46756a2e7ef55003b64fc846dafccf134c27a080",
     "src/guest/event-policy.ts": "13543ed303ec876ff179bfcb9ced225347ddc1f404e13f392fc3ecf417c8bac6",
     "src/guest/generated-runtime-interfaces.ts": "55fa35f2d27fe9b123c74f77a229a2a64b86ace4f2883e5fb70715d851117182",
@@ -209,10 +209,10 @@
   "driverHash": "30fc2b64a961468406e897bec93ee4ad56af61ded43d528d21f1e609f59eb38e",
   "engineSHA256": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
   "bundleHashes": {
-    "production": "0fd44d97ebec0b73f0382a3aac49eb72b880f719b2ef42f637ae82c2d86a2580",
-    "omit-boundary": "16b912c025c5544b0ff1c120474a6fc0f3649e9ec647427573ede32f353ee33c",
-    "omit-function-role": "6f901612262f40ff0db2aafc91d2dbda20fe6d2e4940c8e3c6ad40927bc3043c",
-    "coi-production": "0fd44d97ebec0b73f0382a3aac49eb72b880f719b2ef42f637ae82c2d86a2580"
+    "production": "e104623b093b49aebe178948ae811a31fea64dc2d857e9f2a8358b0a7ebfc312",
+    "omit-boundary": "9f4e4d0cdbdb72b55e807a1ef3045922042d275c29721fab256d63385803c0ea",
+    "omit-function-role": "9948c15249ebe7a1f5011d08be05f79678937ac08dfc52a59171457d8fd952db",
+    "coi-production": "e104623b093b49aebe178948ae811a31fea64dc2d857e9f2a8358b0a7ebfc312"
   },
   "toolchain": {
     "node": "v24.18.0",
@@ -293,7 +293,7 @@
       "version": "153.0.8010.12",
       "executablePath": "/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
       "executableSHA256": "8c599d43aec53f2460a31ae2f4af6bd863f8258b34ff519564bc5d4726bfaa1e",
-      "failure": "TypeError: Native intrinsic has no supported guest counterpart: Function\nTypeError: Native intrinsic has no supported guest counterpart: Function\n    at _GuestEngine.encode (http://127.0.0.1:37749/browser.js?variant=omit-function-role:50363:15)\n    at http://127.0.0.1:37749/browser.js?variant=omit-function-role:50038:27\n    at _GuestEngine.enter (http://127.0.0.1:37749/browser.js?variant=omit-function-role:50172:14)\n    at _GuestEngine.set (http://127.0.0.1:37749/browser.js?variant=omit-function-role:50037:10)\n    at run (http://127.0.0.1:37749/browser.js?variant=omit-function-role:51493:21)"
+      "failure": "TypeError: Native intrinsic has no supported guest counterpart: Function\nTypeError: Native intrinsic has no supported guest counterpart: Function\n    at _GuestEngine.encodeValue (http://127.0.0.1:40177/browser.js?variant=omit-function-role:50396:15)\n    at _GuestEngine.encode (http://127.0.0.1:40177/browser.js?variant=omit-function-role:50374:19)\n    at http://127.0.0.1:40177/browser.js?variant=omit-function-role:50062:27\n    at _GuestEngine.enter (http://127.0.0.1:40177/browser.js?variant=omit-function-role:50196:14)\n    at _GuestEngine.set (http://127.0.0.1:40177/browser.js?variant=omit-function-role:50061:10)\n    at run (http://127.0.0.1:40177/browser.js?variant=omit-function-role:51598:21)"
     },
     {
       "browser": "chromium",
@@ -430,7 +430,7 @@
       "version": "155.0",
       "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
       "executableSHA256": "062272ac4d851eade5b75db2dc7c14569d96cb3ca38f949337cdc1b74367e35b",
-      "failure": "TypeError: Native intrinsic has no supported guest counterpart: Function\nencode@http://127.0.0.1:37749/browser.js?variant=omit-function-role:50363:15\nset/<@http://127.0.0.1:37749/browser.js?variant=omit-function-role:50038:27\nenter@http://127.0.0.1:37749/browser.js?variant=omit-function-role:50172:14\nset@http://127.0.0.1:37749/browser.js?variant=omit-function-role:50037:10\nrun@http://127.0.0.1:37749/browser.js?variant=omit-function-role:51493:21\nasync*@http://127.0.0.1:37749/browser.js?variant=omit-function-role:51665:1\n"
+      "failure": "TypeError: Native intrinsic has no supported guest counterpart: Function\nencodeValue@http://127.0.0.1:40177/browser.js?variant=omit-function-role:50396:15\nencode@http://127.0.0.1:40177/browser.js?variant=omit-function-role:50374:19\nset/<@http://127.0.0.1:40177/browser.js?variant=omit-function-role:50062:27\nenter@http://127.0.0.1:40177/browser.js?variant=omit-function-role:50196:14\nset@http://127.0.0.1:40177/browser.js?variant=omit-function-role:50061:10\nrun@http://127.0.0.1:40177/browser.js?variant=omit-function-role:51598:21\nasync*@http://127.0.0.1:40177/browser.js?variant=omit-function-role:51770:1\n"
     },
     {
       "browser": "firefox",
@@ -494,5 +494,5 @@
       }
     }
   ],
-  "completedAt": "2026-11-21T20:08:45.157Z"
+  "completedAt": "2026-11-21T20:44:48.379Z"
 }

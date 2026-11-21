@@ -1,0 +1,1307 @@
+{
+  "checkedAt": "2026-11-21T20:49:25.787668+00:00",
+  "scope": "Extracted production C indexed record controls under explicit QuickJS ABI and caller lifetime projections",
+  "tool": {
+    "image": "ghcr.io/diffblue/cbmc@sha256:d9fe087b098c5295280a0245d7b653c3485f5a6efc9c034bb3c1854455757d93",
+    "version": "6.11.0 (n/a)",
+    "dataModel": "ILP32",
+    "allocationMayFail": true,
+    "memoryCleanupCheck": true,
+    "unwind": 5
+  },
+  "functions": [
+    "JS_IndexedProxyAccessSize",
+    "JS_NewIndexedProxyAccess",
+    "JS_SetIndexedProxyView",
+    "JS_SetIndexedProxyMemory",
+    "JS_DisableIndexedProxyAccess",
+    "JS_MarkIndexedProxyDirty",
+    "JS_TakeIndexedProxyDirty",
+    "JS_FreeIndexedProxyAccess",
+    "QTS_NewIndexedProxyAccess",
+    "QTS_SetIndexedProxyView",
+    "QTS_SetIndexedProxyMemory",
+    "QTS_DisableIndexedProxyAccess",
+    "QTS_MarkIndexedProxyDirty",
+    "QTS_TakeIndexedProxyDirty",
+    "QTS_FreeIndexedProxyAccess"
+  ],
+  "runtimeTests": {
+    "node": "v24.22.3",
+    "passed": 8,
+    "outputHash": "961f1f43f27abe7d3fb7a3070bce4c56a0d172e186a8ee4bf2c55740cab05f86",
+    "scope": "Five acquisition/lifetime tests and three numeric/indexed tests against actual SDK and compiled C"
+  },
+  "sourceHashes": {
+    "vendor/quickjs/upstream/quickjs.c": "78874f652f90453ef6398f5b7f79f789dc9b8937c30184e5d1d64263d28097a6",
+    "vendor/quickjs/c/interface.c": "53b219444387a65b270ee91bcc21389aab8717f11aba205b72f43499f6f21c89",
+    "formal/quickjs/wasm/record-model.h": "bd1ce3a7402ef12b6ae5979ed71efc0de6db0238b4ceaeba5b059c61bffe57b2",
+    "formal/quickjs/wasm/record-harness.c": "735c9318b07a976289c128a841230abb3c454232844b62b1ee5fb6ac9d041eff",
+    "formal/quickjs/wasm/check-records.py": "149cbbd875122edfc9e80bdb696469fb8dbdf66fc2127fe1be4742e4516baff6",
+    "src/guest/indexed-access.ts": "5ba66e4bd8e29240a4d3def4cc97eaef5007103b26f8121f5261d492bbc86e5d",
+    "test/quickjs-indexed-lifetime.test.ts": "5cc5aade2a898740d52e03c6d4c3f7683f228acf61154e4e9f704e12d3fe5afc",
+    "vendor/quickjs/generated/engine.wasm": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
+    "vendor/quickjs/generated/engine.mjs": "60147727aeb5c4441d54ad7b3c625e952bec7faa8db8531522eb71dd9ab9da2e",
+    "vendor/quickjs/generated/build.json": "2366677bac28dda0928190af20df7c7a842cad752593ae4f3cc9b81525caf789",
+    "src/guest/quickjs.ts": "ab4b6912ca399f3fa56a4a6f252b13e69561fe626e8dcf956f8ffff59a2b9d3b",
+    "src/guest/wasm-accessors.ts": "7e03c8e70638d2d861392ec0b2ed40867c638bfcbb26774fbf1e240b2b18589b",
+    "test/quickjs-indexed.test.ts": "5cda1d1c3473b4153346d1350578152d41d14a403252c46d914e6a1e2ca69906",
+    "package-lock.json": "501bfd0da3702e4cfc3b43d5a4ec3380cca9045e7959204e1460e53ed781422a"
+  },
+  "extractedSourceHash": "40d394be3e754204161c9c76c30b0f9383bd420b55b327b2d1e7d13e5a2f0b93",
+  "translationUnitHash": "d5c4150b2502de6678a694e9e8e3fcd40109ee5052ec5ac1701e084a2e3ffa17",
+  "properties": [
+    {
+      "id": "JS_DisableIndexedProxyAccess.pointer_dereference.1",
+      "description": "dereference failure: pointer NULL in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_DisableIndexedProxyAccess.pointer_dereference.2",
+      "description": "dereference failure: pointer invalid in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_DisableIndexedProxyAccess.pointer_dereference.3",
+      "description": "dereference failure: deallocated dynamic object in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_DisableIndexedProxyAccess.pointer_dereference.4",
+      "description": "dereference failure: dead object in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_DisableIndexedProxyAccess.pointer_dereference.5",
+      "description": "dereference failure: pointer outside object bounds in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_DisableIndexedProxyAccess.pointer_dereference.6",
+      "description": "dereference failure: invalid integer address in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_FreeIndexedProxyAccess.pointer_dereference.1",
+      "description": "dereference failure: pointer NULL in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_FreeIndexedProxyAccess.pointer_dereference.2",
+      "description": "dereference failure: pointer invalid in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_FreeIndexedProxyAccess.pointer_dereference.3",
+      "description": "dereference failure: deallocated dynamic object in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_FreeIndexedProxyAccess.pointer_dereference.4",
+      "description": "dereference failure: dead object in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_FreeIndexedProxyAccess.pointer_dereference.5",
+      "description": "dereference failure: pointer outside object bounds in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_FreeIndexedProxyAccess.pointer_dereference.6",
+      "description": "dereference failure: invalid integer address in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_FreeIndexedProxyAccess.pointer_dereference.7",
+      "description": "dereference failure: pointer NULL in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_FreeIndexedProxyAccess.pointer_dereference.8",
+      "description": "dereference failure: pointer invalid in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_FreeIndexedProxyAccess.pointer_dereference.9",
+      "description": "dereference failure: deallocated dynamic object in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_FreeIndexedProxyAccess.pointer_dereference.10",
+      "description": "dereference failure: dead object in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_FreeIndexedProxyAccess.pointer_dereference.11",
+      "description": "dereference failure: pointer outside object bounds in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_FreeIndexedProxyAccess.pointer_dereference.12",
+      "description": "dereference failure: invalid integer address in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_GetOpaque.pointer_dereference.1",
+      "description": "dereference failure: pointer NULL in value.object->class_id",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_GetOpaque.pointer_dereference.2",
+      "description": "dereference failure: pointer invalid in value.object->class_id",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_GetOpaque.pointer_dereference.3",
+      "description": "dereference failure: deallocated dynamic object in value.object->class_id",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_GetOpaque.pointer_dereference.4",
+      "description": "dereference failure: dead object in value.object->class_id",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_GetOpaque.pointer_dereference.5",
+      "description": "dereference failure: pointer outside object bounds in value.object->class_id",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_GetOpaque.pointer_dereference.6",
+      "description": "dereference failure: invalid integer address in value.object->class_id",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_GetOpaque.pointer_dereference.7",
+      "description": "dereference failure: pointer NULL in value.object->proxy",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_GetOpaque.pointer_dereference.8",
+      "description": "dereference failure: pointer invalid in value.object->proxy",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_GetOpaque.pointer_dereference.9",
+      "description": "dereference failure: deallocated dynamic object in value.object->proxy",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_GetOpaque.pointer_dereference.10",
+      "description": "dereference failure: dead object in value.object->proxy",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_GetOpaque.pointer_dereference.11",
+      "description": "dereference failure: pointer outside object bounds in value.object->proxy",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_GetOpaque.pointer_dereference.12",
+      "description": "dereference failure: invalid integer address in value.object->proxy",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_MarkIndexedProxyDirty.pointer_dereference.1",
+      "description": "dereference failure: pointer NULL in access->dirty",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_MarkIndexedProxyDirty.pointer_dereference.2",
+      "description": "dereference failure: pointer invalid in access->dirty",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_MarkIndexedProxyDirty.pointer_dereference.3",
+      "description": "dereference failure: deallocated dynamic object in access->dirty",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_MarkIndexedProxyDirty.pointer_dereference.4",
+      "description": "dereference failure: dead object in access->dirty",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_MarkIndexedProxyDirty.pointer_dereference.5",
+      "description": "dereference failure: pointer outside object bounds in access->dirty",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_MarkIndexedProxyDirty.pointer_dereference.6",
+      "description": "dereference failure: invalid integer address in access->dirty",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_NewIndexedProxyAccess.pointer_dereference.1",
+      "description": "dereference failure: pointer NULL in s->is_revoked",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_NewIndexedProxyAccess.pointer_dereference.2",
+      "description": "dereference failure: pointer invalid in s->is_revoked",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_NewIndexedProxyAccess.pointer_dereference.3",
+      "description": "dereference failure: deallocated dynamic object in s->is_revoked",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_NewIndexedProxyAccess.pointer_dereference.4",
+      "description": "dereference failure: dead object in s->is_revoked",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_NewIndexedProxyAccess.pointer_dereference.5",
+      "description": "dereference failure: pointer outside object bounds in s->is_revoked",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_NewIndexedProxyAccess.pointer_dereference.6",
+      "description": "dereference failure: invalid integer address in s->is_revoked",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_NewIndexedProxyAccess.pointer_dereference.7",
+      "description": "dereference failure: pointer NULL in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_NewIndexedProxyAccess.pointer_dereference.8",
+      "description": "dereference failure: pointer invalid in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_NewIndexedProxyAccess.pointer_dereference.9",
+      "description": "dereference failure: deallocated dynamic object in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_NewIndexedProxyAccess.pointer_dereference.10",
+      "description": "dereference failure: dead object in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_NewIndexedProxyAccess.pointer_dereference.11",
+      "description": "dereference failure: pointer outside object bounds in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_NewIndexedProxyAccess.pointer_dereference.12",
+      "description": "dereference failure: invalid integer address in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_NewIndexedProxyAccess.pointer_dereference.13",
+      "description": "dereference failure: pointer NULL in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_NewIndexedProxyAccess.pointer_dereference.14",
+      "description": "dereference failure: pointer invalid in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_NewIndexedProxyAccess.pointer_dereference.15",
+      "description": "dereference failure: deallocated dynamic object in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_NewIndexedProxyAccess.pointer_dereference.16",
+      "description": "dereference failure: dead object in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_NewIndexedProxyAccess.pointer_dereference.17",
+      "description": "dereference failure: pointer outside object bounds in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_NewIndexedProxyAccess.pointer_dereference.18",
+      "description": "dereference failure: invalid integer address in s->indexed",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.1",
+      "description": "dereference failure: pointer NULL in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.2",
+      "description": "dereference failure: pointer invalid in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.3",
+      "description": "dereference failure: deallocated dynamic object in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.4",
+      "description": "dereference failure: dead object in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.5",
+      "description": "dereference failure: pointer outside object bounds in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.6",
+      "description": "dereference failure: invalid integer address in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.7",
+      "description": "dereference failure: pointer NULL in access->read",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.8",
+      "description": "dereference failure: pointer invalid in access->read",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.9",
+      "description": "dereference failure: deallocated dynamic object in access->read",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.10",
+      "description": "dereference failure: dead object in access->read",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.11",
+      "description": "dereference failure: pointer outside object bounds in access->read",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.12",
+      "description": "dereference failure: invalid integer address in access->read",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.13",
+      "description": "dereference failure: pointer NULL in access->write",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.14",
+      "description": "dereference failure: pointer invalid in access->write",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.15",
+      "description": "dereference failure: deallocated dynamic object in access->write",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.16",
+      "description": "dereference failure: dead object in access->write",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.17",
+      "description": "dereference failure: pointer outside object bounds in access->write",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.18",
+      "description": "dereference failure: invalid integer address in access->write",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.19",
+      "description": "dereference failure: pointer NULL in access->offset",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.20",
+      "description": "dereference failure: pointer invalid in access->offset",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.21",
+      "description": "dereference failure: deallocated dynamic object in access->offset",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.22",
+      "description": "dereference failure: dead object in access->offset",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.23",
+      "description": "dereference failure: pointer outside object bounds in access->offset",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.24",
+      "description": "dereference failure: invalid integer address in access->offset",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.25",
+      "description": "dereference failure: pointer NULL in access->length",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.26",
+      "description": "dereference failure: pointer invalid in access->length",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.27",
+      "description": "dereference failure: deallocated dynamic object in access->length",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.28",
+      "description": "dereference failure: dead object in access->length",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.29",
+      "description": "dereference failure: pointer outside object bounds in access->length",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.30",
+      "description": "dereference failure: invalid integer address in access->length",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.31",
+      "description": "dereference failure: pointer NULL in access->shift",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.32",
+      "description": "dereference failure: pointer invalid in access->shift",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.33",
+      "description": "dereference failure: deallocated dynamic object in access->shift",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.34",
+      "description": "dereference failure: dead object in access->shift",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.35",
+      "description": "dereference failure: pointer outside object bounds in access->shift",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.36",
+      "description": "dereference failure: invalid integer address in access->shift",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.37",
+      "description": "dereference failure: pointer NULL in access->kind",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.38",
+      "description": "dereference failure: pointer invalid in access->kind",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.39",
+      "description": "dereference failure: deallocated dynamic object in access->kind",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.40",
+      "description": "dereference failure: dead object in access->kind",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.41",
+      "description": "dereference failure: pointer outside object bounds in access->kind",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.42",
+      "description": "dereference failure: invalid integer address in access->kind",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.43",
+      "description": "dereference failure: pointer NULL in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.44",
+      "description": "dereference failure: pointer invalid in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.45",
+      "description": "dereference failure: deallocated dynamic object in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.46",
+      "description": "dereference failure: dead object in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.47",
+      "description": "dereference failure: pointer outside object bounds in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyMemory.pointer_dereference.48",
+      "description": "dereference failure: invalid integer address in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.1",
+      "description": "dereference failure: pointer NULL in view->tag",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.2",
+      "description": "dereference failure: pointer invalid in view->tag",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.3",
+      "description": "dereference failure: deallocated dynamic object in view->tag",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.4",
+      "description": "dereference failure: dead object in view->tag",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.5",
+      "description": "dereference failure: pointer outside object bounds in view->tag",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.6",
+      "description": "dereference failure: invalid integer address in view->tag",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.7",
+      "description": "dereference failure: pointer NULL in view->object",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.8",
+      "description": "dereference failure: pointer invalid in view->object",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.9",
+      "description": "dereference failure: deallocated dynamic object in view->object",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.10",
+      "description": "dereference failure: dead object in view->object",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.11",
+      "description": "dereference failure: pointer outside object bounds in view->object",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.12",
+      "description": "dereference failure: invalid integer address in view->object",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.13",
+      "description": "dereference failure: pointer NULL in p->class_id",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.14",
+      "description": "dereference failure: pointer invalid in p->class_id",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.15",
+      "description": "dereference failure: deallocated dynamic object in p->class_id",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.16",
+      "description": "dereference failure: dead object in p->class_id",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.17",
+      "description": "dereference failure: pointer outside object bounds in p->class_id",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.18",
+      "description": "dereference failure: invalid integer address in p->class_id",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.19",
+      "description": "dereference failure: pointer NULL in p->class_id",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.20",
+      "description": "dereference failure: pointer invalid in p->class_id",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.21",
+      "description": "dereference failure: deallocated dynamic object in p->class_id",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.22",
+      "description": "dereference failure: dead object in p->class_id",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.23",
+      "description": "dereference failure: pointer outside object bounds in p->class_id",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.24",
+      "description": "dereference failure: invalid integer address in p->class_id",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.25",
+      "description": "dereference failure: pointer NULL in p->u",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.26",
+      "description": "dereference failure: pointer invalid in p->u",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.27",
+      "description": "dereference failure: deallocated dynamic object in p->u",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.28",
+      "description": "dereference failure: dead object in p->u",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.29",
+      "description": "dereference failure: pointer outside object bounds in p->u",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.30",
+      "description": "dereference failure: invalid integer address in p->u",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.31",
+      "description": "dereference failure: pointer NULL in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.32",
+      "description": "dereference failure: pointer invalid in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.33",
+      "description": "dereference failure: deallocated dynamic object in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.34",
+      "description": "dereference failure: dead object in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.35",
+      "description": "dereference failure: pointer outside object bounds in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.36",
+      "description": "dereference failure: invalid integer address in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.37",
+      "description": "dereference failure: pointer NULL in access->length",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.38",
+      "description": "dereference failure: pointer invalid in access->length",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.39",
+      "description": "dereference failure: deallocated dynamic object in access->length",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.40",
+      "description": "dereference failure: dead object in access->length",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.41",
+      "description": "dereference failure: pointer outside object bounds in access->length",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.42",
+      "description": "dereference failure: invalid integer address in access->length",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.43",
+      "description": "dereference failure: pointer NULL in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.44",
+      "description": "dereference failure: pointer invalid in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.45",
+      "description": "dereference failure: deallocated dynamic object in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.46",
+      "description": "dereference failure: dead object in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.47",
+      "description": "dereference failure: pointer outside object bounds in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_SetIndexedProxyView.pointer_dereference.48",
+      "description": "dereference failure: invalid integer address in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_TakeIndexedProxyDirty.pointer_dereference.1",
+      "description": "dereference failure: pointer NULL in access->dirty",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_TakeIndexedProxyDirty.pointer_dereference.2",
+      "description": "dereference failure: pointer invalid in access->dirty",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_TakeIndexedProxyDirty.pointer_dereference.3",
+      "description": "dereference failure: deallocated dynamic object in access->dirty",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_TakeIndexedProxyDirty.pointer_dereference.4",
+      "description": "dereference failure: dead object in access->dirty",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_TakeIndexedProxyDirty.pointer_dereference.5",
+      "description": "dereference failure: pointer outside object bounds in access->dirty",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "JS_TakeIndexedProxyDirty.pointer_dereference.6",
+      "description": "dereference failure: invalid integer address in access->dirty",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_FreeIndexedProxyAccess.pointer_dereference.1",
+      "description": "dereference failure: pointer NULL in *proxy",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_FreeIndexedProxyAccess.pointer_dereference.2",
+      "description": "dereference failure: pointer invalid in *proxy",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_FreeIndexedProxyAccess.pointer_dereference.3",
+      "description": "dereference failure: deallocated dynamic object in *proxy",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_FreeIndexedProxyAccess.pointer_dereference.4",
+      "description": "dereference failure: dead object in *proxy",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_FreeIndexedProxyAccess.pointer_dereference.5",
+      "description": "dereference failure: pointer outside object bounds in *proxy",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_FreeIndexedProxyAccess.pointer_dereference.6",
+      "description": "dereference failure: invalid integer address in *proxy",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_FreeIndexedProxyAccess.precondition_instance.1",
+      "description": "free argument must be NULL or valid pointer",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_FreeIndexedProxyAccess.precondition_instance.2",
+      "description": "free argument must be dynamic object",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_FreeIndexedProxyAccess.precondition_instance.3",
+      "description": "free argument has offset zero",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_FreeIndexedProxyAccess.precondition_instance.4",
+      "description": "double free",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_FreeIndexedProxyAccess.precondition_instance.5",
+      "description": "free called for new[] object",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_FreeIndexedProxyAccess.precondition_instance.6",
+      "description": "free called for stack-allocated object",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_NewIndexedProxyAccess.pointer_dereference.1",
+      "description": "dereference failure: pointer NULL in *proxy",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_NewIndexedProxyAccess.pointer_dereference.2",
+      "description": "dereference failure: pointer invalid in *proxy",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_NewIndexedProxyAccess.pointer_dereference.3",
+      "description": "dereference failure: deallocated dynamic object in *proxy",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_NewIndexedProxyAccess.pointer_dereference.4",
+      "description": "dereference failure: dead object in *proxy",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_NewIndexedProxyAccess.pointer_dereference.5",
+      "description": "dereference failure: pointer outside object bounds in *proxy",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_NewIndexedProxyAccess.pointer_dereference.6",
+      "description": "dereference failure: invalid integer address in *proxy",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_NewIndexedProxyAccess.precondition_instance.1",
+      "description": "free argument must be NULL or valid pointer",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_NewIndexedProxyAccess.precondition_instance.2",
+      "description": "free argument must be dynamic object",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_NewIndexedProxyAccess.precondition_instance.3",
+      "description": "free argument has offset zero",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_NewIndexedProxyAccess.precondition_instance.4",
+      "description": "double free",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_NewIndexedProxyAccess.precondition_instance.5",
+      "description": "free called for new[] object",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "QTS_NewIndexedProxyAccess.precondition_instance.6",
+      "description": "free called for stack-allocated object",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "__CPROVER__start.memory-leak.1",
+      "description": "dynamically allocated memory never freed in __CPROVER_memory_leak == NULL",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "calloc.pointer_dereference.1",
+      "description": "dereference failure: dead object in *(&alloc_size)",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "calloc.assertion.1",
+      "description": "max allocation size exceeded",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "calloc.assertion.2",
+      "description": "max allocation may fail",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "lifetime_contract.assertion.1",
+      "description": "mode changes preserve record ownership",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "lifetime_contract.pointer_dereference.1",
+      "description": "dereference failure: pointer NULL in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "lifetime_contract.pointer_dereference.2",
+      "description": "dereference failure: pointer invalid in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "lifetime_contract.pointer_dereference.3",
+      "description": "dereference failure: deallocated dynamic object in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "lifetime_contract.pointer_dereference.4",
+      "description": "dereference failure: dead object in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "lifetime_contract.pointer_dereference.5",
+      "description": "dereference failure: pointer outside object bounds in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "lifetime_contract.pointer_dereference.6",
+      "description": "dereference failure: invalid integer address in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "lifetime_contract.pointer_dereference.7",
+      "description": "dereference failure: pointer NULL in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "lifetime_contract.pointer_dereference.8",
+      "description": "dereference failure: pointer invalid in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "lifetime_contract.pointer_dereference.9",
+      "description": "dereference failure: deallocated dynamic object in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "lifetime_contract.pointer_dereference.10",
+      "description": "dereference failure: dead object in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "lifetime_contract.pointer_dereference.11",
+      "description": "dereference failure: pointer outside object bounds in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "lifetime_contract.pointer_dereference.12",
+      "description": "dereference failure: invalid integer address in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "lifetime_contract.pointer_dereference.13",
+      "description": "dereference failure: pointer NULL in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "lifetime_contract.pointer_dereference.14",
+      "description": "dereference failure: pointer invalid in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "lifetime_contract.pointer_dereference.15",
+      "description": "dereference failure: deallocated dynamic object in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "lifetime_contract.pointer_dereference.16",
+      "description": "dereference failure: dead object in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "lifetime_contract.pointer_dereference.17",
+      "description": "dereference failure: pointer outside object bounds in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "lifetime_contract.pointer_dereference.18",
+      "description": "dereference failure: invalid integer address in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "lifetime_contract.assertion.2",
+      "description": "enabled borrowed pointer remains rooted during the operation",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "lifetime_contract.assertion.3",
+      "description": "lifecycle terminal free removes the attached pointer",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "memory_contract.assertion.1",
+      "description": "memory mode clears borrowed view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "memory_contract.assertion.2",
+      "description": "memory mode retains exact trusted dimensions and kind",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "memory_contract.assertion.3",
+      "description": "memory mode retains only supplied function-table entries",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "memory_contract.assertion.4",
+      "description": "taking dirty consumes a recorded write",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "memory_contract.assertion.5",
+      "description": "taking dirty twice reports no extra write",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.assertion.1",
+      "description": "rejection preserves prior record",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.assertion.2",
+      "description": "successful allocation is paired with its proxy",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.pointer_dereference.1",
+      "description": "dereference failure: pointer NULL in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.pointer_dereference.2",
+      "description": "dereference failure: pointer invalid in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.pointer_dereference.3",
+      "description": "dereference failure: deallocated dynamic object in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.pointer_dereference.4",
+      "description": "dereference failure: dead object in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.pointer_dereference.5",
+      "description": "dereference failure: pointer outside object bounds in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.pointer_dereference.6",
+      "description": "dereference failure: invalid integer address in access->enabled",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.pointer_dereference.7",
+      "description": "dereference failure: pointer NULL in access->dirty",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.pointer_dereference.8",
+      "description": "dereference failure: pointer invalid in access->dirty",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.pointer_dereference.9",
+      "description": "dereference failure: deallocated dynamic object in access->dirty",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.pointer_dereference.10",
+      "description": "dereference failure: dead object in access->dirty",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.pointer_dereference.11",
+      "description": "dereference failure: pointer outside object bounds in access->dirty",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.pointer_dereference.12",
+      "description": "dereference failure: invalid integer address in access->dirty",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.pointer_dereference.13",
+      "description": "dereference failure: pointer NULL in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.pointer_dereference.14",
+      "description": "dereference failure: pointer invalid in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.pointer_dereference.15",
+      "description": "dereference failure: deallocated dynamic object in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.pointer_dereference.16",
+      "description": "dereference failure: dead object in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.pointer_dereference.17",
+      "description": "dereference failure: pointer outside object bounds in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.pointer_dereference.18",
+      "description": "dereference failure: invalid integer address in access->view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.assertion.3",
+      "description": "calloc starts disabled and without a borrowed view",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.assertion.4",
+      "description": "paired free unlinks before storage release",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "rejection_contract.assertion.5",
+      "description": "allocation failure installs no record",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "typed_array_is_oob.pointer_dereference.1",
+      "description": "dereference failure: pointer NULL in object->oob",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "typed_array_is_oob.pointer_dereference.2",
+      "description": "dereference failure: pointer invalid in object->oob",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "typed_array_is_oob.pointer_dereference.3",
+      "description": "dereference failure: deallocated dynamic object in object->oob",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "typed_array_is_oob.pointer_dereference.4",
+      "description": "dereference failure: dead object in object->oob",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "typed_array_is_oob.pointer_dereference.5",
+      "description": "dereference failure: pointer outside object bounds in object->oob",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "typed_array_is_oob.pointer_dereference.6",
+      "description": "dereference failure: invalid integer address in object->oob",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "view_contract.assertion.1",
+      "description": "view admission matches native brand and bounds",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "view_contract.assertion.2",
+      "description": "accepted view borrows exactly the rooted caller handle",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "view_contract.assertion.3",
+      "description": "disable revokes borrowed-view access",
+      "status": "SUCCESS"
+    },
+    {
+      "id": "view_contract.assertion.4",
+      "description": "rejected view grants no new access",
+      "status": "SUCCESS"
+    }
+  ],
+  "control": {
+    "name": "missing production unlink",
+    "translationUnitHash": "1dc632df55f0f504ab374cea0190577997d03c114285398fdb2268172d337e8e",
+    "exitCode": 10,
+    "failures": [
+      {
+        "id": "lifetime_contract.assertion.3",
+        "description": "lifecycle terminal free removes the attached pointer"
+      },
+      {
+        "id": "rejection_contract.assertion.4",
+        "description": "paired free unlinks before storage release"
+      }
+    ],
+    "propertyCount": 237
+  },
+  "callerPremiseControl": {
+    "name": "free called with a different live proxy",
+    "translationUnitHash": "24c895ecf623fdd879ffb3c219438491ab1dc5b58317060dca7f637f3475ce44",
+    "exitCode": 10,
+    "propertyCount": 243,
+    "failures": [
+      {
+        "id": "lifetime_contract.assertion.3",
+        "description": "lifecycle terminal free removes the attached pointer"
+      }
+    ]
+  },
+  "remainingPremises": [
+    "QuickJS value/object ABI, native brand projection and typed_array_is_oob semantics",
+    "Host owns each proxy/control pairing and roots borrowed view handles through enabled use",
+    "Trusted function-table entries remain live until all records are unlinked",
+    "Guest entry/exit and reentry barriers disable stale views after growth or detachment",
+    "No asynchronous execution interrupts individual synchronous control operations",
+    "The 4-operation lifecycle harness does not prove arbitrary TS caller histories or the numeric fast paths",
+    "CBMC frontend, allocator model, SAT solver and extraction runner are trusted"
+  ]
+}

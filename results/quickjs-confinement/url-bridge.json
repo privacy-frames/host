@@ -2,7 +2,7 @@
   "scope": "Actual BrowserEnvironment and QuickJS URL/URLSearchParams bridge: local conversion, callbacks, iteration, reflection, owner-routed object URLs, and pre-getter rejection. The omitted-route control calls the real BrowserEnvironment.host.get directly because guest descriptor inspection independently rejects the unknown getter even if only get routing is absent. The temporary route omission control demonstrates this fixture detects that mediation failure; other native families remain outside this fixture.",
   "sourceHashes": {
     "src/guest/browser.ts": "d8c88d323e2134addd15f7ab07b91c5fd5b1d03e0db27ed5990cb2172739a64d",
-    "src/guest/engine.ts": "ce4b90167e3665c9ac79b738b182cbb91c9cc233bcda8f53a3003974e6a801f7",
+    "src/guest/engine.ts": "8f62cd622a3e3a8067e46de5d9af1a4d9796762b2f9d14df51f20f211076ef4c",
     "src/guest/guest-runtime.ts": "03c01065cc5f73dc7be785d3fd6cddef1f409d17d334c3eb9769a86eafbd7f7c",
     "src/guest/native-policy.ts": "ba0fb4f746bc472c480f0dbeff9e83a629c74e81ba832a3bd8019a6f1e2b1ce8",
     "src/guest/url-policy.ts": "cd9c54875cac49c55634b910e723abe0fc5c402f429107eefbb910ce79d54d7a",
@@ -186,7 +186,7 @@
     "src/guest/css.ts": "ef01e1e37e18deb526344717219399160394fd5d190f471535ff5fd10dfdecb9",
     "src/guest/custom-elements.ts": "ff3cf0ab9c85bee1f74d6198431c01615e1c6e9cf198dd4b9fc68d78a045cb0d",
     "src/guest/dom.ts": "75a654d384521c8c7153bf55bfe71f19ed1eab3b27d1c60fa37241aa300e764a",
-    "src/guest/engine.ts": "ce4b90167e3665c9ac79b738b182cbb91c9cc233bcda8f53a3003974e6a801f7",
+    "src/guest/engine.ts": "8f62cd622a3e3a8067e46de5d9af1a4d9796762b2f9d14df51f20f211076ef4c",
     "src/guest/event-listener-arguments.ts": "f5219d8d8da8d9f5d67f0afb46756a2e7ef55003b64fc846dafccf134c27a080",
     "src/guest/event-policy.ts": "13543ed303ec876ff179bfcb9ced225347ddc1f404e13f392fc3ecf417c8bac6",
     "src/guest/generated-runtime-interfaces.ts": "55fa35f2d27fe9b123c74f77a229a2a64b86ace4f2883e5fb70715d851117182",
@@ -223,8 +223,8 @@
   },
   "engineSHA256": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
   "bundleHashes": {
-    "production": "8a28f75f9de51c216af5b88bdac54177926310ac5b4b6d98b4b088ed87365724",
-    "urlGetRouteRemoved": "2ccd31ffb3e133631a822aeeca50a0e444152bfa131beb5967bc090721c0709d"
+    "production": "e4dab6ebd304f2f2ddea79034433591ebd714cfdd714d9297d81d100d50517ed",
+    "urlGetRouteRemoved": "99ff897fc40cebcb6413a3a971342087fe7f5222dd9f21af3e9b43f4a10e708d"
   },
   "fault": "Only the actual BrowserEnvironment private get URL-domain routing line is omitted from a temporary esbuild bundle. Production sources are unchanged.",
   "receipts": [
@@ -299,5 +299,5 @@
       "rejected": true
     }
   ],
-  "completedAt": "2026-11-21T20:08:49.731Z"
+  "completedAt": "2026-11-21T20:44:57.859Z"
 }
