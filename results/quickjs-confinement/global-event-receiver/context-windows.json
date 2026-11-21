@@ -1,0 +1,674 @@
+[
+  {
+    "browser": "chromium",
+    "version": "153.0.8010.12",
+    "observation": {
+      "result": {
+        "finished": {
+          "value": 21,
+          "returned": false,
+          "cancelled": true,
+          "dynamicFlag": 1,
+          "attributeFlag": 1,
+          "evalFlag": 1,
+          "eventRealms": {
+            "script": true,
+            "dom": true
+          },
+          "srcdoc": true
+        },
+        "logicalLoadCount": 1,
+        "anchors": {
+          "stayedInDocument": true,
+          "nativeScriptAbsent": true
+        },
+        "conversions": [
+          {
+            "method": "setAttribute",
+            "name": 1,
+            "value": 1
+          },
+          {
+            "method": "setAttributeNS",
+            "name": 1,
+            "value": 1
+          },
+          {
+            "method": "removeAttribute",
+            "name": 1
+          },
+          {
+            "method": "removeAttributeNS",
+            "name": 1
+          },
+          {
+            "method": "toggleAttribute",
+            "name": 1
+          },
+          {
+            "method": "removeNamedItem",
+            "name": 1
+          },
+          {
+            "method": "removeNamedItemNS",
+            "name": 1
+          }
+        ],
+        "conversionDOM": [
+          {
+            "method": "setAttribute",
+            "href": null,
+            "label": true,
+            "spellcheck": null
+          },
+          {
+            "method": "setAttributeNS",
+            "href": null,
+            "label": true,
+            "spellcheck": null
+          },
+          {
+            "method": "removeAttribute",
+            "href": null,
+            "label": false,
+            "spellcheck": "false"
+          },
+          {
+            "method": "removeAttributeNS",
+            "href": null,
+            "label": false,
+            "spellcheck": "false"
+          },
+          {
+            "method": "toggleAttribute",
+            "href": null,
+            "label": false,
+            "spellcheck": "false"
+          },
+          {
+            "method": "removeNamedItem",
+            "href": null,
+            "label": false,
+            "spellcheck": "false"
+          },
+          {
+            "method": "removeNamedItemNS",
+            "href": null,
+            "label": false,
+            "spellcheck": "false"
+          }
+        ],
+        "conversionBoundaries": {
+          "history": [
+            {
+              "method": "pushState",
+              "count": 1,
+              "path": "/app/history-pushState"
+            },
+            {
+              "method": "replaceState",
+              "count": 1,
+              "path": "/app/history-replaceState"
+            }
+          ],
+          "instruction": {
+            "count": 1,
+            "target": "local-note"
+          }
+        },
+        "logicalAttributes": {
+          "removed": true,
+          "added": true,
+          "empty": true,
+          "toggled": false,
+          "absent": true,
+          "removedNS": true
+        },
+        "namespaceAttempts": [
+          {
+            "method": "setAttributeNS",
+            "result": "returned"
+          },
+          {
+            "method": "setAttributeNodeNS",
+            "result": "returned"
+          },
+          {
+            "method": "setNamedItemNS",
+            "result": "returned"
+          }
+        ],
+        "namespaceDOM": [
+          {
+            "method": "setAttributeNS",
+            "localTarget": true
+          },
+          {
+            "method": "setAttributeNodeNS",
+            "localTarget": true
+          },
+          {
+            "method": "setNamedItemNS",
+            "localTarget": true
+          }
+        ],
+        "namespaceBaseLocal": true,
+        "modifierTargets": [
+          {
+            "kind": "html",
+            "modifier": "ctrl",
+            "physicalTarget": "_self",
+            "physicalHref": null,
+            "xlinkHref": null
+          },
+          {
+            "kind": "html",
+            "modifier": "shift",
+            "physicalTarget": "_self",
+            "physicalHref": null,
+            "xlinkHref": null
+          },
+          {
+            "kind": "svg",
+            "modifier": "ctrl",
+            "physicalTarget": "_self",
+            "physicalHref": null,
+            "xlinkHref": null
+          },
+          {
+            "kind": "svg",
+            "modifier": "shift",
+            "physicalTarget": "_self",
+            "physicalHref": null,
+            "xlinkHref": null
+          }
+        ],
+        "guestConfirmationUnavailable": true,
+        "detached": {
+          "click": true,
+          "cancelled": true,
+          "dispatch": true
+        },
+        "editing": {
+          "local": {
+            "inserted": true,
+            "formatted": true,
+            "text": "Local editing",
+            "markup": "<b>Local editing</b>"
+          },
+          "denied": {
+            "insertHTML": "SecurityError",
+            "createLink": "SecurityError",
+            "insertImage": "SecurityError",
+            "copy": "SecurityError",
+            "cut": "SecurityError",
+            "paste": "SecurityError"
+          },
+          "converted": {
+            "calls": 1,
+            "valueCalls": 1,
+            "text": "<span id=\"converted-command-node\">Literal text</span>",
+            "parsed": false
+          },
+          "block": {
+            "calls": 1,
+            "result": true,
+            "paragraph": true,
+            "frame": false,
+            "text": "Block formatting"
+          }
+        },
+        "messages": {
+          "reply": {
+            "bytes": [
+              10,
+              7
+            ],
+            "source": true,
+            "origin": true,
+            "trusted": true
+          },
+          "port": true,
+          "detached": true
+        },
+        "receiverRealm": {
+          "event": true,
+          "buffer": true,
+          "port": true
+        },
+        "nativeTrust": [
+          false
+        ],
+        "logicalOrigins": [
+          {
+            "kind": "origin-reply",
+            "id": "explicit",
+            "count": 1,
+            "sender": "https://fixture.invalid",
+            "target": "https://other.fixture.invalid",
+            "origin": "https://other.fixture.invalid",
+            "source": true
+          },
+          {
+            "kind": "origin-reply",
+            "id": "wildcard",
+            "count": 2,
+            "sender": "https://fixture.invalid",
+            "target": "https://other.fixture.invalid",
+            "origin": "https://other.fixture.invalid",
+            "source": true
+          }
+        ],
+        "pendingWindow": true,
+        "brands": {
+          "node": true,
+          "element": true,
+          "document": true,
+          "frame": true,
+          "template": true,
+          "attr": true,
+          "blob": true,
+          "window": true,
+          "port": true,
+          "audio": true,
+          "cache": true,
+          "fakeNode": false,
+          "fakeElement": false
+        },
+        "nativeMarkers": {
+          "dynamic": true,
+          "attribute": true,
+          "eval": true
+        },
+        "popup": {
+          "guest": 7,
+          "syntheticPagehideSurvives": true,
+          "native": true,
+          "trustedURL": true,
+          "nativeContent": "popup"
+        },
+        "removed": {
+          "hidden": true,
+          "callbackClosed": true
+        }
+      }
+    },
+    "requests": [
+      "http://127.0.0.1:40865/",
+      "http://127.0.0.1:40865/browser.js",
+      "http://127.0.0.1:40865/quickjs.wasm"
+    ],
+    "approvals": [
+      {
+        "type": "confirm",
+        "message": "Allow this application to export a file? Exported data leaves confinement. Your browser may send download metadata for security checks.",
+        "accepted": false
+      },
+      {
+        "type": "confirm",
+        "message": "Allow this application to export a file? Exported data leaves confinement. Your browser may send download metadata for security checks.",
+        "accepted": true
+      },
+      {
+        "type": "confirm",
+        "message": "Allow this application to export a file? Exported data leaves confinement. Your browser may send download metadata for security checks.",
+        "accepted": true
+      }
+    ],
+    "nativeBlobNavigationControl": true,
+    "nativeNamespaceControl": {
+      "xlink": true,
+      "xmlBase": false
+    },
+    "nativeEditingControl": {
+      "inserted": true,
+      "parsed": "Native HTML"
+    },
+    "downloads": [
+      {
+        "filename": "guest-download.txt",
+        "bytes": "unchanged guest download bytes"
+      },
+      {
+        "filename": "guest-detached-download.txt",
+        "bytes": "unchanged detached download bytes"
+      }
+    ]
+  },
+  {
+    "browser": "firefox",
+    "version": "155.0",
+    "observation": {
+      "result": {
+        "finished": {
+          "value": 21,
+          "returned": false,
+          "cancelled": true,
+          "dynamicFlag": 1,
+          "attributeFlag": 1,
+          "evalFlag": 1,
+          "eventRealms": {
+            "script": true,
+            "dom": true
+          },
+          "srcdoc": true
+        },
+        "logicalLoadCount": 1,
+        "anchors": {
+          "stayedInDocument": true,
+          "nativeScriptAbsent": true
+        },
+        "conversions": [
+          {
+            "method": "setAttribute",
+            "name": 1,
+            "value": 1
+          },
+          {
+            "method": "setAttributeNS",
+            "name": 1,
+            "value": 1
+          },
+          {
+            "method": "removeAttribute",
+            "name": 1
+          },
+          {
+            "method": "removeAttributeNS",
+            "name": 1
+          },
+          {
+            "method": "toggleAttribute",
+            "name": 1
+          },
+          {
+            "method": "removeNamedItem",
+            "name": 1
+          },
+          {
+            "method": "removeNamedItemNS",
+            "name": 1
+          }
+        ],
+        "conversionDOM": [
+          {
+            "method": "setAttribute",
+            "href": null,
+            "label": true,
+            "spellcheck": null
+          },
+          {
+            "method": "setAttributeNS",
+            "href": null,
+            "label": true,
+            "spellcheck": null
+          },
+          {
+            "method": "removeAttribute",
+            "href": null,
+            "label": false,
+            "spellcheck": "false"
+          },
+          {
+            "method": "removeAttributeNS",
+            "href": null,
+            "label": false,
+            "spellcheck": "false"
+          },
+          {
+            "method": "toggleAttribute",
+            "href": null,
+            "label": false,
+            "spellcheck": "false"
+          },
+          {
+            "method": "removeNamedItem",
+            "href": null,
+            "label": false,
+            "spellcheck": "false"
+          },
+          {
+            "method": "removeNamedItemNS",
+            "href": null,
+            "label": false,
+            "spellcheck": "false"
+          }
+        ],
+        "conversionBoundaries": {
+          "history": [
+            {
+              "method": "pushState",
+              "count": 1,
+              "path": "/app/history-pushState"
+            },
+            {
+              "method": "replaceState",
+              "count": 1,
+              "path": "/app/history-replaceState"
+            }
+          ],
+          "instruction": {
+            "count": 1,
+            "target": "local-note"
+          }
+        },
+        "logicalAttributes": {
+          "removed": true,
+          "added": true,
+          "empty": true,
+          "toggled": false,
+          "absent": true,
+          "removedNS": true
+        },
+        "namespaceAttempts": [
+          {
+            "method": "setAttributeNS",
+            "result": "returned"
+          },
+          {
+            "method": "setAttributeNodeNS",
+            "result": "returned"
+          },
+          {
+            "method": "setNamedItemNS",
+            "result": "returned"
+          }
+        ],
+        "namespaceDOM": [
+          {
+            "method": "setAttributeNS",
+            "localTarget": true
+          },
+          {
+            "method": "setAttributeNodeNS",
+            "localTarget": true
+          },
+          {
+            "method": "setNamedItemNS",
+            "localTarget": true
+          }
+        ],
+        "namespaceBaseLocal": true,
+        "modifierTargets": [
+          {
+            "kind": "html",
+            "modifier": "ctrl",
+            "physicalTarget": "_self",
+            "physicalHref": null,
+            "xlinkHref": null
+          },
+          {
+            "kind": "html",
+            "modifier": "shift",
+            "physicalTarget": "_self",
+            "physicalHref": null,
+            "xlinkHref": null
+          },
+          {
+            "kind": "svg",
+            "modifier": "ctrl",
+            "physicalTarget": "_self",
+            "physicalHref": null,
+            "xlinkHref": null
+          },
+          {
+            "kind": "svg",
+            "modifier": "shift",
+            "physicalTarget": "_self",
+            "physicalHref": null,
+            "xlinkHref": null
+          }
+        ],
+        "guestConfirmationUnavailable": true,
+        "detached": {
+          "click": true,
+          "cancelled": true,
+          "dispatch": true
+        },
+        "editing": {
+          "local": {
+            "inserted": true,
+            "formatted": true,
+            "text": "Local editing",
+            "markup": "<b>Local editing</b>"
+          },
+          "denied": {
+            "insertHTML": "SecurityError",
+            "createLink": "SecurityError",
+            "insertImage": "SecurityError",
+            "copy": "SecurityError",
+            "cut": "SecurityError",
+            "paste": "SecurityError"
+          },
+          "converted": {
+            "calls": 1,
+            "valueCalls": 1,
+            "text": "<span id=\"converted-command-node\">Literal text</span>",
+            "parsed": false
+          },
+          "block": {
+            "calls": 1,
+            "result": true,
+            "paragraph": true,
+            "frame": false,
+            "text": "Block formatting"
+          }
+        },
+        "messages": {
+          "reply": {
+            "bytes": [
+              10,
+              7
+            ],
+            "source": true,
+            "origin": true,
+            "trusted": true
+          },
+          "port": true,
+          "detached": true
+        },
+        "receiverRealm": {
+          "event": true,
+          "buffer": true,
+          "port": true
+        },
+        "nativeTrust": [
+          false
+        ],
+        "logicalOrigins": [
+          {
+            "kind": "origin-reply",
+            "id": "explicit",
+            "count": 1,
+            "sender": "https://fixture.invalid",
+            "target": "https://other.fixture.invalid",
+            "origin": "https://other.fixture.invalid",
+            "source": true
+          },
+          {
+            "kind": "origin-reply",
+            "id": "wildcard",
+            "count": 2,
+            "sender": "https://fixture.invalid",
+            "target": "https://other.fixture.invalid",
+            "origin": "https://other.fixture.invalid",
+            "source": true
+          }
+        ],
+        "pendingWindow": true,
+        "brands": {
+          "node": true,
+          "element": true,
+          "document": true,
+          "frame": true,
+          "template": true,
+          "attr": true,
+          "blob": true,
+          "window": true,
+          "port": true,
+          "audio": true,
+          "cache": true,
+          "fakeNode": false,
+          "fakeElement": false
+        },
+        "nativeMarkers": {
+          "dynamic": true,
+          "attribute": true,
+          "eval": true
+        },
+        "popup": {
+          "guest": 7,
+          "syntheticPagehideSurvives": true,
+          "native": true,
+          "trustedURL": true,
+          "nativeContent": "popup"
+        },
+        "removed": {
+          "hidden": true,
+          "callbackClosed": true
+        }
+      }
+    },
+    "requests": [
+      "http://127.0.0.1:40865/",
+      "http://127.0.0.1:40865/browser.js",
+      "http://127.0.0.1:40865/quickjs.wasm"
+    ],
+    "approvals": [
+      {
+        "type": "confirm",
+        "message": "Allow this application to export a file? Exported data leaves confinement. Your browser may send download metadata for security checks.",
+        "accepted": false
+      },
+      {
+        "type": "confirm",
+        "message": "Allow this application to export a file? Exported data leaves confinement. Your browser may send download metadata for security checks.",
+        "accepted": true
+      },
+      {
+        "type": "confirm",
+        "message": "Allow this application to export a file? Exported data leaves confinement. Your browser may send download metadata for security checks.",
+        "accepted": true
+      }
+    ],
+    "nativeBlobNavigationControl": true,
+    "nativeNamespaceControl": {
+      "xlink": true,
+      "xmlBase": false
+    },
+    "nativeEditingControl": {
+      "inserted": true,
+      "parsed": "Native HTML"
+    },
+    "downloads": [
+      {
+        "filename": "guest-download.txt",
+        "bytes": "unchanged guest download bytes"
+      },
+      {
+        "filename": "guest-detached-download.txt",
+        "bytes": "unchanged detached download bytes"
+      }
+    ]
+  }
+]

@@ -1,0 +1,28 @@
+✔ selected native event constructors preserve identity, conversion and cancellation (21.127711ms)
+✔ native dispatch and cleanup retain guest callback and object-listener semantics (1.169214ms)
+✔ listener conversions match native order and failures do not register cleanup (0.951395ms)
+✔ callback ownership is checked before registration and again on delivery (0.621554ms)
+✔ registered native callables use the provided invocation route as listeners (0.55633ms)
+✔ native delivery rechecks receiver provenance without revoking detached local targets (0.480265ms)
+✔ unknown getters and reflected access are denied before execution (1.123542ms)
+✔ native descriptor changes invalidate cached callable and accessor authority (0.586532ms)
+✔ canonical methods and borrowed receivers do not claim unrelated whole objects (0.775064ms)
+✔ unreviewed aliases do not become local-family members (0.481013ms)
+✔ method publication does not capture unclaimed native target families (0.388906ms)
+✔ only an explicit native call contract permits a registered constructor without new (2.004296ms)
+✔ published wrapper identity is stable and usable for private argument-decoding metadata (0.372254ms)
+✔ trusted native callable producer retains the original funcref identity (0.522309ms)
+✔ exact callable publication refuses metadata accessors without executing them (0.243224ms)
+✔ codec preserves stable callable and descriptor identity without exposing native functions (2.607457ms)
+✔ codec rejects unknown getters and foreign receivers before invoking them (0.41121ms)
+✔ codec keeps wrapper shape immutable and refuses inherited callable authority (0.273474ms)
+✔ codec maps only registered constructor tokens and forwards results through admission (0.559828ms)
+✔ reviewed receiver normalization precedes admission on codec and direct wrapper calls (2.325262ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 175.14923

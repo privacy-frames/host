@@ -1,0 +1,75 @@
+
+> test:contexts
+> tsx test/guest-contexts.ts && tsx test/guest-context-isolation.ts && tsx test/guest-custom-elements.ts && tsx test/guest-context-windows.ts && tsx test/guest-context-publication.ts && tsx test/guest-context-maintenance.ts
+
+▲ [WARNING] "import.meta" is not available with the "iife" output format and will be empty [empty-import-meta]
+
+    vendor/quickjs/generated/engine.mjs:1:796:
+      1 │ ...w toThrow};var _scriptName=import.meta.url;var scriptDirectory="...
+        ╵                               ~~~~~~~~~~~
+
+  You need to set the output format to "esm" for "import.meta" to work correctly.
+
+▲ [WARNING] "import.meta" is not available with the "iife" output format and will be empty [empty-import-meta]
+
+    vendor/quickjs/generated/engine.mjs:1:3172:
+      1 │ ...turn new URL("engine.wasm",import.meta.url).href}function getBin...
+        ╵                               ~~~~~~~~~~~
+
+  You need to set the output format to "esm" for "import.meta" to work correctly.
+
+{"browser":"chromium","version":"153.0.8010.12","observation":{"result":{"worker":{"count":1,"same":true,"bytes":[1,7,3,4],"denied":true,"buffer":{},"binaryText":"\u0000ÿ\ud800Z","keyed":"correct","normal":"decoy","detached":true,"persistentCount":2},"nested":9,"moduleWorker":11,"failedTransfer":{"rejected":true,"retained":true},"denied":true,"shared":[1,2],"sample":0.25,"workletMessages":[{"bytes":[4,4]},{"detached":true,"wasm":"object"}],"nativePortDetached":true,"prepared":1,"closed":1,"stripped":true,"childText":"prepared child"}},"requestURLs":["http://127.0.0.1:34303/","http://127.0.0.1:34303/browser.js","http://127.0.0.1:34303/quickjs.wasm","http://127.0.0.1:34303/worker.js","http://127.0.0.1:34303/guest-worklet.js","http://127.0.0.1:34303/__guest_worker_registry__.js","blob:http://127.0.0.1:34303/bb389be2-f15f-4514-a5b6-5d449fd69df3","blob:http://127.0.0.1:34303/bb389be2-f15f-4514-a5b6-5d449fd69df3","blob:http://127.0.0.1:34303/bb389be2-f15f-4514-a5b6-5d449fd69df3","blob:http://127.0.0.1:34303/bb389be2-f15f-4514-a5b6-5d449fd69df3","blob:http://127.0.0.1:34303/bb389be2-f15f-4514-a5b6-5d449fd69df3","blob:http://127.0.0.1:34303/19684fce-b967-4f99-b194-985ce2181f3d"]}
+{"browser":"firefox","version":"155.0","observation":{"result":{"worker":{"count":1,"same":true,"bytes":[1,7,3,4],"denied":true,"buffer":{},"binaryText":"\u0000ÿ\ud800Z","keyed":"correct","normal":"decoy","detached":true,"persistentCount":2},"nested":9,"moduleWorker":11,"failedTransfer":{"rejected":true,"retained":true},"denied":true,"shared":[1,2],"sample":0.25,"workletMessages":[{"bytes":[4,4]},{"detached":true,"wasm":"object"}],"nativePortDetached":true,"prepared":1,"closed":1,"stripped":true,"childText":"prepared child"}},"requestURLs":["http://127.0.0.1:34303/","http://127.0.0.1:34303/browser.js","http://127.0.0.1:34303/quickjs.wasm","http://127.0.0.1:34303/worker.js","http://127.0.0.1:34303/guest-worklet.js"]}
+chromium {"result":{"events":["construct","connected","construct","construct","connected","connected",["title",null,"private"],"cancel","disconnected"],"constructorAttributes":[3,0,3],"automaticHardening":true,"observations":1,"resolved":true,"registered":true,"prototypes":[true,true,true],"synchronousCancellation":true,"late":true,"customized":true,"invalid":"SyntaxError"},"nativeCallback":false,"nativeControl":true}
+firefox {"result":{"events":["construct","connected","construct","construct","connected","connected",["title",null,"private"],"cancel","disconnected"],"constructorAttributes":[3,0,3],"automaticHardening":true,"observations":1,"resolved":true,"registered":true,"prototypes":[true,true,true],"synchronousCancellation":true,"late":true,"customized":true,"invalid":"SyntaxError"},"nativeCallback":false,"nativeControl":true}
+chromium NativePolicyError: Native call refused for EventTarget.addEventListener: receiver belongs to another family or registry
+    at NativePolicy.call (http://127.0.0.1:35055/browser.js:16064:13)
+    at Object.call (http://127.0.0.1:35055/browser.js:16503:30)
+    at Object.call (http://127.0.0.1:35055/browser.js:45579:30)
+    at _GuestEngine.dispatch (http://127.0.0.1:35055/browser.js:49800:25)
+    at WeakLifetime.<anonymous> (http://127.0.0.1:35055/browser.js:49332:21)
+    at QuickJSContext.<anonymous> (http://127.0.0.1:35055/browser.js:3394:46)
+    at next (<anonymous>)
+    at awaitEachYieldedPromise (http://127.0.0.1:35055/browser.js:2863:29)
+    at awaitYield.awaitYieldOf [as of] (http://127.0.0.1:35055/browser.js:2847:21)
+    at http://127.0.0.1:35055/browser.js:3116:35
+chromium Application error NativePolicyError: Native call refused for EventTarget.addEventListener: receiver belongs to another family or registry
+    at NativePolicy.call (http://127.0.0.1:35055/browser.js:16064:13)
+    at Object.call (http://127.0.0.1:35055/browser.js:16503:30)
+    at Object.call (http://127.0.0.1:35055/browser.js:45579:30)
+    at _GuestEngine.dispatch (http://127.0.0.1:35055/browser.js:49800:25)
+    at WeakLifetime.<anonymous> (http://127.0.0.1:35055/browser.js:49332:21)
+    at QuickJSContext.<anonymous> (http://127.0.0.1:35055/browser.js:3394:46)
+    at next (<anonymous>)
+    at awaitEachYieldedPromise (http://127.0.0.1:35055/browser.js:2863:29)
+    at awaitYield.awaitYieldOf [as of] (http://127.0.0.1:35055/browser.js:2847:21)
+    at http://127.0.0.1:35055/browser.js:3116:35
+chromium NativePolicyError: Native call refused for EventTarget.addEventListener: receiver belongs to another family or registry
+    at NativePolicy.call (http://127.0.0.1:35055/browser.js:16064:13)
+    at Object.call (http://127.0.0.1:35055/browser.js:16503:30)
+    at Object.call (http://127.0.0.1:35055/browser.js:45579:30)
+    at _GuestEngine.dispatch (http://127.0.0.1:35055/browser.js:49800:25)
+    at WeakLifetime.<anonymous> (http://127.0.0.1:35055/browser.js:49332:21)
+    at QuickJSContext.<anonymous> (http://127.0.0.1:35055/browser.js:3394:46)
+    at next (<anonymous>)
+    at awaitEachYieldedPromise (http://127.0.0.1:35055/browser.js:2863:29)
+    at awaitYield.awaitYieldOf [as of] (http://127.0.0.1:35055/browser.js:2847:21)
+    at http://127.0.0.1:35055/browser.js:3116:35
+{"browser":"chromium","version":"153.0.8010.12","observation":{"error":"NativePolicyError: Native call refused for EventTarget.addEventListener: receiver belongs to another family or registry"},"requests":["http://127.0.0.1:35055/","http://127.0.0.1:35055/browser.js","http://127.0.0.1:35055/quickjs.wasm"],"approvals":[],"assertionFailure":"AssertionError [ERR_ASSERTION]: {\"error\":\"NativePolicyError: Native call refused for EventTarget.addEventListener: receiver belongs to another family or registry\"}\n    at <anonymous> (/home/damen/Projects/privacy-frames-quickjs-kernel/test/guest-context-windows.ts:89:7)\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at process.processImmediate (node:internal/timers:472:9)","nativeBlobNavigationControl":false,"downloads":[]}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: {"error":"NativePolicyError: Native call refused for EventTarget.addEventListener: receiver belongs to another family or registry"}
+    at <anonymous> (/home/damen/Projects/privacy-frames-quickjs-kernel/test/guest-context-windows.ts:89:7)
+    at runNextTicks (node:internal/process/task_queues:65:5)
+    at process.processImmediate (node:internal/timers:472:9) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.18.0

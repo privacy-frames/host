@@ -36,6 +36,17 @@ method values encountered on prepared DOM receivers are replaced with canonical
 registry wrappers, so their policy does not depend on the first property name used
 to obtain them.
 
+In Chromium and Firefox window contexts, native `addEventListener`,
+`removeEventListener` and `dispatchEvent` use the method's global window when the
+receiver is `null` or `undefined`, including when borrowed from
+`EventTarget.prototype`. BrowserPolicy preserves this convention for those three
+privately published operation contracts. NativeHost normalizes the receiver before
+admission in both engine-mediated calls and direct calls to canonical wrappers,
+without changing method identity or shape. Other receivers still require the
+existing prepared-context checks. `test/guest-global-event-receiver.ts` compares
+native and guest behavior and separately omits family normalization and direct
+wrapper normalization to check that both paths are exercised.
+
 Listener conversion uses `captureEventListenerArguments`, and cleanup stores the
 actual wrapper and converted primitive arguments supplied to the native call.
 Delivery rechecks prepared receiver provenance. A detached local node remains

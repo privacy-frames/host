@@ -1,0 +1,18 @@
+▲ [WARNING] "import.meta" is not available with the "iife" output format and will be empty [empty-import-meta]
+
+    vendor/quickjs/generated/engine.mjs:1:796:
+      1 │ ...w toThrow};var _scriptName=import.meta.url;var scriptDirectory="...
+        ╵                               ~~~~~~~~~~~
+
+  You need to set the output format to "esm" for "import.meta" to work correctly.
+
+▲ [WARNING] "import.meta" is not available with the "iife" output format and will be empty [empty-import-meta]
+
+    vendor/quickjs/generated/engine.mjs:1:3172:
+      1 │ ...turn new URL("engine.wasm",import.meta.url).href}function getBin...
+        ╵                               ~~~~~~~~~~~
+
+  You need to set the output format to "esm" for "import.meta" to work correctly.
+
+{"browser":"chromium","version":"153.0.8010.12","observation":{"result":{"worker":{"count":1,"same":true,"bytes":[1,7,3,4],"denied":true,"buffer":{},"binaryText":"\u0000ÿ\ud800Z","keyed":"correct","normal":"decoy","detached":true,"persistentCount":2},"nested":9,"moduleWorker":11,"failedTransfer":{"rejected":true,"retained":true},"denied":true,"shared":[1,2],"sample":0.25,"workletMessages":[{"bytes":[4,4]},{"detached":true,"wasm":"object"}],"nativePortDetached":true,"prepared":1,"closed":1,"stripped":true,"childText":"prepared child"}},"requestURLs":["http://127.0.0.1:38793/","http://127.0.0.1:38793/browser.js","http://127.0.0.1:38793/quickjs.wasm","http://127.0.0.1:38793/worker.js","http://127.0.0.1:38793/guest-worklet.js","http://127.0.0.1:38793/__guest_worker_registry__.js","blob:http://127.0.0.1:38793/3dd5af81-622a-4d49-a91a-c37b1d56a929","blob:http://127.0.0.1:38793/3dd5af81-622a-4d49-a91a-c37b1d56a929","blob:http://127.0.0.1:38793/3dd5af81-622a-4d49-a91a-c37b1d56a929","blob:http://127.0.0.1:38793/3dd5af81-622a-4d49-a91a-c37b1d56a929","blob:http://127.0.0.1:38793/3dd5af81-622a-4d49-a91a-c37b1d56a929","blob:http://127.0.0.1:38793/c95803bf-2321-46f0-998b-eb00ef8b4057"]}
+{"browser":"firefox","version":"155.0","observation":{"result":{"worker":{"count":1,"same":true,"bytes":[1,7,3,4],"denied":true,"buffer":{},"binaryText":"\u0000ÿ\ud800Z","keyed":"correct","normal":"decoy","detached":true,"persistentCount":2},"nested":9,"moduleWorker":11,"failedTransfer":{"rejected":true,"retained":true},"denied":true,"shared":[1,2],"sample":0.25,"workletMessages":[{"bytes":[4,4]},{"detached":true,"wasm":"object"}],"nativePortDetached":true,"prepared":1,"closed":1,"stripped":true,"childText":"prepared child"}},"requestURLs":["http://127.0.0.1:38793/","http://127.0.0.1:38793/browser.js","http://127.0.0.1:38793/quickjs.wasm","http://127.0.0.1:38793/worker.js","http://127.0.0.1:38793/guest-worklet.js"]}

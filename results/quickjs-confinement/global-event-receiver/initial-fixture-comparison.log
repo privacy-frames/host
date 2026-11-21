@@ -1,0 +1,30 @@
+chromium production {"failure":"Error: Guest receiver behavior matches unrestricted native control\nError: Guest receiver behavior matches unrestricted native control\n    at check (http://127.0.0.1:45433/browser.js?variant=production:50976:21)\n    at run (http://127.0.0.1:45433/browser.js?variant=production:51000:5)"}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Error: Guest receiver behavior matches unrestricted native control
+Error: Guest receiver behavior matches unrestricted native control
+    at check (http://127.0.0.1:45433/browser.js?variant=production:50976:21)
+    at run (http://127.0.0.1:45433/browser.js?variant=production:51000:5)
++ actual - expected
+
++ 'Error: Guest receiver behavior matches unrestricted native control\n' +
++   'Error: Guest receiver behavior matches unrestricted native control\n' +
++   '    at check (http://127.0.0.1:45433/browser.js?variant=production:50976:21)\n' +
++   '    at run (http://127.0.0.1:45433/browser.js?variant=production:51000:5)'
+- undefined
+
+    at <anonymous> (/home/damen/Projects/privacy-frames-browser-policy/test/guest-global-event-receiver.ts:128:20) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'Error: Guest receiver behavior matches unrestricted native control\n' +
+    'Error: Guest receiver behavior matches unrestricted native control\n' +
+    '    at check (http://127.0.0.1:45433/browser.js?variant=production:50976:21)\n' +
+    '    at run (http://127.0.0.1:45433/browser.js?variant=production:51000:5)',
+  expected: undefined,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.18.0

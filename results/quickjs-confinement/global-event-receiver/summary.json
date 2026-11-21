@@ -1,0 +1,47 @@
+{
+  "sourceRevision": "ea1ba6e",
+  "integratedByParentAs": "8d5f4e0",
+  "scope": "Native EventTarget receiver convention and focused context/lifecycle regressions; no full application release or confinement proof",
+  "initialIntegrationFailure": {
+    "log": "integrated-contexts-failure.log",
+    "inputEvidenceOwner": "Parent integration run",
+    "error": "Unqualified global EventTarget.addEventListener receiver refused"
+  },
+  "nativeControl": {
+    "source": "native-control.mjs",
+    "result": "native.json",
+    "log": "native.log",
+    "observation": "Both browsers global/prototype methods use method realm window for undefined/null, reject plain objects, preserve cancellation/removal"
+  },
+  "checks": {
+    "20 codec/browser unit tests": "units.log",
+    "tsc --noEmit": "types.log",
+    "Scoped Prettier": "format.log",
+    "Both-browser global receiver production and two omission controls": [
+      "result.json",
+      "browser.log"
+    ],
+    "Both-browser guest-context-windows": [
+      "context-windows.json",
+      "context-windows.log"
+    ],
+    "Both-browser guest-contexts": [
+      "contexts.json",
+      "contexts.log"
+    ],
+    "Both-browser lifecycle": "lifecycle.log"
+  },
+  "allChecksExitCode": 0,
+  "comparisonScope": "Native and guest success/refusal, effects, method identity and metadata are compared. Refusal diagnostic classes are not equated. The first fixture draft compared exception names; initial-fixture-comparison.log preserves that diagnostic failure.",
+  "proseReview": "New implementation paragraph reviewed sentence by sentence. Unslop phrase/structure scans found no defects; strict preservation passed. Technical identifier reading-level warning was reviewed in implementation-document context. Private writing-registry examples are excluded.",
+  "sourceHashes": {
+    "src/guest/browser-policy.ts": "56c1d6ce5b30bc3059d8bd3de592707c4f7d5c1c311d0878f6d157224a0555f2",
+    "src/guest/native-host.ts": "2d312e70d1afbdf3b54df66229b6a24520ce0a447ef65b13a250df3c0bd3ab50",
+    "src/guest/browser.ts": "c598247101e98649562ad847a51e3db618d1b29039cf001682e19d9a9ee1e8d1",
+    "src/guest/event-policy.ts": "04b6c5c11b185b3359931505b50fc147ea0e6195d2acf7cc1792260bf7387c82",
+    "src/guest/engine.ts": "f47d9f29180bf54561025352567648768dcb0cfc2b01519ee218ac7e447f6027",
+    "test/native-host.test.ts": "5468859f6ceacc588ad9857b8121ca5388c973c7e655028202a346732f640d9f",
+    "test/guest-global-event-receiver.browser.ts": "5362f290467f335c721ec473cab644ddce6af0bd58be870a05421cc1873ac3fa",
+    "test/guest-global-event-receiver.ts": "5e259c576a424b726cac27cad922ccaa6cdede6957ba8620f81f81fce2bcb850"
+  }
+}
