@@ -1,0 +1,27 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: TypeError: cannot read property 'addEventListener' of undefined
+Fixture ownership: {"childDocumentObservations":4,"childDocumentAttachments":1,"manualOwnerAttached":true,"manualEngineAttached":true,"currentRegistryPrepared":false,"parentTypeFromManualEngine":"undefined"}
+    at <eval> (browser:child-listener:2:19)
+
++ actual - expected
+
++ "TypeError: cannot read property 'addEventListener' of undefined\n" +
++   'Fixture ownership: {"childDocumentObservations":4,"childDocumentAttachments":1,"manualOwnerAttached":true,"manualEngineAttached":true,"currentRegistryPrepared":false,"parentTypeFromManualEngine":"undefined"}\n' +
++   '    at <eval> (browser:child-listener:2:19)\n'
+- undefined
+
+    at <anonymous> (/home/damen/Projects/privacy-frames-realm-intrinsics/test/guest-browser-policy.ts:143:20) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: "TypeError: cannot read property 'addEventListener' of undefined\n" +
+    'Fixture ownership: {"childDocumentObservations":4,"childDocumentAttachments":1,"manualOwnerAttached":true,"manualEngineAttached":true,"currentRegistryPrepared":false,"parentTypeFromManualEngine":"undefined"}\n' +
+    '    at <eval> (browser:child-listener:2:19)\n',
+  expected: undefined,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.18.0

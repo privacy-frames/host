@@ -1,0 +1,71 @@
+{
+  "sourceRevision": "936b5be390dabaf25757022e637f47bbf20ff44e",
+  "baseRevision": "a638f144b843642cb8750f9bbbffeb12fbae1c7c",
+  "scope": "Manual browser policy fixture child ownership; runtime source unchanged",
+  "initialIntegration": {
+    "log": "integrated-suite.log",
+    "inputs": "integrated-source.json",
+    "outcome": "Child guest parent was undefined at browser:child-listener"
+  },
+  "diagnostic": {
+    "log": "diagnostic.log",
+    "inputs": "diagnostic-inputs.json",
+    "patch": "diagnostic.patch",
+    "patchApplyFlags": [
+      "--unidiff-zero"
+    ],
+    "observation": {
+      "childDocumentObservations": 4,
+      "childDocumentAttachments": 1,
+      "manualOwnerAttached": true,
+      "manualEngineAttached": true,
+      "currentRegistryPrepared": false,
+      "parentTypeFromManualEngine": "undefined"
+    },
+    "interpretation": "GuestDOM and window-context management each observe a document once per BrowserEnvironment. Four observations show two environments for the same child document, while only the manual environment has attached. The private readiness predicate sees a pending current registry entry. The appended frame was being prepared both automatically and manually.",
+    "instrumentation": "Temporary fixture-only native observer/attachment delegation; no runtime edit, code-generation invocation or outside payload. Instrumentation removed from final fixture."
+  },
+  "fix": "Create and finish native blank-frame loading before creating the parent session and its DOM observer. The later manual child session is its only preparation owner. Remove the frame in outer cleanup for early-return variants.",
+  "preservedAssertions": [
+    "Canonical cross-context method identity",
+    "Name and length descriptor equality",
+    "No own prototype and nonconstructibility",
+    "Child callback receiver/event identity",
+    "Synchronous preventDefault cancellation",
+    "Explicit removal retains callback identity and stops delivery",
+    "Unknown getters, unprepared receivers and closed callables remain refused"
+  ],
+  "checks": {
+    "tsx test/guest-browser-policy.ts": {
+      "exitCode": 0,
+      "browsers": [
+        "Chromium",
+        "Firefox"
+      ],
+      "variants": [
+        "production",
+        "recovery-unavailable",
+        "unsupported-length"
+      ],
+      "receipt": "result.json",
+      "log": "focused.log"
+    },
+    "tsc --noEmit": {
+      "exitCode": 0,
+      "log": "types.log"
+    },
+    "Scoped Prettier": {
+      "exitCode": 0,
+      "log": "format.log"
+    }
+  },
+  "sourceHashes": {
+    "test/guest-browser-policy.browser.ts": "d35d7dacd5caa4bfe850b31bd745214f1b941191365d55825702717c848440ba",
+    "test/guest-browser-policy.ts": "5bb5de569d1ead639c8fc7baaa9f809cc15f52ee064b061f3e72ded3c37ca7a0",
+    "src/guest/browser.ts": "d8c88d323e2134addd15f7ab07b91c5fd5b1d03e0db27ed5990cb2172739a64d",
+    "src/guest/dom.ts": "75a654d384521c8c7153bf55bfe71f19ed1eab3b27d1c60fa37241aa300e764a",
+    "src/guest/session.ts": "7d6566044cec86e7ee1bd8629cc05bbcf89c62915d8dc4e415a5eb5d5b413f55",
+    "src/guest/contexts/window-contexts.ts": "b38d44e2dd955c36894abb587b9e28dc82397e0845924077e940c8b7c656ec7a"
+  },
+  "limits": "This repairs a test with two preparation owners; it changes no production mediation or application policy. Full suite and application qualification remain with the integrating branch."
+}

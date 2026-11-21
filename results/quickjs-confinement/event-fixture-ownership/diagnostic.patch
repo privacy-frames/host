@@ -1,0 +1,43 @@
+diff --git a/test/guest-browser-policy.browser.ts b/test/guest-browser-policy.browser.ts
+index 4e1172f..6828754 100644
+--- a/test/guest-browser-policy.browser.ts
++++ b/test/guest-browser-policy.browser.ts
+@@ -0,0 +1 @@
++import { BrowserEnvironment } from '../src/guest/browser.ts';
+@@ -38,0 +40,12 @@ async function run() {
++  const observedDocuments: Node[] = [];
++  const attachedEnvironments: BrowserEnvironment[] = [];
++  const observe = MutationObserver.prototype.observe;
++  const attach = BrowserEnvironment.prototype.attach;
++  MutationObserver.prototype.observe = function (target, options) {
++    observedDocuments.push(target);
++    return observe.call(this, target, options);
++  };
++  BrowserEnvironment.prototype.attach = function (engine) {
++    attachedEnvironments.push(this);
++    return attach.call(this, engine);
++  };
+@@ -148,0 +162,14 @@ async function run() {
++    const ready = Reflect.get(child.environment, 'preparedWindow');
++    check(typeof ready === 'function', 'Native preparation diagnostic exists');
++    Reflect.set(window, '__fixtureOwnershipDiagnostic', {
++      childDocumentObservations: observedDocuments.filter(
++        (value) => value === childWindow.document,
++      ).length,
++      childDocumentAttachments: attachedEnvironments.filter(
++        (value) => value.document === childWindow.document,
++      ).length,
++      manualOwnerAttached: attachedEnvironments.includes(child.environment),
++      manualEngineAttached: Reflect.get(child.environment, 'engine') === child.engine,
++      currentRegistryPrepared: Reflect.apply(ready, child.environment, [childWindow]),
++      parentTypeFromManualEngine: typeof child.engine.get('parent'),
++    });
+@@ -338,0 +366,2 @@ async function run() {
++    MutationObserver.prototype.observe = observe;
++    BrowserEnvironment.prototype.attach = attach;
+@@ -350 +379,4 @@ run()
+-      String(error) + (error instanceof Error && error.stack ? '\n' + error.stack : ''),
++      String(error) +
++        '\nFixture ownership: ' +
++        JSON.stringify(Reflect.get(window, '__fixtureOwnershipDiagnostic')) +
++        (error instanceof Error && error.stack ? '\n' + error.stack : ''),
