@@ -1,0 +1,22 @@
+{
+  "baseRevision": "afe426ada8a69a982cd0b805029939b27324f3e0",
+  "format": "Unified diff with zero context; apply with git apply --unidiff-zero. Context-only blank lines are omitted without changing reconstructed source.",
+  "patches": [
+    {
+      "path": "node-smoke-original-source.patch",
+      "sha256": "55199d6cdcb35a6c9f9170852ad757ee1f4ee33d0cf9707481898585bc0c1a3f",
+      "targetHashes": {
+        "src/guest/browser-policy.ts": "229e6ec240c9decdd5b8e3fb5c6c217d43288f931b309fd09ce179abac327e6d",
+        "src/guest/browser.ts": "12fd2e46302f8b63aac10c360dd5067688aadc69f539078f726afaae046c7595",
+        "src/guest/event-policy.ts": "1c42e8ef79c6d4e8f25a5849e354465e5548eb12a02aa70dd4110a8e33bc3b0c"
+      }
+    },
+    {
+      "path": "engine-before-string-repair.patch",
+      "sha256": "d4acedcd8e8f330a5da39779684da158781cc397df5cee961b4687659e09d756",
+      "targetHashes": {
+        "src/guest/engine.ts": "e0d7c1ee888094324c85a110cffd35559ed258b9c435646122762d1190d6c38a"
+      }
+    }
+  ]
+}

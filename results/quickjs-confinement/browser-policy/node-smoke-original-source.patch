@@ -71,26 +71,11 @@ new file mode 100644
 diff --git a/src/guest/browser.ts b/src/guest/browser.ts
 --- a/src/guest/browser.ts
 +++ b/src/guest/browser.ts
-@@ -6,6 +6,7 @@
- import { GuestResources } from './resources.ts';
- import { createGuestURLPolicy } from './url-policy.ts';
- import { createGuestTextPolicy } from './text-policy.ts';
+@@ -8,0 +9 @@
 +import { createBrowserPolicy } from './browser-policy.ts';
- import { GuestDOM } from './dom.ts';
- import { createGuestCustomElements } from './custom-elements.ts';
- import { createGuestDOMParser, parseGuestDocument } from './parser.ts';
-@@ -348,6 +349,7 @@
-   readonly dom?: GuestDOM;
-   private engine?: GuestEngine;
-   private readonly nativePolicies: readonly GuestHost[];
+@@ -350,0 +352 @@
 +  private readonly browserPolicy: ReturnType<typeof createBrowserPolicy>;
-   private customElements?: ReturnType<typeof createGuestCustomElements>;
-   private constructors = new Set<Function>();
-   private audioWorkletNodeConstructor?: Function;
-@@ -372,7 +374,18 @@
-   constructor(readonly options: BrowserEnvironmentOptions) {
-     const { catalog, global: native } = options;
-     this.resources = new GuestResources(catalog);
+@@ -374,0 +377,10 @@
 +    this.document = 'document' in native ? native.document : undefined;
 +    this.browserPolicy = createBrowserPolicy({
 +      global: native,
@@ -101,23 +86,11 @@ diff --git a/src/guest/browser.ts b/src/guest/browser.ts
 +        this.invoke(target, receiver, 'dispatchEvent', [...args]),
 +      isWindowMessage: isGuestWindowMessage,
 +    });
-     this.nativePolicies = [
+@@ -375,0 +388 @@
 +      this.browserPolicy.host,
-       createGuestURLPolicy({
-         URL: Reflect.get(native, 'URL'),
-         URLSearchParams: Reflect.get(native, 'URLSearchParams'),
-@@ -387,7 +400,6 @@
-         TextDecoder: Reflect.get(native, 'TextDecoder'),
-       }),
-     ];
+@@ -390 +402,0 @@
 -    this.document = 'document' in native ? native.document : undefined;
-     environments.set(native, this);
-     if (this.document?.defaultView) {
-       this.customElements = createGuestCustomElements(
-@@ -797,6 +809,22 @@
-     return this.nativePolicies.find((policy) => policy.owns?.(target));
-   }
- 
+@@ -799,0 +812,16 @@
 +  private eventTargetReceiver(target: object): boolean {
 +    if (this.disposed) return false;
 +    if (target === this.options.global) return true;
@@ -134,18 +107,9 @@ diff --git a/src/guest/browser.ts b/src/guest/browser.ts
 +    );
 +  }
 +
-   private get(target: object, key: PropertyKey): unknown {
-     const owner = this.nativeOwner(target);
-     if (owner) return owner.get(target, key);
-@@ -957,6 +985,8 @@
-       this.constructors.has(value)
-     )
-       return value;
+@@ -959,0 +988,2 @@
 +    const reviewed = this.browserPolicy.callable(value, target);
 +    if (reviewed) return reviewed;
-     let wrapper = this.methodWrappers.get(value);
-     if (!wrapper) {
-       const environment = this;
 diff --git a/src/guest/event-policy.ts b/src/guest/event-policy.ts
 new file mode 100644
 --- /dev/null
