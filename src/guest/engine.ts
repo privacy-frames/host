@@ -696,8 +696,7 @@ export class GuestEngine {
     if (
       this.intrinsicBoundaryReady &&
       this.nativeProxies.has(target) &&
-      nativeIntrinsicRole(target) &&
-      !this.explicitAliases.has(target)
+      nativeIntrinsicRole(target)
     )
       throw new TypeError('Native intrinsic was exposed before realm capture');
     const encodedKey = this.readString(keyHandle);

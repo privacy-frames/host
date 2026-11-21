@@ -20,9 +20,9 @@ ECMAScript prototype boundaries resolve to the receiving guest's intrinsics.
 
 A known role without a supported guest counterpart is refused. An identity already
 exposed as a generic proxy cannot be silently upgraded by later capture: encoding
-and native operation dispatch reject it. The trusted binary installer's existing
-startup alias replacement and explicit trusted aliases retain their own contracts.
-The receiving engine releases its retained intrinsic handles on disposal.
+and native operation dispatch reject it. The trusted binary installer retains its existing startup alias replacement.
+Explicit trusted aliases affect new encodings without re-enabling old generic
+proxies. The receiving engine releases its retained intrinsic handles on disposal.
 
 `test/guest-realm-intrinsics.ts` compares native realm differences with actual
 QuickJS identities, reflected descriptor values, guest prototype extensions,

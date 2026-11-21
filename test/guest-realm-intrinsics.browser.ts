@@ -183,6 +183,23 @@ async function run() {
     })()`),
       'Previously exposed generic proxy is refused on metadata dispatch after capture',
     );
+    const explicitIntrinsicAlias = await parent.engine.evaluate(
+      '({explicitIntrinsicAlias:true})',
+    );
+    parent.engine.alias(earlyConstructor, explicitIntrinsicAlias);
+    parent.engine.set('afterExplicitAlias', earlyConstructor);
+    check(
+      await parent.engine.evaluate('afterExplicitAlias.explicitIntrinsicAlias === true'),
+      'Explicit alias still controls new encoding of the native identity',
+    );
+    check(
+      await parent.engine.evaluate(`(() => {
+      try { savedIntrinsics.Object.ctor.getPrototypeOf(prematureReference); }
+      catch(error) { return String(error).includes('exposed before realm capture'); }
+      return false;
+    })()`),
+      'Old generic proxy remains refused after explicit alias',
+    );
     child.close();
     parent.engine.set('afterChildClose', foreignObject);
     check(
@@ -222,6 +239,7 @@ async function run() {
       foreignCallbacks: true,
       lateCaptureRefused: true,
       explicitAlias: true,
+      oldProxyAfterAliasRefused: true,
       disposal: true,
     };
   } finally {
