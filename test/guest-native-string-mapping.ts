@@ -11,6 +11,7 @@ const sources = [
   'src/guest/guest-runtime.ts',
   'src/guest/native-policy.ts',
   'src/guest/native-string-mapping.ts',
+  'src/guest/css.ts',
   'src/guest/resources.ts',
   'src/guest/session.ts',
   'node_modules/@webref/idl/cssom.idl',
@@ -165,7 +166,10 @@ try {
             result,
             observed,
           });
-          console.log(name, JSON.stringify(result));
+          console.log(
+            name,
+            'native CSS/Audio parity, computed URLs and actual mapping passed',
+          );
         }
       } finally {
         await browser.close();
@@ -204,7 +208,7 @@ await mkdir(
 );
 await writeFile(
   new URL(
-    '../results/quickjs-confinement/native-string-mapping/browser.json',
+    '../results/quickjs-confinement/native-string-mapping/css-url-correction.json',
     import.meta.url,
   ),
   JSON.stringify(

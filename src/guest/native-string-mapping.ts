@@ -37,15 +37,6 @@ export function mapNativeString(
   return wrapper;
 }
 
-/** CSSOM explicitly permits either string representation. CSS.escape performs
- * no CSS parsing, so unlike a style declaration it preserves the distinction. */
-export function cssomStringType(escape: (value: string) => string): StringType {
-  const converted = escape('\ud800');
-  if (converted === '\ud800') return 'DOMString';
-  if (converted === '\ufffd') return 'USVString';
-  throw new TypeError('Unrecognized native CSSOMString conversion');
-}
-
 function legacyCSSData(descriptor: PropertyDescriptor | undefined): boolean {
   return (
     !!descriptor &&
@@ -73,19 +64,14 @@ interface MappingOptions {
 export function createNativeStringMapping(options: MappingOptions) {
   const read = (key: string): unknown => Reflect.get(options.global, key);
   const css: unknown = read('CSS');
-  const escape: unknown = css && Reflect.get(css, 'escape');
   const supports: unknown = css && Reflect.get(css, 'supports');
-  const cssType =
-    typeof escape === 'function'
-      ? cssomStringType((value) => nativeApply(escape, css, [value]))
-      : undefined;
-  const mappedCSS = (input: unknown, context: CSSContext, legacy = false): object => {
-    if (!cssType) throw new TypeError('Native CSSOMString conversion is unavailable');
-    return mapNativeString(input, (value) => options.css(value, context), {
-      type: cssType,
+  // CSS-bound input is filtered by the CSS parser before resource mapping.
+  // Do not infer another API's bindings from CSS.escape's string type.
+  const mappedCSS = (input: unknown, context: CSSContext, legacy = false): object =>
+    mapNativeString(input, (value) => options.css(value, context), {
+      type: 'DOMString',
       legacyNullToEmptyString: legacy,
     });
-  };
   const setters = new Map<Function, { context: CSSContext; legacy: boolean }>();
   const operations = new Map<Function, (args: readonly unknown[]) => unknown[]>();
   const prototype = (name: string): object | undefined => {

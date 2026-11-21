@@ -2,6 +2,9 @@ import { generate, ident, parse, walk, type CssNode } from 'css-tree';
 
 export type GuestCSSContext = 'stylesheet' | 'declarationList' | 'value';
 
+const wellFormed: unknown = Reflect.get(String.prototype, 'toWellFormed');
+const apply = Reflect.apply;
+
 /** Parse before mapping so escaped syntax and quoted image candidates agree. */
 export function rewriteGuestCSS(
   text: string,
@@ -11,7 +14,12 @@ export function rewriteGuestCSS(
   const mapped = (value: string) => {
     if (!value) return value;
     try {
-      return map(value);
+      if (typeof wellFormed !== 'function')
+        throw new TypeError('CSS resource URLs require String.prototype.toWellFormed');
+      // CSS URL tokens replace scalar-invalid input before URL resolution.
+      // Normalize only decoded resource values, not the surrounding CSS text.
+      const scalar: string = apply(wellFormed, value, []);
+      return map(scalar.replace(/\0/g, '\ufffd'));
     } catch {
       return 'data:,';
     }

@@ -1,3 +1,4 @@
+import { rewriteGuestCSS } from '../src/guest/css.ts';
 import { createNativeStringMapping } from '../src/guest/native-string-mapping.ts';
 import { createGuestWindow } from '../src/guest/session.ts';
 import type { GuestContextCatalog } from '../src/guest/contexts/types.ts';
@@ -212,6 +213,72 @@ async function run() {
     }
     same(outcomes[0], outcomes[1], 'Audio optional native parity');
   }
+  const computedURLs = [];
+  const urlInputs = [
+    ...[
+      'https://fixture.invalid/base/',
+      'data:text/plain,',
+      'blob:https://fixture.invalid/',
+    ].flatMap((prefix) => [
+      `url("${prefix}\ud800")`,
+      `u\\72l("${prefix}\\d800 ")`,
+      `url("${prefix}\0")`,
+      `url(${prefix}\\0 )`,
+    ]),
+    'url("https://fixture.invalid/base/😀")',
+    'url("https://fixture.invalid/base/\\d83d\\de00")',
+    'url("https://fixture.invalid/base/%ED%A0%80")',
+  ];
+  for (const input of urlInputs) {
+    const native = document.createElement('div');
+    const mediated = document.createElement('div');
+    const rewritten = document.createElement('div');
+    native.style.backgroundImage = input;
+    Reflect.set(
+      mediated.style,
+      'backgroundImage',
+      mapping.set(mediated.style, 'backgroundImage', input),
+    );
+    same(
+      native.style.backgroundImage,
+      mediated.style.backgroundImage,
+      'native per-operation string conversion',
+    );
+    const mapped: string[] = [];
+    rewritten.style.backgroundImage = rewriteGuestCSS(
+      input,
+      (url) => {
+        mapped.push(url);
+        return new URL(url, 'https://fixture.invalid/base/').href;
+      },
+      'value',
+    );
+    document.body.append(native, rewritten);
+    const expected = getComputedStyle(native).backgroundImage;
+    const actual = getComputedStyle(rewritten).backgroundImage;
+    same(expected, actual, 'native computed URL classification');
+    computedURLs.push({
+      input,
+      declared: native.style.backgroundImage,
+      expected,
+      actual,
+      mapped,
+    });
+    native.remove();
+    rewritten.remove();
+  }
+  let unquotedNULMapped = false;
+  check(
+    rewriteGuestCSS(
+      'url(./\0)',
+      () => {
+        unquotedNULMapped = true;
+        return 'data:,';
+      },
+      'value',
+    ) === '' && !unquotedNULMapped,
+    'unquoted raw NUL remains unsupported and fails closed',
+  );
   const catalog: GuestContextCatalog = {
     application: 'string-mapping',
     generation: 'fixture',
@@ -255,7 +322,11 @@ async function run() {
         String(Reflect.get(result, key)).includes('data:application/octet-stream,'),
         'actual unknown URL mapped: ' + key,
       );
-    Reflect.set(window, '__stringMappingResult', { cases, actual: true });
+    Reflect.set(window, '__stringMappingResult', {
+      cases,
+      computedURLs,
+      actual: true,
+    });
   } finally {
     session.close();
   }

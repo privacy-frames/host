@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { cssomStringType, mapNativeString } from '../src/guest/native-string-mapping.ts';
+import { mapNativeString } from '../src/guest/native-string-mapping.ts';
 
 test('mapping defers original string conversion and preserves the original receiver', () => {
   const seen: string[] = [];
@@ -57,16 +57,4 @@ test('null conversion, USV normalization and Symbol errors precede mapping', () 
     TypeError,
   );
   assert.equal(calls, 1);
-});
-
-test('CSSOM mode accepts only the two specified native representations', () => {
-  assert.equal(
-    cssomStringType((value) => value),
-    'DOMString',
-  );
-  assert.equal(
-    cssomStringType(() => '\ufffd'),
-    'USVString',
-  );
-  assert.throws(() => cssomStringType(() => ''), /Unrecognized/);
 });
