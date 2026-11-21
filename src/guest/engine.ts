@@ -16,6 +16,7 @@ import { installGuestRegExpLegacy } from './legacy-regexp.ts';
 import resolveURI from '@jridgewell/resolve-uri';
 import type { GuestEngineOptions, GuestEvaluationMode, GuestHost } from './protocol.ts';
 import { NativeBinary } from './native-binary.ts';
+import { nativeBrand } from './native-brand.ts';
 import { installGuestBinary } from './guest-binary.ts';
 import { createNativeWasm } from './native-wasm.ts';
 import {
@@ -51,6 +52,31 @@ interface BufferMirror {
   guest: QuickJSHandle;
   backing?: QuickJSArrayBufferBacking;
 }
+
+const nativeApply = Reflect.apply;
+const dateGetTime = Date.prototype.getTime;
+const mapSize = Object.getOwnPropertyDescriptor(Map.prototype, 'size')!.get!;
+const setSize = Object.getOwnPropertyDescriptor(Set.prototype, 'size')!.get!;
+const regexpSource = Object.getOwnPropertyDescriptor(RegExp.prototype, 'source')!.get!;
+const mapForEach = Map.prototype.forEach;
+const setForEach = Set.prototype.forEach;
+const isNativeDate = nativeBrand<Date>(dateGetTime);
+const isNativeMap = nativeBrand<Map<unknown, unknown>>(mapSize);
+const isNativeSet = nativeBrand<Set<unknown>>(setSize);
+const isNativeRegExp = nativeBrand<RegExp>(regexpSource);
+const regexpFlagGetters = [
+  ['hasIndices', 'd'],
+  ['global', 'g'],
+  ['ignoreCase', 'i'],
+  ['multiline', 'm'],
+  ['dotAll', 's'],
+  ['unicode', 'u'],
+  ['unicodeSets', 'v'],
+  ['sticky', 'y'],
+].flatMap(([name, flag]) => {
+  const get = Object.getOwnPropertyDescriptor(RegExp.prototype, name)?.get;
+  return get ? [{ get, flag }] : [];
+});
 
 const modules = new Map<string, Promise<WebAssembly.Module>>();
 const requiresStringEncoding = /\0|[\ud800-\udfff]/u;
@@ -874,7 +900,17 @@ export class GuestEngine {
     throw new TypeError('Unknown native property key');
   }
 
-  private encode(value: unknown, seen = new Map<object, QuickJSHandle>()): QuickJSHandle {
+  private encode(value: unknown, seen?: Map<object, QuickJSHandle>): QuickJSHandle {
+    if (seen) return this.encodeValue(value, seen);
+    const graph = new Map<object, QuickJSHandle>();
+    try {
+      return this.encodeValue(value, graph);
+    } finally {
+      for (const handle of graph.values()) handle.dispose();
+    }
+  }
+
+  private encodeValue(value: unknown, seen: Map<object, QuickJSHandle>): QuickJSHandle {
     if (value === undefined) return this.context.undefined;
     if (value === null) return this.context.null;
     if (typeof value === 'boolean') return value ? this.context.true : this.context.false;
@@ -947,18 +983,104 @@ export class GuestEngine {
     }
     if (Array.isArray(value)) {
       const result = this.context.newArray();
-      seen.set(value, result);
+      seen.set(value, result.dup());
       this.nativeHandles.set(value, result.dup());
-      for (let index = 0; index < value.length; index++) {
-        if (!Object.hasOwn(value, index)) continue;
-        const item = this.encode(value[index], seen);
-        this.context.setProp(result, index, item);
-        item.dispose();
+      try {
+        for (let index = 0; index < value.length; index++) {
+          if (!Object.hasOwn(value, index)) continue;
+          const item = this.encode(value[index], seen);
+          try {
+            this.context.setProp(result, index, item);
+          } finally {
+            item.dispose();
+          }
+        }
+        const length = this.context.newNumber(value.length);
+        try {
+          this.context.setProp(result, 'length', length);
+        } finally {
+          length.dispose();
+        }
+        return result;
+      } catch (error) {
+        result.dispose();
+        throw error;
       }
-      const length = this.context.newNumber(value.length);
-      this.context.setProp(result, 'length', length);
-      length.dispose();
-      return result;
+    }
+    if (isNativeMap(value)) {
+      const result = this.helper('makeMap', []);
+      seen.set(value, result.dup());
+      try {
+        nativeApply(mapForEach, value, [
+          (item: unknown, key: unknown) => {
+            const keyHandle = this.encode(key, seen);
+            try {
+              const valueHandle = this.encode(item, seen);
+              try {
+                this.helper('mapSet', [result, keyHandle, valueHandle]).dispose();
+              } finally {
+                valueHandle.dispose();
+              }
+            } finally {
+              keyHandle.dispose();
+            }
+          },
+        ]);
+        return result;
+      } catch (error) {
+        result.dispose();
+        throw error;
+      }
+    }
+    if (isNativeSet(value)) {
+      const result = this.helper('makeSet', []);
+      seen.set(value, result.dup());
+      try {
+        nativeApply(setForEach, value, [
+          (item: unknown) => {
+            const itemHandle = this.encode(item, seen);
+            try {
+              this.helper('setAdd', [result, itemHandle]).dispose();
+            } finally {
+              itemHandle.dispose();
+            }
+          },
+        ]);
+        return result;
+      } catch (error) {
+        result.dispose();
+        throw error;
+      }
+    }
+    if (isNativeRegExp(value)) {
+      const pattern: string = nativeApply(regexpSource, value, []);
+      const modifiers = regexpFlagGetters
+        .filter(({ get }) => nativeApply(get, value, []))
+        .map(({ flag }) => flag)
+        .join('');
+      const source = this.encodeString(pattern);
+      try {
+        const flags = this.encodeString(modifiers);
+        try {
+          const result = this.helper('makeRegExp', [source, flags]);
+          seen.set(value, result.dup());
+          return result;
+        } finally {
+          flags.dispose();
+        }
+      } finally {
+        source.dispose();
+      }
+    }
+    if (isNativeDate(value)) {
+      const time = this.context.newNumber(nativeApply(dateGetTime, value, []));
+      try {
+        const result = this.helper('makeDate', [time]);
+        seen.set(value, result.dup());
+        return result;
+      } finally {
+        time.dispose();
+      }
     }
     const constructorDescriptor = Object.getOwnPropertyDescriptor(object, 'constructor');
     const constructor = constructorDescriptor?.value;
@@ -975,58 +1097,29 @@ export class GuestEngine {
     );
     if (!prototypeObject && plain && !liveFacade) {
       const result = this.context.newObject();
-      seen.set(object, result);
+      seen.set(object, result.dup());
       this.nativeHandles.set(object, result.dup());
-      for (const key of Reflect.ownKeys(object)) {
-        const descriptor = Object.getOwnPropertyDescriptor(object, key);
-        if (!descriptor?.enumerable) continue;
-        const item = this.encode(Reflect.get(object, key), seen);
-        const property =
-          typeof key === 'symbol' ? this.encodeSymbol(key) : this.encodeString(key);
-        this.context.setProp(result, property, item);
-        property.dispose();
-        item.dispose();
-      }
-      return result;
-    }
-    if (value instanceof Map) {
-      const result = this.helper('makeMap', []);
-      seen.set(value, result);
-      for (const [key, item] of value) {
-        const keyHandle = this.encode(key, seen);
-        const valueHandle = this.encode(item, seen);
-        this.helper('mapSet', [result, keyHandle, valueHandle]).dispose();
-        keyHandle.dispose();
-        valueHandle.dispose();
-      }
-      return result;
-    }
-    if (value instanceof Set) {
-      const result = this.helper('makeSet', []);
-      seen.set(value, result);
-      for (const item of value) {
-        const itemHandle = this.encode(item, seen);
-        this.helper('setAdd', [result, itemHandle]).dispose();
-        itemHandle.dispose();
-      }
-      return result;
-    }
-    if (value instanceof RegExp) {
-      const source = this.encodeString(value.source);
-      const flags = this.encodeString(value.flags);
       try {
-        return this.helper('makeRegExp', [source, flags]);
-      } finally {
-        source.dispose();
-        flags.dispose();
-      }
-    }
-    if (value instanceof Date) {
-      const time = this.context.newNumber(value.getTime());
-      try {
-        return this.helper('makeDate', [time]);
-      } finally {
-        time.dispose();
+        for (const key of Reflect.ownKeys(object)) {
+          const descriptor = Object.getOwnPropertyDescriptor(object, key);
+          if (!descriptor?.enumerable) continue;
+          const item = this.encode(Reflect.get(object, key), seen);
+          try {
+            const property =
+              typeof key === 'symbol' ? this.encodeSymbol(key) : this.encodeString(key);
+            try {
+              this.context.setProp(result, property, item);
+            } finally {
+              property.dispose();
+            }
+          } finally {
+            item.dispose();
+          }
+        }
+        return result;
+      } catch (error) {
+        result.dispose();
+        throw error;
       }
     }
     const id = this.registerNative(object);
@@ -1297,7 +1390,9 @@ export class GuestEngine {
     if (kind === 'date') {
       const time = this.helper('dateTime', [value]);
       try {
-        return new Date(this.context.getNumber(time));
+        const result = new Date(this.context.getNumber(time));
+        seen.set(id, result);
+        return result;
       } finally {
         time.dispose();
       }
@@ -1327,11 +1422,14 @@ export class GuestEngine {
         entries.dispose();
       }
     }
-    if (kind === 'regexp')
-      return new RegExp(
+    if (kind === 'regexp') {
+      const result = new RegExp(
         String(this.readGuestProperty(value, 'source')),
         String(this.readGuestProperty(value, 'flags')),
       );
+      seen.set(id, result);
+      return result;
+    }
     const result: unknown[] | Record<PropertyKey, unknown> = previous
       ? (previous.value as unknown[] | Record<PropertyKey, unknown>)
       : kind === 'array'
@@ -1538,12 +1636,22 @@ export class GuestEngine {
   private encodeArguments(values: unknown[]): QuickJSHandle {
     const result = this.context.newArray();
     const seen = new Map<object, QuickJSHandle>();
-    for (let index = 0; index < values.length; index++) {
-      const item = this.encode(values[index], seen);
-      this.context.setProp(result, index, item);
-      item.dispose();
+    try {
+      for (let index = 0; index < values.length; index++) {
+        const item = this.encode(values[index], seen);
+        try {
+          this.context.setProp(result, index, item);
+        } finally {
+          item.dispose();
+        }
+      }
+      return result;
+    } catch (error) {
+      result.dispose();
+      throw error;
+    } finally {
+      for (const handle of seen.values()) handle.dispose();
     }
-    return result;
   }
 
   private invoke(
@@ -1555,19 +1663,22 @@ export class GuestEngine {
   ): unknown {
     return this.enter(() => {
       const thisHandle = this.encode(receiver);
-      const args = this.encodeArguments(arguments_);
       try {
-        const value = construct
-          ? this.helper('construct', [handle, args])
-          : this.helper('apply', [handle, thisHandle, args]);
+        const args = this.encodeArguments(arguments_);
         try {
-          return this.decode(value);
+          const value = construct
+            ? this.helper('construct', [handle, args])
+            : this.helper('apply', [handle, thisHandle, args]);
+          try {
+            return this.decode(value);
+          } finally {
+            value.dispose();
+          }
         } finally {
-          value.dispose();
+          args.dispose();
         }
       } finally {
         thisHandle.dispose();
-        args.dispose();
       }
     }, wasmImport && this.canDeferOrdinary());
   }
