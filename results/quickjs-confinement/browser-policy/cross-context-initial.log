@@ -1,0 +1,53 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: TypeError: Event listener has no recorded callback owner
+TypeError: Event listener has no recorded callback owner
+    at listener (http://127.0.0.1:44675/fixture.js?variant=production:17085:13)
+    at Object.call (http://127.0.0.1:44675/fixture.js?variant=production:17164:49)
+    at NativePolicy.call (http://127.0.0.1:44675/fixture.js?variant=production:16074:15)
+    at addEventListener (http://127.0.0.1:44675/fixture.js?variant=production:16441:34)
+    at Object.call (http://127.0.0.1:44675/fixture.js?variant=production:45576:69)
+    at _GuestEngine.dispatch (http://127.0.0.1:44675/fixture.js?variant=production:49778:25)
+    at WeakLifetime.<anonymous> (http://127.0.0.1:44675/fixture.js?variant=production:49310:21)
+    at QuickJSContext.<anonymous> (http://127.0.0.1:44675/fixture.js?variant=production:3394:46)
+    at next (<anonymous>)
+    at awaitEachYieldedPromise (http://127.0.0.1:44675/fixture.js?variant=production:2863:29)
++ actual - expected
+
++ 'TypeError: Event listener has no recorded callback owner\n' +
++   'TypeError: Event listener has no recorded callback owner\n' +
++   '    at listener (http://127.0.0.1:44675/fixture.js?variant=production:17085:13)\n' +
++   '    at Object.call (http://127.0.0.1:44675/fixture.js?variant=production:17164:49)\n' +
++   '    at NativePolicy.call (http://127.0.0.1:44675/fixture.js?variant=production:16074:15)\n' +
++   '    at addEventListener (http://127.0.0.1:44675/fixture.js?variant=production:16441:34)\n' +
++   '    at Object.call (http://127.0.0.1:44675/fixture.js?variant=production:45576:69)\n' +
++   '    at _GuestEngine.dispatch (http://127.0.0.1:44675/fixture.js?variant=production:49778:25)\n' +
++   '    at WeakLifetime.<anonymous> (http://127.0.0.1:44675/fixture.js?variant=production:49310:21)\n' +
++   '    at QuickJSContext.<anonymous> (http://127.0.0.1:44675/fixture.js?variant=production:3394:46)\n' +
++   '    at next (<anonymous>)\n' +
++   '    at awaitEachYieldedPromise (http://127.0.0.1:44675/fixture.js?variant=production:2863:29)'
+- undefined
+
+    at <anonymous> (/home/damen/Projects/privacy-frames-browser-policy/test/guest-browser-policy.ts:140:20) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'TypeError: Event listener has no recorded callback owner\n' +
+    'TypeError: Event listener has no recorded callback owner\n' +
+    '    at listener (http://127.0.0.1:44675/fixture.js?variant=production:17085:13)\n' +
+    '    at Object.call (http://127.0.0.1:44675/fixture.js?variant=production:17164:49)\n' +
+    '    at NativePolicy.call (http://127.0.0.1:44675/fixture.js?variant=production:16074:15)\n' +
+    '    at addEventListener (http://127.0.0.1:44675/fixture.js?variant=production:16441:34)\n' +
+    '    at Object.call (http://127.0.0.1:44675/fixture.js?variant=production:45576:69)\n' +
+    '    at _GuestEngine.dispatch (http://127.0.0.1:44675/fixture.js?variant=production:49778:25)\n' +
+    '    at WeakLifetime.<anonymous> (http://127.0.0.1:44675/fixture.js?variant=production:49310:21)\n' +
+    '    at QuickJSContext.<anonymous> (http://127.0.0.1:44675/fixture.js?variant=production:3394:46)\n' +
+    '    at next (<anonymous>)\n' +
+    '    at awaitEachYieldedPromise (http://127.0.0.1:44675/fixture.js?variant=production:2863:29)',
+  expected: undefined,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.18.0

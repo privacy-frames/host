@@ -141,6 +141,53 @@ async function run() {
     );
     check(unknownReads === 0, 'Unknown native event getters never execute');
 
+    const childFrame = document.createElement('iframe');
+    document.body.append(childFrame);
+    const childWindow = childFrame.contentWindow;
+    check(childWindow, 'Prepared child native window exists');
+    const child = await createGuestWindow(catalog, childWindow);
+    try {
+      await child.engine.evaluate(
+        `
+        if (parent.addEventListener !== parent.addEventListener ||
+            parent.removeEventListener !== parent.removeEventListener)
+          throw new Error('Cross-context method identity');
+        globalThis.parentEvents = 0;
+        globalThis.parentCallback = function (event) {
+          if (this !== parent || event.type !== 'prepared-parent')
+            throw new Error('Cross-context receiver/event identity');
+          globalThis.parentEvents++;
+          event.preventDefault();
+        };
+        parent.addEventListener('prepared-parent', parentCallback);
+      `,
+        'browser:child-listener',
+      );
+      check(
+        !window.dispatchEvent(new Event('prepared-parent', { cancelable: true })),
+        'Child listener synchronously cancels parent event',
+      );
+      check(
+        child.engine.get('parentEvents') === 1,
+        'Child callback receives parent event',
+      );
+      await child.engine.evaluate(
+        "parent.removeEventListener('prepared-parent', parentCallback)",
+        'browser:child-listener-remove',
+      );
+      check(
+        window.dispatchEvent(new Event('prepared-parent', { cancelable: true })),
+        'Removed child listener no longer cancels parent event',
+      );
+      check(
+        child.engine.get('parentEvents') === 1,
+        'Child listener removal retains identity',
+      );
+    } finally {
+      child.close();
+      childFrame.remove();
+    }
+
     const add = session.environment.host.get(EventTarget.prototype, 'addEventListener');
     check(typeof add === 'function', 'Registered event method available');
     const callback = session.engine.get('fixtureCallback');
@@ -267,6 +314,7 @@ async function run() {
       unknownCallbackDenied: true,
       closedCallbackDenied: true,
       stringFidelity: true,
+      preparedParentListener: true,
     };
   } finally {
     session.close();

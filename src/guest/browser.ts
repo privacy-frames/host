@@ -354,6 +354,7 @@ export class BrowserEnvironment {
   private constructors = new Set<Function>();
   private audioWorkletNodeConstructor?: Function;
   private methodWrappers = new WeakMap<Function, Function>();
+  private foreignBrowserCallables = new WeakMap<Function, Function>();
   private accessorWrappers = new WeakMap<object, Map<PropertyKey, PropertyDescriptor>>();
   private timers = new Set<number>();
   private workers: ReturnType<typeof createGuestWorkers>;
@@ -863,6 +864,21 @@ export class BrowserEnvironment {
       if (typeof key !== 'string') return undefined;
       if (environment !== this && environment.engine) {
         const value = environment.engine.get(key);
+        if (
+          typeof value === 'function' &&
+          environment.browserPolicy.ownsCallable(value)
+        ) {
+          let wrapper = this.foreignBrowserCallables.get(value);
+          if (!wrapper) {
+            const engine = environment.engine;
+            // Marshal arguments through the exact prepared owner's existing handle.
+            wrapper = function (this: unknown, ...args: unknown[]) {
+              return engine.call(value, args, this);
+            };
+            this.foreignBrowserCallables.set(value, wrapper);
+          }
+          return wrapper;
+        }
         if (value !== undefined) return value;
       }
       if (own(environment.globals, key)) return environment.globals[key];

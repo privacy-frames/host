@@ -162,6 +162,7 @@ try {
                     unknownCallbackDenied: true,
                     closedCallbackDenied: true,
                     stringFidelity: true,
+                    preparedParentListener: true,
                   },
             );
           }

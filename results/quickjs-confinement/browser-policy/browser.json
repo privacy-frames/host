@@ -162,8 +162,8 @@
     "../privacy-frames-quickjs-kernel/node_modules/xmlchars/xml/1.0/ed5.js": "ea350479ab6f6553c0c3395c30ec440fb39821f6902081939831ddf1b5e8fd0f",
     "../privacy-frames-quickjs-kernel/node_modules/xmlchars/xml/1.1/ed2.js": "461d5c71cc6076dc16aebbfd2d3c506481df5a74f43631d82372a6ffdc239d69",
     "../privacy-frames-quickjs-kernel/node_modules/xmlchars/xmlns/1.0/ed3.js": "ff14ffa3a2cdfdd1b6077c4a8443dc949f53d5bb56de5ed89d4dbc5d9fdf08f7",
-    "src/guest/browser-policy.ts": "229e6ec240c9decdd5b8e3fb5c6c217d43288f931b309fd09ce179abac327e6d",
-    "src/guest/browser.ts": "6c6b653af169ecdaeaaa0067f96c24d4ccb67aecd39b0d8e5076485e45995900",
+    "src/guest/browser-policy.ts": "1a33de5c6a021e3618ecd9d7847a6fa1749b2e0497f964b1c6f19b0d96d9a8c7",
+    "src/guest/browser.ts": "1cca5997f4a4b7483ea4a1bee1a0c61a40604bd8f65a1af525e2aebe0d3bb8cd",
     "src/guest/contexts/audio-worklet.ts": "8706554251c0020af6599b599e306b3e0e9cffceebd31ce739c825071e789577",
     "src/guest/contexts/brands.ts": "d0b5d97c4e97a71e13408adb1bc0b46c00e2d2c13cf3bb1320fbe9d1bf4a94e5",
     "src/guest/contexts/documents.ts": "02ce86f6e8ef962eb48eb84c88b012613d91728fffe752f4a600f3cd8d8746f0",
@@ -200,14 +200,14 @@
     "src/guest/url-policy.ts": "cd9c54875cac49c55634b910e723abe0fc5c402f429107eefbb910ce79d54d7a",
     "src/guest/wasm-accessors.ts": "7e03c8e70638d2d861392ec0b2ed40867c638bfcbb26774fbf1e240b2b18589b",
     "src/guest/web-services.ts": "429fa17d217a6f7a155b6e80e7ff8b062eb5077b78dd19bc635da9417147266d",
-    "test/guest-browser-policy.browser.ts": "a30d9c9904bd254739d1eae44535d8efc1ffc003c3e4285db59face422df9318",
+    "test/guest-browser-policy.browser.ts": "e22a29a26e0dcda8622380a3cdd54d88bfcb7886e6a13828c9e5f46490562486",
     "vendor/quickjs/generated/engine.mjs": "60147727aeb5c4441d54ad7b3c625e952bec7faa8db8531522eb71dd9ab9da2e"
   },
-  "runnerHash": "2e9c37ecf4ed106f38f75c61d32a6f042565172a24ad7a331f3cdc292447c1f3",
+  "runnerHash": "1c1db91a183ec81215bdf8284d7e20596a4a0920b4cb66583d019a3babb4bfc7",
   "bundleHashes": {
-    "production": "b06ecada91a2d80a4e4d5e4e3608f8e84dbeca4e00c18b2e046757287931fe4f",
-    "recovery-unavailable": "6850c39b2cd30881b03c8eab72bca16b1bcaa55b3dfcda07543265c0ce30fdc8",
-    "unsupported-length": "398806b78339164bd5a12e8db1e47521d0f4bee82d4730467201fb40d244052f"
+    "production": "6ee9aab7f1874afe5338b2283afbcb2d58791994c6b00760fe604fd186a60355",
+    "recovery-unavailable": "7918af14b363b119f65ff3125d60b9ebb32ba9195ab675243a2a15c9de880ff3",
+    "unsupported-length": "ea75da04974f8d37e2e4a1324e34e275d80a69406a4f9eb850487f009df3b200"
   },
   "engineSHA256": "ba56b5d747e33fb4d1e75b6dcff702329799e44ef6950578148814998662cdb8",
   "toolchain": {
@@ -237,7 +237,8 @@
         "publishedNativeCallback": true,
         "unknownCallbackDenied": true,
         "closedCallbackDenied": true,
-        "stringFidelity": true
+        "stringFidelity": true,
+        "preparedParentListener": true
       }
     },
     {
@@ -258,7 +259,7 @@
       "executablePath": "/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome",
       "executableSHA256": "8c599d43aec53f2460a31ae2f4af6bd863f8258b34ff519564bc5d4726bfaa1e",
       "unsupportedLengthDetected": true,
-      "failure": "Error: Diagnostic: string recovery unavailable\nError: Diagnostic: string recovery unavailable\n    at _GuestEngine.readString (http://127.0.0.1:46471/fixture.js?variant=unsupported-length&noStringRecovery=1:50062:11)\n    at read (http://127.0.0.1:46471/fixture.js?variant=unsupported-length&noStringRecovery=1:50743:65)\n    at _GuestEngine.guestError (http://127.0.0.1:46471/fixture.js?variant=unsupported-length&noStringRecovery=1:50748:31)\n    at _GuestEngine.unwrap (http://127.0.0.1:46471/fixture.js?variant=unsupported-length&noStringRecovery=1:50728:22)\n    at _GuestEngine.installBinary (http://127.0.0.1:46471/fixture.js?variant=unsupported-length&noStringRecovery=1:49456:28)\n    at _GuestEngine.initialize (http://127.0.0.1:46471/fixture.js?variant=unsupported-length&noStringRecovery=1:49399:10)\n    at _GuestEngine.create (http://127.0.0.1:46471/fixture.js?variant=unsupported-length&noStringRecovery=1:49291:14)\n    at async createGuestWindow (http://127.0.0.1:46471/fixture.js?variant=unsupported-length&noStringRecovery=1:50865:14)\n    at async run (http://127.0.0.1:46471/fixture.js?variant=unsupported-length&noStringRecovery=1:50952:19)"
+      "failure": "Error: Diagnostic: string recovery unavailable\nError: Diagnostic: string recovery unavailable\n    at _GuestEngine.readString (http://127.0.0.1:41143/fixture.js?variant=unsupported-length&noStringRecovery=1:50077:11)\n    at read (http://127.0.0.1:41143/fixture.js?variant=unsupported-length&noStringRecovery=1:50758:65)\n    at _GuestEngine.guestError (http://127.0.0.1:41143/fixture.js?variant=unsupported-length&noStringRecovery=1:50763:31)\n    at _GuestEngine.unwrap (http://127.0.0.1:41143/fixture.js?variant=unsupported-length&noStringRecovery=1:50743:22)\n    at _GuestEngine.installBinary (http://127.0.0.1:41143/fixture.js?variant=unsupported-length&noStringRecovery=1:49471:28)\n    at _GuestEngine.initialize (http://127.0.0.1:41143/fixture.js?variant=unsupported-length&noStringRecovery=1:49414:10)\n    at _GuestEngine.create (http://127.0.0.1:41143/fixture.js?variant=unsupported-length&noStringRecovery=1:49306:14)\n    at async createGuestWindow (http://127.0.0.1:41143/fixture.js?variant=unsupported-length&noStringRecovery=1:50880:14)\n    at async run (http://127.0.0.1:41143/fixture.js?variant=unsupported-length&noStringRecovery=1:50967:19)"
     },
     {
       "browser": "firefox",
@@ -282,7 +283,8 @@
         "publishedNativeCallback": true,
         "unknownCallbackDenied": true,
         "closedCallbackDenied": true,
-        "stringFidelity": true
+        "stringFidelity": true,
+        "preparedParentListener": true
       }
     },
     {
@@ -303,8 +305,8 @@
       "executablePath": "/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox",
       "executableSHA256": "062272ac4d851eade5b75db2dc7c14569d96cb3ca38f949337cdc1b74367e35b",
       "unsupportedLengthDetected": true,
-      "failure": "Error: Diagnostic: string recovery unavailable\nreadString@http://127.0.0.1:46471/fixture.js?variant=unsupported-length&noStringRecovery=1:50062:11\nread@http://127.0.0.1:46471/fixture.js?variant=unsupported-length&noStringRecovery=1:50743:65\nguestError@http://127.0.0.1:46471/fixture.js?variant=unsupported-length&noStringRecovery=1:50748:31\nunwrap@http://127.0.0.1:46471/fixture.js?variant=unsupported-length&noStringRecovery=1:50728:22\ninstallBinary@http://127.0.0.1:46471/fixture.js?variant=unsupported-length&noStringRecovery=1:49456:28\ninitialize@http://127.0.0.1:46471/fixture.js?variant=unsupported-length&noStringRecovery=1:49399:10\ncreate@http://127.0.0.1:46471/fixture.js?variant=unsupported-length&noStringRecovery=1:49291:14\nasync*createGuestWindow@http://127.0.0.1:46471/fixture.js?variant=unsupported-length&noStringRecovery=1:50865:32\nasync*run@http://127.0.0.1:46471/fixture.js?variant=unsupported-length&noStringRecovery=1:50952:25\nasync*@http://127.0.0.1:46471/fixture.js?variant=unsupported-length&noStringRecovery=1:51187:1\n"
+      "failure": "Error: Diagnostic: string recovery unavailable\nreadString@http://127.0.0.1:41143/fixture.js?variant=unsupported-length&noStringRecovery=1:50077:11\nread@http://127.0.0.1:41143/fixture.js?variant=unsupported-length&noStringRecovery=1:50758:65\nguestError@http://127.0.0.1:41143/fixture.js?variant=unsupported-length&noStringRecovery=1:50763:31\nunwrap@http://127.0.0.1:41143/fixture.js?variant=unsupported-length&noStringRecovery=1:50743:22\ninstallBinary@http://127.0.0.1:41143/fixture.js?variant=unsupported-length&noStringRecovery=1:49471:28\ninitialize@http://127.0.0.1:41143/fixture.js?variant=unsupported-length&noStringRecovery=1:49414:10\ncreate@http://127.0.0.1:41143/fixture.js?variant=unsupported-length&noStringRecovery=1:49306:14\nasync*createGuestWindow@http://127.0.0.1:41143/fixture.js?variant=unsupported-length&noStringRecovery=1:50880:32\nasync*run@http://127.0.0.1:41143/fixture.js?variant=unsupported-length&noStringRecovery=1:50967:25\nasync*@http://127.0.0.1:41143/fixture.js?variant=unsupported-length&noStringRecovery=1:51249:1\n"
     }
   ],
-  "completedAt": "2026-11-21T17:57:29.869Z"
+  "completedAt": "2026-11-21T18:26:04.912Z"
 }

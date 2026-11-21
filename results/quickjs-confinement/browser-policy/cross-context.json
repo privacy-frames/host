@@ -1,0 +1,42 @@
+{
+  "baseRevision": "4c554e6",
+  "scope": "Prepared same-application parent/child selected browser listener operation; no full application or confinement qualification",
+  "initial": {
+    "outcome": "refused child listener before registration",
+    "log": "cross-context-initial.log",
+    "inputs": "cross-context-initial-inputs.json",
+    "fixturePatch": "cross-context-initial.patch",
+    "applyFlags": [
+      "--unidiff-zero"
+    ]
+  },
+  "final": {
+    "outcome": "passed Chromium and Firefox production and both string controls",
+    "browserReceipt": "browser.json",
+    "log": "cross-context-fixed.log",
+    "checks": {
+      "types": "cross-context-types.log",
+      "format": "cross-context-format.log",
+      "units": "cross-context-units.log"
+    },
+    "sourceHashes": {
+      "src/guest/browser-policy.ts": "1a33de5c6a021e3618ecd9d7847a6fa1749b2e0497f964b1c6f19b0d96d9a8c7",
+      "src/guest/browser.ts": "1cca5997f4a4b7483ea4a1bee1a0c61a40604bd8f65a1af525e2aebe0d3bb8cd",
+      "src/guest/engine.ts": "f47d9f29180bf54561025352567648768dcb0cfc2b01519ee218ac7e447f6027",
+      "test/guest-browser-policy.browser.ts": "e22a29a26e0dcda8622380a3cdd54d88bfcb7886e6a13828c9e5f46490562486",
+      "test/guest-browser-policy.ts": "1c1db91a183ec81215bdf8284d7e20596a4a0920b4cb66583d019a3babb4bfc7"
+    }
+  },
+  "mechanism": "Only canonical BrowserPolicy methods read from a prepared foreign window are invoked through their recorded owning engine. Existing argument marshalling publishes the child callback before parent listener admission; arbitrary callable recognition is unchanged.",
+  "controls": [
+    "stable foreign method identity",
+    "child callback receiver and event identity",
+    "synchronous parent cancellation",
+    "explicit child removal preserves callback identity and stops delivery",
+    "existing unknown-callable and unprepared-window refusal controls"
+  ],
+  "remainingPremises": [
+    "Parent target owns the cross-context listener lifetime; this fixture exercises explicit removal, not child-close-without-removal.",
+    "Unclaimed browser families retain prior paths; this does not establish complete mediation."
+  ]
+}

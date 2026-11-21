@@ -1,0 +1,57 @@
+diff --git a/test/guest-browser-policy.browser.ts b/test/guest-browser-policy.browser.ts
+index 542ff25..3c1b34b 100644
+--- a/test/guest-browser-policy.browser.ts
++++ b/test/guest-browser-policy.browser.ts
+@@ -143,0 +144,44 @@ async function run() {
++    const childFrame = document.createElement('iframe');
++    document.body.append(childFrame);
++    const childWindow = childFrame.contentWindow;
++    check(childWindow, 'Prepared child native window exists');
++    const child = await createGuestWindow(catalog, childWindow);
++    try {
++      await child.engine.evaluate(
++        `
++        globalThis.parentEvents = 0;
++        globalThis.parentCallback = function (event) {
++          if (this !== parent || event.type !== 'prepared-parent')
++            throw new Error('Cross-context receiver/event identity');
++          globalThis.parentEvents++;
++          event.preventDefault();
++        };
++        parent.addEventListener('prepared-parent', parentCallback);
++      `,
++        'browser:child-listener',
++      );
++      check(
++        !window.dispatchEvent(new Event('prepared-parent', { cancelable: true })),
++        'Child listener synchronously cancels parent event',
++      );
++      check(
++        child.engine.get('parentEvents') === 1,
++        'Child callback receives parent event',
++      );
++      await child.engine.evaluate(
++        "parent.removeEventListener('prepared-parent', parentCallback)",
++        'browser:child-listener-remove',
++      );
++      check(
++        window.dispatchEvent(new Event('prepared-parent', { cancelable: true })),
++        'Removed child listener no longer cancels parent event',
++      );
++      check(
++        child.engine.get('parentEvents') === 1,
++        'Child listener removal retains identity',
++      );
++    } finally {
++      child.close();
++      childFrame.remove();
++    }
++
+@@ -269,0 +314 @@ async function run() {
++      preparedParentListener: true,
+diff --git a/test/guest-browser-policy.ts b/test/guest-browser-policy.ts
+index 3e2a2db..0e0da6f 100644
+--- a/test/guest-browser-policy.ts
++++ b/test/guest-browser-policy.ts
+@@ -164,0 +165 @@ try {
++                    preparedParentListener: true,

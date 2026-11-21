@@ -11,6 +11,7 @@ export interface BrowserPolicyOptions extends EventFamilyOptions {
 export function createBrowserPolicy(options: BrowserPolicyOptions) {
   const registry = new NativePolicy({ isGuestValue: options.isGuestValue });
   const owned = new WeakSet<object>();
+  const callables = new WeakSet<Function>();
   const methods = new WeakMap<Function, { owner: object; key: PropertyKey }>();
   const host = createNativeHost({
     name: 'Browser',
@@ -58,8 +59,10 @@ export function createBrowserPolicy(options: BrowserPolicyOptions) {
       const value = host.get(declaration.owner, declaration.key);
       if (typeof value !== 'function')
         throw new TypeError('Registered browser method is not callable');
+      callables.add(value);
       return value;
     },
+    ownsCallable: (value: Function) => callables.has(value),
     admitEvent: events.admitEvent,
   };
 }
