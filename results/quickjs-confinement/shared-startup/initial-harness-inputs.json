@@ -1,0 +1,11 @@
+{
+  "scope": "Reproduces first harness assertion failure after the runtime fix, without production source edits",
+  "command": "tsx --test .tools/shared-startup-initial-harness.test.ts",
+  "harnessSHA256": "c82772b70a429f8328950197d6e7edb41ba4a3ba06bd49b325280be4056db65c",
+  "finalHarnessSHA256": "febd050c68fa3272849ce9765a137b42da1ec6b62863dce60ea1f02d861080d4",
+  "sourceSHA256": "5c9936969481455ea674564c4a7ed0bcd3e9ff31048445b793d0bc13480e4a2b",
+  "patchApplyFlags": [
+    "--unidiff-zero"
+  ],
+  "cause": "deepStrictEqual compares VM-created packet prototypes with outer-realm literals. Final fixture checks exact packet fields and keys instead."
+}

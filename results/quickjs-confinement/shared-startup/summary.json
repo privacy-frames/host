@@ -1,0 +1,46 @@
+{
+  "sourceRevision": "873bb399644341f163cf5134efc960a971be4635",
+  "baseRevision": "2e5d37381fb8a983899e317504e0edfa60c7d5b2",
+  "scope": "Shared-worker startup failure unwind in actual bundled source with controlled native scope/port interfaces",
+  "change": "After session creation, failed session.start closes that session once; cleanup exceptions do not replace the original rejection. The shared readiness promise remains rejected for concurrent and late valid connection waiters. Creation failure has no owned session to close.",
+  "checks": [
+    {
+      "command": "tsx --test test/guest-shared-worker-startup.test.ts",
+      "exitCode": 0,
+      "tests": 5,
+      "log": "units.log"
+    },
+    {
+      "command": "tsc --noEmit",
+      "exitCode": 0,
+      "log": "types.log"
+    },
+    {
+      "command": "Scoped Prettier",
+      "exitCode": 0,
+      "log": "format.log"
+    }
+  ],
+  "controls": [
+    "Two concurrent ports plus a later valid port share one creation/start attempt",
+    "Startup rejection and throwing cleanup both preserve the primary error diagnostic for every waiter",
+    "No guest connect delivery or queued replay after failure",
+    "Creation failure performs no session cleanup",
+    "Success publishes each port only after readiness and one port close retains the session",
+    "Omitting the actual session.close call fails cleanup-count assertion although port rejection checks pass"
+  ],
+  "harnessDiagnostic": {
+    "log": "initial-harness-reproduced.json",
+    "inputs": "initial-harness-inputs.json",
+    "sourcePatch": "initial-harness.patch",
+    "status": "Reproduced earlier diagnostic harness failure; not a runtime failure. Packet fields are compared exactly across VM realms instead of requiring prototype identity."
+  },
+  "browserQualification": "Deferred to parent merged suite to avoid overlapping the active full-suite browser lane; no native browser lifetime claim",
+  "proseReview": "Sentence-by-sentence review and Unslop phrase scan passed. Uniform-sentence-length soft warning reviewed as reference documentation; no wording change needed.",
+  "sourceHashes": {
+    "src/guest/contexts/worker-bootstrap.ts": "5c9936969481455ea674564c4a7ed0bcd3e9ff31048445b793d0bc13480e4a2b",
+    "src/guest/contexts/types.ts": "bc30e4b218780f10fc7b5ea2f48041f0ebd39e964b84a85b631577434dda34ff",
+    "test/guest-shared-worker-startup.test.ts": "febd050c68fa3272849ce9765a137b42da1ec6b62863dce60ea1f02d861080d4",
+    "formal/quickjs/shared-worker-startup.md": "6c54fac25d6a34ab01f423400c0a4c68211de69c9acf7a45fc5940abd686b835"
+  }
+}

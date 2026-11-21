@@ -1,0 +1,13 @@
+✔ shared startup rejection closes its session once and rejects concurrent and late ports (2.98911ms)
+✔ shared startup keeps primary rejection when session cleanup throws (0.885561ms)
+✔ shared creation rejection closes ports without inventing session cleanup (0.74732ms)
+✔ successful shared startup publishes every port only after readiness and retains session (0.974448ms)
+✔ omitting actual shared startup cleanup is detected independently of port rejection (2.435598ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 142.117283

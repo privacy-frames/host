@@ -1,0 +1,12 @@
+--- a/test/guest-shared-worker-startup.test.ts
++++ b/test/guest-shared-worker-startup.test.ts
+@@ -221,6 +221,3 @@
+-    assert.equal(port.messages.length, 1);
+-    const packet = port.messages[0];
+-    assert(packet && typeof packet === 'object');
+-    assert.deepEqual(Object.keys(packet), ['type', 'message']);
+-    assert.equal(Reflect.get(packet, 'type'), 'privacy-frames:worker-error');
+-    assert.equal(Reflect.get(packet, 'message'), String(result.failure));
++    assert.deepEqual(port.messages, [
++      { type: 'privacy-frames:worker-error', message: String(result.failure) },
++    ]);
