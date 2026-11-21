@@ -3,6 +3,34 @@ import test from 'node:test';
 import { createGuestURLPolicy, type GuestURLPolicy } from '../src/guest/url-policy.ts';
 import { NativePolicyError } from '../src/guest/native-policy.ts';
 
+test('URL membership is cached while URL attributes and descriptor checks remain live', () => {
+  const original = Object.getOwnPropertyDescriptor(URL.prototype, 'href')!;
+  let probes = 0;
+  Object.defineProperty(URL.prototype, 'href', {
+    ...original,
+    get() {
+      probes++;
+      return Reflect.apply(original.get!, this, []);
+    },
+  });
+  try {
+    const { policy } = fixture();
+    const url = fresh(policy);
+    const afterAdmission = probes;
+    for (let index = 0; index < 1000; index++)
+      assert.equal(typeof policy.get(url, 'toString'), 'function');
+    assert.equal(probes, afterAdmission, 'Membership must not re-read native getters');
+    policy.set(url, 'href', 'https://publisher.invalid/changed');
+    assert.equal(policy.get(url, 'href'), 'https://publisher.invalid/changed');
+    assert.equal(probes, afterAdmission + 1, 'Attribute values must not be cached');
+
+    Object.defineProperty(URL.prototype, 'href', original);
+    assert.throws(() => policy.get(url, 'href'), NativePolicyError);
+  } finally {
+    Object.defineProperty(URL.prototype, 'href', original);
+  }
+});
+
 function fixture() {
   const created: unknown[] = [];
   const revoked: string[] = [];

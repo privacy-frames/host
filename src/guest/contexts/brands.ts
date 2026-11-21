@@ -1,3 +1,7 @@
+import { nativeBrand } from '../native-brand.ts';
+
+export { nativeBrand } from '../native-brand.ts';
+
 const apply = Reflect.apply;
 const objectTag = Object.prototype.toString;
 
@@ -10,32 +14,6 @@ function getter(
   const prototype: unknown = Reflect.get(constructor, 'prototype');
   if (!prototype || typeof prototype !== 'object') return;
   return Object.getOwnPropertyDescriptor(prototype, property)?.get;
-}
-
-/** Cache native internal-slot checks, which do not change with public prototypes. */
-export function nativeBrand<T extends object>(
-  read: ((this: unknown) => unknown) | undefined,
-): (value: unknown) => value is T {
-  const cache = new WeakMap<object, boolean>();
-  return (value: unknown): value is T => {
-    if (
-      !read ||
-      value === null ||
-      (typeof value !== 'object' && typeof value !== 'function')
-    )
-      return false;
-    const known = cache.get(value);
-    if (known !== undefined) return known;
-    let accepted = false;
-    try {
-      apply(read, value, []);
-      accepted = true;
-    } catch {
-      // A Web IDL getter rejects receivers without its native internal slots.
-    }
-    cache.set(value, accepted);
-    return accepted;
-  };
 }
 
 const nodeType = getter('Node', 'nodeType');

@@ -4,6 +4,40 @@ import { createGuestTextPolicy, type GuestTextPolicy } from '../src/guest/text-p
 import { NativePolicyError } from '../src/guest/native-policy.ts';
 
 const fixture = () => createGuestTextPolicy({ TextEncoder, TextDecoder });
+
+test('text brand checks are cached without caching reads or prototype admission', () => {
+  const original = Object.getOwnPropertyDescriptor(TextDecoder.prototype, 'encoding')!;
+  let probes = 0;
+  Object.defineProperty(TextDecoder.prototype, 'encoding', {
+    ...original,
+    get() {
+      probes++;
+      return Reflect.apply(original.get!, this, []);
+    },
+  });
+  try {
+    const policy = fixture();
+    const decoder = policy.construct(policy.TextDecoder, []);
+    const afterAdmission = probes;
+    for (let index = 0; index < 1000; index++) {
+      assert(policy.owns!(decoder));
+      assert.equal(typeof policy.get(decoder, 'decode'), 'function');
+    }
+    assert.equal(probes, afterAdmission, 'Membership must not re-read native getters');
+    assert.equal(policy.get(decoder, 'encoding'), 'utf-8');
+    assert.equal(policy.get(decoder, 'encoding'), 'utf-8');
+    assert.equal(probes, afterAdmission + 2, 'Actual attribute reads remain live');
+
+    Object.setPrototypeOf(decoder, null);
+    assert.throws(
+      () => policy.get(decoder, 'decode'),
+      /another native realm or prototype/,
+    );
+  } finally {
+    Object.defineProperty(TextDecoder.prototype, 'encoding', original);
+  }
+});
+
 function invoke(
   policy: GuestTextPolicy,
   receiver: object,

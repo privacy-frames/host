@@ -1611,6 +1611,7 @@ export class GuestEngine {
   }
 
   private indexedBuffer(value: object): ArrayBuffer | undefined {
+    if (!ArrayBuffer.isView(value)) return;
     try {
       const buffer: unknown = Reflect.apply(typedArrayBuffer, value, []);
       return isArrayBuffer(buffer) &&

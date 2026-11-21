@@ -421,6 +421,7 @@ try {
       row.installation = await manager.locator('#status').innerText();
       console.log(`${target.id}: ${row.installation}`);
       assert(String(row.installation).startsWith('Installed '), String(row.installation));
+      const startupStarted = performance.now();
       const opened = context.waitForEvent('page');
       await manager.locator('#app-list a[data-app]').first().click();
       app = await opened;
@@ -491,12 +492,14 @@ try {
         { timeout: 90000 },
       );
       row.runtime = await app.locator('html').getAttribute('data-privacy-runtime');
+      row.startupMs = Math.round(performance.now() - startupStarted);
       console.log(`${target.id}: runtime ${row.runtime}`);
       assert.equal(row.runtime, 'ready');
       row.task = await interaction(app, target.id);
       if (process.env.CORPUS_CAPTURE_STORAGE)
         row.storageBeforeReload = await browserStorageState(app);
       await context.setOffline(true);
+      const offlineStartupStarted = performance.now();
       await app.reload({ waitUntil: 'commit' });
       await app.waitForFunction(
         () =>
@@ -510,6 +513,7 @@ try {
         await app.locator('html').getAttribute('data-privacy-runtime'),
         'ready',
       );
+      row.offlineStartupMs = Math.round(performance.now() - offlineStartupStarted);
       if (target.id === 'stackedit') {
         await app
           .locator('.cl-preview-section h1')

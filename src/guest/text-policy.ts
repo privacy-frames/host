@@ -1,4 +1,5 @@
 import { createNativeHost } from './native-host.ts';
+import { nativeBrand } from './native-brand.ts';
 import {
   NativePolicy,
   NativePolicyError,
@@ -47,7 +48,7 @@ export function createGuestTextPolicy(options: GuestTextPolicyOptions): GuestTex
   )
     throw new TypeError('Text codecs must belong to one native realm');
 
-  function getter(owner: object, key: string): Function {
+  function getter(owner: object, key: string): (this: unknown) => unknown {
     const native = descriptor(owner, key)?.get;
     if (!native) throw new TypeError('Native text attribute unavailable: ' + key);
     return native;
@@ -63,16 +64,10 @@ export function createGuestTextPolicy(options: GuestTextPolicyOptions): GuestTex
     decoderPrototype,
   ]);
   const unrelated = new WeakSet<object>();
-  function branded(value: object, getters: readonly Function[]): boolean {
-    try {
-      for (const native of getters) apply(native, value, []);
-      return true;
-    } catch {
-      return false;
-    }
-  }
-  const isEncoder = (value: object) => branded(value, [encoderBrand]);
-  const isDecoder = (value: object) => branded(value, decoderBrands);
+  const isEncoder = nativeBrand<TextEncoder>(encoderBrand);
+  const isDecoder = nativeBrand<TextDecoder>(function (this: unknown) {
+    for (const native of decoderBrands) apply(native, this, []);
+  });
   function admit(value: unknown): boolean {
     if (!object(value)) return false;
     if (

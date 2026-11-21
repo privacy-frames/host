@@ -6,6 +6,7 @@ import {
   type NativeReadOperation,
 } from './native-policy.ts';
 import { createNativeHost } from './native-host.ts';
+import { nativeBrand } from './native-brand.ts';
 import type { GuestHost } from './protocol.ts';
 
 export interface GuestURLPolicyOptions {
@@ -50,6 +51,8 @@ export function createGuestURLPolicy(options: GuestURLPolicyOptions): GuestURLPo
   const paramsText = descriptor(paramsPrototype, 'toString')?.value;
   if (!href || typeof paramsText !== 'function')
     throw new TypeError('Required native URL brands are unavailable');
+  const isURL = nativeBrand<URL>(href);
+  const isParams = nativeBrand<URLSearchParams>(size ?? paramsText);
 
   const owned = new WeakSet<object>([
     nativeURL,
@@ -71,20 +74,10 @@ export function createGuestURLPolicy(options: GuestURLPolicyOptions): GuestURLPo
     return { id, result, callbacks, effect };
   }
 
-  function branded(value: unknown, getter: Function): boolean {
-    if (!object(value)) return false;
-    try {
-      apply(getter, value, []);
-      return true;
-    } catch {
-      return false;
-    }
-  }
-
   function admit(value: unknown): boolean {
     if (!object(value)) return false;
     if (owned.has(value)) return true;
-    if (!branded(value, href!) && !branded(value, size ?? paramsText)) return false;
+    if (!isURL(value) && !isParams(value)) return false;
     if (prototype(value) !== urlPrototype && prototype(value) !== paramsPrototype)
       throw new NativePolicyError(
         'admit',
@@ -104,7 +97,7 @@ export function createGuestURLPolicy(options: GuestURLPolicyOptions): GuestURLPo
     owns(target) {
       if (owned.has(target)) return true;
       if (otherBrands.has(target)) return false;
-      if (branded(target, href) || branded(target, size ?? paramsText)) return true;
+      if (isURL(target) || isParams(target)) return true;
       otherBrands.add(target);
       return false;
     },
@@ -233,7 +226,7 @@ export function createGuestURLPolicy(options: GuestURLPolicyOptions): GuestURLPo
 
   registry.registerPrototype(urlPrototype, {
     name: 'URL',
-    accepts: (value) => value === urlPrototype || branded(value, href),
+    accepts: (value) => value === urlPrototype || isURL(value),
     members: [
       ...dataMember(urlPrototype, 'URL', 'constructor', 'callable'),
       ...dataMember(urlPrototype, 'URL', Symbol.toStringTag),
@@ -269,7 +262,7 @@ export function createGuestURLPolicy(options: GuestURLPolicyOptions): GuestURLPo
   const iterator = descriptor(paramsPrototype, Symbol.iterator)?.value;
   registry.registerPrototype(paramsPrototype, {
     name: 'URLSearchParams',
-    accepts: (value) => value === paramsPrototype || branded(value, size ?? paramsText),
+    accepts: (value) => value === paramsPrototype || isParams(value),
     members: [
       ...dataMember(paramsPrototype, 'URLSearchParams', 'constructor', 'callable'),
       ...dataMember(paramsPrototype, 'URLSearchParams', Symbol.toStringTag),
