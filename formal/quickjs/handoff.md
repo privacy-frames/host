@@ -82,7 +82,17 @@ Both browsers pass the corrected fixture; runtime source and its assertions are
 unchanged. The failed run and diagnosis are preserved under `combined-a638f14/`
 and `event-fixture-ownership/`.
 
-Root is repeating combined qualification after that fixture correction. Source
+The core suite passed after the fixture correction. A separate data check then
+confirmed that foreign Date/Map/Set/RegExp instances reached guest builtins without
+their internal slots. `520c6cf` routes all four through the existing data-copy codec
+using captured native slot operations. It also repairs per-copy memo ownership,
+repeated references/cycles and temporary argument cleanup. The original foreign
+slot failures and pre-existing own-realm Date graph identity loss are preserved
+under `cross-realm-data/`. Both-browser focused, engine and intrinsic checks pass.
+The latest executable source is now `520c6cf`; earlier source references above
+identify their component checkpoints.
+
+Root is repeating combined qualification after these corrections. Source
 changes are frozen during the full suite, application matrix, Pitch and paired
 image checks. Fresh CI will rerun the component aggregate against the new test
 revision.

@@ -18,6 +18,13 @@ handles, even after application code replaces a guest global. Foreign DOM
 constructors and prototypes keep their platform identities; their ordinary
 ECMAScript prototype boundaries resolve to the receiving guest's intrinsics.
 
+Dates, maps, sets and regular expressions use the same copy path across native
+realms. Captured internal-slot operations recognize and extract their data without
+reading instance overrides. Per-copy memo handles preserve repeated references
+and cycles, including Date map keys; the memo is released when encoding finishes.
+Argument-copy failure releases temporary handles before the native callee runs.
+Objects are copied as snapshots into the receiving guest heap.
+
 A known role without a supported guest counterpart is refused. An identity already
 exposed as a generic proxy cannot be silently upgraded by later capture: encoding
 and native operation dispatch reject it. The trusted binary installer retains its existing startup alias replacement.
