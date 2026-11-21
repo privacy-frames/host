@@ -1,0 +1,8 @@
+{
+  "session": 59443,
+  "passed": false,
+  "failure": "Error: Prepared foreign write accepted",
+  "scope": "Initial fixture setup failed prepared-write positive control; not a confinement outcome",
+  "sourceSHA256": "b07309ad20439dff9095abdadc76084e0e147508ec4721015c66b34d8d1c3339",
+  "diagnosis": "Fixture appended frames after parent GuestDOM observer started. That observer can start its own child preparation alongside the fixture-owned session. Revised fixture creates and loads native frames before attaching parent observer."
+}
