@@ -7,10 +7,10 @@ accessor or function that implements each operation. Members absent from the sch
 are refused before a native getter, setter or method runs.
 
 The registry is integrated with the standalone URL and text families, native Wasm,
-and the worklet/MessagePort host. BrowserEnvironment routes claimed URL and text
-objects to their reviewed owners. Browser and NativeBinary still contain generic
-native forwarding; these integrations do not establish complete mediation of those
-domains. The [security argument](../../formal/quickjs/README.md#security-argument)
+the [native buffer policy](../../formal/quickjs/binary-policy.md), and the
+worklet/MessagePort host. BrowserEnvironment routes claimed URL and text objects
+to their reviewed owners. Browser forwarding and cross-family producer/callback
+composition remain open obligations. The [security argument](../../formal/quickjs/README.md#security-argument)
 locates the remaining implementation and browser obligations.
 
 ## Registration and ownership

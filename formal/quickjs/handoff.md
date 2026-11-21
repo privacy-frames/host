@@ -16,8 +16,10 @@ and release qualification. Production remains on executable source `5f62e61`.
 No new candidate has been deployed.
 
 Main development checkout: `/home/damen/Projects/privacy-frames-quickjs-kernel`,
-branch `quickjs-confinement-kernel`. Latest committed source is `9017a34`; the
-remote development backup is at `0195a96` before this checkpoint is saved.
+branch `quickjs-confinement-kernel`. Latest executable source is `81967aa`. The
+remote development backup was at `16b281e` before this checkpoint; the next push
+includes the binary policy and CI evidence follow-up `86260c3`. `ffca4da`
+preserves the stabilization receipts, including failed and unqualified diagnostics.
 
 `ef9af40` repairs CyberChef startup overhead by caching immutable native brand
 membership for URL/text objects and skipping indexed-buffer probes for non-views.
@@ -56,22 +58,40 @@ example smoke checks in Chromium/Firefox passed after these documentation edits.
 
 ## Active work and process state
 
-All qualification sessions through 25524 are terminal. No browser qualification
-job is currently running. Preserve failures before any future retry. The owned
-Xvfb :119 was cleaned up; never stop the unrelated existing Xvfb :99 (PID 12947).
+The earlier stabilization sessions, including 25524, are terminal. The current
+binary qualification sequence is described below. Preserve failures before any
+future retry. The earlier owned Xvfb :119 was cleaned up; never stop the unrelated
+existing Xvfb :99 (PID 12947).
 
-The next implementation work replaces generic NativeBinary forwarding with
-explicit reviewed members using the existing NativePolicy/NativeHost codec.
-The assigned implementation owns `src/guest/native-binary.ts` and focused binary
-policy tests. It must preserve species hooks, native buffer identity, mixed
-buffer set operations, DataView expandos and iterator ownership.
+The NativeBinary operation policy is committed at `81967aa`. All 220 units,
+formatting, typecheck, build, the actual GuestEngine browser fixture, native Wasm
+policy controls and the eleven native/confined Wasm fixtures passed. The browser
+fixture confirms unknown native buffer getters remain unexecuted in Chromium and
+Firefox; primitive geometry shadows, growth and synchronization checks still pass.
+An independent read-only review identified no concrete confinement defect, while
+retaining the engine ownership/composition premises.
 
-An independent management-composition task owns
-`formal/quickjs/management-composition/`. It checks asynchronous caller schedules
-and distinguishes authorization at the accepted operation from a stronger
-current-generation-at-transfer property. Three synchronous predicates have
-sixteen contracts; those contracts do not prove every asynchronous caller.
-Neither task owns shared interfaces, build scripts or this handoff.
+Session 91701 is running the full suite, followed by the twelve-case compatibility
+matrix and Pitch. Logs are `/tmp/pf-binary-full-suite.log`,
+`/tmp/pf-binary-corpus.log` and `/tmp/pf-binary-pitch.log`. All executable inputs
+and built artifacts remain frozen. Do not start competing image measurements or
+rebuild while that sequence is running. Session 20459 is terminal with all focused
+checks passed. Paired image/performance qualification is still pending.
+
+The management-composition task is integrated at `16b281e`: actual bundled
+receivers passed 143 bounded schedules and four omitted-recheck controls. Its
+two-controller publication-freshness counterexample is preserved separately from
+management authorization. Three synchronous predicates have sixteen contracts;
+neither those proofs nor the schedules establish every asynchronous execution.
+The NativeBinary implementation and independent review tasks are complete.
+
+The component-verification command and GitHub workflow are also integrated at
+`16b281e`. All fourteen drivers passed on that revision in run `44924608486`.
+Hash-matched CI receipts and logs are archived under
+`results/quickjs-confinement/ci-16b281e/`. This is the pre-NativeBinary source,
+not qualification of the pending runtime changes. The aggregate runner now also
+clears its old summary before input collection and records each receipt path;
+that small follow-up awaits its own run at the new revision.
 
 The integration checkout `/home/damen/Projects/privacy-frames-quickjs-proof` remains
 on `quickjs-confinement-proof` at `9d9e401`. Preserve its untracked identity and
@@ -120,12 +140,12 @@ requests are observed; ordinary user-profile prevalence and all browser families
 are separate coverage obligations. The original namespace creation failure was
 superseded by verified Docker network-none isolation.
 
-Remaining work includes native browser/binary forwarding, source-linked caller
+Remaining work includes native browser forwarding, source-linked caller
 and protocol composition, complete application-effect coverage, upgrade
 verification, CI and qualified deployment. Continue the work
 without marking the goal complete from these component results.
 
-## Resumption planning checkpoint
+## Historical resumption planning checkpoint
 
 Use the [resumption plan](../../docs/implementation/confinement-verification-resumption.md)
 for the inspected state and remaining execution order. The earlier checkpoint
