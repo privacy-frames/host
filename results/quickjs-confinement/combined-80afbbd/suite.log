@@ -1,0 +1,1005 @@
+
+> pretest
+> npm run build
+
+
+> build
+> tsx scripts/build.ts
+
+≈ tailwindcss v4.3.3
+
+Done in 37ms
+Built manager in dist-manager
+▲ [WARNING] "import.meta" is not available with the "iife" output format and will be empty [empty-import-meta]
+
+    vendor/quickjs/generated/engine.mjs:1:796:
+      1 │ ...w toThrow};var _scriptName=import.meta.url;var scriptDirectory="...
+        ╵                               ~~~~~~~~~~~
+
+  You need to set the output format to "esm" for "import.meta" to work correctly.
+
+▲ [WARNING] "import.meta" is not available with the "iife" output format and will be empty [empty-import-meta]
+
+    vendor/quickjs/generated/engine.mjs:1:3172:
+      1 │ ...turn new URL("engine.wasm",import.meta.url).href}function getBin...
+        ╵                               ~~~~~~~~~~~
+
+  You need to set the output format to "esm" for "import.meta" to work correctly.
+
+▲ [WARNING] "import.meta" is not available with the "iife" output format and will be empty [empty-import-meta]
+
+    vendor/quickjs/generated/engine.mjs:1:796:
+      1 │ ...w toThrow};var _scriptName=import.meta.url;var scriptDirectory="...
+        ╵                               ~~~~~~~~~~~
+
+  You need to set the output format to "esm" for "import.meta" to work correctly.
+
+▲ [WARNING] "import.meta" is not available with the "iife" output format and will be empty [empty-import-meta]
+
+    vendor/quickjs/generated/engine.mjs:1:3172:
+      1 │ ...turn new URL("engine.wasm",import.meta.url).href}function getBin...
+        ╵                               ~~~~~~~~~~~
+
+  You need to set the output format to "esm" for "import.meta" to work correctly.
+
+▲ [WARNING] "import.meta" is not available with the "iife" output format and will be empty [empty-import-meta]
+
+    vendor/quickjs/generated/engine.mjs:1:796:
+      1 │ ...w toThrow};var _scriptName=import.meta.url;var scriptDirectory="...
+        ╵                               ~~~~~~~~~~~
+
+  You need to set the output format to "esm" for "import.meta" to work correctly.
+
+▲ [WARNING] "import.meta" is not available with the "iife" output format and will be empty [empty-import-meta]
+
+    vendor/quickjs/generated/engine.mjs:1:3172:
+      1 │ ...turn new URL("engine.wasm",import.meta.url).href}function getBin...
+        ╵                               ~~~~~~~~~~~
+
+  You need to set the output format to "esm" for "import.meta" to work correctly.
+
+≈ tailwindcss v4.3.3
+
+Done in 36ms
+Built runtime in dist-runtime
+Built installation in dist-installation
+
+> build:examples
+> node scripts/build-examples.ts --output /home/damen/Projects/privacy-frames-quickjs-kernel/dist-examples
+
+Built independent publisher websites in /home/damen/Projects/privacy-frames-quickjs-kernel/dist-examples.
+
+> test
+> npm run test:unit && npm run test:guest
+
+
+> test:unit
+> tsx --test test/*.test.ts
+
+✔ configuration changes invalidate bootstrap and role builds expose only their entry points (3856.042253ms)
+✔ private transport survives changed browser accessors and application iterators (7.583092ms)
+✔ malformed or rejected replies fail instead of yielding host data (13.499221ms)
+✔ missing controller, send failure and timeout reject and close local ports (12.452851ms)
+✔ CSS resource syntax excludes comments, content strings, selectors and conditions (9.705521ms)
+✔ imports, escaped URLs, nested values and custom properties share extraction and relocation (7.790522ms)
+✔ malformed declarations preserve later valid CSS resources (1.341993ms)
+✔ style attributes use declaration context while style blocks preserve quoted text (7.043044ms)
+✔ installation requests only parsed CSS resource declarations (135.032843ms)
+✔ abort constructors, native state and delegated reason/throw identity (72.619314ms)
+✔ abort events preserve native synchronous ordering, handler identity and cleanup (7.095646ms)
+✔ unknown abort getters and borrowed mismatched receivers fail before execution (3.699092ms)
+✔ static abort/any use exact native algorithms, extracted calls and one sequence conversion (4.078989ms)
+✔ native timeout produces owned signals and late deliveries cannot enter closed guest (28.694685ms)
+✔ abort callable shapes and reflected getter shapes retain exact native metadata (7.130949ms)
+✔ disposing the last pending owner prevents creating a native controller (5.116402ms)
+✔ pending ownership survives disposal of the controller creator and IDs share one domain (16.269584ms)
+✔ closing before readiness rejects pending work and ignores late ready messages (5.070991ms)
+✔ standard corpus preserves DOM inheritance, mixins and global declarations (3.085814ms)
+✔ global exposure is separate from effect authorization (3.027704ms)
+✔ collection declarations expose native iteration contracts (0.648979ms)
+✔ the generated corpus has complete parent links and stable package provenance (3.75242ms)
+✔ compiler joins out-of-order partials, included mixins and operation overloads (6.136566ms)
+✔ compiler preserves stringifiers, static operations and nonfinite constants (1.134964ms)
+✔ compiler refuses unresolved includes and incomplete interface definitions (12.990789ms)
+✔ overload lookup retains every standard native operation signature (0.293614ms)
+✔ callback interfaces expose a legacy object only when they declare constants (2.665561ms)
+✔ native brands check each receiver once, including failed receivers (1.755375ms)
+✔ functions can be checked, while primitive inputs never invoke a getter (0.372936ms)
+✔ selected native event constructors preserve identity, conversion and cancellation (88.710703ms)
+✔ native dispatch and cleanup retain guest callback and object-listener semantics (9.289173ms)
+✔ listener conversions match native order and failures do not register cleanup (1.888544ms)
+✔ callback ownership is checked before registration and again on delivery (1.039002ms)
+✔ registered native callables use the provided invocation route as listeners (7.523136ms)
+✔ native delivery rechecks receiver provenance without revoking detached local targets (1.226886ms)
+✔ unknown getters and reflected access are denied before execution (3.984221ms)
+✔ native descriptor changes invalidate cached callable and accessor authority (1.273695ms)
+✔ canonical methods and borrowed receivers do not claim unrelated whole objects (4.850304ms)
+✔ unreviewed aliases do not become local-family members (1.140308ms)
+✔ method publication does not capture unclaimed native target families (0.892255ms)
+✔ inactive update scheduling remains explicit when another profile supplies the mechanism control (2.400879ms)
+✔ a quiet implementation does not pass without a positive native mechanism control (0.471189ms)
+✔ a fixed trusted URL still fails the no-HTTP gate (0.487476ms)
+✔ missing private-bit comparison fails despite active controls (0.277699ms)
+✔ one profile cannot borrow another profile physical HTTP sensor (0.528521ms)
+✔ object epochs invalidate retained continuations after numeric counters stop advancing (1.752469ms)
+✔ engine UTF-8 fallback matches native decoding at invalid sequence boundaries (158.577138ms)
+✔ engine UTF-8 fallback preserves valid strings and randomized malformed data (33.599325ms)
+✔ decoded CSS resource URLs normalize invalid scalar input before mapping (20.15707ms)
+✔ unquoted raw NUL remains an unsupported parser input and fails closed (3.687031ms)
+✔ CSS parsing maps URLs, escaped URL functions and escaped imports (6.406371ms)
+✔ image-set string candidates map while MIME and font-family strings remain data (1.280538ms)
+✔ inline declarations and SVG value grammars use the same resource mapping (1.93758ms)
+✔ namespace and supports URLs do not acquire resource semantics (0.662783ms)
+✔ invalid CSS is withheld and an invalid individual URL becomes inert data (2.838826ms)
+✔ nested supports conditions survive while enclosed resources remain mediated (1.217307ms)
+✔ import URLs remain parsed and rewritten alongside raw conditional preludes (1.845802ms)
+✔ a trusted-factory initializer error is reported without a runtime disposal assertion (401.391667ms)
+✔ private conversion tracking preserves native getters, receivers and primitive options (4.479012ms)
+✔ a frozen options object retains proxy invariants and capture identity (0.359674ms)
+✔ native failed conversion does not install a listener or permit cleanup rereads (0.577478ms)
+✔ missing arguments and symbol types preserve native rejection before effect (0.402561ms)
+✔ identity exhaustion rejects without rounding, repetition or record mutation (0.650483ms)
+✔ private identity domains advance independently without inherited setters (0.208971ms)
+✔ manager sender requires every native observation and a live unbound receiver (2.505127ms)
+✔ actual worker adapter denies synthetic, claimed and changed client identities (410.71482ms)
+✔ actual worker adapter rechecks after asynchronous admission and before reply (53.357725ms)
+✔ actual catalog publication rechecks recipient identity after preparation (63.613681ms)
+✔ actual worker adapter evaluates captured source at dequeue and isolates instance queues (51.394412ms)
+✔ actual bridge binds only a genuine allowed parent, with an origin removal control (40.323637ms)
+✔ actual bridge closes pending ready and queued request/reply continuations (14.629889ms)
+✔ postMessage options getter and sequence iterator are each captured once (1.892262ms)
+✔ iterable overload reads its iterator once and does not inspect transfer options (0.369196ms)
+✔ invalid transfer conversion closes the iterator and preserves the thrown error (0.694709ms)
+✔ semantic anchoring requires a registered brand and rejects wrong brands or changed families (4.107531ms)
+✔ delegated function results do not mint callable or constructor tokens (0.601602ms)
+✔ an exact own-field facade composes only reviewed anchored lineage (0.624911ms)
+✔ only an explicit native call contract permits a registered constructor without new (5.846868ms)
+✔ published wrapper identity is stable and usable for private argument-decoding metadata (0.727983ms)
+✔ trusted native callable producer retains the original funcref identity (1.009403ms)
+✔ exact callable publication refuses metadata accessors without executing them (0.495628ms)
+✔ codec preserves stable callable and descriptor identity without exposing native functions (3.981738ms)
+✔ codec rejects unknown getters and foreign receivers before invoking them (0.622957ms)
+✔ codec keeps wrapper shape immutable and refuses inherited callable authority (0.297105ms)
+✔ codec maps only registered constructor tokens and forwards results through admission (0.682437ms)
+✔ native projection covers every pinned declaration and retains matching provenance (207.616837ms)
+✔ inheritance, mixin owners, static placement and overload deduplication retain identity (0.345398ms)
+✔ anonymous named/indexed operations never become empty-name properties (0.190228ms)
+✔ stringifier attributes preserve the source member and add an implicit toString identity (6.704182ms)
+✔ implicit collection methods preserve readonly rules and actual symbol identity (0.362134ms)
+✔ ambiguous mixin declarations refuse lookup rather than choosing their input order (1.060965ms)
+✔ native member presence cannot create an effect permission (3.26889ms)
+✔ global provisioning projection does not import the new identity catalogue (57.478351ms)
+✔ unreviewed native getters never execute, including additions before and after setup (12.281563ms)
+✔ reviewed getters, setters and methods execute after receiver admission (5.152055ms)
+✔ borrowed accessor tokens retain their declaring contract on a derived receiver (0.703177ms)
+✔ canonical function aliases share a token; differing contracts or adapters refuse registration (1.113787ms)
+✔ the same canonical callable supports each explicitly registered receiver family (0.486117ms)
+✔ changed getter and callable identities are refused before their replacement runs (0.468928ms)
+✔ an unreviewed shadow descriptor cannot replace a reviewed inherited operation (0.334249ms)
+✔ facade schemas accept only the registered instance and preserve writable data changes (3.760139ms)
+✔ explicit named families support reviewed data without a generic getter fallback (1.011334ms)
+✔ returned native functions and forged tokens never gain implicit call authority (0.497064ms)
+✔ free-function contracts discard guest receivers and constructors require explicit tokens (2.99809ms)
+✔ constructor function identity and prototype are captured independently of names (0.357066ms)
+✔ guest result rules preserve only exact owned guest references (6.651496ms)
+✔ native constructors, exports, funcref tables/globals and retained buffers preserve identity (35.515143ms)
+✔ native static wrappers publish import decoder identity, while brand validation precedes capture (18.017348ms)
+✔ Wasm error constructors preserve native no-new semantics and prototype aliases (4.342199ms)
+✔ externref functions retain their original owner and never gain Wasm call/construct authority (1.610206ms)
+✔ branded cross-realm values use local semantic anchors without foreign getters or has traps (3.862409ms)
+✔ unknown getters and descriptor replacements cannot enter the reviewed native Wasm surface (1.825779ms)
+✔ optional Exception stack uses reviewed native own descriptors without losing family methods (20.558126ms)
+✔ Exception methods survive own stack composition while custom fields remain unreviewed (2.009435ms)
+✔ repeated Exception traceStack producers share adapters while retaining exact receivers (13.867141ms)
+✔ application processor names exclude the host namespace after one conversion (1.640072ms)
+✔ native rendering receives local resources, including nested CSS and import cycles (72.697979ms)
+✔ runtime projection is generated from the complete pinned corpus (25.559998ms)
+✔ runtime exposure queries preserve interface provisioning in each context (15.76487ms)
+✔ only global provisioning members are present in runtime data (5.728392ms)
+✔ runtime metadata still does not grant native effect authority (4.043952ms)
+✔ shared startup rejection closes its session once and rejects concurrent and late ports (11.740463ms)
+✔ shared startup keeps primary rejection when session cleanup throws (4.991095ms)
+✔ shared creation rejection closes ports without inventing session cleanup (4.830822ms)
+✔ successful shared startup publishes every port only after readiness and retains session (4.785632ms)
+✔ omitting actual shared startup cleanup is detected independently of port rejection (6.674926ms)
+✔ text brand checks are cached without caching reads or prototype admission (18.666606ms)
+✔ text constructors and native codec operations preserve conversion and buffer behavior (7.02294ms)
+✔ native streaming decode retains state and resets on a final call (0.738881ms)
+✔ codec wrappers and descriptors preserve exact identities and guest intrinsic boundaries (12.73996ms)
+✔ unreviewed native getter is rejected before execution, including reflected access (4.565382ms)
+✔ real text brands with foreign prototypes are claimed and refused instead of falling through (0.700878ms)
+✔ changed reviewed native descriptors and foreign callable identities cannot acquire authority (0.542216ms)
+✔ URL membership is cached while URL attributes and descriptor checks remain live (25.471456ms)
+✔ standalone URL constructors, attributes and serialization retain native behavior (5.145968ms)
+✔ URL setters and constructors perform application conversion once (3.256494ms)
+✔ linked URLSearchParams mutation is local and supports native methods and callbacks (9.556934ms)
+✔ reviewed iterator methods preserve aliases and ordinary iterator results (6.604715ms)
+✔ borrowed descriptors and methods retain their native receiver checks (5.464984ms)
+✔ unreviewed native getters are denied before execution at setup, late and own shadows (5.0078ms)
+✔ static parsing is local and object URL effects use only the supplied resource adapters (1.205086ms)
+✔ constructor and wrapper authority cannot be acquired from names or unreviewed functions (5.123195ms)
+✔ URL iterator boundaries do not claim the shared native Iterator prototype (1.741186ms)
+✔ optional static API absence is captured without enabling a later native addition (0.727392ms)
+✔ valid URL brands with an unreviewed prototype cannot fall through to another native host (4.713052ms)
+✔ asynchronous local XHR preserves ready-state, handlers, headers and response identity (55.113164ms)
+✔ synchronous catalog reads complete before send returns (5.959805ms)
+✔ XHR constants, upload identity and event-target ancestry match native interface shape (0.498131ms)
+✔ missing local resources fail without a network fallback (1.117526ms)
+✔ response types use catalog bytes and invalid JSON becomes null (0.978546ms)
+✔ abort prevents queued resource completion and resets request state (6.881749ms)
+✔ request timeout ends a stalled local read (5.795132ms)
+✔ local fetch exposes logical URL, native Response brand, clone and cancellation (3.112824ms)
+✔ navigator exposes facts and denied permissions without native authority records (0.74274ms)
+✔ microphone capture delegates audio only and stops tracks on context disposal (0.993608ms)
+✔ a microphone request resolving after disposal stops its tracks before rejection (0.581313ms)
+✔ closing during engine initialization disposes its late result without guest setup (9.7489ms)
+✔ initialization rejection after closure does not publish a failure message (1.922748ms)
+✔ closing during asynchronous module evaluation suppresses late publication (1.898633ms)
+✔ native worklet registration independently refuses host-reserved processor names (2.64667ms)
+✔ removing the actual late-close guard makes the controlled engine result remain live (5.532852ms)
+✔ worklet host exposes exact callbacks, numeric timing and reviewed console operations (7.245428ms)
+✔ unknown port getters and unadmitted same-brand endpoints are rejected before access (1.813073ms)
+✔ native port delivery admits events before guest callbacks and preserves callback identity (38.715522ms)
+✔ listener adapters preserve removal and transferred endpoint producer ownership (4.378023ms)
+✔ queued delivery after ownership revocation neither admits endpoints nor calls guest (3.683758ms)
+✔ transfer options are consumed once and detachment is committed after native success (2.542029ms)
+✔ omitting actual token mediation for the fixture getter is detected by its counter (74.42361ms)
+✔ worklet registration captures name checks and refuses reserved names (1.921395ms)
+✔ worklet maps, reflection and audio copies retain captured operations (0.99524ms)
+✔ worklet allocation exhaustion rejects before invoking application construction (0.692785ms)
+✔ worklet parameter names remain data rather than private-record prototypes (0.672167ms)
+✔ initial JSON data blocks stay inert rather than becoming executable resources (9.36859ms)
+✔ short alias is source-derived and label does not select identity (0.955609ms)
+✔ generic document base is resolved once and removed before admission (7.535211ms)
+✔ CSS dependency discovery handles imports, relative resources and cycles without following data (2.55601ms)
+✔ manifest adapts identity, hash launch and presentation without granting handlers (0.893901ms)
+✔ invalid bases fall back to the document and base targets cannot open new contexts (1.068855ms)
+✔ unreadable or malformed optional publisher manifests preserve a valid document installation (92.505093ms)
+✔ a small publisher icon keeps its identity and gains installable fallback sizes (0.886425ms)
+✔ inline bootstraps and preload declarations become installation inputs (1.164356ms)
+✔ module discovery follows literal imports without treating comments or strings as imports (24.928423ms)
+✔ installation policy admits up to 100 MiB and serves Wasm with its native media type (0.789571ms)
+✔ relocated module imports preserve fragments and both static quote styles (8.228107ms)
+✔ publisher scripts cannot be overwritten by generated inline resource names (8.102033ms)
+✔ secondary captured HTML collects its inline module and that module dependencies (16.001085ms)
+✔ a standard webpage can install a streamed asset larger than the former 20 MiB limit (81.849196ms)
+✔ streamed installation bytes crossing 100 MiB abort even when content-length understates them (3.050351ms)
+✔ publisher query configuration survives launch and PWA metadata without changing resource bases (0.469054ms)
+✔ installation requires three distinct configured origins (1.958382ms)
+✔ session messages reject wrong identities, malformed commands and oversized text (1.553168ms)
+✔ structured installation requests retain a URL or UTF-8-bounded text list (1.598572ms)
+✔ catalog metadata survives validation and exact URL selection is generic (2.232943ms)
+✔ resource list choices can remove or replace a catalog default (0.99942ms)
+✔ actual syntax nodes and arrays do not inherit application optional-field hooks (136.17438ms)
+✔ syntax detachment ignores accessors and inherited descriptor value fields (53.655269ms)
+✔ reviewed binary bindings preserve native identity, geometry and mixed local set (7.195134ms)
+✔ unknown getters and changed native callable descriptors are rejected before access (4.175824ms)
+✔ reviewed iteration owns produced iterators without claiming shared iterator declarations (2.210967ms)
+✔ private constructor hooks retain inherited native operations and species behavior (2.282622ms)
+✔ canonical typed indices and DataView numeric properties preserve distinct semantics (2.290045ms)
+✔ native constructors, generic static receivers, reducers and atomics retain compatibility (2.903826ms)
+✔ immutable brand memoization retains live geometry and ignores foreign prototype getters (2.544565ms)
+✔ own primitive data shadows remain live without authorizing own getters or functions (5.373307ms)
+✔ constructor metadata snapshots avoid late getters and unreviewed statics fail before access (5.716547ms)
+✔ copyWithin effects are confined to a branded receiver with primitive indices (6.131075ms)
+✔ callback-capable coercions and same-named replacements keep full barriers (1.082427ms)
+✔ reviewed receiver normalization precedes admission on codec and direct wrapper calls (4.092519ms)
+✔ trusted captures classify exact constructor/prototype identities without names or getters (2.412846ms)
+✔ snapshot owner cannot be reused across documents or global identities (1.799607ms)
+✔ conflicting role captures fail before publishing any partial identity (0.542891ms)
+✔ optional ordinary binary constructor roles are captured from data properties (0.319181ms)
+✔ trusted binary producer supplements hidden roles without reading an accessor global (0.295047ms)
+✔ mapping defers original string conversion and preserves the original receiver (1.949431ms)
+✔ null conversion, USV normalization and Symbol errors precede mapping (0.682953ms)
+✔ partial capture retains the successful dependency graph and records transport failures (43.988902ms)
+✔ the entry document remains mandatory even though dependencies are best effort (1.599089ms)
+✔ capture retains markup as data without executing application code (3.453289ms)
+✔ partial capture does not swallow unsupported script or module analysis errors (10.519765ms)
+✔ asynchronous false results do not satisfy a readiness condition (6.811042ms)
+✔ a permanently false condition fails the observation deadline (24.044835ms)
+✔ a pending observation cannot bypass its deadline (20.717412ms)
+✔ an observation error propagates without becoming a successful wait (0.535246ms)
+✔ private ports correlate concurrent replies and carry transferred request ports (14.996747ms)
+✔ server closure rejects pending work and suppresses its later successful result (3.068624ms)
+✔ local closure rejects current and future requests without starting another send (1.30254ms)
+✔ closing reentrantly while reading transfers prevents dispatch (0.379209ms)
+✔ handler failures, hostile thrown values and uncloneable replies fail locally (5.829609ms)
+✔ a private peer that never replies times out (25.78096ms)
+✔ failed proxy retention allocates no C record and the same proxy can retry (32.649671ms)
+✔ failed replacement duplication leaves the old rooted view usable and cleanup valid (8.529528ms)
+✔ failed second function-slot allocation releases the first and permits retry (14.315954ms)
+✔ C rejects a non-view replacement, disables access, and releases the paired record once (13.569729ms)
+✔ terminal disposal unlinks C records before releasing borrowed roots and table entries (11.014991ms)
+✔ native memory indexes use Wasm functions and preserve numeric conversions (84.255696ms)
+✔ private index caches report writes without exposing their backing (39.900017ms)
+✔ acceleration retains Proxy invariants and does not affect application proxies (8.576644ms)
+✔ automatic discovery follows explicit HTML, CSS and literal module references only (57.478281ms)
+✔ supplemental resources are captured without executing or interpreting their code (2.727941ms)
+✔ a remotely supplied list is data and does not become an application resource (1.766458ms)
+✔ missing entry and explicitly listed resources refuse installation (1.045382ms)
+✔ dynamic imports and data-selected filenames are never guessed (1.162057ms)
+✔ each JavaScript resource is lexed once and cycles download once (1.319863ms)
+✔ URI lists normalize absolute URLs, comments, whitespace and duplicates (2.073943ms)
+✔ URI lists reject ambiguous and non-downloadable entries with line numbers (0.951827ms)
+✔ URI-list work is bounded before any requests are made (5.937675ms)
+✔ runtime admission requires explicit captured resources and separates new metadata from private app data (1598.282903ms)
+✔ share recipes preserve launch queries and URL or embedded resource lists (5.041216ms)
+✔ long resource lists compress and round-trip without a file or list server (41.932438ms)
+✔ malformed and ambiguous share links fail before installation (6.186377ms)
+✔ compressed lists enforce decoded byte and resource count limits (19.567158ms)
+✔ unshareably large recipes produce an actionable error (16.035134ms)
+✔ library shares include resolved resources and source URLs select existing local copies (1.320368ms)
+ℹ tests 253
+ℹ suites 0
+ℹ pass 253
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4148.260578
+
+> test:guest
+> npm run test:guest:core && npm run test:contexts && npm run test:policy && npm run test:installation
+
+
+> test:guest:core
+> tsx test/guest-engine.ts && tsx formal/quickjs/wasm/check-engine-lifetime.ts && tsx test/guest-primordials.ts && tsx test/guest-realm-intrinsics.ts && tsx test/guest-cross-realm-data.ts && tsx test/guest-url-bridge.ts && tsx test/guest-text-bridge.ts && tsx test/guest-message-transfer.ts && tsx test/guest-eventtarget-cleanup.ts && tsx test/guest-browser-policy.ts && tsx test/guest-global-event-receiver.ts && tsx test/guest-abort-policy.ts && tsx test/guest-native-wasm-policy.ts && tsx test/guest-wasm.ts && tsx test/guest-regexp.ts && tsx test/guest-parser-browser.ts && tsx test/guest-web-services-browser.ts && tsx test/guest-lifecycle.ts && tsx test/guest-history.ts && tsx test/guest-resource-hints.ts && tsx test/guest-css-browser.ts && tsx test/guest-native-string-mapping.ts && tsx test/guest-fontface-mapping.ts
+
+{"browser":"chromium","version":"153.0.8010.12","result":{"binaryPolicy":{"binaryGetterDenied":true,"binaryGetterReads":0},"result":{"globalIdentity":true,"ownGlobal":true,"globalPrototype":true,"identity":true,"cancellation":false,"trace":["outer","inner",false],"prototype":"BUTTON","prototypeIdentity":true,"expando":7,"list":[true],"bytes":[9,9,9],"nativeBuffer":[8,2,3,4],"constructor":"undefined","url":"https://example.test/hello","error":"native failure"},"additional":{"promise":42,"asyncCompilerRealm":"undefined","generatorCompilerRealm":"undefined","module":42,"nativePrototype":false,"errors":[]},"advanced":{"sameError":true,"getterError":true,"binaryString":"\u0000ÿ\ud800Z","binaryKey":2,"binaryWrite":[3,1],"loneSurrogate":"prefix\ud800suffix","binaryRecord":"\u0000value\udfff","binaryRegistry":"registry\u0000suffix","binaryKeys":["field","field\u0000suffix"],"capturedViewConstructor":true,"guestOwnership":[true,true,false],"guestFunctionPrototype":true,"domException":[true,"SecurityError","denied",18],"nativeException":[true,"SecurityError",18],"map":true,"symbol":"symbol data","dataset":[false,"value",false],"detailIdentity":true,"binaryBrand":[9,9],"nestedBytes":[3,4,3,4,5],"throwingWrite":8,"sender":true,"receiver":true,"bytes":[1,2,3,4]},"cache":{"alias":true,"descriptor":11,"descriptorThenWrite":22,"defined":33,"subRead":44,"subWrite":55,"coercion":true,"argument":43,"throwPreserved":true,"canonical":true,"prototypeLength":123,"nativeLength":19,"bufferIdentity":true,"noPrivateKeys":true,"grown":true},"asyncCache":{"argument":43,"thrown":47,"resumed":91,"thenable":93},"disposal":{"rejectedMessage":"Error: expected rejection","closedMessage":"Error: Application context is closed","lateErrors":[],"capturedNativeSymbol":true,"reflectedAfterGrowth":true,"lengthAfterGrowth":3,"backing":{"grewBackingHeap":true,"backingAfterGrowth":[9,8,7,6],"mirroredAfterGrowth":[31,0,0,0],"mirrorNativeWrite":32,"mirrorNativeDetached":0,"backingAfterTamper":[9,8,7,6],"backingGuestShape":{"length":4,"keys":[]},"backingWrongLength":"RangeError","backingDetachedRead":"TypeError","backingDetachedWrite":"TypeError","zeroBackingDetached":"TypeError","backingTransferDestination":[9,8,7,6],"backingDisposed":"Error","backingContextDisposed":"Error"}}}}
+{"browser":"firefox","version":"155.0","result":{"binaryPolicy":{"binaryGetterDenied":true,"binaryGetterReads":0},"result":{"globalIdentity":true,"ownGlobal":true,"globalPrototype":true,"identity":true,"cancellation":false,"trace":["outer","inner",false],"prototype":"BUTTON","prototypeIdentity":true,"expando":7,"list":[true],"bytes":[9,9,9],"nativeBuffer":[8,2,3,4],"constructor":"undefined","url":"https://example.test/hello","error":"native failure"},"additional":{"promise":42,"asyncCompilerRealm":"undefined","generatorCompilerRealm":"undefined","module":42,"nativePrototype":false,"errors":[]},"advanced":{"sameError":true,"getterError":true,"binaryString":"\u0000ÿ\ud800Z","binaryKey":2,"binaryWrite":[3,1],"loneSurrogate":"prefix\ud800suffix","binaryRecord":"\u0000value\udfff","binaryRegistry":"registry\u0000suffix","binaryKeys":["field","field\u0000suffix"],"capturedViewConstructor":true,"guestOwnership":[true,true,false],"guestFunctionPrototype":true,"domException":[true,"SecurityError","denied",18],"nativeException":[true,"SecurityError",18],"map":true,"symbol":"symbol data","dataset":[false,"value",false],"detailIdentity":true,"binaryBrand":[9,9],"nestedBytes":[3,4,3,4,5],"throwingWrite":8,"sender":true,"receiver":true,"bytes":[1,2,3,4]},"cache":{"alias":true,"descriptor":11,"descriptorThenWrite":22,"defined":33,"subRead":44,"subWrite":55,"coercion":true,"argument":43,"throwPreserved":true,"canonical":true,"prototypeLength":123,"nativeLength":19,"bufferIdentity":true,"noPrivateKeys":true,"grown":true},"asyncCache":{"argument":43,"thrown":47,"resumed":91,"thenable":93},"disposal":{"rejectedMessage":"Error: expected rejection","closedMessage":"Error: Application context is closed","lateErrors":[],"capturedNativeSymbol":true,"reflectedAfterGrowth":true,"lengthAfterGrowth":3,"backing":{"grewBackingHeap":true,"backingAfterGrowth":[9,8,7,6],"mirroredAfterGrowth":[31,0,0,0],"mirrorNativeWrite":32,"mirrorNativeDetached":0,"backingAfterTamper":[9,8,7,6],"backingGuestShape":{"length":4,"keys":[]},"backingWrongLength":"RangeError","backingDetachedRead":"TypeError","backingDetachedWrite":"TypeError","zeroBackingDetached":"TypeError","backingTransferDestination":[9,8,7,6],"backingDisposed":"Error","backingContextDisposed":"Error"}}}}
+Ten actual engine lifecycle cases passed; eager release, terminal binding, set-entry, reporter and job-root controls failed as intended.
+{"variant":"prepared","browser":"chromium","version":"153.0.8010.12","bundleSHA256":"3061d814c50bd61d7f33a50d954e12ab0d334da6eb6e5ae9b9b43e9746f1be84","result":{"checks":{"capturedOperations":true,"privateProxyHandler":true,"privateIndexRecord":true,"binaryConstructorHandler":true,"thrownReference":true,"classification":true}},"errors":[]}
+{"variant":"prepared","browser":"firefox","version":"155.0","bundleSHA256":"3061d814c50bd61d7f33a50d954e12ab0d334da6eb6e5ae9b9b43e9746f1be84","result":{"checks":{"capturedOperations":true,"privateProxyHandler":true,"privateIndexRecord":true,"binaryConstructorHandler":true,"thrownReference":true,"classification":true}},"errors":[]}
+{"variant":"dynamic-object-create","browser":"chromium","version":"153.0.8010.12","bundleSHA256":"991a2c8895601bc39a5d72a0fa974254994d73a83a8f7a35bddfaa45664bed57","result":{"checks":{"capturedOperations":{"error":"Error: mutable operation was invoked"},"privateProxyHandler":true,"privateIndexRecord":true,"binaryConstructorHandler":true,"thrownReference":true,"classification":true}},"errors":[]}
+{"variant":"dynamic-object-create","browser":"firefox","version":"155.0","bundleSHA256":"991a2c8895601bc39a5d72a0fa974254994d73a83a8f7a35bddfaa45664bed57","result":{"checks":{"capturedOperations":{"error":"Error: mutable operation was invoked"},"privateProxyHandler":true,"privateIndexRecord":true,"binaryConstructorHandler":true,"thrownReference":true,"classification":true}},"errors":[]}
+{"variant":"inherited-handler","browser":"chromium","version":"153.0.8010.12","bundleSHA256":"19198cc986ce1eb28b1c8ed8cd7958072f0aa43a473d8e036ee07c5a88dba0bf","result":{"checks":{"capturedOperations":true,"privateProxyHandler":{"error":"Error: inherited proxy handler"},"privateIndexRecord":true,"binaryConstructorHandler":true,"thrownReference":true,"classification":true}},"errors":[]}
+{"variant":"inherited-handler","browser":"firefox","version":"155.0","bundleSHA256":"19198cc986ce1eb28b1c8ed8cd7958072f0aa43a473d8e036ee07c5a88dba0bf","result":{"checks":{"capturedOperations":true,"privateProxyHandler":{"error":"Error: inherited proxy handler"},"privateIndexRecord":true,"binaryConstructorHandler":true,"thrownReference":true,"classification":true}},"errors":[]}
+{"variant":"inherited-index","browser":"chromium","version":"153.0.8010.12","bundleSHA256":"5dba137af11c8fa24f9fc1af787aee93518eb0fa225ad8c2ae2bb8c4d7571fbb","result":{"checks":{"capturedOperations":true,"privateProxyHandler":true,"privateIndexRecord":{"error":"Error: inherited private index read"},"binaryConstructorHandler":true,"thrownReference":true,"classification":true}},"errors":[]}
+{"variant":"inherited-index","browser":"firefox","version":"155.0","bundleSHA256":"5dba137af11c8fa24f9fc1af787aee93518eb0fa225ad8c2ae2bb8c4d7571fbb","result":{"checks":{"capturedOperations":true,"privateProxyHandler":true,"privateIndexRecord":{"error":"Error: inherited private index read"},"binaryConstructorHandler":true,"thrownReference":true,"classification":true}},"errors":[]}
+{"variant":"mutable-classifier","browser":"chromium","version":"153.0.8010.12","bundleSHA256":"072badcea6be313ee107e34a2dc38b61df4291d781a18280dbf8a4b9614ff503","result":{"checks":{"capturedOperations":true,"privateProxyHandler":true,"privateIndexRecord":true,"binaryConstructorHandler":true,"thrownReference":true,"classification":{"error":"Error: application hasInstance"}}},"errors":[]}
+{"variant":"mutable-classifier","browser":"firefox","version":"155.0","bundleSHA256":"072badcea6be313ee107e34a2dc38b61df4291d781a18280dbf8a4b9614ff503","result":{"checks":{"capturedOperations":true,"privateProxyHandler":true,"privateIndexRecord":true,"binaryConstructorHandler":true,"thrownReference":true,"classification":{"error":"Error: application hasInstance"}}},"errors":[]}
+{"variant":"inherited-binary-handler","browser":"chromium","version":"153.0.8010.12","bundleSHA256":"b5a2afe2693315666125cd5771be88e704f9da1c283dac5f559687f03d9e9335","result":{"checks":{"capturedOperations":true,"privateProxyHandler":true,"privateIndexRecord":true,"binaryConstructorHandler":{"error":"Error: inherited binary constructor handler"},"thrownReference":true,"classification":true}},"errors":[]}
+{"variant":"inherited-binary-handler","browser":"firefox","version":"155.0","bundleSHA256":"b5a2afe2693315666125cd5771be88e704f9da1c283dac5f559687f03d9e9335","result":{"checks":{"capturedOperations":true,"privateProxyHandler":true,"privateIndexRecord":true,"binaryConstructorHandler":{"error":"Error: inherited binary constructor handler"},"thrownReference":true,"classification":true}},"errors":[]}
+chromium production {"result":{"nativeDifferent":true,"sharedAlias":"hidden","sharedBuffer":"requires-coi","canonical":["Object","Function","Array","Boolean","Number","String","Symbol","BigInt","Date","RegExp","Map","Set","WeakMap","WeakSet","Promise","Error","TypeError","RangeError","ReferenceError","SyntaxError","URIError","EvalError","AggregateError","ArrayBuffer","DataView","Int8Array","Uint8Array","Uint8ClampedArray","Int16Array","Uint16Array","Int32Array","Uint32Array","Float16Array","Float32Array","Float64Array","BigInt64Array","BigUint64Array"],"descriptorValues":true,"guestGlobalMutation":true,"prototypeExtensions":true,"foreignDOM":true,"foreignCallbacks":true,"lateCaptureRefused":true,"explicitAlias":true,"oldProxyAfterAliasRefused":true,"disposal":true}}
+chromium omit-boundary {"failure":"Error: Foreign intrinsic identity: Object\n    at <anonymous> (application.js:4:26)\n    at <eval> (application.js:7:9)\n"}
+chromium omit-function-role {"failure":"TypeError: Native intrinsic has no supported guest counterpart: Function\nTypeError: Native intrinsic has no supported guest counterpart: Function\n    at _GuestEngine.encodeValue (http://127.0.0.1:40177/browser.js?variant=omit-function-role:50396:15)\n    at _GuestEngine.encode (http://127.0.0.1:40177/browser.js?variant=omit-function-role:50374:19)\n    at http://127.0.0.1:40177/browser.js?variant=omit-function-role:50062:27\n    at _GuestEngine.enter (http://127.0.0.1:40177/browser.js?variant=omit-function-role:50196:14)\n    at _GuestEngine.set (http://127.0.0.1:40177/browser.js?variant=omit-function-role:50061:10)\n    at run (http://127.0.0.1:40177/browser.js?variant=omit-function-role:51598:21)"}
+chromium coi-production {"result":{"nativeDifferent":true,"sharedAlias":"public","sharedBuffer":"passed","canonical":["Object","Function","Array","Boolean","Number","String","Symbol","BigInt","Date","RegExp","Map","Set","WeakMap","WeakSet","Promise","Error","TypeError","RangeError","ReferenceError","SyntaxError","URIError","EvalError","AggregateError","ArrayBuffer","SharedArrayBuffer","DataView","Int8Array","Uint8Array","Uint8ClampedArray","Int16Array","Uint16Array","Int32Array","Uint32Array","Float16Array","Float32Array","Float64Array","BigInt64Array","BigUint64Array"],"descriptorValues":true,"guestGlobalMutation":true,"prototypeExtensions":true,"foreignDOM":true,"foreignCallbacks":true,"lateCaptureRefused":true,"explicitAlias":true,"oldProxyAfterAliasRefused":true,"disposal":true}}
+firefox production {"result":{"nativeDifferent":true,"sharedAlias":"hidden","sharedBuffer":"requires-coi","canonical":["Object","Function","Array","Boolean","Number","String","Symbol","BigInt","Date","RegExp","Map","Set","WeakMap","WeakSet","Promise","Error","TypeError","RangeError","ReferenceError","SyntaxError","URIError","EvalError","AggregateError","ArrayBuffer","DataView","Int8Array","Uint8Array","Uint8ClampedArray","Int16Array","Uint16Array","Int32Array","Uint32Array","Float16Array","Float32Array","Float64Array","BigInt64Array","BigUint64Array"],"descriptorValues":true,"guestGlobalMutation":true,"prototypeExtensions":true,"foreignDOM":true,"foreignCallbacks":true,"lateCaptureRefused":true,"explicitAlias":true,"oldProxyAfterAliasRefused":true,"disposal":true}}
+firefox omit-boundary {"failure":"Error: Foreign intrinsic identity: Object\n    at <anonymous> (application.js:4:26)\n    at <eval> (application.js:7:9)\n"}
+firefox omit-function-role {"failure":"TypeError: Native intrinsic has no supported guest counterpart: Function\nencodeValue@http://127.0.0.1:40177/browser.js?variant=omit-function-role:50396:15\nencode@http://127.0.0.1:40177/browser.js?variant=omit-function-role:50374:19\nset/<@http://127.0.0.1:40177/browser.js?variant=omit-function-role:50062:27\nenter@http://127.0.0.1:40177/browser.js?variant=omit-function-role:50196:14\nset@http://127.0.0.1:40177/browser.js?variant=omit-function-role:50061:10\nrun@http://127.0.0.1:40177/browser.js?variant=omit-function-role:51598:21\nasync*@http://127.0.0.1:40177/browser.js?variant=omit-function-role:51770:1\n"}
+firefox coi-production {"result":{"nativeDifferent":true,"sharedAlias":"public","sharedBuffer":"passed","canonical":["Object","Function","Array","Boolean","Number","String","Symbol","BigInt","Date","RegExp","Map","Set","WeakMap","WeakSet","Promise","Error","TypeError","RangeError","ReferenceError","SyntaxError","URIError","EvalError","AggregateError","ArrayBuffer","SharedArrayBuffer","DataView","Int8Array","Uint8Array","Uint8ClampedArray","Int16Array","Uint16Array","Int32Array","Uint32Array","Float16Array","Float32Array","Float64Array","BigInt64Array","BigUint64Array"],"descriptorValues":true,"guestGlobalMutation":true,"prototypeExtensions":true,"foreignDOM":true,"foreignCallbacks":true,"lateCaptureRefused":true,"explicitAlias":true,"oldProxyAfterAliasRefused":true,"disposal":true}}
+{"browser":"chromium","version":"153.0.8010.12","executablePath":"/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome","executableSHA256":"8c599d43aec53f2460a31ae2f4af6bd863f8258b34ff519564bc5d4726bfaa1e","variant":"production","result":{"observations":[{"name":"Date","ok":true},{"name":"Map","ok":true},{"name":"Set","ok":true},{"name":"RegExp","ok":true}],"nativeControl":true,"ownGraphIdentity":true,"graphCycles":true,"roundTripIdentity":true,"capturedDataOperations":true,"changedPrototypes":true,"freshDate":true,"forgedTagDenied":true,"failureCleanup":true,"argumentsRefusedBeforeCallee":true,"disposal":true},"observed":{"observations":[{"name":"Date","ok":true},{"name":"Map","ok":true},{"name":"Set","ok":true},{"name":"RegExp","ok":true}],"ownGraphIdentity":true}}
+{"browser":"chromium","version":"153.0.8010.12","executablePath":"/home/damen/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome","executableSHA256":"8c599d43aec53f2460a31ae2f4af6bd863f8258b34ff519564bc5d4726bfaa1e","variant":"module-instanceof","failure":"Error: Cross-realm data methods and shared graph identity: {\"observations\":[{\"name\":\"Date\",\"error\":\"TypeError: not a Date object\"},{\"name\":\"Map\",\"error\":\"TypeError: Map object expected\"},{\"name\":\"Set\",\"error\":\"TypeError: Set object expected\"},{\"name\":\"RegExp\",\"error\":\"TypeError: RegExp object expected\"}],\"ownGraphIdentity\":true}\nError: Cross-realm data methods and shared graph identity: {\"observations\":[{\"name\":\"Date\",\"error\":\"TypeError: not a Date object\"},{\"name\":\"Map\",\"error\":\"TypeError: Map object expected\"},{\"name\":\"Set\",\"error\":\"TypeError: Set object expected\"},{\"name\":\"RegExp\",\"error\":\"TypeError: RegExp object expected\"}],\"ownGraphIdentity\":true}\n    at check (http://127.0.0.1:44003/browser.js?variant=module-instanceof:51531:21)\n    at run (http://127.0.0.1:44003/browser.js?variant=module-instanceof:51614:5)","observed":{"observations":[{"name":"Date","error":"TypeError: not a Date object"},{"name":"Map","error":"TypeError: Map object expected"},{"name":"Set","error":"TypeError: Set object expected"},{"name":"RegExp","error":"TypeError: RegExp object expected"}],"ownGraphIdentity":true}}
+{"browser":"firefox","version":"155.0","executablePath":"/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox","executableSHA256":"062272ac4d851eade5b75db2dc7c14569d96cb3ca38f949337cdc1b74367e35b","variant":"production","result":{"observations":[{"name":"Date","ok":true},{"name":"Map","ok":true},{"name":"Set","ok":true},{"name":"RegExp","ok":true}],"nativeControl":true,"ownGraphIdentity":true,"graphCycles":true,"roundTripIdentity":true,"capturedDataOperations":true,"changedPrototypes":true,"freshDate":true,"forgedTagDenied":true,"failureCleanup":true,"argumentsRefusedBeforeCallee":true,"disposal":true},"observed":{"observations":[{"name":"Date","ok":true},{"name":"Map","ok":true},{"name":"Set","ok":true},{"name":"RegExp","ok":true}],"ownGraphIdentity":true}}
+{"browser":"firefox","version":"155.0","executablePath":"/home/damen/.cache/ms-playwright/firefox-1543/firefox/firefox","executableSHA256":"062272ac4d851eade5b75db2dc7c14569d96cb3ca38f949337cdc1b74367e35b","variant":"module-instanceof","failure":"Error: Cross-realm data methods and shared graph identity: {\"observations\":[{\"name\":\"Date\",\"error\":\"TypeError: not a Date object\"},{\"name\":\"Map\",\"error\":\"TypeError: Map object expected\"},{\"name\":\"Set\",\"error\":\"TypeError: Set object expected\"},{\"name\":\"RegExp\",\"error\":\"TypeError: RegExp object expected\"}],\"ownGraphIdentity\":true}\ncheck@http://127.0.0.1:44003/browser.js?variant=module-instanceof:51531:21\nrun@http://127.0.0.1:44003/browser.js?variant=module-instanceof:51614:10\nasync*@http://127.0.0.1:44003/browser.js?variant=module-instanceof:51773:1\n","observed":{"observations":[{"name":"Date","error":"TypeError: not a Date object"},{"name":"Map","error":"TypeError: Map object expected"},{"name":"Set","error":"TypeError: Set object expected"},{"name":"RegExp","error":"TypeError: RegExp object expected"}],"ownGraphIdentity":true}}
+chromium {"construction":true,"coercion":true,"linkedParams":true,"callbacks":true,"iterators":true,"borrowedDescriptors":true,"stableAliases":true,"reflection":true,"objectURLOwner":true,"unknownGetterDenied":true}
+chromium URL getter route removal detected
+firefox {"construction":true,"coercion":true,"linkedParams":true,"callbacks":true,"iterators":true,"borrowedDescriptors":true,"stableAliases":true,"reflection":true,"objectURLOwner":true,"unknownGetterDenied":true}
+firefox URL getter route removal detected
+chromium {"construction":true,"conversion":true,"encoding":true,"encodeInto":true,"streamingDecode":true,"fatalDecode":true,"reflection":true,"binaryHandoff":true,"foreignBrandsDenied":true,"unknownGetterDenied":true}
+chromium Text getter route removal detected
+firefox {"construction":true,"conversion":true,"encoding":true,"encodeInto":true,"streamingDecode":true,"fatalDecode":true,"reflection":true,"binaryHandoff":true,"foreignBrandsDenied":true,"unknownGetterDenied":true}
+firefox Text getter route removal detected
+chromium One-time transfer conversion and native failed-send preservation passed
+chromium Old transfer reread detected
+chromium Legacy null/object guard regression detected
+firefox One-time transfer conversion and native failed-send preservation passed
+firefox Old transfer reread detected
+firefox Legacy null/object guard regression detected
+chromium production {"result":{"nativeComparisons":14,"observations":[{"mode":"capture","captureReads":1,"deliveries":1,"tracked":1},{"mode":"type","typeReads":1,"removals":1,"counts":{"workers":1,"windows":1,"audio":1,"customElements":1,"dom":1,"resources":1},"contextAlive":false},{"mode":"failure","caught":true,"firstFailurePreserved":true,"later":2,"counts":{"workers":1,"windows":1,"audio":1,"customElements":1,"dom":1,"resources":1},"remainingCleanups":0}]},"observed":{"mode":"failure","caught":true,"firstFailurePreserved":true,"later":2,"counts":{"workers":1,"windows":1,"audio":1,"customElements":1,"dom":1,"resources":1},"remainingCleanups":0}}
+chromium production {"nativeComparisons":14,"observations":[{"mode":"capture","captureReads":1,"deliveries":1,"tracked":1},{"mode":"type","typeReads":1,"removals":1,"counts":{"workers":1,"windows":1,"audio":1,"customElements":1,"dom":1,"resources":1},"contextAlive":false},{"mode":"failure","caught":true,"firstFailurePreserved":true,"later":2,"counts":{"workers":1,"windows":1,"audio":1,"customElements":1,"dom":1,"resources":1},"remainingCleanups":0}]}
+chromium capture {"observed":{"mode":"capture","captureReads":2,"registrationError":"capture-read-again","deliveries":1,"tracked":0},"failure":"Error: Capture options must be consumed once before bookkeeping\nError: Capture options must be consumed once before bookkeeping\n    at check (http://127.0.0.1:35403/browser.js?variant=conversion&probe=capture:51539:21)\n    at run (http://127.0.0.1:35403/browser.js?variant=conversion&probe=capture:51723:9)"}
+chromium capture {"mode":"capture","captureReads":2,"registrationError":"capture-read-again","deliveries":1,"tracked":0}
+chromium type {"observed":{"mode":"type","typeReads":1,"removals":0,"counts":{"workers":1,"windows":1,"audio":1,"customElements":1,"dom":1,"resources":1},"contextAlive":false},"failure":"Error: Primitive listener cleanup must release every owned subsystem\nError: Primitive listener cleanup must release every owned subsystem\n    at check (http://127.0.0.1:35403/browser.js?variant=conversion&probe=type:51539:21)\n    at run (http://127.0.0.1:35403/browser.js?variant=conversion&probe=type:51743:9)"}
+chromium type {"mode":"type","typeReads":1,"removals":0,"counts":{"workers":1,"windows":1,"audio":1,"customElements":1,"dom":1,"resources":1},"contextAlive":false}
+chromium failure {"observed":{"mode":"failure","caught":true,"firstFailurePreserved":true,"later":0,"counts":{"workers":0,"windows":0,"audio":0,"customElements":0,"dom":0,"resources":0},"remainingCleanups":4},"failure":"Error: Every owned subsystem must be attempted after cleanup failure\nError: Every owned subsystem must be attempted after cleanup failure\n    at check (http://127.0.0.1:35403/browser.js?variant=cleanup&probe=failure:51522:21)\n    at run (http://127.0.0.1:35403/browser.js?variant=cleanup&probe=failure:51760:9)"}
+chromium failure {"mode":"failure","caught":true,"firstFailurePreserved":true,"later":0,"counts":{"workers":0,"windows":0,"audio":0,"customElements":0,"dom":0,"resources":0},"remainingCleanups":4}
+firefox production {"result":{"nativeComparisons":14,"observations":[{"mode":"capture","captureReads":1,"deliveries":1,"tracked":1},{"mode":"type","typeReads":1,"removals":1,"counts":{"workers":1,"windows":1,"audio":1,"customElements":1,"dom":1,"resources":1},"contextAlive":false},{"mode":"failure","caught":true,"firstFailurePreserved":true,"later":2,"counts":{"workers":1,"windows":1,"audio":1,"customElements":1,"dom":1,"resources":1},"remainingCleanups":0}]},"observed":{"mode":"failure","caught":true,"firstFailurePreserved":true,"later":2,"counts":{"workers":1,"windows":1,"audio":1,"customElements":1,"dom":1,"resources":1},"remainingCleanups":0}}
+firefox production {"nativeComparisons":14,"observations":[{"mode":"capture","captureReads":1,"deliveries":1,"tracked":1},{"mode":"type","typeReads":1,"removals":1,"counts":{"workers":1,"windows":1,"audio":1,"customElements":1,"dom":1,"resources":1},"contextAlive":false},{"mode":"failure","caught":true,"firstFailurePreserved":true,"later":2,"counts":{"workers":1,"windows":1,"audio":1,"customElements":1,"dom":1,"resources":1},"remainingCleanups":0}]}
+firefox capture {"observed":{"mode":"capture","captureReads":2,"registrationError":"capture-read-again","deliveries":1,"tracked":0},"failure":"Error: Capture options must be consumed once before bookkeeping\ncheck@http://127.0.0.1:35403/browser.js?variant=conversion&probe=capture:51539:21\nrun@http://127.0.0.1:35403/browser.js?variant=conversion&probe=capture:51723:14\nasync*@http://127.0.0.1:35403/browser.js?variant=conversion&probe=capture:51790:1\n"}
+firefox capture {"mode":"capture","captureReads":2,"registrationError":"capture-read-again","deliveries":1,"tracked":0}
+firefox type {"observed":{"mode":"type","typeReads":1,"removals":0,"counts":{"workers":1,"windows":1,"audio":1,"customElements":1,"dom":1,"resources":1},"contextAlive":false},"failure":"Error: Primitive listener cleanup must release every owned subsystem\ncheck@http://127.0.0.1:35403/browser.js?variant=conversion&probe=type:51539:21\nrun@http://127.0.0.1:35403/browser.js?variant=conversion&probe=type:51743:14\nasync*@http://127.0.0.1:35403/browser.js?variant=conversion&probe=type:51790:1\n"}
+firefox type {"mode":"type","typeReads":1,"removals":0,"counts":{"workers":1,"windows":1,"audio":1,"customElements":1,"dom":1,"resources":1},"contextAlive":false}
+firefox failure {"observed":{"mode":"failure","caught":true,"firstFailurePreserved":true,"later":0,"counts":{"workers":0,"windows":0,"audio":0,"customElements":0,"dom":0,"resources":0},"remainingCleanups":4},"failure":"Error: Every owned subsystem must be attempted after cleanup failure\ncheck@http://127.0.0.1:35403/browser.js?variant=cleanup&probe=failure:51522:21\nrun@http://127.0.0.1:35403/browser.js?variant=cleanup&probe=failure:51760:14\nasync*@http://127.0.0.1:35403/browser.js?variant=cleanup&probe=failure:51773:1\n"}
+firefox failure {"mode":"failure","caught":true,"firstFailurePreserved":true,"later":0,"counts":{"workers":0,"windows":0,"audio":0,"customElements":0,"dom":0,"resources":0},"remainingCleanups":4}
+chromium production {"localEvents":true,"cancellation":true,"customEvent":true,"messageEvent":true,"reflection":true,"aliasesDenied":true,"borrowedNodeReceiver":true,"nodePropertiesRemainAvailable":true,"unknownGetterReads":0,"unpreparedReceiversDenied":true,"changedDescriptorDenied":true,"guestCallback":true,"publishedNativeCallback":true,"unknownCallbackDenied":true,"closedCallbackDenied":true,"stringFidelity":true,"preparedParentListener":true}
+chromium recovery-unavailable {"primitiveFastPath":true,"opaqueStringsRequireRecovery":true}
+chromium unsupported-length {"unsupportedLengthDetected":true}
+firefox production {"localEvents":true,"cancellation":true,"customEvent":true,"messageEvent":true,"reflection":true,"aliasesDenied":true,"borrowedNodeReceiver":true,"nodePropertiesRemainAvailable":true,"unknownGetterReads":0,"unpreparedReceiversDenied":true,"changedDescriptorDenied":true,"guestCallback":true,"publishedNativeCallback":true,"unknownCallbackDenied":true,"closedCallbackDenied":true,"stringFidelity":true,"preparedParentListener":true}
+firefox recovery-unavailable {"primitiveFastPath":true,"opaqueStringsRequireRecovery":true}
+firefox unsupported-length {"unsupportedLengthDetected":true}
+chromium production {"result":{"native":{"rows":[{"source":"global","kind":"undefined","count":1,"cancelled":true,"removed":true},{"source":"global","kind":"null","count":1,"cancelled":true,"removed":true},{"source":"global","kind":"html-dda","count":0,"error":true},{"source":"global","kind":"plain","count":0,"error":true},{"source":"global","kind":"window","count":1,"cancelled":true,"removed":true},{"source":"global","kind":"target","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"undefined","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"null","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"html-dda","count":0,"error":true},{"source":"prototype","kind":"plain","count":0,"error":true},{"source":"prototype","kind":"window","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"target","count":1,"cancelled":true,"removed":true}],"same":true,"name":"addEventListener","length":2,"prototype":false,"constructible":false},"nativeMatch":true,"bareGlobal":true,"directCallback":true,"unpreparedRefused":true,"disposal":true}}
+chromium no-normalization {"failure":"Error: Guest receiver behavior differs from unrestricted native control\nError: Guest receiver behavior differs from unrestricted native control\n    at check (http://127.0.0.1:37313/browser.js?variant=no-normalization:51553:21)\n    at run (http://127.0.0.1:37313/browser.js?variant=no-normalization:51582:5)","comparison":{"native":{"rows":[{"source":"global","kind":"undefined","count":1,"cancelled":true,"removed":true},{"source":"global","kind":"null","count":1,"cancelled":true,"removed":true},{"source":"global","kind":"html-dda","count":0,"error":true},{"source":"global","kind":"plain","count":0,"error":true},{"source":"global","kind":"window","count":1,"cancelled":true,"removed":true},{"source":"global","kind":"target","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"undefined","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"null","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"html-dda","count":0,"error":true},{"source":"prototype","kind":"plain","count":0,"error":true},{"source":"prototype","kind":"window","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"target","count":1,"cancelled":true,"removed":true}],"same":true,"name":"addEventListener","length":2,"prototype":false,"constructible":false},"guest":{"rows":[{"source":"global","kind":"undefined","count":0,"error":true},{"source":"global","kind":"null","count":0,"error":true},{"source":"global","kind":"html-dda","count":0,"error":true},{"source":"global","kind":"plain","count":0,"error":true},{"source":"global","kind":"window","count":1,"cancelled":true,"removed":true},{"source":"global","kind":"target","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"undefined","count":0,"error":true},{"source":"prototype","kind":"null","count":0,"error":true},{"source":"prototype","kind":"html-dda","count":0,"error":true},{"source":"prototype","kind":"plain","count":0,"error":true},{"source":"prototype","kind":"window","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"target","count":1,"cancelled":true,"removed":true}],"same":true,"name":"addEventListener","length":2,"prototype":false,"constructible":false}}}
+chromium no-direct-normalization {"failure":"NativePolicyError: Native call refused for EventTarget.addEventListener: receiver belongs to another family or registry\nNativePolicyError: Native call refused for EventTarget.addEventListener: receiver belongs to another family or registry\n    at NativePolicy.call (http://127.0.0.1:37313/browser.js?variant=no-direct-normalization:16330:13)\n    at addEventListener (http://127.0.0.1:37313/browser.js?variant=no-direct-normalization:16712:34)\n    at http://127.0.0.1:37313/browser.js?variant=no-direct-normalization:51624:19"}
+firefox production {"result":{"native":{"rows":[{"source":"global","kind":"undefined","count":1,"cancelled":true,"removed":true},{"source":"global","kind":"null","count":1,"cancelled":true,"removed":true},{"source":"global","kind":"html-dda","count":0,"error":true},{"source":"global","kind":"plain","count":0,"error":true},{"source":"global","kind":"window","count":1,"cancelled":true,"removed":true},{"source":"global","kind":"target","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"undefined","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"null","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"html-dda","count":0,"error":true},{"source":"prototype","kind":"plain","count":0,"error":true},{"source":"prototype","kind":"window","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"target","count":1,"cancelled":true,"removed":true}],"same":true,"name":"addEventListener","length":2,"prototype":false,"constructible":false},"nativeMatch":true,"bareGlobal":true,"directCallback":true,"unpreparedRefused":true,"disposal":true}}
+firefox no-normalization {"failure":"Error: Guest receiver behavior differs from unrestricted native control\ncheck@http://127.0.0.1:37313/browser.js?variant=no-normalization:51553:21\nrun@http://127.0.0.1:37313/browser.js?variant=no-normalization:51582:10\nasync*@http://127.0.0.1:37313/browser.js?variant=no-normalization:51658:1\n","comparison":{"native":{"rows":[{"source":"global","kind":"undefined","count":1,"cancelled":true,"removed":true},{"source":"global","kind":"null","count":1,"cancelled":true,"removed":true},{"source":"global","kind":"html-dda","count":0,"error":true},{"source":"global","kind":"plain","count":0,"error":true},{"source":"global","kind":"window","count":1,"cancelled":true,"removed":true},{"source":"global","kind":"target","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"undefined","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"null","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"html-dda","count":0,"error":true},{"source":"prototype","kind":"plain","count":0,"error":true},{"source":"prototype","kind":"window","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"target","count":1,"cancelled":true,"removed":true}],"same":true,"name":"addEventListener","length":2,"prototype":false,"constructible":false},"guest":{"rows":[{"source":"global","kind":"undefined","count":0,"error":true},{"source":"global","kind":"null","count":0,"error":true},{"source":"global","kind":"html-dda","count":0,"error":true},{"source":"global","kind":"plain","count":0,"error":true},{"source":"global","kind":"window","count":1,"cancelled":true,"removed":true},{"source":"global","kind":"target","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"undefined","count":0,"error":true},{"source":"prototype","kind":"null","count":0,"error":true},{"source":"prototype","kind":"html-dda","count":0,"error":true},{"source":"prototype","kind":"plain","count":0,"error":true},{"source":"prototype","kind":"window","count":1,"cancelled":true,"removed":true},{"source":"prototype","kind":"target","count":1,"cancelled":true,"removed":true}],"same":true,"name":"addEventListener","length":2,"prototype":false,"constructible":false}}}
+firefox no-direct-normalization {"failure":"NativePolicyError: Native call refused for EventTarget.addEventListener: receiver belongs to another family or registry\nNativePolicyError@http://127.0.0.1:37313/browser.js?variant=no-direct-normalization:16121:5\ncall@http://127.0.0.1:37313/browser.js?variant=no-direct-normalization:16330:13\ninvoke@http://127.0.0.1:37313/browser.js?variant=no-direct-normalization:16712:34\nrun/</<@http://127.0.0.1:37313/browser.js?variant=no-direct-normalization:51624:19\nVoidFunction*run/<@http://127.0.0.1:37313/browser.js?variant=no-direct-normalization:51622:42\nrun@http://127.0.0.1:37313/browser.js?variant=no-direct-normalization:51621:11\nasync*@http://127.0.0.1:37313/browser.js?variant=no-direct-normalization:51662:1\n"}
+chromium {"crossRealm":true,"funcrefIdentity":true,"externrefOwnership":true,"errorCalls":true,"asyncInstantiation":true,"localAnchors":true,"optionalMemoryMethods":["toFixedLengthBuffer","toResizableBuffer"]}
+chromium Wasm getter route removal detected
+firefox {"crossRealm":true,"funcrefIdentity":true,"externrefOwnership":true,"errorCalls":true,"asyncInstantiation":true,"localAnchors":true,"optionalMemoryMethods":["toFixedLengthBuffer","toResizableBuffer"]}
+firefox Wasm getter route removal detected
+[chromium] log: Wasm fixture: indexed copy loop and ordinary native copies preserve aliases
+[chromium] log: Wasm check: native indexed loop reads real bytes
+[chromium] log: Wasm check: 4 MiB indexed copy milliseconds=5
+[chromium] log: Wasm check: staged ordinary native writes publish before alias access
+[chromium] log: Wasm check: ordinary native aliases share their indexed cache
+[chromium] log: Wasm check: native methods invalidate cached input bytes
+[chromium] log: Wasm fixture: indexed coercion and numeric families retain native semantics
+[chromium] log: Wasm check: Int8Array native descriptor matches indexed value
+[chromium] log: Wasm check: Uint8Array native descriptor matches indexed value
+[chromium] log: Wasm check: Uint8ClampedArray native descriptor matches indexed value
+[chromium] log: Wasm check: Int16Array native descriptor matches indexed value
+[chromium] log: Wasm check: Uint16Array native descriptor matches indexed value
+[chromium] log: Wasm check: Int32Array native descriptor matches indexed value
+[chromium] log: Wasm check: Uint32Array native descriptor matches indexed value
+[chromium] log: Wasm check: Float32Array native descriptor matches indexed value
+[chromium] log: Wasm check: Float64Array native descriptor matches indexed value
+[chromium] log: Wasm check: BigInt and numeric views alias actual native bytes
+[chromium] log: Wasm check: numeric indexed writes reach BigInt native views
+[chromium] log: Wasm check: object coercion observes detachment before indexed store
+[chromium] log: Wasm check: detached write leaves grown memory unchanged
+[chromium] log: Wasm fixture: consecutive imports preserve ordinary bytes through native reentry and throw
+[chromium] log: Wasm check: first import sees current bytes
+[chromium] log: Wasm check: nested native mutation reaches ordinary callback
+[chromium] log: Wasm check: nested native consumer sees guest writes
+[chromium] log: Wasm check: native continuation reaches imported callback
+[chromium] log: Wasm check: second import retains preceding guest-only write
+[chromium] log: Wasm check: native continuation invalidates indexed heap reads
+[chromium] log: Wasm check: primitive native copyWithin preserves deferred ordinary writes
+[chromium] log: Wasm check: exception crosses the outer Wasm scope
+[chromium] log: Wasm check: exceptional scope exit preserves all ordinary bytes
+[chromium] log: Wasm fixture: ordinary memory, reentrant import and alias writes
+[chromium] log: Wasm check: native Wasm write visible inside guest callback
+[chromium] log: Wasm check: nested callback return/write
+[chromium] log: Wasm check: native buffer identity
+[chromium] log: Wasm check: subarray aliases native memory
+[chromium] log: Wasm check: DataView native brand
+[chromium] log: Wasm check: native view brands
+[chromium] log: Wasm check: native callback typed map
+[chromium] log: Wasm check: Wasm memory growth return
+[chromium] log: Wasm check: growth detaches old views
+[chromium] log: Wasm check: new memory size
+[chromium] log: Wasm check: growth preserves bytes
+[chromium] log: Wasm check: native Wasm runtime error brand
+[chromium] log: Wasm check: guest callback exception survives native Wasm boundary
+[chromium] log: Wasm fixture: local and native binary constructors, indexed descriptors and species
+[chromium] log: Wasm check: indexed defineProperty writes bytes
+[chromium] log: Wasm check: indexed descriptor
+[chromium] log: Wasm check: out of bounds definition
+[chromium] log: Wasm check: set and iteration
+[chromium] log: Wasm check: indexed defineProperty writes bytes
+[chromium] log: Wasm check: indexed descriptor
+[chromium] log: Wasm check: out of bounds definition
+[chromium] log: Wasm check: set and iteration
+[chromium] log: Wasm check: local subclass identity
+[chromium] log: Wasm check: local subclass species
+[chromium] log: Wasm check: native-backed subclass identity
+[chromium] log: Wasm check: native-backed subclass species
+[chromium] log: Wasm check: native decoder local view
+[chromium] log: Wasm check: native decoder native view
+[chromium] log: Wasm check: native to local constructor copies
+[chromium] log: Wasm check: local to native set copies
+[chromium] log: Wasm check: native typed iterator
+[chromium] log: Wasm check: mixed native-to-local set preserves raw NaN payload
+[chromium] log: Wasm check: borrowed mixed set preserves raw NaN payload
+[chromium] log: Wasm fixture: shared Wasm memory, atomics and structured clone through dedicated worker
+[chromium] log: Wasm check: shared buffer brand
+[chromium] log: Wasm check: worker native Wasm atomic write
+[chromium] log: Wasm check: guest immediately observes worker write
+[chromium] log: Wasm check: worker structured clone brands
+[chromium] log: Wasm check: shared old buffer remains attached
+[chromium] log: Wasm check: shared growth
+[chromium] log: Wasm check: shared growth aliases bytes
+[chromium] log: Wasm check: Atomics proxy arguments
+[chromium] log: Wasm fixture: Wasm shared-buffer slice copies into a separate shared block
+[chromium] log: Wasm check: shared Wasm slice buffer brand
+[chromium] log: Wasm check: shared Wasm slice copies bytes
+[chromium] log: Wasm check: shared Wasm slice owns a separate data block
+[chromium] log: Wasm fixture: declared imports use inherited getters without traversing unused fields
+[chromium] log: Wasm check: declaration-order import getters: env,memory,env,callback
+[chromium] log: Wasm check: inherited import fields
+[chromium] log: Wasm check: declared import getter preserves guest exception identity
+[chromium] log: Wasm fixture: native function imports retain the owning host call policy
+[chromium] log: Wasm check: direct native call uses fixture policy
+[chromium] log: Wasm check: native Wasm import uses fixture policy
+[chromium] log: Wasm check: mixed-kind import getter order
+[chromium] log: Wasm check: mixed-kind function import uses fixture policy
+[chromium] log: Wasm check: externref import preserves original object identity
+[chromium] log: Wasm check: returned externref function keeps fixture policy
+[chromium] log: Wasm check: opaque import reference preserves subsequent native Array conversion
+[chromium] log: Wasm check: opaque import reference preserves subsequent native Uint8Array conversion
+[chromium] log: Wasm check: opaque import reference preserves subsequent native ArrayBuffer conversion
+[chromium] log: Wasm check: opaque import reference preserves subsequent native Map conversion
+[chromium] log: Wasm check: async compile does not eagerly read imports
+[chromium] log: Wasm check: async imports read in declaration order
+[chromium] log: Wasm check: async native function import uses fixture policy
+[chromium] log: Wasm fixture: fixed Wasm buffers refuse transfer and detach only on native growth
+[chromium] log: Wasm check: Wasm buffer rejects transfer
+[chromium] log: Wasm check: failed transfer leaves bytes attached
+[chromium] log: Wasm check: Wasm buffer rejects transferToFixedLength
+[chromium] log: Wasm check: failed transferToFixedLength leaves bytes attached
+[chromium] log: Wasm check: native structured clone rejects Wasm transfer
+[chromium] log: Wasm check: failed native transfer does not detach guest
+[chromium] log: Wasm check: zero growth returns previous pages
+[chromium] log: Wasm check: zero growth detaches old fixed buffer
+[chromium] log: Wasm check: zero growth replaces buffer and preserves bytes
+[chromium] log: Wasm check: resizable Wasm buffer remains resizable
+[chromium] log: Wasm check: resizable Wasm views track native growth
+[chromium] log: Wasm check: resizable Wasm growth preserves writes
+[chromium] log: Wasm fixture: async compile and instantiate retain import callbacks
+[chromium] log: Wasm check: compile module brand
+[chromium] log: Wasm check: instantiate result brand
+[chromium] log: Wasm check: instantiate module brand
+[chromium] log: Wasm check: async imported callback
+[chromium] log: Wasm check: validate native buffer source
+[chromium] log: Wasm fixture: creating guest engine
+[chromium] log: Wasm fixture: registering guest fixtures
+[chromium] log: Wasm fixture: indexed copy loop and ordinary native copies preserve aliases
+[chromium] log: Wasm check: native indexed loop reads real bytes
+[chromium] log: Wasm check: 4 MiB indexed copy milliseconds=362
+[chromium] log: Wasm check: staged ordinary native writes publish before alias access
+[chromium] log: Wasm check: ordinary native aliases share their indexed cache
+[chromium] log: Wasm check: native methods invalidate cached input bytes
+[chromium] log: Wasm fixture: indexed coercion and numeric families retain native semantics
+[chromium] log: Wasm check: Int8Array native descriptor matches indexed value
+[chromium] log: Wasm check: Uint8Array native descriptor matches indexed value
+[chromium] log: Wasm check: Uint8ClampedArray native descriptor matches indexed value
+[chromium] log: Wasm check: Int16Array native descriptor matches indexed value
+[chromium] log: Wasm check: Uint16Array native descriptor matches indexed value
+[chromium] log: Wasm check: Int32Array native descriptor matches indexed value
+[chromium] log: Wasm check: Uint32Array native descriptor matches indexed value
+[chromium] log: Wasm check: Float32Array native descriptor matches indexed value
+[chromium] log: Wasm check: Float64Array native descriptor matches indexed value
+[chromium] log: Wasm check: BigInt and numeric views alias actual native bytes
+[chromium] log: Wasm check: numeric indexed writes reach BigInt native views
+[chromium] log: Wasm check: object coercion observes detachment before indexed store
+[chromium] log: Wasm check: detached write leaves grown memory unchanged
+[chromium] log: Wasm fixture: consecutive imports preserve ordinary bytes through native reentry and throw
+[chromium] log: Wasm check: first import sees current bytes
+[chromium] log: Wasm check: nested native mutation reaches ordinary callback
+[chromium] log: Wasm check: nested native consumer sees guest writes
+[chromium] log: Wasm check: native continuation reaches imported callback
+[chromium] log: Wasm check: second import retains preceding guest-only write
+[chromium] log: Wasm check: native continuation invalidates indexed heap reads
+[chromium] log: Wasm check: primitive native copyWithin preserves deferred ordinary writes
+[chromium] log: Wasm check: exception crosses the outer Wasm scope
+[chromium] log: Wasm check: exceptional scope exit preserves all ordinary bytes
+[chromium] log: Wasm fixture: ordinary memory, reentrant import and alias writes
+[chromium] log: Wasm check: native Wasm write visible inside guest callback
+[chromium] log: Wasm check: nested callback return/write
+[chromium] log: Wasm check: native buffer identity
+[chromium] log: Wasm check: subarray aliases native memory
+[chromium] log: Wasm check: DataView native brand
+[chromium] log: Wasm check: native view brands
+[chromium] log: Wasm check: native callback typed map
+[chromium] log: Wasm check: Wasm memory growth return
+[chromium] log: Wasm check: growth detaches old views
+[chromium] log: Wasm check: new memory size
+[chromium] log: Wasm check: growth preserves bytes
+[chromium] log: Wasm check: native Wasm runtime error brand
+[chromium] log: Wasm check: guest callback exception survives native Wasm boundary
+[chromium] log: Wasm fixture: local and native binary constructors, indexed descriptors and species
+[chromium] log: Wasm check: indexed defineProperty writes bytes
+[chromium] log: Wasm check: indexed descriptor
+[chromium] log: Wasm check: out of bounds definition
+[chromium] log: Wasm check: set and iteration
+[chromium] log: Wasm check: indexed defineProperty writes bytes
+[chromium] log: Wasm check: indexed descriptor
+[chromium] log: Wasm check: out of bounds definition
+[chromium] log: Wasm check: set and iteration
+[chromium] log: Wasm check: local subclass identity
+[chromium] log: Wasm check: local subclass species
+[chromium] log: Wasm check: native-backed subclass identity
+[chromium] log: Wasm check: native-backed subclass species
+[chromium] log: Wasm check: native decoder local view
+[chromium] log: Wasm check: native decoder native view
+[chromium] log: Wasm check: native to local constructor copies
+[chromium] log: Wasm check: local to native set copies
+[chromium] log: Wasm check: native typed iterator
+[chromium] log: Wasm check: mixed native-to-local set preserves raw NaN payload
+[chromium] log: Wasm check: borrowed mixed set preserves raw NaN payload
+[chromium] log: Wasm fixture: shared Wasm memory, atomics and structured clone through dedicated worker
+[chromium] log: Wasm check: shared buffer brand
+[chromium] log: Wasm check: worker native Wasm atomic write
+[chromium] log: Wasm check: guest immediately observes worker write
+[chromium] log: Wasm check: worker structured clone brands
+[chromium] log: Wasm check: shared old buffer remains attached
+[chromium] log: Wasm check: shared growth
+[chromium] log: Wasm check: shared growth aliases bytes
+[chromium] log: Wasm check: Atomics proxy arguments
+[chromium] log: Wasm fixture: Wasm shared-buffer slice copies into a separate shared block
+[chromium] log: Wasm check: shared Wasm slice buffer brand
+[chromium] log: Wasm check: shared Wasm slice copies bytes
+[chromium] log: Wasm check: shared Wasm slice owns a separate data block
+[chromium] log: Wasm fixture: declared imports use inherited getters without traversing unused fields
+[chromium] log: Wasm check: declaration-order import getters: env,memory,env,callback
+[chromium] log: Wasm check: inherited import fields
+[chromium] log: Wasm check: declared import getter preserves guest exception identity
+[chromium] log: Wasm fixture: native function imports retain the owning host call policy
+[chromium] log: Wasm check: direct native call uses fixture policy
+[chromium] log: Wasm check: native Wasm import uses fixture policy
+[chromium] log: Wasm check: mixed-kind import getter order
+[chromium] log: Wasm check: mixed-kind function import uses fixture policy
+[chromium] log: Wasm check: externref import preserves original object identity
+[chromium] log: Wasm check: returned externref function keeps fixture policy
+[chromium] log: Wasm check: opaque import reference preserves subsequent native Array conversion
+[chromium] log: Wasm check: opaque import reference preserves subsequent native Uint8Array conversion
+[chromium] log: Wasm check: opaque import reference preserves subsequent native ArrayBuffer conversion
+[chromium] log: Wasm check: opaque import reference preserves subsequent native Map conversion
+[chromium] log: Wasm check: async compile does not eagerly read imports
+[chromium] log: Wasm check: async imports read in declaration order
+[chromium] log: Wasm check: async native function import uses fixture policy
+[chromium] log: Wasm fixture: fixed Wasm buffers refuse transfer and detach only on native growth
+[chromium] log: Wasm check: Wasm buffer rejects transfer
+[chromium] log: Wasm check: failed transfer leaves bytes attached
+[chromium] log: Wasm check: Wasm buffer rejects transferToFixedLength
+[chromium] log: Wasm check: failed transferToFixedLength leaves bytes attached
+[chromium] log: Wasm check: native structured clone rejects Wasm transfer
+[chromium] log: Wasm check: failed native transfer does not detach guest
+[chromium] log: Wasm check: zero growth returns previous pages
+[chromium] log: Wasm check: zero growth detaches old fixed buffer
+[chromium] log: Wasm check: zero growth replaces buffer and preserves bytes
+[chromium] log: Wasm check: resizable Wasm buffer remains resizable
+[chromium] log: Wasm check: resizable Wasm views track native growth
+[chromium] log: Wasm check: resizable Wasm growth preserves writes
+[chromium] log: Wasm fixture: async compile and instantiate retain import callbacks
+[chromium] log: Wasm check: compile module brand
+[chromium] log: Wasm check: instantiate result brand
+[chromium] log: Wasm check: instantiate module brand
+[chromium] log: Wasm check: async imported callback
+[chromium] log: Wasm check: validate native buffer source
+[chromium] log: Wasm fixture: disposing core engine
+[chromium] log: Wasm check: both native imports retain deferred ordinary writes
+[chromium] log: Wasm check: both native imports retain deferred ordinary writes
+[chromium] log: Wasm check: both native imports retain deferred ordinary writes
+[chromium] log: Wasm check: pure native copy imports add no unrelated whole-buffer transfers
+[chromium] log: Wasm check: object coercion retains synchronization as a positive control
+[chromium] log: Wasm check: foreign native export return value
+[chromium] log: Wasm check: unrecognized native Wasm memory refreshes ordinary mirror
+[chromium] log: Wasm check: foreign native bytes
+[chromium] log: Wasm check: memory provenance observes the actual import Get once
+[chromium] log: Wasm check: late recognized memory reaches imported callback
+[chromium] log: Wasm check: late imported memory preserves callback writes
+[chromium] log: Wasm check: ordinary mirror retains native callback result
+[chromium] log: Wasm check: foreign native bytes
+[chromium] log: Wasm check: table provenance observes the actual import Get once
+[chromium] log: Wasm check: foreign indirect start writes refresh the ordinary mirror
+[chromium] log: Wasm check: foreign native bytes
+[chromium] error: Application error TypeError: Resource is not installed: http://127.0.0.1:37299/import-probe
+    at GuestResources.fetch (http://127.0.0.1:37299/browser.js:21264:26)
+    at http://127.0.0.1:37299/browser.js:49309:22
+    at new Promise (<anonymous>)
+    at localFetch (http://127.0.0.1:37299/browser.js:49306:12)
+    at Object.call (http://127.0.0.1:37299/browser.js:50488:69)
+    at _GuestEngine.dispatch (http://127.0.0.1:37299/browser.js:9221:26)
+    at WeakLifetime.<anonymous> (http://127.0.0.1:37299/browser.js:8729:21)
+    at QuickJSContext.<anonymous> (http://127.0.0.1:37299/browser.js:610:46)
+    at next (<anonymous>)
+    at awaitEachYieldedPromise (http://127.0.0.1:37299/browser.js:79:29)
+{"browser":"chromium","version":"153.0.8010.12","errors":[],"result":{"isolated":true,"native":[{"name":"indexed copy loop and ordinary native copies preserve aliases","passed":true},{"name":"indexed coercion and numeric families retain native semantics","passed":true},{"name":"consecutive imports preserve ordinary bytes through native reentry and throw","passed":true},{"name":"ordinary memory, reentrant import and alias writes","passed":true},{"name":"local and native binary constructors, indexed descriptors and species","passed":true},{"name":"shared Wasm memory, atomics and structured clone through dedicated worker","passed":true},{"name":"Wasm shared-buffer slice copies into a separate shared block","passed":true},{"name":"declared imports use inherited getters without traversing unused fields","passed":true},{"name":"native function imports retain the owning host call policy","passed":true},{"name":"fixed Wasm buffers refuse transfer and detach only on native growth","passed":true},{"name":"async compile and instantiate retain import callbacks","passed":true}],"guest":[{"name":"indexed copy loop and ordinary native copies preserve aliases","passed":true},{"name":"indexed coercion and numeric families retain native semantics","passed":true},{"name":"consecutive imports preserve ordinary bytes through native reentry and throw","passed":true},{"name":"ordinary memory, reentrant import and alias writes","passed":true},{"name":"local and native binary constructors, indexed descriptors and species","passed":true},{"name":"shared Wasm memory, atomics and structured clone through dedicated worker","passed":true},{"name":"Wasm shared-buffer slice copies into a separate shared block","passed":true},{"name":"declared imports use inherited getters without traversing unused fields","passed":true},{"name":"native function imports retain the owning host call policy","passed":true},{"name":"fixed Wasm buffers refuse transfer and detach only on native growth","passed":true},{"name":"async compile and instantiate retain import callbacks","passed":true}],"copyElision":{"baseline":{"intoNative":19,"intoGuest":10},"copying":{"intoNative":19,"intoGuest":10},"coercing":{"intoNative":25,"intoGuest":14}},"foreign":["raw export","late imported memory","late imported table start"],"policy":{"control":[true,true],"guest":[false,false]}},"requests":["/import-probe","/constructor-probe"]}
+[firefox] log: Wasm fixture: indexed copy loop and ordinary native copies preserve aliases
+[firefox] log: Wasm check: native indexed loop reads real bytes
+[firefox] log: Wasm check: 4 MiB indexed copy milliseconds=2
+[firefox] log: Wasm check: staged ordinary native writes publish before alias access
+[firefox] log: Wasm check: ordinary native aliases share their indexed cache
+[firefox] log: Wasm check: native methods invalidate cached input bytes
+[firefox] log: Wasm fixture: indexed coercion and numeric families retain native semantics
+[firefox] log: Wasm check: Int8Array native descriptor matches indexed value
+[firefox] log: Wasm check: Uint8Array native descriptor matches indexed value
+[firefox] log: Wasm check: Uint8ClampedArray native descriptor matches indexed value
+[firefox] log: Wasm check: Int16Array native descriptor matches indexed value
+[firefox] log: Wasm check: Uint16Array native descriptor matches indexed value
+[firefox] log: Wasm check: Int32Array native descriptor matches indexed value
+[firefox] log: Wasm check: Uint32Array native descriptor matches indexed value
+[firefox] log: Wasm check: Float32Array native descriptor matches indexed value
+[firefox] log: Wasm check: Float64Array native descriptor matches indexed value
+[firefox] log: Wasm check: BigInt and numeric views alias actual native bytes
+[firefox] log: Wasm check: numeric indexed writes reach BigInt native views
+[firefox] log: Wasm check: object coercion observes detachment before indexed store
+[firefox] log: Wasm check: detached write leaves grown memory unchanged
+[firefox] log: Wasm fixture: consecutive imports preserve ordinary bytes through native reentry and throw
+[firefox] log: Wasm check: first import sees current bytes
+[firefox] log: Wasm check: nested native mutation reaches ordinary callback
+[firefox] log: Wasm check: nested native consumer sees guest writes
+[firefox] log: Wasm check: native continuation reaches imported callback
+[firefox] log: Wasm check: second import retains preceding guest-only write
+[firefox] log: Wasm check: native continuation invalidates indexed heap reads
+[firefox] log: Wasm check: primitive native copyWithin preserves deferred ordinary writes
+[firefox] log: Wasm check: exception crosses the outer Wasm scope
+[firefox] log: Wasm check: exceptional scope exit preserves all ordinary bytes
+[firefox] log: Wasm fixture: ordinary memory, reentrant import and alias writes
+[firefox] log: Wasm check: native Wasm write visible inside guest callback
+[firefox] log: Wasm check: nested callback return/write
+[firefox] log: Wasm check: native buffer identity
+[firefox] log: Wasm check: subarray aliases native memory
+[firefox] log: Wasm check: DataView native brand
+[firefox] log: Wasm check: native view brands
+[firefox] log: Wasm check: native callback typed map
+[firefox] log: Wasm check: Wasm memory growth return
+[firefox] log: Wasm check: growth detaches old views
+[firefox] log: Wasm check: new memory size
+[firefox] log: Wasm check: growth preserves bytes
+[firefox] log: Wasm check: native Wasm runtime error brand
+[firefox] log: Wasm check: guest callback exception survives native Wasm boundary
+[firefox] log: Wasm fixture: local and native binary constructors, indexed descriptors and species
+[firefox] log: Wasm check: indexed defineProperty writes bytes
+[firefox] log: Wasm check: indexed descriptor
+[firefox] log: Wasm check: out of bounds definition
+[firefox] log: Wasm check: set and iteration
+[firefox] log: Wasm check: indexed defineProperty writes bytes
+[firefox] log: Wasm check: indexed descriptor
+[firefox] log: Wasm check: out of bounds definition
+[firefox] log: Wasm check: set and iteration
+[firefox] log: Wasm check: local subclass identity
+[firefox] log: Wasm check: local subclass species
+[firefox] log: Wasm check: native-backed subclass identity
+[firefox] log: Wasm check: native-backed subclass species
+[firefox] log: Wasm check: native decoder local view
+[firefox] log: Wasm check: native decoder native view
+[firefox] log: Wasm check: native to local constructor copies
+[firefox] log: Wasm check: local to native set copies
+[firefox] log: Wasm check: native typed iterator
+[firefox] log: Wasm check: mixed native-to-local set preserves raw NaN payload
+[firefox] log: Wasm check: borrowed mixed set preserves raw NaN payload
+[firefox] log: Wasm fixture: shared Wasm memory, atomics and structured clone through dedicated worker
+[firefox] log: Wasm check: shared buffer brand
+[firefox] log: Wasm check: worker native Wasm atomic write
+[firefox] log: Wasm check: guest immediately observes worker write
+[firefox] log: Wasm check: worker structured clone brands
+[firefox] log: Wasm check: shared old buffer remains attached
+[firefox] log: Wasm check: shared growth
+[firefox] log: Wasm check: shared growth aliases bytes
+[firefox] log: Wasm check: Atomics proxy arguments
+[firefox] log: Wasm fixture: Wasm shared-buffer slice copies into a separate shared block
+[firefox] log: Wasm check: shared Wasm slice buffer brand
+[firefox] log: Wasm check: shared Wasm slice copies bytes
+[firefox] log: Wasm check: shared Wasm slice owns a separate data block
+[firefox] log: Wasm fixture: declared imports use inherited getters without traversing unused fields
+[firefox] log: Wasm check: declaration-order import getters: env,memory,env,callback
+[firefox] log: Wasm check: inherited import fields
+[firefox] log: Wasm check: declared import getter preserves guest exception identity
+[firefox] log: Wasm fixture: native function imports retain the owning host call policy
+[firefox] log: Wasm check: direct native call uses fixture policy
+[firefox] log: Wasm check: native Wasm import uses fixture policy
+[firefox] log: Wasm check: mixed-kind import getter order
+[firefox] log: Wasm check: mixed-kind function import uses fixture policy
+[firefox] log: Wasm check: externref import preserves original object identity
+[firefox] log: Wasm check: returned externref function keeps fixture policy
+[firefox] log: Wasm check: opaque import reference preserves subsequent native Array conversion
+[firefox] log: Wasm check: opaque import reference preserves subsequent native Uint8Array conversion
+[firefox] log: Wasm check: opaque import reference preserves subsequent native ArrayBuffer conversion
+[firefox] log: Wasm check: opaque import reference preserves subsequent native Map conversion
+[firefox] log: Wasm check: async compile does not eagerly read imports
+[firefox] log: Wasm check: async imports read in declaration order
+[firefox] log: Wasm check: async native function import uses fixture policy
+[firefox] log: Wasm fixture: fixed Wasm buffers refuse transfer and detach only on native growth
+[firefox] log: Wasm check: Wasm buffer rejects transfer
+[firefox] log: Wasm check: failed transfer leaves bytes attached
+[firefox] log: Wasm check: Wasm buffer rejects transferToFixedLength
+[firefox] log: Wasm check: failed transferToFixedLength leaves bytes attached
+[firefox] log: Wasm check: native structured clone rejects Wasm transfer
+[firefox] log: Wasm check: failed native transfer does not detach guest
+[firefox] log: Wasm check: zero growth returns previous pages
+[firefox] log: Wasm check: zero growth detaches old fixed buffer
+[firefox] log: Wasm check: zero growth replaces buffer and preserves bytes
+[firefox] log: Wasm check: resizable Wasm buffer remains resizable
+[firefox] log: Wasm check: resizable Wasm views track native growth
+[firefox] log: Wasm check: resizable Wasm growth preserves writes
+[firefox] log: Wasm fixture: async compile and instantiate retain import callbacks
+[firefox] log: Wasm check: compile module brand
+[firefox] log: Wasm check: instantiate result brand
+[firefox] log: Wasm check: instantiate module brand
+[firefox] log: Wasm check: async imported callback
+[firefox] log: Wasm check: validate native buffer source
+[firefox] log: Wasm fixture: creating guest engine
+[firefox] log: Wasm fixture: registering guest fixtures
+[firefox] log: Wasm fixture: indexed copy loop and ordinary native copies preserve aliases
+[firefox] log: Wasm check: native indexed loop reads real bytes
+[firefox] log: Wasm check: 4 MiB indexed copy milliseconds=396
+[firefox] log: Wasm check: staged ordinary native writes publish before alias access
+[firefox] log: Wasm check: ordinary native aliases share their indexed cache
+[firefox] log: Wasm check: native methods invalidate cached input bytes
+[firefox] log: Wasm fixture: indexed coercion and numeric families retain native semantics
+[firefox] log: Wasm check: Int8Array native descriptor matches indexed value
+[firefox] log: Wasm check: Uint8Array native descriptor matches indexed value
+[firefox] log: Wasm check: Uint8ClampedArray native descriptor matches indexed value
+[firefox] log: Wasm check: Int16Array native descriptor matches indexed value
+[firefox] log: Wasm check: Uint16Array native descriptor matches indexed value
+[firefox] log: Wasm check: Int32Array native descriptor matches indexed value
+[firefox] log: Wasm check: Uint32Array native descriptor matches indexed value
+[firefox] log: Wasm check: Float32Array native descriptor matches indexed value
+[firefox] log: Wasm check: Float64Array native descriptor matches indexed value
+[firefox] log: Wasm check: BigInt and numeric views alias actual native bytes
+[firefox] log: Wasm check: numeric indexed writes reach BigInt native views
+[firefox] log: Wasm check: object coercion observes detachment before indexed store
+[firefox] log: Wasm check: detached write leaves grown memory unchanged
+[firefox] log: Wasm fixture: consecutive imports preserve ordinary bytes through native reentry and throw
+[firefox] log: Wasm check: first import sees current bytes
+[firefox] log: Wasm check: nested native mutation reaches ordinary callback
+[firefox] log: Wasm check: nested native consumer sees guest writes
+[firefox] log: Wasm check: native continuation reaches imported callback
+[firefox] log: Wasm check: second import retains preceding guest-only write
+[firefox] log: Wasm check: native continuation invalidates indexed heap reads
+[firefox] log: Wasm check: primitive native copyWithin preserves deferred ordinary writes
+[firefox] log: Wasm check: exception crosses the outer Wasm scope
+[firefox] log: Wasm check: exceptional scope exit preserves all ordinary bytes
+[firefox] log: Wasm fixture: ordinary memory, reentrant import and alias writes
+[firefox] log: Wasm check: native Wasm write visible inside guest callback
+[firefox] log: Wasm check: nested callback return/write
+[firefox] log: Wasm check: native buffer identity
+[firefox] log: Wasm check: subarray aliases native memory
+[firefox] log: Wasm check: DataView native brand
+[firefox] log: Wasm check: native view brands
+[firefox] log: Wasm check: native callback typed map
+[firefox] log: Wasm check: Wasm memory growth return
+[firefox] log: Wasm check: growth detaches old views
+[firefox] log: Wasm check: new memory size
+[firefox] log: Wasm check: growth preserves bytes
+[firefox] log: Wasm check: native Wasm runtime error brand
+[firefox] log: Wasm check: guest callback exception survives native Wasm boundary
+[firefox] log: Wasm fixture: local and native binary constructors, indexed descriptors and species
+[firefox] log: Wasm check: indexed defineProperty writes bytes
+[firefox] log: Wasm check: indexed descriptor
+[firefox] log: Wasm check: out of bounds definition
+[firefox] log: Wasm check: set and iteration
+[firefox] log: Wasm check: indexed defineProperty writes bytes
+[firefox] log: Wasm check: indexed descriptor
+[firefox] log: Wasm check: out of bounds definition
+[firefox] log: Wasm check: set and iteration
+[firefox] log: Wasm check: local subclass identity
+[firefox] log: Wasm check: local subclass species
+[firefox] log: Wasm check: native-backed subclass identity
+[firefox] log: Wasm check: native-backed subclass species
+[firefox] log: Wasm check: native decoder local view
+[firefox] log: Wasm check: native decoder native view
+[firefox] log: Wasm check: native to local constructor copies
+[firefox] log: Wasm check: local to native set copies
+[firefox] log: Wasm check: native typed iterator
+[firefox] log: Wasm check: mixed native-to-local set preserves raw NaN payload
+[firefox] log: Wasm check: borrowed mixed set preserves raw NaN payload
+[firefox] log: Wasm fixture: shared Wasm memory, atomics and structured clone through dedicated worker
+[firefox] log: Wasm check: shared buffer brand
+[firefox] log: Wasm check: worker native Wasm atomic write
+[firefox] log: Wasm check: guest immediately observes worker write
+[firefox] log: Wasm check: worker structured clone brands
+[firefox] log: Wasm check: shared old buffer remains attached
+[firefox] log: Wasm check: shared growth
+[firefox] log: Wasm check: shared growth aliases bytes
+[firefox] log: Wasm check: Atomics proxy arguments
+[firefox] log: Wasm fixture: Wasm shared-buffer slice copies into a separate shared block
+[firefox] log: Wasm check: shared Wasm slice buffer brand
+[firefox] log: Wasm check: shared Wasm slice copies bytes
+[firefox] log: Wasm check: shared Wasm slice owns a separate data block
+[firefox] log: Wasm fixture: declared imports use inherited getters without traversing unused fields
+[firefox] log: Wasm check: declaration-order import getters: env,memory,env,callback
+[firefox] log: Wasm check: inherited import fields
+[firefox] log: Wasm check: declared import getter preserves guest exception identity
+[firefox] log: Wasm fixture: native function imports retain the owning host call policy
+[firefox] log: Wasm check: direct native call uses fixture policy
+[firefox] log: Wasm check: native Wasm import uses fixture policy
+[firefox] log: Wasm check: mixed-kind import getter order
+[firefox] log: Wasm check: mixed-kind function import uses fixture policy
+[firefox] log: Wasm check: externref import preserves original object identity
+[firefox] log: Wasm check: returned externref function keeps fixture policy
+[firefox] log: Wasm check: opaque import reference preserves subsequent native Array conversion
+[firefox] log: Wasm check: opaque import reference preserves subsequent native Uint8Array conversion
+[firefox] log: Wasm check: opaque import reference preserves subsequent native ArrayBuffer conversion
+[firefox] log: Wasm check: opaque import reference preserves subsequent native Map conversion
+[firefox] log: Wasm check: async compile does not eagerly read imports
+[firefox] log: Wasm check: async imports read in declaration order
+[firefox] log: Wasm check: async native function import uses fixture policy
+[firefox] log: Wasm fixture: fixed Wasm buffers refuse transfer and detach only on native growth
+[firefox] log: Wasm check: Wasm buffer rejects transfer
+[firefox] log: Wasm check: failed transfer leaves bytes attached
+[firefox] log: Wasm check: Wasm buffer rejects transferToFixedLength
+[firefox] log: Wasm check: failed transferToFixedLength leaves bytes attached
+[firefox] log: Wasm check: native structured clone rejects Wasm transfer
+[firefox] log: Wasm check: failed native transfer does not detach guest
+[firefox] log: Wasm check: zero growth returns previous pages
+[firefox] log: Wasm check: zero growth detaches old fixed buffer
+[firefox] log: Wasm check: zero growth replaces buffer and preserves bytes
+[firefox] log: Wasm check: resizable Wasm buffer remains resizable
+[firefox] log: Wasm check: resizable Wasm views track native growth
+[firefox] log: Wasm check: resizable Wasm growth preserves writes
+[firefox] log: Wasm fixture: async compile and instantiate retain import callbacks
+[firefox] log: Wasm check: compile module brand
+[firefox] log: Wasm check: instantiate result brand
+[firefox] log: Wasm check: instantiate module brand
+[firefox] log: Wasm check: async imported callback
+[firefox] log: Wasm check: validate native buffer source
+[firefox] log: Wasm fixture: disposing core engine
+[firefox] log: Wasm check: both native imports retain deferred ordinary writes
+[firefox] log: Wasm check: both native imports retain deferred ordinary writes
+[firefox] log: Wasm check: both native imports retain deferred ordinary writes
+[firefox] log: Wasm check: pure native copy imports add no unrelated whole-buffer transfers
+[firefox] log: Wasm check: object coercion retains synchronization as a positive control
+[firefox] log: Wasm check: foreign native export return value
+[firefox] log: Wasm check: unrecognized native Wasm memory refreshes ordinary mirror
+[firefox] log: Wasm check: foreign native bytes
+[firefox] log: Wasm check: memory provenance observes the actual import Get once
+[firefox] log: Wasm check: late recognized memory reaches imported callback
+[firefox] log: Wasm check: late imported memory preserves callback writes
+[firefox] log: Wasm check: ordinary mirror retains native callback result
+[firefox] log: Wasm check: foreign native bytes
+[firefox] log: Wasm check: table provenance observes the actual import Get once
+[firefox] log: Wasm check: foreign indirect start writes refresh the ordinary mirror
+[firefox] log: Wasm check: foreign native bytes
+[firefox] error: Application error Error
+{"browser":"firefox","version":"155.0","errors":[],"result":{"isolated":true,"native":[{"name":"indexed copy loop and ordinary native copies preserve aliases","passed":true},{"name":"indexed coercion and numeric families retain native semantics","passed":true},{"name":"consecutive imports preserve ordinary bytes through native reentry and throw","passed":true},{"name":"ordinary memory, reentrant import and alias writes","passed":true},{"name":"local and native binary constructors, indexed descriptors and species","passed":true},{"name":"shared Wasm memory, atomics and structured clone through dedicated worker","passed":true},{"name":"Wasm shared-buffer slice copies into a separate shared block","passed":true},{"name":"declared imports use inherited getters without traversing unused fields","passed":true},{"name":"native function imports retain the owning host call policy","passed":true},{"name":"fixed Wasm buffers refuse transfer and detach only on native growth","passed":true},{"name":"async compile and instantiate retain import callbacks","passed":true}],"guest":[{"name":"indexed copy loop and ordinary native copies preserve aliases","passed":true},{"name":"indexed coercion and numeric families retain native semantics","passed":true},{"name":"consecutive imports preserve ordinary bytes through native reentry and throw","passed":true},{"name":"ordinary memory, reentrant import and alias writes","passed":true},{"name":"local and native binary constructors, indexed descriptors and species","passed":true},{"name":"shared Wasm memory, atomics and structured clone through dedicated worker","passed":true},{"name":"Wasm shared-buffer slice copies into a separate shared block","passed":true},{"name":"declared imports use inherited getters without traversing unused fields","passed":true},{"name":"native function imports retain the owning host call policy","passed":true},{"name":"fixed Wasm buffers refuse transfer and detach only on native growth","passed":true},{"name":"async compile and instantiate retain import callbacks","passed":true}],"copyElision":{"baseline":{"intoNative":19,"intoGuest":10},"copying":{"intoNative":19,"intoGuest":10},"coercing":{"intoNative":25,"intoGuest":14}},"foreign":["raw export","late imported memory","late imported table start"],"policy":{"control":[true,true],"guest":[false,false]}},"requests":["/import-probe","/constructor-probe"]}
+chromium: 25 legacy RegExp controls match QuickJS
+firefox: 24 legacy RegExp controls match QuickJS
+{"browser":"chromium","version":"153.0.8010.12","result":{"html":{"defaultView":true,"contentType":"text/html","doctype":"html","base":"https://publisher.invalid/app/","mapped":"blob:http://127.0.0.1:46087/c073b932-12cb-4e13-a60d-23f6094d7312","unknown":"data:application/octet-stream,","invalid":"data:application/octet-stream,","sourceSet":"blob:http://127.0.0.1:46087/c073b932-12cb-4e13-a60d-23f6094d7312 1x, data:application/octet-stream, 2x","handlerAbsent":true,"handlerMetadata":"globalThis.nativeHandlerMarker=true","frameAbsent":true,"frameHasNoContext":true,"objectDataWithheld":true,"objectRetained":true,"objectAttributesWithheld":true,"embedRetained":true,"embedSourceWithheld":true,"refreshAbsent":true,"scriptType":"application/x-privacy-frames-inert","scriptMetadata":{"code":"globalThis.nativeScriptMarker=true","type":"","source":"http://127.0.0.1:36835/outside.js?marker=script","inert":true},"jsonKept":"{\"local\":true}","template":"kept","style":"@import \"data:application/octet-stream,\";.probe{background:image-set(\"data:application/octet-stream,\"1x)}","customConstructorsBeforeAttachment":0},"inertObjectsAfterInsertion":true,"xml":{"root":"mxGraphModel","attribute":"Keep","ID":"1","label":"<img src=\"https://outside.invalid/secret\">","style":"image=https://outside.invalid/data;","src":"https://outside.invalid/data","doctype":"mxGraphModel","systemId":"https://outside.invalid/schema.dtd","cdataType":4,"cdata":"a<b"},"svg":{"namespace":"http://www.w3.org/2000/svg","viewBox":"0 0 10 10","gradientName":"linearGradient","href":"data:application/octet-stream,","fill":"url(data:application/octet-stream,)","animation":"data:application/octet-stream,","dangerousAnimationWithheld":true,"baseWithheld":true},"qualifiedAnimation":"data:application/octet-stream,","baseAnimationWithheld":true,"stylesheetPI":"href=\"data:application/octet-stream,\"","dtdSubset":"parsererror","publicDoctype":{"publicId":"-//W3C//DTD SVG 1.1//EN","systemId":"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"},"malformed":"parsererror","unknownEntity":"parsererror","unsupported":true,"nativeControlInertDocument":true,"scriptPositiveControl":true,"nativeParsedScriptInertAfterInsertion":true,"nativeMarkersAbsent":true},"requests":["/","/fixture.js"],"sinkRequests":["/outside.png?marker=positive-control"],"browserRequests":["http://127.0.0.1:46087/","http://127.0.0.1:46087/fixture.js","http://127.0.0.1:36835/outside.png?marker=positive-control"],"errors":[]}
+{"browser":"firefox","version":"155.0","result":{"html":{"defaultView":true,"contentType":"text/html","doctype":"html","base":"https://publisher.invalid/app/","mapped":"blob:http://127.0.0.1:46087/d005c4b9-3129-4e60-a0ec-1362fa9caef1","unknown":"data:application/octet-stream,","invalid":"data:application/octet-stream,","sourceSet":"blob:http://127.0.0.1:46087/d005c4b9-3129-4e60-a0ec-1362fa9caef1 1x, data:application/octet-stream, 2x","handlerAbsent":true,"handlerMetadata":"globalThis.nativeHandlerMarker=true","frameAbsent":true,"frameHasNoContext":true,"objectDataWithheld":true,"objectRetained":true,"objectAttributesWithheld":true,"embedRetained":true,"embedSourceWithheld":true,"refreshAbsent":true,"scriptType":"application/x-privacy-frames-inert","scriptMetadata":{"code":"globalThis.nativeScriptMarker=true","type":"","source":"http://127.0.0.1:36835/outside.js?marker=script","inert":true},"jsonKept":"{\"local\":true}","template":"kept","style":"@import \"data:application/octet-stream,\";.probe{background:image-set(\"data:application/octet-stream,\"1x)}","customConstructorsBeforeAttachment":0},"inertObjectsAfterInsertion":true,"xml":{"root":"mxGraphModel","attribute":"Keep","ID":"1","label":"<img src=\"https://outside.invalid/secret\">","style":"image=https://outside.invalid/data;","src":"https://outside.invalid/data","doctype":"mxGraphModel","systemId":"https://outside.invalid/schema.dtd","cdataType":4,"cdata":"a<b"},"svg":{"namespace":"http://www.w3.org/2000/svg","viewBox":"0 0 10 10","gradientName":"linearGradient","href":"data:application/octet-stream,","fill":"url(data:application/octet-stream,)","animation":"data:application/octet-stream,","dangerousAnimationWithheld":true,"baseWithheld":true},"qualifiedAnimation":"data:application/octet-stream,","baseAnimationWithheld":true,"stylesheetPI":"href=\"data:application/octet-stream,\"","dtdSubset":"parsererror","publicDoctype":{"publicId":"-//W3C//DTD SVG 1.1//EN","systemId":"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"},"malformed":"parsererror","unknownEntity":"parsererror","unsupported":true,"nativeControlInertDocument":true,"scriptPositiveControl":true,"nativeParsedScriptInertAfterInsertion":true,"nativeMarkersAbsent":true},"requests":["/","/fixture.js","/favicon.ico"],"sinkRequests":["/outside.png?marker=positive-control"],"browserRequests":["http://127.0.0.1:46087/","http://127.0.0.1:46087/fixture.js","http://127.0.0.1:36835/outside.png?marker=positive-control"],"errors":[]}
+{"browser":"chromium","version":"153.0.8010.12","result":{"localAsync":{"states":[1,2,3,4],"events":["loadstart","progress","load","loadend"],"text":"local text","status":200,"statusText":"OK","url":"https://publisher.invalid/app/value.txt"},"nativeAsync":{"states":[1,2,3,4],"events":["loadstart","progress","load","loadend"],"text":"local text","status":200,"statusText":"OK","url":"http://127.0.0.1:41145/native.txt"},"localSync":{"states":[1,4],"events":["load","loadend"],"text":"local text","status":200,"statusText":"OK","url":"https://publisher.invalid/app/value.txt"},"nativeSync":{"states":[1,4],"events":["load","loadend"],"text":"local text","status":200,"statusText":"OK","url":"http://127.0.0.1:41145/native.txt"},"xml":"root","html":"HTML","inertScript":true,"binary":"local text","syncResponseTypeError":"InvalidAccessError","cameraError":"NotAllowedError","cameraPermission":"denied","serviceWorkerAbsent":true,"beaconBlocked":true,"deniedRead":true},"pageErrors":[],"requests":["/","/fixture.js","/native.txt","/native.txt"]}
+{"browser":"firefox","version":"155.0","result":{"localAsync":{"states":[1,2,3,4],"events":["loadstart","progress","load","loadend"],"text":"local text","status":200,"statusText":"OK","url":"https://publisher.invalid/app/value.txt"},"nativeAsync":{"states":[1,2,3,4],"events":["loadstart","progress","load","loadend"],"text":"local text","status":200,"statusText":"OK","url":"http://127.0.0.1:41145/native.txt"},"localSync":{"states":[1,4],"events":["load","loadend"],"text":"local text","status":200,"statusText":"OK","url":"https://publisher.invalid/app/value.txt"},"nativeSync":{"states":[1,4],"events":["load","loadend"],"text":"local text","status":200,"statusText":"OK","url":"http://127.0.0.1:41145/native.txt"},"xml":"root","html":"HTML","inertScript":true,"binary":"local text","syncResponseTypeError":"InvalidAccessError","cameraError":"NotAllowedError","cameraPermission":"denied","serviceWorkerAbsent":true,"beaconBlocked":true,"deniedRead":true},"pageErrors":[],"requests":["/","/fixture.js","/native.txt","/favicon.ico","/native.txt"]}
+{"browser":"chromium","version":"153.0.8010.12","result":{"before":{"rendered":false,"timeline":["classic","module-start"]},"initial":["classic","module-start","module-end","module-load","DOMContentLoaded:interactive","window-load:complete"],"beforeDynamic":["classic","module-start","module-end","module-load","DOMContentLoaded:interactive","window-load:complete"],"dynamicTimeline":["classic","module-start","module-end","module-load","DOMContentLoaded:interactive","window-load:complete","dynamic-end","dynamic-load"],"failure":"module-error","reported":["Error: expected module failure"],"syntheticPagehide":42,"storedRecord":{"text":"stored text","type":"content","tx":7,"optional":true,"nullable":null,"sparse":true,"bytes":[4,5],"binary":"prefix\u0000\ud800suffix","importedMutation":{"text":"updated imported record","tx":8,"sparse":"new item","bytes":[4,9],"binary":"prefix\u0000\ud800suffix"}}}}
+{"browser":"firefox","version":"155.0","result":{"before":{"rendered":false,"timeline":["classic","module-start"]},"initial":["classic","module-start","module-end","module-load","DOMContentLoaded:interactive","window-load:complete"],"beforeDynamic":["classic","module-start","module-end","module-load","DOMContentLoaded:interactive","window-load:complete"],"dynamicTimeline":["classic","module-start","module-end","module-load","DOMContentLoaded:interactive","window-load:complete","dynamic-end","dynamic-load"],"failure":"module-error","reported":["Error: expected module failure"],"syntheticPagehide":42,"storedRecord":{"text":"stored text","type":"content","tx":7,"optional":true,"nullable":null,"sparse":true,"bytes":[4,5],"binary":"prefix\u0000\ud800suffix","importedMutation":{"text":"updated imported record","tx":8,"sparse":"new item","bytes":[4,9],"binary":"prefix\u0000\ud800suffix"}}}}
+chromium native history steps 1
+chromium guest history steps 3
+{"browser":"chromium","version":"153.0.8010.12","rows":[{"mode":"native","initial":{"mode":"native","reloaded":false,"result":{"initial":"http://127.0.0.1:36601/publisher/index.html?initial=1#boot","replaced":{"href":"http://127.0.0.1:36601/publisher/editor?document=2#edit","state":{"value":1}},"pushed":{"href":"http://127.0.0.1:36601/publisher/alternate?document=3#route","state":{"value":2},"conversions":1},"refused":true,"steps":1,"href":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","origin":"http://127.0.0.1:36601","documentURL":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","documentURI":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","state":null},"physical":"http://127.0.0.1:36601/publisher/alternate?document=3#changed"},"reloaded":{"mode":"native","reloaded":true,"result":{"href":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","origin":"http://127.0.0.1:36601","documentURL":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","documentURI":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","state":null},"physical":"http://127.0.0.1:36601/publisher/alternate?document=3#changed"},"errors":[],"back":{"href":"http://127.0.0.1:36601/publisher/editor?document=2#edit","documentURL":"http://127.0.0.1:36601/publisher/editor?document=2#edit","state":{"value":1},"popState":{"value":1}},"forward":{"href":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","documentURL":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","state":null,"popState":null}},{"mode":"guest","initial":{"mode":"guest","reloaded":false,"result":{"initial":"http://127.0.0.1:36601/publisher/index.html?initial=1#boot","replaced":{"href":"http://127.0.0.1:36601/publisher/editor?document=2#edit","state":{"value":1}},"pushed":{"href":"http://127.0.0.1:36601/publisher/alternate?document=3#route","state":{"value":2},"conversions":1},"refused":true,"steps":3,"href":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","origin":"http://127.0.0.1:36601","documentURL":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","documentURI":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","state":null},"physical":"http://127.0.0.1:36601/installed/runtime.html?host=1#changed","nativeState":{"application":"history-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","generation":"history-fixture","sourceURL":"http://127.0.0.1:36601/publisher/index.html?initial=1","kind":"privacy-frames-history","logicalURL":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","data":null}},"reloaded":{"mode":"guest","reloaded":true,"result":{"href":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","origin":"http://127.0.0.1:36601","documentURL":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","documentURI":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","state":null},"physical":"http://127.0.0.1:36601/installed/runtime.html?host=1#changed","nativeState":{"application":"history-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","generation":"history-fixture","sourceURL":"http://127.0.0.1:36601/publisher/index.html?initial=1","kind":"privacy-frames-history","logicalURL":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","data":null}},"errors":[],"back":{"href":"http://127.0.0.1:36601/publisher/editor?document=2#edit","documentURL":"http://127.0.0.1:36601/publisher/editor?document=2#edit","state":{"value":1},"popState":{"value":1}},"forward":{"href":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","documentURL":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","state":null,"popState":null}}]}
+firefox native history steps 1
+firefox guest history steps 3
+{"browser":"firefox","version":"155.0","rows":[{"mode":"native","initial":{"mode":"native","reloaded":false,"result":{"initial":"http://127.0.0.1:36601/publisher/index.html?initial=1#boot","replaced":{"href":"http://127.0.0.1:36601/publisher/editor?document=2#edit","state":{"value":1}},"pushed":{"href":"http://127.0.0.1:36601/publisher/alternate?document=3#route","state":{"value":2},"conversions":1},"refused":true,"steps":1,"href":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","origin":"http://127.0.0.1:36601","documentURL":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","documentURI":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","state":null},"physical":"http://127.0.0.1:36601/publisher/alternate?document=3#changed"},"reloaded":{"mode":"native","reloaded":true,"result":{"href":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","origin":"http://127.0.0.1:36601","documentURL":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","documentURI":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","state":null},"physical":"http://127.0.0.1:36601/publisher/alternate?document=3#changed"},"errors":[],"back":{"href":"http://127.0.0.1:36601/publisher/editor?document=2#edit","documentURL":"http://127.0.0.1:36601/publisher/editor?document=2#edit","state":{"value":1},"popState":{"value":1}},"forward":{"href":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","documentURL":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","state":null,"popState":null}},{"mode":"guest","initial":{"mode":"guest","reloaded":false,"result":{"initial":"http://127.0.0.1:36601/publisher/index.html?initial=1#boot","replaced":{"href":"http://127.0.0.1:36601/publisher/editor?document=2#edit","state":{"value":1}},"pushed":{"href":"http://127.0.0.1:36601/publisher/alternate?document=3#route","state":{"value":2},"conversions":1},"refused":true,"steps":3,"href":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","origin":"http://127.0.0.1:36601","documentURL":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","documentURI":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","state":null},"physical":"http://127.0.0.1:36601/installed/runtime.html?host=1#changed","nativeState":{"application":"history-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","generation":"history-fixture","sourceURL":"http://127.0.0.1:36601/publisher/index.html?initial=1","kind":"privacy-frames-history","logicalURL":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","data":null}},"reloaded":{"mode":"guest","reloaded":true,"result":{"href":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","origin":"http://127.0.0.1:36601","documentURL":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","documentURI":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","state":null},"physical":"http://127.0.0.1:36601/installed/runtime.html?host=1#changed","nativeState":{"application":"history-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","generation":"history-fixture","sourceURL":"http://127.0.0.1:36601/publisher/index.html?initial=1","kind":"privacy-frames-history","logicalURL":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","data":null}},"errors":[],"back":{"href":"http://127.0.0.1:36601/publisher/editor?document=2#edit","documentURL":"http://127.0.0.1:36601/publisher/editor?document=2#edit","state":{"value":1},"popState":{"value":1}},"forward":{"href":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","documentURL":"http://127.0.0.1:36601/publisher/alternate?document=3#changed","state":null,"popState":null}}]}
+{"browser":"chromium","version":"153.0.8010.12","result":{"first":["load"],"noNativeHref":true,"noPreloadExecution":true,"deduplicated":true,"changed":["load","load","error"],"cancelled":true,"detached":true,"detachedEvents":["load"],"evaluated":["b"],"errors":[]},"requested":["/native-control.js"],"errors":[]}
+{"browser":"firefox","version":"155.0","result":{"first":["load"],"noNativeHref":true,"noPreloadExecution":true,"deduplicated":true,"changed":["load","load","error"],"cancelled":true,"detached":true,"detachedEvents":["load"],"evaluated":["b"],"errors":[]},"requested":["/native-control.js"],"errors":[]}
+chromium nested conditional styles and mediated resource requests passed
+firefox nested conditional styles and mediated resource requests passed
+chromium native CSS/Audio parity, computed URLs and actual mapping passed
+chromium CSS setter mapping removal detected
+firefox native CSS/Audio parity, computed URLs and actual mapping passed
+firefox CSS setter mapping removal detected
+chromium native Window/Worker FontFace parity and actual QuickJS mapping passed
+chromium FontFace constructor mapping omission detected
+firefox native Window/Worker FontFace parity and actual QuickJS mapping passed
+firefox FontFace constructor mapping omission detected
+
+> test:contexts
+> tsx test/guest-contexts.ts && tsx test/guest-context-isolation.ts && tsx test/guest-custom-elements.ts && tsx test/guest-context-windows.ts && tsx test/guest-context-publication.ts && tsx test/guest-window-writes.ts && tsx test/guest-window-reflection.ts && tsx test/guest-context-maintenance.ts
+
+▲ [WARNING] "import.meta" is not available with the "iife" output format and will be empty [empty-import-meta]
+
+    vendor/quickjs/generated/engine.mjs:1:796:
+      1 │ ...w toThrow};var _scriptName=import.meta.url;var scriptDirectory="...
+        ╵                               ~~~~~~~~~~~
+
+  You need to set the output format to "esm" for "import.meta" to work correctly.
+
+▲ [WARNING] "import.meta" is not available with the "iife" output format and will be empty [empty-import-meta]
+
+    vendor/quickjs/generated/engine.mjs:1:3172:
+      1 │ ...turn new URL("engine.wasm",import.meta.url).href}function getBin...
+        ╵                               ~~~~~~~~~~~
+
+  You need to set the output format to "esm" for "import.meta" to work correctly.
+
+{"browser":"chromium","version":"153.0.8010.12","observation":{"result":{"worker":{"count":1,"same":true,"bytes":[1,7,3,4],"denied":true,"buffer":{},"binaryText":"\u0000ÿ\ud800Z","keyed":"correct","normal":"decoy","detached":true,"persistentCount":2},"nested":9,"moduleWorker":11,"failedTransfer":{"rejected":true,"retained":true},"denied":true,"shared":[1,2],"sample":0.25,"workletMessages":[{"bytes":[4,4]},{"detached":true,"wasm":"object"}],"nativePortDetached":true,"prepared":1,"closed":1,"stripped":true,"childText":"prepared child"}},"requestURLs":["http://127.0.0.1:39057/","http://127.0.0.1:39057/browser.js","http://127.0.0.1:39057/quickjs.wasm","http://127.0.0.1:39057/worker.js","http://127.0.0.1:39057/guest-worklet.js","http://127.0.0.1:39057/__guest_worker_registry__.js","blob:http://127.0.0.1:39057/48bd4ead-133e-45e0-8101-cbf22379658b","blob:http://127.0.0.1:39057/48bd4ead-133e-45e0-8101-cbf22379658b","blob:http://127.0.0.1:39057/48bd4ead-133e-45e0-8101-cbf22379658b","blob:http://127.0.0.1:39057/48bd4ead-133e-45e0-8101-cbf22379658b","blob:http://127.0.0.1:39057/48bd4ead-133e-45e0-8101-cbf22379658b","blob:http://127.0.0.1:39057/24b2b295-c3b6-4f07-9025-a045479a52b2"]}
+{"browser":"firefox","version":"155.0","observation":{"result":{"worker":{"count":1,"same":true,"bytes":[1,7,3,4],"denied":true,"buffer":{},"binaryText":"\u0000ÿ\ud800Z","keyed":"correct","normal":"decoy","detached":true,"persistentCount":2},"nested":9,"moduleWorker":11,"failedTransfer":{"rejected":true,"retained":true},"denied":true,"shared":[1,2],"sample":0.25,"workletMessages":[{"bytes":[4,4]},{"detached":true,"wasm":"object"}],"nativePortDetached":true,"prepared":1,"closed":1,"stripped":true,"childText":"prepared child"}},"requestURLs":["http://127.0.0.1:39057/","http://127.0.0.1:39057/browser.js","http://127.0.0.1:39057/quickjs.wasm","http://127.0.0.1:39057/worker.js","http://127.0.0.1:39057/guest-worklet.js"]}
+chromium {"result":{"events":["construct","connected","construct","construct","connected","connected",["title",null,"private"],"cancel","disconnected"],"constructorAttributes":[3,0,3],"automaticHardening":true,"observations":1,"resolved":true,"registered":true,"prototypes":[true,true,true],"synchronousCancellation":true,"late":true,"customized":true,"invalid":"SyntaxError"},"nativeCallback":false,"nativeControl":true}
+firefox {"result":{"events":["construct","connected","construct","construct","connected","connected",["title",null,"private"],"cancel","disconnected"],"constructorAttributes":[3,0,3],"automaticHardening":true,"observations":1,"resolved":true,"registered":true,"prototypes":[true,true,true],"synchronousCancellation":true,"late":true,"customized":true,"invalid":"SyntaxError"},"nativeCallback":false,"nativeControl":true}
+{"browser":"chromium","version":"153.0.8010.12","observation":{"result":{"finished":{"value":21,"returned":false,"cancelled":true,"dynamicFlag":1,"attributeFlag":1,"evalFlag":1,"eventRealms":{"script":true,"dom":true},"srcdoc":true},"logicalLoadCount":1,"anchors":{"stayedInDocument":true,"nativeScriptAbsent":true},"conversions":[{"method":"setAttribute","name":1,"value":1},{"method":"setAttributeNS","name":1,"value":1},{"method":"removeAttribute","name":1},{"method":"removeAttributeNS","name":1},{"method":"toggleAttribute","name":1},{"method":"removeNamedItem","name":1},{"method":"removeNamedItemNS","name":1}],"conversionDOM":[{"method":"setAttribute","href":null,"label":true,"spellcheck":null},{"method":"setAttributeNS","href":null,"label":true,"spellcheck":null},{"method":"removeAttribute","href":null,"label":false,"spellcheck":"false"},{"method":"removeAttributeNS","href":null,"label":false,"spellcheck":"false"},{"method":"toggleAttribute","href":null,"label":false,"spellcheck":"false"},{"method":"removeNamedItem","href":null,"label":false,"spellcheck":"false"},{"method":"removeNamedItemNS","href":null,"label":false,"spellcheck":"false"}],"conversionBoundaries":{"history":[{"method":"pushState","count":1,"path":"/app/history-pushState"},{"method":"replaceState","count":1,"path":"/app/history-replaceState"}],"instruction":{"count":1,"target":"local-note"}},"logicalAttributes":{"removed":true,"added":true,"empty":true,"toggled":false,"absent":true,"removedNS":true},"namespaceAttempts":[{"method":"setAttributeNS","result":"returned"},{"method":"setAttributeNodeNS","result":"returned"},{"method":"setNamedItemNS","result":"returned"}],"namespaceDOM":[{"method":"setAttributeNS","localTarget":true},{"method":"setAttributeNodeNS","localTarget":true},{"method":"setNamedItemNS","localTarget":true}],"namespaceBaseLocal":true,"modifierTargets":[{"kind":"html","modifier":"ctrl","physicalTarget":"_self","physicalHref":null,"xlinkHref":null},{"kind":"html","modifier":"shift","physicalTarget":"_self","physicalHref":null,"xlinkHref":null},{"kind":"svg","modifier":"ctrl","physicalTarget":"_self","physicalHref":null,"xlinkHref":null},{"kind":"svg","modifier":"shift","physicalTarget":"_self","physicalHref":null,"xlinkHref":null}],"guestConfirmationUnavailable":true,"detached":{"click":true,"cancelled":true,"dispatch":true},"editing":{"local":{"inserted":true,"formatted":true,"text":"Local editing","markup":"<b>Local editing</b>"},"denied":{"insertHTML":"SecurityError","createLink":"SecurityError","insertImage":"SecurityError","copy":"SecurityError","cut":"SecurityError","paste":"SecurityError"},"converted":{"calls":1,"valueCalls":1,"text":"<span id=\"converted-command-node\">Literal text</span>","parsed":false},"block":{"calls":1,"result":true,"paragraph":true,"frame":false,"text":"Block formatting"}},"messages":{"reply":{"bytes":[10,7],"source":true,"origin":true,"trusted":true},"port":true,"detached":true},"receiverRealm":{"event":true,"buffer":true,"port":true},"nativeTrust":[false],"logicalOrigins":[{"kind":"origin-reply","id":"explicit","count":1,"sender":"https://fixture.invalid","target":"https://other.fixture.invalid","origin":"https://other.fixture.invalid","source":true},{"kind":"origin-reply","id":"wildcard","count":2,"sender":"https://fixture.invalid","target":"https://other.fixture.invalid","origin":"https://other.fixture.invalid","source":true}],"pendingWindow":true,"brands":{"node":true,"element":true,"document":true,"frame":true,"template":true,"attr":true,"blob":true,"window":true,"port":true,"audio":true,"cache":true,"fakeNode":false,"fakeElement":false},"nativeMarkers":{"dynamic":true,"attribute":true,"eval":true},"popup":{"guest":7,"syntheticPagehideSurvives":true,"native":true,"trustedURL":true,"nativeContent":"popup"},"removed":{"hidden":true,"callbackClosed":true}}},"requests":["http://127.0.0.1:33377/","http://127.0.0.1:33377/browser.js","http://127.0.0.1:33377/quickjs.wasm"],"approvals":[{"type":"confirm","message":"Allow this application to export a file? Exported data leaves confinement. Your browser may send download metadata for security checks.","accepted":false},{"type":"confirm","message":"Allow this application to export a file? Exported data leaves confinement. Your browser may send download metadata for security checks.","accepted":true},{"type":"confirm","message":"Allow this application to export a file? Exported data leaves confinement. Your browser may send download metadata for security checks.","accepted":true}],"nativeBlobNavigationControl":true,"nativeNamespaceControl":{"xlink":true,"xmlBase":false},"nativeEditingControl":{"inserted":true,"parsed":"Native HTML"},"downloads":[{"filename":"guest-download.txt","bytes":"unchanged guest download bytes"},{"filename":"guest-detached-download.txt","bytes":"unchanged detached download bytes"}]}
+{"browser":"firefox","version":"155.0","observation":{"result":{"finished":{"value":21,"returned":false,"cancelled":true,"dynamicFlag":1,"attributeFlag":1,"evalFlag":1,"eventRealms":{"script":true,"dom":true},"srcdoc":true},"logicalLoadCount":1,"anchors":{"stayedInDocument":true,"nativeScriptAbsent":true},"conversions":[{"method":"setAttribute","name":1,"value":1},{"method":"setAttributeNS","name":1,"value":1},{"method":"removeAttribute","name":1},{"method":"removeAttributeNS","name":1},{"method":"toggleAttribute","name":1},{"method":"removeNamedItem","name":1},{"method":"removeNamedItemNS","name":1}],"conversionDOM":[{"method":"setAttribute","href":null,"label":true,"spellcheck":null},{"method":"setAttributeNS","href":null,"label":true,"spellcheck":null},{"method":"removeAttribute","href":null,"label":false,"spellcheck":"false"},{"method":"removeAttributeNS","href":null,"label":false,"spellcheck":"false"},{"method":"toggleAttribute","href":null,"label":false,"spellcheck":"false"},{"method":"removeNamedItem","href":null,"label":false,"spellcheck":"false"},{"method":"removeNamedItemNS","href":null,"label":false,"spellcheck":"false"}],"conversionBoundaries":{"history":[{"method":"pushState","count":1,"path":"/app/history-pushState"},{"method":"replaceState","count":1,"path":"/app/history-replaceState"}],"instruction":{"count":1,"target":"local-note"}},"logicalAttributes":{"removed":true,"added":true,"empty":true,"toggled":false,"absent":true,"removedNS":true},"namespaceAttempts":[{"method":"setAttributeNS","result":"returned"},{"method":"setAttributeNodeNS","result":"returned"},{"method":"setNamedItemNS","result":"returned"}],"namespaceDOM":[{"method":"setAttributeNS","localTarget":true},{"method":"setAttributeNodeNS","localTarget":true},{"method":"setNamedItemNS","localTarget":true}],"namespaceBaseLocal":true,"modifierTargets":[{"kind":"html","modifier":"ctrl","physicalTarget":"_self","physicalHref":null,"xlinkHref":null},{"kind":"html","modifier":"shift","physicalTarget":"_self","physicalHref":null,"xlinkHref":null},{"kind":"svg","modifier":"ctrl","physicalTarget":"_self","physicalHref":null,"xlinkHref":null},{"kind":"svg","modifier":"shift","physicalTarget":"_self","physicalHref":null,"xlinkHref":null}],"guestConfirmationUnavailable":true,"detached":{"click":true,"cancelled":true,"dispatch":true},"editing":{"local":{"inserted":true,"formatted":true,"text":"Local editing","markup":"<b>Local editing</b>"},"denied":{"insertHTML":"SecurityError","createLink":"SecurityError","insertImage":"SecurityError","copy":"SecurityError","cut":"SecurityError","paste":"SecurityError"},"converted":{"calls":1,"valueCalls":1,"text":"<span id=\"converted-command-node\">Literal text</span>","parsed":false},"block":{"calls":1,"result":true,"paragraph":true,"frame":false,"text":"Block formatting"}},"messages":{"reply":{"bytes":[10,7],"source":true,"origin":true,"trusted":true},"port":true,"detached":true},"receiverRealm":{"event":true,"buffer":true,"port":true},"nativeTrust":[false],"logicalOrigins":[{"kind":"origin-reply","id":"explicit","count":1,"sender":"https://fixture.invalid","target":"https://other.fixture.invalid","origin":"https://other.fixture.invalid","source":true},{"kind":"origin-reply","id":"wildcard","count":2,"sender":"https://fixture.invalid","target":"https://other.fixture.invalid","origin":"https://other.fixture.invalid","source":true}],"pendingWindow":true,"brands":{"node":true,"element":true,"document":true,"frame":true,"template":true,"attr":true,"blob":true,"window":true,"port":true,"audio":true,"cache":true,"fakeNode":false,"fakeElement":false},"nativeMarkers":{"dynamic":true,"attribute":true,"eval":true},"popup":{"guest":7,"syntheticPagehideSurvives":true,"native":true,"trustedURL":true,"nativeContent":"popup"},"removed":{"hidden":true,"callbackClosed":true}}},"requests":["http://127.0.0.1:33377/","http://127.0.0.1:33377/browser.js","http://127.0.0.1:33377/quickjs.wasm"],"approvals":[{"type":"confirm","message":"Allow this application to export a file? Exported data leaves confinement. Your browser may send download metadata for security checks.","accepted":false},{"type":"confirm","message":"Allow this application to export a file? Exported data leaves confinement. Your browser may send download metadata for security checks.","accepted":true},{"type":"confirm","message":"Allow this application to export a file? Exported data leaves confinement. Your browser may send download metadata for security checks.","accepted":true}],"nativeBlobNavigationControl":true,"nativeNamespaceControl":{"xlink":true,"xmlBase":false},"nativeEditingControl":{"inserted":true,"parsed":"Native HTML"},"downloads":[{"filename":"guest-download.txt","bytes":"unchanged guest download bytes"},{"filename":"guest-detached-download.txt","bytes":"unchanged detached download bytes"}]}
+chromium {"staleClosed":1,"publishedClosed":1,"logicalLoads":1,"pendingClosed":1,"pendingLoads":0,"reentrantSources":["","inner"],"queuedDeliveries":1,"cancelledRealChildExecutions":0,"liveRealChildExecutions":1,"popupFirstClosed":1,"popupSecondClosed":1,"cleanupCalls":2,"cleanupErrors":1}
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Cancelled real child must not execute its first script/. Input:
+
+'Error: Expected context publication transition did not occur\n' +
+  'Error: Expected context publication transition did not occur\n' +
+  '    at until (http://127.0.0.1:32811/browser.js?cancelFault=1:51541:9)\n' +
+  '    at async run (http://127.0.0.1:32811/browser.js?cancelFault=1:51818:5)'
+
+    at <anonymous> (/home/damen/Projects/privacy-frames-quickjs-kernel/test/guest-context-publication.ts:133:18) {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: 'Error: Expected context publication transition did not occur\n' +
+    'Error: Expected context publication transition did not occur\n' +
+    '    at until (http://127.0.0.1:32811/browser.js?cancelFault=1:51541:9)\n' +
+    '    at async run (http://127.0.0.1:32811/browser.js?cancelFault=1:51818:5)',
+  expected: /Cancelled real child must not execute its first script/,
+  operator: 'match',
+  diff: 'simple'
+}
+
+Node.js v24.18.0
