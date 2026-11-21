@@ -59,25 +59,35 @@ intentionally interrupted during maintenance checks so the completed fixes could
 be integrated. It is not a full-suite pass; its source/artifacts and interrupted
 log are preserved under `integrated-events-abort/`.
 
-Active isolated work, not yet integrated:
+The remaining isolated work is now integrated. `52fc409` captures ordinary native
+intrinsic identities during trusted realm setup and maps them to the receiving
+guest's privately captured handles. `2d82b0b` keeps old generic proxies refused
+after explicit alias replacement; new alias encodings retain their intended
+identity. Foreign dynamic constructors remain outside this catalog.
 
-- `privacy-frames-realm-intrinsics`, branch `quickjs-realm-intrinsics`: private
-  capture of ordinary intrinsic identities from trusted prepared native realms,
-  then canonicalization to the receiving guest's captured handles. Reflective
-  foreign references remain a C2/C3 correspondence gap until this is qualified.
-- `privacy-frames-window-writes`, branch `quickjs-window-reflection`: pending
-  Window prototype and contentDocument producers, with guarded native mutation.
-  Prototype refusal must not cache a temporary null before readiness.
+`887f951` withholds pending Window documents, API references and native mutation.
+`786c91b` makes native prototype deferral an explicit internal result: ordinary
+property polling stays usable, while explicit prototype reflection fails locally.
+No temporary null prototype is cached. The original combined popup-polling failure
+is preserved under `deferred-prototype-initial/` and `deferred-prototypes/`.
+The latest executable source is `786c91b`, including the shared exposure catalog
+in `24a6dfe`. Production remains unchanged; the remote backup is through `7177eb9`.
 
+Root is qualifying the combined source. Source changes are frozen during the
+component runner, full suite, application matrix, Pitch and paired image checks.
 The earlier `privacy-frames-browser-policy` and `privacy-frames-abort-policy`
 worktrees are integrated. Preserve their original branch references, including
-`quickjs-abort-policy`, while those worktrees serve newer isolated tasks.
+`quickjs-abort-policy`, while those worktrees serve newer isolated tasks. The
+`privacy-frames-realm-intrinsics` / `quickjs-realm-intrinsics` and
+`privacy-frames-window-writes` / `quickjs-window-reflection` checkpoints are also
+integrated. The final prototype repair is on `quickjs-deferred-prototypes`.
 
-Root owns integration, suite wiring and exact executable provenance. The event
-fixtures now explicitly launch the executable whose path/hash they record; earlier
-receipts using Playwright's implicit headless selection retain that qualification
-limit. Full suite, application matrix, Pitch and paired image qualification are
-pending on the final combined source. No heavy qualification job is currently active.
+Root owns suite wiring and exact executable provenance. The event fixtures now
+explicitly launch the executable whose path/hash they record; earlier receipts
+using Playwright's implicit headless selection retain that qualification limit.
+Combined checks must finish before their receipts are reported as passing. The
+full confinement argument still has generic forwarding and caller/composition
+obligations; functional qualification does not discharge them.
 
 Publisher inputs remain the `8db931d` checkout at
 `/home/damen/Projects/privacy-frames-quickjs-proof/publisher-source`; set
@@ -146,7 +156,7 @@ boundary. REPORT.md is a build input: its revision changes build hashes even
 though runtime source is unchanged. Formatting, typecheck, build and actual
 example smoke checks in Chromium/Firefox passed after these documentation edits.
 
-## Active work and process state
+### Active work and process state
 
 The earlier stabilization sessions, including 25524, are terminal. The current
 binary qualification sequence is described below. Preserve failures before any
@@ -239,7 +249,7 @@ calibration receipts before merging. Publisher inputs remain the pinned
 `8db931d` checkout there at `publisher-source`; set PUBLISHER_DIRECTORY to its
 dist directory when using the development checkout.
 
-## Integrated components
+### Integrated components
 
 - Management predicates/receivers: `7b01403` with evidence `91a48cf`.
   Sixteen contracts for three production predicates and controlled/native browser cases pass;
@@ -264,7 +274,7 @@ dist directory when using the development checkout.
   cleanup. Transfer normalization runs once; failed sends do not detach sources.
   The legacy document.all dictionary regression and both conversion controls pass.
 
-## Open reviews and coverage
+### Open reviews and coverage
 
 The callback-routing review agent was stopped by cybersecurity screening. Its
 review is incomplete and must not be counted as passed. Preserve this gap; do not
@@ -285,7 +295,7 @@ and protocol composition, complete application-effect coverage, upgrade
 verification, CI and qualified deployment. Continue the work
 without marking the goal complete from these component results.
 
-## Historical resumption planning checkpoint
+### Historical resumption planning checkpoint
 
 Use the [resumption plan](../../docs/implementation/confinement-verification-resumption.md)
 for the inspected state and remaining execution order. The earlier checkpoint
@@ -303,13 +313,13 @@ The management agent stopped safely with changes in `src/runtime/authority.ts`,
 direct predicate verification, actual-adapter lifecycle tests and controls remain.
 No management proof or release qualification was completed by that work.
 
-## Previous objective (20 November)
+### Previous objective (20 November)
 
 The earlier goal was to execute every stage of the autonomous confinement verification plan, preserving
 the existing applications, native Wasm performance and GitHub Pages deployment.
 Do not mark the goal complete from component results or test counts.
 
-## Branch and recovery
+### Branch and recovery
 
 Worktree: `/home/damen/Projects/privacy-frames-quickjs-proof`.
 Branch: `quickjs-confinement-proof`, based on planning commit `4d06014`.
@@ -317,7 +327,7 @@ Remote main at execution start: `10bc6cc`.
 Remote recovery tag: `pre-quickjs-confinement-proof-2026-11-20` -> `10bc6cc`.
 Production source remains `5f62e61`; no implementation deployment has occurred.
 
-## Stage 0 baseline complete
+### Stage 0 baseline complete
 
 Baseline-only commit: `37fe54c9f749b38d2da3035671678cb65728cec6`.
 Artifacts: `results/quickjs-confinement/baseline/summary.json` and its referenced
@@ -334,7 +344,7 @@ both attempts and investigate candidate behavior rather than relabeling the firs
 Panda medians across three paired runs: Chromium 2064 ms native, 8985 ms confined,
 8901 ms offline; Firefox 2116 / 7848 / 7850 ms respectively.
 
-## Active implementation checkout
+### Active implementation checkout
 
 Root uses `/home/damen/Projects/privacy-frames-quickjs-kernel`, auxiliary branch
 `quickjs-confinement-kernel`, so initial source changes did not affect baseline.
@@ -353,7 +363,7 @@ After committing current formal/docs, merge the checked auxiliary source changes
 into the proof branch. Do not merge unfinished registry implementation or stale
 candidate receipts. No deployment has occurred.
 
-## Fresh evidence
+### Fresh evidence
 
 `formal/quickjs/calibrate.ts` invokes the pinned Gillian image through the existing
 verification-report checker. The fresh run passed all three stateful-closure
@@ -362,7 +372,7 @@ Receipt: `results/quickjs-confinement/calibration.json`.
 Log: `/tmp/pf-proof-calibration.log`, session 15961.
 This calibrates the tool; no production kernel has been verified by this run.
 
-## Reviews and next source changes
+### Reviews and next source changes
 
 The native-effects source review is in `formal/quickjs/reviews/native-effects.md`.
 Its agent now owns new `src/guest/native-policy.ts`, its independent unit tests
@@ -395,7 +405,7 @@ private epoch tokens and private-record/primordial integrity, with contracts tie
 to actual caller paths. Then integrate pre-execution native operation policy and
 its effect families. Keep compatibility fixtures independent of application names.
 
-## Tools
+### Tools
 
 Node: `/home/damen/.local/share/mise/installs/node/24.18.0/bin`.
 Lean: `/home/damen/Projects/privacy-frames-runtime-proof/.tools/lean-4.35.0-linux`.
