@@ -1,3 +1,4 @@
+import { createNativeStringMapping } from './native-string-mapping.ts';
 import { captureEventListenerArguments } from './event-listener-arguments.ts';
 import { captureMessageTransfer } from './message-transfer.ts';
 import { GuestLocation } from './location.ts';
@@ -349,6 +350,7 @@ export class BrowserEnvironment {
   readonly dom?: GuestDOM;
   private engine?: GuestEngine;
   private readonly nativePolicies: readonly GuestHost[];
+  private readonly stringMapping: ReturnType<typeof createNativeStringMapping>;
   private readonly browserPolicy: ReturnType<typeof createBrowserPolicy>;
   private customElements?: ReturnType<typeof createGuestCustomElements>;
   private constructors = new Set<Function>();
@@ -376,6 +378,12 @@ export class BrowserEnvironment {
     const { catalog, global: native } = options;
     this.resources = new GuestResources(catalog);
     this.document = 'document' in native ? native.document : undefined;
+    this.stringMapping = createNativeStringMapping({
+      global: native,
+      css: (value, context) =>
+        rewriteGuestCSS(value, (url) => this.resources.nativeURL(url), context),
+      url: (value) => this.resources.nativeURL(value),
+    });
     this.browserPolicy = createBrowserPolicy({
       global: native,
       isGuestValue: (value) => this.engine?.ownsGuestValue(value) ?? false,
@@ -1164,15 +1172,7 @@ export class BrowserEnvironment {
         if (!this.dom!.attribute(target, key, String(value))) return true;
       }
     }
-    if (
-      Object.prototype.toString.call(target) === '[object CSSStyleDeclaration]' &&
-      typeof value === 'string'
-    )
-      value = rewriteGuestCSS(
-        value,
-        (url) => this.resources.nativeURL(url),
-        key === 'cssText' ? 'declarationList' : 'value',
-      );
+    value = this.stringMapping.set(target, key, value);
     if (key === 'nonce' || key === 'srcdoc') return false;
     const written = Reflect.set(target, key, value, target);
     if (
@@ -1245,8 +1245,7 @@ export class BrowserEnvironment {
       );
     if (target === this.audioWorkletNodeConstructor && args.length >= 2)
       args[1] = guestProcessorName(args[1]);
-    if (target.name === 'Audio' && typeof args[0] === 'string')
-      args[0] = this.resources.nativeURL(args[0]);
+    args = this.stringMapping.construct(target, args);
     if (target.name === 'FontFace' && typeof args[1] === 'string')
       args[1] = rewriteGuestCSS(args[1], (url) => this.resources.nativeURL(url), 'value');
     const value: object = Reflect.construct(target, args);
@@ -1394,18 +1393,7 @@ export class BrowserEnvironment {
         Reflect.apply(DocumentFragment.prototype.replaceChildren, receiver, [fragment]);
       return;
     }
-    if (
-      Object.prototype.toString.call(receiver) === '[object CSSStyleDeclaration]' &&
-      key === 'setProperty' &&
-      typeof args[1] === 'string'
-    )
-      args[1] = rewriteGuestCSS(args[1], (url) => this.resources.nativeURL(url), 'value');
-    if (
-      Object.prototype.toString.call(receiver) === '[object CSSStyleSheet]' &&
-      ['insertRule', 'replace', 'replaceSync'].includes(String(key)) &&
-      typeof args[0] === 'string'
-    )
-      args[0] = rewriteGuestCSS(args[0], (url) => this.resources.nativeURL(url));
+    args = this.stringMapping.call(target, args);
     if (key === 'importScripts') {
       for (const input of args) {
         const source = this.resources.source(String(input), this.options.entryURL);
