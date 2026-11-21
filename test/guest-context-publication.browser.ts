@@ -1,6 +1,7 @@
 import { createGuestDocuments } from '../src/guest/contexts/documents.ts';
 import { createGuestWindowContexts } from '../src/guest/contexts/window-contexts.ts';
 import { createGuestWindow } from '../src/guest/session.ts';
+import { GuestEngine } from '../src/guest/engine.ts';
 import { GuestResources } from '../src/guest/resources.ts';
 import type { GuestContextCatalog } from '../src/guest/contexts/types.ts';
 
@@ -280,60 +281,69 @@ async function run() {
 
   const root = await createGuestWindow(catalog, window);
   const notifications: number[] = [];
-  root.engine.set('notifyPublication', (value: number) => notifications.push(value));
-  const compiled = await WebAssembly.compile(bytes);
-  const held = deferred<WebAssembly.Module>();
-  const originalCompile = WebAssembly.compile;
-  let waitingForEngine = false;
-  WebAssembly.compile = (() => {
-    waitingForEngine = true;
-    return held.promise;
-  }) as typeof WebAssembly.compile;
+  const originalCreate = GuestEngine.create;
+  GuestEngine.create = async (options) => {
+    const engine = await originalCreate.call(GuestEngine, options);
+    engine.set('__publicationNotify', (value: number) => notifications.push(value));
+    return engine;
+  };
   try {
-    root.engine.evaluate(`
+    const compiled = await WebAssembly.compile(bytes);
+    const held = deferred<WebAssembly.Module>();
+    const originalCompile = WebAssembly.compile;
+    let waitingForEngine = false;
+    WebAssembly.compile = (() => {
+      waitingForEngine = true;
+      return held.promise;
+    }) as typeof WebAssembly.compile;
+    try {
+      root.engine.evaluate(`
       globalThis.pendingChild = document.createElement('iframe');
-      pendingChild.srcdoc = '<script>parent.notifyPublication(1)</script>';
+      pendingChild.srcdoc = '<script>__publicationNotify(1)</script>';
       document.body.append(pendingChild);
     `);
-    await until(() => waitingForEngine);
-  } finally {
-    WebAssembly.compile = originalCompile;
-  }
-  root.engine.evaluate("pendingChild.srcdoc = '<p>replacement</p>'");
-  await tick();
-  held.resolve(compiled);
-  if (new URL(location.href).searchParams.has('cancelFault'))
-    await until(() => notifications.includes(1));
-  else await new Promise<void>((resolve) => setTimeout(resolve, 500));
-  Reflect.set(window, '__publicationObserved', notifications.slice());
-  check(
-    notifications.length === 0,
-    'Cancelled real child must not execute its first script',
-  );
-  root.engine.evaluate(`
+      await until(() => waitingForEngine);
+    } finally {
+      WebAssembly.compile = originalCompile;
+    }
+    root.engine.evaluate("pendingChild.srcdoc = '<p>replacement</p>'");
+    await tick();
+    held.resolve(compiled);
+    if (new URL(location.href).searchParams.has('cancelFault'))
+      await until(() => notifications.includes(1));
+    else await new Promise<void>((resolve) => setTimeout(resolve, 500));
+    Reflect.set(window, '__publicationObserved', notifications.slice());
+    check(
+      notifications.length === 0,
+      'Cancelled real child must not execute its first script',
+    );
+    root.engine.evaluate(`
     globalThis.liveChild = document.createElement('iframe');
-    liveChild.srcdoc = '<script>parent.notifyPublication(2)</script>';
+    liveChild.srcdoc = '<script>__publicationNotify(2)</script>';
     document.body.append(liveChild);
   `);
-  await until(() => notifications.length === 1);
-  check(notifications[0] === 2, 'Uncancelled real child control must execute');
-  root.close();
-  check(errors.length === 0, 'Independent factories must report no preparation error');
-  return {
-    staleClosed: closedFirst,
-    publishedClosed: closedSecond,
-    logicalLoads: loads,
-    pendingClosed,
-    pendingLoads,
-    reentrantSources: preparedSources,
-    queuedDeliveries: delivered,
-    cancelledRealChildExecutions: notifications.filter((value) => value === 1).length,
-    liveRealChildExecutions: notifications.filter((value) => value === 2).length,
-    popupFirstClosed,
-    popupSecondClosed,
-    cleanupCalls,
-    cleanupErrors,
-  };
+    await until(() => notifications.length === 1);
+    check(notifications[0] === 2, 'Uncancelled real child control must execute');
+    check(errors.length === 0, 'Independent factories must report no preparation error');
+    return {
+      staleClosed: closedFirst,
+      publishedClosed: closedSecond,
+      logicalLoads: loads,
+      pendingClosed,
+      pendingLoads,
+      reentrantSources: preparedSources,
+      queuedDeliveries: delivered,
+      cancelledRealChildExecutions: notifications.filter((value) => value === 1).length,
+      liveRealChildExecutions: notifications.filter((value) => value === 2).length,
+      popupFirstClosed,
+      popupSecondClosed,
+      cleanupCalls,
+      cleanupErrors,
+    };
+  } finally {
+    GuestEngine.create = originalCreate;
+    root.close();
+  }
 }
 run()
   .then((result) => Reflect.set(window, '__publicationResult', result))

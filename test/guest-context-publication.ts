@@ -1,28 +1,18 @@
 import assert from 'node:assert/strict';
-import { build } from 'esbuild';
+import { build, version as esbuildVersion } from 'esbuild';
 import { createServer } from 'node:http';
 import { createHash } from 'node:crypto';
-import { readFile, mkdir, writeFile } from 'node:fs/promises';
+import { createReadStream } from 'node:fs';
+import { readFile, realpath, mkdir, writeFile } from 'node:fs/promises';
 import { chromium, firefox } from 'playwright';
 
-const sources = [
-  'src/guest/contexts/lifecycle-kernel.ts',
-  'src/guest/contexts/documents.ts',
-  'src/guest/contexts/window-contexts.ts',
-  'src/guest/session.ts',
-  'src/guest/browser.ts',
-  'test/guest-context-publication.browser.ts',
-  'test/guest-context-publication.ts',
-];
+const sources = new Set(['test/guest-context-publication.ts']);
 const hash = (bytes: Uint8Array) => createHash('sha256').update(bytes).digest('hex');
-const inputHashes = Object.fromEntries(
-  await Promise.all(
-    sources.map(async (name) => [
-      name,
-      hash(await readFile(new URL('../' + name, import.meta.url))),
-    ]),
-  ),
-);
+async function executableHash(path: string): Promise<string> {
+  const value = createHash('sha256');
+  for await (const chunk of createReadStream(path)) value.update(chunk);
+  return value.digest('hex');
+}
 const output = new URL('../.tools/context-publication-browser/', import.meta.url);
 await mkdir(output, { recursive: true });
 const bundles = new Map<boolean, Uint8Array>();
@@ -33,6 +23,7 @@ for (const fault of [false, true]) {
     ],
     write: false,
     bundle: true,
+    metafile: true,
     format: 'esm',
     platform: 'browser',
     target: 'es2022',
@@ -73,7 +64,18 @@ for (const fault of [false, true]) {
   });
   assert.equal(result.outputFiles.length, 1);
   bundles.set(fault, result.outputFiles[0].contents);
+  for (const path of Object.keys(result.metafile!.inputs)) sources.add(path);
 }
+const inputHashes = Object.fromEntries(
+  await Promise.all(
+    [...sources]
+      .sort()
+      .map(async (name) => [
+        name,
+        hash(await readFile(new URL('../' + name, import.meta.url))),
+      ]),
+  ),
+);
 const wasm = await readFile(
   new URL('../vendor/quickjs/generated/engine.wasm', import.meta.url),
 );
@@ -106,8 +108,10 @@ try {
     ['chromium', chromium],
     ['firefox', firefox],
   ] as const) {
+    const executablePath = await realpath(type.executablePath());
+    const executableSHA256 = await executableHash(executablePath);
     for (const fault of [false, true]) {
-      const browser = await type.launch({ headless: true });
+      const browser = await type.launch({ headless: true, executablePath });
       try {
         const page = await browser.newPage();
         const errors: string[] = [];
@@ -142,6 +146,8 @@ try {
           receipts.push({
             browser: name,
             version: browser.version(),
+            executablePath,
+            executableSHA256,
             variant: 'session-cancellation-removed',
             observed,
             rejected: true,
@@ -172,6 +178,8 @@ try {
           receipts.push({
             browser: name,
             version: browser.version(),
+            executablePath,
+            executableSHA256,
             variant: 'production',
             result,
           });
@@ -181,6 +189,11 @@ try {
         await browser.close();
       }
     }
+    assert.equal(
+      await executableHash(executablePath),
+      executableSHA256,
+      'Browser executable changed',
+    );
   }
 } finally {
   await new Promise<void>((resolve) => server.close(() => resolve()));
@@ -188,10 +201,12 @@ try {
 assert.deepEqual(
   Object.fromEntries(
     await Promise.all(
-      sources.map(async (name) => [
-        name,
-        hash(await readFile(new URL('../' + name, import.meta.url))),
-      ]),
+      [...sources]
+        .sort()
+        .map(async (name) => [
+          name,
+          hash(await readFile(new URL('../' + name, import.meta.url))),
+        ]),
     ),
   ),
   inputHashes,
@@ -211,6 +226,10 @@ await writeFile(
         'Independent preparation/cancellation/reentry/queued-message controls and real QuickJS child-session replacement with actual cancellation-removal controls. This is not a complete browser confinement proof.',
       sourceHashes: inputHashes,
       engineSHA256: hash(wasm),
+      toolchain: { node: process.version, esbuild: esbuildVersion },
+      launch: 'BrowserType.launch with headless:true and explicit executablePath',
+      sensor:
+        'Test-only GuestEngine.create wrapper installs own guest __publicationNotify binding before first application script; original create always runs and is restored in finally',
       bundleHashes: {
         production: hash(bundles.get(false)!),
         sessionCancellationRemoved: hash(bundles.get(true)!),
